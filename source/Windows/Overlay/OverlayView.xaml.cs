@@ -33,11 +33,16 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
-                var a = queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList();
+                if (!IsDisplayed)
+                {
+                    return;
+                }
+
+                var itemListingControls = queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList();
                 DataContext = new
                 {
                     queryResult,
-                    itemListingControls = a
+                    itemListingControls
                 };
             }
         }

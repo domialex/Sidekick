@@ -98,9 +98,9 @@
     <Compile Include="Helpers\TrayIcon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Windows\Logs\LogsController.cs" />
-    <Compile Include="Windows\Logs\LogsWindow.xaml.cs">
-      <DependentUpon>LogsWindow.xaml</DependentUpon>
+    <Compile Include="Windows\ApplicationLogs\ApplicationLogsController.cs" />
+    <Compile Include="Windows\ApplicationLogs\ApplicationLogsWindow.xaml.cs">
+      <DependentUpon>ApplicationLogsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Overlay\UserControls\ItemListingControl.xaml.cs">
       <DependentUpon>ItemListingControl.xaml</DependentUpon>
@@ -124,7 +124,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Windows\Logs\LogsWindow.xaml">
+    <Page Include="Windows\ApplicationLogs\ApplicationLogsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>

@@ -1,5 +1,4 @@
-﻿using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Logs;
+﻿using Sidekick.Windows.ApplicationLogs;
 using System.Windows.Forms;
 
 namespace Sidekick.Helpers
@@ -16,7 +15,7 @@ namespace Sidekick.Helpers
             _notifyIcon.Text = "Sidekick";
 
             var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.Add("Show logs", null, (s, e) => LogsController.Show());
+            contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
             contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
