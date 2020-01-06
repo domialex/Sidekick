@@ -126,7 +126,7 @@
   <ItemGroup>
     <Page Include="Windows\Logs\LogsWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Windows\Overlay\UserControls\ItemListingControl.xaml">
       <SubType>Designer</SubType>

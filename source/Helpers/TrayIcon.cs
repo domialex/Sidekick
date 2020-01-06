@@ -1,5 +1,5 @@
 ﻿using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Log;
+using Sidekick.Windows.Logs;
 using System.Windows.Forms;
 
 namespace Sidekick.Helpers
