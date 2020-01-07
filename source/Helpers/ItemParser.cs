@@ -18,8 +18,8 @@ namespace Sidekick.Helpers
         /// </summary>
         public static Item ParseItem(string text)
         {
-            var item = new Item();
-            bool isIdentitied;
+            Item item = null;
+            bool isIdentitied, hasQuality, isCorrupted;
 
             try
             {
@@ -28,13 +28,16 @@ namespace Sidekick.Helpers
                 if (!lines[0].StartsWith("Rarity: ")) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
                 isIdentitied = !lines.Any(x => x == "Unidentified");
+                hasQuality = lines.Any(x => x.Contains("Quality: "));
+                isCorrupted = lines.Any(x => x == "Corrupted");
 
-                item.Rarity = lines[0].Replace("Rarity: ", string.Empty);
+                var rarity = lines[0].Replace("Rarity: ", string.Empty);
 
-                switch (item.Rarity)
+                switch (rarity)
                 {
                     case "Unique":
-                    //case "Rare":
+                        item = new EquippableItem();
+
                         if (isIdentitied)
                         {
                             item.Name = lines[1];
@@ -46,25 +49,60 @@ namespace Sidekick.Helpers
                         }
                         break;
                     case "Currency":
-                        item.Name = lines[1];
+                        item = new CurrencyItem()
+                        {
+                            Name = lines[1]
+                        };
+                        break;
+                    case "Gem":
+                        item = new GemItem()
+                        {
+                            Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
+                            Level = GetNumberFromString(lines[4]),
+                            Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith("Quality: ")).FirstOrDefault()) : "0",             // Quality Line Can move for different Gems
+                        };
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Log("Could not parse item. " + e.Message);
                 Logger.Log("For now Sidekick only supports uniques.");
                 return null;
             }
 
+            item.IsCorrupted = isCorrupted ? "true" : "false";
             return item;
+        }
+
+        internal static string GetNumberFromString(string input)
+        {
+            return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
     }
 
-    public class Item
+    public abstract class Item
     {
         public string Name { get; set; }
         public string Type { get; set; }
+        public string IsCorrupted { get; set; }
+    }
+
+    public class EquippableItem : Item
+    {
         public string Rarity { get; set; }
+        public string Quality { get; set; }
+    }
+
+    public class GemItem : Item
+    {
+        public string Level { get; set; }
+        public string Quality { get; set; }
+        // IsVaalVersion
+    }
+
+    public class CurrencyItem : Item
+    {
+
     }
 }
