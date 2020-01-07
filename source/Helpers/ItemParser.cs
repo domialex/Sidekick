@@ -168,8 +168,16 @@ namespace Sidekick.Helpers
             {
                 return 0;
             }
-
-            return input.Count(c => c == '-') == 0 ? 0 : input.Count(c => c == '-') + 1;
+            List<int> values = new List<int>();
+            if (!String.IsNullOrEmpty(input))
+            {
+                foreach (string fragment in input.Split(' '))
+                {
+                    values.Add(fragment.Count(c => c == '-') == 0 ? 0 : fragment.Count(c => c == '-') + 1);
+                }
+                return values.Max();
+            }
+            else return 0;
         }
 
         internal static InfluenceType GetInfluenceType(string input)
