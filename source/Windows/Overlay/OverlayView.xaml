@@ -165,7 +165,7 @@
                 <TextBox Grid.Row="0" Grid.Column="3" Text="iLvl" />
                 <TextBox Grid.Row="0" Grid.Column="4" Text="Age" HorizontalAlignment="Center" />
 
-                <ScrollViewer Grid.Row="1" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Name="_itemList" Grid.Row="1" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Path=itemListingControls}" />
                 </ScrollViewer>
             </Grid>

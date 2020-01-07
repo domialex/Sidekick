@@ -70,6 +70,7 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
+                _itemList.ScrollToTop();
                 Visibility = Visibility.Visible;
             }
         }
