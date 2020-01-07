@@ -1,11 +1,9 @@
 ﻿using Sidekick.Helpers;
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Sidekick.Windows.ApplicationLogs

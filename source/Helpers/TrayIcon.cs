@@ -1,10 +1,6 @@
-﻿using System.Reflection;
-using Sidekick.Windows.ApplicationLogs;
+﻿using Sidekick.Windows.ApplicationLogs;
 using System.Windows.Forms;
-using System.Windows.Media.Imaging;
 using System;
-using System.Drawing;
-using System.Runtime.Versioning;
 
 namespace Sidekick.Helpers
 {
