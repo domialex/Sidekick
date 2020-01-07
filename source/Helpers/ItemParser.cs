@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
+using System.Text.RegularExpressions;
 
 namespace Sidekick.Helpers
 {
@@ -39,6 +40,7 @@ namespace Sidekick.Helpers
                         {
                             item.Name = lines[1];
                             item.Type = lines[2];
+                            item.Links = GetLinks(lines.FirstOrDefault(qq => qq.StartsWith("Sockets: ")));
                         }
                         else
                         {
@@ -59,6 +61,15 @@ namespace Sidekick.Helpers
 
             return item;
         }
+        private static int GetLinks(string line)
+        {
+            if (!String.IsNullOrEmpty(line))
+            {
+                var regex = new Regex("[a-zA-Z]+[-]");
+                return regex.Matches(line).Count + 1;
+            }
+            else return 0;
+        }
     }
 
     public class Item
@@ -66,5 +77,6 @@ namespace Sidekick.Helpers
         public string Name { get; set; }
         public string Type { get; set; }
         public string Rarity { get; set; }
+        public int Links { get; set; }
     }
 }
