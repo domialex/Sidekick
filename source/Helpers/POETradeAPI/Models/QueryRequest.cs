@@ -47,6 +47,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
             }
+
             else if (itemType == typeof(CurrencyItem))
             {
                 Query.Type = item.Name;

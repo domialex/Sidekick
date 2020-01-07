@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
+using System.Text.RegularExpressions;
 
 namespace Sidekick.Helpers
 {
@@ -42,6 +43,7 @@ namespace Sidekick.Helpers
                         {
                             item.Name = lines[1];
                             item.Type = lines[2];
+                            item.Links = GetLinks(lines.FirstOrDefault(qq => qq.StartsWith("Sockets: ")));
                         }
                         else
                         {
@@ -219,11 +221,9 @@ namespace Sidekick.Helpers
 
     public class CurrencyItem : Item
     {
-
     }
 
     public class FragmentItem : Item
     {
-
     }
 }
