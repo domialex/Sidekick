@@ -14,7 +14,7 @@ namespace Sidekick.Windows.Overlay.UserControls
 
         private void openQueryLink(object sender, RequestNavigateEventArgs e)
         {
-            var uri = TradeClient.POE_TRADE_SEARCH_BASE_URL + TradeClient.Leagues[0].Id + "/" + e.Uri;
+            var uri = TradeClient.POE_TRADE_SEARCH_BASE_URL + TradeClient.SelectedLeague.Id + "/" + e.Uri;
             Process.Start(new ProcessStartInfo(uri));
             e.Handled = true;
         }
