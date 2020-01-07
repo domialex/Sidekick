@@ -1,11 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
-using Sidekick.Helpers;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
-using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +15,7 @@ namespace Sidekick.Helpers
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
+            _globalHook.MouseWheel += GlobalHookMouseScrollHandler;
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
@@ -41,6 +38,26 @@ namespace Sidekick.Helpers
                 e.Handled = true;
                 Task.Run(TriggerItemFetch);
             }
+        }
+
+        private static void GlobalHookMouseScrollHandler(object sender, MouseEventArgs e)
+        {
+            if (!TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            {
+                return;
+            }
+
+            // CTRL + Scroll to move between stash tabs while not hovering stash
+            int windowWidth = ProcessHelper.GetActiveWindowWidth();
+            if (e.X > 0.35 * windowWidth)
+            {
+                if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
+                {
+                    string key = e.Delta > 0 ? "{LEFT}" : "{RIGHT}";
+                    SendKeys.Send(key);
+                }
+            }
+
         }
 
         private static async void TriggerItemFetch()

@@ -10,13 +10,14 @@ namespace Sidekick.Windows.Overlay.UserControls
         {
 
         }
+
         public ItemListingControl(ListingResult listingResult)
         {
             InitializeComponent();
 
             accountNameTextbox.Text = listingResult.Listing.Account.Name;
             characterNameTextbox.Text = listingResult.Listing.Account.LastCharacterName;
-            priceTextbox.Text = listingResult.Listing.Price.Amount + " " + listingResult.Listing.Price.Currency;
+            priceTextbox.Text = listingResult.Listing.Price?.Amount + " " + listingResult.Listing.Price?.Currency;
             itemLevelTextbox.Text = listingResult.Item.Ilvl.ToString();
             ageTextbox.Text = GetHumanReadableTimeSpan(listingResult.Listing.Indexed);
         }

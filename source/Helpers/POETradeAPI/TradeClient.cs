@@ -30,6 +30,8 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static bool IsReady;
 
+        public static League SelectedLeague;
+
         public static async void Initialize()
         {
             if (_jsonSerializerSettings == null)
@@ -70,6 +72,9 @@ namespace Sidekick.Helpers.POETradeAPI
             }
 
             IsFetching = false;
+
+            TrayIcon.PopulateLeagueSelectMenu(Leagues);
+
             IsReady = true;
 
             Logger.Log($"Path of Exile trade data fetched.");
@@ -121,7 +126,7 @@ namespace Sidekick.Helpers.POETradeAPI
             {
                 var queryRequest = new QueryRequest(item);
                 var body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("search/Metamorph", body);
+                var response = await _httpClient.PostAsync("search/"+SelectedLeague.Id, body);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
