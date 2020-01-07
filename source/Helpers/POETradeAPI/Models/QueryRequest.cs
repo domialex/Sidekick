@@ -17,11 +17,39 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
             if (itemType == typeof(EquippableItem))
             {
-                Query.Name = item.Name;
+                if(((EquippableItem)item).Rarity == StringConstants.RarityUnique)
+                {
+                    Query.Name = item.Name;
+                }
+                else
+                {
+                    Query.Type = item.Type;
+
+                    if (!int.TryParse(((EquippableItem)item).ItemLevel, out var result))
+                    {
+                        throw new Exception("Couldn't parse Item Level");
+                    }
+
+                    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                    {
+                        Min = result,
+                        Max = result,
+                    };
+
+                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                    {
+                        Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
+                    };
+                }             
+
+                if(((EquippableItem)item).Links != null)        // Auto Search 5+ Links
+                {
+                    Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
+                }
             }
             else if (itemType == typeof(CurrencyItem))
             {
-                Query.Name = item.Name;
+                Query.Type = item.Name;
             }
             else if (itemType == typeof(GemItem))
             {
@@ -54,6 +82,10 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                 {
                     Option = item.IsCorrupted
                 };
+            }
+            else if (itemType == typeof(FragmentItem))
+            {
+                Query.Type = item.Type;
             }
             else
             {
@@ -96,6 +128,16 @@ namespace Sidekick.Helpers.POETradeAPI.Models
     {
         [JsonProperty(PropertyName = "misc_filters")]
         public MiscFilter MiscFilters { get; set; } = new MiscFilter();
+        [JsonProperty(PropertyName = "weapon_filters")]
+        public WeaponFilter WeaponFilters { get; set; } = new WeaponFilter();
+        [JsonProperty(PropertyName = "armour_filters")]
+        public ArmourFilter ArmourFilter { get; set; } = new ArmourFilter();
+        [JsonProperty(PropertyName = "socket_filters")]
+        public SocketFilter SocketFilter { get; set; } = new SocketFilter();
+        [JsonProperty(PropertyName = "req_filters")]
+        public RequierementFilter RequierementFilter { get; set; } = new RequierementFilter();
+        [JsonProperty(PropertyName = "type_filters")]
+        public TypeFilter TypeFilter { get; set; } = new TypeFilter();
     }
 
     public class MiscFilter
@@ -104,12 +146,105 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public MiscFilters Filters { get; set; } = new MiscFilters();
     }
 
+    public class WeaponFilter
+    {
+        public bool Disabled { get; set; }
+        public WeaponFilters Filters { get; set; } = new WeaponFilters();
+    }
+
+    public class ArmourFilter
+    {
+        public bool Disabled { get; set; }
+        public ArmorFilters Filters { get; set; } = new ArmorFilters();
+    }
+
+    public class SocketFilter
+    {
+        public bool Disabled { get; set; }
+        public SocketFilters Filters { get; set; } = new SocketFilters();
+    }
+
+    public class RequierementFilter
+    {
+        public bool Disabled { get; set; }
+        public RequierementFilters Filters { get; set; } = new RequierementFilters();
+    }
+
+    public class TypeFilter
+    {
+        public bool Disabled { get; set; }
+        public TypeFilters Filters { get; set; } = new TypeFilters();
+    }
+
     public class MiscFilters
     {
         public FilterValue Quality { get; set; }
+        [JsonProperty(PropertyName = "map_tier")]
+        public FilterValue MapTier { get; set; }
+        [JsonProperty(PropertyName = "map_iiq")]
+        public FilterValue MapIiq { get; set; }
         [JsonProperty(PropertyName = "gem_level")]
         public FilterValue GemLevel { get; set; }
+        [JsonProperty(PropertyName = "ilvl")]
+        public FilterValue ItemLevel { get; set; }
+        [JsonProperty(PropertyName = "map_packsize")]
+        public FilterValue MapPacksize { get; set; }
+        [JsonProperty(PropertyName = "map_iir")]
+        public FilterValue MapIir { get; set; }
+        [JsonProperty(PropertyName = "talisman_art")]
+        public FilterOption TalismanArt { get; set; }
+        [JsonProperty(PropertyName = "alternate_art")]
+        public FilterOption AlternateArt { get; set; }
+        public FilterOption Identified { get; set; }
         public FilterOption Corrupted { get; set; }
+        public FilterOption Crafted { get; set; }
+        public FilterOption Enchanted { get; set; }
+#warning TODO Influence
+    }
+
+    public class WeaponFilters
+    {
+        public FilterValue Damage { get; set; }
+        public FilterValue Crit { get; set; }
+        public FilterValue APS { get; set; }
+        public FilterValue EDPS { get; set; }
+        public FilterValue PDPS { get; set; }
+    }
+
+    public class ArmorFilters
+    {
+        [JsonProperty(PropertyName = "ar")]
+        public FilterValue Armor { get; set; }
+        [JsonProperty(PropertyName = "es")]
+        public FilterValue EnergyShield { get; set; }
+        [JsonProperty(PropertyName = "ev")]
+        public FilterValue Evasion { get; set; }
+        [JsonProperty(PropertyName = "block")]
+        public FilterValue Block { get; set; }
+    }
+
+    public class SocketFilters
+    {
+        public SocketFilterOption Sockets { get; set; }
+        public SocketFilterOption Links { get; set; }
+    }
+
+    public class RequierementFilters
+    {
+        [JsonProperty(PropertyName = "lvl")]
+        public FilterValue Level { get; set; }
+        [JsonProperty(PropertyName = "dex")]
+        public FilterValue Dexterity { get; set; }
+        [JsonProperty(PropertyName = "str")]
+        public FilterValue Strength { get; set; }
+        [JsonProperty(PropertyName = "int")]
+        public FilterValue Intelligence { get; set; }
+    }
+
+    public class TypeFilters
+    {
+        public FilterOption Category { get; set; }
+        public FilterOption Rarity { get; set; }
     }
 
     public class FilterValue
@@ -121,6 +256,18 @@ namespace Sidekick.Helpers.POETradeAPI.Models
     public class FilterOption
     {
         public string Option { get; set; }
+    }
+
+    public class SocketFilterOption : FilterValue
+    {
+        [JsonProperty(PropertyName = "r")]
+        public int? Red { get; set; }
+        [JsonProperty(PropertyName = "g")]
+        public int? Green { get; set; }
+        [JsonProperty(PropertyName = "b")]
+        public int? Blue { get; set; }
+        [JsonProperty(PropertyName = "w")]
+        public int? White { get; set; }
     }
 
     public enum SortType
@@ -141,4 +288,15 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         Or,
         Count
     }
+
+    public enum InfluenceType
+    {
+        None,
+        Shaper,
+        Elder,
+        Crusader,
+        Hunter,
+        Redeemer,
+        Warlord,
+    };
 }

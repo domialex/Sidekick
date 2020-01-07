@@ -95,6 +95,7 @@
     <Compile Include="Helpers\POETradeAPI\Models\QueryResult.cs" />
     <Compile Include="Helpers\POETradeAPI\Models\StaticItem.cs" />
     <Compile Include="Helpers\POETradeAPI\TradeClient.cs" />
+    <Compile Include="Helpers\StringConstants.cs" />
     <Compile Include="Helpers\TrayIcon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
