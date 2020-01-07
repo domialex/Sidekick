@@ -29,8 +29,9 @@ namespace Sidekick.Windows.Overlay
 
             // Ensure the window stays inside the screen but still appears on the mouse.
             var screen = SystemParameters.WorkArea;
-            var positionX = x + (x < screen.Width / 2 ? 0 : -WINDOW_WIDTH);
-            var positionY = y + (y < screen.Height / 2 ? 0 : -WINDOW_HEIGHT);
+            var padding = 5;
+            var positionX = x + (x < screen.Width / 2 ? padding : -WINDOW_WIDTH - padding);
+            var positionY = y + (y < screen.Height / 2 ? padding : -WINDOW_HEIGHT - padding);
 
             _overlayWindow.SetWindowPosition(positionX, positionY);
         }
