@@ -5,6 +5,7 @@ using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -48,6 +49,7 @@ namespace Sidekick.Helpers
 
             // Trigger copy action.
             SendKeys.SendWait("^{c}");
+            Thread.Sleep(100);
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
             // Parse item.            
