@@ -22,13 +22,15 @@ This is a **BETA**, it will probably break in some cases, if it does, don't hesi
 All help is very welcomed.
 
 ## Installation
-1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155)
+1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155).
 2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.1.0/Sidekick.v0.1.0.Beta.zip) and extract anywhere on your computer.
+3. Run.
 
 ## Usage
-1. Run **Sidekick.exe**
-2. In **Path of Exile**, hover on an item and press **Ctrl+D**.
-3. To close the overlay, press **Escape**.
+1. Run **Sidekick.exe**.
+2. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode.
+3. In **Path of Exile**, hover an item and press **Ctrl+D**.
+4. To close the overlay, press **Escape**.
 
 ## Roadmap
 1. Parse all items
