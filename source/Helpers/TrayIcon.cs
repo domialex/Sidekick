@@ -1,5 +1,10 @@
-﻿using Sidekick.Windows.ApplicationLogs;
+﻿using System.Reflection;
+using Sidekick.Windows.ApplicationLogs;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using System;
+using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace Sidekick.Helpers
 {
@@ -10,7 +15,8 @@ namespace Sidekick.Helpers
         public static void Initialize()
         {
             _notifyIcon = new NotifyIcon();
-            _notifyIcon.Icon = new System.Drawing.Icon("Resources/ExaltedOrb.ico");
+            var icon = Resources.ExaltedOrb;
+            _notifyIcon.Icon = icon;
             _notifyIcon.Visible = true;
             _notifyIcon.Text = "Sidekick";
 

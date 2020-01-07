@@ -1,8 +1,12 @@
 ﻿using Sidekick.Helpers;
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Sidekick.Windows.ApplicationLogs
 {
@@ -15,7 +19,31 @@ namespace Sidekick.Windows.ApplicationLogs
             logsTextBox.Text = GenerateLogLines;
             Logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
+            InitializeIcon();
             Show();
+        }
+
+        private static MemoryStream IconStream;
+
+        private void InitializeIcon()
+        {
+            //TODO: Do better than this, ExaltedOrb Icon is referenced in code... 
+            if (IconStream == null)
+            {
+                lock (this)
+                {
+                    if (IconStream == null)
+                    {
+                        var ms = new MemoryStream();
+                        Sidekick.Resources.ExaltedOrb.Save(ms);
+                        IconStream = ms;
+                    }
+                }
+            }
+
+            IconStream.Seek(0, SeekOrigin.Begin);
+            var frame = BitmapFrame.Create(IconStream);
+            Icon = frame;
         }
 
         public void SetText(string text)
