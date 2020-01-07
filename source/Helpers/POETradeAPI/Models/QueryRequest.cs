@@ -200,7 +200,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public FilterOption Corrupted { get; set; }
         public FilterOption Crafted { get; set; }
         public FilterOption Enchanted { get; set; }
-#warning TODO Influence
     }
 
     public class WeaponFilters
