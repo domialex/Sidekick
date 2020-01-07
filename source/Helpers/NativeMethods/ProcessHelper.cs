@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace Sidekick.Helpers.NativeMethods
@@ -14,6 +15,9 @@ namespace Sidekick.Helpers.NativeMethods
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
 
+        [DllImport("user32.dll")]
+        static extern bool GetWindowRect(IntPtr hWnd, out Rectangle lpRect);
+
         public static bool IsPathOfExileInFocus()
         {
             if (Debugger.IsAttached)
@@ -25,6 +29,12 @@ namespace Sidekick.Helpers.NativeMethods
             var processToCheck = Process.GetProcessById(processID);
 
             return processToCheck?.MainWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
+        }
+
+        public static int GetActiveWindowWidth()
+        {
+            GetWindowRect(GetForegroundWindow(), out Rectangle windowRect);
+            return windowRect.Width;
         }
     }
 }
