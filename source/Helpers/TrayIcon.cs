@@ -3,6 +3,7 @@ using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.ApplicationLogs;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System;
 
 
 namespace Sidekick.Helpers
@@ -15,7 +16,8 @@ namespace Sidekick.Helpers
         public static void Initialize()
         {
             _notifyIcon = new NotifyIcon();
-            _notifyIcon.Icon = new System.Drawing.Icon("Resources/ExaltedOrb.ico");
+            var icon = Resources.ExaltedOrb;
+            _notifyIcon.Icon = icon;
             _notifyIcon.Visible = true;
             _notifyIcon.Text = "Sidekick";
 

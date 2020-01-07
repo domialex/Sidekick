@@ -20,7 +20,7 @@ namespace Sidekick.Helpers
         public static Item ParseItem(string text)
         {
             Item item = null;
-            bool isIdentitied, hasQuality, isCorrupted;
+            bool isIdentified, hasQuality, isCorrupted;
 
             try
             {
@@ -28,7 +28,7 @@ namespace Sidekick.Helpers
                 // Every item should start with Rarity in the first line.
                 if (!lines[0].StartsWith("Rarity: ")) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
-                isIdentitied = !lines.Any(x => x == StringConstants.DescriptionUnidentified);
+                isIdentified = !lines.Any(x => x == StringConstants.DescriptionUnidentified);
                 hasQuality = lines.Any(x => x.Contains(StringConstants.DescriptionQuality));
                 isCorrupted = lines.Any(x => x == StringConstants.DescriptionCorrupted);
 
@@ -39,7 +39,7 @@ namespace Sidekick.Helpers
                     case StringConstants.RarityUnique:
                         item = new EquippableItem();
 
-                        if (isIdentitied)
+                        if (isIdentified)
                         {
                             item.Name = lines[1];
                             item.Type = lines[2];
