@@ -43,7 +43,6 @@ namespace Sidekick.Helpers
                         {
                             item.Name = lines[1];
                             item.Type = lines[2];
-                            item.Links = GetLinks(lines.FirstOrDefault(qq => qq.StartsWith("Sockets: ")));
                         }
                         else
                         {

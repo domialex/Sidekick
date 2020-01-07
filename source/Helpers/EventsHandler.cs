@@ -2,6 +2,7 @@
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
