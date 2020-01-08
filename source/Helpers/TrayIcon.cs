@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
 using Sidekick.Helpers.POENinjaAPI;
+using System.Threading.Tasks;
 
 namespace Sidekick.Helpers
 {
@@ -26,6 +27,7 @@ namespace Sidekick.Helpers
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
             contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
+            contextMenu.Items.Add("Refresh Cache", null, (s, e) => Task.Run(() => PoeNinjaCache.Refresh()));
             contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
