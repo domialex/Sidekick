@@ -54,7 +54,7 @@
         </TextBox>
 
         <TextBlock Grid.Row="1" Grid.Column="0">
-            <Hyperlink NavigateUri="{Binding Id}" RequestNavigate="openQueryLink" TextDecorations="None">
+            <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="openQueryLink" TextDecorations="None">
                 <TextBlock Grid.Row="1" Margin="8 0 0 5" TextDecorations="Underline">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}Showing {0} items out of {1}">

@@ -8,5 +8,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public string Id { get; set; }
         public int Total { get; set; }
         public Item Item { get; set; }
+        public string Uri { get; set; }
     }
 }
