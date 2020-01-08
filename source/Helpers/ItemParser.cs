@@ -88,7 +88,7 @@ namespace Sidekick.Helpers
 
                         break;
                     case StringConstants.RarityMagic:
-                        break;
+                        throw new Exception("Magic items not supported for now.");
                     case StringConstants.RarityNormal:
                         if(lines.Any(c => c.StartsWith(StringConstants.DescriptionItemLevel)))      // Equippable Item
                         {
@@ -149,7 +149,6 @@ namespace Sidekick.Helpers
             catch (Exception e)
             {
                 Logger.Log("Could not parse item. " + e.Message);
-                Logger.Log("For now Sidekick only supports uniques.");
                 return null;
             }
 
