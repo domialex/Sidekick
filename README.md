@@ -44,3 +44,10 @@ All help is very welcomed.
 ## Thanks
 - [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) - Keyboard hooks
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
+
+## Donations
+I've been receiving messages from people who expressed interest in supporting the project with donations.
+
+Please know that I will work on this project because I enjoy it! There is no need to donate 😋.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/domialex)
