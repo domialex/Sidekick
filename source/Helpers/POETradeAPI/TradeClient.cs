@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
+using Sidekick.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,6 @@ namespace Sidekick.Helpers.POETradeAPI
 {
     public static class TradeClient
     {
-        public readonly static Uri POE_TRADE_SEARCH_BASE_URL = new Uri("https://www.pathofexile.com/trade/search/");
-        public readonly static Uri POE_TRADE_EXCHANGE_BASE_URL = new Uri("https://www.pathofexile.com/trade/exchange/");
-        public readonly static Uri POE_TRADE_API_BASE_URL = new Uri("https://www.pathofexile.com/api/trade/"); // TODO: Subdomain determines the language of the items.
-        public readonly static Uri POE_CDN_BASE_URL = new Uri("https://web.poecdn.com/");
-
         public static List<League> Leagues;
         public static List<StaticItemCategory> StaticItemCategories;
         public static List<AttributeCategory> AttributeCategories;
@@ -52,7 +48,7 @@ namespace Sidekick.Helpers.POETradeAPI
             Logger.Log("Fetching Path of Exile trade data.");
 
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = POE_TRADE_API_BASE_URL;
+            _httpClient.BaseAddress = LanguageSettings.Provider.PoeTradeApiBaseUrl;
 
             var fetchLeaguesTask = FetchDataAsync<League>("Leagues", "leagues");
             var fetchStaticItemCategoriesTask = FetchDataAsync<StaticItemCategory>("Static item categories", "static");
@@ -118,6 +114,11 @@ namespace Sidekick.Helpers.POETradeAPI
             return result;
         }
 
+        public static void UpdateClientBaseUrl(Uri baseUri)
+        {
+            _httpClient.BaseAddress = baseUri;
+        }
+
         public static async Task<QueryResult<string>> Query(Item item)
         {
             Logger.Log("Querying Trade API.");
@@ -147,7 +148,7 @@ namespace Sidekick.Helpers.POETradeAPI
                     var content = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
-                    var baseUri = isBulk ? TradeClient.POE_TRADE_EXCHANGE_BASE_URL : TradeClient.POE_TRADE_SEARCH_BASE_URL;
+                    var baseUri = isBulk ? LanguageSettings.Provider.PoeTradeExchangeBaseUrl : LanguageSettings.Provider.PoeTradeSearchBaseUrl;
                     result.Uri = baseUri + SelectedLeague.Id + "/" + result.Id;
                 }
             }

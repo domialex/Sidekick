@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
 using System.Text.RegularExpressions;
+using Sidekick.Localization;
 
 namespace Sidekick.Helpers
 {
@@ -26,32 +27,87 @@ namespace Sidekick.Helpers
             {
                 var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
                 // Every item should start with Rarity in the first line.
-                if (!lines[0].StartsWith("Rarity: ")) throw new Exception("Probably not an item.");
+                if (!lines[0].StartsWith(LanguageSettings.Provider.DescriptionRarity)) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
-                isIdentified = !lines.Any(x => x == StringConstants.DescriptionUnidentified);
-                hasQuality = lines.Any(x => x.Contains(StringConstants.DescriptionQuality));
-                isCorrupted = lines.Any(x => x == StringConstants.DescriptionCorrupted);
+                isIdentified = !lines.Any(x => x == LanguageSettings.Provider.DescriptionUnidentified);
+                hasQuality = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionQuality));
+                isCorrupted = lines.Any(x => x == LanguageSettings.Provider.DescriptionCorrupted);
 
-                var rarity = lines[0].Replace(StringConstants.DescriptionRarity, string.Empty);
+                var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
 
-                switch (rarity)
+                if(rarity == LanguageSettings.Provider.RarityUnique)
                 {
-                    case StringConstants.RarityUnique:
-                        item = new EquippableItem();
+                    item = new EquippableItem();
 
-                        if (isIdentified)
+                    if (isIdentified)
+                    {
+                        item.Name = lines[1];
+                        item.Type = lines[2];
+                    }
+                    else
+                    {
+                        item.Type = lines[1];
+                    }
+
+                    var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+
+                    if (links >= 5)
+                    {
+                        ((EquippableItem)item).Links = new SocketFilterOption()
                         {
-                            item.Name = lines[1];
-                            item.Type = lines[2];
-                        }
-                        else
+                            Min = links,
+                            Max = links,
+                        };
+                    }
+
+                    ((EquippableItem)item).Rarity = rarity;
+                }
+                else if(rarity == LanguageSettings.Provider.RarityRare)
+                {
+                    item = new EquippableItem()
+                    {
+                        Name = lines[2].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
+                        Type = lines[2].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
+                        ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
+                        Rarity = rarity,
+                    };
+
+                    var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+
+                    if (links >= 5)
+                    {
+                        ((EquippableItem)item).Links = new SocketFilterOption()
                         {
-                            item.Type = lines[1];
-                        }
+                            Min = links,
+                            Max = links,
+                        };
+                    }
 
-                        var links = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());
+                    var influence = GetInfluenceType(lines.LastOrDefault());
 
-                        if(links >= 5)
+                    ((EquippableItem)item).Influence = influence;
+                }
+                else if(rarity == LanguageSettings.Provider.RarityMagic)
+                {
+                    throw new Exception("Magic items not supported for now.");
+                }
+                else if(rarity == LanguageSettings.Provider.RarityNormal)
+                {
+                    if (lines.Any(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)))      // Equippable Item
+                    {
+                        item = new EquippableItem()
+                        {
+                            Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
+                            ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
+                            Rarity = rarity,                           // TODO Non-Unique Rarity
+                        };
+
+                        var influence = GetInfluenceType(lines.LastOrDefault());
+                        ((EquippableItem)item).Influence = influence;
+
+                        var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+
+                        if (links >= 5)
                         {
                             ((EquippableItem)item).Links = new SocketFilterOption()
                             {
@@ -59,92 +115,45 @@ namespace Sidekick.Helpers
                                 Max = links,
                             };
                         }
-
-                        ((EquippableItem)item).Rarity = rarity;
-                        break;
-                    case StringConstants.RarityRare:
-                        item = new EquippableItem()
+                    }
+                    else                // Fragment
+                    {
+                        item = new FragmentItem()
                         {
-                            Name = lines[2].Replace(StringConstants.PrefixSuperior, string.Empty),
-                            Type = lines[2].Replace(StringConstants.PrefixSuperior, string.Empty),
-                            ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(StringConstants.DescriptionItemLevel)).FirstOrDefault()),
-                            Rarity = rarity,
-                        };
-
-                        var links2 = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());     // better naming
-
-                        if(links2 >= 5)
-                        {
-                            ((EquippableItem)item).Links = new SocketFilterOption()
-                            {
-                                Min = links2,
-                                Max = links2,
-                            };
-                        }
-
-                        var influence = GetInfluenceType(lines.LastOrDefault());
-
-                        ((EquippableItem)item).Influence = influence;
-
-                        break;
-                    case StringConstants.RarityMagic:
-                        throw new Exception("Magic items not supported for now.");
-                    case StringConstants.RarityNormal:
-                        if(lines.Any(c => c.StartsWith(StringConstants.DescriptionItemLevel)))      // Equippable Item
-                        {
-                            item = new EquippableItem()
-                            {
-                                Type = lines[1].Replace(StringConstants.PrefixSuperior, string.Empty),
-                                ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(StringConstants.DescriptionItemLevel)).FirstOrDefault()),
-                                Rarity = rarity,                           // TODO Non-Unique Rarity
-                            };
-
-                            var influence2 = GetInfluenceType(lines.LastOrDefault());       // Better naming
-                            ((EquippableItem)item).Influence = influence2;
-
-                            var link3 = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());      // Better naming
-
-                            if(link3 >= 5)
-                            {
-                                ((EquippableItem)item).Links = new SocketFilterOption()
-                                {
-                                    Min = link3,
-                                    Max = link3,
-                                };
-                            }
-                        }
-                        else                // Fragment
-                        {
-                            item = new FragmentItem()
-                            {
-                                Type = lines[1],
-                            };
-                        }
-                        break;
-                    case StringConstants.RarityCurrency:
-                        item = new CurrencyItem()
-                        {
-                            Name = lines[1]
-                        };
-                        break;
-                    case StringConstants.RarityGem:
-                        item = new GemItem()
-                        {
-                            Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
-                            Level = GetNumberFromString(lines[4]),
-                            Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(StringConstants.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
-                        };
-                        break;
-                    case StringConstants.RarityDivinationCard:
-                        item = new CurrencyItem()
-                        {
-                            Name = lines[1],
                             Type = lines[1],
                         };
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                    }
                 }
+                else if(rarity == LanguageSettings.Provider.RarityCurrency)
+                {
+                    item = new CurrencyItem()
+                    {
+                        Name = lines[1]
+                    };
+
+                }
+                else if(rarity == LanguageSettings.Provider.RarityGem)
+                {
+                    item = new GemItem()
+                    {
+                        Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
+                        Level = GetNumberFromString(lines[4]),
+                        Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(LanguageSettings.Provider.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
+                    };
+                }
+                else if(rarity == LanguageSettings.Provider.RarityDivinationCard)
+                {
+                    item = new CurrencyItem()
+                    {
+                        Name = lines[1],
+                        Type = lines[1],
+                    };
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+              
             }
             catch (Exception e)
             {
@@ -163,41 +172,56 @@ namespace Sidekick.Helpers
 
         internal static int GetLinkCount(string input)
         {
-            if(input == null || !input.StartsWith(StringConstants.DescriptionSockets))
+            if(input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
             {
                 return 0;
             }
+
             List<int> values = new List<int>();
+
             if (!String.IsNullOrEmpty(input))
             {
                 foreach (string fragment in input.Split(' '))
                 {
                     values.Add(fragment.Count(c => c == '-') == 0 ? 0 : fragment.Count(c => c == '-') + 1);
                 }
+
                 return values.Max();
             }
-            else return 0;
+            else
+            {
+                return 0;
+            }
         }
 
         internal static InfluenceType GetInfluenceType(string input)
         {
-            switch(input)
+            if(input == LanguageSettings.Provider.InfluenceShaper)
             {
-                case StringConstants.InfluenceShaper:
-                    return InfluenceType.Shaper;
-                case StringConstants.InfluenceElder:
-                    return InfluenceType.Elder;
-                case StringConstants.InfluenceCrusader:
-                    return InfluenceType.Crusader;
-                case StringConstants.InfluenceHunter:
-                    return InfluenceType.Hunter;
-                case StringConstants.InfluenceRedeemer:
-                    return InfluenceType.Redeemer;
-                case StringConstants.InfluenceWarlord:
-                    return InfluenceType.Warlord;
-                default:
-                    return InfluenceType.None;
+                return InfluenceType.Shaper;
             }
+            else if(input == LanguageSettings.Provider.InfluenceElder)
+            {
+                return InfluenceType.Elder;
+            }
+            else if(input == LanguageSettings.Provider.InfluenceCrusader)
+            {
+                return InfluenceType.Crusader;
+            }
+            else if(input == LanguageSettings.Provider.InfluenceHunter)
+            {
+                return InfluenceType.Hunter;
+            }
+            else if(input == LanguageSettings.Provider.InfluenceRedeemer)
+            {
+                return InfluenceType.Redeemer;
+            }
+            else if(input == LanguageSettings.Provider.InfluenceWarlord)
+            {
+                return InfluenceType.Warlord;
+            }
+
+            return InfluenceType.None;
         }
     }
 

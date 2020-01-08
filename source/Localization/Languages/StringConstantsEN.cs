@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Localization.Languages
 {
-    public static class StringConstants
+    public static class StringConstantsEN
     {
+        public const string PoeTradeSearchBaseUrl = "https://www.pathofexile.com/trade/search/";
+        public const string PoeTradeExchangeBaseUrl = "https://www.pathofexile.com/trade/exchange/";
+        public const string PoeTradeApiBaseUrl = "https://www.pathofexile.com/api/trade/";
+        public const string PoeCdnBaseUrl = "https://web.poecdn.com/";
+
         public const string RarityUnique = "Unique";
         public const string RarityRare = "Rare";
         public const string RarityMagic = "Magic";
