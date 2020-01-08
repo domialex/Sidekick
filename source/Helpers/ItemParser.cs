@@ -196,27 +196,27 @@ namespace Sidekick.Helpers
 
         internal static InfluenceType GetInfluenceType(string input)
         {
-            if(input == LanguageSettings.Provider.InfluenceShaper)
+            if(input.Contains(LanguageSettings.Provider.InfluenceShaper))
             {
                 return InfluenceType.Shaper;
             }
-            else if(input == LanguageSettings.Provider.InfluenceElder)
+            else if(input.Contains(LanguageSettings.Provider.InfluenceElder))
             {
                 return InfluenceType.Elder;
             }
-            else if(input == LanguageSettings.Provider.InfluenceCrusader)
+            else if(input.Contains(LanguageSettings.Provider.InfluenceCrusader))
             {
                 return InfluenceType.Crusader;
             }
-            else if(input == LanguageSettings.Provider.InfluenceHunter)
+            else if(input.Contains(LanguageSettings.Provider.InfluenceHunter))
             {
                 return InfluenceType.Hunter;
             }
-            else if(input == LanguageSettings.Provider.InfluenceRedeemer)
+            else if(input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
             {
                 return InfluenceType.Redeemer;
             }
-            else if(input == LanguageSettings.Provider.InfluenceWarlord)
+            else if(input.Contains(LanguageSettings.Provider.InfluenceWarlord))
             {
                 return InfluenceType.Warlord;
             }

@@ -33,11 +33,11 @@ namespace Sidekick.Localization.Languages
 
         public const string PrefixSuperior = "(hochwertig)";
 
-        public const string InfluenceShaper = "Shaper";
-        public const string InfluenceElder = "Elder";
-        public const string InfluenceCrusader = "Crusader";
-        public const string InfluenceHunter = "Hunter";
-        public const string InfluenceRedeemer = "Redeemer";
-        public const string InfluenceWarlord = "Warlord";
+        public const string InfluenceShaper = "Schöpfer";
+        public const string InfluenceElder = "Ältesten";
+        public const string InfluenceCrusader = "Kreuzritter";
+        public const string InfluenceHunter = "Jägers";
+        public const string InfluenceRedeemer = "Erlöserin";
+        public const string InfluenceWarlord = "Kriegsherrn";
     }
 }
