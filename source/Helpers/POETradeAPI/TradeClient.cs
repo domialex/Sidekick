@@ -15,6 +15,7 @@ namespace Sidekick.Helpers.POETradeAPI
     public static class TradeClient
     {
         public readonly static Uri POE_TRADE_SEARCH_BASE_URL = new Uri("https://www.pathofexile.com/trade/search/");
+        public readonly static Uri POE_TRADE_EXCHANGE_BASE_URL = new Uri("https://www.pathofexile.com/trade/exchange/");
         public readonly static Uri POE_TRADE_API_BASE_URL = new Uri("https://www.pathofexile.com/api/trade/"); // TODO: Subdomain determines the language of the items.
         public readonly static Uri POE_CDN_BASE_URL = new Uri("https://web.poecdn.com/");
 
@@ -124,13 +125,30 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var queryRequest = new QueryRequest(item);
-                var body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("search/"+SelectedLeague.Id, body);
+                // TODO: More complex logic for determining bulk vs regular search
+                var isBulk = item.GetType() == typeof(CurrencyItem);
+
+                StringContent body;
+                if (isBulk)
+                {
+                    var bulkQueryRequest = new BulkQueryRequest(item);
+                    body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
+                }
+                else
+                {
+                    var queryRequest = new QueryRequest(item);
+                    body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
+                }
+
+                var response = await _httpClient.PostAsync($"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
+
+                    var baseUri = isBulk ? TradeClient.POE_TRADE_EXCHANGE_BASE_URL : TradeClient.POE_TRADE_SEARCH_BASE_URL;
+                    result.Uri = baseUri + SelectedLeague.Id + "/" + result.Id;
                 }
             }
             catch
@@ -154,7 +172,8 @@ namespace Sidekick.Helpers.POETradeAPI
                     Id = queryResult.Id,
                     Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
                     Total = queryResult.Total,
-                    Item = item
+                    Item = item,
+                    Uri = queryResult.Uri
                 };
             }
 

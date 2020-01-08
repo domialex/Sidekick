@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sidekick.Helpers.POETradeAPI.Models
 {
@@ -98,6 +99,70 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public Dictionary<string, SortType> Sort { get; set; } = new Dictionary<string, SortType> { { "price", SortType.Asc } };
     }
 
+    public class BulkQueryRequest
+    {
+
+        public BulkQueryRequest()
+        {
+
+        }
+
+        public BulkQueryRequest(Item item)
+        {
+            var itemType = item.GetType();
+
+            if (itemType == typeof(CurrencyItem))
+            {
+                var itemCategory = "Currency";
+
+                var itemName = item.Name.ToLowerInvariant();
+                if (itemName.EndsWith(" catalyst"))
+                {
+                    itemCategory = "Catalysts";
+                }
+                else if (itemName.EndsWith(" oil"))
+                {
+                    itemCategory = "Oils";
+                }
+                else if (itemName.EndsWith(" incubator"))
+                {
+                    itemCategory = "Incubators";
+                }
+                else if (itemName.EndsWith(" scarab"))
+                {
+                    itemCategory = "Scarabs";
+                }
+                else if (itemName.EndsWith(" resonator"))
+                {
+                    itemCategory = "DelveResonators";
+                }
+                else if (itemName.EndsWith(" fossil"))
+                {
+                    itemCategory = "DelveFossils";
+                }
+                else if (itemName.StartsWith("vial "))
+                {
+                    itemCategory = "Vials";
+                }
+                else if (itemName.Contains(" essence of "))
+                {
+                    itemCategory = "Essences";
+                }
+
+                var itemId = TradeClient.StaticItemCategories.Single(x => x.Id == itemCategory)
+                                                               .Entries
+                                                               .Single(x => x.Text == item.Name)
+                                                               .Id;
+
+                Exchange.Want.Add(itemId);
+                Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
+            }
+        }
+
+        public Exchange Exchange { get; set; } = new Exchange();
+        public Dictionary<string, SortType> Sort { get; set; } = new Dictionary<string, SortType> { { "price", SortType.Asc } };
+    }
+
     public class Query
     {
         public Status Status { get; set; } = new Status();
@@ -105,6 +170,13 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public string Type { get; set; }
         public List<Stat> Stats { get; set; } = new List<Stat>();
         public Filters Filters { get; set; } = new Filters();
+    }
+
+    public class Exchange
+    {
+        public List<string> Want { get; set; } = new List<string>();
+        public List<string> Have { get; set; } = new List<string>();
+        public string Status = "online";
     }
 
     public class Status
