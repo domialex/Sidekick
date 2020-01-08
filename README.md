@@ -23,7 +23,7 @@ All help is very welcomed.
 
 ## Installation
 1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155).
-2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.1.0/Sidekick.v0.1.0.Beta.zip) and extract anywhere on your computer.
+2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.2.0-beta/Sidekick.v0.2.0.Beta.zip) and extract anywhere on your computer.
 3. Run.
 
 ## Usage
