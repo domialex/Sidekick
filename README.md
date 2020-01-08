@@ -8,16 +8,16 @@ A Path of Exile helper that shows item prices using the **official** [Path of Ex
 
 If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
 
-For now, it can only support unique items. I will continously add features in the coming days.
+For now, it can only support some items. The idea is to eventually be able to modify your search on-the-fly and see the results appear.
 
-I'm looking for ideas, so if you want a feature tell me!
+I'm looking for ideas, so if you want a feature, create an issue!
 
 **Enjoy!**
 
 ## Warning
 This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to create an issue.
 
-**League is hardcoded to Metamorph!!!**
+**[Remember to choose your league with the league selector](https://i.imgur.com/7uFb7NF.png).**
 
 All help is very welcomed.
 
@@ -37,7 +37,6 @@ All help is very welcomed.
 2. Support [poe.ninja](https://poe.ninja)
 3. Support all Path of Exile languages (possible?)
 4. Settings page
-   - Choose league
    - Change hotkeys
 5. Item filtering
 6. Results pagination
