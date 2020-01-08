@@ -2,6 +2,7 @@
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,6 +40,14 @@ namespace Sidekick.Helpers
                 e.Handled = true;
                 Task.Run(TriggerItemFetch);
             }
+            else if (!OverlayController.IsDisplayed && e.Modifiers == (Keys.Control | Keys.Shift) && e.KeyCode == Keys.D)
+            {
+                if (!ProcessHelper.IsPathOfExileInFocus())
+                    return;
+
+                e.Handled = true;
+                Task.Run(TriggerBulkQuery);
+            }
         }
 
         private static void GlobalHookMouseScrollHandler(object sender, MouseEventArgs e)
@@ -61,17 +70,17 @@ namespace Sidekick.Helpers
 
         }
 
+        private static Item ParseItemUnderCursor()
+        {
+            SendKeys.SendWait("^{c}");
+            Thread.Sleep(100);
+            return ItemParser.ParseItem(ClipboardHelper.GetText());
+        }
+
         private static async void TriggerItemFetch()
         {
             Logger.Log("Hotkey pressed.");
-
-            // Trigger copy action.
-            SendKeys.SendWait("^{c}");
-            Thread.Sleep(100);
-            // Retrieve clipboard.
-            var itemText = ClipboardHelper.GetText();
-            // Parse item.            
-            var item = ItemParser.ParseItem(itemText);
+            var item = ParseItemUnderCursor();
             if (item != null)
             {
                 OverlayController.SetPosition(Cursor.Position.X, Cursor.Position.Y);
@@ -86,6 +95,18 @@ namespace Sidekick.Helpers
             }
 
             OverlayController.Hide();
+        }
+
+        private static async void TriggerBulkQuery()
+        {
+            var item = ParseItemUnderCursor();
+            if (item == null) return;
+            var result = await TradeClient.BulkQuery(item);
+            var lines = from l in result
+                        select $"{l.Ratio.BuyerReceives}c for {l.Ratio.SellerGives}, {l.Ratio.UnitPrice} each, stock: {l.Stock} seller: {l.SellerAccountName}";
+            var text = string.Join("\n", lines);
+            // TODO: replace with a proper WPF window
+            MessageBox.Show($"Bulk Listings for {item.Name}\n\n{text}");
         }
 
         public static void Dispose()

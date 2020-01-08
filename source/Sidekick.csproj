@@ -87,6 +87,9 @@
     <Compile Include="Helpers\NativeMethods\ClipboardHelper.cs" />
     <Compile Include="Helpers\NativeMethods\ConsoleHelper.cs" />
     <Compile Include="Helpers\NativeMethods\ProcessHelper.cs" />
+    <Compile Include="Helpers\POETradeAPI\Exchange\BulkListing.cs" />
+    <Compile Include="Helpers\POETradeAPI\Exchange\ExchangeFetch.cs" />
+    <Compile Include="Helpers\POETradeAPI\Exchange\ExchangePrefetch.cs" />
     <Compile Include="Helpers\POETradeAPI\Models\TradeData\Attribute.cs" />
     <Compile Include="Helpers\POETradeAPI\Models\TradeData\Item.cs" />
     <Compile Include="Helpers\POETradeAPI\Models\TradeData\League.cs" />
@@ -118,6 +121,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <Content Include="Resources\ExchangeItemIds.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ExaltedOrb.ico">

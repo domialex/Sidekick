@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Sidekick.Helpers.POETradeAPI.Exchange;
 using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using System;
@@ -182,6 +183,33 @@ namespace Sidekick.Helpers.POETradeAPI
 
 
             return result;
+        }
+
+        public static async Task<IEnumerable<BulkListing>> BulkQuery(Item item)
+        {
+            // TODO: minimum stock hard-coded to 10. should be configurable somewhere
+            var prefetch = await ExchangePrefetch.MakeRequest(_httpClient, item, 10);
+            if (prefetch == null)
+            {
+                Logger.Log("BulkQuery: prefetch failed");
+                return null;
+            }
+
+            var fetch = await ExchangeFetch.MakeRequest(_httpClient, prefetch);
+            if (fetch == null)
+            {
+                Logger.Log("BulkQuery: fetch failed");
+                return null;
+            }
+
+            return from result in fetch.Result
+                   select new BulkListing()
+                   {
+                       Stock = (int)result.Listing.Price.Item.Stock,
+                       SellerAccountName = result.Listing.Account.Name,
+                       SellerCharacterName = result.Listing.Account.LastCharacterName,
+                       Ratio = new CurrencyRatio(result.Listing.Price.Item.Amount, result.Listing.Price.Exchange.Amount)
+                   };
         }
 
 
