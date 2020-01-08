@@ -113,7 +113,43 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
             if (itemType == typeof(CurrencyItem))
             {
-                var itemId = TradeClient.StaticItemCategories.Single(x => x.Id == "Currency")
+                var itemCategory = "Currency";
+
+                var itemName = item.Name.ToLowerInvariant();
+                if (itemName.EndsWith(" catalyst"))
+                {
+                    itemCategory = "Catalysts";
+                }
+                else if (itemName.EndsWith(" oil"))
+                {
+                    itemCategory = "Oils";
+                }
+                else if (itemName.EndsWith(" incubator"))
+                {
+                    itemCategory = "Incubators";
+                }
+                else if (itemName.EndsWith(" scarab"))
+                {
+                    itemCategory = "Scarabs";
+                }
+                else if (itemName.EndsWith(" resonator"))
+                {
+                    itemCategory = "DelveResonators";
+                }
+                else if (itemName.EndsWith(" fossil"))
+                {
+                    itemCategory = "DelveFossils";
+                }
+                else if (itemName.StartsWith("vial "))
+                {
+                    itemCategory = "Vials";
+                }
+                else if (itemName.Contains(" essence of "))
+                {
+                    itemCategory = "Essences";
+                }
+
+                var itemId = TradeClient.StaticItemCategories.Single(x => x.Id == itemCategory)
                                                                .Entries
                                                                .Single(x => x.Text == item.Name)
                                                                .Id;
