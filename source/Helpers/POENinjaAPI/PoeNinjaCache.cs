@@ -26,6 +26,8 @@ namespace Sidekick.Helpers.POENinjaAPI
 
         public static bool IsInitialized => LastRefreshTimestamp.HasValue;
 
+        private static List<PoeNinjaItem> FlatItems => Items.SelectMany(c => c.Items).ToList();
+        private static List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(c => c.Items).ToList();
 
         public static PoeNinjaItem GetItem(Item item)
         {
@@ -34,8 +36,7 @@ namespace Sidekick.Helpers.POENinjaAPI
             //{
             //    throw new Exception("Cache not yet initialized. Call Refresh() before trying to get an item.");
             //}
-            
-            return Items.FirstOrDefault(c => c.Type == item.Type)?.Items.FirstOrDefault(c => c.Name == item.Name);
+            return FlatItems.FirstOrDefault(c => c.Name == item.Name);
         }
 
 

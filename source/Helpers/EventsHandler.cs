@@ -81,7 +81,7 @@ namespace Sidekick.Helpers
                 {
                     queryResult.PoeNinjaItem = PoeNinjaCache.GetItem(item);
                     queryResult.LastRefreshTimestamp = PoeNinjaCache.LastRefreshTimestamp;
-                    OverlayController.SetQueryResult(queryResult, ninjaItem);
+                    OverlayController.SetQueryResult(queryResult);
                     return;
                 }
             }

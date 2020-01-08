@@ -52,30 +52,21 @@
                 </MultiBinding>
             </TextBox.Text>
         </TextBox>
-
-        <Grid Grid.Row="0" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBox FontWeight="Bold" TextAlignment="Right" Margin="5 5 0 0">
-                <TextBox.Text>
-                    <MultiBinding StringFormat="poe.ninja: {0}c">
-                        <Binding Path="PoeNinjaItem.ChaosValue" />
-                    </MultiBinding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock Grid.Row="1" Grid.Column="0">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="Last update: {0}">
-                        <Binding Path="LastRefreshTimestamp"></Binding>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-        </Grid>
+        
+        <TextBox Grid.Row="0" Grid.Column="1"  FontWeight="Bold" TextAlignment="Right" Margin="5 0 5 0">
+            <TextBox.Text>
+                <MultiBinding StringFormat="Ø {0}c">
+                    <Binding Path="PoeNinjaItem.ChaosValue" />
+                </MultiBinding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Right" Margin="8 0 5 0">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Last update: {0:HH:mm}">
+                    <Binding Path="LastRefreshTimestamp"></Binding>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <TextBlock Grid.Row="1" Grid.Column="0">
             <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="openQueryLink" TextDecorations="None">
