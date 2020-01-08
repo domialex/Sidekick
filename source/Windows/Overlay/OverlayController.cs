@@ -1,5 +1,6 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
-using System.Collections.Generic;
+﻿using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POETradeAPI.Models;
+using System;
 using System.Windows;
 
 namespace Sidekick.Windows.Overlay
@@ -29,9 +30,14 @@ namespace Sidekick.Windows.Overlay
 
             // Ensure the window stays inside the screen but still appears on the mouse.
             var screen = SystemParameters.WorkArea;
+            var scale = screen.Width / ProcessHelper.GetActiveWindowWidth();
+            var xScaled = (int)Math.Floor(x * scale);
+            var yScaled = (int)Math.Floor(y * scale);
+
             var padding = 5;
-            var positionX = x + (x < screen.Width / 2 ? padding : -WINDOW_WIDTH - padding);
-            var positionY = y + (y < screen.Height / 2 ? padding : -WINDOW_HEIGHT - padding);
+            var positionX = xScaled + (xScaled < screen.Width / 2 ? padding : -WINDOW_WIDTH - padding);
+            var positionY = yScaled + (yScaled < screen.Height / 2 ? padding : -WINDOW_HEIGHT - padding);
+
 
             _overlayWindow.SetWindowPosition(positionX, positionY);
         }
