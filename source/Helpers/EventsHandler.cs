@@ -79,8 +79,16 @@ namespace Sidekick.Helpers
 
                 if (queryResult != null)
                 {
-                    queryResult.PoeNinjaItem = PoeNinjaCache.GetItem(item);
-                    queryResult.LastRefreshTimestamp = PoeNinjaCache.LastRefreshTimestamp;
+                    if (item is EquippableItem)
+                    {
+                        // Only support unique equippable items for now.
+                        if (((EquippableItem)item).Rarity == StringConstants.RarityUnique)
+                        {
+                            queryResult.PoeNinjaItem = PoeNinjaCache.GetItem(item);
+                            queryResult.LastRefreshTimestamp = PoeNinjaCache.LastRefreshTimestamp;
+                        }
+                    }
+
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }

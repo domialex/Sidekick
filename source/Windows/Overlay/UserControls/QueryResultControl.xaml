@@ -52,8 +52,18 @@
                 </MultiBinding>
             </TextBox.Text>
         </TextBox>
-        
+
         <TextBox Grid.Row="0" Grid.Column="1"  FontWeight="Bold" TextAlignment="Right" Margin="5 0 5 0">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasAverage}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
             <TextBox.Text>
                 <MultiBinding StringFormat="Ø {0}c">
                     <Binding Path="PoeNinjaItem.ChaosValue" />
@@ -61,6 +71,16 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Right" Margin="8 0 5 0">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasAverage}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
             <TextBlock.Text>
                 <MultiBinding StringFormat="Last update: {0:HH:mm}">
                     <Binding Path="LastRefreshTimestamp"></Binding>

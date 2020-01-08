@@ -15,5 +15,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public PoeNinjaItem PoeNinjaItem { get; set; }
 
         public DateTime? LastRefreshTimestamp { get; set; }
+
+        public bool HasAverage => PoeNinjaItem != null && LastRefreshTimestamp.HasValue;
     }
 }
