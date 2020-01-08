@@ -1,7 +1,10 @@
-﻿using Sidekick.Helpers.NativeMethods;
+﻿using Sidekick.Helpers;
+using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI.Models;
 using System;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace Sidekick.Windows.Overlay
 {
@@ -10,6 +13,7 @@ namespace Sidekick.Windows.Overlay
         private static OverlayWindow _overlayWindow;
         private static int WINDOW_WIDTH = 480;
         private static int WINDOW_HEIGHT = 320;
+        private static int PADDING = 5;
 
         public static void Initialize()
         {
@@ -29,15 +33,16 @@ namespace Sidekick.Windows.Overlay
                 Initialize();
 
             // Ensure the window stays inside the screen but still appears on the mouse.
-            var screen = SystemParameters.WorkArea;
-            var scale = screen.Width / ProcessHelper.GetActiveWindowWidth();
-            var xScaled = (int)Math.Floor(x * scale);
-            var yScaled = (int)Math.Floor(y * scale);
+            var scale = 96f / ProcessHelper.GetActiveWindowDpi();
+            var screenRect = Screen.FromPoint(Cursor.Position).Bounds;
 
-            var padding = 5;
-            var positionX = xScaled + (xScaled < screen.Width / 2 ? padding : -WINDOW_WIDTH - padding);
-            var positionY = yScaled + (yScaled < screen.Height / 2 ? padding : -WINDOW_HEIGHT - padding);
+            var xScaled = (int)(x * scale);
+            var yScaled = (int)(y * scale);
+            var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
+            var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
 
+            var positionX = xScaled + (xScaled < xMidScaled ? PADDING : -WINDOW_WIDTH - PADDING);
+            var positionY = yScaled + (yScaled < yMidScaled ? PADDING : -WINDOW_HEIGHT - PADDING);
 
             _overlayWindow.SetWindowPosition(positionX, positionY);
         }

@@ -31,6 +31,14 @@ namespace Sidekick.Helpers.NativeMethods
             return processToCheck?.MainWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
         }
 
+        public static float GetActiveWindowDpi()
+        {
+            using (Graphics g = Graphics.FromHwnd(GetForegroundWindow()))
+            {
+                return g.DpiX;
+            }
+        }
+
         public static int GetActiveWindowWidth()
         {
             GetWindowRect(GetForegroundWindow(), out Rectangle windowRect);
