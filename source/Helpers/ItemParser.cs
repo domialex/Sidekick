@@ -97,7 +97,7 @@ namespace Sidekick.Helpers
                     {
                         item = new EquippableItem()
                         {
-                            Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
+                            Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
                             ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
                             Rarity = rarity,                           // TODO Non-Unique Rarity
                         };
@@ -143,7 +143,7 @@ namespace Sidekick.Helpers
                 }
                 else if(rarity == LanguageSettings.Provider.RarityDivinationCard)
                 {
-                    item = new CurrencyItem()
+                    item = new DivinationCardItem()
                     {
                         Name = lines[1],
                         Type = lines[1],
@@ -179,7 +179,7 @@ namespace Sidekick.Helpers
 
             List<int> values = new List<int>();
 
-            if (!String.IsNullOrEmpty(input))
+            if (!string.IsNullOrEmpty(input))
             {
                 foreach (string fragment in input.Split(' '))
                 {
@@ -250,6 +250,10 @@ namespace Sidekick.Helpers
     }
 
     public class CurrencyItem : Item
+    {
+    }
+
+    public class DivinationCardItem : Item
     {
     }
 
