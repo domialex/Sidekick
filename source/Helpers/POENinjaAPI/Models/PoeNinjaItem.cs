@@ -2,7 +2,7 @@
 
 namespace Sidekick.Helpers.POENinjaAPI.Models
 {
-    public class NinjaItem : PoeNinjaResult
+    public class PoeNinjaItem : PoeNinjaResult
     {
         public int Id { get; set; }
 

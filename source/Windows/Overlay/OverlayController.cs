@@ -1,4 +1,5 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
+﻿using Sidekick.Helpers.POENinjaAPI.Models;
+using Sidekick.Helpers.POETradeAPI.Models;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -16,7 +17,7 @@ namespace Sidekick.Windows.Overlay
         }
 
         public static bool IsDisplayed => _overlayWindow.IsDisplayed;
-        public static void SetQueryResult(QueryResult<ListingResult> queryResult) => _overlayWindow.SetQueryResult(queryResult);
+        public static void SetQueryResult(QueryResult<ListingResult> queryResult, PoeNinjaItem poeNinjaItem = null) => _overlayWindow.SetQueryResult(queryResult, poeNinjaItem);
 
         public static void Show() => _overlayWindow.ShowWindow();
 

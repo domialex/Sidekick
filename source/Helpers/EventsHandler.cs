@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POENinjaAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System.Threading;
@@ -75,9 +76,12 @@ namespace Sidekick.Helpers
                 OverlayController.Show();
 
                 var queryResult = await TradeClient.GetListings(item);
+
                 if (queryResult != null)
                 {
-                    OverlayController.SetQueryResult(queryResult);
+                    queryResult.PoeNinjaItem = PoeNinjaCache.GetItem(item);
+                    queryResult.LastRefreshTimestamp = PoeNinjaCache.LastRefreshTimestamp;
+                    OverlayController.SetQueryResult(queryResult, ninjaItem);
                     return;
                 }
             }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POENinjaAPI.Models
 {
-    public class NinjaCurrency : PoeNinjaResult
+    public class PoeNinjaCurrency : PoeNinjaResult
     {
         public string CurrencyTypeName { get; set; }
 
-        public NinjaExchange Pay { get; set; }
+        public PoeNinjaExchange Pay { get; set; }
 
-        public NinjaExchange Receive { get; set; }
+        public PoeNinjaExchange Receive { get; set; }
 
         public SparkLine PaySparkLine { get; set; }
 
@@ -26,7 +26,7 @@ namespace Sidekick.Helpers.POENinjaAPI.Models
         public string DetailsId { get; set; }
     }
 
-    public class NinjaExchange
+    public class PoeNinjaExchange
     {
         public int Id { get; set; }
 

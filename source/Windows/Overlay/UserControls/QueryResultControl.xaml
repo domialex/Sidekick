@@ -53,6 +53,30 @@
             </TextBox.Text>
         </TextBox>
 
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox FontWeight="Bold" TextAlignment="Right" Margin="5 5 0 0">
+                <TextBox.Text>
+                    <MultiBinding StringFormat="poe.ninja: {0}c">
+                        <Binding Path="PoeNinjaItem.ChaosValue" />
+                    </MultiBinding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="0">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Last update: {0}">
+                        <Binding Path="LastRefreshTimestamp"></Binding>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+
         <TextBlock Grid.Row="1" Grid.Column="0">
             <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="openQueryLink" TextDecorations="None">
                 <TextBlock Grid.Row="1" Margin="8 0 0 5" TextDecorations="Underline">

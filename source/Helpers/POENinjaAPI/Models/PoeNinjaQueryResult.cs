@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POENinjaAPI.Models
 {
-    public class NinjaQueryResult<T> where T : PoeNinjaResult
+    public class PoeNinjaQueryResult<T> where T : PoeNinjaResult
     {
         public List<T> Lines { get; set; }
     }

@@ -11,12 +11,12 @@ namespace Sidekick.Tests.POENinjaAPI
     [TestClass]
     class NinjaClientTests
     {
-        private NinjaClient _sut;
+        private PoeNinjaClient _sut;
 
         [TestInitialize]
         public void Init()
         {
-            _sut = new NinjaClient();
+            _sut = new PoeNinjaClient();
         }
 
 

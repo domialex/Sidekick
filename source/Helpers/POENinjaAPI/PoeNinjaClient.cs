@@ -9,36 +9,36 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POENinjaAPI
 {
-    public class NinjaClient
+    public class PoeNinjaClient
     {
 
         public readonly static Uri POE_NINJA_ITEMOVERVIEW_BASE_URL = new Uri("https://poe.ninja/api/data/itemoverview");
         public readonly static Uri POE_NINJA_CURRENCYOVERVIEW_BASE_URL = new Uri("https://poe.ninja/api/data/currencyoverview");
         private readonly HttpClient _client;
 
-        public NinjaClient()
+        public PoeNinjaClient()
         {
             _client = new HttpClient();
         }
 
-        public async Task<NinjaQueryResult<NinjaItem>> GetItemOverview(string league, ItemType itemType)
+        public async Task<PoeNinjaQueryResult<PoeNinjaItem>> GetItemOverview(string league, ItemType itemType)
         {
 
             var url = $"{POE_NINJA_ITEMOVERVIEW_BASE_URL}?league={league}&type={itemType}";
 
             var responseString = await PerformRequestAndValidateResponse(url);
 
-            return JsonConvert.DeserializeObject<NinjaQueryResult<NinjaItem>>(responseString);
+            return JsonConvert.DeserializeObject<PoeNinjaQueryResult<PoeNinjaItem>>(responseString);
         }
 
-        public async Task<NinjaQueryResult<NinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency)
+        public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency)
         {
 
             var url = $"{POE_NINJA_CURRENCYOVERVIEW_BASE_URL}?league={league}&type={currency}";
 
             var responseString = await PerformRequestAndValidateResponse(url);
 
-            return JsonConvert.DeserializeObject<NinjaQueryResult<NinjaCurrency>>(responseString);
+            return JsonConvert.DeserializeObject<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseString);
         }
 
         private async Task<string> PerformRequestAndValidateResponse(string url)

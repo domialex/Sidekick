@@ -1,4 +1,5 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
+﻿using Sidekick.Helpers.POENinjaAPI.Models;
+using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using System.ComponentModel;
@@ -25,11 +26,11 @@ namespace Sidekick.Windows.Overlay
 
         public bool IsDisplayed => Visibility == Visibility.Visible;
 
-        public void SetQueryResult(QueryResult<ListingResult> queryResult)
+        public void SetQueryResult(QueryResult<ListingResult> queryResult, PoeNinjaItem poeNinjaItem)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(new SetQueryResultCallback(SetQueryResult), new object[] { queryResult });
+                Dispatcher.Invoke(new SetQueryResultCallback(SetQueryResult), new object[] { queryResult, poeNinjaItem });
             }
             else
             {
@@ -46,7 +47,7 @@ namespace Sidekick.Windows.Overlay
                 };
             }
         }
-        delegate void SetQueryResultCallback(QueryResult<ListingResult> queryResult);
+        delegate void SetQueryResultCallback(QueryResult<ListingResult> queryResult, PoeNinjaItem poeNinjaItem);
 
         public void SetWindowPosition(int x, int y)
         {
