@@ -20,10 +20,10 @@ namespace Sidekick.Helpers.NativeMethods
 
         public static bool IsPathOfExileInFocus()
         {
-            if (Debugger.IsAttached)
-            {
-                return true;
-            }
+            //if (Debugger.IsAttached)
+            //{
+            //    return true;
+            //}
 
             GetWindowThreadProcessId(GetForegroundWindow(), out int processID);
             var processToCheck = Process.GetProcessById(processID);

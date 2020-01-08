@@ -16,7 +16,7 @@ namespace Sidekick.Helpers
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-            _globalHook.MouseWheel += GlobalHookMouseScrollHandler;
+            _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
@@ -41,22 +41,19 @@ namespace Sidekick.Helpers
             }
         }
 
-        private static void GlobalHookMouseScrollHandler(object sender, MouseEventArgs e)
+        private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
         {
             if (!TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
                 return;
             }
 
-            // CTRL + Scroll to move between stash tabs while not hovering stash
-            int windowWidth = ProcessHelper.GetActiveWindowWidth();
-            if (e.X > 0.35 * windowWidth)
+            // Ctrl + Scroll wheel to move between stash tabs.
+            if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
             {
-                if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
-                {
-                    string key = e.Delta > 0 ? "{LEFT}" : "{RIGHT}";
-                    SendKeys.Send(key);
-                }
+                e.Handled = true;
+                string key = e.Delta > 0 ? "{LEFT}" : "{RIGHT}";
+                SendKeys.Send(key);
             }
 
         }
