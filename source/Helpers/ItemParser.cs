@@ -7,6 +7,7 @@ using Sidekick.Helpers.POETradeAPI.Models;
 using System.Text.RegularExpressions;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.POETradeAPI;
+using MoreLinq;
 
 namespace Sidekick.Helpers
 {
@@ -23,12 +24,11 @@ namespace Sidekick.Helpers
         {
             Item item = null;
             bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted;
+            if (!text.StartsWith(LanguageSettings.Provider.DescriptionRarity)) throw new Exception("Probably not an item.");
 
             try
             {
-                var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
-                // Every item should start with Rarity in the first line.
-                if (!lines[0].StartsWith(LanguageSettings.Provider.DescriptionRarity)) throw new Exception("Probably not an item.");
+                var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries).ToList();
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
                 isIdentified = !lines.Any(x => x == LanguageSettings.Provider.DescriptionUnidentified);
                 hasQuality = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionQuality));
@@ -38,7 +38,7 @@ namespace Sidekick.Helpers
 
                 var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
 
-                if(isMap)
+                if (isMap)
                 {
                     item = new MapItem()
                     {
@@ -49,19 +49,19 @@ namespace Sidekick.Helpers
                         Rarity = rarity,
                     };
 
-                    if(rarity == LanguageSettings.Provider.RarityNormal)
+                    if (rarity == LanguageSettings.Provider.RarityNormal)
                     {
                         item.Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
+                    else if (rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
                     {
                         item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityRare)
+                    else if (rarity == LanguageSettings.Provider.RarityRare)
                     {
                         item.Type = lines[2].Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityUnique)
+                    else if (rarity == LanguageSettings.Provider.RarityUnique)
                     {
                         if (!isIdentified)
                         {
@@ -75,7 +75,7 @@ namespace Sidekick.Helpers
 
                     ((MapItem)item).IsBlight = isBlighted ? "true" : "false";
                 }
-                else if(rarity == LanguageSettings.Provider.RarityUnique)
+                else if (rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     item = new EquippableItem();
 
@@ -101,8 +101,9 @@ namespace Sidekick.Helpers
                     }
 
                     ((EquippableItem)item).Rarity = rarity;
+                    ((EquippableItem)item).Stats = GetItemStats(text);
                 }
-                else if(rarity == LanguageSettings.Provider.RarityRare)
+                else if (rarity == LanguageSettings.Provider.RarityRare)
                 {
                     item = new EquippableItem()
                     {
@@ -126,12 +127,14 @@ namespace Sidekick.Helpers
                     var influence = GetInfluenceType(lines.LastOrDefault());
 
                     ((EquippableItem)item).Influence = influence;
+                    ((EquippableItem)item).Stats = GetItemStats(text);
                 }
-                else if(rarity == LanguageSettings.Provider.RarityMagic)
+                else if (rarity == LanguageSettings.Provider.RarityMagic)
                 {
                     throw new Exception("Magic items not supported for now.");
+                    ((EquippableItem)item).Stats = GetItemStats(text);
                 }
-                else if(rarity == LanguageSettings.Provider.RarityNormal)
+                else if (rarity == LanguageSettings.Provider.RarityNormal)
                 {
                     if (lines.Any(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)))      // Equippable Item
                     {
@@ -164,7 +167,7 @@ namespace Sidekick.Helpers
                         };
                     }
                 }
-                else if(rarity == LanguageSettings.Provider.RarityCurrency)
+                else if (rarity == LanguageSettings.Provider.RarityCurrency)
                 {
                     item = new CurrencyItem()
                     {
@@ -172,7 +175,7 @@ namespace Sidekick.Helpers
                     };
 
                 }
-                else if(rarity == LanguageSettings.Provider.RarityGem)
+                else if (rarity == LanguageSettings.Provider.RarityGem)
                 {
                     item = new GemItem()
                     {
@@ -181,7 +184,7 @@ namespace Sidekick.Helpers
                         Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(LanguageSettings.Provider.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
                     };
                 }
-                else if(rarity == LanguageSettings.Provider.RarityDivinationCard)
+                else if (rarity == LanguageSettings.Provider.RarityDivinationCard)
                 {
                     item = new DivinationCardItem()
                     {
@@ -193,7 +196,7 @@ namespace Sidekick.Helpers
                 {
                     throw new NotImplementedException();
                 }
-              
+
             }
             catch (Exception e)
             {
@@ -207,7 +210,7 @@ namespace Sidekick.Helpers
 
         internal static string GetNumberFromString(string input)
         {
-            if(string.IsNullOrEmpty(input))     // Default return 0
+            if (string.IsNullOrEmpty(input))     // Default return 0
             {
                 return "0";
             }
@@ -217,57 +220,105 @@ namespace Sidekick.Helpers
 
         internal static int GetLinkCount(string input)
         {
-            if(input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
-            {
-                return 0;
-            }
-
-            List<int> values = new List<int>();
-
-            if (!string.IsNullOrEmpty(input))
-            {
-                foreach (string fragment in input.Split(' '))
-                {
-                    values.Add(fragment.Count(c => c == '-') == 0 ? 0 : fragment.Count(c => c == '-') + 1);
-                }
-
-                return values.Max();
-            }
-            else
-            {
-                return 0;
-            }
+            var check = input.Replace(LanguageSettings.Provider.DescriptionSockets, string.Empty);
+            return Regex.Replace(check, @"[RGBW]", string.Empty).Split(' ').MaxBy(x => x.Length).FirstOrDefault().Length + 1;
         }
 
         internal static InfluenceType GetInfluenceType(string input)
         {
-            if(input.Contains(LanguageSettings.Provider.InfluenceShaper))
+            if (input.Contains(LanguageSettings.Provider.InfluenceShaper))
             {
                 return InfluenceType.Shaper;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceElder))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceElder))
             {
                 return InfluenceType.Elder;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceCrusader))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceCrusader))
             {
                 return InfluenceType.Crusader;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceHunter))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceHunter))
             {
                 return InfluenceType.Hunter;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
             {
                 return InfluenceType.Redeemer;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceWarlord))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceWarlord))
             {
                 return InfluenceType.Warlord;
             }
 
             return InfluenceType.None;
         }
+
+        internal static List<POETradeAPI.Models.TradeData.Attribute> GetItemStats(string text)
+        {
+            List<POETradeAPI.Models.TradeData.Attribute> stats = new List<POETradeAPI.Models.TradeData.Attribute>();
+
+            var properties = text.Split(PROPERTY_SEPERATOR, StringSplitOptions.RemoveEmptyEntries).ToList();
+            foreach (var prop in properties)
+            {
+                var lines = prop.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionRarity) ||
+                    lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionSockets) ||
+                    lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionQuality) ||
+                    lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionMapTier) ||
+                    lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionItemLevel) ||
+                    lines.FirstOrDefault().StartsWith(LanguageSettings.Provider.DescriptionRequirements))
+                {
+                    continue;
+                }
+
+                //need LanguageSettings.Provider
+
+                foreach (var line in lines)
+                {
+                    var search = Regex.Replace(line, @"([\+\-\d.]+)", "#");
+                    if (search.EndsWith(" (implicit)"))
+                    {
+                        search = search.Replace(" (implicit)", string.Empty);
+                        var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Implicit"));
+                        var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                        if (res != null)
+                            stats.Add(res);
+                    }
+                    else if (search.EndsWith(" (crafted)"))
+                    {
+                        search = search.Replace(" (crafted)", string.Empty);
+                        var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Crafted"));
+                        var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                        if (res != null)
+                            stats.Add(res);
+                    }
+                    else if (search.EndsWith(" (fractured)"))
+                    {
+                        search = search.Replace(" (fractured)", string.Empty);
+                        var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Fractured"));
+                        var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                        if (res != null)
+                            stats.Add(res);
+                    }
+                    else
+                    {
+                        //Find Properties
+                        foreach (var cat in TradeClient.AttributeCategories.Where(x => x.Label == "Pseudo" || x.Label == "Explicit" || x.Label == "Enchant" || x.Label == "Monster" || x.Label == "Delve" || x.Label == "Veiled"))
+                        {
+                            var res = cat.Entries.FirstOrDefault(x => x.Text.StartsWith(search));
+                            if (res != null)
+                            {
+                                stats.Add(res);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return stats;
+        }
+
     }
 
     public abstract class Item
@@ -285,6 +336,20 @@ namespace Sidekick.Helpers
         public InfluenceType Influence { get; set; }
         public SocketFilterOption Sockets { get; set; }
         public SocketFilterOption Links { get; set; }
+
+        private List<POETradeAPI.Models.TradeData.Attribute> _Stats;
+        public List<POETradeAPI.Models.TradeData.Attribute> Stats
+        {
+            get
+            {
+                if (_Stats == null)
+                {
+                    _Stats = new List<POETradeAPI.Models.TradeData.Attribute>();
+                }
+                return _Stats;
+            }
+            set { _Stats = value; }
+        }
     }
 
     public class GemItem : Item

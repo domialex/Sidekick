@@ -31,6 +31,7 @@ namespace Sidekick.Helpers.Localization
         string DescriptionItemQuantity { get; }
         string DescriptionItemRarity { get; }
         string DescriptionMonsterPackSize { get; }
+        string DescriptionRequirements { get; }
 
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }

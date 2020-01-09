@@ -14,6 +14,7 @@
     
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.191211002" />
+    <PackageReference Include="morelinq" Version="3.3.2" />
     <!-- TODO: MouseKeyHook support for netcoreapp3.1? - https://github.com/gmamaladze/globalmousekeyhook -->
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
