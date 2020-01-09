@@ -1,4 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
+using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
@@ -67,13 +68,16 @@ namespace Sidekick.Helpers
             Thread.Sleep(100);
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+            LanguageSettings.DetectLanguage(itemText);
             // Parse item.            
             var item = ItemParser.ParseItem(itemText);
+
             if (item != null)
             {
                 OverlayController.Open();
 
                 var queryResult = await TradeClient.GetListings(item);
+
                 if (queryResult != null)
                 {
                     OverlayController.SetQueryResult(queryResult);

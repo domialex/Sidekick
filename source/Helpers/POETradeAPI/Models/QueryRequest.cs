@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sidekick.Helpers.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
             if (itemType == typeof(EquippableItem))
             {
-                if(((EquippableItem)item).Rarity == StringConstants.RarityUnique)
+                if(((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     Query.Name = item.Name;
                 }
@@ -156,6 +157,12 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
                 Exchange.Want.Add(itemId);
                 Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
+            }
+            else if(itemType == typeof(DivinationCardItem))
+            {
+                var itemId = TradeClient.StaticItemCategories.Where(c => c.Id == "Cards").FirstOrDefault().Entries.Where(c => c.Text == item.Name).FirstOrDefault().Id;
+                Exchange.Want.Add(itemId);
+                Exchange.Have.Add("chaos");
             }
         }
 
