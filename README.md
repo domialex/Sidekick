@@ -23,7 +23,7 @@ All help is very welcomed.
 
 ## Installation
 1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155).
-2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.1.0/Sidekick.v0.1.0.Beta.zip) and extract anywhere on your computer.
+2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.2.0-beta/Sidekick.v0.2.0.Beta.zip) and extract anywhere on your computer.
 3. Run.
 
 ## Usage
@@ -44,3 +44,10 @@ All help is very welcomed.
 ## Thanks
 - [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) - Keyboard hooks
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
+
+## Donations
+I've been receiving messages from people who expressed interest in supporting the project with donations.
+
+Please know that I will work on this project because I enjoy it! There is no need to donate 😋.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/domialex)

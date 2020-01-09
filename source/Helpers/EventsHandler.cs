@@ -71,8 +71,7 @@ namespace Sidekick.Helpers
             var item = ItemParser.ParseItem(itemText);
             if (item != null)
             {
-                OverlayController.SetPosition(Cursor.Position.X, Cursor.Position.Y);
-                OverlayController.Show();
+                OverlayController.Open();
 
                 var queryResult = await TradeClient.GetListings(item);
                 if (queryResult != null)
