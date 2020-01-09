@@ -23,7 +23,7 @@ namespace Sidekick.Helpers.Localization
     {
         public static ILanguageProvider Provider { get; private set; } = new LanguageProviderEN();      // Default to english language
 
-        private static Language _currentLanguage;
+        private static Language _currentLanguage = Language.English;
         private static Dictionary<Language, ILanguageProvider> _providerDictionary = new Dictionary<Language, ILanguageProvider>()
         {
             { Language.English, new LanguageProviderEN() },
