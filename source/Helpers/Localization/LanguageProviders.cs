@@ -25,6 +25,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionRarity => "Seltenheit: ";
         public string DescriptionSockets => "Fassungen: ";
         public string DescriptionItemLevel => "Gegenstandsstufe: ";
+        public string DescriptionExperience => "Erfahrung: ";
         public string PrefixSuperior => "(hochwertig)";
         public string InfluenceShaper => "Schöpfer";
         public string InfluenceElder => "Ältesten";
@@ -53,6 +54,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionRarity => "Rarity: ";
         public string DescriptionSockets => "Sockets: ";
         public string DescriptionItemLevel => "Item Level: ";
+        public string DescriptionExperience => "Experience: ";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Shaper";
         public string InfluenceElder => "Elder";
@@ -81,6 +83,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionRarity => "Rareza: ";
         public string DescriptionSockets => "Engarces: ";
         public string DescriptionItemLevel => "Nivel de Objeto: ";
+        public string DescriptionExperience => "Experiencia: ";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Creador";
         public string InfluenceElder => "Antiguo";
@@ -109,6 +112,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionRarity => "Rareté: ";
         public string DescriptionSockets => "Châsses: ";
         public string DescriptionItemLevel => "Niveau de l'objet: ";
+        public string DescriptionExperience => "Expérience: ";
         public string PrefixSuperior => "supérieure";
         public string InfluenceShaper => "Façonneur";
         public string InfluenceElder => "l'Ancien";
@@ -144,6 +148,8 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "사냥꾼";
         public string InfluenceRedeemer => "대속자";
         public string InfluenceWarlord => "전쟁군주";
+
+        public string DescriptionExperience => throw new NotImplementedException();
     }
 
     public class LanguageProviderPT : ILanguageProvider
@@ -165,6 +171,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionRarity => "Raridade: ";
         public string DescriptionSockets => "Encaixes: ";
         public string DescriptionItemLevel => "Nível do Item: ";
+        public string DescriptionExperience => "Experiência: ";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Criador";
         public string InfluenceElder => "Ancião";
@@ -200,6 +207,8 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Охотника";
         public string InfluenceRedeemer => "Избавительницы";
         public string InfluenceWarlord => "Вождя";
+
+        public string DescriptionExperience => throw new NotImplementedException();
     }
 
     public class LanguageProviderTH : ILanguageProvider
@@ -228,5 +237,7 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "ฮันเตอร์";
         public string InfluenceRedeemer => "รีดีมเมอร์";
         public string InfluenceWarlord => "วอร์หลอด";
+
+        public string DescriptionExperience => throw new NotImplementedException();
     }
 }
