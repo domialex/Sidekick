@@ -26,21 +26,19 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                 {
                     Query.Type = item.Type;
 
-                    if (!int.TryParse(((EquippableItem)item).ItemLevel, out var result))
-                    {
-                        throw new Exception("Couldn't parse Item Level");
-                    }
-
-                    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
-                    {
-                        Min = result,
-                        Max = result,
-                    };
-
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
                     {
                         Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
                     };
+
+                    //Adding MapTier
+                    if (((EquippableItem)item).MapTier > 0)
+                    {
+                        Query.Filters.MiscFilters.Filters.MapTier = new FilterValue
+                        {
+                            Min = ((EquippableItem)item).MapTier
+                        };
+                    }
                 }             
 
                 if(((EquippableItem)item).Links != null)        // Auto Search 5+ Links

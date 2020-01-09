@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
 using System.Text.RegularExpressions;
+using MoreLinq;
+using Sidekick.Helpers.POETradeAPI;
 
 namespace Sidekick.Helpers
 {
@@ -24,126 +26,172 @@ namespace Sidekick.Helpers
 
             try
             {
-                var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
-                // Every item should start with Rarity in the first line.
-                if (!lines[0].StartsWith("Rarity: ")) throw new Exception("Probably not an item.");
-                // If the item is Unidentified, the second line will be its Type instead of the Name.
-                isIdentified = !lines.Any(x => x == StringConstants.DescriptionUnidentified);
-                hasQuality = lines.Any(x => x.Contains(StringConstants.DescriptionQuality));
-                isCorrupted = lines.Any(x => x == StringConstants.DescriptionCorrupted);
-
-                var rarity = lines[0].Replace(StringConstants.DescriptionRarity, string.Empty);
-
-                switch (rarity)
+                // Splitting Properties
+                var properties = text.Split(PROPERTY_SEPERATOR, StringSplitOptions.RemoveEmptyEntries).ToList();
+                foreach (var prop in properties)
                 {
-                    case StringConstants.RarityUnique:
+                    var lines = prop.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionRarity))
+                    {
                         item = new EquippableItem();
-
-                        if (isIdentified)
+                        ((EquippableItem)item).Rarity = lines.FirstOrDefault().Replace(StringConstants.DescriptionRarity, string.Empty);
+                        item.Name = lines.Skip(1).FirstOrDefault();
+                        item.Type = lines.LastOrDefault();
+                        item.Type = item.Type == item.Name ? item.Type.Replace("Superior ", string.Empty) : item.Type;
+                    }
+                    else if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionRequirements))
+                    {
+                        ((EquippableItem)item).Req = new ReqValue();
+                        foreach (var line in lines)
                         {
-                            item.Name = lines[1];
-                            item.Type = lines[2];
-                        }
-                        else
-                        {
-                            item.Type = lines[1];
-                        }
-
-                        var links = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());
-
-                        if(links >= 5)
-                        {
-                            ((EquippableItem)item).Links = new SocketFilterOption()
+                            if (line.StartsWith("Level: "))
                             {
-                                Min = links,
-                                Max = links,
-                            };
-                        }
-
-                        ((EquippableItem)item).Rarity = rarity;
-                        break;
-                    case StringConstants.RarityRare:
-                        item = new EquippableItem()
-                        {
-                            Name = lines[2].Replace(StringConstants.PrefixSuperior, string.Empty),
-                            Type = lines[2].Replace(StringConstants.PrefixSuperior, string.Empty),
-                            ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(StringConstants.DescriptionItemLevel)).FirstOrDefault()),
-                            Rarity = rarity,
-                        };
-
-                        var links2 = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());     // better naming
-
-                        if(links2 >= 5)
-                        {
-                            ((EquippableItem)item).Links = new SocketFilterOption()
+                                int.TryParse(line.Replace("Level: ", string.Empty), out int res);
+                                ((EquippableItem)item).Req.Level = res;
+                            }
+                            else if (line.StartsWith("Dex: "))
                             {
-                                Min = links2,
-                                Max = links2,
-                            };
-                        }
-
-                        var influence = GetInfluenceType(lines.LastOrDefault());
-
-                        ((EquippableItem)item).Influence = influence;
-
-                        break;
-                    case StringConstants.RarityMagic:
-                        throw new Exception("Magic items not supported for now.");
-                    case StringConstants.RarityNormal:
-                        if(lines.Any(c => c.StartsWith(StringConstants.DescriptionItemLevel)))      // Equippable Item
-                        {
-                            item = new EquippableItem()
+                                int.TryParse(line.Replace("Dex: ", string.Empty), out int res);
+                                ((EquippableItem)item).Req.Dex = res;
+                            }
+                            else if (line.StartsWith("Str: "))
                             {
-                                Type = lines[1].Replace(StringConstants.PrefixSuperior, string.Empty),
-                                ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(StringConstants.DescriptionItemLevel)).FirstOrDefault()),
-                                Rarity = rarity,                           // TODO Non-Unique Rarity
-                            };
-
-                            var influence2 = GetInfluenceType(lines.LastOrDefault());       // Better naming
-                            ((EquippableItem)item).Influence = influence2;
-
-                            var link3 = GetLinkCount(lines.Where(c => c.StartsWith(StringConstants.DescriptionSockets)).FirstOrDefault());      // Better naming
-
-                            if(link3 >= 5)
+                                int.TryParse(line.Replace("Str: ", string.Empty), out int res);
+                                ((EquippableItem)item).Req.Str = res;
+                            }
+                            else if (line.StartsWith("Int: "))
                             {
-                                ((EquippableItem)item).Links = new SocketFilterOption()
-                                {
-                                    Min = link3,
-                                    Max = link3,
-                                };
+                                int.TryParse(line.Replace("Int: ", string.Empty), out int res);
+                                ((EquippableItem)item).Req.Int = res;
                             }
                         }
-                        else                // Fragment
+                    }
+                    else if (lines.FirstOrDefault().Contains(StringConstants.DescriptionSockets))
+                    {
+                        var socklinks = lines.FirstOrDefault().Replace(StringConstants.DescriptionSockets, string.Empty);
+                        ((EquippableItem)item).Socket = new SocketValue
                         {
-                            item = new FragmentItem()
+                            R = socklinks.Count(x => x == 'R'),
+                            G = socklinks.Count(x => x == 'G'),
+                            B = socklinks.Count(x => x == 'B'),
+                            W = socklinks.Count(x => x == 'W')
+                        };
+                        ((EquippableItem)item).Socket.Sockets = ((EquippableItem)item).Socket.R + ((EquippableItem)item).Socket.G + ((EquippableItem)item).Socket.B + ((EquippableItem)item).Socket.W;
+                        ((EquippableItem)item).Socket.Links = Regex.Replace(socklinks, @"[RGBW]", string.Empty).Split(' ').MaxBy(x => x.Length).FirstOrDefault().Length + 1;
+                    }
+                    else if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionItemLevel))
+                    {
+                        int.TryParse(lines.FirstOrDefault().Replace(StringConstants.DescriptionItemLevel, string.Empty), out int res);
+                        ((EquippableItem)item).ItemLevel = res;
+                    }
+                    else if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionQuality) || lines.FirstOrDefault().StartsWith(StringConstants.DescriptionArmour) || lines.FirstOrDefault().StartsWith(StringConstants.DescriptionEvasion) || lines.FirstOrDefault().StartsWith(StringConstants.DescriptionEnergyShield) || lines.FirstOrDefault().StartsWith(StringConstants.DescriptionBlock))
+                    {
+                        ((EquippableItem)item).Armour = new ArmourValue();
+                        foreach (var line in lines)
+                        {
+                            var match = Regex.Match(line, @"[\d]+");
+                            int number = 0;
+                            if (match.Success)
+                                int.TryParse(match.Value, out number);
+
+                            if (line.StartsWith("Quality: "))
                             {
-                                Type = lines[1],
-                            };
+                                ((EquippableItem)item).Armour.Quality = number;
+                            }
+                            else if (line.StartsWith("Armour: "))
+                            {
+                                ((EquippableItem)item).Armour.Armour = number;
+                            }
+                            else if (line.StartsWith("Evasion: "))
+                            {
+                                ((EquippableItem)item).Armour.Evasion = number;
+                            }
+                            else if (line.StartsWith("Energy Shield: "))
+                            {
+                                ((EquippableItem)item).Armour.EnergyShield = number;
+                            }
+                            else if (line.StartsWith("Block: "))
+                            {
+                                ((EquippableItem)item).Armour.Block = number;
+                            }
                         }
-                        break;
-                    case StringConstants.RarityCurrency:
-                        item = new CurrencyItem()
+                    }
+                    else if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionMapTier))
+                    {
+                        int.TryParse(lines.FirstOrDefault().Replace(StringConstants.DescriptionMapTier, string.Empty), out int tier);
+                        ((EquippableItem)item).MapTier = tier;
+                    }
+                    else if (lines.FirstOrDefault().EndsWith(" Item"))
+                    {
+                        Enum.TryParse(lines.FirstOrDefault().Replace(" Item", string.Empty), out InfluenceType result);
+                        ((EquippableItem)item).Influence = result;
+                    }
+                    else if (lines.Any(x => x == "Unidentified"))
+                    {
+                        //item.IsIdentified = true;
+                    }
+                    else
+                    {
+                        foreach (var line in lines)
                         {
-                            Name = lines[1]
-                        };
-                        break;
-                    case StringConstants.RarityGem:
-                        item = new GemItem()
-                        {
-                            Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
-                            Level = GetNumberFromString(lines[4]),
-                            Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(StringConstants.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
-                        };
-                        break;
-                    case StringConstants.RarityDivinationCard:
-                        item = new CurrencyItem()
-                        {
-                            Name = lines[1],
-                            Type = lines[1],
-                        };
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                            var search = Regex.Replace(line, @"([\+\-\d.]+)", "#");
+                            if (search.EndsWith(" (implicit)"))
+                            {
+                                search = search.Replace(" (implicit)", string.Empty);
+                                //To Do relace The Elder,... with #
+                                var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Implicit"));
+                                var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                                if (res != null)
+                                    ((EquippableItem)item).Stats.Add(res);
+                            }
+                            else if (search.EndsWith(" (crafted)"))
+                            {
+                                search = search.Replace(" (crafted)", string.Empty);
+                                var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Crafted"));
+                                var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                                if (res != null)
+                                    ((EquippableItem)item).Stats.Add(res);
+                            }
+                            else if (search.EndsWith(" (fractured)"))
+                            {
+                                search = search.Replace(" (fractured)", string.Empty);
+                                var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Fractured"));
+                                var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                                if (res != null)
+                                    ((EquippableItem)item).Stats.Add(res);
+                            }
+                            else if (search.EndsWith(" (veiled)"))
+                            {
+                                search = search.Replace(" (veiled)", string.Empty);
+                                var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Veiled"));
+                                var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                                if (res != null)
+                                    ((EquippableItem)item).Stats.Add(res);
+                            }
+                            else if (search.EndsWith(" (delve)"))
+                            {
+                                search = search.Replace(" (delve)", string.Empty);
+                                var category = TradeClient.AttributeCategories.FirstOrDefault(x => x.Label.Contains("Delve"));
+                                var res = category?.Entries.FirstOrDefault(x => x.Text == search);
+                                if (res != null)
+                                    ((EquippableItem)item).Stats.Add(res);
+                            }
+                            else
+                            {
+                                //Find Properties
+                                foreach (var cat in TradeClient.AttributeCategories.Where(x => x.Label == "Pseudo" || x.Label == "Explicit" || x.Label == "Enchant" || x.Label == "Monster"))
+                                {
+                                    //StartsWith for (local)
+                                    var res = cat.Entries.FirstOrDefault(x => x.Text.StartsWith(search));
+                                    if (res != null)
+                                    {
+                                        ((EquippableItem)item).Stats.Add(res);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -152,15 +200,15 @@ namespace Sidekick.Helpers
                 return null;
             }
 
-            item.IsCorrupted = isCorrupted ? "true" : "false";
             return item;
         }
 
+        //Using MoreLinq instead
         internal static string GetNumberFromString(string input)
         {
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
-
+        //Using MoreLinq instead
         internal static int GetLinkCount(string input)
         {
             if(input == null || !input.StartsWith(StringConstants.DescriptionSockets))
@@ -179,6 +227,7 @@ namespace Sidekick.Helpers
             else return 0;
         }
 
+        //Using Enum.TryParse instead
         internal static InfluenceType GetInfluenceType(string input)
         {
             switch(input)
@@ -211,11 +260,28 @@ namespace Sidekick.Helpers
     public class EquippableItem : Item
     {
         public string Rarity { get; set; }
-        public string Quality { get; set; }
-        public string ItemLevel { get; set; }
+        public int ItemLevel { get; set; }
         public InfluenceType Influence { get; set; }
         public SocketFilterOption Sockets { get; set; }
         public SocketFilterOption Links { get; set; }
+        public int MapTier { get; set; }
+        public ReqValue Req { get; set; }
+        public SocketValue Socket { get; set; }
+        public ArmourValue Armour { get; set; }
+
+        private List<POETradeAPI.Models.TradeData.Attribute> _Stats;
+        public List<POETradeAPI.Models.TradeData.Attribute> Stats
+        {
+            get
+            {
+                if (_Stats == null)
+                {
+                    _Stats = new List<POETradeAPI.Models.TradeData.Attribute>();
+                }
+                return _Stats;
+            }
+            set { _Stats = value; }
+        }
     }
 
     public class GemItem : Item
@@ -232,4 +298,35 @@ namespace Sidekick.Helpers
     public class FragmentItem : Item
     {
     }
+
+
+
+
+    public class ReqValue
+    {
+        public int Level { get; set; }
+        public int Str { get; set; }
+        public int Dex { get; set; }
+        public int Int { get; set; }
+    }
+
+    public class SocketValue
+    {
+        public int Sockets { get; set; }
+        public int Links { get; set; }
+        public int R { get; set; }
+        public int G { get; set; }
+        public int B { get; set; }
+        public int W { get; set; }
+    }
+
+    public class ArmourValue
+    {
+        public int Quality { get; set; }
+        public int Armour { get; set; }
+        public int Evasion { get; set; }
+        public int EnergyShield { get; set; }
+        public int Block { get; set; }
+    }
+
 }

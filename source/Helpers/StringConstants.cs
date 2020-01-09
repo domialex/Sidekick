@@ -22,6 +22,12 @@ namespace Sidekick.Helpers
         public const string DescriptionRarity = "Rarity: ";
         public const string DescriptionSockets = "Sockets: ";
         public const string DescriptionItemLevel = "Item Level: ";
+        public const string DescriptionRequirements = "Requirements:";
+        public const string DescriptionArmour = "Armour: ";
+        public const string DescriptionEvasion = "Evasion: ";
+        public const string DescriptionEnergyShield = "Energy Shield: ";
+        public const string DescriptionBlock = "Block: ";
+        public const string DescriptionMapTier = "Map Tier: ";
 
         public const string OptionTrue = "true";
         public const string OptionFalse = "false";
