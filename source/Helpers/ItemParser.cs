@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
 using System.Text.RegularExpressions;
 using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POETradeAPI;
 
 namespace Sidekick.Helpers
 {
@@ -21,7 +22,7 @@ namespace Sidekick.Helpers
         public static Item ParseItem(string text)
         {
             Item item = null;
-            bool isIdentified, hasQuality, isCorrupted;
+            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted;
 
             try
             {
@@ -32,10 +33,49 @@ namespace Sidekick.Helpers
                 isIdentified = !lines.Any(x => x == LanguageSettings.Provider.DescriptionUnidentified);
                 hasQuality = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionQuality));
                 isCorrupted = lines.Any(x => x == LanguageSettings.Provider.DescriptionCorrupted);
+                isMap = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionMapTier));
+                isBlighted = lines.Any(x => x.Contains(LanguageSettings.Provider.PrefixBlighted));
 
                 var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
 
-                if(rarity == LanguageSettings.Provider.RarityUnique)
+                if(isMap)
+                {
+                    item = new MapItem()
+                    {
+                        ItemQuantity = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemQuantity)).FirstOrDefault()),
+                        ItemRarity = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemRarity)).FirstOrDefault()),
+                        MonsterPackSize = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionMonsterPackSize)).FirstOrDefault()),
+                        MapTier = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionMapTier)).FirstOrDefault()),
+                        Rarity = rarity,
+                    };
+
+                    if(rarity == LanguageSettings.Provider.RarityNormal)
+                    {
+                        item.Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
+                    }
+                    else if(rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
+                    {
+                        item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
+                    }
+                    else if(rarity == LanguageSettings.Provider.RarityRare)
+                    {
+                        item.Type = lines[2].Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
+                    }
+                    else if(rarity == LanguageSettings.Provider.RarityUnique)
+                    {
+                        if (!isIdentified)
+                        {
+                            item.Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim();
+                        }
+                        else
+                        {
+                            item.Name = lines[1];
+                        }
+                    }
+
+                    ((MapItem)item).IsBlight = isBlighted ? "true" : "false";
+                }
+                else if(rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     item = new EquippableItem();
 
@@ -167,6 +207,11 @@ namespace Sidekick.Helpers
 
         internal static string GetNumberFromString(string input)
         {
+            if(string.IsNullOrEmpty(input))     // Default return 0
+            {
+                return "0";
+            }
+
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
 
@@ -259,5 +304,15 @@ namespace Sidekick.Helpers
 
     public class FragmentItem : Item
     {
+    }
+
+    public class MapItem : Item
+    {
+        public string MapTier { get; set; }
+        public string ItemQuantity { get; set; }
+        public string ItemRarity { get; set; }
+        public string MonsterPackSize { get; set; }
+        public string Rarity { get; set; }
+        public string IsBlight { get; set; }
     }
 }

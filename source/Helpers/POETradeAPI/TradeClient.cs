@@ -19,6 +19,7 @@ namespace Sidekick.Helpers.POETradeAPI
         public static List<StaticItemCategory> StaticItemCategories;
         public static List<AttributeCategory> AttributeCategories;
         public static List<ItemCategory> ItemCategories;
+        public static HashSet<string> MapNames;
 
         private static JsonSerializerSettings _jsonSerializerSettings;
         private static HttpClient _httpClient;
@@ -90,6 +91,15 @@ namespace Sidekick.Helpers.POETradeAPI
             StaticItemCategories = await FetchDataAsync<StaticItemCategory>("Static item categories", "static");
             AttributeCategories = await FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
             ItemCategories = await FetchDataAsync<ItemCategory>("Item categories", "items");
+            var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
+            var allMapNames = new List<string>();
+
+            foreach(var item in mapCategories)
+            {
+                allMapNames.AddRange(item.Entries.Select(c => c.Text));
+            }
+
+            MapNames = new HashSet<string>(allMapNames.Distinct());
         }
 
         private static async Task<List<T>> FetchDataAsync<T>(string name, string path) where T : class
