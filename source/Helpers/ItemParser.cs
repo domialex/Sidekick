@@ -67,7 +67,7 @@ namespace Sidekick.Helpers
                             }
                         }
                     }
-                    else if (lines.FirstOrDefault().Contains(StringConstants.DescriptionSockets))
+                    else if (lines.FirstOrDefault().StartsWith(StringConstants.DescriptionSockets))
                     {
                         var socklinks = lines.FirstOrDefault().Replace(StringConstants.DescriptionSockets, string.Empty);
                         ((EquippableItem)item).Socket = new SocketValue
