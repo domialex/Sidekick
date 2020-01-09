@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
-using Sidekick.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

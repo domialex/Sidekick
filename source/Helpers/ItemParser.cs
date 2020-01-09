@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
 using System.Text.RegularExpressions;
-using Sidekick.Localization;
+using Sidekick.Helpers.Localization;
 
 namespace Sidekick.Helpers
 {

@@ -1,7 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
+using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
-using Sidekick.Localization;
 using Sidekick.Windows.Overlay;
 using System.Threading;
 using System.Threading.Tasks;
