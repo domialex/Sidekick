@@ -33,6 +33,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Jägers";
         public string InfluenceRedeemer => "Erlöserin";
         public string InfluenceWarlord => "Kriegsherrn";
+        public string DescriptionMapTier => "Kartenlevel: ";
+        public string DescriptionItemQuantity => "Gegenstandsmenge: ";
+        public string DescriptionItemRarity => "Gegenstandsseltenheit: ";
+        public string DescriptionMonsterPackSize => "Monstergruppengröße: ";
+        public string PrefixBlighted => "Befallene";
     }
 
     public class LanguageProviderEN : ILanguageProvider
@@ -62,6 +67,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Hunter";
         public string InfluenceRedeemer => "Redeemer";
         public string InfluenceWarlord => "Warlord";
+        public string DescriptionMapTier => "Map Tier: ";
+        public string DescriptionItemQuantity => "Item Quantity: ";
+        public string DescriptionItemRarity => "Item Rarity: ";
+        public string DescriptionMonsterPackSize => "Monster Pack Size: ";
+        public string PrefixBlighted => "Blighted";
     }
 
     public class LanguageProviderES : ILanguageProvider
@@ -91,6 +101,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Cazador";
         public string InfluenceRedeemer => "Redentora";
         public string InfluenceWarlord => "Jefe de guerra";
+        public string DescriptionMapTier => "Grado del Mapa: ";
+        public string DescriptionItemQuantity => "Cantidad de Objetos: ";
+        public string DescriptionItemRarity => "Rareza de Objetos: ";
+        public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos: ";
+        public string PrefixBlighted => "Infestado";
     }
 
     public class LanguageProviderFR : ILanguageProvider
@@ -120,6 +135,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Chasseur";
         public string InfluenceRedeemer => "la Rédemptrice";
         public string InfluenceWarlord => "Seigneur de guerre";
+        public string DescriptionMapTier => "Palier de Carte: ";
+        public string DescriptionItemQuantity => "Quantité d'objets: ";
+        public string DescriptionItemRarity => "Rareté des objets: ";
+        public string DescriptionMonsterPackSize => "Taille des groupes de monstres: ";
+        public string PrefixBlighted => "infestée";
     }
 
     public class LanguageProviderKR : ILanguageProvider
@@ -148,7 +168,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "사냥꾼";
         public string InfluenceRedeemer => "대속자";
         public string InfluenceWarlord => "전쟁군주";
-
+        public string DescriptionMapTier => "지도 등급: ";
+        public string DescriptionItemQuantity => "아이템 수량: ";
+        public string DescriptionItemRarity => "아이템 희귀도: ";
+        public string DescriptionMonsterPackSize => "몬스터 무리 규모: ";
+        public string PrefixBlighted => "역병";
         public string DescriptionExperience => throw new NotImplementedException();
     }
 
@@ -179,6 +203,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Caçador";
         public string InfluenceRedeemer => "Redentor";
         public string InfluenceWarlord => "Senhor da Guerra";
+        public string DescriptionMapTier => "Tier do Mapa: ";
+        public string DescriptionItemQuantity => "Quantidade de Itens: ";
+        public string DescriptionItemRarity => "Raridade de Itens: ";
+        public string DescriptionMonsterPackSize => "Tamanho do Grupo de Monstros: ";
+        public string PrefixBlighted => "Arruinado";
     }
 
     public class LanguageProviderRU : ILanguageProvider
@@ -207,7 +236,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "Охотника";
         public string InfluenceRedeemer => "Избавительницы";
         public string InfluenceWarlord => "Вождя";
-
+        public string DescriptionMapTier => "Уровень карты: ";
+        public string DescriptionItemQuantity => "Количество предметов: ";
+        public string DescriptionItemRarity => "Редкость предметов: ";
+        public string DescriptionMonsterPackSize => "Размер групп монстров: ";
+        public string PrefixBlighted => "Заражённая";
         public string DescriptionExperience => throw new NotImplementedException();
     }
 
@@ -237,7 +270,11 @@ namespace Sidekick.Helpers.Localization
         public string InfluenceHunter => "ฮันเตอร์";
         public string InfluenceRedeemer => "รีดีมเมอร์";
         public string InfluenceWarlord => "วอร์หลอด";
-
+        public string DescriptionMapTier => "ระดับแผนที่: ";
+        public string DescriptionItemQuantity => "จำนวนไอเท็ม: ";
+        public string DescriptionItemRarity => "ระดับความหายากของไอเทม: ";
+        public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
+        public string PrefixBlighted => "Blighted";
         public string DescriptionExperience => throw new NotImplementedException();
     }
 }

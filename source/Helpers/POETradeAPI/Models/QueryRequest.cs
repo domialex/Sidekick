@@ -22,10 +22,18 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                 if(((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     Query.Name = item.Name;
+                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                    {
+                        Option = "Unique",
+                    };
                 }
                 else
                 {
                     Query.Type = item.Type;
+                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                    {
+                        Option = "nonunique",
+                    };
 
                     if (!int.TryParse(((EquippableItem)item).ItemLevel, out var result))
                     {
@@ -49,7 +57,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
             }
-
             else if (itemType == typeof(CurrencyItem))
             {
                 Query.Type = item.Name;
@@ -89,6 +96,40 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             else if (itemType == typeof(FragmentItem))
             {
                 Query.Type = item.Type;
+            }
+            else if(itemType == typeof(MapItem))
+            {
+                if (((MapItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
+                {
+                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                    {
+                        Option = "Unique",
+                    };
+                }
+                else
+                {
+                    Query.Type = item.Type;
+                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                    {
+                        Option = "nonunique",
+                    };
+                }
+                
+                if(!int.TryParse(((MapItem)item).MapTier, out var result))
+                {
+                    throw new Exception("Unable to parse Map Tier");
+                }
+
+                Query.Filters.MiscFilters.Filters.MapTier = new FilterValue()       // Search correct map tier
+                {
+                    Min = result,
+                    Max = result,
+                };
+
+                Query.Filters.MiscFilters.Filters.Blighted = new FilterOption()
+                {
+                    Option = ((MapItem)item).IsBlight,
+                };
             }
             else
             {
@@ -279,6 +320,8 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public FilterOption Corrupted { get; set; }
         public FilterOption Crafted { get; set; }
         public FilterOption Enchanted { get; set; }
+        [JsonProperty(PropertyName = "map_blighted")]
+        public FilterOption Blighted { get; set; }
     }
 
     public class WeaponFilters

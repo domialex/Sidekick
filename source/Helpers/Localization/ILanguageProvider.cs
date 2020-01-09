@@ -27,9 +27,15 @@ namespace Sidekick.Helpers.Localization
         string DescriptionRarity { get; }
         string DescriptionSockets { get; }
         string DescriptionItemLevel { get; }
+
+        string DescriptionMapTier { get; }
+        string DescriptionItemQuantity { get; }
+        string DescriptionItemRarity { get; }
+        string DescriptionMonsterPackSize { get; }
         string DescriptionExperience { get; }
 
         string PrefixSuperior { get; }
+        string PrefixBlighted { get; }
 
         string InfluenceShaper { get; }
         string InfluenceElder { get; }
