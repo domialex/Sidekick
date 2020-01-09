@@ -25,8 +25,18 @@ namespace Sidekick.Helpers
             {
                 Logs.RemoveAt(0);
             }
+
             Logs.Add(log);
             MessageLogged?.Invoke(null, null);
+        }
+
+        public static void LogException(string text, Exception e, LogState state = LogState.Error)
+        {
+            string format = "[Exception] " + text + Environment.NewLine +
+                e.Message + Environment.NewLine +
+                e.StackTrace.ToString();
+
+            Log(format, state);
         }
 
         public static void Clear()

@@ -22,8 +22,8 @@ namespace Sidekick.Helpers.Localization
     public static class LanguageSettings
     {
         public static ILanguageProvider Provider { get; private set; } = new LanguageProviderEN();      // Default to english language
+        public static Language CurrentLanguage { get; private set; } = Language.English;
 
-        private static Language _currentLanguage = Language.English;
         private static Dictionary<Language, ILanguageProvider> _providerDictionary = new Dictionary<Language, ILanguageProvider>()
         {
             { Language.English, new LanguageProviderEN() },
@@ -41,7 +41,7 @@ namespace Sidekick.Helpers.Localization
             if(_providerDictionary.ContainsKey(lang))
             {
                 Provider = _providerDictionary[lang];
-                _currentLanguage = lang;
+                CurrentLanguage = lang;
                 TradeClient.FetchAPIData().Wait();
             }
             else
@@ -54,56 +54,56 @@ namespace Sidekick.Helpers.Localization
         {
             if(input.Contains(_providerDictionary[Language.English].DescriptionRarity))
             {
-                if(_currentLanguage != Language.English)
+                if(CurrentLanguage != Language.English)
                 {
                     ChangeLanguage(Language.English);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.German].DescriptionRarity))
             {
-                if (_currentLanguage != Language.German)
+                if (CurrentLanguage != Language.German)
                 {
                     ChangeLanguage(Language.German);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.French].DescriptionRarity))
             {
-                if (_currentLanguage != Language.French)
+                if (CurrentLanguage != Language.French)
                 {
                     ChangeLanguage(Language.French);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Korean].DescriptionRarity))
             {
-                if (_currentLanguage != Language.Korean)
+                if (CurrentLanguage != Language.Korean)
                 {
                     ChangeLanguage(Language.Korean);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Portuguese].DescriptionRarity))
             {
-                if (_currentLanguage != Language.Portuguese)
+                if (CurrentLanguage != Language.Portuguese)
                 {
                     ChangeLanguage(Language.Portuguese);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Russian].DescriptionRarity))
             {
-                if (_currentLanguage != Language.Russian)
+                if (CurrentLanguage != Language.Russian)
                 {
                     ChangeLanguage(Language.Russian);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Spanish].DescriptionRarity))
             {
-                if (_currentLanguage != Language.Spanish)
+                if (CurrentLanguage != Language.Spanish)
                 {
                     ChangeLanguage(Language.Spanish);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Thai].DescriptionRarity))
             {
-                if (_currentLanguage != Language.Thai)
+                if (CurrentLanguage != Language.Thai)
                 {
                     ChangeLanguage(Language.Thai);
                 }

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sidekick.Helpers.POETradeAPI.Models;
-using System.Text.RegularExpressions;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.POETradeAPI;
 
@@ -77,17 +74,11 @@ namespace Sidekick.Helpers
                 }
                 else if(rarity == LanguageSettings.Provider.RarityUnique)
                 {
-                    item = new EquippableItem();
-
-                    if (isIdentified)
+                    item = new EquippableItem
                     {
-                        item.Name = lines[1];
-                        item.Type = lines[2];
-                    }
-                    else
-                    {
-                        item.Type = lines[1];
-                    }
+                        Name = lines[1],
+                        Type = isIdentified ? lines[2] : lines[1]
+                    };
 
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
 
@@ -99,17 +90,14 @@ namespace Sidekick.Helpers
                             Max = links,
                         };
                     }
-
-                    ((EquippableItem)item).Rarity = rarity;
                 }
                 else if(rarity == LanguageSettings.Provider.RarityRare)
                 {
                     item = new EquippableItem()
                     {
-                        Name = lines[2].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
-                        Type = lines[2].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty),
+                    	Name = lines[1],
+                    	Type = lines[2],
                         ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
-                        Rarity = rarity,
                     };
 
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
@@ -138,8 +126,8 @@ namespace Sidekick.Helpers
                         item = new EquippableItem()
                         {
                             Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
+							Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
                             ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
-                            Rarity = rarity,                           // TODO Non-Unique Rarity
                         };
 
                         var influence = GetInfluenceType(lines.LastOrDefault());
@@ -160,6 +148,7 @@ namespace Sidekick.Helpers
                     {
                         item = new FragmentItem()
                         {
+							Name = lines[1],
                             Type = lines[1],
                         };
                     }
@@ -168,18 +157,30 @@ namespace Sidekick.Helpers
                 {
                     item = new CurrencyItem()
                     {
-                        Name = lines[1]
+                        Name = lines[1],
+                        Type = lines[1]
                     };
-
                 }
                 else if(rarity == LanguageSettings.Provider.RarityGem)
                 {
                     item = new GemItem()
                     {
+                        Name = lines[1],
                         Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
                         Level = GetNumberFromString(lines[4]),
+                        ExperiencePercent = lines.Any(x => x.StartsWith(LanguageSettings.Provider.DescriptionExperience)) ? ParseGemExperiencePercent(lines.Where(y => y.StartsWith(LanguageSettings.Provider.DescriptionExperience)).FirstOrDefault()) : 0, // Some gems have no experience like portal or max ranks
                         Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(LanguageSettings.Provider.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
+                        IsVaalVersion = isCorrupted && lines[3].Contains("Vaal") // check if the gem tags contain Vaal
                     };
+
+                    // if it's the vaal version, remap to have that name instead
+                    // Unsure if this works on non arabic lettering (ru/th/kr)
+                    if ((item as GemItem).IsVaalVersion)
+                    {
+                        string vaalName = lines.Where(x => x.Contains("Vaal") && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
+                        item.Name = vaalName;
+                        item.Type = vaalName;
+                    }
                 }
                 else if(rarity == LanguageSettings.Provider.RarityDivinationCard)
                 {
@@ -194,10 +195,14 @@ namespace Sidekick.Helpers
                     throw new NotImplementedException();
                 }
               
+                if(item != null && string.IsNullOrEmpty(item.Rarity))
+                {
+                    item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
+                }
             }
             catch (Exception e)
             {
-                Logger.Log("Could not parse item. " + e.Message);
+                Logger.LogException("Could not parse item", e);
                 return null;
             }
 
@@ -213,6 +218,31 @@ namespace Sidekick.Helpers
             }
 
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
+        }
+
+        internal static int ParseGemExperiencePercent(string input)
+        {
+            // trim leading prefix if any
+            if (input.Contains(LanguageSettings.Provider.DescriptionExperience))
+                input = input.Replace(LanguageSettings.Provider.DescriptionExperience, "");
+
+            int percent = 0;
+            var split = input.Split('/');
+            if (split.Length == 2)
+            {
+                int max = 1; // no division by 0
+                int.TryParse(split[0], out int current);
+                int.TryParse(split[1], out max);
+
+                percent = (int)(((float)current / (float)max) * 100.0f);
+                percent = (percent < 100) ? percent : 100;
+            }
+            else
+            {
+                throw new Exception("unable to parse gem experience from input string: " + input);
+            }
+
+            return percent;
         }
 
         internal static int GetLinkCount(string input)
@@ -275,11 +305,11 @@ namespace Sidekick.Helpers
         public string Name { get; set; }
         public string Type { get; set; }
         public string IsCorrupted { get; set; }
+        public string Rarity { get; set; }
     }
 
     public class EquippableItem : Item
     {
-        public string Rarity { get; set; }
         public string Quality { get; set; }
         public string ItemLevel { get; set; }
         public InfluenceType Influence { get; set; }
@@ -291,7 +321,8 @@ namespace Sidekick.Helpers
     {
         public string Level { get; set; }
         public string Quality { get; set; }
-        // IsVaalVersion
+        public bool IsVaalVersion { get; set; }
+        public int ExperiencePercent { get; set; } // percent towards next level
     }
 
     public class CurrencyItem : Item
