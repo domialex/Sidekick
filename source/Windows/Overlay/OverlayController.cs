@@ -1,5 +1,7 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POETradeAPI.Models;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 using Cursor = System.Windows.Forms.Cursor;
@@ -40,20 +42,27 @@ namespace Sidekick.Windows.Overlay
             if (_overlayWindow == null)
                 Initialize();
 
-            EnsureBounds(Cursor.Position.X, Cursor.Position.Y);
+            var scale = 96f / ProcessHelper.GetActiveWindowDpi();
+            var xScaled = (int)(Cursor.Position.X * scale);
+            var yScaled = (int)(Cursor.Position.Y * scale);
+            
+            EnsureBounds(xScaled, yScaled, scale);
             Show();
         }
 
         /// <summary>
         /// Ensures that the window stays within width and height of the display.
         /// </summary>
-        private static void EnsureBounds(int desiredX, int desiredY)
+        private static void EnsureBounds(int desiredX, int desiredY, float scale)
         {
-            var screen = SystemParameters.WorkArea;
-            int x = desiredX + (desiredX < screen.Width / 2 ? WINDOW_PADDING : -WINDOW_WIDTH - WINDOW_PADDING);
-            int y = desiredY + (desiredY < screen.Height / 2 ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
+            var screenRect = Screen.FromPoint(Cursor.Position).Bounds;
+            var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
+            var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
 
-            _overlayWindow.SetWindowPosition(x, y);
+            var positionX = desiredX + (desiredX < xMidScaled ? WINDOW_PADDING : -WINDOW_WIDTH - WINDOW_PADDING);
+            var positionY = desiredY + (desiredY < yMidScaled ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
+
+            _overlayWindow.SetWindowPosition(positionX, positionY);
         }
 
         /// <summary>
