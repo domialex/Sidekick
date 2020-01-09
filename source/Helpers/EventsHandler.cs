@@ -32,14 +32,19 @@ namespace Sidekick.Helpers
                 e.Handled = true;
                 OverlayController.Hide();
             }
-            else if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
+            else if (ProcessHelper.IsPathOfExileInFocus())
             {
-                if (!ProcessHelper.IsPathOfExileInFocus())
-                    return;
-
-                e.Handled = true;
-                Task.Run(TriggerItemFetch);
-            }
+                if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
+                {
+                    e.Handled = true;
+                    Task.Run(TriggerItemFetch);
+                }
+                else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
+                {
+                    e.Handled = true;
+                    Task.Run(TriggerItemWiki);
+                }
+            } 
         }
 
         private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
@@ -56,22 +61,13 @@ namespace Sidekick.Helpers
                 string key = e.Delta > 0 ? "{LEFT}" : "{RIGHT}";
                 SendKeys.Send(key);
             }
-
         }
 
         private static async void TriggerItemFetch()
         {
-            Logger.Log("Hotkey pressed.");
+            Logger.Log("TriggerItemFetch()");
 
-            // Trigger copy action.
-            SendKeys.SendWait("^{c}");
-            Thread.Sleep(100);
-            // Retrieve clipboard.
-            var itemText = ClipboardHelper.GetText();
-            LanguageSettings.DetectLanguage(itemText);
-            // Parse item.            
-            var item = ItemParser.ParseItem(itemText);
-
+            Item item = TriggerCopyAction();
             if (item != null)
             {
                 OverlayController.Open();
@@ -86,6 +82,33 @@ namespace Sidekick.Helpers
             }
 
             OverlayController.Hide();
+        }
+
+        private static void TriggerItemWiki()
+        {
+            Logger.Log("TriggerItemWiki()");
+
+            var item = TriggerCopyAction();
+            if (item != null)
+            {
+                POEWikiAPI.POEWikiHelper.Open(item);
+            }
+        }
+
+        private static Item TriggerCopyAction()
+        {
+            // Trigger copy action.
+            SendKeys.SendWait("^{c}");
+            Thread.Sleep(100);
+
+            // Retrieve clipboard.
+            var itemText = ClipboardHelper.GetText();
+
+            // Detect the language of the item in the clipboard.
+            LanguageSettings.DetectLanguage(itemText);       
+
+            // Parse and return item
+            return ItemParser.ParseItem(itemText);
         }
 
         public static void Dispose()

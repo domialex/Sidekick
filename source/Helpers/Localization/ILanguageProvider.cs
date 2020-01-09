@@ -27,6 +27,7 @@ namespace Sidekick.Helpers.Localization
         string DescriptionRarity { get; }
         string DescriptionSockets { get; }
         string DescriptionItemLevel { get; }
+        string DescriptionExperience { get; }
 
         string PrefixSuperior { get; }
 
