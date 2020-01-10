@@ -8,12 +8,19 @@ using System;
 
 namespace Sidekick.Helpers
 {
-    public static class TrayIcon
+    public interface ITrayIcon : IDisposable
     {
-        static private NotifyIcon _notifyIcon;
-        static private ToolStripMenuItem _leagueSelectMenu;
+        void Initialize();
+        void PopulateLeagueSelectMenu(List<League> leagues);
+        void SendNotification(string text, string title = null);
+    }
 
-        public static void Initialize()
+    public class DefaultTrayIcon : ITrayIcon
+    {
+        private NotifyIcon _notifyIcon;
+        private ToolStripMenuItem _leagueSelectMenu;
+
+        public void Initialize()
         {
             _notifyIcon = new NotifyIcon();
             var icon = Resources.ExaltedOrb;
@@ -30,8 +37,10 @@ namespace Sidekick.Helpers
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
-        public static void PopulateLeagueSelectMenu(List<League> leagues) {
-            foreach(League l in leagues) {
+        public void PopulateLeagueSelectMenu(List<League> leagues)
+        {
+            foreach (League l in leagues)
+            {
                 var menuItem = new ToolStripMenuItem(l.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem t in _leagueSelectMenu.DropDownItems) { t.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
@@ -42,16 +51,44 @@ namespace Sidekick.Helpers
             _leagueSelectMenu.DropDownItems[0].PerformClick();
         }
 
-        public static void SendNotification(string text, string title = null)
+        public void SendNotification(string text, string title = null)
         {
             _notifyIcon.BalloonTipTitle = title;
             _notifyIcon.BalloonTipText = text;
             _notifyIcon.ShowBalloonTip(2000);
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
             _notifyIcon?.Dispose();
+        }
+    }
+
+    public static class TrayIcon
+    {
+        static private NotifyIcon _notifyIcon;
+        static private ToolStripMenuItem _leagueSelectMenu;
+
+        public static ITrayIcon UsedTrayIcon = new DefaultTrayIcon();
+
+        public static void Initialize()
+        {
+            UsedTrayIcon.Initialize();
+        }
+
+        public static void PopulateLeagueSelectMenu(List<League> leagues) 
+        {
+            UsedTrayIcon.PopulateLeagueSelectMenu(leagues);
+        }
+
+        public static void SendNotification(string text, string title = null)
+        {
+            UsedTrayIcon.SendNotification(text, title);
+        }
+
+        public static void Dispose()
+        {
+            UsedTrayIcon.Dispose();
         }
     }
 }
