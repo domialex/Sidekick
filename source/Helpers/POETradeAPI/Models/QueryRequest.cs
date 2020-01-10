@@ -161,7 +161,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             {
                 var itemCategory = "Currency";
 
-                // TODO: Translate with LanguageProviders
                 if (item.Name.Contains(LanguageSettings.Provider.KeywordCatalyst))
                 {
                     itemCategory = "Catalysts";
