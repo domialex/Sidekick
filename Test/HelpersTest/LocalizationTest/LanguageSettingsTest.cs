@@ -11,7 +11,7 @@ namespace Test.HelpersTest.LocalizationTest
     public class LanguageSettingsTest
     {
         [TestInitialize]
-        public void ReplaceTradeClient()
+        public void Initialize()
         {
             var tradeClientMock = new Mock<ITradeClient>(MockBehavior.Strict);
             tradeClientMock.Setup(tradeClient => tradeClient.FetchAPIData()).Returns(Task.CompletedTask);

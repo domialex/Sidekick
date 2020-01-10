@@ -66,9 +66,6 @@ namespace Sidekick.Helpers
 
     public static class TrayIcon
     {
-        static private NotifyIcon _notifyIcon;
-        static private ToolStripMenuItem _leagueSelectMenu;
-
         public static ITrayIcon UsedTrayIcon = new DefaultTrayIcon();
 
         public static void Initialize()
