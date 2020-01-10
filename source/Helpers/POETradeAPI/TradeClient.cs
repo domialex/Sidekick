@@ -249,7 +249,7 @@ namespace Sidekick.Helpers.POETradeAPI
         public static List<ItemCategory> ItemCategories => Client.ItemCategories;
         public static HashSet<string> MapNames => Client.MapNames;
         public static bool IsReady => Client.IsReady;
-        public static League SelectedLeague { get { return Client.SelectedLeague; } set { Client.SelectedLeague = value; } }
+        public static League SelectedLeague => Client.SelectedLeague;
 
         public static async Task Initialize()
         {
