@@ -38,6 +38,7 @@ namespace Sidekick.Helpers.Localization
         string PrefixBlighted { get; }
 
         string KeywordProphecy { get; }
+        string KeywordVaal { get; }
 
         string InfluenceShaper { get; }
         string InfluenceElder { get; }

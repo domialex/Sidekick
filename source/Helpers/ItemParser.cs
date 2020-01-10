@@ -176,19 +176,19 @@ namespace Sidekick.Helpers
                 {
                     item = new GemItem()
                     {
-                        Name = lines[1],
+                        Name = lines[1],        // Need adjustment for Thai Language
                         Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
                         Level = GetNumberFromString(lines[4]),
                         ExperiencePercent = lines.Any(x => x.StartsWith(LanguageSettings.Provider.DescriptionExperience)) ? ParseGemExperiencePercent(lines.Where(y => y.StartsWith(LanguageSettings.Provider.DescriptionExperience)).FirstOrDefault()) : 0, // Some gems have no experience like portal or max ranks
                         Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(LanguageSettings.Provider.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
-                        IsVaalVersion = isCorrupted && lines[3].Contains("Vaal") // check if the gem tags contain Vaal
+                        IsVaalVersion = isCorrupted && lines[3].Contains(LanguageSettings.Provider.KeywordVaal) // check if the gem tags contain Vaal
                     };
 
                     // if it's the vaal version, remap to have that name instead
                     // Unsure if this works on non arabic lettering (ru/th/kr)
                     if ((item as GemItem).IsVaalVersion)
                     {
-                        string vaalName = lines.Where(x => x.Contains("Vaal") && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
+                        string vaalName = lines.Where(x => x.Contains(LanguageSettings.Provider.KeywordVaal) && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
                         item.Name = vaalName;
                         item.Type = vaalName;
                     }

@@ -38,8 +38,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Gegenstandsseltenheit: ";
         public string DescriptionMonsterPackSize => "Monstergruppengröße: ";
         public string PrefixBlighted => "Befallene";
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string KeywordProphecy => "Prophezeiung";
+        public string KeywordVaal => "Vaal";
     }
 
     public class LanguageProviderEN : ILanguageProvider
@@ -75,6 +75,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionMonsterPackSize => "Monster Pack Size: ";
         public string PrefixBlighted => "Blighted";
         public string KeywordProphecy => "prophecy";
+        public string KeywordVaal => "Vaal";
     }
 
     public class LanguageProviderES : ILanguageProvider
@@ -109,8 +110,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareza de Objetos: ";
         public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos: ";
         public string PrefixBlighted => "Infestado";
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string KeywordProphecy => "profecía";
+        public string KeywordVaal => "Vaal";
     }
 
     public class LanguageProviderFR : ILanguageProvider
@@ -145,8 +146,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareté des objets: ";
         public string DescriptionMonsterPackSize => "Taille des groupes de monstres: ";
         public string PrefixBlighted => "infestée";
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string KeywordProphecy => "prophétie";
+        public string KeywordVaal => "Vaal";
     }
 
     public class LanguageProviderKR : ILanguageProvider
@@ -180,9 +181,9 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "아이템 희귀도: ";
         public string DescriptionMonsterPackSize => "몬스터 무리 규모: ";
         public string PrefixBlighted => "역병";
-        public string DescriptionExperience => throw new NotImplementedException();
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string DescriptionExperience => "경험치: ";
+        public string KeywordProphecy => "예언을";
+        public string KeywordVaal => "바알";
     }
 
     public class LanguageProviderPT : ILanguageProvider
@@ -217,8 +218,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Raridade de Itens: ";
         public string DescriptionMonsterPackSize => "Tamanho do Grupo de Monstros: ";
         public string PrefixBlighted => "Arruinado";
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string KeywordProphecy => "profecia";
+        public string KeywordVaal => "Vaal";
     }
 
     public class LanguageProviderRU : ILanguageProvider
@@ -252,9 +253,9 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Редкость предметов: ";
         public string DescriptionMonsterPackSize => "Размер групп монстров: ";
         public string PrefixBlighted => "Заражённая";
-        public string DescriptionExperience => throw new NotImplementedException();
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string DescriptionExperience => "Опыт: ";
+        public string KeywordProphecy => "пророчество";
+        public string KeywordVaal => "Ваал";
     }
 
     public class LanguageProviderTH : ILanguageProvider
@@ -288,8 +289,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "ระดับความหายากของไอเทม: ";
         public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
         public string PrefixBlighted => "Blighted";
-        public string DescriptionExperience => throw new NotImplementedException();
-
-        public string KeywordProphecy => throw new NotImplementedException();
+        public string DescriptionExperience => "ประสบการณ์: ";
+        public string KeywordProphecy => "(prophecy)";
+        public string KeywordVaal => "วาล์";
     }
 }
