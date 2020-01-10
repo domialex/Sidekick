@@ -17,7 +17,7 @@ namespace Sidekick.Helpers
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-            //_globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
+            _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
