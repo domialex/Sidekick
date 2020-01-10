@@ -343,7 +343,6 @@ namespace Sidekick.Helpers
         public string ItemQuantity { get; set; }
         public string ItemRarity { get; set; }
         public string MonsterPackSize { get; set; }
-        public string Rarity { get; set; }
         public string IsBlight { get; set; }
     }
 }
