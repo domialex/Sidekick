@@ -62,7 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelpersTest\ItemParserTest.cs" />
     <Compile Include="HelpersTest\LocalizationTest\LanguageSettingsTest.cs" />
+    <Compile Include="HelpersTest\LoggerTest.cs" />
+    <Compile Include="HelpersTest\POETradeAPITest\ModelsTest\QueryRequestTest.cs" />
+    <Compile Include="HelpersTest\POETradeAPITest\TradeClientTest.cs" />
+    <Compile Include="HelpersTest\POEWikiAPI\POEWikiHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

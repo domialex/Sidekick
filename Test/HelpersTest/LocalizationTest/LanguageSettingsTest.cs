@@ -18,7 +18,7 @@ namespace Test.HelpersTest.LocalizationTest
             TradeClient.Client = tradeClientMock.Object;
         }
 
-        // TODO add proper test cases
+        //TODO add test cases
         [DataTestMethod]
         [DataRow("", Language.English)]
         public void DetectLanguage_WithInput_IsExpected(string input, Language expected)
