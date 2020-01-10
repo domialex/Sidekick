@@ -11,6 +11,7 @@ namespace Test.HelpersTest.POEWikiAPI
     [TestClass]
     public class POEWikiHelperTest
     {
-
+        // in order to test POEWikiHelper properly, something will need to be done about the Process.Start() call
+        // as with TradeClient, my recommendation is creating an interface and wrapping the call inside a method
     }
 }
