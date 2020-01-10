@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using System;
@@ -14,15 +15,11 @@ namespace Sidekick.Helpers.POETradeAPI
 {
     public static class TradeClient
     {
-        public readonly static Uri POE_TRADE_SEARCH_BASE_URL = new Uri("https://www.pathofexile.com/trade/search/");
-        public readonly static Uri POE_TRADE_EXCHANGE_BASE_URL = new Uri("https://www.pathofexile.com/trade/exchange/");
-        public readonly static Uri POE_TRADE_API_BASE_URL = new Uri("https://www.pathofexile.com/api/trade/"); // TODO: Subdomain determines the language of the items.
-        public readonly static Uri POE_CDN_BASE_URL = new Uri("https://web.poecdn.com/");
-
         public static List<League> Leagues;
         public static List<StaticItemCategory> StaticItemCategories;
         public static List<AttributeCategory> AttributeCategories;
         public static List<ItemCategory> ItemCategories;
+        public static HashSet<string> MapNames;
 
         private static JsonSerializerSettings _jsonSerializerSettings;
         private static HttpClient _httpClient;
@@ -52,17 +49,8 @@ namespace Sidekick.Helpers.POETradeAPI
             Logger.Log("Fetching Path of Exile trade data.");
 
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = POE_TRADE_API_BASE_URL;
 
-            var fetchLeaguesTask = FetchDataAsync<League>("Leagues", "leagues");
-            var fetchStaticItemCategoriesTask = FetchDataAsync<StaticItemCategory>("Static item categories", "static");
-            var fetchAttributeCategoriesTask = FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
-            var fetchItemCategoriesTask = FetchDataAsync<ItemCategory>("Item categories", "items");
-
-            Leagues = await fetchLeaguesTask;
-            StaticItemCategories = await fetchStaticItemCategoriesTask;
-            AttributeCategories = await fetchAttributeCategoriesTask;
-            ItemCategories = await fetchItemCategoriesTask;
+            await FetchAPIData();
 
             if (OneFetchFailed)
             {
@@ -97,6 +85,23 @@ namespace Sidekick.Helpers.POETradeAPI
             }
         }
 
+        public static async Task FetchAPIData()
+        {
+            Leagues = await FetchDataAsync<League>("Leagues", "leagues");
+            StaticItemCategories = await FetchDataAsync<StaticItemCategory>("Static item categories", "static");
+            AttributeCategories = await FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
+            ItemCategories = await FetchDataAsync<ItemCategory>("Item categories", "items");
+            var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
+            var allMapNames = new List<string>();
+
+            foreach(var item in mapCategories)
+            {
+                allMapNames.AddRange(item.Entries.Select(c => c.Text));
+            }
+
+            MapNames = new HashSet<string>(allMapNames.Distinct());
+        }
+
         private static async Task<List<T>> FetchDataAsync<T>(string name, string path) where T : class
         {
             Logger.Log($"Fetching {name}.".PadLeft(4));
@@ -104,7 +109,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync("data/" + path);
+                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "data/" + path);
                 var content = await response.Content.ReadAsStringAsync();
                 result = JsonConvert.DeserializeObject<QueryResult<T>>(content, _jsonSerializerSettings)?.Result;
                 Logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
@@ -126,7 +131,8 @@ namespace Sidekick.Helpers.POETradeAPI
             try
             {
                 // TODO: More complex logic for determining bulk vs regular search
-                var isBulk = item.GetType() == typeof(CurrencyItem);
+                // Maybe also add Fragments to bulk search
+                var isBulk = (item.GetType() == typeof(CurrencyItem) || item.GetType() == typeof(DivinationCardItem));
 
                 StringContent body;
                 if (isBulk)
@@ -140,14 +146,14 @@ namespace Sidekick.Helpers.POETradeAPI
                     body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
 
-                var response = await _httpClient.PostAsync($"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
+                var response = await _httpClient.PostAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
-                    var baseUri = isBulk ? TradeClient.POE_TRADE_EXCHANGE_BASE_URL : TradeClient.POE_TRADE_SEARCH_BASE_URL;
+                    var baseUri = isBulk ? LanguageSettings.Provider.PoeTradeExchangeBaseUrl : LanguageSettings.Provider.PoeTradeSearchBaseUrl;
                     result.Uri = baseUri + SelectedLeague.Id + "/" + result.Id;
                 }
             }
@@ -187,7 +193,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync("fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
+                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
