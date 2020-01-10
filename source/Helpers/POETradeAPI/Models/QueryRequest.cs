@@ -120,16 +120,20 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     throw new Exception("Unable to parse Map Tier");
                 }
 
-                Query.Filters.MiscFilters.Filters.MapTier = new FilterValue()       // Search correct map tier
+                Query.Filters.MapFilter.Filters.MapTier = new FilterValue()       // Search correct map tier
                 {
                     Min = result,
                     Max = result,
                 };
 
-                Query.Filters.MiscFilters.Filters.Blighted = new FilterOption()
+                Query.Filters.MapFilter.Filters.Blighted = new FilterOption()
                 {
                     Option = ((MapItem)item).IsBlight,
                 };
+            }
+            else if(itemType == typeof(ProphecyItem))
+            {
+                Query.Name = item.Name;
             }
             else
             {
@@ -157,36 +161,35 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             {
                 var itemCategory = "Currency";
 
-                var itemName = item.Name.ToLowerInvariant();
-                if (itemName.EndsWith(" catalyst"))
+                if (item.Name.Contains(LanguageSettings.Provider.KeywordCatalyst))
                 {
                     itemCategory = "Catalysts";
                 }
-                else if (itemName.EndsWith(" oil"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordOil))
                 {
                     itemCategory = "Oils";
                 }
-                else if (itemName.EndsWith(" incubator"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordIncubator))
                 {
                     itemCategory = "Incubators";
                 }
-                else if (itemName.EndsWith(" scarab"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordScarab))
                 {
                     itemCategory = "Scarabs";
                 }
-                else if (itemName.EndsWith(" resonator"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordResonator))
                 {
                     itemCategory = "DelveResonators";
                 }
-                else if (itemName.EndsWith(" fossil"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordFossil))
                 {
                     itemCategory = "DelveFossils";
                 }
-                else if (itemName.StartsWith("vial "))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordVial))
                 {
                     itemCategory = "Vials";
                 }
-                else if (itemName.Contains(" essence of "))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordEssence))
                 {
                     itemCategory = "Essences";
                 }
@@ -259,6 +262,8 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public RequierementFilter RequierementFilter { get; set; } = new RequierementFilter();
         [JsonProperty(PropertyName = "type_filters")]
         public TypeFilter TypeFilter { get; set; } = new TypeFilter();
+        [JsonProperty(PropertyName = "map_filters")]
+        public MapFilter MapFilter { get; set; } = new MapFilter();
     }
 
     public class MiscFilter
@@ -297,21 +302,19 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public TypeFilters Filters { get; set; } = new TypeFilters();
     }
 
+    public class MapFilter
+    {
+        public bool Disabled { get; set; }
+        public MapFilters Filters { get; set; } = new MapFilters();
+    }
+
     public class MiscFilters
     {
         public FilterValue Quality { get; set; }
-        [JsonProperty(PropertyName = "map_tier")]
-        public FilterValue MapTier { get; set; }
-        [JsonProperty(PropertyName = "map_iiq")]
-        public FilterValue MapIiq { get; set; }
         [JsonProperty(PropertyName = "gem_level")]
         public FilterValue GemLevel { get; set; }
         [JsonProperty(PropertyName = "ilvl")]
         public FilterValue ItemLevel { get; set; }
-        [JsonProperty(PropertyName = "map_packsize")]
-        public FilterValue MapPacksize { get; set; }
-        [JsonProperty(PropertyName = "map_iir")]
-        public FilterValue MapIir { get; set; }
         [JsonProperty(PropertyName = "talisman_art")]
         public FilterOption TalismanArt { get; set; }
         [JsonProperty(PropertyName = "alternate_art")]
@@ -320,8 +323,22 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public FilterOption Corrupted { get; set; }
         public FilterOption Crafted { get; set; }
         public FilterOption Enchanted { get; set; }
-        [JsonProperty(PropertyName = "map_blighted")]
-        public FilterOption Blighted { get; set; }
+        public FilterOption Veiled { get; set; }
+        public FilterOption Mirrored { get; set; }
+        [JsonProperty(PropertyName = "elder_item")]
+        public FilterOption ElderItem { get; set; }
+        [JsonProperty(PropertyName = "hunter_item")]
+        public FilterOption HunterItem { get; set; }
+        [JsonProperty(PropertyName = "shaper_item")]
+        public FilterOption ShaperItem { get; set; }
+        [JsonProperty(PropertyName = "warlord_item")]
+        public FilterOption WarlordItem { get; set; }
+        [JsonProperty(PropertyName = "crusader_item")]
+        public FilterOption CrusaderItem { get; set; }
+        [JsonProperty(PropertyName = "redeemer_item")]
+        public FilterOption RedeemerItem { get; set; }
+        [JsonProperty(PropertyName = "synthesised_item")]
+        public FilterOption SynthesisedItem { get; set; }
     }
 
     public class WeaponFilters
@@ -367,6 +384,24 @@ namespace Sidekick.Helpers.POETradeAPI.Models
     {
         public FilterOption Category { get; set; }
         public FilterOption Rarity { get; set; }
+    }
+
+    public class MapFilters
+    {
+        [JsonProperty(PropertyName = "map_iiq")]
+        public FilterValue MapIiq { get; set; }
+        [JsonProperty(PropertyName = "map_iir")]
+        public FilterValue MapIir { get; set; }
+        [JsonProperty(PropertyName = "map_tier")]
+        public FilterValue MapTier { get; set; }
+        [JsonProperty(PropertyName = "map_packsize")]
+        public FilterValue MapPacksize { get; set; }
+        [JsonProperty(PropertyName = "map_blighted")]
+        public FilterOption Blighted { get; set; }
+        [JsonProperty(PropertyName = "map_elder")]
+        public FilterOption Elder { get; set; }
+        [JsonProperty(PropertyName = "map_shaped")]
+        public FilterOption Shaped { get; set; }
     }
 
     public class FilterValue

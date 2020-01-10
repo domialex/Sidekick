@@ -38,6 +38,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Gegenstandsseltenheit: ";
         public string DescriptionMonsterPackSize => "Monstergruppengröße: ";
         public string PrefixBlighted => "Befallene";
+        public string KeywordProphecy => "Prophezeiung";
+        public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Katalysator";
+        public string KeywordOil => "Öl";
+        public string KeywordIncubator => "Inkubator";
+        public string KeywordScarab => "Skarabäus";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Phiole";
+        public string KeywordEssence => "Essenz";
     }
 
     public class LanguageProviderEN : ILanguageProvider
@@ -72,6 +82,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Item Rarity: ";
         public string DescriptionMonsterPackSize => "Monster Pack Size: ";
         public string PrefixBlighted => "Blighted";
+        public string KeywordProphecy => "prophecy";
+        public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalyst";
+        public string KeywordOil => "Oil";
+        public string KeywordIncubator => "Incubator";
+        public string KeywordScarab => "Scarab";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Essence";
     }
 
     public class LanguageProviderES : ILanguageProvider
@@ -106,6 +126,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareza de Objetos: ";
         public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos: ";
         public string PrefixBlighted => "Infestado";
+        public string KeywordProphecy => "profecía";
+        public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalizador";
+        public string KeywordOil => "Aceite";
+        public string KeywordIncubator => "Incubadora";
+        public string KeywordScarab => "Escarabajo";
+        public string KeywordResonator => "Resonador";
+        public string KeywordFossil => "Fósil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Esencia";
     }
 
     public class LanguageProviderFR : ILanguageProvider
@@ -140,6 +170,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareté des objets: ";
         public string DescriptionMonsterPackSize => "Taille des groupes de monstres: ";
         public string PrefixBlighted => "infestée";
+        public string KeywordProphecy => "prophétie";
+        public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalyseur";
+        public string KeywordOil => "Huile";
+        public string KeywordIncubator => "Incubateur";
+        public string KeywordScarab => "Scarabée";
+        public string KeywordResonator => "Résonateur";
+        public string KeywordFossil => "Fossile";
+        public string KeywordVial => "Fiole";
+        public string KeywordEssence => "Essence";
     }
 
     public class LanguageProviderKR : ILanguageProvider
@@ -173,7 +213,17 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "아이템 희귀도: ";
         public string DescriptionMonsterPackSize => "몬스터 무리 규모: ";
         public string PrefixBlighted => "역병";
-        public string DescriptionExperience => throw new NotImplementedException();
+        public string DescriptionExperience => "경험치: ";
+        public string KeywordProphecy => "예언을";
+        public string KeywordVaal => "바알";
+        public string KeywordCatalyst => "기폭제";
+        public string KeywordOil => "성유";
+        public string KeywordIncubator => "인큐베이터";
+        public string KeywordScarab => "갑충석";
+        public string KeywordResonator => "공명기";
+        public string KeywordFossil => "화석";
+        public string KeywordVial => "시약";
+        public string KeywordEssence => "에센스";
     }
 
     public class LanguageProviderPT : ILanguageProvider
@@ -208,6 +258,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Raridade de Itens: ";
         public string DescriptionMonsterPackSize => "Tamanho do Grupo de Monstros: ";
         public string PrefixBlighted => "Arruinado";
+        public string KeywordProphecy => "profecia";
+        public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalisador";
+        public string KeywordOil => "Óleo";
+        public string KeywordIncubator => "Incubador";
+        public string KeywordScarab => "Escaravelho";
+        public string KeywordResonator => "Ressonador";
+        public string KeywordFossil => "Fóssil";
+        public string KeywordVial => "Recipiente";
+        public string KeywordEssence => "Essência";
     }
 
     public class LanguageProviderRU : ILanguageProvider
@@ -241,7 +301,17 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Редкость предметов: ";
         public string DescriptionMonsterPackSize => "Размер групп монстров: ";
         public string PrefixBlighted => "Заражённая";
-        public string DescriptionExperience => throw new NotImplementedException();
+        public string DescriptionExperience => "Опыт: ";
+        public string KeywordProphecy => "пророчество";
+        public string KeywordVaal => "Ваал";
+        public string KeywordCatalyst => "катализатор";
+        public string KeywordOil => "масло";
+        public string KeywordIncubator => "инкубатор";
+        public string KeywordScarab => "скарабей";
+        public string KeywordResonator => "резонатор";
+        public string KeywordFossil => "ископаемое";
+        public string KeywordVial => "Фиал";
+        public string KeywordEssence => "сущность";
     }
 
     public class LanguageProviderTH : ILanguageProvider
@@ -275,6 +345,16 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "ระดับความหายากของไอเทม: ";
         public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
         public string PrefixBlighted => "Blighted";
-        public string DescriptionExperience => throw new NotImplementedException();
+        public string DescriptionExperience => "ประสบการณ์: ";
+        public string KeywordProphecy => "(prophecy)";
+        public string KeywordVaal => "วาล์";
+        public string KeywordCatalyst => "Catalyst";
+        public string KeywordOil => "Oil";
+        public string KeywordIncubator => "Incubator";
+        public string KeywordScarab => "Scarab";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Essence";
     }
 }
