@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Test
 {
     [TestClass]
-    public class UnitTest1
+    public class LanguageSettingsTest
     {
         [TestMethod]
         public void TestMethod1()
