@@ -8,7 +8,6 @@ using Sidekick.Helpers;
 
 namespace Test.HelpersTest
 {
-    //TODO add tests
     [TestClass]
     public class LoggerTest
     {
