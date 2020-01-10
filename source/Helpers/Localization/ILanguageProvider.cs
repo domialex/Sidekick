@@ -27,7 +27,6 @@ namespace Sidekick.Helpers.Localization
         string DescriptionRarity { get; }
         string DescriptionSockets { get; }
         string DescriptionItemLevel { get; }
-
         string DescriptionMapTier { get; }
         string DescriptionItemQuantity { get; }
         string DescriptionItemRarity { get; }
@@ -39,6 +38,15 @@ namespace Sidekick.Helpers.Localization
 
         string KeywordProphecy { get; }
         string KeywordVaal { get; }
+
+        string KeywordCatalyst { get; }
+        string KeywordOil { get; }
+        string KeywordIncubator { get; }
+        string KeywordScarab { get; }
+        string KeywordResonator { get; }
+        string KeywordFossil { get; }
+        string KeywordVial { get; }
+        string KeywordEssence { get; }
 
         string InfluenceShaper { get; }
         string InfluenceElder { get; }

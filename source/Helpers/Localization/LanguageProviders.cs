@@ -40,6 +40,14 @@ namespace Sidekick.Helpers.Localization
         public string PrefixBlighted => "Befallene";
         public string KeywordProphecy => "Prophezeiung";
         public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Katalysator";
+        public string KeywordOil => "Öl";
+        public string KeywordIncubator => "Inkubator";
+        public string KeywordScarab => "Skarabäus";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Phiole";
+        public string KeywordEssence => "Essenz";
     }
 
     public class LanguageProviderEN : ILanguageProvider
@@ -76,6 +84,14 @@ namespace Sidekick.Helpers.Localization
         public string PrefixBlighted => "Blighted";
         public string KeywordProphecy => "prophecy";
         public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalyst";
+        public string KeywordOil => "Oil";
+        public string KeywordIncubator => "Incubator";
+        public string KeywordScarab => "Scarab";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Essence";
     }
 
     public class LanguageProviderES : ILanguageProvider
@@ -112,6 +128,14 @@ namespace Sidekick.Helpers.Localization
         public string PrefixBlighted => "Infestado";
         public string KeywordProphecy => "profecía";
         public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalizador";
+        public string KeywordOil => "Aceite";
+        public string KeywordIncubator => "Incubadora";
+        public string KeywordScarab => "Escarabajo";
+        public string KeywordResonator => "Resonador";
+        public string KeywordFossil => "Fósil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Esencia";
     }
 
     public class LanguageProviderFR : ILanguageProvider
@@ -148,6 +172,14 @@ namespace Sidekick.Helpers.Localization
         public string PrefixBlighted => "infestée";
         public string KeywordProphecy => "prophétie";
         public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalyseur";
+        public string KeywordOil => "Huile";
+        public string KeywordIncubator => "Incubateur";
+        public string KeywordScarab => "Scarabée";
+        public string KeywordResonator => "Résonateur";
+        public string KeywordFossil => "Fossile";
+        public string KeywordVial => "Fiole";
+        public string KeywordEssence => "Essence";
     }
 
     public class LanguageProviderKR : ILanguageProvider
@@ -184,6 +216,14 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionExperience => "경험치: ";
         public string KeywordProphecy => "예언을";
         public string KeywordVaal => "바알";
+        public string KeywordCatalyst => "기폭제";
+        public string KeywordOil => "성유";
+        public string KeywordIncubator => "인큐베이터";
+        public string KeywordScarab => "갑충석";
+        public string KeywordResonator => "공명기";
+        public string KeywordFossil => "화석";
+        public string KeywordVial => "시약";
+        public string KeywordEssence => "에센스";
     }
 
     public class LanguageProviderPT : ILanguageProvider
@@ -220,6 +260,14 @@ namespace Sidekick.Helpers.Localization
         public string PrefixBlighted => "Arruinado";
         public string KeywordProphecy => "profecia";
         public string KeywordVaal => "Vaal";
+        public string KeywordCatalyst => "Catalisador";
+        public string KeywordOil => "Óleo";
+        public string KeywordIncubator => "Incubador";
+        public string KeywordScarab => "Escaravelho";
+        public string KeywordResonator => "Ressonador";
+        public string KeywordFossil => "Fóssil";
+        public string KeywordVial => "Recipiente";
+        public string KeywordEssence => "Essência";
     }
 
     public class LanguageProviderRU : ILanguageProvider
@@ -256,6 +304,14 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionExperience => "Опыт: ";
         public string KeywordProphecy => "пророчество";
         public string KeywordVaal => "Ваал";
+        public string KeywordCatalyst => "катализатор";
+        public string KeywordOil => "масло";
+        public string KeywordIncubator => "инкубатор";
+        public string KeywordScarab => "скарабей";
+        public string KeywordResonator => "резонатор";
+        public string KeywordFossil => "ископаемое";
+        public string KeywordVial => "Фиал";
+        public string KeywordEssence => "сущность";
     }
 
     public class LanguageProviderTH : ILanguageProvider
@@ -292,5 +348,13 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionExperience => "ประสบการณ์: ";
         public string KeywordProphecy => "(prophecy)";
         public string KeywordVaal => "วาล์";
+        public string KeywordCatalyst => "Catalyst";
+        public string KeywordOil => "Oil";
+        public string KeywordIncubator => "Incubator";
+        public string KeywordScarab => "Scarab";
+        public string KeywordResonator => "Resonator";
+        public string KeywordFossil => "Fossil";
+        public string KeywordVial => "Vial";
+        public string KeywordEssence => "Essence";
     }
 }

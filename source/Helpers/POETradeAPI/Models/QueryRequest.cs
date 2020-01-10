@@ -161,38 +161,36 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             {
                 var itemCategory = "Currency";
 
-                var itemName = item.Name.ToLowerInvariant();
-
-                // TODO: Transalte with LanguageProviders
-                if (itemName.EndsWith(" catalyst"))
+                // TODO: Translate with LanguageProviders
+                if (item.Name.Contains(LanguageSettings.Provider.KeywordCatalyst))
                 {
                     itemCategory = "Catalysts";
                 }
-                else if (itemName.EndsWith(" oil"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordOil))
                 {
                     itemCategory = "Oils";
                 }
-                else if (itemName.EndsWith(" incubator"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordIncubator))
                 {
                     itemCategory = "Incubators";
                 }
-                else if (itemName.EndsWith(" scarab"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordScarab))
                 {
                     itemCategory = "Scarabs";
                 }
-                else if (itemName.EndsWith(" resonator"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordResonator))
                 {
                     itemCategory = "DelveResonators";
                 }
-                else if (itemName.EndsWith(" fossil"))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordFossil))
                 {
                     itemCategory = "DelveFossils";
                 }
-                else if (itemName.StartsWith("vial "))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordVial))
                 {
                     itemCategory = "Vials";
                 }
-                else if (itemName.Contains(" essence of "))
+                else if (item.Name.Contains(LanguageSettings.Provider.KeywordEssence))
                 {
                     itemCategory = "Essences";
                 }
