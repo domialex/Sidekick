@@ -13,24 +13,39 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POETradeAPI
 {
-    public static class TradeClient
+    public interface ITradeClient : IDisposable
     {
-        public static List<League> Leagues;
-        public static List<StaticItemCategory> StaticItemCategories;
-        public static List<AttributeCategory> AttributeCategories;
-        public static List<ItemCategory> ItemCategories;
-        public static HashSet<string> MapNames;
+        List<League> Leagues { get; }
+        List<StaticItemCategory> StaticItemCategories { get; }
+        List<AttributeCategory> AttributeCategories { get; }
+        List<ItemCategory> ItemCategories { get; }
+        HashSet<string> MapNames { get; }
+        bool IsReady { get; }
+        League SelectedLeague { get; set; }
 
-        private static JsonSerializerSettings _jsonSerializerSettings;
-        private static HttpClient _httpClient;
-        private static bool IsFetching;
-        private static bool OneFetchFailed;
+        Task Initialize();
+        Task FetchAPIData();
+        Task<QueryResult<string>> Query(Item item);
+        Task<QueryResult<ListingResult>> GetListings(Item item);
+        Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0);
+    }
 
-        public static bool IsReady;
+    public class DefaultTradeClient : ITradeClient
+    {
+        public List<League> Leagues { get; private set; }
+        public List<StaticItemCategory> StaticItemCategories { get; private set; }
+        public List<AttributeCategory> AttributeCategories { get; private set; }
+        public List<ItemCategory> ItemCategories { get; private set; }
+        public HashSet<string> MapNames { get; private set; }
+        public bool IsReady { get; private set; }
+        public League SelectedLeague { get; set; }
 
-        public static League SelectedLeague;
+        private JsonSerializerSettings _jsonSerializerSettings;
+        private HttpClient _httpClient;
+        private bool IsFetching;
+        private bool OneFetchFailed;
 
-        public static async void Initialize()
+        public async Task Initialize()
         {
             if (_jsonSerializerSettings == null)
             {
@@ -71,7 +86,7 @@ namespace Sidekick.Helpers.POETradeAPI
             TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
         }
 
-        private static async void Retry()
+        private async void Retry()
         {
             await Task.Delay(TimeSpan.FromMinutes(1));
             if (IsFetching)
@@ -85,7 +100,7 @@ namespace Sidekick.Helpers.POETradeAPI
             }
         }
 
-        public static async Task FetchAPIData()
+        public async Task FetchAPIData()
         {
             Leagues = await FetchDataAsync<League>("Leagues", "leagues");
             StaticItemCategories = await FetchDataAsync<StaticItemCategory>("Static item categories", "static");
@@ -94,7 +109,7 @@ namespace Sidekick.Helpers.POETradeAPI
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
 
-            foreach(var item in mapCategories)
+            foreach (var item in mapCategories)
             {
                 allMapNames.AddRange(item.Entries.Select(c => c.Text));
             }
@@ -102,7 +117,7 @@ namespace Sidekick.Helpers.POETradeAPI
             MapNames = new HashSet<string>(allMapNames.Distinct());
         }
 
-        private static async Task<List<T>> FetchDataAsync<T>(string name, string path) where T : class
+        private async Task<List<T>> FetchDataAsync<T>(string name, string path) where T : class
         {
             Logger.Log($"Fetching {name}.".PadLeft(4));
             List<T> result = null;
@@ -123,7 +138,7 @@ namespace Sidekick.Helpers.POETradeAPI
             return result;
         }
 
-        public static async Task<QueryResult<string>> Query(Item item)
+        public async Task<QueryResult<string>> Query(Item item)
         {
             Logger.Log("Querying Trade API.");
             QueryResult<string> result = null;
@@ -163,10 +178,9 @@ namespace Sidekick.Helpers.POETradeAPI
             }
 
             return result;
-
         }
 
-        public static async Task<QueryResult<ListingResult>> GetListings(Item item)
+        public async Task<QueryResult<ListingResult>> GetListings(Item item)
         {
             var queryResult = await Query(item);
             if (queryResult != null)
@@ -186,7 +200,7 @@ namespace Sidekick.Helpers.POETradeAPI
             return null;
         }
 
-        public static async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
+        public async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
         {
             Logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {(page + 1).ToString()}.");
             QueryResult<ListingResult> result = null;
@@ -209,8 +223,7 @@ namespace Sidekick.Helpers.POETradeAPI
             return result;
         }
 
-
-        public static void Dispose()
+        public void Dispose()
         {
             _httpClient.Dispose();
             _httpClient = null;
@@ -223,6 +236,49 @@ namespace Sidekick.Helpers.POETradeAPI
             IsReady = false;
             IsFetching = false;
             OneFetchFailed = false;
+        }
+    }
+
+    public static class TradeClient
+    {
+        public static ITradeClient Client = new DefaultTradeClient();
+
+        public static List<League> Leagues => Client.Leagues;
+        public static List<StaticItemCategory> StaticItemCategories => Client.StaticItemCategories;
+        public static List<AttributeCategory> AttributeCategories => Client.AttributeCategories;
+        public static List<ItemCategory> ItemCategories => Client.ItemCategories;
+        public static HashSet<string> MapNames => Client.MapNames;
+        public static bool IsReady => Client.IsReady;
+        public static League SelectedLeague { get { return Client.SelectedLeague; } set { Client.SelectedLeague = value; } }
+
+        public static async Task Initialize()
+        {
+            await Client.Initialize();
+        }
+
+        public static async Task FetchAPIData()
+        {
+            await Client.FetchAPIData();
+        }
+
+        public static async Task<QueryResult<string>> Query(Item item)
+        {
+            return await Client.Query(item);
+        }
+
+        public static async Task<QueryResult<ListingResult>> GetListings(Item item)
+        {
+            return await Client.GetListings(item);
+        }
+
+        public static async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
+        {
+            return await Client.GetListings(queryResult, page);
+        }
+
+        public static void Dispose()
+        {
+            Client.Dispose();
         }
     }
 }
