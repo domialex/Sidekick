@@ -38,6 +38,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Gegenstandsseltenheit: ";
         public string DescriptionMonsterPackSize => "Monstergruppengröße: ";
         public string PrefixBlighted => "Befallene";
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderEN : ILanguageProvider
@@ -72,6 +74,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Item Rarity: ";
         public string DescriptionMonsterPackSize => "Monster Pack Size: ";
         public string PrefixBlighted => "Blighted";
+        public string KeywordProphecy => "prophecy";
     }
 
     public class LanguageProviderES : ILanguageProvider
@@ -106,6 +109,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareza de Objetos: ";
         public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos: ";
         public string PrefixBlighted => "Infestado";
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderFR : ILanguageProvider
@@ -140,6 +145,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Rareté des objets: ";
         public string DescriptionMonsterPackSize => "Taille des groupes de monstres: ";
         public string PrefixBlighted => "infestée";
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderKR : ILanguageProvider
@@ -174,6 +181,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionMonsterPackSize => "몬스터 무리 규모: ";
         public string PrefixBlighted => "역병";
         public string DescriptionExperience => throw new NotImplementedException();
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderPT : ILanguageProvider
@@ -208,6 +217,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionItemRarity => "Raridade de Itens: ";
         public string DescriptionMonsterPackSize => "Tamanho do Grupo de Monstros: ";
         public string PrefixBlighted => "Arruinado";
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderRU : ILanguageProvider
@@ -242,6 +253,8 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionMonsterPackSize => "Размер групп монстров: ";
         public string PrefixBlighted => "Заражённая";
         public string DescriptionExperience => throw new NotImplementedException();
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 
     public class LanguageProviderTH : ILanguageProvider
@@ -276,5 +289,7 @@ namespace Sidekick.Helpers.Localization
         public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
         public string PrefixBlighted => "Blighted";
         public string DescriptionExperience => throw new NotImplementedException();
+
+        public string KeywordProphecy => throw new NotImplementedException();
     }
 }

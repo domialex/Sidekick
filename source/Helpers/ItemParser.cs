@@ -48,14 +48,17 @@ namespace Sidekick.Helpers
 
                     if(rarity == LanguageSettings.Provider.RarityNormal)
                     {
+                        item.Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim();
                         item.Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
                     else if(rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
                     {
+                        item.Name = LanguageSettings.Provider.PrefixBlighted + " " + TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
                         item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
                     else if(rarity == LanguageSettings.Provider.RarityRare)
                     {
+                        item.Name = lines[2].Trim();
                         item.Type = lines[2].Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
                     else if(rarity == LanguageSettings.Provider.RarityUnique)
@@ -143,6 +146,14 @@ namespace Sidekick.Helpers
                                 Max = links,
                             };
                         }
+                    }
+                    else if(lines.Any(c => c.Contains(LanguageSettings.Provider.KeywordProphecy)))      // Prophecy
+                    {
+                        item = new ProphecyItem()
+                        {
+                            Name = lines[1],
+                            Type = lines[1],
+                        };
                     }
                     else                // Fragment
                     {
@@ -334,6 +345,10 @@ namespace Sidekick.Helpers
     }
 
     public class FragmentItem : Item
+    {
+    }
+
+    public class ProphecyItem : Item
     {
     }
 
