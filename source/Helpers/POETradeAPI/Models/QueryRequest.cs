@@ -94,6 +94,11 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     }
                 }
 
+                Query.Filters.MiscFilters.Filters.Corrupted = new FilterOption()
+                {
+                    Option = item.IsCorrupted
+                };
+
                 if (((EquippableItem)item).Links != null)        // Auto Search 5+ Links
                 {
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
