@@ -159,11 +159,11 @@
                     <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Row="0" Grid.Column="0" Text="Account name" Margin="5 5" />
-                <TextBox Grid.Row="0" Grid.Column="1" Text="Character" />
-                <TextBox Grid.Row="0" Grid.Column="2" Text="Price" />
-                <TextBox Grid.Row="0" Grid.Column="3" Text="iLvl" />
-                <TextBox Grid.Row="0" Grid.Column="4" Text="Age" HorizontalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="0" Text="Account name" Margin="5 5" Name="textBoxAccountName" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="Character" Name ="textBoxCharacter"/>
+                <TextBox Grid.Row="0" Grid.Column="2" Text="Price" Name="textBoxPrice"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Text="iLvl" Name="textBoxItemLevel"/>
+                <TextBox Grid.Row="0" Grid.Column="4" Text="Age" HorizontalAlignment="Center" Name="textBoxAge" />
 
                 <ScrollViewer Name="_itemList" Grid.Row="1" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Path=itemListingControls}" />

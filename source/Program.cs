@@ -21,6 +21,10 @@ namespace Sidekick
 
             Logger.Log("Starting Sidekick.");
 
+            var settingsHandler = new SettingsHandler();
+            settingsHandler.ReadSettings();
+            settingsHandler.HandleCurrentSettings();
+
             // System tray icon.
             TrayIcon.Initialize();
 
@@ -34,16 +38,17 @@ namespace Sidekick
             OverlayController.Initialize();
 
             // Run window.
-            Application.ApplicationExit += OnApplicationExit;
+            Application.ApplicationExit += (s, args) => OnApplicationExit(s, args, settingsHandler);        // Maybe find a better way
             Application.Run();
         }
 
-        private static void OnApplicationExit(object sender, EventArgs e)
+        private static void OnApplicationExit(object sender, EventArgs e, SettingsHandler handler)
         {
             TrayIcon.Dispose();
             TradeClient.Dispose();
             EventsHandler.Dispose();
             OverlayController.Dispose();
+            handler.WriteSettings();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             Logger.Log($"Path of Exile trade data fetched.");
             Logger.Log($"Sidekick is ready, press Ctrl+D over an item in-game to use. Press Escape to close overlay.");
-            TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
+            TrayIcon.SendNotification(LanguageSettings.UIProvider.StartTooltip, LanguageSettings.UIProvider.StartTooltipCaption);
         }
 
         private static async void Retry()

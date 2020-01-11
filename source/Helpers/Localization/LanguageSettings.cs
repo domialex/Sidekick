@@ -22,7 +22,9 @@ namespace Sidekick.Helpers.Localization
     public static class LanguageSettings
     {
         public static ILanguageProvider Provider { get; private set; } = new LanguageProviderEN();      // Default to english language
-        public static Language CurrentLanguage { get; private set; } = Language.English;
+        public static IUILanguageProvider UIProvider { get; private set; } = new UILanguageProviderEN();        // Default to english language
+        public static Language CurrentClientLanguage { get; private set; } = Language.English;
+        public static Language CurrentUILanguage { get; private set; } = Language.English;
 
         private static Dictionary<Language, ILanguageProvider> _providerDictionary = new Dictionary<Language, ILanguageProvider>()
         {
@@ -36,12 +38,18 @@ namespace Sidekick.Helpers.Localization
             { Language.Korean, new LanguageProviderKR() },
         };
 
+        private static Dictionary<Language, IUILanguageProvider> _uiProviderDictionary = new Dictionary<Language, IUILanguageProvider>()
+        {
+            { Language.English, new UILanguageProviderEN() },
+            { Language.German, new UILanguageProvidersDE() },
+        };
+
         private static void ChangeLanguage(Language lang)       // Maybe async?
         {
             if(_providerDictionary.ContainsKey(lang))
             {
                 Provider = _providerDictionary[lang];
-                CurrentLanguage = lang;
+                CurrentClientLanguage = lang;
                 TradeClient.FetchAPIData().Wait();
             }
             else
@@ -50,60 +58,73 @@ namespace Sidekick.Helpers.Localization
             }
         }
 
+        public static void ChangeUILanguage(Language lang)
+        {
+            if(_uiProviderDictionary.ContainsKey(lang))
+            {
+                UIProvider = _uiProviderDictionary[lang];
+                CurrentUILanguage = lang;
+            }
+            else
+            {
+                throw new Exception("UI Language not implemented yet");
+            }
+        }
+
         public static void DetectLanguage(string input)
         {
             if(input.Contains(_providerDictionary[Language.English].DescriptionRarity))
             {
-                if(CurrentLanguage != Language.English)
+                if(CurrentClientLanguage != Language.English)
                 {
                     ChangeLanguage(Language.English);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.German].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.German)
+                if (CurrentClientLanguage != Language.German)
                 {
                     ChangeLanguage(Language.German);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.French].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.French)
+                if (CurrentClientLanguage != Language.French)
                 {
                     ChangeLanguage(Language.French);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Korean].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.Korean)
+                if (CurrentClientLanguage != Language.Korean)
                 {
                     ChangeLanguage(Language.Korean);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Portuguese].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.Portuguese)
+                if (CurrentClientLanguage != Language.Portuguese)
                 {
                     ChangeLanguage(Language.Portuguese);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Russian].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.Russian)
+                if (CurrentClientLanguage != Language.Russian)
                 {
                     ChangeLanguage(Language.Russian);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Spanish].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.Spanish)
+                if (CurrentClientLanguage != Language.Spanish)
                 {
                     ChangeLanguage(Language.Spanish);
                 }
             }
             else if(input.Contains(_providerDictionary[Language.Thai].DescriptionRarity))
             {
-                if (CurrentLanguage != Language.Thai)
+                if (CurrentClientLanguage != Language.Thai)
                 {
                     ChangeLanguage(Language.Thai);
                 }

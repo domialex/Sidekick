@@ -4,7 +4,7 @@ using Sidekick.Windows.ApplicationLogs;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
-
+using Sidekick.Helpers.Localization;
 
 namespace Sidekick.Helpers
 {
@@ -22,11 +22,11 @@ namespace Sidekick.Helpers
             _notifyIcon.Text = "Sidekick";
 
             var contextMenu = new ContextMenuStrip();
-            _leagueSelectMenu = new ToolStripMenuItem("League");
+            _leagueSelectMenu = new ToolStripMenuItem(LanguageSettings.UIProvider.League);
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
-            contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
-            contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
+            contextMenu.Items.Add(LanguageSettings.UIProvider.ShowLog, null, (s, e) => ApplicationLogsController.Show());
+            contextMenu.Items.Add(LanguageSettings.UIProvider.Exit, null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 

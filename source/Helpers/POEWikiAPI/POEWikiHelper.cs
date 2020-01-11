@@ -17,7 +17,7 @@ namespace Sidekick.Helpers.POEWikiAPI
                 return;
 
             // only available for english portal
-            if (LanguageSettings.CurrentLanguage != Language.English)
+            if (LanguageSettings.CurrentClientLanguage != Language.English)
                 return;
 
             // Don't handle magic and rare items
