@@ -19,7 +19,7 @@ namespace Sidekick.Helpers
         public static Item ParseItem(string text)
         {
             Item item = null;
-            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted;
+            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
 
             try
             {
@@ -32,6 +32,7 @@ namespace Sidekick.Helpers
                 isCorrupted = lines.Any(x => x == LanguageSettings.Provider.DescriptionCorrupted);
                 isMap = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionMapTier));
                 isBlighted = lines.Any(x => x.Contains(LanguageSettings.Provider.PrefixBlighted));
+                hasNote = lines.LastOrDefault().Contains("Note");
 
                 var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
 
@@ -114,9 +115,14 @@ namespace Sidekick.Helpers
                         };
                     }
 
-                    var influence = GetInfluenceType(lines.LastOrDefault());
-
-                    ((EquippableItem)item).Influence = influence;
+                    if (hasNote)
+                    {
+                        ((EquippableItem)item).Influence = GetInfluenceType(lines[lines.Length - 3]);
+                    }
+                    else
+                    {
+                        ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
+                    }
                 }
                 else if(rarity == LanguageSettings.Provider.RarityMagic)
                 {
@@ -133,8 +139,14 @@ namespace Sidekick.Helpers
                             ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
                         };
 
-                        var influence = GetInfluenceType(lines.LastOrDefault());
-                        ((EquippableItem)item).Influence = influence;
+                        if (hasNote)
+                        {
+                            ((EquippableItem)item).Influence = GetInfluenceType(lines[lines.Length - 3]);
+                        }
+                        else
+                        {
+                            ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
+                        }
 
                         var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
 

@@ -50,6 +50,48 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     {
                         Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
                     };
+
+                    switch (((EquippableItem)item).Influence)
+                    {
+                        case InfluenceType.None:
+                            break;
+                        case InfluenceType.Shaper:
+                            Query.Filters.MiscFilters.Filters.ShaperItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Crusader:
+                            Query.Filters.MiscFilters.Filters.CrusaderItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Elder:
+                            Query.Filters.MiscFilters.Filters.ElderItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Hunter:
+                            Query.Filters.MiscFilters.Filters.HunterItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Redeemer:
+                            Query.Filters.MiscFilters.Filters.RedeemerItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Warlord:
+                            Query.Filters.MiscFilters.Filters.WarlordItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                    }
                 }             
 
                 if(((EquippableItem)item).Links != null)        // Auto Search 5+ Links
