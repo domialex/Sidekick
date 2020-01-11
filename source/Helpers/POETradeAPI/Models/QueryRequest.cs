@@ -19,7 +19,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
             if (itemType == typeof(EquippableItem))
             {
-                if(((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
+                if (((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
@@ -92,9 +92,9 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                             };
                             break;
                     }
-                }             
+                }
 
-                if(((EquippableItem)item).Links != null)        // Auto Search 5+ Links
+                if (((EquippableItem)item).Links != null)        // Auto Search 5+ Links
                 {
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
@@ -139,7 +139,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             {
                 Query.Type = item.Type;
             }
-            else if(itemType == typeof(MapItem))
+            else if (itemType == typeof(MapItem))
             {
                 if (((MapItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
@@ -156,8 +156,8 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         Option = "nonunique",
                     };
                 }
-                
-                if(!int.TryParse(((MapItem)item).MapTier, out var result))
+
+                if (!int.TryParse(((MapItem)item).MapTier, out var result))
                 {
                     throw new Exception("Unable to parse Map Tier");
                 }
@@ -173,7 +173,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     Option = ((MapItem)item).IsBlight,
                 };
             }
-            else if(itemType == typeof(ProphecyItem))
+            else if (itemType == typeof(ProphecyItem))
             {
                 Query.Name = item.Name;
             }
@@ -244,7 +244,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                 Exchange.Want.Add(itemId);
                 Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
             }
-            else if(itemType == typeof(DivinationCardItem))
+            else if (itemType == typeof(DivinationCardItem))
             {
                 var itemId = TradeClient.StaticItemCategories.Where(c => c.Id == "Cards").FirstOrDefault().Entries.Where(c => c.Text == item.Name).FirstOrDefault().Id;
                 Exchange.Want.Add(itemId);

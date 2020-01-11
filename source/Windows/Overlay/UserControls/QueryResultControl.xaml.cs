@@ -1,5 +1,4 @@
 ﻿using Sidekick.Helpers;
-using Sidekick.Helpers.POETradeAPI;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Navigation;

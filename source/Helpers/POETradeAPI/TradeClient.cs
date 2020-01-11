@@ -94,7 +94,7 @@ namespace Sidekick.Helpers.POETradeAPI
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
 
-            foreach(var item in mapCategories)
+            foreach (var item in mapCategories)
             {
                 allMapNames.AddRange(item.Entries.Select(c => c.Text));
             }

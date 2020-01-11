@@ -45,7 +45,7 @@ namespace Sidekick.Windows.Overlay
             var scale = 96f / ProcessHelper.GetActiveWindowDpi();
             var xScaled = (int)(Cursor.Position.X * scale);
             var yScaled = (int)(Cursor.Position.Y * scale);
-            
+
             EnsureBounds(xScaled, yScaled, scale);
             Show();
         }

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
+﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Sidekick.Helpers
 {
@@ -55,7 +55,7 @@ namespace Sidekick.Helpers
                     e.Handled = true;
                     Task.Run(TriggerItemWiki);
                 }
-                else if(e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
+                else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
                 {
                     e.Handled = true;
                     Task.Run(TriggerHideout);
@@ -138,7 +138,7 @@ namespace Sidekick.Helpers
             var itemText = ClipboardHelper.GetText();
 
             // Detect the language of the item in the clipboard.
-            LanguageSettings.DetectLanguage(itemText);       
+            LanguageSettings.DetectLanguage(itemText);
 
             // Parse and return item
             return ItemParser.ParseItem(itemText);

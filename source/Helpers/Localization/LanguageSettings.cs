@@ -1,9 +1,6 @@
 ﻿using Sidekick.Helpers.POETradeAPI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.Localization
 {
@@ -38,7 +35,7 @@ namespace Sidekick.Helpers.Localization
 
         private static void ChangeLanguage(Language lang)       // Maybe async?
         {
-            if(_providerDictionary.ContainsKey(lang))
+            if (_providerDictionary.ContainsKey(lang))
             {
                 Provider = _providerDictionary[lang];
                 CurrentLanguage = lang;
@@ -52,56 +49,56 @@ namespace Sidekick.Helpers.Localization
 
         public static void DetectLanguage(string input)
         {
-            if(input.Contains(_providerDictionary[Language.English].DescriptionRarity))
+            if (input.Contains(_providerDictionary[Language.English].DescriptionRarity))
             {
-                if(CurrentLanguage != Language.English)
+                if (CurrentLanguage != Language.English)
                 {
                     ChangeLanguage(Language.English);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.German].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.German].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.German)
                 {
                     ChangeLanguage(Language.German);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.French].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.French].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.French)
                 {
                     ChangeLanguage(Language.French);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.Korean].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.Korean].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.Korean)
                 {
                     ChangeLanguage(Language.Korean);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.Portuguese].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.Portuguese].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.Portuguese)
                 {
                     ChangeLanguage(Language.Portuguese);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.Russian].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.Russian].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.Russian)
                 {
                     ChangeLanguage(Language.Russian);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.Spanish].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.Spanish].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.Spanish)
                 {
                     ChangeLanguage(Language.Spanish);
                 }
             }
-            else if(input.Contains(_providerDictionary[Language.Thai].DescriptionRarity))
+            else if (input.Contains(_providerDictionary[Language.Thai].DescriptionRarity))
             {
                 if (CurrentLanguage != Language.Thai)
                 {

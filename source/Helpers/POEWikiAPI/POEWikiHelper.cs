@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Sidekick.Helpers.Localization;
+using System;
 using System.Diagnostics;
-using Sidekick.Helpers.Localization;
 
 namespace Sidekick.Helpers.POEWikiAPI
 {

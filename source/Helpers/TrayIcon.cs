@@ -1,17 +1,16 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models.TradeData;
-using Sidekick.Helpers.POETradeAPI;
+﻿using Sidekick.Helpers.POETradeAPI;
+using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using Sidekick.Windows.ApplicationLogs;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System;
 
 
 namespace Sidekick.Helpers
 {
     public static class TrayIcon
     {
-        static private NotifyIcon _notifyIcon;
-        static private ToolStripMenuItem _leagueSelectMenu;
+        private static NotifyIcon _notifyIcon;
+        private static ToolStripMenuItem _leagueSelectMenu;
 
         public static void Initialize()
         {
@@ -30,8 +29,10 @@ namespace Sidekick.Helpers
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
-        public static void PopulateLeagueSelectMenu(List<League> leagues) {
-            foreach(League l in leagues) {
+        public static void PopulateLeagueSelectMenu(List<League> leagues)
+        {
+            foreach (League l in leagues)
+            {
                 var menuItem = new ToolStripMenuItem(l.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem t in _leagueSelectMenu.DropDownItems) { t.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
