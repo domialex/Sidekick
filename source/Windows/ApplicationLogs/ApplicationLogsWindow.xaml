@@ -5,8 +5,8 @@
         WindowStartupLocation="CenterScreen"
         Height="320" 
         MinHeight="320"
-        Width="720"
-        MinWidth="720">
+        Width="960"
+        MinWidth="960">
     <ScrollViewer 
         Name="logsScrollViewer"
         HorizontalScrollBarVisibility="Auto" 

@@ -126,7 +126,7 @@ namespace Sidekick.Helpers
                 }
                 else if (rarity == LanguageSettings.Provider.RarityMagic)
                 {
-                    throw new Exception("Magic items not supported for now.");
+                    throw new Exception("Magic items are not yet supported.");
                 }
                 else if (rarity == LanguageSettings.Provider.RarityNormal)
                 {
@@ -225,7 +225,7 @@ namespace Sidekick.Helpers
             }
             catch (Exception e)
             {
-                Logger.LogException("Could not parse item", e);
+                Logger.Log("Could not parse item. " + e.Message);
                 return null;
             }
 

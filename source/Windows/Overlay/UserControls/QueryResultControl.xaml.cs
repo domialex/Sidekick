@@ -14,9 +14,9 @@ namespace Sidekick.Windows.Overlay.UserControls
 
         private void openQueryLink(object sender, RequestNavigateEventArgs e)
         {
-            string uri = e.Uri.ToString();
+            var uri = e.Uri.ToString();
             Logger.Log(string.Format("Opening in browser: {0}", uri));
-            Process.Start(new ProcessStartInfo(uri));
+            Process.Start(uri);
             e.Handled = true;
         }
     }

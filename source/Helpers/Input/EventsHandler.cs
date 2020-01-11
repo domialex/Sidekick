@@ -81,7 +81,7 @@ namespace Sidekick.Helpers
 
         private static async void TriggerItemFetch()
         {
-            Logger.Log("TriggerItemFetch()");
+            Logger.Log("Hotkey for pricing item triggered.");
 
             Item item = TriggerCopyAction();
             if (item != null)
@@ -102,7 +102,7 @@ namespace Sidekick.Helpers
 
         private static void TriggerItemWiki()
         {
-            Logger.Log("TriggerItemWiki()");
+            Logger.Log("Hotkey for opening wiki triggered.");
 
             var item = TriggerCopyAction();
             if (item != null)
@@ -116,15 +116,13 @@ namespace Sidekick.Helpers
         /// </summary>
         private static void TriggerHideout()
         {
-            Logger.Log("TriggerHideout()");
+            Logger.Log("Hotkey for Hideout triggered.");
 
             SendKeys.SendWait(Input.KeyCommands.HIDEOUT);
         }
 
         private static void ExitApplication()
         {
-            Logger.Log("ExitApplication()");
-
             Application.Exit();
         }
 

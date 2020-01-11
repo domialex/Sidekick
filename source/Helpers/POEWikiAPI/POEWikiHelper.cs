@@ -28,12 +28,13 @@ namespace Sidekick.Helpers.POEWikiAPI
 
             if (string.IsNullOrEmpty(item.Name))
             {
-                Logger.Log("Item with empty name supplied to wiki fetcher. TypeOf(): " + item.GetType().Name, LogState.Warning);
+                Logger.Log("Failed to open the wiki for the specified item.", LogState.Error);
                 return;
             }
 
-            Uri uri = CreateItemWikiLink(item);
-            Process.Start(uri.ToString());
+            var uri = CreateItemWikiLink(item).ToString();
+            Logger.Log(string.Format("Opening in browser: {0}", uri));
+            Process.Start(uri);
         }
 
         /// <summary>
