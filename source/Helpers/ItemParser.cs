@@ -81,7 +81,7 @@ namespace Sidekick.Helpers
                     item = new EquippableItem
                     {
                         Name = lines[1],
-                        Type = isIdentified ? lines[2] : lines[1]
+                        Type = isIdentified ? lines[2] : lines[1],
                     };
 
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
@@ -229,7 +229,7 @@ namespace Sidekick.Helpers
                 return null;
             }
 
-            item.IsCorrupted = isCorrupted ? "true" : "false";
+            item.IsCorrupted = isCorrupted;
             return item;
         }
 
@@ -327,7 +327,7 @@ namespace Sidekick.Helpers
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string IsCorrupted { get; set; }
+        public bool IsCorrupted { get; set; }
         public string Rarity { get; set; }
     }
 
