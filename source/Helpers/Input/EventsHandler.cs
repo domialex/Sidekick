@@ -38,7 +38,7 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
+            if (OverlayController.IsDisplayed && (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Space))
             {
                 e.Handled = true;
                 OverlayController.Hide();
