@@ -1,9 +1,10 @@
 ﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
-using System;
+using Sidekick.Windows.PricePrediction;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Sidekick.Helpers
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-            _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
+            //_globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
 
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
@@ -59,6 +60,11 @@ namespace Sidekick.Helpers
                 {
                     e.Handled = true;
                     Task.Run(TriggerHideout);
+                }
+                else if(e.Modifiers == Keys.Alt && e.KeyCode == Keys.D)      // Better solution would beo on Ctrl + D and switch Action for rare item
+                {
+                    e.Handled = true;
+                    Task.Run(TriggerItemPrediction);
                 }
             }
         }
@@ -100,7 +106,34 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
-        private static async void TriggerItemWiki()
+        private static async void TriggerItemPrediction()
+        {
+            Logger.Log("TriggerItemPrediction()");
+            var itemText = GetItemText();
+            LanguageSettings.DetectLanguage(itemText);
+
+            if (!itemText.Contains(LanguageSettings.Provider.DescriptionRarity))     // Trigger only on item
+            {
+                return;
+            }
+
+            if(!itemText.Contains(LanguageSettings.Provider.RarityRare))        // Only trigger on rare items atm
+            {
+                return;
+            }
+
+            var pred = await PriceInfoClient.GetItemPricePrediction(itemText);
+            PricePredictionViewController.Open();
+
+            if(pred != null)
+            {
+                PricePredictionViewController.SetResult(pred);
+                return;
+            }
+
+            PricePredictionViewController.Hide();
+        }
+
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
@@ -126,7 +159,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static async Task<Item> TriggerCopyAction()
+        private static string GetItemText()
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -134,6 +167,12 @@ namespace Sidekick.Helpers
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+            return itemText;
+        }
+
+        private static Item TriggerCopyAction()
+        {
+            var itemText = GetItemText();
 
             // Detect the language of the item in the clipboard.
             var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);

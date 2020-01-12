@@ -1,0 +1,27 @@
+﻿<Window x:Class="Sidekick.Windows.PricePrediction.PricePredictionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sidekick.Windows.PricePrediction"
+        mc:Ignorable="d"
+        Title="PricePredictionView" Height="450" Width="800">
+    <Grid>
+        <Label Content="Min" HorizontalAlignment="Left" Margin="455,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Max" HorizontalAlignment="Left" Margin="563,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="445,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="56" Name="textBoxMin"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="554,41,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="56" x:Name="textBoxMax"/>
+        <RichTextBox HorizontalAlignment="Left" Height="387" Margin="22,22,0,0" VerticalAlignment="Top" Width="370" Name="textBoxItem">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Label Content="-
+               " HorizontalAlignment="Left" Margin="518,38,0,0" VerticalAlignment="Top" Width="20"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="627,41,0,0" VerticalAlignment="Top" Name="labelCurrency"/>
+        <Label Content="Prediction Confidentiality Score: " HorizontalAlignment="Left" Margin="397,97,0,0" VerticalAlignment="Top" Width="179"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="581,97,0,0" VerticalAlignment="Top" Name="labelPredictionScore"/>
+    </Grid>
+</Window>

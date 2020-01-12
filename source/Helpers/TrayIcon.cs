@@ -3,7 +3,7 @@ using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using Sidekick.Windows.ApplicationLogs;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
+using Sidekick.Helpers.POEPriceInfoAPI;
 
 namespace Sidekick.Helpers
 {
