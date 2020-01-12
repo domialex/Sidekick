@@ -40,11 +40,21 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         throw new Exception("Couldn't parse Item Level");
                     }
 
-                    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                    if (result >= 86)
                     {
-                        Min = result,
-                        Max = result,
-                    };
+                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                        {
+                            Min = 86
+                        };
+                    }
+                    else
+                    {
+                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                        {
+                            Min = result,
+                            Max = result,
+                        };
+                    }
 
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
                     {
