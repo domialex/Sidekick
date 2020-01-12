@@ -4,7 +4,7 @@ using Sidekick.Windows.ApplicationLogs;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
-
+using Sidekick.Helpers.POEPriceInfoAPI;
 
 namespace Sidekick.Helpers
 {
@@ -35,7 +35,7 @@ namespace Sidekick.Helpers
                 var menuItem = new ToolStripMenuItem(l.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem t in _leagueSelectMenu.DropDownItems) { t.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = l; };
+                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = l; PriceInfoClient.SelectedLeague = l; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
             //select the first league as the default

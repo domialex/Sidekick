@@ -27,6 +27,10 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         Option = "Unique",
                     };
                 }
+                else if(item.Rarity == LanguageSettings.Provider.RarityRare)        // Get Price Prediction on rare items
+                {
+
+                }
                 else
                 {
                     Query.Type = item.Type;
