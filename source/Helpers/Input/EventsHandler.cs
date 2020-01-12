@@ -37,7 +37,6 @@ namespace Sidekick.Helpers
         {
             if(SettingsController.IsDisplayed)
             {
-                e.Handled = true;
                 SettingsController.CaptureKeyEvents(e.KeyCode, e.Modifiers);
                 return;
             }
