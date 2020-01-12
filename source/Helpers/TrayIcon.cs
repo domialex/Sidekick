@@ -1,6 +1,7 @@
 ﻿using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.Settings;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -24,6 +25,7 @@ namespace Sidekick.Helpers
             _leagueSelectMenu = new ToolStripMenuItem("League");
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("Settings", null, (s, e) => SettingsController.Show());
             contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
             contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
