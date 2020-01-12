@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
@@ -100,7 +101,7 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
-        private static async void TriggerItemWiki()
+        public static async void TriggerItemWiki()
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
@@ -126,7 +127,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static async Task<Item> TriggerCopyAction()
+        private static string GetItemText()
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -134,9 +135,16 @@ namespace Sidekick.Helpers
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+            return itemText;
+        }
+
+        private static async Task<Item> TriggerCopyAction()
+        {
+            var itemText = GetItemText();
 
             // Detect the language of the item in the clipboard.
             var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
+
             if (!setLanguageSuccess)
             {
                 return null;

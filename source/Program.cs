@@ -1,4 +1,5 @@
 ﻿using Sidekick.Helpers;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
