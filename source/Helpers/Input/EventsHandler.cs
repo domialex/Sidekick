@@ -38,6 +38,7 @@ namespace Sidekick.Helpers
             if(SettingsController.IsDisplayed)
             {
                 e.Handled = true;
+                SettingsController.CaptureKeyEvents(e.KeyCode, e.Modifiers);
                 return;
             }
 
@@ -48,7 +49,7 @@ namespace Sidekick.Helpers
 
             var settings = SettingsController.GetSettingsInstance();
             var setting = settings.GetKeybindSetting(e.KeyCode, e.Modifiers);
-            //var setting = settings.GetKeybindSetting((int)e.KeyCode, (int)e.Modifiers);
+
             //if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
             if (OverlayController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {

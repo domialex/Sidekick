@@ -63,6 +63,11 @@ namespace Sidekick.Windows.Settings
             }
         }
 
+        public static void CaptureKeyEvents(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
+        {
+            _settingsView.CaptureKeyEvents(key, modifier);
+        }
+
         /// <summary>
         /// Loads the settings from the settings file. If no settings file exists, loads default settings
         /// </summary>

@@ -237,7 +237,7 @@
                                             <ContextMenu Visibility="Collapsed"/>
                                         </TextBox.ContextMenu>
                                     </TextBox>
-                                    <UC:KeybindEditor Grid.Column="1" Hotkey="{Binding Path=Value}" HotkeyChanged="KeybindEditor_HotkeyChanged" />
+                                    <UC:KeybindEditor Grid.Column="1" Hotkey="{Binding Path=Value}" HotkeyChanged="KeybindEditor_HotkeyChanged" HotkeyChanging="KeybindEditor_HotkeyChanging"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

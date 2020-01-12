@@ -53,6 +53,14 @@ namespace Sidekick.Windows.Settings
             Close();
         }
 
+        public void CaptureKeyEvents(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
+        {
+            if(currentChangingKeybind != null)
+            {
+                currentChangingKeybind.CaptureKeybinding(key, modifier);
+            }
+        }
+
         /// <summary>
         /// Gets called after a new hotkey has been defined. Checks if that new hotkey is unique
         /// </summary>
@@ -70,6 +78,7 @@ namespace Sidekick.Windows.Settings
                         control.Hotkey = null;
                     }                   
                 }
+                currentChangingKeybind = null;
             }
             catch (Exception)
             {
@@ -77,6 +86,12 @@ namespace Sidekick.Windows.Settings
                 control.Hotkey = null;
                 throw;
             }            
+        }
+
+        private KeybindEditor currentChangingKeybind;
+        private void KeybindEditor_HotkeyChanging(object sender)
+        {
+            currentChangingKeybind = sender as KeybindEditor;
         }
     }
 }
