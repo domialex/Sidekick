@@ -4,7 +4,7 @@ A Path of Exile helper that shows item prices using the **official** [Path of Ex
 
 ![Sidekick preview image](https://i.imgur.com/KWaasdg.png)
 
-## Demo video
+## Demo videos
 **[Item price check](https://streamable.com/raz6q)**
 
 **[Currency price check](https://streamable.com/y0x6k)**
@@ -13,7 +13,7 @@ A Path of Exile helper that shows item prices using the **official** [Path of Ex
 
 If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
 
-Sidekick should be able to price check every item except magic items, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
+Sidekick should be able to price check a lot of items now, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
 
 **Enjoy!**
 
@@ -31,10 +31,12 @@ All help is very welcomed.
 
 ## Usage
 1. Run **Sidekick.exe**.
-2. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for better results.
-3. In **Path of Exile**, hover an item and press **Ctrl+D**.
-4. To close the overlay, press **Escape**.
+2. Select your [current league](https://i.imgur.com/7uFb7NF.png)
+3. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for better results.
+4. In **Path of Exile**, hover an item and press **Ctrl+D**.
+5. To close the overlay, press **Escape**.
 
+### Hotkeys
 - **Ctrl+D** to price check an item
 - **Escape** to close overlay
 - **Ctrl+Scroll wheel** navigates your **stash tabs**
@@ -42,7 +44,7 @@ All help is very welcomed.
 - **Alt+W** - Open the Wiki page for an item (only English version of Path of Exile)
 - **Shift+Z twice** will close Sidekick
 
-*All hotkeys will be configurable in the future*
+*All hotkeys will be configurable in the future.*
 
 ## Roadmap
 1. Parse all items
