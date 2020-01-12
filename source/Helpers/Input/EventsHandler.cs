@@ -4,7 +4,6 @@ using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
-using Sidekick.Windows.PricePrediction;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -62,11 +61,6 @@ namespace Sidekick.Helpers
                     e.Handled = true;
                     Task.Run(TriggerHideout);
                 }
-                else if(e.Modifiers == Keys.Alt && e.KeyCode == Keys.D)      // Better solution would beo on Ctrl + D and switch Action for rare item
-                {
-                    e.Handled = true;
-                    Task.Run(TriggerItemPrediction);
-                }
             }
         }
 
@@ -105,34 +99,6 @@ namespace Sidekick.Helpers
             }
 
             OverlayController.Hide();
-        }
-
-        private static async void TriggerItemPrediction()
-        {
-            Logger.Log("TriggerItemPrediction()");
-            var itemText = GetItemText();
-            await LanguageSettings.FindAndSetLanguageProvider(itemText);
-
-            if (!itemText.Contains(LanguageSettings.Provider.DescriptionRarity))     // Trigger only on item
-            {
-                return;
-            }
-
-            if(!itemText.Contains(LanguageSettings.Provider.RarityRare))        // Only trigger on rare items atm
-            {
-                return;
-            }
-
-            var pred = await PriceInfoClient.GetItemPricePrediction(itemText);
-            PricePredictionViewController.Open();
-
-            if(pred != null)
-            {
-                PricePredictionViewController.SetResult(pred);
-                return;
-            }
-
-            PricePredictionViewController.Hide();
         }
 
         public static async void TriggerItemWiki()
