@@ -16,11 +16,6 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             Hide();
-            textBoxAccountName.Text = LanguageSettings.UIProvider.LabelAccountName;
-            textBoxAge.Text = LanguageSettings.UIProvider.LabelAge;
-            textBoxCharacter.Text = LanguageSettings.UIProvider.LabelCharacter;
-            textBoxItemLevel.Text = LanguageSettings.UIProvider.LabelItemLevel;
-            textBoxPrice.Text = LanguageSettings.UIProvider.LabelPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)
