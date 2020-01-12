@@ -56,11 +56,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         };
                     }
 
-                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
-                    {
-                        Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
-                    };
-
                     switch (((EquippableItem)item).Influence)
                     {
                         case InfluenceType.None:

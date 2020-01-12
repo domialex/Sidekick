@@ -83,7 +83,7 @@ namespace Sidekick.Helpers
         {
             Logger.Log("Hotkey for pricing item triggered.");
 
-            Item item = TriggerCopyAction();
+            Item item = await TriggerCopyAction();
             if (item != null)
             {
                 OverlayController.Open();
@@ -100,11 +100,11 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
-        private static void TriggerItemWiki()
+        private static async void TriggerItemWiki()
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
-            var item = TriggerCopyAction();
+            var item = await TriggerCopyAction();
             if (item != null)
             {
                 POEWikiAPI.POEWikiHelper.Open(item);
@@ -126,7 +126,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static Item TriggerCopyAction()
+        private static async Task<Item> TriggerCopyAction()
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -136,7 +136,8 @@ namespace Sidekick.Helpers
             var itemText = ClipboardHelper.GetText();
 
             // Detect the language of the item in the clipboard.
-            if (!LanguageSettings.FindAndSetLanguageProvider(itemText))
+            var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
+            if (!setLanguageSuccess)
             {
                 return null;
             }

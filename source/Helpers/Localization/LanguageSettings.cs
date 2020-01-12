@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Sidekick.Helpers.POETradeAPI;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.Localization
 {
@@ -33,8 +35,9 @@ namespace Sidekick.Helpers.Localization
 
         /// <summary>
         /// Every item should start with Rarity in the first line. 
+        /// This will force the TradeClient to refetch the Public API's data if needed.
         /// </summary>
-        public static bool FindAndSetLanguageProvider(string itemDescription)
+        public static async Task<bool> FindAndSetLanguageProvider(string itemDescription)
         {
             foreach (var item in RarityToLanguageDictionary)
             {
@@ -45,6 +48,8 @@ namespace Sidekick.Helpers.Localization
                         Logger.Log($"Changed language support to {item.Value}.");
                         CurrentLanguage = item.Value;
                         Provider = GetLanguageProvider(item.Value);
+                        TradeClient.Dispose();
+                        return await TradeClient.Initialize();
                     }
 
                     return true;

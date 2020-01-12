@@ -30,7 +30,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static League SelectedLeague;
 
-        public static async void Initialize()
+        public static async Task<bool> Initialize()
         {
             if (_jsonSerializerSettings == null)
             {
@@ -42,7 +42,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             if (IsFetching)
             {
-                return;
+                return false;
             }
 
             IsFetching = true;
@@ -57,7 +57,7 @@ namespace Sidekick.Helpers.POETradeAPI
                 Logger.Log("Retrying every minute.");
                 Dispose();
                 await Task.Run(Retry);
-                return;
+                return false;
             }
 
             IsFetching = false;
@@ -69,6 +69,8 @@ namespace Sidekick.Helpers.POETradeAPI
             Logger.Log($"Path of Exile trade data fetched.");
             Logger.Log($"Sidekick is ready, press Ctrl+D over an item in-game to use. Press Escape to close overlay.");
             TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
+
+            return true;
         }
 
         private static async void Retry()
@@ -81,7 +83,7 @@ namespace Sidekick.Helpers.POETradeAPI
             }
             else
             {
-                Initialize();
+                await Initialize();
             }
         }
 

@@ -31,15 +31,22 @@ namespace Sidekick.Helpers
 
         public static void PopulateLeagueSelectMenu(List<League> leagues)
         {
-            foreach (League l in leagues)
+            if(_leagueSelectMenu.DropDownItems.Count > 0)
             {
-                var menuItem = new ToolStripMenuItem(l.Id);
-                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem t in _leagueSelectMenu.DropDownItems) { t.Checked = false; } };
+                // TODO: Fix Cross-thread operation not valid after changing language.
+                return;
+            }
+
+            foreach (var league in leagues)
+            {
+                var menuItem = new ToolStripMenuItem(league.Id);
+                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = l; };
+                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = league; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
-            //select the first league as the default
+
+            // Select the first league as the default.
             _leagueSelectMenu.DropDownItems[0].PerformClick();
         }
 

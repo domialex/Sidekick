@@ -25,7 +25,7 @@ namespace Sidekick
             TrayIcon.Initialize();
 
             // Load POE Trade information.
-            TradeClient.Initialize();
+            _ = TradeClient.Initialize();
 
             // Keyboard hooks.
             EventsHandler.Initialize();
