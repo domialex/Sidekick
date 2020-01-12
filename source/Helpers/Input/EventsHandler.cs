@@ -1,25 +1,28 @@
-﻿using Gma.System.MouseKeyHook;
-using Sidekick.Helpers.Localization;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Helpers.POETradeAPI;
-using Sidekick.Windows.Overlay;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Gma.System.MouseKeyHook;
+using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POETradeAPI;
+using Sidekick.Windows.Overlay;
 
 namespace Sidekick.Helpers
 {
     public static class EventsHandler
     {
         private static IKeyboardMouseEvents _globalHook;
+        private static Dictionary<Hotkey, Action> _hotkeys;
 
         public static void Initialize()
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
             _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
+
+            _hotkeys = new Dictionary<Hotkey, Action>();
 
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
@@ -29,6 +32,30 @@ namespace Sidekick.Helpers
             };
 
             _globalHook.OnSequence(assignment);
+
+            RegisterHotkey(new Hotkey(Keys.None, Keys.Escape, true, HotKeyRestrictions.OverlayDisplayed), new Action(() =>
+            {
+                OverlayController.Hide();
+            }));
+
+            RegisterHotkey(new Hotkey(Keys.Control, Keys.D, true, HotKeyRestrictions.PathOfExileFocused | HotKeyRestrictions.OverlayClosed), TriggerItemFetch);
+            RegisterHotkey(new Hotkey(Keys.Alt, Keys.W, true, HotKeyRestrictions.PathOfExileFocused), TriggerItemWiki);
+            RegisterHotkey(new Hotkey(Keys.None, Keys.F, true, HotKeyRestrictions.PathOfExileFocused), TriggerHideout);
+
+        }
+
+        public static void RegisterHotkey(Hotkey hotkey, Action action)
+        {
+            if (_hotkeys.ContainsKey(hotkey))
+                throw new HotkeyInUseException(hotkey);
+
+            _hotkeys.Add(hotkey, action);
+        }
+
+        public static void DeregisterHotkey(Hotkey hotkey)
+        {
+            if (_hotkeys.ContainsKey(hotkey))
+                _hotkeys.Remove(hotkey);
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
@@ -38,27 +65,13 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
+            foreach (var hotkey in _hotkeys)
             {
-                e.Handled = true;
-                OverlayController.Hide();
-            }
-            else if (ProcessHelper.IsPathOfExileInFocus())
-            {
-                if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
+                if (hotkey.Key.MeetsRestrictions() && hotkey.Key.IsPressed(e))
                 {
-                    e.Handled = true;
-                    Task.Run(TriggerItemFetch);
-                }
-                else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
-                {
-                    e.Handled = true;
-                    Task.Run(TriggerItemWiki);
-                }
-                else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
-                {
-                    e.Handled = true;
-                    Task.Run(TriggerHideout);
+                    e.Handled = hotkey.Key.HandleEvent;
+                    Task.Run(hotkey.Value);
+                    break;
                 }
             }
         }
