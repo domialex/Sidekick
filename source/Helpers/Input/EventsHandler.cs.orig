@@ -4,12 +4,15 @@ using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
-using Sidekick.Windows.PricePrediction;
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+=======
+using Sidekick.Windows.PricePrediction;
+>>>>>>> item_price_prediction
 
 namespace Sidekick.Helpers
 {
@@ -107,11 +110,14 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
+<<<<<<< HEAD
+        private static async void TriggerItemWiki()
+=======
         private static async void TriggerItemPrediction()
         {
             Logger.Log("TriggerItemPrediction()");
             var itemText = GetItemText();
-            await LanguageSettings.FindAndSetLanguageProvider(itemText);
+            LanguageSettings.DetectLanguage(itemText);
 
             if (!itemText.Contains(LanguageSettings.Provider.DescriptionRarity))     // Trigger only on item
             {
@@ -135,7 +141,8 @@ namespace Sidekick.Helpers
             PricePredictionViewController.Hide();
         }
 
-        public static async void TriggerItemWiki()
+        private static void TriggerItemWiki()
+>>>>>>> item_price_prediction
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
@@ -161,7 +168,11 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
+<<<<<<< HEAD
+        private static async Task<Item> TriggerCopyAction()
+=======
         private static string GetItemText()
+>>>>>>> item_price_prediction
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -172,13 +183,12 @@ namespace Sidekick.Helpers
             return itemText;
         }
 
-        private static async Task<Item> TriggerCopyAction()
+        private static Item TriggerCopyAction()
         {
             var itemText = GetItemText();
 
             // Detect the language of the item in the clipboard.
             var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
-
             if (!setLanguageSuccess)
             {
                 return null;

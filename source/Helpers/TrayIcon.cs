@@ -42,7 +42,7 @@ namespace Sidekick.Helpers
                 var menuItem = new ToolStripMenuItem(league.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = league; };
+                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = league; PriceInfoClient.SelectedLeague = league; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
 

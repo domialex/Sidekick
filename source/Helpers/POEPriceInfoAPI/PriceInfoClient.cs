@@ -53,7 +53,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
             }
             catch(Exception ex)
             {
-                Logger.LogException("Error getting price prediction from item: " + itemText, ex);
+                Logger.Log("Error getting price prediction from item: " + itemText, LogState.Error);
             }
 
             return null;
