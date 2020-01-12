@@ -1,4 +1,5 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
+﻿using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POETradeAPI.Models;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using System.ComponentModel;
@@ -15,6 +16,11 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             Hide();
+            textBoxAccountName.Text = LanguageSettings.UIProvider.LabelAccountName;
+            textBoxAge.Text = LanguageSettings.UIProvider.LabelAge;
+            textBoxCharacter.Text = LanguageSettings.UIProvider.LabelCharacter;
+            textBoxItemLevel.Text = LanguageSettings.UIProvider.LabelItemLevel;
+            textBoxPrice.Text = LanguageSettings.UIProvider.LabelPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -46,6 +52,7 @@ namespace Sidekick.Windows.Overlay
                 };
             }
         }
+
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryResult);
 
         public void SetWindowPosition(int x, int y)
@@ -60,6 +67,7 @@ namespace Sidekick.Windows.Overlay
                 Top = y;
             }
         }
+
         delegate void SetWindowPositionCallback(int x, int y);
 
         public void ShowWindow()
@@ -74,6 +82,7 @@ namespace Sidekick.Windows.Overlay
                 Visibility = Visibility.Visible;
             }
         }
+
         delegate void ShowWindowCallback();
 
         public void HideWindowAndClearData()
@@ -88,6 +97,7 @@ namespace Sidekick.Windows.Overlay
                 Visibility = Visibility.Hidden;
             }
         }
+
         delegate void HideWindowAndClearDataCallback();
     }
 }
