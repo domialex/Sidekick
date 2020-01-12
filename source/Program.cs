@@ -1,6 +1,8 @@
 ﻿using Sidekick.Helpers;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
+using Sidekick.Windows.PricePrediction;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -32,6 +34,10 @@ namespace Sidekick
 
             // Overlay.
             OverlayController.Initialize();
+            PricePredictionViewController.Initialize();
+
+            //Price Info
+            PriceInfoClient.Initialize();
 
             // Run window.
             Application.ApplicationExit += OnApplicationExit;

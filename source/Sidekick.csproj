@@ -13,7 +13,6 @@
   </PropertyGroup>
     
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.191211002" />
     <!-- TODO: MouseKeyHook support for netcoreapp3.1? - https://github.com/gmamaladze/globalmousekeyhook -->
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />

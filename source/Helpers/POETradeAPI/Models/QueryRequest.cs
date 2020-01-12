@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     {
                         Option = "Unique",
                     };
-                }
-                else if(item.Rarity == LanguageSettings.Provider.RarityRare)        // Get Price Prediction on rare items
-                {
-
                 }
                 else
                 {
