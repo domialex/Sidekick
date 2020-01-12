@@ -40,7 +40,7 @@ namespace Sidekick.Helpers
 
             RegisterHotkey(new Hotkey(Keys.Control, Keys.D, true, HotKeyRestrictions.PathOfExileFocused | HotKeyRestrictions.OverlayClosed), TriggerItemFetch);
             RegisterHotkey(new Hotkey(Keys.Alt, Keys.W, true, HotKeyRestrictions.PathOfExileFocused), TriggerItemWiki);
-            RegisterHotkey(new Hotkey(Keys.None, Keys.F, true, HotKeyRestrictions.PathOfExileFocused), TriggerHideout);
+            RegisterHotkey(new Hotkey(Keys.None, Keys.F5, true, HotKeyRestrictions.PathOfExileFocused), TriggerHideout);
 
         }
 
