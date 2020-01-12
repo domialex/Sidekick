@@ -34,9 +34,6 @@ namespace Sidekick
             // Overlay.
             OverlayController.Initialize();
 
-            //Price Info
-            PriceInfoClient.Initialize();
-
             // Run window.
             Application.ApplicationExit += OnApplicationExit;
             Application.Run();
