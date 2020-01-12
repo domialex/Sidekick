@@ -136,7 +136,10 @@ namespace Sidekick.Helpers
             var itemText = ClipboardHelper.GetText();
 
             // Detect the language of the item in the clipboard.
-            LanguageSettings.DetectLanguage(itemText);
+            if (!LanguageSettings.FindAndSetLanguageProvider(itemText))
+            {
+                return null;
+            }
 
             // Parse and return item
             return ItemParser.ParseItem(itemText);
