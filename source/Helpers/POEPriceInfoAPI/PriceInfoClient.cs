@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using System;
 using System.Collections.Generic;
@@ -15,38 +16,21 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
     public static class PriceInfoClient
     {
         public const string PoePricesBaseUrl = "https://www.poeprices.info/api";
-        public static League SelectedLeague;
-
-        private static HttpClient _client;
-        private static JsonSerializerSettings _jsonSerializerSettings;
-
-        public static void Initialize()
-        {
-            _client = new HttpClient();
-
-            if (_jsonSerializerSettings == null)
-            {
-                _jsonSerializerSettings = new JsonSerializerSettings();
-                _jsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
-                _jsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                _jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            }
-        }
 
         public static async Task<PriceInfo> GetItemPricePrediction(string itemText)
         {
             var encodedItem = EncodeItemToBase64(itemText);
-            var league = SelectedLeague.Id;
+            var league = TradeClient.SelectedLeague.Id;
             var requestUrl = GenerateRequestUrl(encodedItem, league);
 
             try
             {
-                var response = await _client.GetAsync(requestUrl);
+                var response = await TradeClient._httpClient.GetAsync(requestUrl);
 
                 if(response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, _jsonSerializerSettings);
+                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, TradeClient._jsonSerializerSettings);
                     priceInfo.ItemText = itemText;
                     return priceInfo;
                 }
@@ -70,9 +54,5 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
             return PoePricesBaseUrl + "?l=" + selectedLeague + "&i=" + encodedItem;
         }
 
-        public static void Dispose()
-        {
-            _client.Dispose();
-        }
     }
 }
