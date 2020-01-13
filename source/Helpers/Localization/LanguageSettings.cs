@@ -1,112 +1,86 @@
 ﻿using Sidekick.Helpers.POETradeAPI;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.Localization
 {
     public enum Language
     {
         English,
-        German,
         French,
+        German,
+        Korean,
         Portuguese,
         Russian,
-        Thai,
         Spanish,
-        Korean,
+        Thai
     };
 
     public static class LanguageSettings
     {
-        public static ILanguageProvider Provider { get; private set; } = new LanguageProviderEN();      // Default to english language
+        public static ILanguageProvider Provider { get; private set; } = new LanguageProviderEN();
         public static Language CurrentLanguage { get; private set; } = Language.English;
 
-        private static Dictionary<Language, ILanguageProvider> _providerDictionary = new Dictionary<Language, ILanguageProvider>()
+        private static Dictionary<string, Language> RarityToLanguageDictionary = new Dictionary<string, Language>()
         {
-            { Language.English, new LanguageProviderEN() },
-            { Language.German, new LanguageProviderDE() },
-            { Language.French, new LanguageProviderFR() },
-            { Language.Portuguese, new LanguageProviderPT() },
-            { Language.Russian, new LanguageProviderRU() },
-            { Language.Thai, new LanguageProviderTH() },
-            { Language.Spanish, new LanguageProviderES() },
-            { Language.Korean, new LanguageProviderKR() },
+            { "Rarity: ", Language.English },
+            { "Rareté: ", Language.French },
+            { "Seltenheit: ", Language.German },
+            { "아이템 희귀도: ", Language.Korean },
+            { "Raridade: ", Language.Portuguese },
+            { "Редкость: ", Language.Russian },
+            { "Rareza: ", Language.Spanish },
+            { "ความหายาก: ", Language.Thai }
         };
 
-        private static void ChangeLanguage(Language lang)       // Maybe async?
+        /// <summary>
+        /// Every item should start with Rarity in the first line. 
+        /// This will force the TradeClient to refetch the Public API's data if needed.
+        /// </summary>
+        public static async Task<bool> FindAndSetLanguageProvider(string itemDescription)
         {
-            if (_providerDictionary.ContainsKey(lang))
+            foreach (var item in RarityToLanguageDictionary)
             {
-                Provider = _providerDictionary[lang];
-                CurrentLanguage = lang;
-                TradeClient.FetchAPIData().Wait();
+                if (itemDescription.Contains(item.Key))
+                {
+                    if (CurrentLanguage != item.Value)
+                    {
+                        Logger.Log($"Changed language support to {item.Value}.");
+                        CurrentLanguage = item.Value;
+                        Provider = GetLanguageProvider(item.Value);
+                        TradeClient.Dispose();
+                        return await TradeClient.Initialize();
+                    }
+
+                    return true;
+                }
             }
-            else
-            {
-                throw new Exception("Language not implemented yet");
-            }
+
+            Logger.Log("This Path of Exile language is not yet supported.");
+            return false;
         }
 
-        public static void DetectLanguage(string input)
+        public static ILanguageProvider GetLanguageProvider(Language language)
         {
-            if (input.Contains(_providerDictionary[Language.English].DescriptionRarity))
+            switch (language)
             {
-                if (CurrentLanguage != Language.English)
-                {
-                    ChangeLanguage(Language.English);
-                }
+                case Language.French:
+                    return new LanguageProviderFR();
+                case Language.German:
+                    return new LanguageProviderDE();
+                case Language.Korean:
+                    return new LanguageProviderKR();
+                case Language.Portuguese:
+                    return new LanguageProviderPT();
+                case Language.Russian:
+                    return new LanguageProviderRU();
+                case Language.Spanish:
+                    return new LanguageProviderES();
+                case Language.Thai:
+                    return new LanguageProviderTH();
+                default:
+                    return new LanguageProviderEN(); // English by default.
             }
-            else if (input.Contains(_providerDictionary[Language.German].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.German)
-                {
-                    ChangeLanguage(Language.German);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.French].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.French)
-                {
-                    ChangeLanguage(Language.French);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.Korean].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.Korean)
-                {
-                    ChangeLanguage(Language.Korean);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.Portuguese].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.Portuguese)
-                {
-                    ChangeLanguage(Language.Portuguese);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.Russian].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.Russian)
-                {
-                    ChangeLanguage(Language.Russian);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.Spanish].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.Spanish)
-                {
-                    ChangeLanguage(Language.Spanish);
-                }
-            }
-            else if (input.Contains(_providerDictionary[Language.Thai].DescriptionRarity))
-            {
-                if (CurrentLanguage != Language.Thai)
-                {
-                    ChangeLanguage(Language.Thai);
-                }
-            }
-
-            // Do nothing if random text is copied
         }
     }
 }

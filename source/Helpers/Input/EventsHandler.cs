@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
@@ -99,7 +100,7 @@ namespace Sidekick.Helpers
         {
             Logger.Log("Hotkey for pricing item triggered.");
 
-            Item item = TriggerCopyAction();
+            Item item = await TriggerCopyAction();
             if (item != null)
             {
                 OverlayController.Open();
@@ -116,11 +117,11 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
-        private static void TriggerItemWiki()
+        public static async void TriggerItemWiki()
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
-            var item = TriggerCopyAction();
+            var item = await TriggerCopyAction();
             if (item != null)
             {
                 POEWikiAPI.POEWikiHelper.Open(item);
@@ -142,7 +143,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static Item TriggerCopyAction()
+        private static string GetItemText()
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -150,9 +151,20 @@ namespace Sidekick.Helpers
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+            return itemText;
+        }
+
+        private static async Task<Item> TriggerCopyAction()
+        {
+            var itemText = GetItemText();
 
             // Detect the language of the item in the clipboard.
-            LanguageSettings.DetectLanguage(itemText);
+            var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
+
+            if (!setLanguageSuccess)
+            {
+                return null;
+            }
 
             // Parse and return item
             return ItemParser.ParseItem(itemText);

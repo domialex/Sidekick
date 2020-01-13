@@ -21,8 +21,8 @@ namespace Sidekick.Helpers.POETradeAPI
         public static List<ItemCategory> ItemCategories;
         public static HashSet<string> MapNames;
 
-        private static JsonSerializerSettings _jsonSerializerSettings;
-        private static HttpClient _httpClient;
+        public static JsonSerializerSettings _jsonSerializerSettings;
+        public static HttpClient _httpClient;
         private static bool IsFetching;
         private static bool OneFetchFailed;
 
@@ -30,7 +30,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static League SelectedLeague;
 
-        public static async void Initialize()
+        public static async Task<bool> Initialize()
         {
             if (_jsonSerializerSettings == null)
             {
@@ -42,7 +42,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             if (IsFetching)
             {
-                return;
+                return false;
             }
 
             IsFetching = true;
@@ -57,7 +57,7 @@ namespace Sidekick.Helpers.POETradeAPI
                 Logger.Log("Retrying every minute.");
                 Dispose();
                 await Task.Run(Retry);
-                return;
+                return false;
             }
 
             IsFetching = false;
@@ -69,6 +69,8 @@ namespace Sidekick.Helpers.POETradeAPI
             Logger.Log($"Path of Exile trade data fetched.");
             Logger.Log($"Sidekick is ready, press Ctrl+D over an item in-game to use. Press Escape to close overlay.");
             TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
+
+            return true;
         }
 
         private static async void Retry()
@@ -81,7 +83,7 @@ namespace Sidekick.Helpers.POETradeAPI
             }
             else
             {
-                Initialize();
+                await Initialize();
             }
         }
 
@@ -135,6 +137,7 @@ namespace Sidekick.Helpers.POETradeAPI
                 var isBulk = (item.GetType() == typeof(CurrencyItem) || item.GetType() == typeof(DivinationCardItem));
 
                 StringContent body;
+
                 if (isBulk)
                 {
                     var bulkQueryRequest = new BulkQueryRequest(item);
@@ -169,6 +172,7 @@ namespace Sidekick.Helpers.POETradeAPI
         public static async Task<QueryResult<ListingResult>> GetListings(Item item)
         {
             var queryResult = await Query(item);
+
             if (queryResult != null)
             {
                 var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));

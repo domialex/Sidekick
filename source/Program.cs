@@ -1,4 +1,5 @@
 ﻿using Sidekick.Helpers;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
@@ -25,7 +26,7 @@ namespace Sidekick
             TrayIcon.Initialize();
 
             // Load POE Trade information.
-            TradeClient.Initialize();
+            _ = TradeClient.Initialize();
 
             // Keyboard hooks.
             EventsHandler.Initialize();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sidekick.Helpers.Localization;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -9,20 +10,25 @@ namespace Sidekick.Windows.Overlay.Converters
     {
         private Color GetRarityColor(string rarity)
         {
-            switch (rarity)
+            if (rarity == LanguageSettings.Provider.RarityNormal)
             {
-                case "Normal":
-                    return Color.FromRgb(200, 200, 200);
-                case "Magic":
-                    return Color.FromRgb(136, 136, 255);
-                case "Rare":
-                    return Color.FromRgb(255, 255, 119);
-                case "Unique":
-                    return Color.FromRgb(175, 96, 37);
-                default:
-                    //gem, currency, divination card, quest item, prophecy, relic
-                    return Color.FromRgb(170, 158, 130);
+                return Color.FromRgb(200, 200, 200);
             }
+            if (rarity == LanguageSettings.Provider.RarityMagic)
+            {
+                return Color.FromRgb(136, 136, 255);
+            }
+            if (rarity == LanguageSettings.Provider.RarityRare)
+            {
+                return Color.FromRgb(255, 255, 119);
+            }
+            if (rarity == LanguageSettings.Provider.RarityUnique)
+            {
+                return Color.FromRgb(175, 96, 37);
+            }
+
+            // Gem, Currency, Divination Card, Quest Item, Prophecy, Relic, etc.
+            return Color.FromRgb(170, 158, 130);
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,11 +56,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                             Max = result,
                         };
                     }
-
-                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
-                    {
-                        Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
-                    };
 
                     switch (((EquippableItem)item).Influence)
                     {
