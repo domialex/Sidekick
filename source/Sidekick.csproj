@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <UseWPF>true</UseWPF>
     <TargetFramework>net48</TargetFramework>
+    <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- TODO: Add dotnet core support in MouseKeyHook, remove System.Windows.Forms reference, ... profit
     <TargetFramework>netcoreapp3.1</TargetFramework>

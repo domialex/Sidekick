@@ -1,17 +1,17 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models.TradeData;
-using Sidekick.Helpers.POETradeAPI;
+﻿using Sidekick.Helpers.POETradeAPI;
+using Sidekick.Helpers.POETradeAPI.Models.TradeData;
 using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.Settings;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System;
-
+using Sidekick.Helpers.POEPriceInfoAPI;
 
 namespace Sidekick.Helpers
 {
     public static class TrayIcon
     {
-        static private NotifyIcon _notifyIcon;
-        static private ToolStripMenuItem _leagueSelectMenu;
+        private static NotifyIcon _notifyIcon;
+        private static ToolStripMenuItem _leagueSelectMenu;
 
         public static void Initialize()
         {
@@ -25,20 +25,30 @@ namespace Sidekick.Helpers
             _leagueSelectMenu = new ToolStripMenuItem("League");
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
+            contextMenu.Items.Add("Settings", null, (s, e) => SettingsController.Show());
             contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
             contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
-        public static void PopulateLeagueSelectMenu(List<League> leagues) {
-            foreach(League l in leagues) {
-                var menuItem = new ToolStripMenuItem(l.Id);
-                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem t in _leagueSelectMenu.DropDownItems) { t.Checked = false; } };
+        public static void PopulateLeagueSelectMenu(List<League> leagues)
+        {
+            if(_leagueSelectMenu.DropDownItems.Count > 0)
+            {
+                // TODO: Fix Cross-thread operation not valid after changing language.
+                return;
+            }
+
+            foreach (var league in leagues)
+            {
+                var menuItem = new ToolStripMenuItem(league.Id);
+                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = l; };
+                menuItem.Click += (s, e) => { TradeClient.SelectedLeague = league; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
-            //select the first league as the default
+
+            // Select the first league as the default.
             _leagueSelectMenu.DropDownItems[0].PerformClick();
         }
 

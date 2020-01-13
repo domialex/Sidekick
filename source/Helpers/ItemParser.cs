@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POETradeAPI;
+using Sidekick.Helpers.POETradeAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Helpers.POETradeAPI.Models;
-using Sidekick.Helpers.Localization;
-using Sidekick.Helpers.POETradeAPI;
+using Sidekick.Helpers.POEPriceInfoAPI;
 
 namespace Sidekick.Helpers
 {
     public static class ItemParser
     {
-        private static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
-        private static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
+        public static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
+        public static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
 
         /// <summary>
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
@@ -19,7 +20,7 @@ namespace Sidekick.Helpers
         public static Item ParseItem(string text)
         {
             Item item = null;
-            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted;
+            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
 
             try
             {
@@ -32,10 +33,11 @@ namespace Sidekick.Helpers
                 isCorrupted = lines.Any(x => x == LanguageSettings.Provider.DescriptionCorrupted);
                 isMap = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionMapTier));
                 isBlighted = lines.Any(x => x.Contains(LanguageSettings.Provider.PrefixBlighted));
+                hasNote = lines.LastOrDefault().Contains("Note");
 
                 var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
 
-                if(isMap)
+                if (isMap)
                 {
                     item = new MapItem()
                     {
@@ -46,22 +48,22 @@ namespace Sidekick.Helpers
                         Rarity = rarity,
                     };
 
-                    if(rarity == LanguageSettings.Provider.RarityNormal)
+                    if (rarity == LanguageSettings.Provider.RarityNormal)
                     {
                         item.Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim();
                         item.Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
+                    else if (rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
                     {
                         item.Name = LanguageSettings.Provider.PrefixBlighted + " " + TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
                         item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityRare)
+                    else if (rarity == LanguageSettings.Provider.RarityRare)
                     {
                         item.Name = lines[2].Trim();
                         item.Type = lines[2].Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if(rarity == LanguageSettings.Provider.RarityUnique)
+                    else if (rarity == LanguageSettings.Provider.RarityUnique)
                     {
                         if (!isIdentified)
                         {
@@ -75,7 +77,7 @@ namespace Sidekick.Helpers
 
                     ((MapItem)item).IsBlight = isBlighted ? "true" : "false";
                 }
-                else if(rarity == LanguageSettings.Provider.RarityUnique)
+                else if (rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     item = new EquippableItem
                     {
@@ -94,12 +96,12 @@ namespace Sidekick.Helpers
                         };
                     }
                 }
-                else if(rarity == LanguageSettings.Provider.RarityRare)
+                else if (rarity == LanguageSettings.Provider.RarityRare)
                 {
                     item = new EquippableItem()
                     {
-                    	Name = lines[1],
-                    	Type = lines[2],
+                        Name = lines[1],
+                        Type = lines[2],
                         ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
                     };
 
@@ -114,27 +116,38 @@ namespace Sidekick.Helpers
                         };
                     }
 
-                    var influence = GetInfluenceType(lines.LastOrDefault());
-
-                    ((EquippableItem)item).Influence = influence;
+                    if (hasNote)
+                    {
+                        ((EquippableItem)item).Influence = GetInfluenceType(lines[lines.Length - 3]);
+                    }
+                    else
+                    {
+                        ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
+                    }
                 }
-                else if(rarity == LanguageSettings.Provider.RarityMagic)
+                else if (rarity == LanguageSettings.Provider.RarityMagic)
                 {
-                    throw new Exception("Magic items not supported for now.");
+                    throw new Exception("Magic items are not yet supported.");
                 }
-                else if(rarity == LanguageSettings.Provider.RarityNormal)
+                else if (rarity == LanguageSettings.Provider.RarityNormal)
                 {
                     if (lines.Any(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)))      // Equippable Item
                     {
                         item = new EquippableItem()
                         {
                             Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
-							Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
+                            Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
                             ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
                         };
 
-                        var influence = GetInfluenceType(lines.LastOrDefault());
-                        ((EquippableItem)item).Influence = influence;
+                        if (hasNote)
+                        {
+                            ((EquippableItem)item).Influence = GetInfluenceType(lines[lines.Length - 3]);
+                        }
+                        else
+                        {
+                            ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
+                        }
 
                         var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
 
@@ -147,7 +160,7 @@ namespace Sidekick.Helpers
                             };
                         }
                     }
-                    else if(lines.Any(c => c.Contains(LanguageSettings.Provider.KeywordProphecy)))      // Prophecy
+                    else if (lines.Any(c => c.Contains(LanguageSettings.Provider.KeywordProphecy)))      // Prophecy
                     {
                         item = new ProphecyItem()
                         {
@@ -159,12 +172,12 @@ namespace Sidekick.Helpers
                     {
                         item = new FragmentItem()
                         {
-							Name = lines[1],
+                            Name = lines[1],
                             Type = lines[1],
                         };
                     }
                 }
-                else if(rarity == LanguageSettings.Provider.RarityCurrency)
+                else if (rarity == LanguageSettings.Provider.RarityCurrency)
                 {
                     item = new CurrencyItem()
                     {
@@ -172,7 +185,7 @@ namespace Sidekick.Helpers
                         Type = lines[1]
                     };
                 }
-                else if(rarity == LanguageSettings.Provider.RarityGem)
+                else if (rarity == LanguageSettings.Provider.RarityGem)
                 {
                     item = new GemItem()
                     {
@@ -193,7 +206,7 @@ namespace Sidekick.Helpers
                         item.Type = vaalName;
                     }
                 }
-                else if(rarity == LanguageSettings.Provider.RarityDivinationCard)
+                else if (rarity == LanguageSettings.Provider.RarityDivinationCard)
                 {
                     item = new DivinationCardItem()
                     {
@@ -205,15 +218,15 @@ namespace Sidekick.Helpers
                 {
                     throw new NotImplementedException();
                 }
-              
-                if(item != null && string.IsNullOrEmpty(item.Rarity))
+
+                if (item != null && string.IsNullOrEmpty(item.Rarity))
                 {
                     item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
                 }
             }
             catch (Exception e)
             {
-                Logger.LogException("Could not parse item", e);
+                Logger.Log("Could not parse item. " + e.Message);
                 return null;
             }
 
@@ -223,7 +236,7 @@ namespace Sidekick.Helpers
 
         internal static string GetNumberFromString(string input)
         {
-            if(string.IsNullOrEmpty(input))     // Default return 0
+            if (string.IsNullOrEmpty(input))     // Default return 0
             {
                 return "0";
             }
@@ -258,7 +271,7 @@ namespace Sidekick.Helpers
 
         internal static int GetLinkCount(string input)
         {
-            if(input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
+            if (input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
             {
                 return 0;
             }
@@ -282,27 +295,27 @@ namespace Sidekick.Helpers
 
         internal static InfluenceType GetInfluenceType(string input)
         {
-            if(input.Contains(LanguageSettings.Provider.InfluenceShaper))
+            if (input.Contains(LanguageSettings.Provider.InfluenceShaper))
             {
                 return InfluenceType.Shaper;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceElder))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceElder))
             {
                 return InfluenceType.Elder;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceCrusader))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceCrusader))
             {
                 return InfluenceType.Crusader;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceHunter))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceHunter))
             {
                 return InfluenceType.Hunter;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
             {
                 return InfluenceType.Redeemer;
             }
-            else if(input.Contains(LanguageSettings.Provider.InfluenceWarlord))
+            else if (input.Contains(LanguageSettings.Provider.InfluenceWarlord))
             {
                 return InfluenceType.Warlord;
             }

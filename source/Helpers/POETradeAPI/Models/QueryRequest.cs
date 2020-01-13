@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Sidekick.Helpers.Localization;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
             if (itemType == typeof(EquippableItem))
             {
-                if(((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
+                if (((EquippableItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
                     Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
@@ -40,19 +41,66 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         throw new Exception("Couldn't parse Item Level");
                     }
 
-                    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                    if (result >= 86)
                     {
-                        Min = result,
-                        Max = result,
-                    };
-
-                    Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
+                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                        {
+                            Min = 86
+                        };
+                    }
+                    else
                     {
-                        Option = ((EquippableItem)item).Rarity.ToLowerInvariant(),
-                    };
-                }             
+                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                        {
+                            Min = result,
+                            Max = result,
+                        };
+                    }
 
-                if(((EquippableItem)item).Links != null)        // Auto Search 5+ Links
+                    switch (((EquippableItem)item).Influence)
+                    {
+                        case InfluenceType.None:
+                            break;
+                        case InfluenceType.Shaper:
+                            Query.Filters.MiscFilters.Filters.ShaperItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Crusader:
+                            Query.Filters.MiscFilters.Filters.CrusaderItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Elder:
+                            Query.Filters.MiscFilters.Filters.ElderItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Hunter:
+                            Query.Filters.MiscFilters.Filters.HunterItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Redeemer:
+                            Query.Filters.MiscFilters.Filters.RedeemerItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                        case InfluenceType.Warlord:
+                            Query.Filters.MiscFilters.Filters.WarlordItem = new FilterOption()
+                            {
+                                Option = "true"
+                            };
+                            break;
+                    }
+                }
+
+                if (((EquippableItem)item).Links != null)        // Auto Search 5+ Links
                 {
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
@@ -97,7 +145,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
             {
                 Query.Type = item.Type;
             }
-            else if(itemType == typeof(MapItem))
+            else if (itemType == typeof(MapItem))
             {
                 if (((MapItem)item).Rarity == LanguageSettings.Provider.RarityUnique)
                 {
@@ -114,8 +162,8 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                         Option = "nonunique",
                     };
                 }
-                
-                if(!int.TryParse(((MapItem)item).MapTier, out var result))
+
+                if (!int.TryParse(((MapItem)item).MapTier, out var result))
                 {
                     throw new Exception("Unable to parse Map Tier");
                 }
@@ -131,7 +179,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                     Option = ((MapItem)item).IsBlight,
                 };
             }
-            else if(itemType == typeof(ProphecyItem))
+            else if (itemType == typeof(ProphecyItem))
             {
                 Query.Name = item.Name;
             }
@@ -202,7 +250,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
                 Exchange.Want.Add(itemId);
                 Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
             }
-            else if(itemType == typeof(DivinationCardItem))
+            else if (itemType == typeof(DivinationCardItem))
             {
                 var itemId = TradeClient.StaticItemCategories.Where(c => c.Id == "Cards").FirstOrDefault().Entries.Where(c => c.Text == item.Name).FirstOrDefault().Id;
                 Exchange.Want.Add(itemId);
