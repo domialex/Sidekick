@@ -10,6 +10,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Sidekick.Windows.Settings;
+using Sidekick.Windows.Settings.Models;
 
 namespace Sidekick.Helpers.POETradeAPI
 {
@@ -32,6 +34,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static async Task<bool> Initialize()
         {
+            var settings = SettingsController.GetSettingsInstance();
             if (_jsonSerializerSettings == null)
             {
                 _jsonSerializerSettings = new JsonSerializerSettings();
@@ -67,8 +70,8 @@ namespace Sidekick.Helpers.POETradeAPI
             IsReady = true;
 
             Logger.Log($"Path of Exile trade data fetched.");
-            Logger.Log($"Sidekick is ready, press Ctrl+D over an item in-game to use. Press Escape to close overlay.");
-            TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
+            Logger.Log($"Sidekick is ready, press {settings.KeybindSettings[KeybindSetting.PriceCheck].ToString()} over an item in-game to use. Press {settings.KeybindSettings[KeybindSetting.CloseWindow].ToString()} to close overlay.");
+            TrayIcon.SendNotification($"Press {settings.KeybindSettings[KeybindSetting.PriceCheck].ToString()} over an item in-game to use. Press {settings.KeybindSettings[KeybindSetting.CloseWindow].ToString()} to close overlay.", "Sidekick is ready");
 
             return true;
         }
@@ -167,6 +170,27 @@ namespace Sidekick.Helpers.POETradeAPI
 
             return result;
 
+        }
+
+        public static async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Item item, int nextPageToFetch)
+        {
+            var queryResult = await Query(item);
+
+            if (queryResult != null)
+            {
+                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 2).Select(x => GetListings(queryResult, x)));
+
+                return new QueryResult<ListingResult>()
+                {
+                    Id = queryResult.Id,
+                    Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
+                    Total = queryResult.Total,
+                    Item = item,
+                    Uri = queryResult.Uri
+                };
+            }
+
+            return null;
         }
 
         public static async Task<QueryResult<ListingResult>> GetListings(Item item)
