@@ -7,7 +7,8 @@ namespace Sidekick.Windows.Settings.Models
 {
     public enum GeneralSetting
     {
-        None
+        None,
+        CharacterName
     }
 
     public enum KeybindSetting
@@ -16,7 +17,9 @@ namespace Sidekick.Windows.Settings.Models
         CloseWindow,
         PriceCheck,
         Hideout,
-        ItemWiki
+        ItemWiki,
+        FindItems,
+        LeaveParty
     }
 
     public class Settings

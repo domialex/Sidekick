@@ -216,7 +216,26 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <GroupBox Header="Settings Group 1" Grid.Row="0" Grid.Column="0"></GroupBox>
+                    <GroupBox Header="Settings Group 1" Grid.Row="0" Grid.Column="0">
+                        <ItemsControl ItemsSource="{Binding Path=Settings.GeneralSettings}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding Path=Key, StringFormat = {}{0}: }" BorderBrush="{DynamicResource PrimaryColor}" IsReadOnly="True">
+                                            <TextBox.ContextMenu>
+                                                <ContextMenu Visibility="Collapsed"/>
+                                            </TextBox.ContextMenu>
+                                        </TextBox>
+                                        <TextBox Grid.Column="1" Text="{Binding Path=Value}" IsReadOnly="False" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </GroupBox>
                     <GroupBox Header="Settings Group 2" Grid.Row="0" Grid.Column="1"></GroupBox>
                     <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0"></GroupBox>
                     <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1"></GroupBox>
