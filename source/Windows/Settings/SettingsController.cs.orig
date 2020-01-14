@@ -49,6 +49,10 @@ namespace Sidekick.Windows.Settings
                 settings.KeybindSettings.Add(Models.KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
                 settings.KeybindSettings.Add(Models.KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
                 settings.KeybindSettings.Add(Models.KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
+<<<<<<< HEAD
+                settings.CurrentWikiSettings = Models.WikiSetting.PoeWiki;
+                // TODO: Add more default settings
+=======
                 settings.KeybindSettings.Add(Models.KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
                 settings.KeybindSettings.Add(Models.KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
 
@@ -56,6 +60,7 @@ namespace Sidekick.Windows.Settings
                 settings.GeneralSettings.Add(Models.GeneralSetting.CharacterName, string.Empty);
 
                 // #TODO: Add more default settings
+>>>>>>> 363166d06892ea149eea9187c3a18804707f68e9
                 return settings;
             }
             catch (Exception)
@@ -135,8 +140,13 @@ namespace Sidekick.Windows.Settings
                     File.Delete(SETTINGS_PATH);
                 }
 
+<<<<<<< HEAD
+                string settingsString = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                File.WriteAllText(settingsPath, settingsString);
+=======
                 string settingsString = JsonConvert.SerializeObject(_settings, Formatting.Indented);
                 File.WriteAllText(SETTINGS_PATH, settingsString);
+>>>>>>> 363166d06892ea149eea9187c3a18804707f68e9
             }
             catch (Exception)
             {
