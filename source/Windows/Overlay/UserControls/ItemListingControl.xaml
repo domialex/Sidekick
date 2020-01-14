@@ -13,6 +13,8 @@
     </d:DesignerProperties.DesignStyle>
 
     <UserControl.Resources>
+        <SolidColorBrush x:Key="TextColor" Color="#FFE6E6E6" />
+        
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
