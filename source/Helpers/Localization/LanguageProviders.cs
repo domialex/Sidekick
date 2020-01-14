@@ -356,8 +356,8 @@ namespace Sidekick.Helpers.Localization
 
     public class LanguageProviderZHTW : ILanguageProvider
     {
-        public Uri PoeTradeSearchBaseUrl => new Uri("http://web.poe.garena.tw/api/search/");
-        public Uri PoeTradeExchangeBaseUrl => new Uri("http://web.poe.garena.tw/api/exchange/");
+        public Uri PoeTradeSearchBaseUrl => new Uri("http://web.poe.garena.tw/trade/search/");
+        public Uri PoeTradeExchangeBaseUrl => new Uri("http://web.poe.garena.tw/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("http://web.poe.garena.tw/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("http://web.poe.garena.tw/");
         public string RarityUnique => "傳奇";
