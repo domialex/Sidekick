@@ -21,7 +21,7 @@ namespace Sidekick.Helpers.POETradeAPI
         public static List<ItemCategory> ItemCategories;
         public static HashSet<string> MapNames;
 
-        private static JsonSerializerSettings _jsonSerializerSettings;
+        public static JsonSerializerSettings _jsonSerializerSettings;
         private static bool IsFetching;
         private static bool OneFetchFailed;
 

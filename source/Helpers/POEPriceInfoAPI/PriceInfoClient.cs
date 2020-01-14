@@ -25,7 +25,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
 
             try
             {
-                var response = await TradeClient._httpClient.GetAsync(requestUrl);
+                var response = await HttpClientProvider.GetHttpClient().GetAsync(requestUrl);
 
                 if(response.IsSuccessStatusCode)
                 {
@@ -35,7 +35,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
                     return priceInfo;
                 }
             }
-            catch(Exception ex)
+            catch
             {
                 Logger.Log("Error getting price prediction from item: " + itemText, LogState.Error);
             }
