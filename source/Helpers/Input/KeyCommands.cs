@@ -9,5 +9,9 @@
         public const string STASH_LEFT = "{Left}";
         public const string STASH_RIGHT = "{Right}";
         public const string COPY = "^{c}";
+
+        public const string FIND_ITEMS = "^{f}^{a}^{v}{Enter}";
+
+        public const string LEAVE_PARTY = "{Enter}/kick {name}{Enter}"; // replaces {name} in send so keep that as is
     }
 }

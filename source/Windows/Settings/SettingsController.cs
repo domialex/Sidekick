@@ -2,16 +2,22 @@
 using Sidekick.Helpers;
 using System;
 using System.IO;
+using System.Windows.Forms.Integration;
 using System.Windows.Input;
 
 namespace Sidekick.Windows.Settings
 {
     public static class SettingsController
     {
+        private static readonly string SETTINGS_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
+        private static readonly int WINDOW_WIDTH = 480;
+        private static readonly int WINDOW_HEIGHT = 320;
+
         private static SettingsView _settingsView;
+        private static Models.Settings _settings;
+
         public static bool IsDisplayed => _settingsView != null && _settingsView.IsDisplayed;
-        private static int WINDOW_WIDTH = 480;
-        private static int WINDOW_HEIGHT = 320;
+
         public static void Show()
         {
             if (_settingsView == null)
@@ -20,12 +26,12 @@ namespace Sidekick.Windows.Settings
             }
 
             _settingsView.Activate();
+
+            // When running a tray app with a call to 'Application.Run()' instead of opening a MainWindow
+            // we need this to capture keyboard input for our window
+            ElementHost.EnableModelessKeyboardInterop(_settingsView);
             _settingsView.OnWindowClosed += (s, e) => _settingsView = null;
         }
-
-        private static readonly string settingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
-
-        private static Models.Settings settings;
 
         /// <summary>
         /// Loads the default settings
@@ -37,11 +43,19 @@ namespace Sidekick.Windows.Settings
             {
                 Logger.Log("Loading default settings");
                 var settings = new Models.Settings();
+
+                /* KeybindSettings */
                 settings.KeybindSettings.Add(Models.KeybindSetting.CloseWindow, new Models.Hotkey(System.Windows.Forms.Keys.Escape, System.Windows.Forms.Keys.None));
                 settings.KeybindSettings.Add(Models.KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
                 settings.KeybindSettings.Add(Models.KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
                 settings.KeybindSettings.Add(Models.KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
-                // TODO: Add more default settings
+                settings.KeybindSettings.Add(Models.KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
+                settings.KeybindSettings.Add(Models.KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
+
+                /* GeneralSettings */
+                settings.GeneralSettings.Add(Models.GeneralSetting.CharacterName, string.Empty);
+
+                // #TODO: Add more default settings
                 return settings;
             }
             catch (Exception)
@@ -53,13 +67,13 @@ namespace Sidekick.Windows.Settings
 
         public static Models.Settings GetSettingsInstance()
         {
-            if(settings == null)
+            if(_settings == null)
             {
                 return LoadSettings();
             }
             else
             {
-                return settings;
+                return _settings;
             }
         }
 
@@ -78,25 +92,25 @@ namespace Sidekick.Windows.Settings
             {
                 Logger.Log("Loading settings");
                 string settingsString = null;
-                if (File.Exists(settingsPath))
+                if (File.Exists(SETTINGS_PATH))
                 {
-                    settingsString = File.ReadAllText(settingsPath);
+                    settingsString = File.ReadAllText(SETTINGS_PATH);
                 }
 
                 //If settings have never been initialized, create new settings, otherwise clear and reload settings
-                if (settings == null) settings = new Models.Settings();
-                else settings.Clear();
+                if (_settings == null) _settings = new Models.Settings();
+                else _settings.Clear();
 
                 if (String.IsNullOrEmpty(settingsString))
                 {
-                    settings = LoadDefaultSettings();
+                    _settings = LoadDefaultSettings();
                 }
                 else
                 {
-                    settings = JsonConvert.DeserializeObject<Models.Settings>(settingsString);
+                    _settings = JsonConvert.DeserializeObject<Models.Settings>(settingsString);
                     // TODO: Add new settings, that aren't in the settings file yet
                 }
-                return settings;
+                return _settings;
             }
             catch (Exception)
             {
@@ -113,15 +127,16 @@ namespace Sidekick.Windows.Settings
             try
             {
                 Logger.Log("Saving settings");
+				
                 // Backup old settings
-                if (File.Exists(settingsPath))
+                if (File.Exists(SETTINGS_PATH))
                 {
-                    File.Copy(settingsPath, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json.old"), true);
-                    File.Delete(settingsPath);
+                    File.Copy(SETTINGS_PATH, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json.old"), true);
+                    File.Delete(SETTINGS_PATH);
                 }
 
-                string settingsString = JsonConvert.SerializeObject(settings);
-                File.WriteAllText(settingsPath, settingsString);
+                string settingsString = JsonConvert.SerializeObject(_settings, Formatting.Indented);
+                File.WriteAllText(SETTINGS_PATH, settingsString);
             }
             catch (Exception)
             {
