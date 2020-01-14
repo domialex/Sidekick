@@ -11,6 +11,7 @@ namespace Sidekick
     class Program
     {
         static readonly string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
+        public static System.Windows.Threading.Dispatcher MAIN_DISPATCHER { get; private set; } = null;
 
         [STAThread]
         static void Main()
@@ -35,6 +36,7 @@ namespace Sidekick
             OverlayController.Initialize();
 
             // Run window.
+            MAIN_DISPATCHER = System.Windows.Threading.Dispatcher.CurrentDispatcher;
             Application.ApplicationExit += OnApplicationExit;
             Application.Run();
         }
@@ -45,6 +47,7 @@ namespace Sidekick
             TradeClient.Dispose();
             EventsHandler.Dispose();
             OverlayController.Dispose();
+            MAIN_DISPATCHER = null;
         }
     }
 }
