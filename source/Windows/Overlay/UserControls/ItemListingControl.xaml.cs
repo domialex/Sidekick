@@ -22,7 +22,9 @@ namespace Sidekick.Windows.Overlay.UserControls
             itemLevelTextbox.Text = listingResult.Item.Ilvl.ToString();
             ageTextbox.Text = GetHumanReadableTimeSpan(listingResult.Listing.Indexed);
             if (listingResult.Item.Corrupted)
-                priceTextbox.Foreground = Brushes.Red;
+            {
+                priceTextbox.Foreground = new SolidColorBrush(Color.FromRgb(210, 0, 0));
+            }
         }
 
         private string GetHumanReadableTimeSpan(DateTime time)
