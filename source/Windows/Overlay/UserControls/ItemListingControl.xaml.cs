@@ -1,6 +1,7 @@
 ﻿using Sidekick.Helpers.POETradeAPI.Models;
 using System;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Sidekick.Windows.Overlay.UserControls
 {
@@ -20,6 +21,10 @@ namespace Sidekick.Windows.Overlay.UserControls
             priceTextbox.Text = listingResult.Listing.Price?.Amount + " " + listingResult.Listing.Price?.Currency;
             itemLevelTextbox.Text = listingResult.Item.Ilvl.ToString();
             ageTextbox.Text = GetHumanReadableTimeSpan(listingResult.Listing.Indexed);
+            if (listingResult.Item.Corrupted)
+            {
+                priceTextbox.Foreground = new SolidColorBrush(Color.FromRgb(210, 0, 0));
+            }
         }
 
         private string GetHumanReadableTimeSpan(DateTime time)

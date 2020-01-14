@@ -37,6 +37,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public string TypeLine { get; set; }
         public bool Verified { get; set; }
         public bool Identified { get; set; }
+        public bool Corrupted { get; set; }
         public int Ilvl { get; set; }
     }
 }
