@@ -13,7 +13,8 @@ namespace Sidekick.Helpers.Localization
         Portuguese,
         Russian,
         Spanish,
-        Thai
+        Thai,
+        TraditionalChinese,
     };
 
     public static class LanguageSettings
@@ -30,7 +31,8 @@ namespace Sidekick.Helpers.Localization
             { "Raridade: ", Language.Portuguese },
             { "Редкость: ", Language.Russian },
             { "Rareza: ", Language.Spanish },
-            { "ความหายาก: ", Language.Thai }
+            { "ความหายาก: ", Language.Thai },
+            { "稀有度: ", Language.TraditionalChinese },
         };
 
         /// <summary>
@@ -78,6 +80,8 @@ namespace Sidekick.Helpers.Localization
                     return new LanguageProviderES();
                 case Language.Thai:
                     return new LanguageProviderTH();
+                case Language.TraditionalChinese:
+                    return new LanguageProviderZHTW();
                 default:
                     return new LanguageProviderEN(); // English by default.
             }
