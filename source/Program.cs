@@ -1,4 +1,5 @@
 ﻿using Sidekick.Helpers;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
@@ -34,16 +35,20 @@ namespace Sidekick
             OverlayController.Initialize();
 
             // Run window.
-            Application.ApplicationExit += OnApplicationExit;
+            Application.ThreadExit += ThreadExit;
             Application.Run();
         }
 
-        private static void OnApplicationExit(object sender, EventArgs e)
+        private static void ThreadExit(object sender, EventArgs e)
         {
-            TrayIcon.Dispose();
-            TradeClient.Dispose();
-            EventsHandler.Dispose();
-            OverlayController.Dispose();
+            // check that the main thread is about to exit
+            if (SynchronizationContext.Current != null)
+            {
+                TrayIcon.Dispose();
+                TradeClient.Dispose();
+                EventsHandler.Dispose();
+                OverlayController.Dispose();
+            }
         }
     }
 }

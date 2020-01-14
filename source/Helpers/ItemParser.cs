@@ -4,13 +4,14 @@ using Sidekick.Helpers.POETradeAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sidekick.Helpers.POEPriceInfoAPI;
 
 namespace Sidekick.Helpers
 {
     public static class ItemParser
     {
-        private static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
-        private static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
+        public static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
+        public static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
 
         /// <summary>
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
@@ -229,7 +230,7 @@ namespace Sidekick.Helpers
                 return null;
             }
 
-            item.IsCorrupted = isCorrupted ? "true" : "false";
+            item.IsCorrupted = isCorrupted;
             return item;
         }
 
@@ -327,7 +328,7 @@ namespace Sidekick.Helpers
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string IsCorrupted { get; set; }
+        public bool IsCorrupted { get; set; }
         public string Rarity { get; set; }
     }
 

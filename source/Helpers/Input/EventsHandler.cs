@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
@@ -8,6 +9,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Windows.Settings;
+using Sidekick.Windows.Settings.Models;
 
 namespace Sidekick.Helpers
 {
@@ -33,29 +36,43 @@ namespace Sidekick.Helpers
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
         {
+            if(SettingsController.IsDisplayed)
+            {
+                SettingsController.CaptureKeyEvents(e.KeyCode, e.Modifiers);
+                return;
+            }
+
             if (!TradeClient.IsReady)
             {
                 return;
             }
 
-            if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
+            var settings = SettingsController.GetSettingsInstance();
+            var setting = settings.GetKeybindSetting(e.KeyCode, e.Modifiers);
+
+            //if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
+            if (OverlayController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {
                 e.Handled = true;
                 OverlayController.Hide();
             }
             else if (ProcessHelper.IsPathOfExileInFocus())
             {
-                if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
+
+                //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
+                if (!OverlayController.IsDisplayed && setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
                 }
-                else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
+                //else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
+                else if (setting == KeybindSetting.ItemWiki)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemWiki);
                 }
-                else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
+                //else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
+                else if (setting == KeybindSetting.Hideout)
                 {
                     e.Handled = true;
                     Task.Run(TriggerHideout);
@@ -100,7 +117,7 @@ namespace Sidekick.Helpers
             OverlayController.Hide();
         }
 
-        private static async void TriggerItemWiki()
+        public static async void TriggerItemWiki()
         {
             Logger.Log("Hotkey for opening wiki triggered.");
 
@@ -126,7 +143,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static async Task<Item> TriggerCopyAction()
+        private static string GetItemText()
         {
             // Trigger copy action.
             SendKeys.SendWait(Input.KeyCommands.COPY);
@@ -134,9 +151,16 @@ namespace Sidekick.Helpers
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+            return itemText;
+        }
+
+        private static async Task<Item> TriggerCopyAction()
+        {
+            var itemText = GetItemText();
 
             // Detect the language of the item in the clipboard.
             var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
+
             if (!setLanguageSuccess)
             {
                 return null;
@@ -148,7 +172,12 @@ namespace Sidekick.Helpers
 
         public static void Dispose()
         {
-            _globalHook?.Dispose();
+            if (_globalHook != null)
+            {
+                _globalHook.KeyDown -= GlobalHookKeyPressHandler;
+                _globalHook.MouseWheelExt -= GlobalHookMouseScrollHandler;
+                _globalHook.Dispose();
+            }
         }
     }
 }
