@@ -41,6 +41,7 @@ namespace Sidekick.Windows.Settings
                 settings.KeybindSettings.Add(Models.KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
                 settings.KeybindSettings.Add(Models.KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
                 settings.KeybindSettings.Add(Models.KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
+                settings.CurrentWikiSettings = Models.WikiSetting.PoeWiki;
                 // TODO: Add more default settings
                 return settings;
             }
@@ -87,7 +88,7 @@ namespace Sidekick.Windows.Settings
                 if (settings == null) settings = new Models.Settings();
                 else settings.Clear();
 
-                if (String.IsNullOrEmpty(settingsString))
+                if (string.IsNullOrEmpty(settingsString))
                 {
                     settings = LoadDefaultSettings();
                 }
@@ -120,7 +121,7 @@ namespace Sidekick.Windows.Settings
                     File.Delete(settingsPath);
                 }
 
-                string settingsString = JsonConvert.SerializeObject(settings);
+                string settingsString = JsonConvert.SerializeObject(settings, Formatting.Indented);
                 File.WriteAllText(settingsPath, settingsString);
             }
             catch (Exception)
