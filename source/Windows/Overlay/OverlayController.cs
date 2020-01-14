@@ -1,6 +1,7 @@
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Helpers.POETradeAPI.Models;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -30,11 +31,13 @@ namespace Sidekick.Windows.Overlay
             _overlayWindow.ItemScrollReachedEnd += Window_ItemScrollReachedEnd;
         }
 
-        private static void Window_ItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
+        private static async void Window_ItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
         {
-            var queryResult = Task.Run(() => TradeClient.GetListingsForSubsequentPages(item, (int)System.Math.Ceiling(displayedItemsCount / 10d))).Result;
-            if(queryResult.Result.Count > 0)
+            var queryResult = await TradeClient.GetListingsForSubsequentPages(item, (int)System.Math.Ceiling(displayedItemsCount / 10d));
+            if (queryResult.Result.Any())
+            {
                 _overlayWindow.AppendQueryResult(queryResult);
+            }
         }
 
         public static void Dispose()
