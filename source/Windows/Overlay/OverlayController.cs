@@ -33,7 +33,8 @@ namespace Sidekick.Windows.Overlay
         private static void Window_ItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
         {
             var queryResult = Task.Run(() => TradeClient.GetListingsForSubsequentPages(item, (int)System.Math.Ceiling(displayedItemsCount / 10d))).Result;
-            _overlayWindow.AppendQueryResult(queryResult);
+            if(queryResult.Result.Count > 0)
+                _overlayWindow.AppendQueryResult(queryResult);
         }
 
         public static void Dispose()

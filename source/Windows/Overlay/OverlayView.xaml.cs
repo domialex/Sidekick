@@ -4,19 +4,48 @@ using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Sidekick.Windows.Overlay
 {
-    public partial class OverlayWindow : Window
+    public partial class OverlayWindow : Window, INotifyPropertyChanged
     {
+        #region Events
+        public delegate void ItemScrollReachedEndHandler(Helpers.Item item, int displayedItemsCount);
+        public event ItemScrollReachedEndHandler ItemScrollReachedEnd;
+        public void OnItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
+        {
+            ItemScrollReachedEnd?.Invoke(item, displayedItemsCount);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+        public ObservableCollection<ListItem> itemListingControls { get; set; } = new ObservableCollection<ListItem>();
+
+        private QueryResult<ListingResult> queryResultValue = new QueryResult<ListingResult>();
+        public QueryResult<ListingResult> queryResult 
+        {
+            get { return queryResultValue; }
+            set { queryResultValue = value; NotifyPropertyChanged(); }
+        }
+
+        private bool overlayIsUpdatable = false;
+        private bool dataIsUpdating = false;
+
         public OverlayWindow(int width, int height)
         {
             Width = width;
             Height = height;
             InitializeComponent();
+            DataContext = this;
             Hide();
         }
 
@@ -41,12 +70,10 @@ namespace Sidekick.Windows.Overlay
                     return;
                 }
 
-                var itemListingControls = queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList();
-                DataContext = new
-                {
-                    queryResult,
-                    itemListingControls
-                };
+                this.queryResult = queryResult;
+                this.itemListingControls?.Clear();
+                
+                queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(i => this.itemListingControls?.Add(i));
             }
         }
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
@@ -64,39 +91,26 @@ namespace Sidekick.Windows.Overlay
                     return;
                 }
 
-                // TODO: Get this to work, so infinite scroll works
-                //ReadDataContext(out QueryResult<ListingResult> queryResult, out List<ListItem> itemListingControls);
+                // Update queryResult
+                var newQueryResult = new QueryResult<ListingResult>();
+                newQueryResult.Id = this.queryResult.Id;
+                newQueryResult.Item = this.queryResult.Item;
+                newQueryResult.Total = queryToAppend.Total;
+                newQueryResult.Uri = this.queryResult.Uri;
 
-                ////append newly fetched result to query and refresh total count
-                //queryResult.Total = queryResult.Total;
-                //queryResult.Result.AddRange(queryResult.Result);
+                var newResults = new List<ListingResult>();
+                newResults.AddRange(this.queryResult.Result);
+                newResults.AddRange(queryToAppend.Result);
+                newQueryResult.Result = newResults;
 
-                ////append newly fetched items
-                //itemListingControls.AddRange(queryToAppend.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList());
+                this.queryResult = newQueryResult;
+                queryToAppend.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(item => this.itemListingControls.Add(item));
 
-                //DataContext = new
-                //{
-                //    queryResult,
-                //    itemListingControls
-                //};
+                dataIsUpdating = false;
             }
         }
         delegate void AppendQueryResultCallback(QueryResult<ListingResult> queryResult);
-
-        /// <summary>
-        /// Used to cast anonymous types
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="typeHolder"></param>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        private T Cast<T>(T typeHolder, object x)
-        {
-            return (T)x;
-        }
-
-        
-
+       
         public void SetWindowPosition(int x, int y)
         {
             if (!Dispatcher.CheckAccess())
@@ -109,7 +123,6 @@ namespace Sidekick.Windows.Overlay
                 Top = y;
             }
         }
-
         delegate void SetWindowPositionCallback(int x, int y);
 
         public void ShowWindow()
@@ -120,11 +133,11 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
+                dataIsUpdating = false;
                 _itemList.ScrollToTop();
                 Visibility = Visibility.Visible;
             }
         }
-
         delegate void ShowWindowCallback();
 
         public void HideWindowAndClearData()
@@ -134,43 +147,32 @@ namespace Sidekick.Windows.Overlay
                 Dispatcher.Invoke(new HideWindowAndClearDataCallback(HideWindowAndClearData));
             }
             else
-            {
-                DataContext = null;
+            {             
+                this.queryResult = null;
+                this.itemListingControls = new ObservableCollection<ListItem>();
+                NotifyPropertyChanged("itemListingControls");
                 Visibility = Visibility.Hidden;
             }
         }
-
         delegate void HideWindowAndClearDataCallback();
-
-        public delegate void ItemScrollReachedEndHandler(Helpers.Item item, int displayedItemsCount);
-        public event ItemScrollReachedEndHandler ItemScrollReachedEnd;
-        public void OnItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
-        {
-            ItemScrollReachedEnd?.Invoke(item, displayedItemsCount);
-        }
-
+            
         private void _itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
             //Load next results when scrollviewer is at the bottom
             if(_itemList.VerticalOffset == _itemList.ScrollableHeight && _itemList.ScrollableHeight > 0)
             {
-                ReadDataContext(out QueryResult<ListingResult> queryResult, out List<ListItem> items);
-                OnItemScrollReachedEnd(queryResult.Item, items.Count);
+                if(overlayIsUpdatable && !dataIsUpdating)
+                {
+                    dataIsUpdating = true;
+                    overlayIsUpdatable = false;
+                    OnItemScrollReachedEnd(this.queryResult.Item, this.itemListingControls.Count);
+                }               
             }
-        }
-
-        private bool ReadDataContext(out QueryResult<ListingResult> query, out List<ListItem> items)
-        {
-            try
+            else
             {
-                items = (List<ListItem>)DataContext?.GetType().GetProperty("itemListingControls")?.GetValue(DataContext, null);
-                query = (QueryResult<ListingResult>)DataContext?.GetType().GetProperty("queryResult")?.GetValue(DataContext, null);
-                return true;
+                // UI update is finished, when the scrollviewer is reset (newly added items will move the scrollbar)
+                overlayIsUpdatable = true;
             }
-            catch (Exception)
-            {
-                throw;
-            }           
         }
     }
 }
