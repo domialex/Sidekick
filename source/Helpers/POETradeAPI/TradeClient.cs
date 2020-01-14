@@ -157,7 +157,7 @@ namespace Sidekick.Helpers.POETradeAPI
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
                     var baseUri = isBulk ? LanguageSettings.Provider.PoeTradeExchangeBaseUrl : LanguageSettings.Provider.PoeTradeSearchBaseUrl;
-                    result.Uri = baseUri + SelectedLeague.Id + "/" + result.Id;
+                    result.Uri = new Uri(baseUri + SelectedLeague.Id + "/" + result.Id);
                 }
             }
             catch

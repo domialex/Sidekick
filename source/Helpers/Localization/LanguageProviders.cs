@@ -7,7 +7,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://de.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://de.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://de.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://de.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://de.pathofexile.com/");
         public string RarityUnique => "Einzigartig";
         public string RarityRare => "Selten";
         public string RarityMagic => "Magisch";
@@ -52,6 +53,7 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://www.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://www.pathofexile.com/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://www.pathofexile.com/");
         public string RarityUnique => "Unique";
         public string RarityRare => "Rare";
         public string RarityMagic => "Magic";
@@ -95,7 +97,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://es.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://es.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://es.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://es.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://es.pathofexile.com/");
         public string RarityUnique => "Único";
         public string RarityRare => "Raro";
         public string RarityMagic => "Mágico";
@@ -139,7 +142,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://fr.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://fr.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://fr.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://fr.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://fr.pathofexile.com/");
         public string RarityUnique => "Unique";
         public string RarityRare => "Rare";
         public string RarityMagic => "Magique";
@@ -183,7 +187,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://poe.game.daum.net/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://poe.game.daum.net/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://poe.game.daum.net/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://poe.game.daum.net/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://poe.game.daum.net/");
         public string RarityUnique => "고유";
         public string RarityRare => "희귀";
         public string RarityMagic => "마법";
@@ -227,7 +232,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://br.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://br.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://br.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://br.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://br.pathofexile.com/");
         public string RarityUnique => "Único";
         public string RarityRare => "Raro";
         public string RarityMagic => "Mágico";
@@ -271,7 +277,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://ru.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://ru.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://ru.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://ru.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://ru.pathofexile.com/");
         public string RarityUnique => "Уникальный";
         public string RarityRare => "Редкий";
         public string RarityMagic => "Волшебный";
@@ -315,7 +322,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("https://th.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://th.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://th.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://th.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://th.pathofexile.com/");
         public string RarityUnique => "Unique";
         public string RarityRare => "แรร์";
         public string RarityMagic => "เมจิก";
@@ -359,7 +367,8 @@ namespace Sidekick.Helpers.Localization
         public Uri PoeTradeSearchBaseUrl => new Uri("http://web.poe.garena.tw/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("http://web.poe.garena.tw/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("http://web.poe.garena.tw/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("http://web.poe.garena.tw/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("http://web.poe.garena.tw/");
         public string RarityUnique => "傳奇";
         public string RarityRare => "稀有";
         public string RarityMagic => "魔法";

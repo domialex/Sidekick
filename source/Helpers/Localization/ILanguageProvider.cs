@@ -8,6 +8,7 @@ namespace Sidekick.Helpers.Localization
         Uri PoeTradeExchangeBaseUrl { get; }
         Uri PoeTradeApiBaseUrl { get; }
         Uri PoeCdnBaseUrl { get; }
+        Uri PoeWebsite { get; }
 
         string RarityUnique { get; }
         string RarityRare { get; }
