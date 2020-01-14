@@ -21,6 +21,10 @@
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     <PackageReference Include="WindowsBase" Version="4.6.1055.0" />
   </ItemGroup>
+    
+  <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
+  </ItemGroup>
 
   <!-- TODO: These will go away when moved to netcoreapp3.1 -->  
   <ItemGroup>

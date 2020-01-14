@@ -1,14 +1,11 @@
-﻿using Sidekick.Helpers.Localization;
-using Sidekick.Helpers.POETradeAPI;
-using Sidekick.Helpers.POETradeAPI.Models;
+using Sidekick.Business.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Helpers.POEPriceInfoAPI;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Business.Parsers
 {
-    public static class ItemParser
+    public static class ItemParserService
     {
         public static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
@@ -234,7 +231,7 @@ namespace Sidekick.Helpers
             return item;
         }
 
-        internal static string GetNumberFromString(string input)
+        private static string GetNumberFromString(string input)
         {
             if (string.IsNullOrEmpty(input))     // Default return 0
             {
@@ -244,7 +241,7 @@ namespace Sidekick.Helpers
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
 
-        internal static int ParseGemExperiencePercent(string input)
+        private static int ParseGemExperiencePercent(string input)
         {
             // trim leading prefix if any
             if (input.Contains(LanguageSettings.Provider.DescriptionExperience))
@@ -269,7 +266,7 @@ namespace Sidekick.Helpers
             return percent;
         }
 
-        internal static int GetLinkCount(string input)
+        private static int GetLinkCount(string input)
         {
             if (input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
             {
@@ -322,55 +319,5 @@ namespace Sidekick.Helpers
 
             return InfluenceType.None;
         }
-    }
-
-    public abstract class Item
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string IsCorrupted { get; set; }
-        public string Rarity { get; set; }
-    }
-
-    public class EquippableItem : Item
-    {
-        public string Quality { get; set; }
-        public string ItemLevel { get; set; }
-        public InfluenceType Influence { get; set; }
-        public SocketFilterOption Sockets { get; set; }
-        public SocketFilterOption Links { get; set; }
-    }
-
-    public class GemItem : Item
-    {
-        public string Level { get; set; }
-        public string Quality { get; set; }
-        public bool IsVaalVersion { get; set; }
-        public int ExperiencePercent { get; set; } // percent towards next level
-    }
-
-    public class CurrencyItem : Item
-    {
-    }
-
-    public class DivinationCardItem : Item
-    {
-    }
-
-    public class FragmentItem : Item
-    {
-    }
-
-    public class ProphecyItem : Item
-    {
-    }
-
-    public class MapItem : Item
-    {
-        public string MapTier { get; set; }
-        public string ItemQuantity { get; set; }
-        public string ItemRarity { get; set; }
-        public string MonsterPackSize { get; set; }
-        public string IsBlight { get; set; }
     }
 }

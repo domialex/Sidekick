@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
-namespace Sidekick.Helpers.Localization
+namespace Sidekick.Business.Localization.Locales
 {
-    public interface ILanguageProvider
+    public interface ILanguage
     {
         Uri PoeTradeSearchBaseUrl { get; }
         Uri PoeTradeExchangeBaseUrl { get; }

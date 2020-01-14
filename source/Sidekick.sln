@@ -3,7 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick", "Sidekick.csproj", "{9ED8EEAA-EB64-4D96-991F-958D2C9A42E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "Sidekick.csproj", "{9ED8EEAA-EB64-4D96-991F-958D2C9A42E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Business", "..\Sidekick.Business\Sidekick.Business.csproj", "{AB46B951-3803-4C10-A21E-648D6060C2B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Input", "..\Sidekick.Input\Sidekick.Input.csproj", "{85DFC4B5-C3C1-42AB-9F57-660E041DA119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Core", "..\Sidekick.Core\Sidekick.Core.csproj", "{AB7F3342-9954-4EFF-976B-3BF0E66BD40F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{9B41443D-4D1E-4DF3-9DA5-522B0AAB40A0}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +31,18 @@ Global
 		{9ED8EEAA-EB64-4D96-991F-958D2C9A42E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED8EEAA-EB64-4D96-991F-958D2C9A42E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED8EEAA-EB64-4D96-991F-958D2C9A42E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB46B951-3803-4C10-A21E-648D6060C2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB46B951-3803-4C10-A21E-648D6060C2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB46B951-3803-4C10-A21E-648D6060C2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB46B951-3803-4C10-A21E-648D6060C2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85DFC4B5-C3C1-42AB-9F57-660E041DA119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85DFC4B5-C3C1-42AB-9F57-660E041DA119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85DFC4B5-C3C1-42AB-9F57-660E041DA119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85DFC4B5-C3C1-42AB-9F57-660E041DA119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7F3342-9954-4EFF-976B-3BF0E66BD40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7F3342-9954-4EFF-976B-3BF0E66BD40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7F3342-9954-4EFF-976B-3BF0E66BD40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7F3342-9954-4EFF-976B-3BF0E66BD40F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
