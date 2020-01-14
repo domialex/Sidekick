@@ -230,7 +230,7 @@ namespace Sidekick.Helpers
                 return null;
             }
 
-            item.IsCorrupted = isCorrupted ? "true" : "false";
+            item.IsCorrupted = isCorrupted;
             return item;
         }
 
@@ -328,7 +328,7 @@ namespace Sidekick.Helpers
     {
         public string Name { get; set; }
         public string Type { get; set; }
-        public string IsCorrupted { get; set; }
+        public bool IsCorrupted { get; set; }
         public string Rarity { get; set; }
     }
 
