@@ -5,6 +5,7 @@ using Sidekick.Windows.Settings;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Sidekick.Helpers.POEPriceInfoAPI;
+using System.Linq;
 
 namespace Sidekick.Helpers
 {
@@ -33,9 +34,10 @@ namespace Sidekick.Helpers
 
         public static void PopulateLeagueSelectMenu(List<League> leagues)
         {
-            if(_leagueSelectMenu.DropDownItems.Count > 0)
+            if (_leagueSelectMenu.DropDownItems.Count > 0)
             {
                 // TODO: Fix Cross-thread operation not valid after changing language.
+                TradeClient.SelectedLeague = leagues.FirstOrDefault();
                 return;
             }
 
