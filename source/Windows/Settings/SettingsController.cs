@@ -101,7 +101,7 @@ namespace Sidekick.Windows.Settings
                 if (_settings == null) _settings = new Models.Settings();
                 else _settings.Clear();
 
-                if (String.IsNullOrEmpty(settingsString))
+                if (string.IsNullOrEmpty(settingsString))
                 {
                     _settings = LoadDefaultSettings();
                 }

@@ -11,6 +11,7 @@ using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.Settings.Models;
+using System.Diagnostics;
 
 namespace Sidekick.Helpers
 {
@@ -40,9 +41,11 @@ namespace Sidekick.Helpers
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-#if Release
-            _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
-#endif
+
+            if (!Debugger.IsAttached)
+            {
+                _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
+            }
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
             var assignment = new Dictionary<Sequence, Action>
@@ -218,9 +221,10 @@ namespace Sidekick.Helpers
             Logger.Log("Hotkey for opening wiki triggered.");
 
             var item = await TriggerCopyAction();
+
             if (item != null)
             {
-                POEWikiAPI.POEWikiHelper.Open(item);
+                SettingsController.GetSettingsInstance().GetWikiAction().Invoke(item);
             }
         }
 

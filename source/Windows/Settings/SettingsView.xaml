@@ -32,7 +32,7 @@
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="TextWrapping" Value="NoWrap" />
         </Style>
-        
+
         <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -51,7 +51,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -99,7 +99,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
         <Style TargetType="{x:Type GroupBox}">
             <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
@@ -139,7 +139,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <SolidColorBrush x:Key="TextColor" Color="#FFE6E6E6" />
         <SolidColorBrush x:Key="BackgroundColor" Color="#FF1E1E1E" />
         <SolidColorBrush x:Key="BackgroundColorLight" Color="#FF252525" />
@@ -155,8 +155,8 @@
             <Setter Property="Foreground" Value="{DynamicResource LightColor}"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Padding" Value="0 -2 0 0"/>
-        </Style>    
-        
+        </Style>
+
         <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
             <Setter Property="Foreground" Value="{DynamicResource LightColor}"/>
             <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
@@ -199,7 +199,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -216,29 +216,15 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <GroupBox Header="Settings Group 1" Grid.Row="0" Grid.Column="0">
-                        <ItemsControl ItemsSource="{Binding Path=Settings.GeneralSettings}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="200"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBox Grid.Column="0" Text="{Binding Path=Key, StringFormat = {}{0}: }" BorderBrush="{DynamicResource PrimaryColor}" IsReadOnly="True">
-                                            <TextBox.ContextMenu>
-                                                <ContextMenu Visibility="Collapsed"/>
-                                            </TextBox.ContextMenu>
-                                        </TextBox>
-                                        <TextBox Grid.Column="1" Text="{Binding Path=Value}" IsReadOnly="False" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </GroupBox>
+                    <GroupBox Header="Settings Group 1" Grid.Row="0" Grid.Column="0" Margin="-2,-2,4,4"></GroupBox>
                     <GroupBox Header="Settings Group 2" Grid.Row="0" Grid.Column="1"></GroupBox>
                     <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0"></GroupBox>
                     <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1"></GroupBox>
+                    <Grid HorizontalAlignment="Left" Height="151" Margin="1,19,0,0" VerticalAlignment="Top" Width="241" RenderTransformOrigin="0.48,0.51">
+                        <RadioButton x:Name="radioButtonPOEWiki" Content="POE Wiki" HorizontalAlignment="Left" Margin="19,55,0,0" VerticalAlignment="Top" Background="White" Foreground="#FF5994CE"/>
+                        <RadioButton x:Name="radioButtonPOEDb" Content="POE Db" HorizontalAlignment="Left" Margin="19,87,0,0" VerticalAlignment="Top" Foreground="#FF5994CE"/>
+                        <Label Content="Choose which Wiki Page should be displayed" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="231" Foreground="#FF5994CE" FontSize="11"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Keybindings">
