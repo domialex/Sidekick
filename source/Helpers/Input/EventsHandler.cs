@@ -108,17 +108,8 @@ namespace Sidekick.Helpers
                 }
                 else if (setting == KeybindSetting.LeaveParty)
                 {
-                    // this operation is only valid if the user has added their character name to the settings file
-                    string name = string.Empty;
-                    if(settings.GeneralSettings.TryGetValue(GeneralSetting.CharacterName, out name) && !string.IsNullOrEmpty(name))
-                    {
-                        e.Handled = true;
-                        Task.Run(() => TriggerLeaveParty(name));
-                    }
-                    else
-                    {
-                        Logger.Log("Requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
-                    }
+                    e.Handled = true;
+                    Task.Run(TriggerLeaveParty);
                 }
             }
         }
@@ -163,12 +154,20 @@ namespace Sidekick.Helpers
         /// <summary>
         /// Kick yourself from the current party
         /// </summary>
-        /// <param name="characterName"> The name of the character specified in settings needed for the /kick command. </param>
-        private static void TriggerLeaveParty(string characterName)
+        private static void TriggerLeaveParty()
         {
-            Logger.Log("Hotkey for leaving party triggered with \"CharacterName\": " + characterName);
+            Logger.Log("Hotkey for leaving party triggered");
 
-            SendKeys.Send(Input.KeyCommands.LEAVE_PARTY.Replace("{name}", characterName));
+            // this operation is only valid if the user has added their character name to the settings file
+            string name = string.Empty;
+            SettingsController.GetSettingsInstance().GeneralSettings.TryGetValue(GeneralSetting.CharacterName, out name);
+            if (string.IsNullOrEmpty(name))
+            {
+                Logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
+                return;
+            }
+
+            SendKeys.SendWait(Input.KeyCommands.LEAVE_PARTY.Replace("{name}", name));
         }
 
         /// <summary>
