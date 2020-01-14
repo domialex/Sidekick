@@ -42,9 +42,7 @@ namespace Sidekick.Helpers
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
 #if Release
-            if (!Debugger.IsAttached)
-            {
-                _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
+            _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
 #endif
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
