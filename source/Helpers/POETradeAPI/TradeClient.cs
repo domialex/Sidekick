@@ -24,7 +24,6 @@ namespace Sidekick.Helpers.POETradeAPI
         public static HashSet<string> MapNames;
 
         public static JsonSerializerSettings _jsonSerializerSettings;
-        public static HttpClient _httpClient;
         private static bool IsFetching;
         private static bool OneFetchFailed;
 
@@ -50,8 +49,6 @@ namespace Sidekick.Helpers.POETradeAPI
 
             IsFetching = true;
             Logger.Log("Fetching Path of Exile trade data.");
-
-            _httpClient = new HttpClient();
 
             await FetchAPIData();
 
@@ -114,7 +111,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "data/" + path);
+                var response = await HttpClientProvider.GetHttpClient().GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "data/" + path);
                 var content = await response.Content.ReadAsStringAsync();
                 result = JsonConvert.DeserializeObject<QueryResult<T>>(content, _jsonSerializerSettings)?.Result;
                 Logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
@@ -152,7 +149,7 @@ namespace Sidekick.Helpers.POETradeAPI
                     body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
 
-                var response = await _httpClient.PostAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
+                var response = await HttpClientProvider.GetHttpClient().PostAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -221,7 +218,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
+                var response = await HttpClientProvider.GetHttpClient().GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -240,8 +237,6 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static void Dispose()
         {
-            _httpClient.Dispose();
-            _httpClient = null;
 
             Leagues = null;
             StaticItemCategories = null;

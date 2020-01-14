@@ -172,7 +172,12 @@ namespace Sidekick.Helpers
 
         public static void Dispose()
         {
-            _globalHook?.Dispose();
+            if (_globalHook != null)
+            {
+                _globalHook.KeyDown -= GlobalHookKeyPressHandler;
+                _globalHook.MouseWheelExt -= GlobalHookMouseScrollHandler;
+                _globalHook.Dispose();
+            }
         }
     }
 }
