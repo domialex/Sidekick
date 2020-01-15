@@ -1,3 +1,6 @@
+using Sidekick.Business.Filters;
+using Sidekick.Business.Types;
+
 namespace Sidekick.Business.Items
 {
     public class EquippableItem : Item

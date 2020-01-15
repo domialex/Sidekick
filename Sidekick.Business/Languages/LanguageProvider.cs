@@ -1,17 +1,17 @@
-using Sidekick.Business.Localization.Locales;
+using Sidekick.Business.Languages.Implementations;
 using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sidekick.Business.Localization
+namespace Sidekick.Business.Languages
 {
-    [SidekickService(typeof(ILanguageService))]
-    public class LanguageService : ILanguageService
+    [SidekickService(typeof(ILanguageProvider))]
+    public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;
 
-        public LanguageService(ILogger logger)
+        public LanguageProvider(ILogger logger)
         {
             this.logger = logger;
 

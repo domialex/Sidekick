@@ -1,20 +1,32 @@
+using Sidekick.Business.Filters;
 using Sidekick.Business.Items;
+using Sidekick.Business.Languages;
+using Sidekick.Business.Loggers;
+using Sidekick.Business.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
-    public static class ItemParserService
+    public class ItemParser
     {
-        public static readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
-        public static readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
+        public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
+        public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
+        private readonly ILanguageProvider languageProvider;
+        private readonly ILogger logger;
+
+        public ItemParser(ILanguageProvider languageProvider, ILogger logger)
+        {
+            this.languageProvider = languageProvider;
+            this.logger = logger;
+        }
 
         /// <summary>
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public static Item ParseItem(string text)
+        public Item ParseItem(string text)
         {
             Item item = null;
             bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
@@ -23,48 +35,48 @@ namespace Sidekick.Business.Parsers
             {
                 var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
                 // Every item should start with Rarity in the first line.
-                if (!lines[0].StartsWith(LanguageSettings.Provider.DescriptionRarity)) throw new Exception("Probably not an item.");
+                if (!lines[0].StartsWith(languageProvider.Language.DescriptionRarity)) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
-                isIdentified = !lines.Any(x => x == LanguageSettings.Provider.DescriptionUnidentified);
-                hasQuality = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionQuality));
-                isCorrupted = lines.Any(x => x == LanguageSettings.Provider.DescriptionCorrupted);
-                isMap = lines.Any(x => x.Contains(LanguageSettings.Provider.DescriptionMapTier));
-                isBlighted = lines.Any(x => x.Contains(LanguageSettings.Provider.PrefixBlighted));
+                isIdentified = !lines.Any(x => x == languageProvider.Language.DescriptionUnidentified);
+                hasQuality = lines.Any(x => x.Contains(languageProvider.Language.DescriptionQuality));
+                isCorrupted = lines.Any(x => x == languageProvider.Language.DescriptionCorrupted);
+                isMap = lines.Any(x => x.Contains(languageProvider.Language.DescriptionMapTier));
+                isBlighted = lines.Any(x => x.Contains(languageProvider.Language.PrefixBlighted));
                 hasNote = lines.LastOrDefault().Contains("Note");
 
-                var rarity = lines[0].Replace(LanguageSettings.Provider.DescriptionRarity, string.Empty);
+                var rarity = lines[0].Replace(languageProvider.Language.DescriptionRarity, string.Empty);
 
                 if (isMap)
                 {
                     item = new MapItem()
                     {
-                        ItemQuantity = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemQuantity)).FirstOrDefault()),
-                        ItemRarity = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemRarity)).FirstOrDefault()),
-                        MonsterPackSize = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionMonsterPackSize)).FirstOrDefault()),
-                        MapTier = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionMapTier)).FirstOrDefault()),
+                        ItemQuantity = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemQuantity)).FirstOrDefault()),
+                        ItemRarity = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemRarity)).FirstOrDefault()),
+                        MonsterPackSize = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionMonsterPackSize)).FirstOrDefault()),
+                        MapTier = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionMapTier)).FirstOrDefault()),
                         Rarity = rarity,
                     };
 
-                    if (rarity == LanguageSettings.Provider.RarityNormal)
+                    if (rarity == languageProvider.Language.RarityNormal)
                     {
-                        item.Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim();
-                        item.Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
+                        item.Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim();
+                        item.Type = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Replace(languageProvider.Language.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if (rarity == LanguageSettings.Provider.RarityMagic)        // Extract only map name
+                    else if (rarity == languageProvider.Language.RarityMagic)        // Extract only map name
                     {
-                        item.Name = LanguageSettings.Provider.PrefixBlighted + " " + TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
+                        item.Name = languageProvider.Language.PrefixBlighted + " " + TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
                         item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
-                    else if (rarity == LanguageSettings.Provider.RarityRare)
+                    else if (rarity == languageProvider.Language.RarityRare)
                     {
                         item.Name = lines[2].Trim();
-                        item.Type = lines[2].Replace(LanguageSettings.Provider.PrefixBlighted, string.Empty).Trim();
+                        item.Type = lines[2].Replace(languageProvider.Language.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if (rarity == LanguageSettings.Provider.RarityUnique)
+                    else if (rarity == languageProvider.Language.RarityUnique)
                     {
                         if (!isIdentified)
                         {
-                            item.Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim();
+                            item.Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim();
                         }
                         else
                         {
@@ -74,7 +86,7 @@ namespace Sidekick.Business.Parsers
 
                     ((MapItem)item).IsBlight = isBlighted ? "true" : "false";
                 }
-                else if (rarity == LanguageSettings.Provider.RarityUnique)
+                else if (rarity == languageProvider.Language.RarityUnique)
                 {
                     item = new EquippableItem
                     {
@@ -82,7 +94,7 @@ namespace Sidekick.Business.Parsers
                         Type = isIdentified ? lines[2] : lines[1]
                     };
 
-                    var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+                    var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
                     if (links >= 5)
                     {
@@ -93,16 +105,16 @@ namespace Sidekick.Business.Parsers
                         };
                     }
                 }
-                else if (rarity == LanguageSettings.Provider.RarityRare)
+                else if (rarity == languageProvider.Language.RarityRare)
                 {
                     item = new EquippableItem()
                     {
                         Name = lines[1],
                         Type = lines[2],
-                        ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
+                        ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
                     };
 
-                    var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+                    var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
                     if (links >= 5)
                     {
@@ -122,19 +134,19 @@ namespace Sidekick.Business.Parsers
                         ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
                     }
                 }
-                else if (rarity == LanguageSettings.Provider.RarityMagic)
+                else if (rarity == languageProvider.Language.RarityMagic)
                 {
                     throw new Exception("Magic items are not yet supported.");
                 }
-                else if (rarity == LanguageSettings.Provider.RarityNormal)
+                else if (rarity == languageProvider.Language.RarityNormal)
                 {
-                    if (lines.Any(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)))      // Equippable Item
+                    if (lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)))      // Equippable Item
                     {
                         item = new EquippableItem()
                         {
-                            Type = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
-                            Name = lines[1].Replace(LanguageSettings.Provider.PrefixSuperior, string.Empty).Trim(),
-                            ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionItemLevel)).FirstOrDefault()),
+                            Type = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim(),
+                            Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim(),
+                            ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
                         };
 
                         if (hasNote)
@@ -146,7 +158,7 @@ namespace Sidekick.Business.Parsers
                             ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
                         }
 
-                        var links = GetLinkCount(lines.Where(c => c.StartsWith(LanguageSettings.Provider.DescriptionSockets)).FirstOrDefault());
+                        var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
                         if (links >= 5)
                         {
@@ -157,7 +169,7 @@ namespace Sidekick.Business.Parsers
                             };
                         }
                     }
-                    else if (lines.Any(c => c.Contains(LanguageSettings.Provider.KeywordProphecy)))      // Prophecy
+                    else if (lines.Any(c => c.Contains(languageProvider.Language.KeywordProphecy)))      // Prophecy
                     {
                         item = new ProphecyItem()
                         {
@@ -174,7 +186,7 @@ namespace Sidekick.Business.Parsers
                         };
                     }
                 }
-                else if (rarity == LanguageSettings.Provider.RarityCurrency)
+                else if (rarity == languageProvider.Language.RarityCurrency)
                 {
                     item = new CurrencyItem()
                     {
@@ -182,28 +194,28 @@ namespace Sidekick.Business.Parsers
                         Type = lines[1]
                     };
                 }
-                else if (rarity == LanguageSettings.Provider.RarityGem)
+                else if (rarity == languageProvider.Language.RarityGem)
                 {
                     item = new GemItem()
                     {
                         Name = lines[1],        // Need adjustment for Thai Language
                         Type = lines[1],        // For Gems the Type has to be set to the Gem Name insead of the name itself
                         Level = GetNumberFromString(lines[4]),
-                        ExperiencePercent = lines.Any(x => x.StartsWith(LanguageSettings.Provider.DescriptionExperience)) ? ParseGemExperiencePercent(lines.Where(y => y.StartsWith(LanguageSettings.Provider.DescriptionExperience)).FirstOrDefault()) : 0, // Some gems have no experience like portal or max ranks
-                        Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(LanguageSettings.Provider.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
-                        IsVaalVersion = isCorrupted && lines[3].Contains(LanguageSettings.Provider.KeywordVaal) // check if the gem tags contain Vaal
+                        ExperiencePercent = lines.Any(x => x.StartsWith(languageProvider.Language.DescriptionExperience)) ? ParseGemExperiencePercent(lines.Where(y => y.StartsWith(languageProvider.Language.DescriptionExperience)).FirstOrDefault()) : 0, // Some gems have no experience like portal or max ranks
+                        Quality = hasQuality ? GetNumberFromString(lines.Where(x => x.StartsWith(languageProvider.Language.DescriptionQuality)).FirstOrDefault()) : "0",      // Quality Line Can move for different Gems
+                        IsVaalVersion = isCorrupted && lines[3].Contains(languageProvider.Language.KeywordVaal) // check if the gem tags contain Vaal
                     };
 
                     // if it's the vaal version, remap to have that name instead
                     // Unsure if this works on non arabic lettering (ru/th/kr)
                     if ((item as GemItem).IsVaalVersion)
                     {
-                        string vaalName = lines.Where(x => x.Contains(LanguageSettings.Provider.KeywordVaal) && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
+                        string vaalName = lines.Where(x => x.Contains(languageProvider.Language.KeywordVaal) && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
                         item.Name = vaalName;
                         item.Type = vaalName;
                     }
                 }
-                else if (rarity == LanguageSettings.Provider.RarityDivinationCard)
+                else if (rarity == languageProvider.Language.RarityDivinationCard)
                 {
                     item = new DivinationCardItem()
                     {
@@ -223,7 +235,7 @@ namespace Sidekick.Business.Parsers
             }
             catch (Exception e)
             {
-                Logger.Log("Could not parse item. " + e.Message);
+                logger.Log("Could not parse item. " + e.Message);
                 return null;
             }
 
@@ -231,7 +243,7 @@ namespace Sidekick.Business.Parsers
             return item;
         }
 
-        private static string GetNumberFromString(string input)
+        private string GetNumberFromString(string input)
         {
             if (string.IsNullOrEmpty(input))     // Default return 0
             {
@@ -241,11 +253,11 @@ namespace Sidekick.Business.Parsers
             return new string(input.Where(c => char.IsDigit(c)).ToArray());
         }
 
-        private static int ParseGemExperiencePercent(string input)
+        private int ParseGemExperiencePercent(string input)
         {
             // trim leading prefix if any
-            if (input.Contains(LanguageSettings.Provider.DescriptionExperience))
-                input = input.Replace(LanguageSettings.Provider.DescriptionExperience, "");
+            if (input.Contains(languageProvider.Language.DescriptionExperience))
+                input = input.Replace(languageProvider.Language.DescriptionExperience, "");
 
             int percent = 0;
             var split = input.Split('/');
@@ -266,9 +278,9 @@ namespace Sidekick.Business.Parsers
             return percent;
         }
 
-        private static int GetLinkCount(string input)
+        private int GetLinkCount(string input)
         {
-            if (input == null || !input.StartsWith(LanguageSettings.Provider.DescriptionSockets))
+            if (input == null || !input.StartsWith(languageProvider.Language.DescriptionSockets))
             {
                 return 0;
             }
@@ -290,29 +302,29 @@ namespace Sidekick.Business.Parsers
             }
         }
 
-        internal static InfluenceType GetInfluenceType(string input)
+        internal InfluenceType GetInfluenceType(string input)
         {
-            if (input.Contains(LanguageSettings.Provider.InfluenceShaper))
+            if (input.Contains(languageProvider.Language.InfluenceShaper))
             {
                 return InfluenceType.Shaper;
             }
-            else if (input.Contains(LanguageSettings.Provider.InfluenceElder))
+            else if (input.Contains(languageProvider.Language.InfluenceElder))
             {
                 return InfluenceType.Elder;
             }
-            else if (input.Contains(LanguageSettings.Provider.InfluenceCrusader))
+            else if (input.Contains(languageProvider.Language.InfluenceCrusader))
             {
                 return InfluenceType.Crusader;
             }
-            else if (input.Contains(LanguageSettings.Provider.InfluenceHunter))
+            else if (input.Contains(languageProvider.Language.InfluenceHunter))
             {
                 return InfluenceType.Hunter;
             }
-            else if (input.Contains(LanguageSettings.Provider.InfluenceRedeemer))
+            else if (input.Contains(languageProvider.Language.InfluenceRedeemer))
             {
                 return InfluenceType.Redeemer;
             }
-            else if (input.Contains(LanguageSettings.Provider.InfluenceWarlord))
+            else if (input.Contains(languageProvider.Language.InfluenceWarlord))
             {
                 return InfluenceType.Warlord;
             }

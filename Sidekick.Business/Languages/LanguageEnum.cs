@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Localization
+namespace Sidekick.Business.Languages
 {
     public enum LanguageEnum
     {

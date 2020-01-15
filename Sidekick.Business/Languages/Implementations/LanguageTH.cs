@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Localization.Locales
+namespace Sidekick.Business.Languages.Implementations
 {
     public class LanguageTH : ILanguage
     {

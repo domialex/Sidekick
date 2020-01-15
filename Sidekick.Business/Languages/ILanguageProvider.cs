@@ -1,9 +1,9 @@
+using Sidekick.Business.Languages.Implementations;
 using System.Threading.Tasks;
-using Sidekick.Business.Localization.Locales;
 
-namespace Sidekick.Business.Localization
+namespace Sidekick.Business.Languages
 {
-    public interface ILanguageService
+    public interface ILanguageProvider
     {
         LanguageEnum Current { get; }
         ILanguage Language { get; }
