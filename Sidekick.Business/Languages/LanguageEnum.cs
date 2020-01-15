@@ -9,6 +9,7 @@ namespace Sidekick.Business.Languages
         Portuguese,
         Russian,
         Spanish,
-        Thai
+        Thai,
+        TraditionalChinese,
     };
 }
