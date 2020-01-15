@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "src\source\Sidekick.csproj", "{AA241639-5A1F-4DE5-9193-BEAD5E954F86}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Business", "src\Sidekick.Business\Sidekick.Business.csproj", "{E14E16C1-3570-4886-9732-C942EFAE46E0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Core", "src\Sidekick.Core\Sidekick.Core.csproj", "{1F6D0041-F405-4C9C-883C-F486D4CC2E09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Input", "src\Sidekick.Input\Sidekick.Input.csproj", "{4F453B34-80D3-4AF0-9605-C692205F1F41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "src\Sidekick\Sidekick.csproj", "{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA241639-5A1F-4DE5-9193-BEAD5E954F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA241639-5A1F-4DE5-9193-BEAD5E954F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA241639-5A1F-4DE5-9193-BEAD5E954F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA241639-5A1F-4DE5-9193-BEAD5E954F86}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,6 +39,10 @@ Global
 		{4F453B34-80D3-4AF0-9605-C692205F1F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F453B34-80D3-4AF0-9605-C692205F1F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F453B34-80D3-4AF0-9605-C692205F1F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
