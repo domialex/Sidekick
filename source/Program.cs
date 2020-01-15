@@ -3,6 +3,8 @@ using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Helpers.POETradeAPI;
 using Sidekick.Windows.Overlay;
 using System;
+using System.Diagnostics;
+using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -22,6 +24,8 @@ namespace Sidekick
             GC.KeepAlive(mutex);
 
             Logger.Log("Starting Sidekick.");
+
+            CheckIfUserRunAsAdmin();
 
             // System tray icon.
             TrayIcon.Initialize();
@@ -51,6 +55,18 @@ namespace Sidekick
                 EventsHandler.Dispose();
                 OverlayController.Dispose();
             	MAIN_DISPATCHER = null;
+            }
+        }
+
+        private static void CheckIfUserRunAsAdmin()
+        {
+            var info = WindowsIdentity.GetCurrent();
+            var principle = new WindowsPrincipal(info);
+            bool isAdmin = principle.IsInRole(WindowsBuiltInRole.Administrator);
+
+            if(!isAdmin)
+            {
+                Logger.Log("This application must be run as administrator.", LogState.Error);
             }
         }
     }
