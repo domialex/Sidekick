@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Sidekick.Helpers.POETradeAPI.Models
 {
@@ -8,6 +9,6 @@ namespace Sidekick.Helpers.POETradeAPI.Models
         public string Id { get; set; }
         public int Total { get; set; }
         public Item Item { get; set; }
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

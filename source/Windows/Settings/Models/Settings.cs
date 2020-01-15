@@ -2,12 +2,16 @@
 //using System.Windows.Input;
 using System.Windows.Forms;
 using System.Linq;
+using System;
+using Sidekick.Helpers.POEWikiAPI;
+using Sidekick.Helpers.POEDbAPI;
 
 namespace Sidekick.Windows.Settings.Models
 {
     public enum GeneralSetting
     {
-        None
+        None,
+        CharacterName
     }
 
     public enum KeybindSetting
@@ -16,13 +20,22 @@ namespace Sidekick.Windows.Settings.Models
         CloseWindow,
         PriceCheck,
         Hideout,
-        ItemWiki
+        ItemWiki,
+        FindItems,
+        LeaveParty
     }
+
+    public enum WikiSetting
+    {
+        PoeWiki,
+        PoeDb,
+    };
 
     public class Settings
     {       
         public ObservableDictionary<GeneralSetting, string> GeneralSettings { get; set; } = new ObservableDictionary<GeneralSetting, string>();
         public ObservableDictionary<KeybindSetting, Hotkey> KeybindSettings { get; set; } = new ObservableDictionary<KeybindSetting, Hotkey>();
+        public WikiSetting CurrentWikiSettings { get; set; }
 
         public KeybindSetting GetKeybindSetting(Keys key, Keys modifier)
         {
@@ -32,6 +45,20 @@ namespace Sidekick.Windows.Settings.Models
                 return KeybindSettings.TryGetKey(value, out KeybindSetting setting) ? setting : KeybindSetting.None;
             }
             return KeybindSetting.None;
+        }
+
+        public Action<Item> GetWikiAction()
+        {
+            if(CurrentWikiSettings == WikiSetting.PoeWiki)
+            {
+                return POEWikiHelper.Open;
+            }
+            else if(CurrentWikiSettings == WikiSetting.PoeDb)
+            {
+                return POEDbClient.Open;
+            }
+
+            return null;
         }
 
         //Takes a winforms hotkey and returns the keybind setting

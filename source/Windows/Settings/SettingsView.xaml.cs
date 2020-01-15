@@ -28,12 +28,37 @@ namespace Sidekick.Windows.Settings
             DataContext = this;
 
             Settings = SettingsController.LoadSettings();
+            SelectWikiSetting();
             Show();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void SelectWikiSetting()
+        {
+            if(Settings.CurrentWikiSettings == Models.WikiSetting.PoeWiki)
+            {
+                radioButtonPOEWiki.IsChecked = true;
+            }
+            else if(Settings.CurrentWikiSettings == Models.WikiSetting.PoeDb)
+            {
+                radioButtonPOEDb.IsChecked = true;
+            }
+        }
+
+        private void UpdateWikiSetting()
+        {
+            if(radioButtonPOEWiki.IsChecked == true)
+            {
+                Settings.CurrentWikiSettings = Models.WikiSetting.PoeWiki;
+            }
+            else if(radioButtonPOEDb.IsChecked == true)
+            {
+                Settings.CurrentWikiSettings = Models.WikiSetting.PoeDb;
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -44,6 +69,7 @@ namespace Sidekick.Windows.Settings
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
+            UpdateWikiSetting();
             SettingsController.SaveSettings();
             Close();
         }

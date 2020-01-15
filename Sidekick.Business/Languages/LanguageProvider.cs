@@ -31,7 +31,8 @@ namespace Sidekick.Business.Languages
             { "Raridade: ", LanguageEnum.Portuguese },
             { "Редкость: ", LanguageEnum.Russian },
             { "Rareza: ", LanguageEnum.Spanish },
-            { "ความหายาก: ", LanguageEnum.Thai }
+            { "ความหายาก: ", LanguageEnum.Thai },
+            { "稀有度: ", LanguageEnum.TraditionalChinese },
         };
 
         /// <summary>
@@ -79,6 +80,8 @@ namespace Sidekick.Business.Languages
                     return new LanguageES();
                 case LanguageEnum.Thai:
                     return new LanguageTH();
+                case LanguageEnum.TraditionalChinese:
+                    return new LanguageZHTW();
                 default:
                     return new LanguageEN(); // English by default.
             }

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Sidekick.Windows.Settings;
+using Sidekick.Windows.Settings.Models;
 
 namespace Sidekick.Helpers.POETradeAPI
 {
@@ -22,7 +24,6 @@ namespace Sidekick.Helpers.POETradeAPI
         public static HashSet<string> MapNames;
 
         public static JsonSerializerSettings _jsonSerializerSettings;
-        public static HttpClient _httpClient;
         private static bool IsFetching;
         private static bool OneFetchFailed;
 
@@ -32,6 +33,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static async Task<bool> Initialize()
         {
+            var settings = SettingsController.GetSettingsInstance();
             if (_jsonSerializerSettings == null)
             {
                 _jsonSerializerSettings = new JsonSerializerSettings();
@@ -47,8 +49,6 @@ namespace Sidekick.Helpers.POETradeAPI
 
             IsFetching = true;
             Logger.Log("Fetching Path of Exile trade data.");
-
-            _httpClient = new HttpClient();
 
             await FetchAPIData();
 
@@ -67,8 +67,8 @@ namespace Sidekick.Helpers.POETradeAPI
             IsReady = true;
 
             Logger.Log($"Path of Exile trade data fetched.");
-            Logger.Log($"Sidekick is ready, press Ctrl+D over an item in-game to use. Press Escape to close overlay.");
-            TrayIcon.SendNotification("Press Ctrl+D over an item in-game to use. Press Escape to close overlay.", "Sidekick is ready");
+            Logger.Log($"Sidekick is ready, press {settings.KeybindSettings[KeybindSetting.PriceCheck].ToString()} over an item in-game to use. Press {settings.KeybindSettings[KeybindSetting.CloseWindow].ToString()} to close overlay.");
+            TrayIcon.SendNotification($"Press {settings.KeybindSettings[KeybindSetting.PriceCheck].ToString()} over an item in-game to use. Press {settings.KeybindSettings[KeybindSetting.CloseWindow].ToString()} to close overlay.", "Sidekick is ready");
 
             return true;
         }
@@ -111,7 +111,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "data/" + path);
+                var response = await HttpClientProvider.GetHttpClient().GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "data/" + path);
                 var content = await response.Content.ReadAsStringAsync();
                 result = JsonConvert.DeserializeObject<QueryResult<T>>(content, _jsonSerializerSettings)?.Result;
                 Logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
@@ -149,7 +149,7 @@ namespace Sidekick.Helpers.POETradeAPI
                     body = new StringContent(JsonConvert.SerializeObject(queryRequest, _jsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
 
-                var response = await _httpClient.PostAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
+                var response = await HttpClientProvider.GetHttpClient().PostAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -157,7 +157,7 @@ namespace Sidekick.Helpers.POETradeAPI
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
                     var baseUri = isBulk ? LanguageSettings.Provider.PoeTradeExchangeBaseUrl : LanguageSettings.Provider.PoeTradeSearchBaseUrl;
-                    result.Uri = baseUri + SelectedLeague.Id + "/" + result.Id;
+                    result.Uri = new Uri(baseUri + SelectedLeague.Id + "/" + result.Id);
                 }
             }
             catch
@@ -167,6 +167,27 @@ namespace Sidekick.Helpers.POETradeAPI
 
             return result;
 
+        }
+
+        public static async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Item item, int nextPageToFetch)
+        {
+            var queryResult = await Query(item);
+
+            if (queryResult != null)
+            {
+                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 2).Select(x => GetListings(queryResult, x)));
+
+                return new QueryResult<ListingResult>()
+                {
+                    Id = queryResult.Id,
+                    Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
+                    Total = queryResult.Total,
+                    Item = item,
+                    Uri = queryResult.Uri
+                };
+            }
+
+            return null;
         }
 
         public static async Task<QueryResult<ListingResult>> GetListings(Item item)
@@ -197,7 +218,7 @@ namespace Sidekick.Helpers.POETradeAPI
 
             try
             {
-                var response = await _httpClient.GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
+                var response = await HttpClientProvider.GetHttpClient().GetAsync(LanguageSettings.Provider.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -216,8 +237,6 @@ namespace Sidekick.Helpers.POETradeAPI
 
         public static void Dispose()
         {
-            _httpClient.Dispose();
-            _httpClient = null;
 
             Leagues = null;
             StaticItemCategories = null;

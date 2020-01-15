@@ -25,10 +25,13 @@ namespace Sidekick.Helpers.NativeMethods
             //    return true;
             //}
 
-            GetWindowThreadProcessId(GetForegroundWindow(), out int processID);
-            var processToCheck = Process.GetProcessById(processID);
+            return GetActiveWindowTitle() == PATH_OF_EXILE_PROCESS_TITLE;
+        }
 
-            return processToCheck?.MainWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
+        public static string GetActiveWindowTitle()
+        {
+            GetWindowThreadProcessId(GetForegroundWindow(), out int processID);
+            return Process.GetProcessById(processID)?.MainWindowTitle;
         }
 
         public static float GetActiveWindowDpi()

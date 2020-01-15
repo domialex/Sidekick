@@ -7,7 +7,8 @@ namespace Sidekick.Business.Languages.Implementations
         public Uri PoeTradeSearchBaseUrl => new Uri("https://br.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://br.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://br.pathofexile.com/api/trade/");
-        public Uri PoeCdnBaseUrl => new Uri("https://br.pathofexile.com/");
+        public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
+        public Uri PoeWebsite => new Uri("https://br.pathofexile.com/");
         public string RarityUnique => "Único";
         public string RarityRare => "Raro";
         public string RarityMagic => "Mágico";

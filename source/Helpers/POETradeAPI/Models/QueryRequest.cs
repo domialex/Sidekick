@@ -139,7 +139,7 @@ namespace Sidekick.Helpers.POETradeAPI.Models
 
                 Query.Filters.MiscFilters.Filters.Corrupted = new FilterOption()
                 {
-                    Option = item.IsCorrupted
+                    Option = item.IsCorrupted ? "true" : "false"
                 };
             }
             else if (itemType == typeof(FragmentItem))
