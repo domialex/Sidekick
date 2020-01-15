@@ -1,4 +1,3 @@
-﻿using Sidekick.Helpers.Localization;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -10,19 +9,19 @@ namespace Sidekick.Windows.Overlay.Converters
     {
         private Color GetRarityColor(string rarity)
         {
-            if (rarity == LanguageSettings.Provider.RarityNormal)
+            if (rarity == Legacy.LanguageProvider.Language.RarityNormal)
             {
                 return Color.FromRgb(200, 200, 200);
             }
-            if (rarity == LanguageSettings.Provider.RarityMagic)
+            if (rarity == Legacy.LanguageProvider.Language.RarityMagic)
             {
                 return Color.FromRgb(136, 136, 255);
             }
-            if (rarity == LanguageSettings.Provider.RarityRare)
+            if (rarity == Legacy.LanguageProvider.Language.RarityRare)
             {
                 return Color.FromRgb(255, 255, 119);
             }
-            if (rarity == LanguageSettings.Provider.RarityUnique)
+            if (rarity == Legacy.LanguageProvider.Language.RarityUnique)
             {
                 return Color.FromRgb(175, 96, 37);
             }

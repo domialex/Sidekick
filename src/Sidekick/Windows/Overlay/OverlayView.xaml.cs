@@ -1,5 +1,4 @@
-﻿using Sidekick.Helpers.Localization;
-using Sidekick.Helpers.POETradeAPI.Models;
+using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using System;
@@ -15,9 +14,9 @@ namespace Sidekick.Windows.Overlay
     public partial class OverlayWindow : Window, INotifyPropertyChanged
     {
         #region Events
-        public delegate void ItemScrollReachedEndHandler(Helpers.Item item, int displayedItemsCount);
+        public delegate void ItemScrollReachedEndHandler(Business.Parsers.Models.Item item, int displayedItemsCount);
         public event ItemScrollReachedEndHandler ItemScrollReachedEnd;
-        public void OnItemScrollReachedEnd(Helpers.Item item, int displayedItemsCount)
+        public void OnItemScrollReachedEnd(Business.Parsers.Models.Item item, int displayedItemsCount)
         {
             ItemScrollReachedEnd?.Invoke(item, displayedItemsCount);
         }
@@ -31,7 +30,7 @@ namespace Sidekick.Windows.Overlay
         public ObservableCollection<ListItem> itemListingControls { get; set; } = new ObservableCollection<ListItem>();
 
         private QueryResult<ListingResult> queryResultValue = new QueryResult<ListingResult>();
-        public QueryResult<ListingResult> queryResult 
+        public QueryResult<ListingResult> queryResult
         {
             get { return queryResultValue; }
             set { queryResultValue = value; NotifyPropertyChanged(); }
@@ -72,7 +71,7 @@ namespace Sidekick.Windows.Overlay
 
                 this.queryResult = queryResult;
                 this.itemListingControls?.Clear();
-                
+
                 queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(i => this.itemListingControls?.Add(i));
             }
         }
@@ -110,7 +109,7 @@ namespace Sidekick.Windows.Overlay
             }
         }
         delegate void AppendQueryResultCallback(QueryResult<ListingResult> queryResult);
-       
+
         public void SetWindowPosition(int x, int y)
         {
             if (!Dispatcher.CheckAccess())
@@ -147,7 +146,7 @@ namespace Sidekick.Windows.Overlay
                 Dispatcher.Invoke(new HideWindowAndClearDataCallback(HideWindowAndClearData));
             }
             else
-            {             
+            {
                 this.queryResult = null;
                 this.itemListingControls = new ObservableCollection<ListItem>();
                 NotifyPropertyChanged("itemListingControls");
@@ -155,18 +154,18 @@ namespace Sidekick.Windows.Overlay
             }
         }
         delegate void HideWindowAndClearDataCallback();
-            
+
         private void _itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
             //Load next results when scrollviewer is at the bottom
-            if(_itemList.VerticalOffset == _itemList.ScrollableHeight && _itemList.ScrollableHeight > 0)
+            if (_itemList.VerticalOffset == _itemList.ScrollableHeight && _itemList.ScrollableHeight > 0)
             {
-                if(overlayIsUpdatable && !dataIsUpdating)
+                if (overlayIsUpdatable && !dataIsUpdating)
                 {
                     dataIsUpdating = true;
                     overlayIsUpdatable = false;
                     OnItemScrollReachedEnd(this.queryResult.Item, this.itemListingControls.Count);
-                }               
+                }
             }
             else
             {

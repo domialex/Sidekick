@@ -1,4 +1,4 @@
-﻿using Sidekick.Helpers.POETradeAPI.Models;
+using Sidekick.Business.Trades.Results;
 using System;
 using System.Windows.Controls;
 using System.Windows.Media;

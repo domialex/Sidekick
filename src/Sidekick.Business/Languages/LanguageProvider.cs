@@ -1,6 +1,7 @@
 using Sidekick.Business.Languages.Implementations;
 using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace Sidekick.Business.Languages
 
         public ILanguage Language { get; private set; }
         public LanguageEnum Current { get; private set; }
+        public event Func<Task> LanguageChanged;
 
         private Dictionary<string, LanguageEnum> RarityToLanguageDictionary = new Dictionary<string, LanguageEnum>()
         {
@@ -50,8 +52,14 @@ namespace Sidekick.Business.Languages
                         logger.Log($"Changed language support to {item.Value}.");
                         Current = item.Value;
                         Language = GetLanguageProvider(item.Value);
-                        TradeClient.Dispose();
-                        return await TradeClient.Initialize();
+
+                        if (LanguageChanged != null)
+                        {
+                            foreach (var handler in LanguageChanged.GetInvocationList())
+                            {
+                                await ((Func<Task>)handler)();
+                            }
+                        }
                     }
 
                     return true;

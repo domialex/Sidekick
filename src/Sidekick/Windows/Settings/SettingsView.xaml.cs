@@ -1,10 +1,10 @@
-﻿using Sidekick.Windows.Settings.UserControls;
+using Sidekick.Core.Settings;
+using Sidekick.Windows.Settings.UserControls;
 using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Sidekick.Helpers;
 
 namespace Sidekick.Windows.Settings
 {
@@ -20,7 +20,7 @@ namespace Sidekick.Windows.Settings
         public Models.Settings Settings { get; set; }
 
         public SettingsView(int width, int height)
-        {            
+        {
             Width = width;
             Height = height;
 
@@ -39,11 +39,11 @@ namespace Sidekick.Windows.Settings
 
         private void SelectWikiSetting()
         {
-            if(Settings.CurrentWikiSettings == Models.WikiSetting.PoeWiki)
+            if (Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
             {
                 radioButtonPOEWiki.IsChecked = true;
             }
-            else if(Settings.CurrentWikiSettings == Models.WikiSetting.PoeDb)
+            else if (Settings.CurrentWikiSettings == WikiSetting.PoeDb)
             {
                 radioButtonPOEDb.IsChecked = true;
             }
@@ -51,13 +51,13 @@ namespace Sidekick.Windows.Settings
 
         private void UpdateWikiSetting()
         {
-            if(radioButtonPOEWiki.IsChecked == true)
+            if (radioButtonPOEWiki.IsChecked == true)
             {
-                Settings.CurrentWikiSettings = Models.WikiSetting.PoeWiki;
+                Settings.CurrentWikiSettings = WikiSetting.PoeWiki;
             }
-            else if(radioButtonPOEDb.IsChecked == true)
+            else if (radioButtonPOEDb.IsChecked == true)
             {
-                Settings.CurrentWikiSettings = Models.WikiSetting.PoeDb;
+                Settings.CurrentWikiSettings = WikiSetting.PoeDb;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Sidekick.Windows.Settings
 
         public void CaptureKeyEvents(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
         {
-            if(currentChangingKeybind != null)
+            if (currentChangingKeybind != null)
             {
                 currentChangingKeybind.CaptureKeybinding(key, modifier);
             }
@@ -95,23 +95,23 @@ namespace Sidekick.Windows.Settings
         {
             var control = sender as KeybindEditor;
             try
-            {                
+            {
                 //Check if hotkeys are unique
                 if (Settings.KeybindSettings.Values.Where(v => v?.ToString() == control.Hotkey?.ToString()).ToList().Count > 1)
                 {
-                    if(MessageBox.Show("Hotkey already in use!") == MessageBoxResult.OK)
+                    if (MessageBox.Show("Hotkey already in use!") == MessageBoxResult.OK)
                     {
                         control.Hotkey = null;
-                    }                   
+                    }
                 }
                 currentChangingKeybind = null;
             }
             catch (Exception)
             {
-                Logger.Log("Could not validate if Hotkey is already in use");
+                Legacy.Logger.Log("Could not validate if Hotkey is already in use");
                 control.Hotkey = null;
                 throw;
-            }            
+            }
         }
 
         private KeybindEditor currentChangingKeybind;

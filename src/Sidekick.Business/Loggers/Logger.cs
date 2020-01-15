@@ -1,8 +1,10 @@
+using Sidekick.Core.DependencyInjection.Services;
 using System;
 using System.Collections.Generic;
 
 namespace Sidekick.Business.Loggers
 {
+    [SidekickService(typeof(ILogger))]
     public class Logger : ILogger
     {
         public event EventHandler MessageLogged;

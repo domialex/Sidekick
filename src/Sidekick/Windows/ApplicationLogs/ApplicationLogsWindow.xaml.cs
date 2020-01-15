@@ -1,4 +1,3 @@
-﻿using Sidekick.Helpers;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -15,7 +14,7 @@ namespace Sidekick.Windows.ApplicationLogs
         {
             InitializeComponent();
             logsTextBox.Text = GenerateLogLines;
-            Logger.MessageLogged += MessageLogged;
+            Legacy.Logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
             InitializeIcon();
             Show();
@@ -80,7 +79,7 @@ namespace Sidekick.Windows.ApplicationLogs
             }
         }
 
-        private string GenerateLogLines => string.Join(Environment.NewLine, Logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
+        private string GenerateLogLines => string.Join(Environment.NewLine, Legacy.Logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
 
         protected override void OnClosing(CancelEventArgs e)
         {

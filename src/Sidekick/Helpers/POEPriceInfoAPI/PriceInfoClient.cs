@@ -1,12 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Sidekick.Helpers.POETradeAPI;
-using Sidekick.Helpers.POETradeAPI.Models.TradeData;
+using Newtonsoft.Json;
+using Sidekick.Business.Loggers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,24 +14,24 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
         public static async Task<PriceInfo> GetItemPricePrediction(string itemText)
         {
             var encodedItem = EncodeItemToBase64(itemText);
-            var league = TradeClient.SelectedLeague.Id;
+            var league = Legacy.TradeClient.SelectedLeague.Id;
             var requestUrl = GenerateRequestUrl(encodedItem, league);
 
             try
             {
-                var response = await HttpClientProvider.GetHttpClient().GetAsync(requestUrl);
+                var response = await Legacy.HttpClientProvider.HttpClient.GetAsync(requestUrl);
 
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, TradeClient._jsonSerializerSettings);
+                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.TradeClient.JsonSerializerSettings);
                     priceInfo.ItemText = itemText;
                     return priceInfo;
                 }
             }
             catch
             {
-                Logger.Log("Error getting price prediction from item: " + itemText, LogState.Error);
+                Legacy.Logger.Log("Error getting price prediction from item: " + itemText, LogState.Error);
             }
 
             return null;

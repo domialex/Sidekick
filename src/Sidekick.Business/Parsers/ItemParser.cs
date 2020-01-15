@@ -1,25 +1,30 @@
 using Sidekick.Business.Filters;
-using Sidekick.Business.Items;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Loggers;
-using Sidekick.Business.Types;
+using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Parsers.Types;
+using Sidekick.Business.Trades;
+using Sidekick.Core.DependencyInjection.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
-    public class ItemParser
+    [SidekickService(typeof(IItemParser))]
+    public class ItemParser : IItemParser
     {
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
+        private readonly ITradeClient tradeClient;
 
-        public ItemParser(ILanguageProvider languageProvider, ILogger logger)
+        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
+            this.tradeClient = tradeClient;
         }
 
         /// <summary>
@@ -64,8 +69,8 @@ namespace Sidekick.Business.Parsers
                     }
                     else if (rarity == languageProvider.Language.RarityMagic)        // Extract only map name
                     {
-                        item.Name = languageProvider.Language.PrefixBlighted + " " + TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
-                        item.Type = TradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
+                        item.Name = languageProvider.Language.PrefixBlighted + " " + tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
+                        item.Type = tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
                     else if (rarity == languageProvider.Language.RarityRare)
                     {

@@ -1,10 +1,7 @@
-﻿using Sidekick.Helpers.Localization;
+using Sidekick.Business.Languages;
+using Sidekick.Business.Loggers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POEDbAPI
 {
@@ -15,43 +12,43 @@ namespace Sidekick.Helpers.POEDbAPI
         public const string SubUrlGem = "gem.php?n=";
         public const string SubUrlItem = "item.php?n=";
 
-        public static void Open(Item item)
+        public static void Open(Sidekick.Business.Parsers.Models.Item item)
         {
-            if(item == null)
+            if (item == null)
             {
                 return;
             }
 
-            if(LanguageSettings.CurrentLanguage != Language.English)        // Only English for now
+            if (Legacy.LanguageProvider.Current != LanguageEnum.English)        // Only English for now
             {
                 return;
             }
 
-            if(item.Rarity == LanguageSettings.Provider.RarityRare || item.Rarity == LanguageSettings.Provider.RarityMagic)
+            if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
             {
                 return;
             }
-          
+
             if (string.IsNullOrEmpty(item.Name))
             {
-                Logger.Log("Failed to open PoeDb for item", LogState.Error);
+                Legacy.Logger.Log("Failed to open PoeDb for item", LogState.Error);
                 return;
             }
 
             var url = CreateUri(item).ToString();
-            Logger.Log(string.Format("Opening in browser: {0}", url));
+            Legacy.Logger.Log(string.Format("Opening in browser: {0}", url));
             Process.Start(url);
         }
 
-        private static Uri CreateUri(Item item)
+        private static Uri CreateUri(Sidekick.Business.Parsers.Models.Item item)
         {
             string subUrl;
 
-            if(item.Rarity == LanguageSettings.Provider.RarityUnique)
+            if (item.Rarity == Legacy.LanguageProvider.Language.RarityUnique)
             {
                 subUrl = SubUrlUnique;
             }
-            else if(item.Rarity == LanguageSettings.Provider.RarityGem)
+            else if (item.Rarity == Legacy.LanguageProvider.Language.RarityGem)
             {
                 subUrl = SubUrlGem;
             }

@@ -1,4 +1,4 @@
-using Sidekick.Business.Types;
+using Sidekick.Business.Parsers.Types;
 
 namespace Sidekick.Business.Filters
 {

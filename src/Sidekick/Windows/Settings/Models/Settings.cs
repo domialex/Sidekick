@@ -1,38 +1,16 @@
-﻿using Sidekick.Helpers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers;
+using Sidekick.Helpers.POEDbAPI;
+using Sidekick.Helpers.POEWikiAPI;
+using System;
+using System.Linq;
 //using System.Windows.Input;
 using System.Windows.Forms;
-using System.Linq;
-using System;
-using Sidekick.Helpers.POEWikiAPI;
-using Sidekick.Helpers.POEDbAPI;
 
 namespace Sidekick.Windows.Settings.Models
 {
-    public enum GeneralSetting
-    {
-        None,
-        CharacterName
-    }
-
-    public enum KeybindSetting
-    {
-        None,
-        CloseWindow,
-        PriceCheck,
-        Hideout,
-        ItemWiki,
-        FindItems,
-        LeaveParty
-    }
-
-    public enum WikiSetting
-    {
-        PoeWiki,
-        PoeDb,
-    };
-
     public class Settings
-    {       
+    {
         public ObservableDictionary<GeneralSetting, string> GeneralSettings { get; set; } = new ObservableDictionary<GeneralSetting, string>();
         public ObservableDictionary<KeybindSetting, Hotkey> KeybindSettings { get; set; } = new ObservableDictionary<KeybindSetting, Hotkey>();
         public WikiSetting CurrentWikiSettings { get; set; }
@@ -47,13 +25,13 @@ namespace Sidekick.Windows.Settings.Models
             return KeybindSetting.None;
         }
 
-        public Action<Item> GetWikiAction()
+        public Action<Sidekick.Business.Parsers.Models.Item> GetWikiAction()
         {
-            if(CurrentWikiSettings == WikiSetting.PoeWiki)
+            if (CurrentWikiSettings == WikiSetting.PoeWiki)
             {
                 return POEWikiHelper.Open;
             }
-            else if(CurrentWikiSettings == WikiSetting.PoeDb)
+            else if (CurrentWikiSettings == WikiSetting.PoeDb)
             {
                 return POEDbClient.Open;
             }

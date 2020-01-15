@@ -1,17 +1,16 @@
-﻿using System;
+using Gma.System.MouseKeyHook;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
-using Sidekick.Helpers.Localization;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Helpers.POETradeAPI;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
-using Sidekick.Windows.Settings.Models;
-using System.Diagnostics;
 
 namespace Sidekick.Helpers
 {
@@ -58,13 +57,13 @@ namespace Sidekick.Helpers
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
         {
-            if(SettingsController.IsDisplayed)
+            if (SettingsController.IsDisplayed)
             {
                 SettingsController.CaptureKeyEvents(e.KeyCode, e.Modifiers);
                 return;
             }
 
-            if (!TradeClient.IsReady)
+            if (!Legacy.TradeClient.IsReady)
             {
                 return;
             }
@@ -120,7 +119,7 @@ namespace Sidekick.Helpers
 
         private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
         {
-            if (!TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            if (!Legacy.TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
                 return;
             }
@@ -136,14 +135,14 @@ namespace Sidekick.Helpers
 
         private static async void TriggerItemFetch()
         {
-            Logger.Log("Hotkey for pricing item triggered.");
+            Legacy.Logger.Log("Hotkey for pricing item triggered.");
 
-            Item item = await TriggerCopyAction();
+            Business.Parsers.Models.Item item = await TriggerCopyAction();
             if (item != null)
             {
                 OverlayController.Open();
 
-                var queryResult = await TradeClient.GetListings(item);
+                var queryResult = await Legacy.TradeClient.GetListings(item);
 
                 if (queryResult != null)
                 {
@@ -160,14 +159,14 @@ namespace Sidekick.Helpers
         /// </summary>
         private static void TriggerLeaveParty()
         {
-            Logger.Log("Hotkey for leaving party triggered");
+            Legacy.Logger.Log("Hotkey for leaving party triggered");
 
             // this operation is only valid if the user has added their character name to the settings file
             string name = string.Empty;
             SettingsController.GetSettingsInstance().GeneralSettings.TryGetValue(GeneralSetting.CharacterName, out name);
             if (string.IsNullOrEmpty(name))
             {
-                Logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
+                Legacy.Logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
                 return;
             }
 
@@ -182,16 +181,16 @@ namespace Sidekick.Helpers
             // Unregister input listeners to not end up in infinite loop since we are sending ctrl+f in the command here
             _handleEvents = false;
 
-            Logger.Log("Hotkey for finding item triggered.");
+            Legacy.Logger.Log("Hotkey for finding item triggered.");
 
-            Item item = null;
+            Business.Parsers.Models.Item item = null;
             string clipboardContents = ClipboardHelper.GetText();
             bool restoreClipboard = true;
             if (!string.IsNullOrEmpty(clipboardContents))
             {
                 // check if clipboard contains an old item copy
                 // if so, we should not restore the clipboard to previous item
-                item = ItemParser.ParseItem(clipboardContents);
+                item = Legacy.ItemParser.ParseItem(clipboardContents);
                 restoreClipboard = item == null && clipboardContents != null;
                 item = null;
             }
@@ -218,7 +217,7 @@ namespace Sidekick.Helpers
 
         public static async void TriggerItemWiki()
         {
-            Logger.Log("Hotkey for opening wiki triggered.");
+            Legacy.Logger.Log("Hotkey for opening wiki triggered.");
 
             var item = await TriggerCopyAction();
 
@@ -233,7 +232,7 @@ namespace Sidekick.Helpers
         /// </summary>
         private static void TriggerHideout()
         {
-            Logger.Log("Hotkey for Hideout triggered.");
+            Legacy.Logger.Log("Hotkey for Hideout triggered.");
 
             SendKeys.SendWait(Input.KeyCommands.HIDEOUT);
         }
@@ -243,7 +242,7 @@ namespace Sidekick.Helpers
             Application.Exit();
         }
 
-        private static async Task<Item> TriggerCopyAction()
+        private static async Task<Business.Parsers.Models.Item> TriggerCopyAction()
         {
             SendKeys.SendWait(Input.KeyCommands.COPY);
             Thread.Sleep(100);
@@ -252,14 +251,14 @@ namespace Sidekick.Helpers
             var itemText = ClipboardHelper.GetText();
 
             // Detect the language of the item in the clipboard.
-            var setLanguageSuccess = await LanguageSettings.FindAndSetLanguageProvider(itemText);
+            var setLanguageSuccess = await Legacy.LanguageProvider.FindAndSetLanguageProvider(itemText);
             if (!setLanguageSuccess)
             {
                 return null;
             }
 
             // Parse and return item
-            return ItemParser.ParseItem(itemText);
+            return Legacy.ItemParser.ParseItem(itemText);
         }
 
         public static void Dispose()

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Sidekick.Helpers;
+using Newtonsoft.Json;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms.Integration;
-using System.Windows.Input;
 
 namespace Sidekick.Windows.Settings
 {
@@ -41,33 +41,33 @@ namespace Sidekick.Windows.Settings
         {
             try
             {
-                Logger.Log("Loading default settings");
+                Legacy.Logger.Log("Loading default settings");
                 var settings = new Models.Settings();
 
                 /* KeybindSettings */
-                settings.KeybindSettings.Add(Models.KeybindSetting.CloseWindow, new Models.Hotkey(System.Windows.Forms.Keys.Escape, System.Windows.Forms.Keys.None));
-                settings.KeybindSettings.Add(Models.KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
-                settings.KeybindSettings.Add(Models.KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
-                settings.KeybindSettings.Add(Models.KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
-                settings.KeybindSettings.Add(Models.KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
-                settings.KeybindSettings.Add(Models.KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.CloseWindow, new Models.Hotkey(System.Windows.Forms.Keys.Escape, System.Windows.Forms.Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
+                settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
 
                 /* GeneralSettings */
-                settings.GeneralSettings.Add(Models.GeneralSetting.CharacterName, string.Empty);
+                settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
 
                 // #TODO: Add more default settings
                 return settings;
             }
             catch (Exception)
             {
-                Logger.Log("Could not load default settings", LogState.Error);
+                Legacy.Logger.Log("Could not load default settings", LogState.Error);
                 throw;
             }
         }
 
         public static Models.Settings GetSettingsInstance()
         {
-            if(_settings == null)
+            if (_settings == null)
             {
                 return LoadSettings();
             }
@@ -90,7 +90,7 @@ namespace Sidekick.Windows.Settings
         {
             try
             {
-                Logger.Log("Loading settings");
+                Legacy.Logger.Log("Loading settings");
                 string settingsString = null;
                 if (File.Exists(SETTINGS_PATH))
                 {
@@ -114,7 +114,7 @@ namespace Sidekick.Windows.Settings
             }
             catch (Exception)
             {
-                Logger.Log("Could not load settings", LogState.Error);
+                Legacy.Logger.Log("Could not load settings", LogState.Error);
                 throw;
             }
         }
@@ -126,8 +126,8 @@ namespace Sidekick.Windows.Settings
         {
             try
             {
-                Logger.Log("Saving settings");
-				
+                Legacy.Logger.Log("Saving settings");
+
                 // Backup old settings
                 if (File.Exists(SETTINGS_PATH))
                 {
@@ -140,7 +140,7 @@ namespace Sidekick.Windows.Settings
             }
             catch (Exception)
             {
-                Logger.Log("Could not save settings", LogState.Error);
+                Legacy.Logger.Log("Could not save settings", LogState.Error);
                 throw;
             }
         }
