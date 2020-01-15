@@ -239,7 +239,7 @@ namespace Sidekick.Business.Parsers
                 return null;
             }
 
-            item.IsCorrupted = isCorrupted ? "true" : "false";
+            item.IsCorrupted = isCorrupted;
             return item;
         }
 
