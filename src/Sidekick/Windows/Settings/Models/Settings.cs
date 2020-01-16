@@ -1,6 +1,11 @@
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
+using Sidekick.Helpers.POEDbAPI;
+using Sidekick.Helpers.POEWikiAPI;
+using System;
+using System.Linq;
 using WindowsHook;
+
 namespace Sidekick.Windows.Settings.Models
 {
     public class Settings

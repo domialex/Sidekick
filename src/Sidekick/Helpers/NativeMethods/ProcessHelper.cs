@@ -1,9 +1,11 @@
-﻿using System;
+using Sidekick.Business.Loggers;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,6 +13,8 @@ namespace Sidekick.Helpers.NativeMethods
 {
     public static class ProcessHelper
     {
+        public static Mutex mutex { private get; set; }
+
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
 
         private const int STANDARD_RIGHTS_REQUIRED = 0xF0000;
@@ -86,7 +90,7 @@ namespace Sidekick.Helpers.NativeMethods
             }
             else
             {
-                Logger.Log("Permission Sufficient.");
+                Legacy.Logger.Log("Permission Sufficient.");
             }
         }
 
@@ -100,30 +104,39 @@ namespace Sidekick.Helpers.NativeMethods
 
         public static void RestartAsAdmin()
         {
-            string message = "This application must be run as administrator.\nClick Yes will restart as administrator automatically.";
-            Logger.Log(message, LogState.Error);
+            string message = "This application must be run as administrator.";
+            Legacy.Logger.Log(message, LogState.Error);
 
-            if (MessageBox.Show(message, "Sidekick", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-
-            var processInfo = new ProcessStartInfo();
-            processInfo.UseShellExecute = true;
-            processInfo.FileName = Application.ExecutablePath;
-            processInfo.Verb = "runas";
-
-            try
+            if (MessageBox.Show(message + "\nClick Yes will restart as administrator automatically.", "Sidekick", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Process.Start(processInfo);
-                Environment.Exit(Environment.ExitCode);
-            }
-            catch (Win32Exception e)
-            {
-                const int ERROR_CANCELLED = 1223; //The operation was canceled by the user.
+                mutex?.Close();
+                try
+                {
+                    using (Process p = new Process())
+                    {
+                        p.StartInfo.FileName = Application.ExecutablePath;
+                        p.StartInfo.UseShellExecute = true;
+                        p.StartInfo.Verb = "runas";
+                        p.Start();
+                    }
+                }
+                catch (Win32Exception e)
+                {
+                    const int ERROR_CANCELLED = 1223; //The operation was canceled by the user.
 
-                if (e.NativeErrorCode == ERROR_CANCELLED)
-                    MessageBox.Show("This application must be run as administrator.");
-                else
-                    throw;
+                    if (e.NativeErrorCode == ERROR_CANCELLED)
+                        MessageBox.Show("This application must be run as administrator.");
+                    else
+                        throw;
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+                finally
+                {
+                    Environment.Exit(Environment.ExitCode);
+                }
             }
         }
 
@@ -170,7 +183,7 @@ namespace Sidekick.Helpers.NativeMethods
             }
             catch(Exception e)
             {
-                Logger.Log(e.Message, LogState.Error);
+                Legacy.Logger.Log(e.Message, LogState.Error);
                 RestartAsAdmin();
             }
 

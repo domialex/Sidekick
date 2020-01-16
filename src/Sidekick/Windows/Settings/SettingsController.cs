@@ -46,12 +46,12 @@ namespace Sidekick.Windows.Settings
                 var settings = new Models.Settings();
 
                 /* KeybindSettings */
-                settings.KeybindSettings.Add(Models.KeybindSetting.CloseWindow, new Models.Hotkey(Keys.Escape, Keys.None));
-                settings.KeybindSettings.Add(Models.KeybindSetting.PriceCheck, new Models.Hotkey(Keys.D, Keys.Control));
-                settings.KeybindSettings.Add(Models.KeybindSetting.Hideout, new Models.Hotkey(Keys.F5, Keys.None));
-                settings.KeybindSettings.Add(Models.KeybindSetting.ItemWiki, new Models.Hotkey(Keys.W, Keys.Alt));
-                settings.KeybindSettings.Add(Models.KeybindSetting.FindItems, new Models.Hotkey(Keys.F, Keys.Control));
-                settings.KeybindSettings.Add(Models.KeybindSetting.LeaveParty, new Models.Hotkey(Keys.F4, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.CloseWindow, new Models.Hotkey(Keys.Escape, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.PriceCheck, new Models.Hotkey(Keys.D, Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.Hideout, new Models.Hotkey(Keys.F5, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(Keys.W, Keys.Alt));
+                settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(Keys.F, Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(Keys.F4, Keys.None));
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
 

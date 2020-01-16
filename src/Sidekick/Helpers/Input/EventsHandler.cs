@@ -10,8 +10,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Helpers.POETradeAPI;
-using System.Diagnostics;using WindowsHook;
+using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
 namespace Sidekick.Helpers
@@ -40,6 +39,8 @@ namespace Sidekick.Helpers
 
         public static void Initialize()
         {
+            ProcessHelper.CheckPermission();
+
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
 
@@ -55,9 +56,6 @@ namespace Sidekick.Helpers
             };
 
             _globalHook.OnSequence(assignment);
-
-            // 
-            ProcessHelper.CheckPermission();
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
