@@ -1,11 +1,12 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Leagues;
 using Sidekick.Business.Loggers;
-using Sidekick.Business.Notifications;
 using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Platforms;
 using Sidekick.Business.Trades.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
@@ -21,26 +22,30 @@ using System.Threading.Tasks;
 namespace Sidekick.Business.Trades
 {
     [SidekickService(typeof(ITradeClient))]
-    public class TradeClient : ITradeClient
+    public class TradeClient : ITradeClient, IDisposable
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
-        private readonly INotificationService notificationService;
+        private readonly IPlatformTrayService platformTrayService;
+        private readonly IPoeApiService poeApiService;
+        private readonly ILeagueService leagueService;
 
-        public TradeClient(ILogger logger, ILanguageProvider languageProvider, IHttpClientProvider httpClientProvider, INotificationService notificationService)
+        public TradeClient(ILogger logger,
+            ILanguageProvider languageProvider,
+            IHttpClientProvider httpClientProvider,
+            IPlatformTrayService platformTrayService,
+            IPoeApiService poeApiService,
+            ILeagueService leagueService)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
-            this.notificationService = notificationService;
+            this.platformTrayService = platformTrayService;
+            this.poeApiService = poeApiService;
+            this.leagueService = leagueService;
 
             languageProvider.LanguageChanged += LanguageProvider_LanguageChanged;
-
-            JsonSerializerSettings = new JsonSerializerSettings();
-            JsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
-            JsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
 
         private async Task LanguageProvider_LanguageChanged()
@@ -49,17 +54,7 @@ namespace Sidekick.Business.Trades
             await Initialize();
         }
 
-        public JsonSerializerSettings JsonSerializerSettings { get; private set; }
         private bool IsFetching { get; set; }
-        private bool OneFetchFailed { get; set; }
-
-        private List<League> _leagues = null;
-        public List<League> Leagues
-        {
-            get => _leagues;
-            set { _leagues = value; LeaguesChanged?.Invoke(null, null); }
-        }
-        public event EventHandler LeaguesChanged;
 
         public List<StaticItemCategory> StaticItemCategories { get; private set; }
 
@@ -70,8 +65,6 @@ namespace Sidekick.Business.Trades
         public HashSet<string> MapNames { get; private set; }
 
         public bool IsReady { get; private set; }
-
-        public League SelectedLeague { get; set; }
 
         public async Task<bool> Initialize()
         {
@@ -85,14 +78,6 @@ namespace Sidekick.Business.Trades
 
             await FetchAPIData();
 
-            if (OneFetchFailed)
-            {
-                logger.Log("Retrying every minute.");
-                Dispose();
-                await Task.Run(Retry);
-                return false;
-            }
-
             IsFetching = false;
 
             IsReady = true;
@@ -100,11 +85,7 @@ namespace Sidekick.Business.Trades
             logger.Log($"Path of Exile trade data fetched.");
             logger.Log($"Sidekick is ready, press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
 
-            notificationService.NotifyTray(new Notification()
-            {
-                Title = "Sidekick is ready",
-                Text = $"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay."
-            });
+            platformTrayService.SendNotification("Sidekick is ready", $"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
 
             return true;
         }
@@ -125,10 +106,9 @@ namespace Sidekick.Business.Trades
 
         public async Task FetchAPIData()
         {
-            Leagues = await FetchDataAsync<League>("Leagues", "leagues");
-            StaticItemCategories = await FetchDataAsync<StaticItemCategory>("Static item categories", "static");
-            AttributeCategories = await FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
-            ItemCategories = await FetchDataAsync<ItemCategory>("Item categories", "items");
+            StaticItemCategories = await poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
+            AttributeCategories = await poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
+            ItemCategories = await poeApiService.Fetch<ItemCategory>("Item categories", "items");
 
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
@@ -139,27 +119,6 @@ namespace Sidekick.Business.Trades
             }
 
             MapNames = new HashSet<string>(allMapNames.Distinct());
-        }
-
-        private async Task<List<T>> FetchDataAsync<T>(string name, string path) where T : class
-        {
-            logger.Log($"Fetching {name}.".PadLeft(4));
-            List<T> result = null;
-
-            try
-            {
-                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "data/" + path);
-                var content = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<QueryResult<T>>(content, JsonSerializerSettings)?.Result;
-                logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
-            }
-            catch
-            {
-                OneFetchFailed = true;
-                logger.Log($"Could not fetch {name}.");
-            }
-
-            return result;
         }
 
         public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
@@ -178,15 +137,15 @@ namespace Sidekick.Business.Trades
                 if (isBulk)
                 {
                     var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, this);
-                    body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, JsonSerializerSettings), Encoding.UTF8, "application/json");
+                    body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
                 else
                 {
                     var queryRequest = new QueryRequest(item, languageProvider.Language);
-                    body = new StringContent(JsonConvert.SerializeObject(queryRequest, JsonSerializerSettings), Encoding.UTF8, "application/json");
+                    body = new StringContent(JsonConvert.SerializeObject(queryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
 
-                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + SelectedLeague.Id, body);
+                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + leagueService.SelectedLeague.Id, body);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -194,7 +153,7 @@ namespace Sidekick.Business.Trades
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
                     var baseUri = isBulk ? languageProvider.Language.PoeTradeExchangeBaseUrl : languageProvider.Language.PoeTradeSearchBaseUrl;
-                    result.Uri = new Uri(baseUri + SelectedLeague.Id + "/" + result.Id);
+                    result.Uri = new Uri(baseUri + leagueService.SelectedLeague.Id + "/" + result.Id);
                 }
             }
             catch
@@ -273,14 +232,12 @@ namespace Sidekick.Business.Trades
 
         public void Dispose()
         {
-            Leagues = null;
             StaticItemCategories = null;
             AttributeCategories = null;
             ItemCategories = null;
 
             IsReady = false;
             IsFetching = false;
-            OneFetchFailed = false;
         }
     }
 }

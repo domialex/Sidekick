@@ -1,3 +1,4 @@
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;

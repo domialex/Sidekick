@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Trades.Models
+namespace Sidekick.Business.Leagues.Models
 {
     public class League
     {
