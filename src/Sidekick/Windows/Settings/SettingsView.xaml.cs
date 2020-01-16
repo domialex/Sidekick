@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using WindowsHook;
 
 namespace Sidekick.Windows.Settings
 {
@@ -79,7 +80,7 @@ namespace Sidekick.Windows.Settings
             Close();
         }
 
-        public void CaptureKeyEvents(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
+        public void CaptureKeyEvents(Keys key, Keys modifier)
         {
             if (currentChangingKeybind != null)
             {

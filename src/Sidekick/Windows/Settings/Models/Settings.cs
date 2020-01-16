@@ -4,8 +4,7 @@ using Sidekick.Helpers.POEDbAPI;
 using Sidekick.Helpers.POEWikiAPI;
 using System;
 using System.Linq;
-//using System.Windows.Input;
-using System.Windows.Forms;
+using WindowsHook;
 
 namespace Sidekick.Windows.Settings.Models
 {

@@ -1,6 +1,5 @@
 ﻿using System.Text;
-//using System.Windows.Input;
-using System.Windows.Forms;
+using WindowsHook;
 
 namespace Sidekick.Windows.Settings.Models
 {

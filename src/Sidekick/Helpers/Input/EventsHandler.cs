@@ -1,4 +1,3 @@
-using Gma.System.MouseKeyHook;
 using Sidekick.Business.Loggers;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
@@ -11,6 +10,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsHook;
+using KeyEventArgs = WindowsHook.KeyEventArgs;
 
 namespace Sidekick.Helpers
 {
@@ -38,6 +39,8 @@ namespace Sidekick.Helpers
 
         public static void Initialize()
         {
+            ProcessHelper.CheckPermission();
+
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
 
