@@ -49,6 +49,8 @@ namespace Sidekick.Business.Languages
             {
                 case UILanguageEnum.English:
                     return new UILanguageEN();
+                case UILanguageEnum.French:
+                    return new UILanguageFR();
                 case UILanguageEnum.German:
                     return new UILanguageDE();
                 default:

@@ -7,6 +7,7 @@ namespace Sidekick.Business.Languages
     public enum UILanguageEnum
     {
         English,
+        French,
         German,
     };
 }
