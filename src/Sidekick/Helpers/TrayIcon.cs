@@ -55,6 +55,11 @@ namespace Sidekick.Helpers
 
         public static void PopulateLeagueSelectMenu(List<League> leagues)
         {
+            if (leagues == null)
+            {
+                return;
+            }
+
             if (_leagueSelectMenu.DropDownItems.Count > 0)
             {
                 // TODO: Fix Cross-thread operation not valid after changing language.

@@ -87,7 +87,7 @@ namespace Sidekick.Helpers
             else if (ProcessHelper.IsPathOfExileInFocus())
             {
                 //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
-                if (!OverlayController.IsDisplayed && setting == KeybindSetting.PriceCheck)
+                if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
