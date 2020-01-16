@@ -29,17 +29,24 @@ namespace Sidekick.Helpers
             _notifyIcon.Visible = true;
             _notifyIcon.Text = "Sidekick";
 
+            ReloadUI();
+
+            Legacy.NotificationService.TrayNotified += NotificationService_TrayNotified;
+            Legacy.TradeClient.LeaguesChanged += TradeClient_LeaguesChanged;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(ReloadUI);
+        }
+
+        private static void ReloadUI()
+        {
+            var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
             _leagueSelectMenu = new ToolStripMenuItem("League");
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
-            contextMenu.Items.Add("Settings", null, (s, e) => SettingsController.Show());
-            contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
-            contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconSettings, null, (s, e) => SettingsController.Show());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconExit, null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
-
-            Legacy.NotificationService.TrayNotified += NotificationService_TrayNotified;
-            Legacy.TradeClient.LeaguesChanged += TradeClient_LeaguesChanged;
         }
 
         private static void TradeClient_LeaguesChanged(object sender, System.EventArgs e)
@@ -55,6 +62,11 @@ namespace Sidekick.Helpers
 
         public static void PopulateLeagueSelectMenu(List<League> leagues)
         {
+            if (leagues == null)
+            {
+                return;
+            }
+
             if (_leagueSelectMenu.DropDownItems.Count > 0)
             {
                 // TODO: Fix Cross-thread operation not valid after changing language.
