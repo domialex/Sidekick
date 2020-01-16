@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -11,12 +18,6 @@ using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sidekick.Business.Trades
 {
@@ -269,6 +270,15 @@ namespace Sidekick.Business.Trades
 
 
             return result;
+        }
+
+        public async Task OpenWebpage(Parsers.Models.Item item)
+        {
+            var queryResult = await Query(item);
+
+            var uri = queryResult.Uri.ToString();
+            logger.Log($"Opening in browser: {uri}");
+            Process.Start(uri);
         }
 
         public void Dispose()

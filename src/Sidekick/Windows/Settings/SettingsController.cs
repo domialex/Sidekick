@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms.Integration;
+using Newtonsoft.Json;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Windows.Settings
 {
@@ -51,6 +51,7 @@ namespace Sidekick.Windows.Settings
                 settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
                 settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
                 settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.OpenSearch, new Models.Hotkey(System.Windows.Forms.Keys.F6, System.Windows.Forms.Keys.None));
 
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
