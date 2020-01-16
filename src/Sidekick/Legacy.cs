@@ -22,6 +22,9 @@ namespace Sidekick
         public static ILanguageProvider LanguageProvider { get; private set; }
 
         [Obsolete]
+        public static IUILanguageProvider UILanguageProvider { get; private set; }
+
+        [Obsolete]
         public static INotificationService NotificationService { get; private set; }
 
         [Obsolete]
@@ -39,6 +42,7 @@ namespace Sidekick
             NotificationService = Program.ServiceProvider.GetService<INotificationService>();
             ItemParser = Program.ServiceProvider.GetService<IItemParser>();
             HttpClientProvider = Program.ServiceProvider.GetService<IHttpClientProvider>();
+            UILanguageProvider = Program.ServiceProvider.GetService<IUILanguageProvider>();
         }
     }
 }

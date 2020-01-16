@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
 using Sidekick.Helpers.POEDbAPI;
@@ -13,6 +15,9 @@ namespace Sidekick.Windows.Settings.Models
         public ObservableDictionary<GeneralSetting, string> GeneralSettings { get; set; } = new ObservableDictionary<GeneralSetting, string>();
         public ObservableDictionary<KeybindSetting, Hotkey> KeybindSettings { get; set; } = new ObservableDictionary<KeybindSetting, Hotkey>();
         public WikiSetting CurrentWikiSettings { get; set; }
+        [JsonIgnore]
+        public IUILanguageProvider CurrentUILanguageProvider { get; set; } = Legacy.UILanguageProvider;
+        public UILanguageEnum CurrentUILanguage { get { return CurrentUILanguageProvider.Current; } set { CurrentUILanguageProvider.SetUILanguageProvider(value); } }
 
         public KeybindSetting GetKeybindSetting(Keys key, Keys modifier)
         {
