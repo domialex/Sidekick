@@ -31,7 +31,7 @@ namespace Sidekick
             logger.Log("Starting Sidekick.");
 
             // System tray icon.
-            TrayIcon.Initialize();
+            _ = ServiceProvider.GetService<IPlatformTrayService>();
 
             // Load POE Trade information.
             Legacy.TradeClient.Initialize();

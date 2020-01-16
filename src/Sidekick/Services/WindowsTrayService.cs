@@ -1,27 +1,27 @@
-using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Notifications;
+using Sidekick.Business.Leagues;
+using Sidekick.Business.Platforms;
 using Sidekick.Business.Trades;
-using Sidekick.Business.Trades.Models;
+using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Services
 {
-    public static class TrayIcon
+    [SidekickService(typeof(IPlatformTrayService))]
+    public class WindowsTrayService : IPlatformTrayService, IDisposable
     {
-        private static ITradeClient _tradeClient;
+        private readonly ITradeClient tradeClient;
+        private readonly ILeagueService leagueService;
 
-        private static NotifyIcon _notifyIcon;
-        private static ToolStripMenuItem _leagueSelectMenu;
-
-        public static void Initialize()
+        public WindowsTrayService(ITradeClient tradeClient,
+            ILeagueService leagueService)
         {
-            _tradeClient = Program.ServiceProvider.GetService<ITradeClient>();
+            this.tradeClient = tradeClient;
+            this.leagueService = leagueService;
 
             _notifyIcon = new NotifyIcon();
             var icon = Resources.ExaltedOrb;
@@ -37,49 +37,38 @@ namespace Sidekick.Helpers
             contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
             contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
-
-            Legacy.NotificationService.TrayNotified += NotificationService_TrayNotified;
-            Legacy.TradeClient.LeaguesChanged += TradeClient_LeaguesChanged;
         }
 
-        private static void TradeClient_LeaguesChanged(object sender, System.EventArgs e)
+        private NotifyIcon _notifyIcon;
+        private ToolStripMenuItem _leagueSelectMenu;
+
+        public void SendNotification(string title, string text)
         {
-            PopulateLeagueSelectMenu(Legacy.TradeClient.Leagues);
+            _notifyIcon.BalloonTipTitle = GetParsedString(title);
+            _notifyIcon.BalloonTipText = GetParsedString(text);
+            _notifyIcon.ShowBalloonTip(2000);
         }
 
-        private static void NotificationService_TrayNotified(object sender, System.EventArgs e)
-        {
-            var notificationEvent = (NotificationEvent)e;
-            SendNotification(notificationEvent.Notification.Text, notificationEvent.Notification.Title);
-        }
-
-        public static void PopulateLeagueSelectMenu(List<League> leagues)
+        public void UpdateLeagues()
         {
             if (_leagueSelectMenu.DropDownItems.Count > 0)
             {
                 // TODO: Fix Cross-thread operation not valid after changing language.
-                _tradeClient.SelectedLeague = leagues.FirstOrDefault();
+                leagueService.SelectedLeague = leagueService.Leagues.FirstOrDefault();
                 return;
             }
 
-            foreach (var league in leagues)
+            foreach (var league in leagueService.Leagues)
             {
                 var menuItem = new ToolStripMenuItem(league.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { _tradeClient.SelectedLeague = league; };
+                menuItem.Click += (s, e) => { leagueService.SelectedLeague = league; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
 
             // Select the first league as the default.
             _leagueSelectMenu.DropDownItems[0].PerformClick();
-        }
-
-        public static void SendNotification(string text, string title = null)
-        {
-            _notifyIcon.BalloonTipTitle = GetParsedString(title);
-            _notifyIcon.BalloonTipText = GetParsedString(text);
-            _notifyIcon.ShowBalloonTip(2000);
         }
 
         private static string GetParsedString(string source)
@@ -105,7 +94,7 @@ namespace Sidekick.Helpers
             return source;
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
             _notifyIcon?.Dispose();
         }
