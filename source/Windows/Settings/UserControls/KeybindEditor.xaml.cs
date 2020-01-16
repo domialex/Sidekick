@@ -1,9 +1,6 @@
 ﻿using Sidekick.Windows.Settings.Models;
 using System.Windows;
-using System.Windows.Controls;
-//using System.Windows.Input;
-using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
+using WindowsHook;
 
 namespace Sidekick.Windows.Settings.UserControls
 {
@@ -40,7 +37,7 @@ namespace Sidekick.Windows.Settings.UserControls
             InitializeComponent();
         }
 
-        public void CaptureKeybinding(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
+        public void CaptureKeybinding(Keys key, Keys modifier)
         {
             // If no actual key was pressed - return
             if (key == Keys.LControlKey ||

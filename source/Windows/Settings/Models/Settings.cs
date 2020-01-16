@@ -1,6 +1,5 @@
 ﻿using Sidekick.Helpers;
-//using System.Windows.Input;
-using System.Windows.Forms;
+using WindowsHook;
 using System.Linq;
 using System;
 using Sidekick.Helpers.POEWikiAPI;

@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Gma.System.MouseKeyHook;
 using Sidekick.Helpers.Localization;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POETradeAPI;
@@ -12,6 +11,8 @@ using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.Settings.Models;
 using System.Diagnostics;
+using WindowsHook;
+using KeyEventArgs = WindowsHook.KeyEventArgs;
 
 namespace Sidekick.Helpers
 {
@@ -54,6 +55,9 @@ namespace Sidekick.Helpers
             };
 
             _globalHook.OnSequence(assignment);
+
+            // 
+            ProcessHelper.CheckPermission();
         }
 
         private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
