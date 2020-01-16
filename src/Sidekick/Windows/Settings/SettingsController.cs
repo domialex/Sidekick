@@ -54,6 +54,7 @@ namespace Sidekick.Windows.Settings
                 settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(Keys.F4, Keys.None));
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
+                settings.CurrentWikiSettings = WikiSetting.PoeWiki;
 
                 // #TODO: Add more default settings
                 return settings;

@@ -1,3 +1,4 @@
+using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.Settings.UserControls;
 using System;
@@ -29,13 +30,25 @@ namespace Sidekick.Windows.Settings
             DataContext = this;
 
             Settings = SettingsController.LoadSettings();
+            SetUIElementsToCurrentLanguage();
             SelectWikiSetting();
+            PopulateUIComboBoxAndSetSelectedLanguage();
             Show();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void SetUIElementsToCurrentLanguage()
+        {
+            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabGeneral;
+            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabKeybindings;
+            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiSettings;
+            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageSettings;
+            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiDescription;
+            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageDescription;
         }
 
         private void SelectWikiSetting()
@@ -62,6 +75,17 @@ namespace Sidekick.Windows.Settings
             }
         }
 
+        private void UpdateUILanguageSetting()
+        {
+            Settings.CurrentUILanguageProvider.SetUILanguageProvider((UILanguageEnum)comboBoxUILanguages.SelectedItem);
+        }
+
+        private void PopulateUIComboBoxAndSetSelectedLanguage()
+        {
+            comboBoxUILanguages.ItemsSource = Enum.GetValues(typeof(UILanguageEnum)).Cast<UILanguageEnum>();
+            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage;
+        }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             OnWindowClosed?.Invoke(this, null);
@@ -71,6 +95,7 @@ namespace Sidekick.Windows.Settings
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
             UpdateWikiSetting();
+            UpdateUILanguageSetting();
             SettingsController.SaveSettings();
             Close();
         }

@@ -5,22 +5,22 @@ using System.Runtime.Serialization;
 
 namespace Sidekick.Core.DependencyInjection.Configuration
 {
-  public static partial class BuilderExtensions
-  {
-    public static IServiceCollection AddSidekickConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static partial class BuilderExtensions
     {
-      foreach (var type in typeof(SidekickConfigAttribute).GetImplementedAttribute())
-      {
-        var attribute = type.GetAttribute<SidekickConfigAttribute>();
-        if (attribute != null)
+        public static IServiceCollection AddSidekickConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-          var config = FormatterServices.GetUninitializedObject(type);
-          configuration.GetSection(attribute.Section).Bind(config);
-          services.AddSingleton(type, config);
-        }
-      }
+            foreach (var type in typeof(SidekickConfigAttribute).GetImplementedAttribute())
+            {
+                var attribute = type.GetAttribute<SidekickConfigAttribute>();
+                if (attribute != null)
+                {
+                    var config = FormatterServices.GetUninitializedObject(type);
+                    configuration.GetSection(attribute.Section).Bind(config);
+                    services.AddSingleton(type, config);
+                }
+            }
 
-      return services;
+            return services;
+        }
     }
-  }
 }
