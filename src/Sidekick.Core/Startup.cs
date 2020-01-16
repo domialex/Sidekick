@@ -3,13 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.DependencyInjection.Configuration;
 using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.DependencyInjection.Startup;
-using System;
 
 namespace Sidekick.Core
 {
     public static class Startup
     {
-        public static IServiceProvider InitializeServices()
+        public static ServiceProvider InitializeServices()
         {
             var configuration = new ConfigurationBuilder()
               .AddJsonFile("appsettings.json", true)
