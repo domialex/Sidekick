@@ -125,10 +125,20 @@ namespace Sidekick.Business.Trades
 
         public async Task FetchAPIData()
         {
-            Leagues = await FetchDataAsync<League>("Leagues", "leagues");
-            StaticItemCategories = await FetchDataAsync<StaticItemCategory>("Static item categories", "static");
-            AttributeCategories = await FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
-            ItemCategories = await FetchDataAsync<ItemCategory>("Item categories", "items");
+            var fetchLeaguesTask = FetchDataAsync<League>("Leagues", "leagues");
+            var fetchStaticItemCategoriesTask = FetchDataAsync<StaticItemCategory>("Static item categories", "static");
+            var fetchAttributeCategoriesTask = FetchDataAsync<AttributeCategory>("Attribute categories", "stats");
+            var fetchItemCategoriesTask = FetchDataAsync<ItemCategory>("Item categories", "items");
+
+            Leagues = await fetchLeaguesTask;
+            StaticItemCategories = await fetchStaticItemCategoriesTask;
+            AttributeCategories = await fetchAttributeCategoriesTask;
+            ItemCategories = await fetchItemCategoriesTask;
+
+            if (OneFetchFailed)
+            {
+                return;
+            }
 
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
@@ -212,7 +222,7 @@ namespace Sidekick.Business.Trades
 
             if (queryResult != null)
             {
-                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 2).Select(x => GetListings(queryResult, x)));
+                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 1).Select(x => GetListings(queryResult, x)));
 
                 return new QueryResult<ListingResult>()
                 {
@@ -233,7 +243,7 @@ namespace Sidekick.Business.Trades
 
             if (queryResult != null)
             {
-                var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
+                var result = await Task.WhenAll(Enumerable.Range(0, 1).Select(x => GetListings(queryResult, x)));
 
                 return new QueryResult<ListingResult>()
                 {
