@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Sidekick.Business.Leagues.Models;
+using System.Collections.Generic;
 
 namespace Sidekick.Business.Leagues
 {
@@ -8,7 +7,5 @@ namespace Sidekick.Business.Leagues
     {
         List<League> Leagues { get; }
         League SelectedLeague { get; set; }
-
-        Task Initialize();
     }
 }
