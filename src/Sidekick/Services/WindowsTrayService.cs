@@ -29,13 +29,21 @@ namespace Sidekick.Services
             _notifyIcon.Visible = true;
             _notifyIcon.Text = "Sidekick";
 
+            ReloadUI();
+
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(ReloadUI);
+        }
+
+        private void ReloadUI()
+        {
+            var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
             _leagueSelectMenu = new ToolStripMenuItem("League");
             contextMenu.Items.Add(_leagueSelectMenu);
             contextMenu.Items.Add(new ToolStripSeparator());
-            contextMenu.Items.Add("Settings", null, (s, e) => SettingsController.Show());
-            contextMenu.Items.Add("Show logs", null, (s, e) => ApplicationLogsController.Show());
-            contextMenu.Items.Add("Exit", null, (s, e) => Application.Exit());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconSettings, null, (s, e) => SettingsController.Show());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconExit, null, (s, e) => Application.Exit());
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
@@ -51,6 +59,11 @@ namespace Sidekick.Services
 
         public void UpdateLeagues()
         {
+            if (leagueService.Leagues == null)
+            {
+                return;
+            }
+
             if (_leagueSelectMenu.DropDownItems.Count > 0)
             {
                 // TODO: Fix Cross-thread operation not valid after changing language.

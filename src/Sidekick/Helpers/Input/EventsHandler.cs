@@ -1,9 +1,3 @@
-using Gma.System.MouseKeyHook;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +5,13 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
+using WindowsHook;
+using KeyEventArgs = WindowsHook.KeyEventArgs;
 
 namespace Sidekick.Helpers.Input
 {
@@ -38,6 +39,8 @@ namespace Sidekick.Helpers.Input
 
         public static void Initialize()
         {
+            ProcessHelper.CheckPermission();
+
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
 
@@ -87,7 +90,7 @@ namespace Sidekick.Helpers.Input
             else if (ProcessHelper.IsPathOfExileInFocus())
             {
                 //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
-                if (!OverlayController.IsDisplayed && setting == KeybindSetting.PriceCheck)
+                if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
@@ -113,6 +116,11 @@ namespace Sidekick.Helpers.Input
                 {
                     e.Handled = true;
                     Task.Run(TriggerLeaveParty);
+                }
+                else if (setting == KeybindSetting.OpenSearch)
+                {
+                    e.Handled = true;
+                    Task.Run(TriggerOpenSearch);
                 }
             }
         }
@@ -235,6 +243,17 @@ namespace Sidekick.Helpers.Input
             Legacy.Logger.Log("Hotkey for Hideout triggered.");
 
             SendKeys.SendWait(KeyCommands.HIDEOUT);
+        }
+
+        public static async void TriggerOpenSearch()
+        {
+            Legacy.Logger.Log("Hotkey for opening search query in browser triggered.");
+
+            var item = await TriggerCopyAction();
+            if (item != null)
+            {
+                await Legacy.TradeClient.OpenWebpage(item);
+            }
         }
 
         private static void ExitApplication()

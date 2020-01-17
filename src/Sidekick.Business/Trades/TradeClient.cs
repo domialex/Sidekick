@@ -14,6 +14,7 @@ using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Settings;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -106,9 +107,13 @@ namespace Sidekick.Business.Trades
 
         public async Task FetchAPIData()
         {
-            StaticItemCategories = await poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
-            AttributeCategories = await poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
-            ItemCategories = await poeApiService.Fetch<ItemCategory>("Item categories", "items");
+            var fetchStaticItemCategoriesTask = poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
+            var fetchAttributeCategoriesTask = poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
+            var fetchItemCategoriesTask = poeApiService.Fetch<ItemCategory>("Item categories", "items");
+
+            StaticItemCategories = await fetchStaticItemCategoriesTask;
+            AttributeCategories = await fetchAttributeCategoriesTask;
+            ItemCategories = await fetchItemCategoriesTask;
 
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
@@ -171,7 +176,7 @@ namespace Sidekick.Business.Trades
 
             if (queryResult != null)
             {
-                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 2).Select(x => GetListings(queryResult, x)));
+                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 1).Select(x => GetListings(queryResult, x)));
 
                 return new QueryResult<ListingResult>()
                 {
@@ -192,7 +197,7 @@ namespace Sidekick.Business.Trades
 
             if (queryResult != null)
             {
-                var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
+                var result = await Task.WhenAll(Enumerable.Range(0, 1).Select(x => GetListings(queryResult, x)));
 
                 return new QueryResult<ListingResult>()
                 {
@@ -228,6 +233,15 @@ namespace Sidekick.Business.Trades
 
 
             return result;
+        }
+
+        public async Task OpenWebpage(Parsers.Models.Item item)
+        {
+            var queryResult = await Query(item);
+
+            var uri = queryResult.Uri.ToString();
+            logger.Log($"Opening in browser: {uri}");
+            Process.Start(uri);
         }
 
         public void Dispose()

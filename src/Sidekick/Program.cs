@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Loggers;
 using Sidekick.Business.Platforms;
 using Sidekick.Helpers.Input;
+using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
 using System;
 using System.Threading;
@@ -22,6 +23,7 @@ namespace Sidekick
             var mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out bool instanceResult);
             if (!instanceResult) return;
             GC.KeepAlive(mutex);
+            ProcessHelper.mutex = mutex;
 
             ServiceProvider = Core.Startup.InitializeServices();
 

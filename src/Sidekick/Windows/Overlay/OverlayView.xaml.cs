@@ -2,6 +2,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
+using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,7 +47,19 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(UpdateUIText);
+            UpdateUIText();
             Hide();
+        }
+
+        private void UpdateUIText()
+        {
+            var settings = SettingsController.GetSettingsInstance();
+            textBoxAccountName.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAccountName;
+            textBoxAge.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAge;
+            textBoxCharacter.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayCharacter;
+            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayItemLevel;
+            textBoxPrice.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)
