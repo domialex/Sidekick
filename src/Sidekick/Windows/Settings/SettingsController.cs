@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms.Integration;
+using Newtonsoft.Json;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
 using WindowsHook;
 
 namespace Sidekick.Windows.Settings
@@ -52,6 +52,8 @@ namespace Sidekick.Windows.Settings
                 settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(Keys.W, Keys.Alt));
                 settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(Keys.F, Keys.Control));
                 settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(Keys.F4, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.OpenSearch, new Models.Hotkey(Keys.F6, Keys.None));
+
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
                 settings.CurrentWikiSettings = WikiSetting.PoeWiki;
