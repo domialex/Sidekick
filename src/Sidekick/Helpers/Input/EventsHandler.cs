@@ -244,7 +244,7 @@ namespace Sidekick.Helpers
 
         public static async void TriggerOpenSearch()
         {
-            Legacy.Logger.Log("Hotkey for Hideout triggered.");
+            Legacy.Logger.Log("Hotkey for opening search query in browser triggered.");
 
             var item = await TriggerCopyAction();
             if (item != null)
