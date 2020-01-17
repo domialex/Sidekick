@@ -1,14 +1,10 @@
 using Sidekick.Business.Languages.Implementations.UI;
 using Sidekick.Business.Loggers;
-using Sidekick.Core.DependencyInjection.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sidekick.Business.Languages
 {
-    [SidekickService(typeof(IUILanguageProvider))]
     public class UILanguageProvider : IUILanguageProvider
     {
         private readonly ILogger logger;

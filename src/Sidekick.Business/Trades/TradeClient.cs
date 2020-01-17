@@ -16,12 +16,10 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Trades
 {
-    [SidekickService(typeof(ITradeClient))]
     public class TradeClient : ITradeClient
     {
         private readonly ILogger logger;
