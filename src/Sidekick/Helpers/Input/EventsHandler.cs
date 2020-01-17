@@ -11,6 +11,8 @@ using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
+using WindowsHook;
+using KeyEventArgs = WindowsHook.KeyEventArgs;
 
 namespace Sidekick.Helpers
 {
@@ -38,6 +40,8 @@ namespace Sidekick.Helpers
 
         public static void Initialize()
         {
+            ProcessHelper.CheckPermission();
+
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
 

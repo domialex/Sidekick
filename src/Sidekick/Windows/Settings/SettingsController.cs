@@ -4,6 +4,7 @@ using System.Windows.Forms.Integration;
 using Newtonsoft.Json;
 using Sidekick.Business.Loggers;
 using Sidekick.Core.Settings;
+using WindowsHook;
 
 namespace Sidekick.Windows.Settings
 {
@@ -45,16 +46,17 @@ namespace Sidekick.Windows.Settings
                 var settings = new Models.Settings();
 
                 /* KeybindSettings */
-                settings.KeybindSettings.Add(KeybindSetting.CloseWindow, new Models.Hotkey(System.Windows.Forms.Keys.Escape, System.Windows.Forms.Keys.None));
-                settings.KeybindSettings.Add(KeybindSetting.PriceCheck, new Models.Hotkey(System.Windows.Forms.Keys.D, System.Windows.Forms.Keys.Control));
-                settings.KeybindSettings.Add(KeybindSetting.Hideout, new Models.Hotkey(System.Windows.Forms.Keys.F5, System.Windows.Forms.Keys.None));
-                settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(System.Windows.Forms.Keys.W, System.Windows.Forms.Keys.Alt));
-                settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(System.Windows.Forms.Keys.F, System.Windows.Forms.Keys.Control));
-                settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(System.Windows.Forms.Keys.F4, System.Windows.Forms.Keys.None));
-                settings.KeybindSettings.Add(KeybindSetting.OpenSearch, new Models.Hotkey(System.Windows.Forms.Keys.F6, System.Windows.Forms.Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.CloseWindow, new Models.Hotkey(Keys.Escape, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.PriceCheck, new Models.Hotkey(Keys.D, Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.Hideout, new Models.Hotkey(Keys.F5, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.ItemWiki, new Models.Hotkey(Keys.W, Keys.Alt));
+                settings.KeybindSettings.Add(KeybindSetting.FindItems, new Models.Hotkey(Keys.F, Keys.Control));
+                settings.KeybindSettings.Add(KeybindSetting.LeaveParty, new Models.Hotkey(Keys.F4, Keys.None));
+                settings.KeybindSettings.Add(KeybindSetting.OpenSearch, new Models.Hotkey(Keys.F6, Keys.None));
 
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
+                settings.CurrentWikiSettings = WikiSetting.PoeWiki;
 
                 // #TODO: Add more default settings
                 return settings;
@@ -78,7 +80,7 @@ namespace Sidekick.Windows.Settings
             }
         }
 
-        public static void CaptureKeyEvents(System.Windows.Forms.Keys key, System.Windows.Forms.Keys modifier)
+        public static void CaptureKeyEvents(Keys key, Keys modifier)
         {
             _settingsView.CaptureKeyEvents(key, modifier);
         }

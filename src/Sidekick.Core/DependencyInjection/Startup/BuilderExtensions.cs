@@ -5,17 +5,17 @@ using System.Runtime.Serialization;
 
 namespace Sidekick.Core.DependencyInjection.Startup
 {
-  public static class BuilderExtensions
-  {
-    public static IServiceCollection AddSidekickStartup(this IServiceCollection services, IConfiguration configuration)
+    public static class BuilderExtensions
     {
-      foreach (var type in typeof(ISidekickStartup).GetImplementedInterface())
-      {
-        var instance = (ISidekickStartup)FormatterServices.GetUninitializedObject(type);
-        instance.ConfigureServices(services, configuration);
-      }
+        public static IServiceCollection AddSidekickStartup(this IServiceCollection services, IConfiguration configuration)
+        {
+            foreach (var type in typeof(ISidekickStartup).GetImplementedInterface())
+            {
+                var instance = (ISidekickStartup)FormatterServices.GetUninitializedObject(type);
+                instance.ConfigureServices(services, configuration);
+            }
 
-      return services;
+            return services;
+        }
     }
-  }
 }
