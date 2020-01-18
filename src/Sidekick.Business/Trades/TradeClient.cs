@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;

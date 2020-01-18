@@ -1,4 +1,3 @@
-using Sidekick.Business.Languages;
 using Sidekick.Core.Loggers;
 using System;
 using System.Diagnostics;
@@ -19,7 +18,7 @@ namespace Sidekick.Helpers.POEDbAPI
                 return;
             }
 
-            if (Legacy.LanguageProvider.Current != LanguageEnum.English)        // Only English for now
+            if (Legacy.LanguageProvider.Current.Name != Legacy.LanguageProvider.DefaultLanguage)        // Only English for now
             {
                 return;
             }

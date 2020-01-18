@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;

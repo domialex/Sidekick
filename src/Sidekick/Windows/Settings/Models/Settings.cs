@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
 using Sidekick.Helpers.POEDbAPI;
@@ -17,7 +17,7 @@ namespace Sidekick.Windows.Settings.Models
         public WikiSetting CurrentWikiSettings { get; set; }
         [JsonIgnore]
         public IUILanguageProvider CurrentUILanguageProvider { get; set; } = Legacy.UILanguageProvider;
-        public UILanguageEnum CurrentUILanguage { get { return CurrentUILanguageProvider.Current; } set { CurrentUILanguageProvider.SetUILanguageProvider(value); } }
+        public UILanguageAttribute CurrentUILanguage { get { return CurrentUILanguageProvider.Current; } set { CurrentUILanguageProvider.SetLanguage(value); } }
 
         public KeybindSetting GetKeybindSetting(Keys key, Keys modifier)
         {

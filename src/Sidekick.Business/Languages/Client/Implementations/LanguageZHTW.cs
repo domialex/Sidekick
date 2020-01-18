@@ -1,7 +1,8 @@
 using System;
 
-namespace Sidekick.Business.Languages.Implementations
+namespace Sidekick.Business.Languages.Client.Implementations
 {
+    [Language("TraditionalChinese", "稀有度: ")]
     public class LanguageZHTW : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("http://web.poe.garena.tw/trade/search/");

@@ -270,11 +270,7 @@ namespace Sidekick.Helpers.Input
             var itemText = ClipboardHelper.GetText();
 
             // Detect the language of the item in the clipboard.
-            var setLanguageSuccess = await Legacy.LanguageProvider.FindAndSetLanguageProvider(itemText);
-            if (!setLanguageSuccess)
-            {
-                return null;
-            }
+            await Legacy.LanguageProvider.FindAndSetLanguage(itemText);
 
             // Parse and return item
             return Legacy.ItemParser.ParseItem(itemText);

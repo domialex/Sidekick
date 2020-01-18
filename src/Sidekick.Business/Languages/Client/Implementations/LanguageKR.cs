@@ -1,7 +1,8 @@
 using System;
 
-namespace Sidekick.Business.Languages.Implementations
+namespace Sidekick.Business.Languages.Client.Implementations
 {
+    [Language("Korean", "아이템 희귀도: ")]
     public class LanguageKR : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://poe.game.daum.net/trade/search/");

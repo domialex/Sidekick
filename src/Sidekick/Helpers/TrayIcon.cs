@@ -1,70 +1,78 @@
-using Sidekick.Business.Leagues.Models;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sidekick.Helpers
 {
     public static class TrayIcon
     {
-        private static NotifyIcon _notifyIcon;
-        private static ToolStripMenuItem _leagueSelectMenu;
+        private static NotifyIcon NotifyIcon;
 
         public static void Initialize()
         {
-            _notifyIcon = new NotifyIcon();
+            NotifyIcon = new NotifyIcon();
             var icon = Resources.ExaltedOrb;
-            _notifyIcon.Icon = icon;
-            _notifyIcon.Visible = true;
-            _notifyIcon.Text = "Sidekick";
+            NotifyIcon.Icon = icon;
+            NotifyIcon.Visible = true;
+            NotifyIcon.Text = "Sidekick";
 
             ReloadUI();
 
-            Legacy.UILanguageProvider.UILanguageChanged.Add(ReloadUI);
+            Legacy.UILanguageProvider.UILanguageChanged += ReloadUI;
         }
 
-        public static void ReloadUI()
+        public static Task ReloadUI()
         {
             var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
-            _leagueSelectMenu = new ToolStripMenuItem("League");
-            contextMenu.Items.Add(_leagueSelectMenu);
+
+            // League selection
+            if (Legacy.LeagueService.Leagues != null)
+            {
+                var leagueMenu = new ToolStripMenuItem("League");
+                foreach (var league in Legacy.LeagueService.Leagues)
+                {
+                    var menuItem = new ToolStripMenuItem(league.Id);
+                    menuItem.Checked = league.Id == Legacy.LeagueService.SelectedLeague.Id;
+                    menuItem.Click += (s, e) =>
+                    {
+                        foreach (ToolStripMenuItem x in leagueMenu.DropDownItems)
+                        {
+                            x.Checked = false;
+                        }
+                        menuItem.Checked = true;
+                        Legacy.LeagueService.SelectedLeague = league;
+                    };
+                    leagueMenu.DropDownItems.Add(menuItem);
+                }
+                contextMenu.Items.Add(leagueMenu);
+            }
+
+            // Separator
             contextMenu.Items.Add(new ToolStripSeparator());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconSettings, null, (s, e) => SettingsController.Show());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconExit, null, (s, e) => Application.Exit());
-            _notifyIcon.ContextMenuStrip = contextMenu;
-        }
 
-        public static void PopulateLeagueSelectMenu(List<League> leagues)
-        {
-            if (leagues == null)
-            {
-                return;
-            }
+            // Settings button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconSettings, null, (s, e) => SettingsController.Show());
 
-            foreach (var league in leagues)
-            {
-                var menuItem = new ToolStripMenuItem(league.Id);
-                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
-                menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { Legacy.LeagueService.SelectedLeague = league; };
-                _leagueSelectMenu.DropDownItems.Add(menuItem);
-            }
+            // Logs button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
 
-            // Select the first league as the default.
-            _leagueSelectMenu.DropDownItems[0].PerformClick();
+            // Exit button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconExit, null, (s, e) => Application.Exit());
+
+            NotifyIcon.ContextMenuStrip = contextMenu;
+            return Task.CompletedTask;
         }
 
         public static void SendNotification(string text, string title = null)
         {
-            _notifyIcon.BalloonTipTitle = GetParsedString(title);
-            _notifyIcon.BalloonTipText = GetParsedString(text);
-            _notifyIcon.ShowBalloonTip(2000);
+            NotifyIcon.BalloonTipTitle = GetParsedString(title);
+            NotifyIcon.BalloonTipText = GetParsedString(text);
+            NotifyIcon.ShowBalloonTip(2000);
         }
 
         private static string GetParsedString(string source)
@@ -92,7 +100,7 @@ namespace Sidekick.Helpers
 
         public static void Dispose()
         {
-            _notifyIcon?.Dispose();
+            NotifyIcon?.Dispose();
         }
     }
 }

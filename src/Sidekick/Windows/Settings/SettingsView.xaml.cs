@@ -1,4 +1,3 @@
-using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.Settings.UserControls;
 using System;
@@ -43,12 +42,12 @@ namespace Sidekick.Windows.Settings
 
         private void SetUIElementsToCurrentLanguage()
         {
-            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabGeneral;
-            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabKeybindings;
-            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiSettings;
-            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageSettings;
-            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiDescription;
-            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageDescription;
+            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabGeneral;
+            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabKeybindings;
+            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiSettings;
+            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageSettings;
+            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiDescription;
+            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageDescription;
         }
 
         private void SelectWikiSetting()
@@ -77,13 +76,13 @@ namespace Sidekick.Windows.Settings
 
         private void UpdateUILanguageSetting()
         {
-            Settings.CurrentUILanguageProvider.SetUILanguageProvider((UILanguageEnum)comboBoxUILanguages.SelectedItem);
+            Settings.CurrentUILanguageProvider.SetLanguage(Legacy.UILanguageProvider.AvailableLanguages.First(x => x.Name == (string)comboBoxUILanguages.SelectedItem));
         }
 
         private void PopulateUIComboBoxAndSetSelectedLanguage()
         {
-            comboBoxUILanguages.ItemsSource = Enum.GetValues(typeof(UILanguageEnum)).Cast<UILanguageEnum>();
-            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage;
+            comboBoxUILanguages.ItemsSource = Legacy.UILanguageProvider.AvailableLanguages.Select(x => x.Name);
+            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage.Name;
         }
 
         protected override void OnClosing(CancelEventArgs e)
