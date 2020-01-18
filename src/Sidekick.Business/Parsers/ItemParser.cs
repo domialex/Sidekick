@@ -26,7 +26,7 @@ namespace Sidekick.Business.Parsers
             this.languageProvider = languageProvider;
             this.logger = logger;
             this.tradeClient = tradeClient;
-            itemNameTokenizer = tokenizers.Where(x => x.GetType() == typeof(ItemNameTokenizer)).FirstOrDefault();
+            itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
         }
 
         /// <summary>
