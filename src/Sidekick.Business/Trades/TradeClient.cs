@@ -5,12 +5,10 @@ using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Trades.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Loggers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -38,23 +36,6 @@ namespace Sidekick.Business.Trades
             this.httpClientProvider = httpClientProvider;
             this.leagueService = leagueService;
             this.staticItemCategoryService = staticItemCategoryService;
-        }
-
-        public HashSet<string> MapNames { get; private set; }
-
-        public Task OnInitialize()
-        {
-            var mapCategories = staticItemCategoryService.Categories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
-            var allMapNames = new List<string>();
-
-            foreach (var item in mapCategories)
-            {
-                allMapNames.AddRange(item.Entries.Select(c => c.Text));
-            }
-
-            MapNames = new HashSet<string>(allMapNames.Distinct());
-
-            return Task.CompletedTask;
         }
 
         public async Task<QueryResult<string>> Query(Parsers.Models.Item item)

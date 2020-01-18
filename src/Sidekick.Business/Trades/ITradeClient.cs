@@ -1,13 +1,11 @@
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sidekick.Business.Trades
 {
     public interface ITradeClient
     {
-        HashSet<string> MapNames { get; }
         Task<QueryResult<ListingResult>> GetListings(Parsers.Models.Item item);
         Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0);
         Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch);
