@@ -5,6 +5,8 @@ using Sidekick.Business.Languages;
 using Sidekick.Business.Loggers;
 using Sidekick.Business.Notifications;
 using Sidekick.Business.Parsers;
+using Sidekick.Business.Tokenizers;
+using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
 
 namespace Sidekick.Core.Extensions
@@ -22,6 +24,8 @@ namespace Sidekick.Core.Extensions
 
             services.AddSingleton<ILogger, Logger>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
+
+            services.AddSingleton<ITokenizer, ItemNameTokenizer>();
 
             return services;
         }
