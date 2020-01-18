@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ namespace Sidekick.Helpers
             {
                 TValue result;
                 if (!TryGetValue(key, out result))
-                    throw new ArgumentException("Key not found", "key");
+                    return default; //throw new ArgumentException("Key not found", "key");
 
                 return result;
             }

@@ -20,12 +20,8 @@ namespace Sidekick.Helpers.POEWikiAPI
             if (Legacy.LanguageProvider.Current.Name != Legacy.LanguageProvider.DefaultLanguage)
                 return;
 
-            // Don't handle magic and rare items
-            // Normal items will open the basetype wiki link which is acceptable
-            // Does not work for unique items that are not identified
-            if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
-                return;
-
+            // Most items will open the basetype wiki link.
+            // Does not work for unique items that are not identified.
             if (string.IsNullOrEmpty(item.Name))
             {
                 Legacy.Logger.Log("Failed to open the wiki for the specified item.", LogState.Error);
@@ -43,8 +39,10 @@ namespace Sidekick.Helpers.POEWikiAPI
         /// </summary>
         private static Uri CreateItemWikiLink(Business.Parsers.Models.Item item)
         {
+            // determine search link, so wiki can be opened for any item
+            var searchLink = item.Rarity == Legacy.LanguageProvider.Language.RarityUnique ? item.Name : item.Type;
             // replace space encodes with '_' to match the link layout of the poe wiki and then url encode it
-            string itemLink = System.Net.WebUtility.UrlEncode(item.Name.Replace(" ", "_"));
+            string itemLink = System.Net.WebUtility.UrlEncode(searchLink.Replace(" ", "_"));
             return new Uri(WIKI_BASE_URI, itemLink);
         }
     }

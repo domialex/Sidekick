@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Sidekick.Windows.Overlay.UserControls.QueryResultControl"
+<UserControl x:Class="Sidekick.Windows.Overlay.UserControls.QueryResultControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -47,7 +47,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Text="{Binding Path=Item.Name, Mode=OneWay}" Grid.Row="0" FontWeight="Bold" Margin="5 5 0 0" Foreground="{Binding Item.Rarity, Converter={StaticResource RarityToColorConverter}}"/>
-
+        
         <TextBlock Grid.Row="1" Grid.Column="0">
             <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="openQueryLink" TextDecorations="None">
                 <TextBlock Grid.Row="1" Margin="8 0 0 5" TextDecorations="Underline">

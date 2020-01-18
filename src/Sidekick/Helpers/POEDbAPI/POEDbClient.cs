@@ -23,11 +23,6 @@ namespace Sidekick.Helpers.POEDbAPI
                 return;
             }
 
-            if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
-            {
-                return;
-            }
-
             if (string.IsNullOrEmpty(item.Name))
             {
                 Legacy.Logger.Log("Failed to open PoeDb for item", LogState.Error);
@@ -56,7 +51,8 @@ namespace Sidekick.Helpers.POEDbAPI
                 subUrl = SubUrlItem;
             }
 
-            string wikiLink = subUrl + item.Name.Replace(" ", "+");
+            var searchLink = item.Rarity == Legacy.LanguageProvider.Language.RarityUnique ? item.Name : item.Type;
+            string wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri, wikiLink);
         }
     }

@@ -40,7 +40,7 @@ namespace Sidekick.Business.Apis.Poe
 
                     result = JsonConvert.DeserializeObject<QueryResult<TReturn>>(content, httpClientProvider.JsonSerializerSettings)?.Result;
 
-                    logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
+                    logger.Log($"{result.Count} {name} fetched.");
                     success = true;
                 }
                 catch
