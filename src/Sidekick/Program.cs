@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Loggers;
+using Sidekick.Core.Initialization;
 using Sidekick.Helpers;
+using Sidekick.Helpers.Input;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
 using System;
@@ -11,7 +12,7 @@ namespace Sidekick
 {
     class Program
     {
-        public static IServiceProvider ServiceProvider;
+        public static ServiceProvider ServiceProvider;
         static readonly string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
         public static System.Windows.Threading.Dispatcher MAIN_DISPATCHER { get; private set; } = null;
 
@@ -27,15 +28,10 @@ namespace Sidekick
             ServiceProvider = Startup.InitializeServices();
 
             Legacy.Initialize();
-
-            var logger = ServiceProvider.GetService<ILogger>();
-            logger.Log("Starting Sidekick.");
-
-            // System tray icon.
             TrayIcon.Initialize();
 
-            // Load POE Trade information.
-            Legacy.TradeClient.Initialize();
+            var initializeService = ServiceProvider.GetService<IInitializer>();
+            initializeService.Initialize();
 
             // Keyboard hooks.
             EventsHandler.Initialize();
@@ -54,8 +50,7 @@ namespace Sidekick
             // check that the main thread is about to exit
             if (SynchronizationContext.Current != null)
             {
-                TrayIcon.Dispose();
-                Legacy.TradeClient.Dispose();
+                ServiceProvider.Dispose();
                 EventsHandler.Dispose();
                 OverlayController.Dispose();
                 MAIN_DISPATCHER = null;

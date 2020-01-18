@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Sidekick.Business.Loggers;
+using Sidekick.Core.Loggers;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
         public static async Task<PriceInfo> GetItemPricePrediction(string itemText)
         {
             var encodedItem = EncodeItemToBase64(itemText);
-            var league = Legacy.TradeClient.SelectedLeague.Id;
+            var league = Legacy.LeagueService.SelectedLeague.Id;
             var requestUrl = GenerateRequestUrl(encodedItem, league);
 
             try
@@ -24,7 +24,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.TradeClient.JsonSerializerSettings);
+                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.HttpClientProvider.JsonSerializerSettings);
                     priceInfo.ItemText = itemText;
                     return priceInfo;
                 }

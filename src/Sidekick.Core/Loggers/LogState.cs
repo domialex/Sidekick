@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Loggers
+namespace Sidekick.Core.Loggers
 {
     public enum LogState
     {

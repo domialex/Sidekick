@@ -2,7 +2,7 @@ using Sidekick.Business.Parsers.Models;
 using System;
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Trades.Results
+namespace Sidekick.Business.Apis.Poe.Models
 {
     public class QueryResult<T>
     {

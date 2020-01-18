@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Loggers
+namespace Sidekick.Core.Loggers
 {
     public interface ILogger
     {
@@ -11,5 +11,6 @@ namespace Sidekick.Business.Loggers
 
         void Clear();
         void Log(string text, LogState state = LogState.None);
+        void LogException(Exception e);
     }
 }
