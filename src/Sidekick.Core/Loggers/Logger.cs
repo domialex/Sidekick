@@ -1,4 +1,3 @@
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using System;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Loggers
 {
-    [SidekickService(typeof(ILogger))]
     public class Logger : ILogger, IOnBeforeInitialize, IOnInitialize, IOnAfterInitialize, IOnReset
     {
         public event EventHandler MessageLogged;

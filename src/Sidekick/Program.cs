@@ -25,7 +25,7 @@ namespace Sidekick
             GC.KeepAlive(mutex);
             ProcessHelper.mutex = mutex;
 
-            ServiceProvider = Core.Startup.InitializeServices();
+            ServiceProvider = Startup.InitializeServices();
 
             Legacy.Initialize();
             TrayIcon.Initialize();

@@ -1,14 +1,10 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using Sidekick.Core.DependencyInjection.Services;
-using System;
 using System.Net.Http;
 
 namespace Sidekick.Business.Http
 {
-    [Obsolete]
-    [SidekickService(typeof(IHttpClientProvider))]
     public class HttpClientProvider : IHttpClientProvider
     {
         public HttpClientProvider()

@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.Poe
 {
-    [SidekickService(typeof(IPoeApiService))]
     public class PoeApiService : IPoeApiService
     {
         private readonly ILogger logger;

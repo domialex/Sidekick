@@ -1,4 +1,3 @@
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Loggers;
 using System;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
 {
-    [SidekickService(typeof(IInitializeService))]
     public class InitializeService : IInitializeService
     {
         private readonly IServiceProvider serviceProvider;

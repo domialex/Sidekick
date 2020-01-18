@@ -1,5 +1,4 @@
 using Sidekick.Business.Leagues;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Services
 {
-    [SidekickService(typeof(ITrayService))]
     public class TrayService : ITrayService, IOnAfterInitialize
     {
         private readonly ILeagueService leagueService;

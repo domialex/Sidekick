@@ -1,10 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.DependencyInjection.Configuration;
-using Sidekick.Core.DependencyInjection.Services;
-using Sidekick.Core.DependencyInjection.Startup;
+using Sidekick.Core.Extensions;
 
-namespace Sidekick.Core
+namespace Sidekick
 {
     public static class Startup
     {
@@ -16,8 +14,7 @@ namespace Sidekick.Core
 
             var services = new ServiceCollection()
               .AddSidekickConfiguration(configuration)
-              .AddSidekickServices()
-              .AddSidekickStartup(configuration);
+              .AddSidekickServices();
 
             return services.BuildServiceProvider();
         }

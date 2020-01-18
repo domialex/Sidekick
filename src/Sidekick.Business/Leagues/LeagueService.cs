@@ -1,6 +1,5 @@
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Leagues.Models;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Leagues
 {
-    [SidekickService(typeof(ILeagueService))]
     public class LeagueService : ILeagueService, IOnBeforeInitialize, IOnReset
     {
         private readonly ILogger logger;

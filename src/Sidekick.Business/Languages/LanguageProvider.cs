@@ -1,5 +1,4 @@
 using Sidekick.Business.Languages.Implementations;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using System;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Languages
 {
-    [SidekickService(typeof(ILanguageProvider))]
     public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;

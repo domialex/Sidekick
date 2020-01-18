@@ -2,8 +2,9 @@ using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
+using Sidekick.Business.Tokenizers;
+using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
-using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
-    [SidekickService(typeof(IItemParser))]
     public class ItemParser : IItemParser
     {
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
@@ -19,12 +19,14 @@ namespace Sidekick.Business.Parsers
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
+        private readonly ITokenizer itemNameTokenizer;
 
-        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient)
+        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient, IEnumerable<ITokenizer> tokenizers)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
             this.tradeClient = tradeClient;
+            itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
         }
 
         /// <summary>
@@ -237,6 +239,12 @@ namespace Sidekick.Business.Parsers
                 {
                     item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
                 }
+
+                if (!string.IsNullOrWhiteSpace(item.Name))
+                    item.Name = ParseName(item.Name);
+
+                if (!string.IsNullOrWhiteSpace(item.Type))
+                    item.Type = ParseName(item.Type);
             }
             catch (Exception e)
             {
@@ -246,6 +254,29 @@ namespace Sidekick.Business.Parsers
 
             item.IsCorrupted = isCorrupted;
             return item;
+        }
+
+        private string ParseName(string name)
+        {
+            var langs = new List<string>();
+            var tokens = itemNameTokenizer.Tokenize(name);
+            var output = "";
+
+            foreach (var token in tokens.Select(x => x as ItemNameToken))
+            {
+                if (token.TokenType == ItemNameTokenType.Set)
+                    langs.Add(token.Match.Match.Groups["LANG"].Value);
+                else if (token.TokenType == ItemNameTokenType.Name)
+                    output += token.Match.Match.Value;
+                else if (token.TokenType == ItemNameTokenType.If)
+                {
+                    var lang = token.Match.Match.Groups["LANG"].Value;
+                    if (langs.Contains(lang))
+                        output += token.Match.Match.Groups["NAME"].Value;
+                }
+            }
+
+            return output;
         }
 
         private string GetNumberFromString(string input)
