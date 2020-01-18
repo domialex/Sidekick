@@ -9,7 +9,7 @@ namespace Sidekick.Core
         public static IServiceCollection AddSidekickCoreServices(this IServiceCollection services)
         {
             services.AddSingleton<ILogger, Logger>();
-            services.AddSingleton<IInitializeService, InitializeService>();
+            services.AddSingleton<IInitializer, Initializer>();
 
             return services;
         }

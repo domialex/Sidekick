@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Trades
 {
-    public class TradeClient : ITradeClient, IOnBeforeInitialize, IOnReset
+    public class TradeClient : ITradeClient, IOnBeforeInit, IOnReset
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
@@ -49,7 +49,7 @@ namespace Sidekick.Business.Trades
 
         public HashSet<string> MapNames { get; private set; }
 
-        public async Task OnBeforeInitialize()
+        public async Task OnBeforeInit()
         {
             logger.Log("Fetching Path of Exile trade data.");
 

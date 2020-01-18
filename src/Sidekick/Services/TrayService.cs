@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Services
 {
-    public class TrayService : ITrayService, IOnAfterInitialize
+    public class TrayService : ITrayService, IOnAfterInit
     {
         private readonly ILeagueService leagueService;
 
@@ -15,7 +15,7 @@ namespace Sidekick.Services
             this.leagueService = leagueService;
         }
 
-        public Task OnAfterInitialize()
+        public Task OnAfterInit()
         {
             TrayIcon.ReloadUI();
             TrayIcon.PopulateLeagueSelectMenu(leagueService.Leagues);

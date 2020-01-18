@@ -30,7 +30,7 @@ namespace Sidekick
             Legacy.Initialize();
             TrayIcon.Initialize();
 
-            var initializeService = ServiceProvider.GetService<IInitializeService>();
+            var initializeService = ServiceProvider.GetService<IInitializer>();
             initializeService.Initialize();
 
             // Keyboard hooks.

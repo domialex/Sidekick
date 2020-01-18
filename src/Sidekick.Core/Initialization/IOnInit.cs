@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
 {
-    public interface IOnBeforeInitialize
+    public interface IOnInit
     {
-        Task OnBeforeInitialize();
+        Task OnInit();
     }
 }

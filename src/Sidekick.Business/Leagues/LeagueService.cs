@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Leagues
 {
-    public class LeagueService : ILeagueService, IOnBeforeInitialize, IOnReset
+    public class LeagueService : ILeagueService, IOnBeforeInit, IOnReset
     {
         private readonly ILogger logger;
         private readonly IPoeApiService poeApiService;
@@ -20,7 +20,7 @@ namespace Sidekick.Business.Leagues
             this.poeApiService = poeApiService;
         }
 
-        public async Task OnBeforeInitialize()
+        public async Task OnBeforeInit()
         {
             logger.Log("Fetching Path of Exile league data.");
 

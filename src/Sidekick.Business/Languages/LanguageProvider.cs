@@ -10,10 +10,10 @@ namespace Sidekick.Business.Languages
     public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;
-        private readonly IInitializeService initializeService;
+        private readonly IInitializer initializeService;
 
         public LanguageProvider(ILogger logger,
-            IInitializeService initializeService)
+            IInitializer initializeService)
         {
             this.logger = logger;
             this.initializeService = initializeService;

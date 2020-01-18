@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Loggers
 {
-    public class Logger : ILogger, IOnBeforeInitialize, IOnInitialize, IOnAfterInitialize, IOnReset
+    public class Logger : ILogger, IOnBeforeInit, IOnInit, IOnAfterInit, IOnReset
     {
         public event EventHandler MessageLogged;
         public List<Log> Logs { get; private set; } = new List<Log>();
@@ -56,19 +56,19 @@ namespace Sidekick.Core.Loggers
             Logs.Clear();
         }
 
-        public Task OnBeforeInitialize()
+        public Task OnBeforeInit()
         {
             Log("Sidekick before initialization.");
             return Task.CompletedTask;
         }
 
-        public Task OnInitialize()
+        public Task OnInit()
         {
             Log("Sidekick initialization.");
             return Task.CompletedTask;
         }
 
-        public Task OnAfterInitialize()
+        public Task OnAfterInit()
         {
             Log("Sidekick after initialization.");
             Log($"Sidekick is ready, press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");

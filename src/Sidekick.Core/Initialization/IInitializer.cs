@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
 {
-    public interface IInitializeService
+    public interface IInitializer
     {
         Task Initialize();
         Task Reset();

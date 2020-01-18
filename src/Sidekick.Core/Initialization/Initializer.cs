@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
 {
-    public class InitializeService : IInitializeService
+    public class Initializer : IInitializer
     {
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger logger;
 
-        public InitializeService(IServiceProvider serviceProvider,
+        public Initializer(IServiceProvider serviceProvider,
             ILogger logger)
         {
             this.serviceProvider = serviceProvider;
             this.logger = logger;
 
             resetServices = typeof(IOnReset).GetImplementedInterface();
-            beforeInitializeServices = typeof(IOnBeforeInitialize).GetImplementedInterface();
-            initializeServices = typeof(IOnInitialize).GetImplementedInterface();
-            afterInitializeServices = typeof(IOnAfterInitialize).GetImplementedInterface();
+            beforeInitServices = typeof(IOnBeforeInit).GetImplementedInterface();
+            initServices = typeof(IOnInit).GetImplementedInterface();
+            afterInitServices = typeof(IOnAfterInit).GetImplementedInterface();
         }
 
         private List<Type> resetServices { get; set; }
-        private List<Type> beforeInitializeServices { get; set; }
-        private List<Type> initializeServices { get; set; }
-        private List<Type> afterInitializeServices { get; set; }
+        private List<Type> beforeInitServices { get; set; }
+        private List<Type> initServices { get; set; }
+        private List<Type> afterInitServices { get; set; }
         public bool IsReady { get; private set; }
 
         private List<Type> GetServiceInterfaces(List<Type> implementations)
@@ -50,31 +50,17 @@ namespace Sidekick.Core.Initialization
         public async Task Initialize()
         {
             IsReady = false;
-            try
-            {
-                await OnReset();
-                await OnBeforeInitialize();
-                await OnInitialize();
-                await OnAfterInitialize();
-                IsReady = true;
-            }
-            catch (Exception e)
-            {
-                logger.LogException(e);
-            }
+            await OnReset();
+            await OnBeforeInit();
+            await OnInit();
+            await OnAfterInit();
+            IsReady = true;
         }
 
         public async Task Reset()
         {
             IsReady = false;
-            try
-            {
-                await OnReset();
-            }
-            catch (Exception e)
-            {
-                logger.LogException(e);
-            }
+            await OnReset();
         }
 
         private async Task OnReset()
@@ -87,33 +73,33 @@ namespace Sidekick.Core.Initialization
             await Task.WhenAll(tasks);
         }
 
-        private async Task OnBeforeInitialize()
+        private async Task OnBeforeInit()
         {
-            var tasks = new List<Task>(beforeInitializeServices.Count);
-            foreach (var service in GetServiceInterfaces(beforeInitializeServices))
+            var tasks = new List<Task>(beforeInitServices.Count);
+            foreach (var service in GetServiceInterfaces(beforeInitServices))
             {
-                tasks.Add(((IOnBeforeInitialize)serviceProvider.GetService(service)).OnBeforeInitialize());
+                tasks.Add(((IOnBeforeInit)serviceProvider.GetService(service)).OnBeforeInit());
             }
             await Task.WhenAll(tasks);
 
         }
 
-        private async Task OnInitialize()
+        private async Task OnInit()
         {
-            var tasks = new List<Task>(initializeServices.Count);
-            foreach (var service in GetServiceInterfaces(initializeServices))
+            var tasks = new List<Task>(initServices.Count);
+            foreach (var service in GetServiceInterfaces(initServices))
             {
-                tasks.Add(((IOnInitialize)serviceProvider.GetService(service)).OnInitialize());
+                tasks.Add(((IOnInit)serviceProvider.GetService(service)).OnInit());
             }
             await Task.WhenAll(tasks);
         }
 
-        private async Task OnAfterInitialize()
+        private async Task OnAfterInit()
         {
-            var tasks = new List<Task>(afterInitializeServices.Count);
-            foreach (var service in GetServiceInterfaces(afterInitializeServices))
+            var tasks = new List<Task>(afterInitServices.Count);
+            foreach (var service in GetServiceInterfaces(afterInitServices))
             {
-                tasks.Add(((IOnAfterInitialize)serviceProvider.GetService(service)).OnAfterInitialize());
+                tasks.Add(((IOnAfterInit)serviceProvider.GetService(service)).OnAfterInit());
             }
             await Task.WhenAll(tasks);
         }

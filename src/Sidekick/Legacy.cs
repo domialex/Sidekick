@@ -14,7 +14,7 @@ namespace Sidekick
     public static class Legacy
     {
         [Obsolete]
-        public static IInitializeService InitializeService { get; private set; }
+        public static IInitializer InitializeService { get; private set; }
 
         [Obsolete]
         public static ILogger Logger { get; private set; }
@@ -40,7 +40,7 @@ namespace Sidekick
         [Obsolete]
         public static void Initialize()
         {
-            InitializeService = Program.ServiceProvider.GetService<IInitializeService>();
+            InitializeService = Program.ServiceProvider.GetService<IInitializer>();
             Logger = Program.ServiceProvider.GetService<ILogger>();
             TradeClient = Program.ServiceProvider.GetService<ITradeClient>();
             LanguageProvider = Program.ServiceProvider.GetService<ILanguageProvider>();
