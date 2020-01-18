@@ -1,8 +1,3 @@
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +5,11 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Business.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
 using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
@@ -116,6 +116,11 @@ namespace Sidekick.Helpers
                 {
                     e.Handled = true;
                     Task.Run(TriggerLeaveParty);
+                }
+                else if (setting == KeybindSetting.OpenSearch)
+                {
+                    e.Handled = true;
+                    Task.Run(TriggerOpenSearch);
                 }
             }
         }
@@ -238,6 +243,17 @@ namespace Sidekick.Helpers
             Legacy.Logger.Log("Hotkey for Hideout triggered.");
 
             SendKeys.SendWait(Input.KeyCommands.HIDEOUT);
+        }
+
+        public static async void TriggerOpenSearch()
+        {
+            Legacy.Logger.Log("Hotkey for opening search query in browser triggered.");
+
+            var item = await TriggerCopyAction();
+            if (item != null)
+            {
+                await Legacy.TradeClient.OpenWebpage(item);
+            }
         }
 
         private static void ExitApplication()

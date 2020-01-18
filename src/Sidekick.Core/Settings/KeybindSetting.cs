@@ -8,6 +8,7 @@ namespace Sidekick.Core.Settings
         Hideout,
         ItemWiki,
         FindItems,
-        LeaveParty
+        LeaveParty,
+        OpenSearch
     }
 }
