@@ -1,3 +1,8 @@
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,15 +10,10 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
 using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Helpers.Input
 {
     public static class EventsHandler
     {
@@ -66,7 +66,7 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            if (!Legacy.TradeClient.IsReady)
+            if (!Legacy.InitializeService.IsReady)
             {
                 return;
             }
@@ -127,7 +127,7 @@ namespace Sidekick.Helpers
 
         private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
         {
-            if (!Legacy.TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
                 return;
             }
@@ -136,7 +136,7 @@ namespace Sidekick.Helpers
             if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
             {
                 e.Handled = true;
-                string key = e.Delta > 0 ? Input.KeyCommands.STASH_LEFT : Input.KeyCommands.STASH_RIGHT;
+                string key = e.Delta > 0 ? KeyCommands.STASH_LEFT : KeyCommands.STASH_RIGHT;
                 SendKeys.Send(key);
             }
         }
@@ -178,7 +178,7 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            SendKeys.SendWait(Input.KeyCommands.LEAVE_PARTY.Replace("{name}", name));
+            SendKeys.SendWait(KeyCommands.LEAVE_PARTY.Replace("{name}", name));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Sidekick.Helpers
                 string searchText = item.Name;
                 ClipboardHelper.SetText(searchText);
 
-                SendKeys.SendWait(Input.KeyCommands.FIND_ITEMS);
+                SendKeys.SendWait(KeyCommands.FIND_ITEMS);
             }
 
             Thread.Sleep(250);
@@ -242,7 +242,7 @@ namespace Sidekick.Helpers
         {
             Legacy.Logger.Log("Hotkey for Hideout triggered.");
 
-            SendKeys.SendWait(Input.KeyCommands.HIDEOUT);
+            SendKeys.SendWait(KeyCommands.HIDEOUT);
         }
 
         public static async void TriggerOpenSearch()
@@ -263,7 +263,7 @@ namespace Sidekick.Helpers
 
         private static async Task<Business.Parsers.Models.Item> TriggerCopyAction()
         {
-            SendKeys.SendWait(Input.KeyCommands.COPY);
+            SendKeys.SendWait(KeyCommands.COPY);
             Thread.Sleep(100);
 
             // Retrieve clipboard.

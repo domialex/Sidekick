@@ -1,3 +1,4 @@
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Helpers.NativeMethods;
 using System.Linq;
