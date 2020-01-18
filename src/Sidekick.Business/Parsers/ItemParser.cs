@@ -6,6 +6,7 @@ using Sidekick.Business.Languages;
 using Sidekick.Business.Loggers;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
+using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
 
@@ -15,16 +16,17 @@ namespace Sidekick.Business.Parsers
     {
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
-        private readonly Tokenizer itemNameTokenizer = new Tokenizer();
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
+        private readonly ITokenizer itemNameTokenizer;
 
-        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient)
+        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient, IEnumerable<ITokenizer> tokenizers)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
             this.tradeClient = tradeClient;
+            itemNameTokenizer = tokenizers.Where(x => x.GetType() == typeof(ItemNameTokenizer)).FirstOrDefault();
         }
 
         /// <summary>
@@ -260,13 +262,13 @@ namespace Sidekick.Business.Parsers
             var tokens = itemNameTokenizer.Tokenize(name);
             var output = "";
 
-            foreach (var token in tokens)
+            foreach (var token in tokens.Select(x => x as ItemNameToken))
             {
-                if (token.TokenType == TokenType.Set)
+                if (token.TokenType == ItemNameTokenType.Set)
                     langs.Add(token.Match.Match.Groups["LANG"].Value);
-                else if (token.TokenType == TokenType.Name)
+                else if (token.TokenType == ItemNameTokenType.Name)
                     output += token.Match.Match.Value;
-                else if (token.TokenType == TokenType.If)
+                else if (token.TokenType == ItemNameTokenType.If)
                 {
                     var lang = token.Match.Match.Groups["LANG"].Value;
                     if (langs.Contains(lang))

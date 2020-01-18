@@ -3,29 +3,29 @@ using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Tokenizers.ItemName
 {
-    public class Tokenizer
+    public class ItemNameTokenizer : ITokenizer
     {
-        private Dictionary<TokenType, string> _tokenDefs;
+        private Dictionary<ItemNameTokenType, string> _tokenDefs;
 
-        public Tokenizer()
+        public ItemNameTokenizer()
         {
-            _tokenDefs = new Dictionary<TokenType, string>();
+            _tokenDefs = new Dictionary<ItemNameTokenType, string>();
 
-            _tokenDefs.Add(TokenType.Set, "<<set:(?<LANG>\\w{1,2})>>");
-            _tokenDefs.Add(TokenType.Name, "^((?!<).)+");
-            _tokenDefs.Add(TokenType.If, "<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}");
+            _tokenDefs.Add(ItemNameTokenType.Set, "<<set:(?<LANG>\\w{1,2})>>");
+            _tokenDefs.Add(ItemNameTokenType.Name, "^((?!<).)+");
+            _tokenDefs.Add(ItemNameTokenType.If, "<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}");
         }
 
-        public IEnumerable<Token> Tokenize(string input)
+        public IEnumerable<IToken> Tokenize(string input)
         {
-            var tokens = new List<Token>();
+            var tokens = new List<ItemNameToken>();
 
             while (!string.IsNullOrWhiteSpace(input))
             {
                 var match = FindMatch(ref input);
                 if (match.IsMatch)
                 {
-                    tokens.Add(new Token(match.TokenType, match));
+                    tokens.Add(new ItemNameToken(match.TokenType, match));
                 }
                 else
                 {
@@ -40,12 +40,12 @@ namespace Sidekick.Business.Tokenizers.ItemName
                 }
             }
 
-            tokens.Add(new Token(TokenType.EndOfItem, null));
+            tokens.Add(new ItemNameToken(ItemNameTokenType.EndOfItem, null));
 
             return tokens;
         }
 
-        private TokenMatch FindMatch(ref string input)
+        private ItemNameTokenMatch FindMatch(ref string input)
         {
             foreach (var def in _tokenDefs)
             {
@@ -57,7 +57,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
                     else
                         input = string.Empty;
 
-                    return new TokenMatch()
+                    return new ItemNameTokenMatch()
                     {
                         IsMatch = true,
                         TokenType = def.Key,
@@ -66,7 +66,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
                 }
             }
 
-            return new TokenMatch() { IsMatch = false };
+            return new ItemNameTokenMatch() { IsMatch = false };
         }
     }
 }
