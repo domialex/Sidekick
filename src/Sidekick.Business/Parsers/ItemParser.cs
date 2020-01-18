@@ -1,12 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Loggers;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
+using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
@@ -14,6 +15,7 @@ namespace Sidekick.Business.Parsers
     {
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
+        private readonly Tokenizer itemNameTokenizer = new Tokenizer();
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
@@ -235,6 +237,12 @@ namespace Sidekick.Business.Parsers
                 {
                     item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
                 }
+
+                if (!string.IsNullOrWhiteSpace(item.Name))
+                    item.Name = ParseName(item.Name);
+
+                if (!string.IsNullOrWhiteSpace(item.Type))
+                    item.Type = ParseName(item.Type);
             }
             catch (Exception e)
             {
@@ -244,6 +252,29 @@ namespace Sidekick.Business.Parsers
 
             item.IsCorrupted = isCorrupted;
             return item;
+        }
+
+        private string ParseName(string name)
+        {
+            var langs = new List<string>();
+            var tokens = itemNameTokenizer.Tokenize(name);
+            var output = "";
+
+            foreach (var token in tokens)
+            {
+                if (token.TokenType == TokenType.Set)
+                    langs.Add(token.Match.Match.Groups["LANG"].Value);
+                else if (token.TokenType == TokenType.Name)
+                    output += token.Match.Match.Value;
+                else if (token.TokenType == TokenType.If)
+                {
+                    var lang = token.Match.Match.Groups["LANG"].Value;
+                    if (langs.Contains(lang))
+                        output += token.Match.Match.Groups["NAME"].Value;
+                }
+            }
+
+            return output;
         }
 
         private string GetNumberFromString(string input)
