@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Trades.Models
+namespace Sidekick.Business.Categories.Models
 {
     public class StaticItem
     {

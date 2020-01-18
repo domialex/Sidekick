@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Trades.Models
+namespace Sidekick.Business.Categories.Models
 {
     /// <summary>
     /// Pseudo, Explicit, Implicit, etc.

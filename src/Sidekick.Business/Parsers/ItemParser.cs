@@ -1,10 +1,10 @@
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Business.Trades;
 using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
@@ -18,14 +18,17 @@ namespace Sidekick.Business.Parsers
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
-        private readonly ITradeClient tradeClient;
+        private readonly IMapService mapService;
         private readonly ITokenizer itemNameTokenizer;
 
-        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient, IEnumerable<ITokenizer> tokenizers)
+        public ItemParser(ILanguageProvider languageProvider,
+            ILogger logger,
+            IEnumerable<ITokenizer> tokenizers,
+            IMapService mapService)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
-            this.tradeClient = tradeClient;
+            this.mapService = mapService;
             itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
         }
 
@@ -71,8 +74,8 @@ namespace Sidekick.Business.Parsers
                     }
                     else if (rarity == languageProvider.Language.RarityMagic)        // Extract only map name
                     {
-                        item.Name = languageProvider.Language.PrefixBlighted + " " + tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
-                        item.Type = tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
+                        item.Name = languageProvider.Language.PrefixBlighted + " " + mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
+                        item.Type = mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
                     else if (rarity == languageProvider.Language.RarityRare)
                     {
