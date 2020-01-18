@@ -46,10 +46,6 @@ namespace Sidekick.Helpers.NativeMethods
 
         public static bool IsPathOfExileInFocus()
         {
-            //if (Debugger.IsAttached)
-            //{
-            //    return true;
-            //}
             return GetActiveWindowTitle() == PATH_OF_EXILE_PROCESS_TITLE;
         }
 
