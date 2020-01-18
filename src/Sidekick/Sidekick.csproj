@@ -24,7 +24,6 @@
     
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
-    <ProjectReference Include="..\Sidekick.Input\Sidekick.Keyboard.csproj" />
   </ItemGroup>
 
   <!-- TODO: These will go away when moved to netcoreapp3.1 -->  

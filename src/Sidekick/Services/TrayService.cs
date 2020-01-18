@@ -19,7 +19,7 @@ namespace Sidekick.Services
         {
             TrayIcon.ReloadUI();
             TrayIcon.PopulateLeagueSelectMenu(leagueService.Leagues);
-            TrayIcon.SendNotification("Sidekick is ready", $"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
+            TrayIcon.SendNotification($"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.", "Sidekick is ready");
 
             return Task.CompletedTask;
         }
