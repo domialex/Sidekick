@@ -1,3 +1,4 @@
+using Sidekick.Business.Categories;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages.Implementations;
 using Sidekick.Business.Parsers.Models;
@@ -9,7 +10,7 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class BulkQueryRequest
     {
-        public BulkQueryRequest(Item item, ILanguage language, ITradeClient tradeClient)
+        public BulkQueryRequest(Item item, ILanguage language, IStaticItemCategoryService staticItemCategoryService)
         {
             var itemType = item.GetType();
 
@@ -50,7 +51,7 @@ namespace Sidekick.Business.Trades.Requests
                     itemCategory = "Essences";
                 }
 
-                var itemId = tradeClient.StaticItemCategories.Single(x => x.Id == itemCategory)
+                var itemId = staticItemCategoryService.Categories.Single(x => x.Id == itemCategory)
                                                                .Entries
                                                                .Single(x => x.Text == item.Name)
                                                                .Id;
@@ -60,7 +61,7 @@ namespace Sidekick.Business.Trades.Requests
             }
             else if (itemType == typeof(DivinationCardItem))
             {
-                var itemId = tradeClient.StaticItemCategories.Where(c => c.Id == "Cards").FirstOrDefault().Entries.Where(c => c.Text == item.Name).FirstOrDefault().Id;
+                var itemId = staticItemCategoryService.Categories.Where(c => c.Id == "Cards").FirstOrDefault().Entries.Where(c => c.Text == item.Name).FirstOrDefault().Id;
                 Exchange.Want.Add(itemId);
                 Exchange.Have.Add("chaos");
             }

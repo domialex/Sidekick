@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
@@ -19,6 +20,7 @@ namespace Sidekick.Business
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<ILeagueService, LeagueService>();
             services.AddSingleton<IPoeApiService, PoeApiService>();
+            services.AddSingleton<IStaticItemCategoryService, StaticItemCategoryService>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();

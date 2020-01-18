@@ -8,7 +8,6 @@ namespace Sidekick.Business.Trades
 {
     public interface ITradeClient
     {
-        List<StaticItemCategory> StaticItemCategories { get; }
         List<AttributeCategory> AttributeCategories { get; }
         List<ItemCategory> ItemCategories { get; }
         HashSet<string> MapNames { get; }

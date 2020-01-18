@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
@@ -27,21 +28,22 @@ namespace Sidekick.Business.Trades
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IPoeApiService poeApiService;
         private readonly ILeagueService leagueService;
+        private readonly IStaticItemCategoryService staticItemCategoryService;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IPoeApiService poeApiService,
-            ILeagueService leagueService)
+            ILeagueService leagueService,
+            IStaticItemCategoryService staticItemCategoryService)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
             this.poeApiService = poeApiService;
             this.leagueService = leagueService;
+            this.staticItemCategoryService = staticItemCategoryService;
         }
-
-        public List<StaticItemCategory> StaticItemCategories { get; private set; }
 
         public List<AttributeCategory> AttributeCategories { get; private set; }
 
@@ -53,11 +55,9 @@ namespace Sidekick.Business.Trades
         {
             logger.Log("Fetching Path of Exile trade data.");
 
-            var fetchStaticItemCategoriesTask = poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
             var fetchAttributeCategoriesTask = poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
             var fetchItemCategoriesTask = poeApiService.Fetch<ItemCategory>("Item categories", "items");
 
-            StaticItemCategories = await fetchStaticItemCategoriesTask;
             AttributeCategories = await fetchAttributeCategoriesTask;
             ItemCategories = await fetchItemCategoriesTask;
 
@@ -66,7 +66,7 @@ namespace Sidekick.Business.Trades
 
         public Task OnInitialize()
         {
-            var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
+            var mapCategories = staticItemCategoryService.Categories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
 
             foreach (var item in mapCategories)
@@ -81,7 +81,6 @@ namespace Sidekick.Business.Trades
 
         public Task OnReset()
         {
-            StaticItemCategories = null;
             AttributeCategories = null;
             ItemCategories = null;
 
@@ -103,7 +102,7 @@ namespace Sidekick.Business.Trades
 
                 if (isBulk)
                 {
-                    var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, this);
+                    var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService);
                     body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
                 else
