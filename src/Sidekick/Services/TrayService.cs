@@ -17,7 +17,7 @@ namespace Sidekick.Services
 
         public Task OnAfterInitialize()
         {
-            TrayIcon.Initialize();
+            TrayIcon.ReloadUI();
             TrayIcon.PopulateLeagueSelectMenu(leagueService.Leagues);
             TrayIcon.SendNotification("Sidekick is ready", $"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
 

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.Extensions;
+using Sidekick.Business;
+using Sidekick.Core;
 
 namespace Sidekick
 {
@@ -13,7 +14,8 @@ namespace Sidekick
               .Build();
 
             var services = new ServiceCollection()
-              .AddSidekickConfiguration(configuration)
+              .AddSidekickCoreServices()
+              .AddSidekickBusinessServices()
               .AddSidekickServices();
 
             return services.BuildServiceProvider();

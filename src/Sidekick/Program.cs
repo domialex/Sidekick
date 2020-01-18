@@ -31,7 +31,7 @@ namespace Sidekick
             TrayIcon.Initialize();
 
             var initializeService = ServiceProvider.GetService<IInitializeService>();
-            initializeService.Initialize().Wait();
+            initializeService.Initialize();
 
             // Keyboard hooks.
             EventsHandler.Initialize();
