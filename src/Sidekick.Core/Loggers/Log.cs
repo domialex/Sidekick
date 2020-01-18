@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Loggers
+namespace Sidekick.Core.Loggers
 {
     public class Log
     {

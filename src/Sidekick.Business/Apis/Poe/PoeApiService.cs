@@ -1,13 +1,11 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.Poe
@@ -17,23 +15,16 @@ namespace Sidekick.Business.Apis.Poe
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
+        private readonly IHttpClientProvider httpClientProvider;
 
-        public PoeApiService(ILogger logger, ILanguageProvider languageProvider)
+        public PoeApiService(ILogger logger,
+            ILanguageProvider languageProvider,
+            IHttpClientProvider httpClientProvider)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
-
-            HttpClient = new HttpClient();
-
-            JsonSerializerSettings = new JsonSerializerSettings();
-            JsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
-            JsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            this.httpClientProvider = httpClientProvider;
         }
-
-        private JsonSerializerSettings JsonSerializerSettings { get; set; }
-
-        private HttpClient HttpClient { get; set; }
 
         public async Task<List<TReturn>> Fetch<TReturn>(string name, string path)
             where TReturn : class
@@ -46,10 +37,10 @@ namespace Sidekick.Business.Apis.Poe
             {
                 try
                 {
-                    var response = await HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "data/" + path);
+                    var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "data/" + path);
                     var content = await response.Content.ReadAsStringAsync();
 
-                    result = JsonConvert.DeserializeObject<QueryResult<TReturn>>(content, JsonSerializerSettings)?.Result;
+                    result = JsonConvert.DeserializeObject<QueryResult<TReturn>>(content, httpClientProvider.JsonSerializerSettings)?.Result;
 
                     logger.Log($"{result.Count.ToString().PadRight(3)} {name} fetched.");
                     success = true;

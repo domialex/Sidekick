@@ -1,4 +1,4 @@
-using Sidekick.Business.Loggers;
+using Sidekick.Core.Loggers;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -96,7 +96,7 @@ namespace Sidekick.Helpers.NativeMethods
 
         public async static Task WaitForPathOfExileFocus(int timeout = 200)
         {
-            while(IsPathOfExileInFocus() == false)
+            while (IsPathOfExileInFocus() == false)
             {
                 await Task.Delay(timeout);
             }
@@ -129,7 +129,7 @@ namespace Sidekick.Helpers.NativeMethods
                     else
                         throw;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show(e.Message);
                 }
@@ -181,7 +181,7 @@ namespace Sidekick.Helpers.NativeMethods
 
                 return result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Legacy.Logger.Log(e.Message, LogState.Error);
                 RestartAsAdmin();

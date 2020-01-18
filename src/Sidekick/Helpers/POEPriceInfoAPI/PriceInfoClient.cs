@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Sidekick.Business.Loggers;
+using Sidekick.Core.Loggers;
 using System;
 using System.Text;
 using System.Threading.Tasks;

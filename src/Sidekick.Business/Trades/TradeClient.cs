@@ -4,14 +4,13 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
-using Sidekick.Business.Loggers;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Platforms;
 using Sidekick.Business.Trades.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.DependencyInjection.Services;
-using Sidekick.Core.Settings;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,39 +22,26 @@ using System.Threading.Tasks;
 namespace Sidekick.Business.Trades
 {
     [SidekickService(typeof(ITradeClient))]
-    public class TradeClient : ITradeClient, IDisposable
+    public class TradeClient : ITradeClient, IOnBeforeInitialize, IOnReset
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
-        private readonly IPlatformTrayService platformTrayService;
         private readonly IPoeApiService poeApiService;
         private readonly ILeagueService leagueService;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
-            IPlatformTrayService platformTrayService,
             IPoeApiService poeApiService,
             ILeagueService leagueService)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
-            this.platformTrayService = platformTrayService;
             this.poeApiService = poeApiService;
             this.leagueService = leagueService;
-
-            languageProvider.LanguageChanged += LanguageProvider_LanguageChanged;
         }
-
-        private async Task LanguageProvider_LanguageChanged()
-        {
-            Dispose();
-            await Initialize();
-        }
-
-        private bool IsFetching { get; set; }
 
         public List<StaticItemCategory> StaticItemCategories { get; private set; }
 
@@ -65,48 +51,10 @@ namespace Sidekick.Business.Trades
 
         public HashSet<string> MapNames { get; private set; }
 
-        public bool IsReady { get; private set; }
-
-        public async Task<bool> Initialize()
+        public async Task OnBeforeInitialize()
         {
-            if (IsFetching)
-            {
-                return false;
-            }
-
-            IsFetching = true;
             logger.Log("Fetching Path of Exile trade data.");
 
-            await FetchAPIData();
-
-            IsFetching = false;
-
-            IsReady = true;
-
-            logger.Log($"Path of Exile trade data fetched.");
-            logger.Log($"Sidekick is ready, press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
-
-            platformTrayService.SendNotification("Sidekick is ready", $"Press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
-
-            return true;
-        }
-
-        private async void Retry()
-        {
-            await Task.Delay(TimeSpan.FromMinutes(1));
-            if (IsFetching)
-            {
-                await Task.Delay(TimeSpan.FromMinutes(1));
-                Retry();
-            }
-            else
-            {
-                await Initialize();
-            }
-        }
-
-        public async Task FetchAPIData()
-        {
             var fetchStaticItemCategoriesTask = poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
             var fetchAttributeCategoriesTask = poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
             var fetchItemCategoriesTask = poeApiService.Fetch<ItemCategory>("Item categories", "items");
@@ -115,6 +63,11 @@ namespace Sidekick.Business.Trades
             AttributeCategories = await fetchAttributeCategoriesTask;
             ItemCategories = await fetchItemCategoriesTask;
 
+            logger.Log($"Path of Exile trade data fetched.");
+        }
+
+        public Task OnInitialize()
+        {
             var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
             var allMapNames = new List<string>();
 
@@ -124,6 +77,17 @@ namespace Sidekick.Business.Trades
             }
 
             MapNames = new HashSet<string>(allMapNames.Distinct());
+
+            return Task.CompletedTask;
+        }
+
+        public Task OnReset()
+        {
+            StaticItemCategories = null;
+            AttributeCategories = null;
+            ItemCategories = null;
+
+            return Task.CompletedTask;
         }
 
         public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
@@ -242,16 +206,6 @@ namespace Sidekick.Business.Trades
             var uri = queryResult.Uri.ToString();
             logger.Log($"Opening in browser: {uri}");
             Process.Start(uri);
-        }
-
-        public void Dispose()
-        {
-            StaticItemCategories = null;
-            AttributeCategories = null;
-            ItemCategories = null;
-
-            IsReady = false;
-            IsFetching = false;
         }
     }
 }

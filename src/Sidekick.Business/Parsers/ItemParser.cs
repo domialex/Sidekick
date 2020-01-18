@@ -1,10 +1,10 @@
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Loggers;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Trades;
 using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

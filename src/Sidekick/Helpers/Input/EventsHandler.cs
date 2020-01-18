@@ -1,3 +1,8 @@
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,11 +10,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
 using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
@@ -66,7 +66,7 @@ namespace Sidekick.Helpers.Input
                 return;
             }
 
-            if (!Legacy.TradeClient.IsReady)
+            if (!Legacy.InitializeService.IsReady)
             {
                 return;
             }
@@ -127,7 +127,7 @@ namespace Sidekick.Helpers.Input
 
         private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
         {
-            if (!Legacy.TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
                 return;
             }

@@ -1,5 +1,9 @@
 using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Core.Extensions;
+using Sidekick.Core.Loggers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
@@ -7,42 +11,112 @@ namespace Sidekick.Core.Initialization
     [SidekickService(typeof(IInitializeService))]
     public class InitializeService : IInitializeService
     {
-        public event Func<Task> OnBeforeInitialize;
+        private readonly IServiceProvider serviceProvider;
+        private readonly ILogger logger;
 
-        public event Func<Task> OnInitialize;
+        public InitializeService(IServiceProvider serviceProvider,
+            ILogger logger)
+        {
+            this.serviceProvider = serviceProvider;
+            this.logger = logger;
 
-        public event Func<Task> OnAfterInitialize;
+            resetServices = typeof(IOnReset).GetImplementedInterface();
+            beforeInitializeServices = typeof(IOnBeforeInitialize).GetImplementedInterface();
+            initializeServices = typeof(IOnInitialize).GetImplementedInterface();
+            afterInitializeServices = typeof(IOnAfterInitialize).GetImplementedInterface();
+        }
 
-        public event Func<Task> OnReset;
+        private List<Type> resetServices { get; set; }
+        private List<Type> beforeInitializeServices { get; set; }
+        private List<Type> initializeServices { get; set; }
+        private List<Type> afterInitializeServices { get; set; }
+        public bool IsReady { get; private set; }
+
+        private List<Type> GetServiceInterfaces(List<Type> implementations)
+        {
+            var interfaces = new List<Type>();
+            foreach (var implementation in implementations)
+            {
+                var test = serviceProvider.GetService(implementation.GetInterfaces()[0]);
+                var implementationInterfaces = implementation
+                    .GetInterfaces()
+                    .Where(x => serviceProvider.GetService(x) != null);
+                foreach (var @interface in implementationInterfaces)
+                {
+                    interfaces.Add(@interface);
+                }
+            }
+            return interfaces;
+        }
 
         public async Task Initialize()
         {
-            await Reset();
-            await CallEvent(OnBeforeInitialize);
-            await CallEvent(OnInitialize);
-            await CallEvent(OnAfterInitialize);
+            IsReady = false;
+            try
+            {
+                await OnReset();
+                await OnBeforeInitialize();
+                await OnInitialize();
+                await OnAfterInitialize();
+                IsReady = true;
+            }
+            catch (Exception e)
+            {
+                logger.LogException(e);
+            }
         }
 
         public async Task Reset()
         {
-            await CallEvent(OnReset);
+            IsReady = false;
+            try
+            {
+                await OnReset();
+            }
+            catch (Exception e)
+            {
+                logger.LogException(e);
+            }
         }
 
-        private async Task CallEvent(Func<Task> handler)
+        private async Task OnReset()
         {
-            if (handler == null)
+            var tasks = new List<Task>(resetServices.Count);
+            foreach (var service in GetServiceInterfaces(resetServices))
             {
-                return;
+                tasks.Add(((IOnReset)serviceProvider.GetService(service)).OnReset());
             }
+            await Task.WhenAll(tasks);
+        }
 
-            var invocationList = handler.GetInvocationList();
-            var tasks = new Task[invocationList.Length];
-
-            for (int i = 0; i < invocationList.Length; i++)
+        private async Task OnBeforeInitialize()
+        {
+            var tasks = new List<Task>(beforeInitializeServices.Count);
+            foreach (var service in GetServiceInterfaces(beforeInitializeServices))
             {
-                tasks[i] = ((Func<Task>)invocationList[i])();
+                tasks.Add(((IOnBeforeInitialize)serviceProvider.GetService(service)).OnBeforeInitialize());
             }
+            await Task.WhenAll(tasks);
 
+        }
+
+        private async Task OnInitialize()
+        {
+            var tasks = new List<Task>(initializeServices.Count);
+            foreach (var service in GetServiceInterfaces(initializeServices))
+            {
+                tasks.Add(((IOnInitialize)serviceProvider.GetService(service)).OnInitialize());
+            }
+            await Task.WhenAll(tasks);
+        }
+
+        private async Task OnAfterInitialize()
+        {
+            var tasks = new List<Task>(afterInitializeServices.Count);
+            foreach (var service in GetServiceInterfaces(afterInitializeServices))
+            {
+                tasks.Add(((IOnAfterInitialize)serviceProvider.GetService(service)).OnAfterInitialize());
+            }
             await Task.WhenAll(tasks);
         }
     }

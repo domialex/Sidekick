@@ -1,10 +1,8 @@
 using Sidekick.Business.Languages.Implementations.UI;
-using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sidekick.Business.Languages
 {
@@ -34,9 +32,9 @@ namespace Sidekick.Business.Languages
             Current = language;
             UILanguage = lang;
 
-            if(UILanguageChanged != null)
+            if (UILanguageChanged != null)
             {
-                foreach(var item in UILanguageChanged)
+                foreach (var item in UILanguageChanged)
                 {
                     item.Invoke();
                 }
@@ -45,7 +43,7 @@ namespace Sidekick.Business.Languages
 
         public static IUILanguage GetLanguage(UILanguageEnum language)
         {
-            switch(language)
+            switch (language)
             {
                 case UILanguageEnum.English:
                     return new UILanguageEN();

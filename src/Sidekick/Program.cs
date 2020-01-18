@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Loggers;
-using Sidekick.Business.Platforms;
+using Sidekick.Core.Initialization;
+using Sidekick.Helpers;
 using Sidekick.Helpers.Input;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
@@ -28,15 +28,10 @@ namespace Sidekick
             ServiceProvider = Core.Startup.InitializeServices();
 
             Legacy.Initialize();
+            TrayIcon.Initialize();
 
-            var logger = ServiceProvider.GetService<ILogger>();
-            logger.Log("Starting Sidekick.");
-
-            // System tray icon.
-            _ = ServiceProvider.GetService<IPlatformTrayService>();
-
-            // Load POE Trade information.
-            Legacy.TradeClient.Initialize();
+            var initializeService = ServiceProvider.GetService<IInitializeService>();
+            initializeService.Initialize().Wait();
 
             // Keyboard hooks.
             EventsHandler.Initialize();

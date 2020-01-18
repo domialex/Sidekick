@@ -1,0 +1,9 @@
+using System.Threading.Tasks;
+
+namespace Sidekick.Core.Initialization
+{
+    public interface IOnBeforeInitialize
+    {
+        Task OnBeforeInitialize();
+    }
+}

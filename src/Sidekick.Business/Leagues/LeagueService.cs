@@ -1,8 +1,8 @@
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Leagues.Models;
-using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,23 +10,19 @@ using System.Threading.Tasks;
 namespace Sidekick.Business.Leagues
 {
     [SidekickService(typeof(ILeagueService))]
-    public class LeagueService : ILeagueService
+    public class LeagueService : ILeagueService, IOnBeforeInitialize, IOnReset
     {
         private readonly ILogger logger;
         private readonly IPoeApiService poeApiService;
 
         public LeagueService(ILogger logger,
-            IPoeApiService poeApiService,
-            IInitializeService initializeService)
+            IPoeApiService poeApiService)
         {
             this.logger = logger;
             this.poeApiService = poeApiService;
-
-            initializeService.OnBeforeInitialize += InitializeService_OnBeforeInitialize; ;
-            initializeService.OnReset += InitializeService_OnReset;
         }
 
-        private async Task InitializeService_OnBeforeInitialize()
+        public async Task OnBeforeInitialize()
         {
             logger.Log("Fetching Path of Exile league data.");
 
@@ -38,7 +34,7 @@ namespace Sidekick.Business.Leagues
             logger.Log($"Path of Exile league data fetched.");
         }
 
-        private Task InitializeService_OnReset()
+        public Task OnReset()
         {
             Leagues = null;
             SelectedLeague = null;

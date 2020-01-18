@@ -1,9 +1,9 @@
+using Newtonsoft.Json;
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms.Integration;
-using Newtonsoft.Json;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
 using WindowsHook;
 
 namespace Sidekick.Windows.Settings

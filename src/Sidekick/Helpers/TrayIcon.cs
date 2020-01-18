@@ -1,28 +1,21 @@
-using Sidekick.Business.Leagues;
-using Sidekick.Business.Platforms;
-using Sidekick.Business.Trades;
-using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Business.Leagues.Models;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Sidekick.Services
+namespace Sidekick.Helpers
 {
-    [SidekickService(typeof(IPlatformTrayService))]
-    public class WindowsTrayService : IPlatformTrayService, IDisposable
+    public static class TrayIcon
     {
-        private readonly ITradeClient tradeClient;
-        private readonly ILeagueService leagueService;
+        private static NotifyIcon _notifyIcon;
+        private static ToolStripMenuItem _leagueSelectMenu;
 
-        public WindowsTrayService(ITradeClient tradeClient,
-            ILeagueService leagueService)
+        public static void Initialize()
         {
-            this.tradeClient = tradeClient;
-            this.leagueService = leagueService;
-
             _notifyIcon = new NotifyIcon();
             var icon = Resources.ExaltedOrb;
             _notifyIcon.Icon = icon;
@@ -31,10 +24,10 @@ namespace Sidekick.Services
 
             ReloadUI();
 
-            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(ReloadUI);
+            Legacy.UILanguageProvider.UILanguageChanged.Add(ReloadUI);
         }
 
-        private void ReloadUI()
+        public static void ReloadUI()
         {
             var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
@@ -47,41 +40,31 @@ namespace Sidekick.Services
             _notifyIcon.ContextMenuStrip = contextMenu;
         }
 
-        private NotifyIcon _notifyIcon;
-        private ToolStripMenuItem _leagueSelectMenu;
-
-        public void SendNotification(string title, string text)
+        public static void PopulateLeagueSelectMenu(List<League> leagues)
         {
-            _notifyIcon.BalloonTipTitle = GetParsedString(title);
-            _notifyIcon.BalloonTipText = GetParsedString(text);
-            _notifyIcon.ShowBalloonTip(2000);
-        }
-
-        public void UpdateLeagues()
-        {
-            if (leagueService.Leagues == null)
+            if (leagues == null)
             {
                 return;
             }
 
-            if (_leagueSelectMenu.DropDownItems.Count > 0)
-            {
-                // TODO: Fix Cross-thread operation not valid after changing language.
-                leagueService.SelectedLeague = leagueService.Leagues.FirstOrDefault();
-                return;
-            }
-
-            foreach (var league in leagueService.Leagues)
+            foreach (var league in leagues)
             {
                 var menuItem = new ToolStripMenuItem(league.Id);
                 menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
                 menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { leagueService.SelectedLeague = league; };
+                menuItem.Click += (s, e) => { Legacy.LeagueService.SelectedLeague = league; };
                 _leagueSelectMenu.DropDownItems.Add(menuItem);
             }
 
             // Select the first league as the default.
             _leagueSelectMenu.DropDownItems[0].PerformClick();
+        }
+
+        public static void SendNotification(string text, string title = null)
+        {
+            _notifyIcon.BalloonTipTitle = GetParsedString(title);
+            _notifyIcon.BalloonTipText = GetParsedString(text);
+            _notifyIcon.ShowBalloonTip(2000);
         }
 
         private static string GetParsedString(string source)
@@ -107,7 +90,7 @@ namespace Sidekick.Services
             return source;
         }
 
-        public void Dispose()
+        public static void Dispose()
         {
             _notifyIcon?.Dispose();
         }

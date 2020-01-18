@@ -1,6 +1,7 @@
 using Sidekick.Business.Languages.Implementations;
-using Sidekick.Business.Loggers;
 using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +12,13 @@ namespace Sidekick.Business.Languages
     public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;
+        private readonly IInitializeService initializeService;
 
-        public LanguageProvider(ILogger logger)
+        public LanguageProvider(ILogger logger,
+            IInitializeService initializeService)
         {
             this.logger = logger;
+            this.initializeService = initializeService;
 
             Language = new LanguageEN();
             Current = LanguageEnum.English;
@@ -53,13 +57,8 @@ namespace Sidekick.Business.Languages
                         Current = item.Value;
                         Language = GetLanguageProvider(item.Value);
 
-                        if (LanguageChanged != null)
-                        {
-                            foreach (var handler in LanguageChanged.GetInvocationList())
-                            {
-                                await ((Func<Task>)handler)();
-                            }
-                        }
+                        await initializeService.Reset();
+                        await initializeService.Initialize();
                     }
 
                     return true;
