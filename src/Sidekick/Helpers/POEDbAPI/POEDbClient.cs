@@ -19,15 +19,11 @@ namespace Sidekick.Helpers.POEDbAPI
                 return;
             }
 
-            if (Legacy.LanguageProvider.Current != LanguageEnum.English)        // Only English for now
+            // Only English for now.
+            if (Legacy.LanguageProvider.Current != LanguageEnum.English)
             {
                 return;
             }
-
-            //if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
-            //{
-            //    return;
-            //}
 
             if (string.IsNullOrEmpty(item.Name))
             {

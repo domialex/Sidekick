@@ -21,12 +21,8 @@ namespace Sidekick.Helpers.POEWikiAPI
             if (Legacy.LanguageProvider.Current != LanguageEnum.English)
                 return;
 
-            // Don't handle magic and rare items
-            // Normal items will open the basetype wiki link which is acceptable
-            // Does not work for unique items that are not identified
-            //if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
-            //    return;
-
+            // Most items will open the basetype wiki link.
+            // Does not work for unique items that are not identified.
             if (string.IsNullOrEmpty(item.Name))
             {
                 Legacy.Logger.Log("Failed to open the wiki for the specified item.", LogState.Error);
