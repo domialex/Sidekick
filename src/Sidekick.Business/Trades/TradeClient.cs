@@ -1,17 +1,14 @@
 using Newtonsoft.Json;
-using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Trades.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -20,72 +17,25 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Trades
 {
-    public class TradeClient : ITradeClient, IOnBeforeInit, IOnReset
+    public class TradeClient : ITradeClient
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
-        private readonly IPoeApiService poeApiService;
         private readonly ILeagueService leagueService;
+        private readonly IStaticItemCategoryService staticItemCategoryService;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
-            IPoeApiService poeApiService,
-            ILeagueService leagueService)
+            ILeagueService leagueService,
+            IStaticItemCategoryService staticItemCategoryService)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
-            this.poeApiService = poeApiService;
             this.leagueService = leagueService;
-        }
-
-        public List<StaticItemCategory> StaticItemCategories { get; private set; }
-
-        public List<AttributeCategory> AttributeCategories { get; private set; }
-
-        public List<ItemCategory> ItemCategories { get; private set; }
-
-        public HashSet<string> MapNames { get; private set; }
-
-        public async Task OnBeforeInit()
-        {
-            logger.Log("Fetching Path of Exile trade data.");
-
-            var fetchStaticItemCategoriesTask = poeApiService.Fetch<StaticItemCategory>("Static item categories", "static");
-            var fetchAttributeCategoriesTask = poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
-            var fetchItemCategoriesTask = poeApiService.Fetch<ItemCategory>("Item categories", "items");
-
-            StaticItemCategories = await fetchStaticItemCategoriesTask;
-            AttributeCategories = await fetchAttributeCategoriesTask;
-            ItemCategories = await fetchItemCategoriesTask;
-
-            logger.Log($"Path of Exile trade data fetched.");
-        }
-
-        public Task OnInitialize()
-        {
-            var mapCategories = StaticItemCategories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
-            var allMapNames = new List<string>();
-
-            foreach (var item in mapCategories)
-            {
-                allMapNames.AddRange(item.Entries.Select(c => c.Text));
-            }
-
-            MapNames = new HashSet<string>(allMapNames.Distinct());
-
-            return Task.CompletedTask;
-        }
-
-        public Task OnReset()
-        {
-            StaticItemCategories = null;
-            AttributeCategories = null;
-            ItemCategories = null;
-
-            return Task.CompletedTask;
+            this.staticItemCategoryService = staticItemCategoryService;
         }
 
         public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
@@ -103,7 +53,7 @@ namespace Sidekick.Business.Trades
 
                 if (isBulk)
                 {
-                    var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, this);
+                    var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService);
                     body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
                 else
