@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Core;
 using Sidekick.Services;
 
 namespace Sidekick
@@ -7,7 +8,7 @@ namespace Sidekick
     {
         public static IServiceCollection AddSidekickServices(this IServiceCollection services)
         {
-            services.AddSingleton<ITrayService, TrayService>();
+            services.AddInitializableService<ITrayService, TrayService>();
 
             return services;
         }

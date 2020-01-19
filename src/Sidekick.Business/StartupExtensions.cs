@@ -10,6 +10,7 @@ using Sidekick.Business.Parsers;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
+using Sidekick.Core;
 
 namespace Sidekick.Business
 {
@@ -20,18 +21,19 @@ namespace Sidekick.Business
             // Http Services
             services.AddHttpClient();
 
-            services.AddSingleton<IAttributeCategoryService, AttributeCategoryService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
-            services.AddSingleton<IItemCategoryService, ItemCategoryService>();
             services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<ILeagueService, LeagueService>();
-            services.AddSingleton<IMapService, MapService>();
-            services.AddSingleton<IPoeApiService, PoeApiService>();
-            services.AddSingleton<IStaticItemCategoryService, StaticItemCategoryService>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
+
+            services.AddInitializableService<IPoeApiService, PoeApiService>();
+            services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
+            services.AddInitializableService<IItemCategoryService, ItemCategoryService>();
+            services.AddInitializableService<ILeagueService, LeagueService>();
+            services.AddInitializableService<IMapService, MapService>();
+            services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();
 
             return services;
         }
