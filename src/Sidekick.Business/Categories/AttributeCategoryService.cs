@@ -1,4 +1,5 @@
 using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories.Models;
 using Sidekick.Core.Initialization;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Categories
 {
-    public class AttributeCategoryService : IAttributeCategoryService, IOnBeforeInit, IOnReset
+    public class AttributeCategoryService : IAttributeCategoryService, IOnInit, IOnReset
     {
         private readonly IPoeApiService poeApiService;
 
@@ -17,10 +18,10 @@ namespace Sidekick.Business.Categories
 
         public List<AttributeCategory> Categories { get; private set; }
 
-        public async Task OnBeforeInit()
+        public async Task OnInit()
         {
             Categories = null;
-            Categories = await poeApiService.Fetch<AttributeCategory>("Attribute categories", "stats");
+            Categories = await poeApiService.Fetch<AttributeCategory>(FetchEnum.Stats);
         }
 
         public Task OnReset()
