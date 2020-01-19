@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
@@ -126,7 +126,7 @@ namespace Sidekick.Business.Trades
 
         public async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
         {
-            logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {(page + 1).ToString()}.");
+            logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
             QueryResult<ListingResult> result = null;
 
             try

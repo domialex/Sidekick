@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;

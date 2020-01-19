@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sidekick.Business.Languages.Implementations.UI
+namespace Sidekick.Business.Languages.UI.Implementations
 {
     public interface IUILanguage
     {
+        string LanguageName { get; }
+
         string TrayIconSettings { get; }
         string TrayIconShowLogs { get; }
         string TrayIconExit { get; }

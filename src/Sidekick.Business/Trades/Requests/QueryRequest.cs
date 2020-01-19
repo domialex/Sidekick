@@ -1,5 +1,5 @@
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages.Implementations;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using System;

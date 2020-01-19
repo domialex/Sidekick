@@ -1,4 +1,3 @@
-using Sidekick.Business.Languages;
 using Sidekick.Core.Loggers;
 using System;
 using System.Diagnostics;
@@ -19,15 +18,10 @@ namespace Sidekick.Helpers.POEDbAPI
                 return;
             }
 
-            if (Legacy.LanguageProvider.Current != LanguageEnum.English)        // Only English for now
+            if (Legacy.LanguageProvider.Current.Name != Legacy.LanguageProvider.DefaultLanguage)        // Only English for now
             {
                 return;
             }
-
-            //if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
-            //{
-            //    return;
-            //}
 
             if (string.IsNullOrEmpty(item.Name))
             {
@@ -36,7 +30,7 @@ namespace Sidekick.Helpers.POEDbAPI
             }
 
             var url = CreateUri(item).ToString();
-            Legacy.Logger.Log(string.Format("Opening in browser: {0}", url));
+            Legacy.Logger.Log($"Opening in browser: {url}");
             Process.Start(url);
         }
 

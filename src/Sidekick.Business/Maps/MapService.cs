@@ -20,15 +20,12 @@ namespace Sidekick.Business.Maps
 
         public Task OnInit()
         {
-            var mapCategories = staticItemCategoryService.Categories.Where(c => MapTiers.TierIds.Contains(c.Id)).ToList();
-            var allMapNames = new List<string>();
-
-            foreach (var item in mapCategories)
-            {
-                allMapNames.AddRange(item.Entries.Select(c => c.Text));
-            }
-
-            MapNames = new HashSet<string>(allMapNames.Distinct());
+            MapNames = new HashSet<string>(staticItemCategoryService.Categories
+                .Where(c => MapTiers.TierIds.Contains(c.Id))
+                .SelectMany(x => x.Entries)
+                .Select(x => x.Text)
+                .Distinct()
+                .ToList());
 
             return Task.CompletedTask;
         }
