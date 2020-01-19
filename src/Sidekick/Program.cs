@@ -4,6 +4,7 @@ using Sidekick.Helpers;
 using Sidekick.Helpers.Input;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Prediction;
 using System;
 using System.Threading;
 using System.Windows.Forms;
@@ -38,6 +39,9 @@ namespace Sidekick
 
             // Overlay.
             OverlayController.Initialize();
+
+            // Price Predictio
+            PredictionController.Initialize();
 
             // Run window.
             MAIN_DISPATCHER = System.Windows.Threading.Dispatcher.CurrentDispatcher;
