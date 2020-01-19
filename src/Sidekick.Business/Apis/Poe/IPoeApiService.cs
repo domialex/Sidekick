@@ -8,5 +8,6 @@ namespace Sidekick.Business.Apis.Poe
     {
         Task<List<TReturn>> Fetch<TReturn>(FetchEnum type);
 
+        Task<QueryResult<TReturn>> Query<TReturn>(QueryEnum type, object data);
     }
 }

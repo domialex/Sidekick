@@ -77,5 +77,50 @@ namespace Sidekick.Business.Apis.Poe
             logger.Log($"Fetching {type.ToString()} finished.");
             return result.Result;
         }
+
+        public async Task<QueryResult<TReturn>> Query<TReturn>(QueryEnum type, object data)
+        {
+            logger.Log($"Querying {type.ToString()} started.");
+            QueryResult<TReturn> result = null;
+
+            string path = string.Empty;
+            switch (type)
+            {
+                case QueryEnum.Exchange: path += "exchange/"; break;
+                case QueryEnum.Search: path += "search/"; break;
+            }
+
+            try
+            {
+                var body = new StringContent(JsonSerializer.Serialize(data));
+                var response = await client.PostAsync(path + configuration.LeagueId, body);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    result = await JsonSerializer.DeserializeAsync<QueryResult<TReturn>>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions()
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    });
+
+                    switch (type)
+                    {
+                        case QueryEnum.Exchange:
+                            result.Uri = new Uri(languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId + "/" + result.Id);
+                            break;
+                        case QueryEnum.Search:
+                            result.Uri = new Uri(languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId + "/" + result.Id);
+                            break;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            logger.Log($"Querying {type.ToString()} finished.");
+            return result;
+        }
     }
 }
