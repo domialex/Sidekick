@@ -76,7 +76,6 @@ namespace Sidekick.Business.Apis.Poe
 
             logger.Log($"Fetching {type.ToString()} finished.");
             return result.Result;
-            return result;
         }
     }
 }
