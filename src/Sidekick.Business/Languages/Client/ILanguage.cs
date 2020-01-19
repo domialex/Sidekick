@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Languages.Implementations
+namespace Sidekick.Business.Languages.Client
 {
     public interface ILanguage
     {

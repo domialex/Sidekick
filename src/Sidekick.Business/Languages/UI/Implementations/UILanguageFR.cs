@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sidekick.Business.Languages.Implementations.UI
+namespace Sidekick.Business.Languages.UI.Implementations
 {
+    [UILanguage("French")]
     public class UILanguageFR : IUILanguage
     {
+        public string LanguageName => "French";
+
         public string TrayIconSettings => "Configurations";
         public string TrayIconShowLogs => "Afficher les logs";
         public string TrayIconExit => "Quitter";

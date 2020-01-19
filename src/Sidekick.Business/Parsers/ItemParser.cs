@@ -1,5 +1,5 @@
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
@@ -251,7 +251,8 @@ namespace Sidekick.Business.Parsers
             }
             catch (Exception e)
             {
-                logger.Log("Could not parse item. " + e.Message);
+                logger.Log("Could not parse item.");
+                logger.LogException(e);
                 return null;
             }
 
@@ -341,7 +342,7 @@ namespace Sidekick.Business.Parsers
             }
         }
 
-        internal InfluenceType GetInfluenceType(string input)
+        private InfluenceType GetInfluenceType(string input)
         {
             if (input.Contains(languageProvider.Language.InfluenceShaper))
             {

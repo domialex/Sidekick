@@ -1,4 +1,3 @@
-using Sidekick.Business.Languages;
 using Sidekick.Core.Loggers;
 using System;
 using System.Diagnostics;
@@ -18,7 +17,7 @@ namespace Sidekick.Helpers.POEWikiAPI
                 return;
 
             // only available for english portal
-            if (Legacy.LanguageProvider.Current != LanguageEnum.English)
+            if (Legacy.LanguageProvider.Current.Name != Legacy.LanguageProvider.DefaultLanguage)
                 return;
 
             // Most items will open the basetype wiki link.

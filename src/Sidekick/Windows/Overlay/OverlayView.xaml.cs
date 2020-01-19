@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Sidekick.Windows.Overlay
@@ -47,19 +48,20 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
-            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(UpdateUIText);
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateUIText;
             UpdateUIText();
             Hide();
         }
 
-        private void UpdateUIText()
+        private Task UpdateUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
-            textBoxAccountName.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAccountName;
-            textBoxAge.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAge;
-            textBoxCharacter.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayCharacter;
-            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayItemLevel;
-            textBoxPrice.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayPrice;
+            textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
+            textBoxAge.Text = settings.CurrentUILanguageProvider.Language.OverlayAge;
+            textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
+            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
+            textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
+            return Task.CompletedTask;
         }
 
         protected override void OnClosing(CancelEventArgs e)

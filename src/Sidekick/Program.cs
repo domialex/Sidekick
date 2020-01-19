@@ -51,6 +51,7 @@ namespace Sidekick
             if (SynchronizationContext.Current != null)
             {
                 ServiceProvider.Dispose();
+                TrayIcon.Dispose();
                 EventsHandler.Dispose();
                 OverlayController.Dispose();
                 MAIN_DISPATCHER = null;
