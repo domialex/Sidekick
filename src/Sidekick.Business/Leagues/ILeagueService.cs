@@ -6,6 +6,5 @@ namespace Sidekick.Business.Leagues
     public interface ILeagueService
     {
         List<League> Leagues { get; }
-        League SelectedLeague { get; set; }
     }
 }

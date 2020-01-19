@@ -14,7 +14,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
         public static async Task<PriceInfo> GetItemPricePrediction(string itemText)
         {
             var encodedItem = EncodeItemToBase64(itemText);
-            var league = Legacy.LeagueService.SelectedLeague.Id;
+            var league = Legacy.Configuration.LeagueId;
             var requestUrl = GenerateRequestUrl(encodedItem, league);
 
             try

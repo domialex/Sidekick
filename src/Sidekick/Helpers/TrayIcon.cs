@@ -37,7 +37,7 @@ namespace Sidekick.Helpers
                 foreach (var league in Legacy.LeagueService.Leagues)
                 {
                     var menuItem = new ToolStripMenuItem(league.Id);
-                    menuItem.Checked = league.Id == Legacy.LeagueService.SelectedLeague.Id;
+                    menuItem.Checked = league.Id == Legacy.Configuration.LeagueId;
                     menuItem.Click += (s, e) =>
                     {
                         foreach (ToolStripMenuItem x in leagueMenu.DropDownItems)
@@ -45,7 +45,8 @@ namespace Sidekick.Helpers
                             x.Checked = false;
                         }
                         menuItem.Checked = true;
-                        Legacy.LeagueService.SelectedLeague = league;
+                        Legacy.Configuration.LeagueId = league.Id;
+                        Legacy.Configuration.Save();
                     };
                     leagueMenu.DropDownItems.Add(menuItem);
                 }

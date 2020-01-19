@@ -9,3 +9,6 @@ Here are some simple guidelines in order to make pull requests easier to merge, 
 ### Git convention
 - Try to use [Git Flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) in order to keep the master branch as clean as possible.
 - When you want to add a new feature, create a feature branch from develop and make a pull request for that branch.
+
+
+[Discord server](https://discord.gg/R9HyCpV)

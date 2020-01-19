@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
+using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using System;
@@ -17,6 +17,9 @@ namespace Sidekick
     {
         [Obsolete]
         public static IInitializer InitializeService { get; private set; }
+
+        [Obsolete]
+        public static Configuration Configuration { get; private set; }
 
         [Obsolete]
         public static ILogger Logger { get; private set; }
@@ -43,6 +46,7 @@ namespace Sidekick
         public static void Initialize()
         {
             InitializeService = Program.ServiceProvider.GetService<IInitializer>();
+            Configuration = Program.ServiceProvider.GetService<Configuration>();
             Logger = Program.ServiceProvider.GetService<ILogger>();
             TradeClient = Program.ServiceProvider.GetService<ITradeClient>();
             LanguageProvider = Program.ServiceProvider.GetService<ILanguageProvider>();
