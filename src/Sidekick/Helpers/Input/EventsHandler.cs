@@ -1,7 +1,9 @@
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Prediction;
 using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
@@ -87,6 +89,11 @@ namespace Sidekick.Helpers.Input
                 e.Handled = true;
                 OverlayController.Hide();
             }
+            else if(PredictionController.IsDisplayed && setting == KeybindSetting.CloseWindow)
+            {
+                e.Handled = true;
+                PredictionController.Hide();
+            }
             else if (ProcessHelper.IsPathOfExileInFocus())
             {
                 //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
@@ -148,18 +155,37 @@ namespace Sidekick.Helpers.Input
             Business.Parsers.Models.Item item = await TriggerCopyAction();
             if (item != null)
             {
-                OverlayController.Open();
-
-                var queryResult = await Legacy.TradeClient.GetListings(item);
-
-                if (queryResult != null)
+                // Trigger Price Prediction on rare item (english only
+                if (Legacy.LanguageProvider.Language.GetType() == typeof(Business.Languages.Client.Implementations.LanguageEN) && item.GetType() == typeof(Business.Parsers.Models.EquippableItem) && item.Rarity == Legacy.LanguageProvider.Language.RarityRare)
                 {
-                    OverlayController.SetQueryResult(queryResult);
-                    return;
+                    PredictionController.Open();
+                    var text = ClipboardHelper.GetText();
+                    var predictionResult = await PriceInfoClient.GetItemPricePrediction(text);
+
+                    if (predictionResult != null)
+                    {
+                        PredictionController.SetPriceInfoResult(predictionResult);
+                        return;
+                    }
+
+                    PredictionController.Hide();
+                }
+                else
+                {
+                    OverlayController.Open();
+
+                    var queryResult = await Legacy.TradeClient.GetListings(item);
+
+                    if (queryResult != null)
+                    {
+                        OverlayController.SetQueryResult(queryResult);
+                        return;
+                    }
+
+                    OverlayController.Hide();
                 }
             }
 
-            OverlayController.Hide();
         }
 
         /// <summary>
