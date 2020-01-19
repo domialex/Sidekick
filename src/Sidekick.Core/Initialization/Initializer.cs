@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Loggers;
 using System;
@@ -9,52 +10,39 @@ namespace Sidekick.Core.Initialization
 {
     public class Initializer : IInitializer
     {
-        private readonly IServiceProvider serviceProvider;
-        private readonly ILogger logger;
-
-        public Initializer(IServiceProvider serviceProvider,
-            ILogger logger)
-        {
-            this.serviceProvider = serviceProvider;
-            this.logger = logger;
-
-            resetServices = typeof(IOnReset).GetImplementedInterface();
-            beforeInitServices = typeof(IOnBeforeInit).GetImplementedInterface();
-            initServices = typeof(IOnInit).GetImplementedInterface();
-            afterInitServices = typeof(IOnAfterInit).GetImplementedInterface();
-        }
-
-        private List<Type> resetServices { get; set; }
-        private List<Type> beforeInitServices { get; set; }
-        private List<Type> initServices { get; set; }
-        private List<Type> afterInitServices { get; set; }
         public bool IsReady { get; private set; }
 
-        private List<Type> GetServiceInterfaces(List<Type> implementations)
+        private List<IOnReset> resetServices;
+        private List<IOnBeforeInit> beforeInitServices;
+        private List<IOnInit> initServices;
+        private List<IOnAfterInit> afterInitServices;
+
+        private readonly IServiceProvider serviceProvider;
+
+        public Initializer(IServiceProvider serviceProvider)
         {
-            var interfaces = new List<Type>();
-            foreach (var implementation in implementations)
-            {
-                var test = serviceProvider.GetService(implementation.GetInterfaces()[0]);
-                var implementationInterfaces = implementation
-                    .GetInterfaces()
-                    .Where(x => serviceProvider.GetService(x) != null);
-                foreach (var @interface in implementationInterfaces)
-                {
-                    interfaces.Add(@interface);
-                }
-            }
-            return interfaces;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task Initialize()
         {
+            // Doing this here, injecting dependencies in constructor causes dependency loops
+            resetServices = GetImplementations(resetServices);
+            beforeInitServices = GetImplementations(beforeInitServices);
+            initServices = GetImplementations(initServices);
+            afterInitServices = GetImplementations(afterInitServices);
+
             IsReady = false;
             await OnReset();
             await OnBeforeInit();
             await OnInit();
             await OnAfterInit();
             IsReady = true;
+        }
+
+        private List<T> GetImplementations<T>(List<T> implementationList)
+        {
+            return implementationList ?? serviceProvider.GetServices<T>().ToList();
         }
 
         public async Task Reset()
@@ -65,43 +53,23 @@ namespace Sidekick.Core.Initialization
 
         private async Task OnReset()
         {
-            var tasks = new List<Task>(resetServices.Count);
-            foreach (var service in GetServiceInterfaces(resetServices))
-            {
-                tasks.Add(((IOnReset)serviceProvider.GetService(service)).OnReset());
-            }
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(resetServices.Select(s => s.OnReset()));
         }
 
         private async Task OnBeforeInit()
         {
-            var tasks = new List<Task>(beforeInitServices.Count);
-            foreach (var service in GetServiceInterfaces(beforeInitServices))
-            {
-                tasks.Add(((IOnBeforeInit)serviceProvider.GetService(service)).OnBeforeInit());
-            }
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(beforeInitServices.Select(s => s.OnBeforeInit()));
 
         }
 
         private async Task OnInit()
         {
-            var tasks = new List<Task>(initServices.Count);
-            foreach (var service in GetServiceInterfaces(initServices))
-            {
-                tasks.Add(((IOnInit)serviceProvider.GetService(service)).OnInit());
-            }
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(initServices.Select(s => s.OnInit()));
         }
 
         private async Task OnAfterInit()
         {
-            var tasks = new List<Task>(afterInitServices.Count);
-            foreach (var service in GetServiceInterfaces(afterInitServices))
-            {
-                tasks.Add(((IOnAfterInit)serviceProvider.GetService(service)).OnAfterInit());
-            }
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(afterInitServices.Select(s => s.OnAfterInit()));
         }
     }
 }
