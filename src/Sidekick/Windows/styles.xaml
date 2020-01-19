@@ -85,6 +85,9 @@
     <SolidColorBrush x:Key="LightColor" Color="#FF5994CE" />
     <SolidColorBrush x:Key="AccentColor" Color="#FF3A4E93" />
 
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+
+    <!--#region TextBox -->
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -96,4 +99,100 @@
         <Setter Property="TextWrapping" Value="NoWrap" />
         <Setter Property="Margin" Value="0 5" />
     </Style>
+    <!--#endregion TextBox -->
+   
+    <!--#region GroupBox -->
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="6" />
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="4" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent" Background="{TemplateBinding Background}" />
+                        <Border Name="Header" Padding="3,0,3,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
+                                    <Binding ElementName="Header" Path="ActualWidth" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion GroupBox -->
+    
+    <!--#region Button -->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LightColor}"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Padding" Value="0 -2 0 0"/>
+    </Style>
+    <!--#endregion Button -->
+    
+    <!--#region TabItem -->
+    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+        <Setter Property="Foreground" Value="{DynamicResource LightColor}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Border x:Name="HeaderBorder" Padding="2 0 2 1" BorderThickness="1 1 1 0" Margin="-2 -2 1 0"
+                            Background="{DynamicResource BackgroundColor}" 
+                            BorderBrush="{DynamicResource PrimaryColor}">
+                            <ContentPresenter x:Name="Content" ContentSource="Header"
+                                          HorizontalAlignment="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                          VerticalAlignment="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+                                          />
+                        </Border>
+                        <Border x:Name="TopLineCover" BorderThickness="1 1 1 0" Margin="-2 -2 1 0" Height="1" Panel.ZIndex="100"
+                            Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}"
+                            VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
+                        <Border x:Name="BottomLineCover" BorderThickness="0 0 0 3" Margin="-1 0 2 -2" Panel.ZIndex="100" BorderBrush="{DynamicResource BackgroundColor}"
+                            VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="HeaderBorder" Value="{DynamicResource BackgroundColorLight}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="HeaderBorder" Value="{DynamicResource BackgroundColor}"/>
+                            <Setter Property="Visibility" TargetName="TopLineCover" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="BottomLineCover" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion TabItem -->
 </ResourceDictionary>
