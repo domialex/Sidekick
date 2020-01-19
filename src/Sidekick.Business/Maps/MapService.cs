@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Maps
 {
-    public class MapService : IMapService, IOnInit, IOnReset
+    public class MapService : IMapService, IOnAfterInit, IOnReset
     {
         private readonly IStaticItemCategoryService staticItemCategoryService;
 
@@ -18,7 +18,7 @@ namespace Sidekick.Business.Maps
 
         public HashSet<string> MapNames { get; private set; }
 
-        public Task OnInit()
+        public Task OnAfterInit()
         {
             MapNames = new HashSet<string>(staticItemCategoryService.Categories
                 .Where(c => MapTiers.TierIds.Contains(c.Id))

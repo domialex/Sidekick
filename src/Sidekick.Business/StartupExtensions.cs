@@ -18,14 +18,17 @@ namespace Sidekick.Business
     {
         public static IServiceCollection AddSidekickBusinessServices(this IServiceCollection services)
         {
+            // Http Services
+            services.AddHttpClient();
+
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<IPoeApiService, PoeApiService>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
+            services.AddInitializableService<IPoeApiService, PoeApiService>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
             services.AddInitializableService<IItemCategoryService, ItemCategoryService>();
             services.AddInitializableService<ILeagueService, LeagueService>();

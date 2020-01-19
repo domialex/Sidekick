@@ -3,10 +3,10 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages.Client;
-using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Core.Configuration;
 using Sidekick.Core.Loggers;
 using System;
 using System.Diagnostics;
@@ -22,23 +22,23 @@ namespace Sidekick.Business.Trades
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
-        private readonly ILeagueService leagueService;
         private readonly IStaticItemCategoryService staticItemCategoryService;
+        private readonly Configuration configuration;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
-            ILeagueService leagueService,
-            IStaticItemCategoryService staticItemCategoryService)
+            IStaticItemCategoryService staticItemCategoryService,
+            Configuration configuration)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
-            this.leagueService = leagueService;
             this.staticItemCategoryService = staticItemCategoryService;
+            this.configuration = configuration;
         }
 
-        public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
+        public async Task<QueryResult<string>> Query(Item item)
         {
             logger.Log("Querying Trade API.");
             QueryResult<string> result = null;
@@ -62,7 +62,7 @@ namespace Sidekick.Business.Trades
                     body = new StringContent(JsonConvert.SerializeObject(queryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
                 }
 
-                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + leagueService.SelectedLeague.Id, body);
+                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + configuration.LeagueId, body);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -70,7 +70,7 @@ namespace Sidekick.Business.Trades
                     result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
 
                     var baseUri = isBulk ? languageProvider.Language.PoeTradeExchangeBaseUrl : languageProvider.Language.PoeTradeSearchBaseUrl;
-                    result.Uri = new Uri(baseUri + leagueService.SelectedLeague.Id + "/" + result.Id);
+                    result.Uri = new Uri(baseUri + configuration.LeagueId + "/" + result.Id);
                 }
             }
             catch
@@ -82,7 +82,7 @@ namespace Sidekick.Business.Trades
 
         }
 
-        public async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
+        public async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Item item, int nextPageToFetch)
         {
             var queryResult = await Query(item);
 
@@ -103,7 +103,7 @@ namespace Sidekick.Business.Trades
             return null;
         }
 
-        public async Task<QueryResult<ListingResult>> GetListings(Parsers.Models.Item item)
+        public async Task<QueryResult<ListingResult>> GetListings(Item item)
         {
             var queryResult = await Query(item);
 
@@ -147,7 +147,7 @@ namespace Sidekick.Business.Trades
             return result;
         }
 
-        public async Task OpenWebpage(Parsers.Models.Item item)
+        public async Task OpenWebpage(Item item)
         {
             var queryResult = await Query(item);
 
