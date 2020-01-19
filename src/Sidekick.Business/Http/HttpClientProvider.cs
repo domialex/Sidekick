@@ -7,9 +7,11 @@ namespace Sidekick.Business.Http
 {
     public class HttpClientProvider : IHttpClientProvider
     {
-        public HttpClientProvider()
+        private readonly IHttpClientFactory httpClientFactory;
+
+        public HttpClientProvider(IHttpClientFactory httpClientFactory)
         {
-            HttpClient = new HttpClient();
+            this.httpClientFactory = httpClientFactory;
 
             JsonSerializerSettings = new JsonSerializerSettings();
             JsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
@@ -19,6 +21,6 @@ namespace Sidekick.Business.Http
 
         public JsonSerializerSettings JsonSerializerSettings { get; private set; }
 
-        public HttpClient HttpClient { get; private set; }
+        public HttpClient HttpClient => httpClientFactory.CreateClient();
     }
 }

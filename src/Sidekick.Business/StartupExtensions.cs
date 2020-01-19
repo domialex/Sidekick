@@ -17,6 +17,9 @@ namespace Sidekick.Business
     {
         public static IServiceCollection AddSidekickBusinessServices(this IServiceCollection services)
         {
+            // Http Services
+            services.AddHttpClient();
+
             services.AddSingleton<IAttributeCategoryService, AttributeCategoryService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemCategoryService, ItemCategoryService>();
