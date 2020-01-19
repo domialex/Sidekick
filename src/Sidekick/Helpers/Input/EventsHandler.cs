@@ -83,32 +83,28 @@ namespace Sidekick.Helpers.Input
             var settings = SettingsController.GetSettingsInstance();
             var setting = settings.GetKeybindSetting(e.KeyCode, e.Modifiers);
 
-            //if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
             if (OverlayController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {
                 e.Handled = true;
                 OverlayController.Hide();
             }
-            else if(PredictionController.IsDisplayed && setting == KeybindSetting.CloseWindow)
+            else if (PredictionController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {
                 e.Handled = true;
                 PredictionController.Hide();
             }
             else if (ProcessHelper.IsPathOfExileInFocus())
             {
-                //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
                 if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
                 }
-                //else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
                 else if (setting == KeybindSetting.ItemWiki)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemWiki);
                 }
-                //else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
                 else if (setting == KeybindSetting.Hideout)
                 {
                     e.Handled = true;
@@ -155,35 +151,18 @@ namespace Sidekick.Helpers.Input
             Business.Parsers.Models.Item item = await TriggerCopyAction();
             if (item != null)
             {
-                // Trigger Price Prediction on rare item (english only
-                if (Legacy.LanguageProvider.Language.GetType() == typeof(Business.Languages.Client.Implementations.LanguageEN) && item.GetType() == typeof(Business.Parsers.Models.EquippableItem) && item.Rarity == Legacy.LanguageProvider.Language.RarityRare)
+                OverlayController.Open();
+
+                var queryResult = await Legacy.TradeClient.GetListings(item);
+
+                if (queryResult != null)
                 {
-                    PredictionController.Open();
-                    var text = ClipboardHelper.GetText();
-                    var predictionResult = await PriceInfoClient.GetItemPricePrediction(text);
-
-                    if (predictionResult != null)
-                    {
-                        PredictionController.SetPriceInfoResult(predictionResult);
-                        return;
-                    }
-
-                    PredictionController.Hide();
+                    OverlayController.SetQueryResult(queryResult);
+                    return;
                 }
-                else
-                {
-                    OverlayController.Open();
 
-                    var queryResult = await Legacy.TradeClient.GetListings(item);
+                OverlayController.Hide();
 
-                    if (queryResult != null)
-                    {
-                        OverlayController.SetQueryResult(queryResult);
-                        return;
-                    }
-
-                    OverlayController.Hide();
-                }
             }
 
         }

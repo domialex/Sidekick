@@ -36,14 +36,14 @@ namespace Sidekick.Business.Parsers
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public Item ParseItem(string text)
+        public Item ParseItem(string itemText)
         {
             Item item = null;
             bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
 
             try
             {
-                var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
+                var lines = itemText.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
                 // Every item should start with Rarity in the first line.
                 if (!lines[0].StartsWith(languageProvider.Language.DescriptionRarity)) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
@@ -120,7 +120,7 @@ namespace Sidekick.Business.Parsers
                     item = new EquippableItem()
                     {
                         Name = lines[1],
-                        Type = lines[2],
+                        Type = isIdentified ? lines[2] : lines[1],
                         ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
                     };
 
@@ -257,6 +257,8 @@ namespace Sidekick.Business.Parsers
             }
 
             item.IsCorrupted = isCorrupted;
+            item.IsIdentified = isIdentified;
+            item.ItemText = itemText;
             return item;
         }
 

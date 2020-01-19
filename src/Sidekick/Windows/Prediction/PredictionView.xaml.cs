@@ -1,4 +1,5 @@
 using Sidekick.Helpers.POEPriceInfoAPI;
+using Sidekick.Helpers.POEPriceInfoAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace Sidekick.Windows.Prediction
     /// </summary>
     public partial class PredictionView : Window
     {
-        private PriceInfo priceInfo;
+        private PriceInfoResult priceInfo;
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
 
@@ -41,7 +42,7 @@ namespace Sidekick.Windows.Prediction
             e.Cancel = true;
         }
 
-        public void SetPriceInfoResult(PriceInfo info)
+        public void SetPriceInfoResult(PriceInfoResult info)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -56,17 +57,17 @@ namespace Sidekick.Windows.Prediction
 
                 this.priceInfo = info;
                 var itemParagraph = new Paragraph();
-                var lines = info.ItemText.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
+                //var lines = info.ItemText.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach(var line in lines)
-                {
-                    itemParagraph.Inlines.Add(new Run(line + "\n"));
-                }
+                //foreach(var line in lines)
+                //{
+                //    itemParagraph.Inlines.Add(new Run(line + "\n"));
+                //}
 
-                textBoxItemStats.Document = new FlowDocument(itemParagraph);
-                var priceText = Math.Round(info.Min, 2) + " ~ " + Math.Round(info.Max, 2) + " " + info.Currency;
+                //textBoxItemStats.Document = new FlowDocument(itemParagraph);
+                var priceText = Math.Round(info.Min.Value, 2) + " ~ " + Math.Round(info.Max.Value, 2) + " " + info.Currency;
                 labelPriceRange.Content = priceText;
-                var predictionText = Math.Round(info.PredictionConfidenceScore, 2) + " %";
+                var predictionText = Math.Round(info.ConfidenceScore, 2) + " %";
                 labelConfidence.Content = predictionText;
                 var warningParagraph = new Paragraph();
                 warningParagraph.Inlines.Add(info.WarningMessage);
@@ -74,7 +75,7 @@ namespace Sidekick.Windows.Prediction
             }
         }
 
-        delegate void SetPriceInfoResultCallback(PriceInfo info);
+        delegate void SetPriceInfoResultCallback(PriceInfoResult info);
 
         public void SetWindowPosition(int x, int y)
         {
