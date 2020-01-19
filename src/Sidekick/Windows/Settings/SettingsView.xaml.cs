@@ -122,9 +122,9 @@ namespace Sidekick.Windows.Settings
             try
             {
                 //Check if hotkeys are unique
-                if (Settings.KeybindSettings.Values.Where(v => v?.ToString() == control.Hotkey?.ToString()).ToList().Count > 1)
+                if (Settings.KeybindSettings.Values.Count(x => x?.ToString() == control.Hotkey?.ToString()) > 1)
                 {
-                    if (MessageBox.Show("Hotkey already in use!") == MessageBoxResult.OK)
+                    if (MessageBox.Show("This hotkey already in use.") == MessageBoxResult.OK)
                     {
                         control.Hotkey = null;
                     }
@@ -133,7 +133,7 @@ namespace Sidekick.Windows.Settings
             }
             catch (Exception)
             {
-                Legacy.Logger.Log("Could not validate if Hotkey is already in use");
+                Legacy.Logger.Log("Could not validate if Hotkey is already in use.");
                 control.Hotkey = null;
                 throw;
             }

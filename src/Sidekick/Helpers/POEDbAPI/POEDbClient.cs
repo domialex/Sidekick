@@ -30,7 +30,7 @@ namespace Sidekick.Helpers.POEDbAPI
             }
 
             var url = CreateUri(item).ToString();
-            Legacy.Logger.Log(string.Format("Opening in browser: {0}", url));
+            Legacy.Logger.Log($"Opening in browser: {url}");
             Process.Start(url);
         }
 

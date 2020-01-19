@@ -126,7 +126,7 @@ namespace Sidekick.Business.Trades
 
         public async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
         {
-            logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {(page + 1).ToString()}.");
+            logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
             QueryResult<ListingResult> result = null;
 
             try

@@ -61,7 +61,7 @@ namespace Sidekick.Windows.Settings
                 // #TODO: Add more default settings
                 return settings;
             }
-            catch (Exception)
+            catch
             {
                 Legacy.Logger.Log("Could not load default settings", LogState.Error);
                 throw;
@@ -115,7 +115,7 @@ namespace Sidekick.Windows.Settings
                 }
                 return _settings;
             }
-            catch (Exception)
+            catch
             {
                 Legacy.Logger.Log("Could not load settings", LogState.Error);
                 throw;
@@ -134,14 +134,14 @@ namespace Sidekick.Windows.Settings
                 // Backup old settings
                 if (File.Exists(SETTINGS_PATH))
                 {
-                    File.Copy(SETTINGS_PATH, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json.old"), true);
+                    File.Copy(SETTINGS_PATH, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings_old.json"), true);
                     File.Delete(SETTINGS_PATH);
                 }
 
                 string settingsString = JsonConvert.SerializeObject(_settings, Formatting.Indented);
                 File.WriteAllText(SETTINGS_PATH, settingsString);
             }
-            catch (Exception)
+            catch
             {
                 Legacy.Logger.Log("Could not save settings", LogState.Error);
                 throw;
