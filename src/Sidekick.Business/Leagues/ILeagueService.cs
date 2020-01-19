@@ -1,4 +1,4 @@
-using Sidekick.Business.Leagues.Models;
+using Sidekick.Business.Apis.Poe.Models;
 using System.Collections.Generic;
 
 namespace Sidekick.Business.Leagues

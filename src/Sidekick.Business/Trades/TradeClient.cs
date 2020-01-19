@@ -38,7 +38,7 @@ namespace Sidekick.Business.Trades
             this.configuration = configuration;
         }
 
-        public async Task<QueryResult<string>> Query(Item item)
+        public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
         {
             logger.Log("Querying Trade API.");
             QueryResult<string> result = null;
@@ -82,7 +82,7 @@ namespace Sidekick.Business.Trades
 
         }
 
-        public async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Item item, int nextPageToFetch)
+        public async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
         {
             var queryResult = await Query(item);
 
@@ -103,7 +103,7 @@ namespace Sidekick.Business.Trades
             return null;
         }
 
-        public async Task<QueryResult<ListingResult>> GetListings(Item item)
+        public async Task<QueryResult<ListingResult>> GetListings(Parsers.Models.Item item)
         {
             var queryResult = await Query(item);
 
@@ -147,7 +147,7 @@ namespace Sidekick.Business.Trades
             return result;
         }
 
-        public async Task OpenWebpage(Item item)
+        public async Task OpenWebpage(Parsers.Models.Item item)
         {
             var queryResult = await Query(item);
 

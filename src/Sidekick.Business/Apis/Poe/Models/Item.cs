@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Categories.Models
+namespace Sidekick.Business.Apis.Poe.Models
 {
     public class Item
     {

@@ -36,19 +36,22 @@ namespace Sidekick.Business.Apis.Poe
             return Task.CompletedTask;
         }
 
-        public async Task<List<TReturn>> Fetch<TReturn>(FetchEnum type)
+        public async Task<List<TReturn>> Fetch<TReturn>()
         {
-            logger.Log($"Fetching {type.ToString()} started.");
+            var name = typeof(TReturn).Name;
+
+            logger.Log($"Fetching {name} started.");
             QueryResult<TReturn> result = null;
             var success = false;
 
             string path = string.Empty;
-            switch (type)
+            switch (name)
             {
-                case FetchEnum.Items: path += "data/items/"; break;
-                case FetchEnum.Leagues: path += "data/leagues/"; break;
-                case FetchEnum.Static: path += "data/static/"; break;
-                case FetchEnum.Stats: path += "data/stats/"; break;
+                case nameof(ItemCategory): path += "data/items/"; break;
+                case nameof(League): path += "data/leagues/"; break;
+                case nameof(StaticItemCategory): path += "data/static/"; break;
+                case nameof(AttributeCategory): path += "data/stats/"; break;
+                default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
 
             while (!success)
@@ -63,18 +66,18 @@ namespace Sidekick.Business.Apis.Poe
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });
 
-                    logger.Log($"{result.Result.Count} {type.ToString()} fetched.");
+                    logger.Log($"{result.Result.Count} {name} fetched.");
                     success = true;
                 }
                 catch
                 {
-                    logger.Log($"Could not fetch {type.ToString()}.");
+                    logger.Log($"Could not fetch {name}.");
                     logger.Log("Retrying every minute.");
                     await Task.Delay(TimeSpan.FromMinutes(1));
                 }
             }
 
-            logger.Log($"Fetching {type.ToString()} finished.");
+            logger.Log($"Fetching {name} finished.");
             return result.Result;
         }
 
