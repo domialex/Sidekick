@@ -54,7 +54,7 @@ namespace Sidekick.Windows.Overlay
             Hide();
         }
 
-        private Task UpdateUIText()
+        private void UpdateUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
             textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
@@ -62,7 +62,6 @@ namespace Sidekick.Windows.Overlay
             textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
             textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
             textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
-            return Task.CompletedTask;
         }
 
         protected override void OnClosing(CancelEventArgs e)

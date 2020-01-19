@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace Sidekick.Helpers.NativeMethods
 {
@@ -90,9 +91,9 @@ namespace Sidekick.Helpers.NativeMethods
             if (text == null)
                 text = string.Empty;
 
-            if(Thread.CurrentThread != Program.MAIN_DISPATCHER.Thread)
+            if(Thread.CurrentThread != Dispatcher.CurrentDispatcher.Thread)
             {
-                await Program.MAIN_DISPATCHER.InvokeAsync(() => SetText(text));
+                await Dispatcher.CurrentDispatcher.InvokeAsync(() => SetText(text));
                 return;
             }
 

@@ -34,20 +34,25 @@ namespace Sidekick.Business.Languages.UI
 
         public IUILanguage Language { get; private set; }
 
-        public event Func<Task> UILanguageChanged;
+        public event Action UILanguageChanged;
 
-        public async Task SetLanguage(UILanguageAttribute language)
+        public void SetLanguage(UILanguageAttribute language)
         {
             if (language.Name != Current.Name)
             {
                 logger.Log($"Changed UI language to {language.Name}.");
                 Language = (IUILanguage)Activator.CreateInstance(language.ImplementationType);
-                if (UILanguageChanged != null)
+                NotifyLanguageSet();
+            }
+        }
+
+        private void NotifyLanguageSet()
+        {
+            if (UILanguageChanged != null)
+            {
+                foreach (var handler in UILanguageChanged.GetInvocationList())
                 {
-                    foreach (var handler in UILanguageChanged.GetInvocationList())
-                    {
-                        await ((Func<Task>)handler)();
-                    }
+                    ((Action)handler)();
                 }
             }
         }

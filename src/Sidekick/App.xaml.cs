@@ -1,16 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
+using Hardcodet.Wpf.TaskbarNotification;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Core.Initialization;
+using Sidekick.Windows.TrayIcon;
+using Sidekick.Windows.Overlay;
+using Sidekick.Helpers.Input;
 
 namespace Sidekick
 {
@@ -19,14 +16,52 @@ namespace Sidekick
     /// </summary>
     public partial class App : Application
     {
+        static readonly string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
+
+        private Mutex mutex;
+
+        private ServiceProvider serviceProvider;
+        private TaskbarIcon trayIcon;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            EnsureSingleInstance();
+
+            serviceProvider = Sidekick.Startup.InitializeServices();
+
+            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            trayIcon.DataContext = serviceProvider.GetService<TrayIconViewModel>();
+
+            Legacy.Initialize(serviceProvider);
+
+            var initializeService = serviceProvider.GetService<IInitializer>();
+            initializeService.Initialize();
+
+            // Keyboard hooks.
+            EventsHandler.Initialize();
+
+            // Overlay.
+            OverlayController.Initialize();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            trayIcon.Dispose();
+            serviceProvider.Dispose();
             base.OnExit(e);
+        }
+
+        private void EnsureSingleInstance()
+        {
+            mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out bool instanceResult);
+            if (!instanceResult)
+            {
+                App.Current.Shutdown();
+            }
+
+            ProcessHelper.mutex = mutex;
         }
     }
 }

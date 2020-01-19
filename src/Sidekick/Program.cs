@@ -15,10 +15,9 @@ namespace Sidekick
     {
         public static ServiceProvider ServiceProvider;
         static readonly string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
-        public static System.Windows.Threading.Dispatcher MAIN_DISPATCHER { get; private set; } = null;
 
         [STAThread]
-        static void Main()
+        static void Mains()
         {
             // Only have one instance running.
             var mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out bool instanceResult);
@@ -28,7 +27,7 @@ namespace Sidekick
 
             ServiceProvider = Startup.InitializeServices();
 
-            Legacy.Initialize();
+            Legacy.Initialize(ServiceProvider);
             TrayIcon.Initialize();
 
             var initializeService = ServiceProvider.GetService<IInitializer>();
@@ -44,7 +43,6 @@ namespace Sidekick
             PredictionController.Initialize();
 
             // Run window.
-            MAIN_DISPATCHER = System.Windows.Threading.Dispatcher.CurrentDispatcher;
             Application.ThreadExit += ThreadExit;
             Application.Run();
         }
@@ -58,7 +56,6 @@ namespace Sidekick
                 TrayIcon.Dispose();
                 EventsHandler.Dispose();
                 OverlayController.Dispose();
-                MAIN_DISPATCHER = null;
             }
         }
     }

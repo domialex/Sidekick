@@ -46,17 +46,17 @@ namespace Sidekick
         public static ILeagueService LeagueService { get; private set; }
 
         [Obsolete]
-        public static void Initialize()
+        public static void Initialize(IServiceProvider serviceProvider)
         {
-            InitializeService = Program.ServiceProvider.GetService<IInitializer>();
-            Configuration = Program.ServiceProvider.GetService<Configuration>();
-            Logger = Program.ServiceProvider.GetService<ILogger>();
-            TradeClient = Program.ServiceProvider.GetService<ITradeClient>();
-            LanguageProvider = Program.ServiceProvider.GetService<ILanguageProvider>();
-            ItemParser = Program.ServiceProvider.GetService<IItemParser>();
-            HttpClientProvider = Program.ServiceProvider.GetService<IHttpClientProvider>();
-            LeagueService = Program.ServiceProvider.GetService<ILeagueService>();
-            UILanguageProvider = Program.ServiceProvider.GetService<IUILanguageProvider>();
+            InitializeService = serviceProvider.GetService<IInitializer>();
+            Configuration = serviceProvider.GetService<Configuration>();
+            Logger = serviceProvider.GetService<ILogger>();
+            TradeClient = serviceProvider.GetService<ITradeClient>();
+            LanguageProvider = serviceProvider.GetService<ILanguageProvider>();
+            ItemParser = serviceProvider.GetService<IItemParser>();
+            HttpClientProvider = serviceProvider.GetService<IHttpClientProvider>();
+            LeagueService = serviceProvider.GetService<ILeagueService>();
+            UILanguageProvider = serviceProvider.GetService<IUILanguageProvider>();
         }
     }
 }
