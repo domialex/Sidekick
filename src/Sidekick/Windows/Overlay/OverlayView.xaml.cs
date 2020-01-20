@@ -1,5 +1,6 @@
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using Sidekick.Windows.Settings;
@@ -89,9 +90,29 @@ namespace Sidekick.Windows.Overlay
                 this.itemListingControls?.Clear();
 
                 queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(i => this.itemListingControls?.Add(i));
+
+                // Hardcoded to the English value of Rare since poeprices.info only support English.
+                if (queryResult.Item.Rarity == "Rare" && queryResult.Item.IsIdentified)
+                {
+                    Task.Run(() => GetPricePrediction(queryResult.Item.ItemText));
+                }
             }
         }
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
+
+        private async void GetPricePrediction(string itemText)
+        {
+            var predictionResult = await PriceInfoClient.GetItemPricePrediction(itemText);
+            if (predictionResult.ErrorCode != 0)
+            {
+                return;
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                txtPrediction.Text = $"{predictionResult.Min?.ToString("F")}-{predictionResult.Max?.ToString("F")} {predictionResult.Currency}";
+            });
+        }
 
         public void AppendQueryResult(QueryResult<ListingResult> queryToAppend)
         {
@@ -163,6 +184,7 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
+                this.txtPrediction.Text = null;
                 this.queryResult = null;
                 this.itemListingControls = new ObservableCollection<ListItem>();
                 NotifyPropertyChanged("itemListingControls");

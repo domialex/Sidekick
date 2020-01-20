@@ -1,7 +1,8 @@
-using Newtonsoft.Json;
 using Sidekick.Core.Loggers;
+using Sidekick.Helpers.POEPriceInfoAPI.Models;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sidekick.Helpers.POEPriceInfoAPI
@@ -11,42 +12,29 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
     {
         public const string PoePricesBaseUrl = "https://www.poeprices.info/api";
 
-        public static async Task<PriceInfo> GetItemPricePrediction(string itemText)
+        public static async Task<PriceInfoResult> GetItemPricePrediction(string itemText)
         {
-            var encodedItem = EncodeItemToBase64(itemText);
-            var league = Legacy.Configuration.LeagueId;
-            var requestUrl = GenerateRequestUrl(encodedItem, league);
+            var encodedItem = Convert.ToBase64String(Encoding.UTF8.GetBytes(itemText));
+            var requestUrl = PoePricesBaseUrl + "?l=" + Legacy.Configuration.LeagueId + "&i=" + encodedItem;
 
             try
             {
                 var response = await Legacy.HttpClientProvider.HttpClient.GetAsync(requestUrl);
+                var content = await response.Content.ReadAsStreamAsync();
 
-                if (response.IsSuccessStatusCode)
+                return await JsonSerializer.DeserializeAsync<PriceInfoResult>(content, new JsonSerializerOptions()
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.HttpClientProvider.JsonSerializerSettings);
-                    priceInfo.ItemText = itemText;
-                    return priceInfo;
-                }
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+
             }
             catch
             {
-                Legacy.Logger.Log("Error getting price prediction from item: " + itemText, LogState.Error);
+                Legacy.Logger.Log("Error getting price prediction from poeprices.info", LogState.Error);
             }
 
             return null;
         }
-
-        private static string EncodeItemToBase64(string itemText)
-        {
-            var bytes = Encoding.UTF8.GetBytes(itemText);
-            return Convert.ToBase64String(bytes);
-        }
-
-        private static string GenerateRequestUrl(string encodedItem, string selectedLeague)
-        {
-            return PoePricesBaseUrl + "?l=" + selectedLeague + "&i=" + encodedItem;
-        }
-
     }
 }

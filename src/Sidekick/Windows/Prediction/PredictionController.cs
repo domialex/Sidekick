@@ -1,5 +1,6 @@
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Helpers.POEPriceInfoAPI;
+using Sidekick.Helpers.POEPriceInfoAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Sidekick.Windows.Prediction
         private const int WindowPadding = 5;
 
         public static bool IsDisplayed => _predictionView.IsDisplayed;
-        public static void SetPriceInfoResult(PriceInfo info) => _predictionView.SetPriceInfoResult(info);
+        public static void SetPriceInfoResult(PriceInfoResult info) => _predictionView.SetPriceInfoResult(info);
         public static void Show() => _predictionView.ShowWindow();
         public static void Hide() => _predictionView.HideWindowAndClearData();
 
