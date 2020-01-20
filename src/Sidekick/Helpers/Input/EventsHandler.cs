@@ -1,3 +1,4 @@
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
@@ -153,9 +154,10 @@ namespace Sidekick.Helpers.Input
                 OverlayController.Open();
 
                 var queryResult = await Legacy.TradeClient.GetListings(item);
-
                 if (queryResult != null)
                 {
+                    queryResult.PoeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                    queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }
