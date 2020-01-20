@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Leagues.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Initialization;
 using Sidekick.Business.Apis.PoeNinja.Models;

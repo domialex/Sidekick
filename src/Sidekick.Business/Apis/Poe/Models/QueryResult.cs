@@ -1,3 +1,4 @@
+using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Parsers.Models;
 using System;
 using System.Collections.Generic;
