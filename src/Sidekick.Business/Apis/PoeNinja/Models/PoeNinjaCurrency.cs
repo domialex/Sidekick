@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Sidekick.Business.Apis.PoeNinja.Models
 {
@@ -30,21 +30,21 @@ namespace Sidekick.Business.Apis.PoeNinja.Models
     {
         public int Id { get; set; }
 
-        [JsonProperty("league_id")]
+        [JsonPropertyName("league_id")]
         public int LeagueId { get; set; }
-        [JsonProperty("pay_currency_id")]
+        [JsonPropertyName("pay_currency_id")]
         public int PayCurrencyId { get; set; }
-        [JsonProperty("get_currency_id")]
+        [JsonPropertyName("get_currency_id")]
         public int GetCurrencyId { get; set; }
-        [JsonProperty("sample_time_utc")]
+        [JsonPropertyName("sample_time_utc")]
         public DateTime SampleTimeUtc { get; set; }
 
         public int Count { get; set; }
 
         public double Value { get; set; }
-        [JsonProperty("data_point_count")]
+        [JsonPropertyName("data_point_count")]
         public int DataPointCount { get; set; }
-        [JsonProperty("includes_secondary")]
+        [JsonPropertyName("includes_secondary")]
         public bool IncludesSecondary { get; set; }
 
     }

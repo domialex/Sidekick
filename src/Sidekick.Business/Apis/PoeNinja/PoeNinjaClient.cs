@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Sidekick.Business.Http;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using System;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -29,7 +29,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             var responseString = await PerformRequestAndValidateResponse(url);
 
-            return JsonConvert.DeserializeObject<PoeNinjaQueryResult<PoeNinjaItem>>(responseString);
+            return JsonSerializer.Deserialize<PoeNinjaQueryResult<PoeNinjaItem>>(responseString);
         }
 
         public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency)
@@ -39,7 +39,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             var responseString = await PerformRequestAndValidateResponse(url);
 
-            return JsonConvert.DeserializeObject<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseString);
+            return JsonSerializer.Deserialize<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseString);
         }
 
         private async Task<string> PerformRequestAndValidateResponse(string url)
