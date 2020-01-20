@@ -2,6 +2,7 @@ using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Prediction;
 using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
@@ -43,11 +44,11 @@ namespace Sidekick.Helpers.Input
 
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-
             if (!Debugger.IsAttached)
             {
                 _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
             }
+
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
             var assignment = new Dictionary<Sequence, Action>
@@ -81,27 +82,25 @@ namespace Sidekick.Helpers.Input
             var settings = SettingsController.GetSettingsInstance();
             var setting = settings.GetKeybindSetting(e.KeyCode, e.Modifiers);
 
-            //if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
             if (OverlayController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {
                 e.Handled = true;
                 OverlayController.Hide();
             }
-            else if (ProcessHelper.IsPathOfExileInFocus())
+
+
+            if (ProcessHelper.IsPathOfExileInFocus())
             {
-                //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
                 if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
                 }
-                //else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
                 else if (setting == KeybindSetting.ItemWiki)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemWiki);
                 }
-                //else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
                 else if (setting == KeybindSetting.Hideout)
                 {
                     e.Handled = true;
@@ -125,7 +124,9 @@ namespace Sidekick.Helpers.Input
             }
         }
 
-        private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
+        private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e) => Task.Run(() => GlobalHookMouseScrollTask(e));
+
+        private static void GlobalHookMouseScrollTask(MouseEventExtArgs e)
         {
             if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
@@ -133,11 +134,12 @@ namespace Sidekick.Helpers.Input
             }
 
             // Ctrl + Scroll wheel to move between stash tabs.
-            if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
+            if (KeyboardState.IsKeyPressed(VirtualKeyStates.VK_CONTROL))
             {
-                e.Handled = true;
+                e.Handled = true; // Right now this won't have any effect.
                 string key = e.Delta > 0 ? KeyCommands.STASH_LEFT : KeyCommands.STASH_RIGHT;
-                SendKeys.Send(key);
+
+                SendKeys.SendWait(key);
             }
         }
 
@@ -157,9 +159,11 @@ namespace Sidekick.Helpers.Input
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }
+
+                OverlayController.Hide();
+
             }
 
-            OverlayController.Hide();
         }
 
         /// <summary>
@@ -200,7 +204,6 @@ namespace Sidekick.Helpers.Input
                 // if so, we should not restore the clipboard to previous item
                 item = Legacy.ItemParser.ParseItem(clipboardContents);
                 restoreClipboard = item == null && clipboardContents != null;
-                item = null;
             }
 
             // we still need to fetch the item under the cursor if any and make sure we don't use old contents
