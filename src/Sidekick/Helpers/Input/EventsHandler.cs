@@ -156,9 +156,8 @@ namespace Sidekick.Helpers.Input
                 var queryResult = await Legacy.TradeClient.GetListings(item);
                 if (queryResult != null)
                 {
-                    var cache = Program.ServiceProvider.GetService(typeof(PoeNinjaCache)) as PoeNinjaCache;
-                    queryResult.PoeNinjaItem = cache.GetItem(item);
-                    queryResult.LastRefreshTimestamp = cache.LastRefreshTimestamp;
+                    queryResult.PoeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                    queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }

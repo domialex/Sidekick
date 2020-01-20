@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
-    public class PoeNinjaClient
+    public class PoeNinjaClient : IPoeNinjaClient
     {
 
         public readonly static Uri POE_NINJA_ITEMOVERVIEW_BASE_URL = new Uri("https://poe.ninja/api/data/itemoverview");

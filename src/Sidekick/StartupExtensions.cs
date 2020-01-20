@@ -16,7 +16,7 @@ namespace Sidekick
 
         public static IServiceCollection AddPoeNinja(this IServiceCollection services)
         {
-            services.AddSingleton<PoeNinjaClient>();
+            services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             return services;
         }

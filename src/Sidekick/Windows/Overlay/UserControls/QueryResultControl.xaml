@@ -51,6 +51,7 @@
         <TextBox Grid.Row="0" Grid.Column="1"  FontWeight="Bold" TextAlignment="Right" Margin="5 0 5 0">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                    <Setter Property="Foreground" Value="White" />
                     <Setter Property="Visibility" Value="Hidden"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding HasAverage}" Value="True">

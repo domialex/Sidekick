@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Business.Parsers.Models;
+using Sidekick.Core.Configuration;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -18,9 +19,10 @@ namespace Sidekick.Business.Apis.PoeNinja
     /// imo it'd be overkill to request their api every time. Also perfomance. 
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
-    public class PoeNinjaCache : IPoeNinjaCache, IOnBeforeInit
+    public class PoeNinjaCache : IPoeNinjaCache, IOnAfterInit
     {
-        private readonly PoeNinjaClient _client;
+        private readonly IPoeNinjaClient _client;
+        private readonly Configuration _configuration;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
 
@@ -28,16 +30,15 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public List<PoeNinjaCacheItem<PoeNinjaCurrency>> Currencies { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
 
-        public League SelectedLeague { get; set; }
-
         public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
         private List<PoeNinjaItem> FlatItems => Items.SelectMany(c => c.Items).ToList();
         private List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(c => c.Items).ToList();
 
-        public PoeNinjaCache(PoeNinjaClient client)
+        public PoeNinjaCache(IPoeNinjaClient client, Configuration configuration)
         {
             _client = client;
+            _configuration = configuration;
         }
         public PoeNinjaItem GetItem(Item item)
         {
@@ -59,7 +60,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             Items = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
             foreach (var itemType in Enum.GetValues(typeof(ItemType)))
             {
-                var result = await _client.GetItemOverview(SelectedLeague.Id, (ItemType)itemType);
+                var result = await _client.GetItemOverview(_configuration.LeagueId, (ItemType)itemType);
                 PoeNinjaCacheItem<PoeNinjaItem> item = new PoeNinjaCacheItem<PoeNinjaItem>()
                 {
                     Type = itemType.ToString(),
@@ -73,7 +74,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             foreach(var currency in Enum.GetValues(typeof(CurrencyType)))
             {
-                var result = await _client.GetCurrencyOverview(SelectedLeague.Id, (CurrencyType)currency);
+                var result = await _client.GetCurrencyOverview(_configuration.LeagueId, (CurrencyType)currency);
                 PoeNinjaCacheItem<PoeNinjaCurrency> item = new PoeNinjaCacheItem<PoeNinjaCurrency>()
                 {
                     Type = currency.ToString(),
@@ -87,7 +88,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             //_logger.LogInformation($"poe.ninja cache refreshed for league {SelectedLeague.Id}.");
         }
 
-        public async Task OnBeforeInit()
+        public async Task OnAfterInit()
         {
             await Refresh();
         }
