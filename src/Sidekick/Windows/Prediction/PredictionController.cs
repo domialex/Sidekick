@@ -20,8 +20,9 @@ namespace Sidekick.Windows.Prediction
         private const int WindowWidth = 800;
         private const int WindowPadding = 5;
 
-        public static bool IsDisplayed => _predictionView.IsDisplayed;
+		public static bool IsDisplayed => _predictionView?.IsDisplayed ?? false;
         public static void SetPriceInfoResult(PriceInfoResult info) => _predictionView.SetPriceInfoResult(info);
+        
         public static void Show() => _predictionView.ShowWindow();
         public static void Hide() => _predictionView.HideWindowAndClearData();
 

@@ -3,11 +3,21 @@
                     xmlns:local="clr-namespace:Sidekick"
                     xmlns:tb="http://www.hardcodet.net/taskbar">
 
-    
-    
-    
+    <Style x:Key="LeagueMenuItemStyle" TargetType="MenuItem">
+        <Setter Property="Command" Value="{Binding Path=DataContext.ChangeLeagueCommand, RelativeSource={RelativeSource AncestorType=MenuItem}, Mode=OneWay}"/>
+        <Setter Property="CommandParameter" Value="{Binding Id}"/>
+        <Setter Property="IsCheckable" Value="True"/>
+        <Setter Property="IsChecked" Value="{Binding IsCurrent}"/>
+    </Style>
+
     <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
-        <MenuItem Header="League" ItemsSource=""/>
+        <MenuItem Header="League" ItemsSource="{Binding Leagues}" ItemContainerStyle="{StaticResource LeagueMenuItemStyle}">
+            <MenuItem.ItemTemplate>
+                <HierarchicalDataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </MenuItem.ItemTemplate>
+        </MenuItem>
         <MenuItem Header="{Binding SettingsHeader}" Command="{Binding ShowSettingsCommand}" />
         <MenuItem Header="{Binding ShowLogsHeader}" Command="{Binding ShowLogsCommand}" />
         <Separator />

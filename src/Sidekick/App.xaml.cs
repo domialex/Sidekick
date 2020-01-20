@@ -16,7 +16,7 @@ namespace Sidekick
     /// </summary>
     public partial class App : Application
     {
-        static readonly string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
+        private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private Mutex mutex;
 
@@ -31,9 +31,6 @@ namespace Sidekick
 
             serviceProvider = Sidekick.Startup.InitializeServices();
 
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetService<TrayIconViewModel>();
-
             Legacy.Initialize(serviceProvider);
 
             var initializeService = serviceProvider.GetService<IInitializer>();
@@ -44,12 +41,17 @@ namespace Sidekick
 
             // Overlay.
             OverlayController.Initialize();
+
+            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            trayIcon.DataContext = serviceProvider.GetService<TrayIconViewModel>();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             trayIcon.Dispose();
             serviceProvider.Dispose();
+            EventsHandler.Dispose();
+            OverlayController.Dispose();
             base.OnExit(e);
         }
 

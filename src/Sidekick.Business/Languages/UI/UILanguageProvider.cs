@@ -48,12 +48,9 @@ namespace Sidekick.Business.Languages.UI
 
         private void NotifyLanguageSet()
         {
-            if (UILanguageChanged != null)
+            foreach (var handler in UILanguageChanged?.GetInvocationList())
             {
-                foreach (var handler in UILanguageChanged.GetInvocationList())
-                {
-                    ((Action)handler)();
-                }
+                ((Action)handler)();
             }
         }
     }
