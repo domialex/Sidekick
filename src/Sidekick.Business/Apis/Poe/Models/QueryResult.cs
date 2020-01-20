@@ -18,5 +18,9 @@ namespace Sidekick.Business.Apis.Poe.Models
         public Uri Uri { get; set; }
 
         public PoeNinjaItem PoeNinjaItem { get; set; }
+
+        public bool HasAverage => PoeNinjaItem != null;
+
+        public DateTime? LastRefreshTimestamp { get; set; }
     }
 }

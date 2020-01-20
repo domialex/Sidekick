@@ -1,3 +1,4 @@
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers.NativeMethods;
@@ -155,7 +156,9 @@ namespace Sidekick.Helpers.Input
                 var queryResult = await Legacy.TradeClient.GetListings(item);
                 if (queryResult != null)
                 {
-                    queryResult.PoeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                    var cache = Program.ServiceProvider.GetService(typeof(PoeNinjaCache)) as PoeNinjaCache;
+                    queryResult.PoeNinjaItem = cache.GetItem(item);
+                    queryResult.LastRefreshTimestamp = cache.LastRefreshTimestamp;
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }

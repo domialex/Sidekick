@@ -18,29 +18,26 @@ namespace Sidekick.Business.Apis.PoeNinja
     /// imo it'd be overkill to request their api every time. Also perfomance. 
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
-    public class PoeNinjaCache : IPoeNinjaCache, IOnInit
+    public class PoeNinjaCache : IPoeNinjaCache, IOnBeforeInit
     {
         private readonly PoeNinjaClient _client;
-        private readonly ILogger _logger;
 
-        public static DateTime? LastRefreshTimestamp { get; private set; }
+        public DateTime? LastRefreshTimestamp { get; private set; }
 
-        public static List<PoeNinjaCacheItem<PoeNinjaItem>> Items { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
+        public List<PoeNinjaCacheItem<PoeNinjaItem>> Items { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
 
-        public static List<PoeNinjaCacheItem<PoeNinjaCurrency>> Currencies { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
+        public List<PoeNinjaCacheItem<PoeNinjaCurrency>> Currencies { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
 
-        public static League SelectedLeague { get; set; }
+        public League SelectedLeague { get; set; }
 
-        public static bool IsInitialized => LastRefreshTimestamp.HasValue;
+        public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
-        private static List<PoeNinjaItem> FlatItems => Items.SelectMany(c => c.Items).ToList();
-        private static List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(c => c.Items).ToList();
+        private List<PoeNinjaItem> FlatItems => Items.SelectMany(c => c.Items).ToList();
+        private List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(c => c.Items).ToList();
 
-
-        public PoeNinjaCache(PoeNinjaClient client, ILogger logger)
+        public PoeNinjaCache(PoeNinjaClient client)
         {
             _client = client;
-            _logger = logger;
         }
         public PoeNinjaItem GetItem(Item item)
         {
@@ -87,10 +84,10 @@ namespace Sidekick.Business.Apis.PoeNinja
             }
 
             LastRefreshTimestamp = DateTime.Now;
-            _logger.LogInformation($"poe.ninja cache refreshed for league {SelectedLeague.Id}.");
+            //_logger.LogInformation($"poe.ninja cache refreshed for league {SelectedLeague.Id}.");
         }
 
-        public async Task OnInit()
+        public async Task OnBeforeInit()
         {
             await Refresh();
         }

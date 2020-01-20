@@ -44,9 +44,6 @@ namespace Sidekick
         public static ILeagueService LeagueService { get; private set; }
 
         [Obsolete]
-        public static PoeNinjaCache PoeNinjaCache { get; private set; }
-
-        [Obsolete]
         public static void Initialize()
         {
             InitializeService = Program.ServiceProvider.GetService<IInitializer>();
@@ -58,7 +55,6 @@ namespace Sidekick
             HttpClientProvider = Program.ServiceProvider.GetService<IHttpClientProvider>();
             LeagueService = Program.ServiceProvider.GetService<ILeagueService>();
             UILanguageProvider = Program.ServiceProvider.GetService<IUILanguageProvider>();
-            PoeNinjaCache = Program.ServiceProvider.GetService<PoeNinjaCache>();
         }
     }
 }

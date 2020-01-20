@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Core.Initialization;
 using Sidekick.Helpers;
 using Sidekick.Helpers.Input;
@@ -25,7 +26,6 @@ namespace Sidekick
             if (!instanceResult) return;
             GC.KeepAlive(mutex);
             ProcessHelper.mutex = mutex;
-
             ServiceProvider = Startup.InitializeServices();
 
             Legacy.Initialize();
