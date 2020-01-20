@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Categories.Models
+namespace Sidekick.Business.Apis.Poe.Models
 {
     /// <summary>
     /// Pseudo, Explicit, Implicit, etc.

@@ -1,19 +1,19 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
     public class RequierementFilters
     {
-        [JsonProperty(PropertyName = "lvl")]
+        [JsonPropertyName("lvl")]
         public FilterValue Level { get; set; }
 
-        [JsonProperty(PropertyName = "dex")]
+        [JsonPropertyName("dex")]
         public FilterValue Dexterity { get; set; }
 
-        [JsonProperty(PropertyName = "str")]
+        [JsonPropertyName("str")]
         public FilterValue Strength { get; set; }
 
-        [JsonProperty(PropertyName = "int")]
+        [JsonPropertyName("int")]
         public FilterValue Intelligence { get; set; }
     }
 }

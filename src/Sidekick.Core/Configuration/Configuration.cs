@@ -12,9 +12,13 @@ namespace Sidekick.Core.Configuration
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);
-
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
-            var jsonString = File.ReadAllText(filePath);
+
+            // Backup old settings
+            if (File.Exists(filePath))
+            {
+                File.Copy(filePath, filePath.Replace(".json", "_old.json"), true);
+            }
 
             using (var fileStream = File.Create(filePath))
             {

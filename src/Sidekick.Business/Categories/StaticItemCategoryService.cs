@@ -1,6 +1,5 @@
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Categories.Models;
 using Sidekick.Core.Initialization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace Sidekick.Business.Categories
         public async Task OnInit()
         {
             Categories = null;
-            Categories = await poeApiService.Fetch<StaticItemCategory>(FetchEnum.Static);
+            Categories = await poeApiService.Fetch<StaticItemCategory>();
         }
 
         public Task OnReset()

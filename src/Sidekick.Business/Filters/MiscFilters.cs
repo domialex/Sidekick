@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
@@ -6,16 +6,16 @@ namespace Sidekick.Business.Filters
     {
         public FilterValue Quality { get; set; }
 
-        [JsonProperty(PropertyName = "gem_level")]
+        [JsonPropertyName("gem_level")]
         public FilterValue GemLevel { get; set; }
 
-        [JsonProperty(PropertyName = "ilvl")]
+        [JsonPropertyName("ilvl")]
         public FilterValue ItemLevel { get; set; }
 
-        [JsonProperty(PropertyName = "talisman_art")]
+        [JsonPropertyName("talisman_art")]
         public FilterOption TalismanArt { get; set; }
 
-        [JsonProperty(PropertyName = "alternate_art")]
+        [JsonPropertyName("alternate_art")]
         public FilterOption AlternateArt { get; set; }
 
         public FilterOption Identified { get; set; }
@@ -30,25 +30,25 @@ namespace Sidekick.Business.Filters
 
         public FilterOption Mirrored { get; set; }
 
-        [JsonProperty(PropertyName = "elder_item")]
+        [JsonPropertyName("elder_item")]
         public FilterOption ElderItem { get; set; }
 
-        [JsonProperty(PropertyName = "hunter_item")]
+        [JsonPropertyName("hunter_item")]
         public FilterOption HunterItem { get; set; }
 
-        [JsonProperty(PropertyName = "shaper_item")]
+        [JsonPropertyName("shaper_item")]
         public FilterOption ShaperItem { get; set; }
 
-        [JsonProperty(PropertyName = "warlord_item")]
+        [JsonPropertyName("warlord_item")]
         public FilterOption WarlordItem { get; set; }
 
-        [JsonProperty(PropertyName = "crusader_item")]
+        [JsonPropertyName("crusader_item")]
         public FilterOption CrusaderItem { get; set; }
 
-        [JsonProperty(PropertyName = "redeemer_item")]
+        [JsonPropertyName("redeemer_item")]
         public FilterOption RedeemerItem { get; set; }
 
-        [JsonProperty(PropertyName = "synthesised_item")]
+        [JsonPropertyName("synthesised_item")]
         public FilterOption SynthesisedItem { get; set; }
     }
 }
