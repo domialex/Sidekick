@@ -1,14 +1,16 @@
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Leagues.Models;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Helpers.POENinjaAPI.Models;
+using Sidekick.Core.Initialization;
+using Sidekick.Business.Apis.PoeNinja.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sidekick.Business.Parsers.Models;
 
-namespace Sidekick.Helpers.POENinjaAPI
+namespace Sidekick.Business.Apis.PoeNinja
 {
 
     /// <summary>
@@ -16,7 +18,7 @@ namespace Sidekick.Helpers.POENinjaAPI
     /// imo it'd be overkill to request their api every time. Also perfomance. 
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
-    public class PoeNinjaCache
+    public class PoeNinjaCache : IPoeNinjaCache, IOnInit
     {
         private readonly PoeNinjaClient _client;
         private readonly ILogger _logger;
@@ -40,7 +42,7 @@ namespace Sidekick.Helpers.POENinjaAPI
             _client = client;
             _logger = logger;
         }
-        public PoeNinjaItem GetItem(ItemListing item)
+        public PoeNinjaItem GetItem(Item item)
         {
             // TODO: Ensure cached items are from the currently selected league (league change needs a few sec to update)
             //if(!IsInitialized)
@@ -86,6 +88,11 @@ namespace Sidekick.Helpers.POENinjaAPI
 
             LastRefreshTimestamp = DateTime.Now;
             _logger.LogInformation($"poe.ninja cache refreshed for league {SelectedLeague.Id}.");
+        }
+
+        public async Task OnInit()
+        {
+            await Refresh();
         }
     }
 

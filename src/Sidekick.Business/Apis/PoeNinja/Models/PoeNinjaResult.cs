@@ -1,4 +1,4 @@
-﻿namespace Sidekick.Helpers.POENinjaAPI.Models
+namespace Sidekick.Business.Apis.PoeNinja.Models
 {
     public abstract class PoeNinjaResult
     {

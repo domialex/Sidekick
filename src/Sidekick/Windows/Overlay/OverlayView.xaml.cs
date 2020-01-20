@@ -1,4 +1,5 @@
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Windows.Overlay.UserControls;
@@ -38,7 +39,7 @@ namespace Sidekick.Windows.Overlay
         {
             get { return queryResultValue; }
             set { queryResultValue = value; NotifyPropertyChanged(); }
-        }
+        }            
 
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
@@ -146,7 +147,6 @@ namespace Sidekick.Windows.Overlay
             }
         }
         delegate void AppendQueryResultCallback(QueryResult<ListingResult> queryResult);
-
         public void SetWindowPosition(int x, int y)
         {
             if (!Dispatcher.CheckAccess())

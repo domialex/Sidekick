@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sidekick.Helpers.POENinjaAPI.Models
+namespace Sidekick.Business.Apis.PoeNinja.Models
 {
     public class PoeNinjaCurrency : PoeNinjaResult
     {

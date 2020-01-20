@@ -153,9 +153,9 @@ namespace Sidekick.Helpers.Input
                 OverlayController.Open();
 
                 var queryResult = await Legacy.TradeClient.GetListings(item);
-
                 if (queryResult != null)
                 {
+                    queryResult.PoeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }
