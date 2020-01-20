@@ -1,44 +1,49 @@
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages;
-using Sidekick.Business.Loggers;
+using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
-using Sidekick.Business.Trades;
-using Sidekick.Core.DependencyInjection.Services;
+using Sidekick.Business.Tokenizers;
+using Sidekick.Business.Tokenizers.ItemName;
+using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
-    [SidekickService(typeof(IItemParser))]
     public class ItemParser : IItemParser
     {
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
-        private readonly ITradeClient tradeClient;
+        private readonly IMapService mapService;
+        private readonly ITokenizer itemNameTokenizer;
 
-        public ItemParser(ILanguageProvider languageProvider, ILogger logger, ITradeClient tradeClient)
+        public ItemParser(ILanguageProvider languageProvider,
+            ILogger logger,
+            IEnumerable<ITokenizer> tokenizers,
+            IMapService mapService)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
-            this.tradeClient = tradeClient;
+            this.mapService = mapService;
+            itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
         }
 
         /// <summary>
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public Item ParseItem(string text)
+        public Item ParseItem(string itemText)
         {
             Item item = null;
             bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
 
             try
             {
-                var lines = text.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
+                var lines = itemText.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
                 // Every item should start with Rarity in the first line.
                 if (!lines[0].StartsWith(languageProvider.Language.DescriptionRarity)) throw new Exception("Probably not an item.");
                 // If the item is Unidentified, the second line will be its Type instead of the Name.
@@ -69,8 +74,8 @@ namespace Sidekick.Business.Parsers
                     }
                     else if (rarity == languageProvider.Language.RarityMagic)        // Extract only map name
                     {
-                        item.Name = languageProvider.Language.PrefixBlighted + " " + tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
-                        item.Type = tradeClient.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
+                        item.Name = languageProvider.Language.PrefixBlighted + " " + mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
+                        item.Type = mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
                     else if (rarity == languageProvider.Language.RarityRare)
                     {
@@ -115,7 +120,7 @@ namespace Sidekick.Business.Parsers
                     item = new EquippableItem()
                     {
                         Name = lines[1],
-                        Type = lines[2],
+                        Type = isIdentified ? lines[2] : lines[1],
                         ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
                     };
 
@@ -237,15 +242,47 @@ namespace Sidekick.Business.Parsers
                 {
                     item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
                 }
+
+                if (!string.IsNullOrWhiteSpace(item.Name))
+                    item.Name = ParseName(item.Name);
+
+                if (!string.IsNullOrWhiteSpace(item.Type))
+                    item.Type = ParseName(item.Type);
             }
             catch (Exception e)
             {
-                logger.Log("Could not parse item. " + e.Message);
+                logger.Log("Could not parse item.");
+                logger.LogException(e);
                 return null;
             }
 
             item.IsCorrupted = isCorrupted;
+            item.IsIdentified = isIdentified;
+            item.ItemText = itemText;
             return item;
+        }
+
+        private string ParseName(string name)
+        {
+            var langs = new List<string>();
+            var tokens = itemNameTokenizer.Tokenize(name);
+            var output = "";
+
+            foreach (var token in tokens.Select(x => x as ItemNameToken))
+            {
+                if (token.TokenType == ItemNameTokenType.Set)
+                    langs.Add(token.Match.Match.Groups["LANG"].Value);
+                else if (token.TokenType == ItemNameTokenType.Name)
+                    output += token.Match.Match.Value;
+                else if (token.TokenType == ItemNameTokenType.If)
+                {
+                    var lang = token.Match.Match.Groups["LANG"].Value;
+                    if (langs.Contains(lang))
+                        output += token.Match.Match.Groups["NAME"].Value;
+                }
+            }
+
+            return output;
         }
 
         private string GetNumberFromString(string input)
@@ -307,7 +344,7 @@ namespace Sidekick.Business.Parsers
             }
         }
 
-        internal InfluenceType GetInfluenceType(string input)
+        private InfluenceType GetInfluenceType(string input)
         {
             if (input.Contains(languageProvider.Language.InfluenceShaper))
             {

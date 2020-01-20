@@ -1,97 +1,79 @@
-using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Notifications;
-using Sidekick.Business.Trades;
-using Sidekick.Business.Trades.Models;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sidekick.Helpers
 {
     public static class TrayIcon
     {
-        private static ITradeClient _tradeClient;
-
-        private static NotifyIcon _notifyIcon;
-        private static ToolStripMenuItem _leagueSelectMenu;
+        private static NotifyIcon NotifyIcon;
 
         public static void Initialize()
         {
-            _tradeClient = Program.ServiceProvider.GetService<ITradeClient>();
-
-            _notifyIcon = new NotifyIcon();
+            NotifyIcon = new NotifyIcon();
             var icon = Resources.ExaltedOrb;
-            _notifyIcon.Icon = icon;
-            _notifyIcon.Visible = true;
-            _notifyIcon.Text = "Sidekick";
+            NotifyIcon.Icon = icon;
+            NotifyIcon.Visible = true;
+            NotifyIcon.Text = "Sidekick";
 
             ReloadUI();
 
-            Legacy.NotificationService.TrayNotified += NotificationService_TrayNotified;
-            Legacy.TradeClient.LeaguesChanged += TradeClient_LeaguesChanged;
-            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(ReloadUI);
+            Legacy.UILanguageProvider.UILanguageChanged += ReloadUI;
         }
 
-        private static void ReloadUI()
+        public static Task ReloadUI()
         {
             var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
-            _leagueSelectMenu = new ToolStripMenuItem("League");
-            contextMenu.Items.Add(_leagueSelectMenu);
+
+            // League selection
+            if (Legacy.LeagueService.Leagues != null)
+            {
+                var leagueMenu = new ToolStripMenuItem("League");
+                foreach (var league in Legacy.LeagueService.Leagues)
+                {
+                    var menuItem = new ToolStripMenuItem(league.Id);
+                    menuItem.Checked = league.Id == Legacy.Configuration.LeagueId;
+                    menuItem.Click += (s, e) =>
+                    {
+                        foreach (ToolStripMenuItem x in leagueMenu.DropDownItems)
+                        {
+                            x.Checked = false;
+                        }
+                        menuItem.Checked = true;
+                        Legacy.Configuration.LeagueId = league.Id;
+                        Legacy.Configuration.Save();
+                    };
+                    leagueMenu.DropDownItems.Add(menuItem);
+                }
+                contextMenu.Items.Add(leagueMenu);
+            }
+
+            // Separator
             contextMenu.Items.Add(new ToolStripSeparator());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconSettings, null, (s, e) => SettingsController.Show());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
-            contextMenu.Items.Add(settings.CurrentUILanguageProvider.UILanguage.TrayIconExit, null, (s, e) => Application.Exit());
-            _notifyIcon.ContextMenuStrip = contextMenu;
-        }
 
-        private static void TradeClient_LeaguesChanged(object sender, System.EventArgs e)
-        {
-            PopulateLeagueSelectMenu(Legacy.TradeClient.Leagues);
-        }
+            // Settings button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconSettings, null, (s, e) => SettingsController.Show());
 
-        private static void NotificationService_TrayNotified(object sender, System.EventArgs e)
-        {
-            var notificationEvent = (NotificationEvent)e;
-            SendNotification(notificationEvent.Notification.Text, notificationEvent.Notification.Title);
-        }
+            // Logs button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconShowLogs, null, (s, e) => ApplicationLogsController.Show());
 
-        public static void PopulateLeagueSelectMenu(List<League> leagues)
-        {
-            if (leagues == null)
-            {
-                return;
-            }
+            // Exit button
+            contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconExit, null, (s, e) => Application.Exit());
 
-            if (_leagueSelectMenu.DropDownItems.Count > 0)
-            {
-                // TODO: Fix Cross-thread operation not valid after changing language.
-                _tradeClient.SelectedLeague = leagues.FirstOrDefault();
-                return;
-            }
-
-            foreach (var league in leagues)
-            {
-                var menuItem = new ToolStripMenuItem(league.Id);
-                menuItem.Click += (s, e) => { foreach (ToolStripMenuItem x in _leagueSelectMenu.DropDownItems) { x.Checked = false; } };
-                menuItem.Click += (s, e) => { menuItem.Checked = true; };
-                menuItem.Click += (s, e) => { _tradeClient.SelectedLeague = league; };
-                _leagueSelectMenu.DropDownItems.Add(menuItem);
-            }
-
-            // Select the first league as the default.
-            _leagueSelectMenu.DropDownItems[0].PerformClick();
+            NotifyIcon.ContextMenuStrip = contextMenu;
+            return Task.CompletedTask;
         }
 
         public static void SendNotification(string text, string title = null)
         {
-            _notifyIcon.BalloonTipTitle = GetParsedString(title);
-            _notifyIcon.BalloonTipText = GetParsedString(text);
-            _notifyIcon.ShowBalloonTip(2000);
+            NotifyIcon.BalloonTipTitle = GetParsedString(title);
+            NotifyIcon.BalloonTipText = GetParsedString(text);
+            NotifyIcon.ShowBalloonTip(2000);
         }
 
         private static string GetParsedString(string source)
@@ -119,7 +101,7 @@ namespace Sidekick.Helpers
 
         public static void Dispose()
         {
-            _notifyIcon?.Dispose();
+            NotifyIcon?.Dispose();
         }
     }
 }

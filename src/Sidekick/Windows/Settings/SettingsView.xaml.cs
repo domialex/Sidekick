@@ -1,4 +1,3 @@
-using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.Settings.UserControls;
 using System;
@@ -43,12 +42,12 @@ namespace Sidekick.Windows.Settings
 
         private void SetUIElementsToCurrentLanguage()
         {
-            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabGeneral;
-            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowTabKeybindings;
-            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiSettings;
-            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageSettings;
-            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowWikiDescription;
-            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.UILanguage.SettingsWindowLanguageDescription;
+            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabGeneral;
+            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabKeybindings;
+            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiSettings;
+            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageSettings;
+            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiDescription;
+            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageDescription;
         }
 
         private void SelectWikiSetting()
@@ -77,13 +76,13 @@ namespace Sidekick.Windows.Settings
 
         private void UpdateUILanguageSetting()
         {
-            Settings.CurrentUILanguageProvider.SetUILanguageProvider((UILanguageEnum)comboBoxUILanguages.SelectedItem);
+            Settings.CurrentUILanguageProvider.SetLanguage(Legacy.UILanguageProvider.AvailableLanguages.First(x => x.Name == (string)comboBoxUILanguages.SelectedItem));
         }
 
         private void PopulateUIComboBoxAndSetSelectedLanguage()
         {
-            comboBoxUILanguages.ItemsSource = Enum.GetValues(typeof(UILanguageEnum)).Cast<UILanguageEnum>();
-            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage;
+            comboBoxUILanguages.ItemsSource = Legacy.UILanguageProvider.AvailableLanguages.Select(x => x.Name);
+            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage.Name;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -123,9 +122,9 @@ namespace Sidekick.Windows.Settings
             try
             {
                 //Check if hotkeys are unique
-                if (Settings.KeybindSettings.Values.Where(v => v?.ToString() == control.Hotkey?.ToString()).ToList().Count > 1)
+                if (Settings.KeybindSettings.Values.Count(x => x?.ToString() == control.Hotkey?.ToString()) > 1)
                 {
-                    if (MessageBox.Show("Hotkey already in use!") == MessageBoxResult.OK)
+                    if (MessageBox.Show("This hotkey already in use.") == MessageBoxResult.OK)
                     {
                         control.Hotkey = null;
                     }
@@ -134,7 +133,7 @@ namespace Sidekick.Windows.Settings
             }
             catch (Exception)
             {
-                Legacy.Logger.Log("Could not validate if Hotkey is already in use");
+                Legacy.Logger.Log("Could not validate if Hotkey is already in use.");
                 control.Hotkey = null;
                 throw;
             }

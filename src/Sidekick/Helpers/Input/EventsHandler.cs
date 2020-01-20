@@ -1,3 +1,9 @@
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Prediction;
+using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,15 +11,10 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Business.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Settings;
 using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Helpers.Input
 {
     public static class EventsHandler
     {
@@ -43,11 +44,11 @@ namespace Sidekick.Helpers
 
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
-
             if (!Debugger.IsAttached)
             {
                 _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
             }
+
             // #TODO: Remap all actions to json read local file for allowing user bindings
             var exit = Sequence.FromString("Shift+Z, Shift+Z");
             var assignment = new Dictionary<Sequence, Action>
@@ -66,7 +67,7 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            if (!Legacy.TradeClient.IsReady)
+            if (!Legacy.InitializeService.IsReady)
             {
                 return;
             }
@@ -81,27 +82,25 @@ namespace Sidekick.Helpers
             var settings = SettingsController.GetSettingsInstance();
             var setting = settings.GetKeybindSetting(e.KeyCode, e.Modifiers);
 
-            //if (OverlayController.IsDisplayed && e.KeyCode == Keys.Escape)
             if (OverlayController.IsDisplayed && setting == KeybindSetting.CloseWindow)
             {
                 e.Handled = true;
                 OverlayController.Hide();
             }
-            else if (ProcessHelper.IsPathOfExileInFocus())
+
+
+            if (ProcessHelper.IsPathOfExileInFocus())
             {
-                //if (!OverlayController.IsDisplayed && e.Modifiers == Keys.Control && e.KeyCode == Keys.D)
                 if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemFetch);
                 }
-                //else if (e.Modifiers == Keys.Alt && e.KeyCode == Keys.W)
                 else if (setting == KeybindSetting.ItemWiki)
                 {
                     e.Handled = true;
                     Task.Run(TriggerItemWiki);
                 }
-                //else if (e.Modifiers == Keys.None && e.KeyCode == Keys.F5)
                 else if (setting == KeybindSetting.Hideout)
                 {
                     e.Handled = true;
@@ -125,19 +124,22 @@ namespace Sidekick.Helpers
             }
         }
 
-        private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e)
+        private static void GlobalHookMouseScrollHandler(object sender, MouseEventExtArgs e) => Task.Run(() => GlobalHookMouseScrollTask(e));
+
+        private static void GlobalHookMouseScrollTask(MouseEventExtArgs e)
         {
-            if (!Legacy.TradeClient.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus())
             {
                 return;
             }
 
             // Ctrl + Scroll wheel to move between stash tabs.
-            if ((System.Windows.Input.Keyboard.Modifiers & System.Windows.Input.ModifierKeys.Control) > 0)
+            if (KeyboardState.IsKeyPressed(VirtualKeyStates.VK_CONTROL))
             {
-                e.Handled = true;
-                string key = e.Delta > 0 ? Input.KeyCommands.STASH_LEFT : Input.KeyCommands.STASH_RIGHT;
-                SendKeys.Send(key);
+                e.Handled = true; // Right now this won't have any effect.
+                string key = e.Delta > 0 ? KeyCommands.STASH_LEFT : KeyCommands.STASH_RIGHT;
+
+                SendKeys.SendWait(key);
             }
         }
 
@@ -157,9 +159,11 @@ namespace Sidekick.Helpers
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }
+
+                OverlayController.Hide();
+
             }
 
-            OverlayController.Hide();
         }
 
         /// <summary>
@@ -178,7 +182,7 @@ namespace Sidekick.Helpers
                 return;
             }
 
-            SendKeys.SendWait(Input.KeyCommands.LEAVE_PARTY.Replace("{name}", name));
+            SendKeys.SendWait(KeyCommands.LEAVE_PARTY.Replace("{name}", name));
         }
 
         /// <summary>
@@ -200,7 +204,6 @@ namespace Sidekick.Helpers
                 // if so, we should not restore the clipboard to previous item
                 item = Legacy.ItemParser.ParseItem(clipboardContents);
                 restoreClipboard = item == null && clipboardContents != null;
-                item = null;
             }
 
             // we still need to fetch the item under the cursor if any and make sure we don't use old contents
@@ -212,7 +215,7 @@ namespace Sidekick.Helpers
                 string searchText = item.Name;
                 ClipboardHelper.SetText(searchText);
 
-                SendKeys.SendWait(Input.KeyCommands.FIND_ITEMS);
+                SendKeys.SendWait(KeyCommands.FIND_ITEMS);
             }
 
             Thread.Sleep(250);
@@ -242,7 +245,7 @@ namespace Sidekick.Helpers
         {
             Legacy.Logger.Log("Hotkey for Hideout triggered.");
 
-            SendKeys.SendWait(Input.KeyCommands.HIDEOUT);
+            SendKeys.SendWait(KeyCommands.HIDEOUT);
         }
 
         public static async void TriggerOpenSearch()
@@ -263,18 +266,20 @@ namespace Sidekick.Helpers
 
         private static async Task<Business.Parsers.Models.Item> TriggerCopyAction()
         {
-            SendKeys.SendWait(Input.KeyCommands.COPY);
+            SendKeys.SendWait(KeyCommands.COPY);
             Thread.Sleep(100);
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
 
-            // Detect the language of the item in the clipboard.
-            var setLanguageSuccess = await Legacy.LanguageProvider.FindAndSetLanguageProvider(itemText);
-            if (!setLanguageSuccess)
+            if (string.IsNullOrWhiteSpace(itemText))
             {
+                Legacy.Logger.Log("No item detected in the clipboard.");
                 return null;
             }
+
+            // Detect the language of the item in the clipboard.
+            await Legacy.LanguageProvider.FindAndSetLanguage(itemText);
 
             // Parse and return item
             return Legacy.ItemParser.ParseItem(itemText);

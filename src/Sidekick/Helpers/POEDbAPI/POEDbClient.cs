@@ -1,5 +1,4 @@
-using Sidekick.Business.Languages;
-using Sidekick.Business.Loggers;
+using Sidekick.Core.Loggers;
 using System;
 using System.Diagnostics;
 
@@ -19,12 +18,7 @@ namespace Sidekick.Helpers.POEDbAPI
                 return;
             }
 
-            if (Legacy.LanguageProvider.Current != LanguageEnum.English)        // Only English for now
-            {
-                return;
-            }
-
-            if (item.Rarity == Legacy.LanguageProvider.Language.RarityRare || item.Rarity == Legacy.LanguageProvider.Language.RarityMagic)
+            if (Legacy.LanguageProvider.Current.Name != Legacy.LanguageProvider.DefaultLanguage)        // Only English for now
             {
                 return;
             }
@@ -36,7 +30,7 @@ namespace Sidekick.Helpers.POEDbAPI
             }
 
             var url = CreateUri(item).ToString();
-            Legacy.Logger.Log(string.Format("Opening in browser: {0}", url));
+            Legacy.Logger.Log($"Opening in browser: {url}");
             Process.Start(url);
         }
 
@@ -57,7 +51,8 @@ namespace Sidekick.Helpers.POEDbAPI
                 subUrl = SubUrlItem;
             }
 
-            string wikiLink = subUrl + item.Name.Replace(" ", "+");
+            var searchLink = item.Rarity == Legacy.LanguageProvider.Language.RarityUnique ? item.Name : item.Type;
+            string wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri, wikiLink);
         }
     }

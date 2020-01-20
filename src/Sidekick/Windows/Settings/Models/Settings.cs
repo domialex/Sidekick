@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Sidekick.Business.Languages;
+using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
 using Sidekick.Helpers.POEDbAPI;
@@ -17,7 +17,7 @@ namespace Sidekick.Windows.Settings.Models
         public WikiSetting CurrentWikiSettings { get; set; }
         [JsonIgnore]
         public IUILanguageProvider CurrentUILanguageProvider { get; set; } = Legacy.UILanguageProvider;
-        public UILanguageEnum CurrentUILanguage { get { return CurrentUILanguageProvider.Current; } set { CurrentUILanguageProvider.SetUILanguageProvider(value); } }
+        public UILanguageAttribute CurrentUILanguage { get { return CurrentUILanguageProvider.Current; } set { CurrentUILanguageProvider.SetLanguage(value); } }
 
         public KeybindSetting GetKeybindSetting(Keys key, Keys modifier)
         {
@@ -42,34 +42,6 @@ namespace Sidekick.Windows.Settings.Models
 
             return null;
         }
-
-        //Takes a winforms hotkey and returns the keybind setting
-        //public Setting GetKeybindSetting(int winformsKey, int winformsModifier)
-        //{
-        //    Key key = KeyInterop.KeyFromVirtualKey(winformsKey);
-        //    ModifierKeys modifiers = ModifierFromVirtualKey(winformsModifier);
-
-        //    var value = KeybindSettings.Values.FirstOrDefault(x => x?.Key == key && x?.Modifiers == modifiers);
-        //    if(value != null)
-        //    {
-        //        return KeybindSettings.TryGetKey(value, out Setting setting) ? setting : Setting.None;
-        //    }
-        //    return Setting.None;
-        //}
-
-        //private ModifierKeys ModifierFromVirtualKey(int winformsModifier)
-        //{
-        //    switch (winformsModifier)
-        //    {
-        //        case (int)System.Windows.Forms.Keys.Control: return ModifierKeys.Control;
-        //        case (int)System.Windows.Forms.Keys.Shift: return ModifierKeys.Shift;
-        //        case (int)System.Windows.Forms.Keys.Alt: return ModifierKeys.Alt;
-        //        case (int)(System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift): return ModifierKeys.Alt | ModifierKeys.Shift;
-        //        case (int)(System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Control): return ModifierKeys.Alt | ModifierKeys.Control;
-        //        case (int)(System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Control): return ModifierKeys.Shift | ModifierKeys.Control;
-        //        default: return ModifierKeys.None;
-        //    }
-        //}
 
         public void Clear()
         {

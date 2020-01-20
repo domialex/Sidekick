@@ -1,4 +1,6 @@
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Helpers.POEPriceInfoAPI;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 using Sidekick.Windows.Settings;
@@ -8,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Sidekick.Windows.Overlay
@@ -46,19 +49,20 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
-            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged.Add(UpdateUIText);
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateUIText;
             UpdateUIText();
             Hide();
         }
 
-        private void UpdateUIText()
+        private Task UpdateUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
-            textBoxAccountName.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAccountName;
-            textBoxAge.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayAge;
-            textBoxCharacter.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayCharacter;
-            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayItemLevel;
-            textBoxPrice.Text = settings.CurrentUILanguageProvider.UILanguage.OverlayPrice;
+            textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
+            textBoxAge.Text = settings.CurrentUILanguageProvider.Language.OverlayAge;
+            textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
+            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
+            textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
+            return Task.CompletedTask;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -86,9 +90,29 @@ namespace Sidekick.Windows.Overlay
                 this.itemListingControls?.Clear();
 
                 queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(i => this.itemListingControls?.Add(i));
+
+                // Hardcoded to the English value of Rare since poeprices.info only support English.
+                if (queryResult.Item.Rarity == "Rare" && queryResult.Item.IsIdentified)
+                {
+                    Task.Run(() => GetPricePrediction(queryResult.Item.ItemText));
+                }
             }
         }
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
+
+        private async void GetPricePrediction(string itemText)
+        {
+            var predictionResult = await PriceInfoClient.GetItemPricePrediction(itemText);
+            if (predictionResult.ErrorCode != 0)
+            {
+                return;
+            }
+
+            Dispatcher.Invoke(() =>
+            {
+                txtPrediction.Text = $"{predictionResult.Min?.ToString("F")}-{predictionResult.Max?.ToString("F")} {predictionResult.Currency}";
+            });
+        }
 
         public void AppendQueryResult(QueryResult<ListingResult> queryToAppend)
         {
@@ -160,6 +184,7 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
+                this.txtPrediction.Text = null;
                 this.queryResult = null;
                 this.itemListingControls = new ObservableCollection<ListItem>();
                 NotifyPropertyChanged("itemListingControls");

@@ -1,16 +1,26 @@
-using Sidekick.Core.DependencyInjection.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System.Net.Http;
 
 namespace Sidekick.Business.Http
 {
-    [SidekickService(typeof(IHttpClientProvider))]
     public class HttpClientProvider : IHttpClientProvider
     {
-        public HttpClientProvider()
+        private readonly IHttpClientFactory httpClientFactory;
+
+        public HttpClientProvider(IHttpClientFactory httpClientFactory)
         {
-            HttpClient = new HttpClient();
+            this.httpClientFactory = httpClientFactory;
+
+            JsonSerializerSettings = new JsonSerializerSettings();
+            JsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
+            JsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
 
-        public HttpClient HttpClient { get; private set; }
+        public JsonSerializerSettings JsonSerializerSettings { get; private set; }
+
+        public HttpClient HttpClient => httpClientFactory.CreateClient();
     }
 }

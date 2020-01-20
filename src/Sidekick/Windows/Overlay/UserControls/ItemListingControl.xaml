@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Sidekick.Windows.Overlay.UserControls.ItemListingControl"
+<UserControl x:Class="Sidekick.Windows.Overlay.UserControls.ItemListingControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -35,7 +35,7 @@
             <ColumnDefinition Width="40*" />
             <ColumnDefinition Width="80*" />
         </Grid.ColumnDefinitions>
-
+            
         <TextBox Grid.Column="0" Name="accountNameTextbox" Text="AccountName" />
         <TextBox Grid.Column="1" Name="characterNameTextbox" Text="CharacterName" />
         <TextBox Grid.Column="2" Name="priceTextbox" Text="Price" VerticalAlignment="Center" />
