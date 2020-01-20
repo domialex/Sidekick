@@ -1,28 +1,28 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
     public class MapFilters
     {
-        [JsonProperty(PropertyName = "map_iiq")]
+        [JsonPropertyName("map_iiq")]
         public FilterValue MapIiq { get; set; }
 
-        [JsonProperty(PropertyName = "map_iir")]
+        [JsonPropertyName("map_iir")]
         public FilterValue MapIir { get; set; }
 
-        [JsonProperty(PropertyName = "map_tier")]
+        [JsonPropertyName("map_tier")]
         public FilterValue MapTier { get; set; }
 
-        [JsonProperty(PropertyName = "map_packsize")]
+        [JsonPropertyName("map_packsize")]
         public FilterValue MapPacksize { get; set; }
 
-        [JsonProperty(PropertyName = "map_blighted")]
+        [JsonPropertyName("map_blighted")]
         public FilterOption Blighted { get; set; }
 
-        [JsonProperty(PropertyName = "map_elder")]
+        [JsonPropertyName("map_elder")]
         public FilterOption Elder { get; set; }
 
-        [JsonProperty(PropertyName = "map_shaped")]
+        [JsonPropertyName("map_shaped")]
         public FilterOption Shaped { get; set; }
     }
 }

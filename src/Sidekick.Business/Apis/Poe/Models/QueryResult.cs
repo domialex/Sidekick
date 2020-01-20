@@ -1,4 +1,3 @@
-using Sidekick.Business.Parsers.Models;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         public int Total { get; set; }
 
-        public Item Item { get; set; }
+        public Parsers.Models.Item Item { get; set; }
 
         public Uri Uri { get; set; }
     }

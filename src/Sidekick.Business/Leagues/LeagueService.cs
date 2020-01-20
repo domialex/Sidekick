@@ -1,6 +1,5 @@
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Leagues.Models;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace Sidekick.Business.Leagues
         public async Task OnInit()
         {
             Leagues = null;
-            Leagues = await poeApiService.Fetch<League>(FetchEnum.Leagues);
+            Leagues = await poeApiService.Fetch<League>();
 
             if (string.IsNullOrEmpty(configuration.LeagueId))
             {
