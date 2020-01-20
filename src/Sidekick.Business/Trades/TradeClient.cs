@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sidekick.Business.Trades
@@ -24,21 +25,24 @@ namespace Sidekick.Business.Trades
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IStaticItemCategoryService staticItemCategoryService;
         private readonly Configuration configuration;
+        private readonly IPoeApiService poeApiService;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticItemCategoryService staticItemCategoryService,
-            Configuration configuration)
+            Configuration configuration,
+            IPoeApiService poeApiService)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
             this.staticItemCategoryService = staticItemCategoryService;
             this.configuration = configuration;
+            this.poeApiService = poeApiService;
         }
 
-        public async Task<QueryResult<string>> Query(Parsers.Models.Item item)
+        private async Task<QueryResult<string>> Query(Parsers.Models.Item item)
         {
             logger.Log("Querying Trade API.");
             QueryResult<string> result = null;
@@ -47,34 +51,42 @@ namespace Sidekick.Business.Trades
             {
                 // TODO: More complex logic for determining bulk vs regular search
                 // Maybe also add Fragments to bulk search
-                var isBulk = (item.GetType() == typeof(CurrencyItem) || item.GetType() == typeof(DivinationCardItem));
-
-                StringContent body;
-
-                if (isBulk)
+                string path = "";
+                string json = "";
+                string baseUri = null;
+                if (item is CurrencyItem || item is DivinationCardItem)
                 {
-                    var bulkQueryRequest = new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService);
-                    body = new StringContent(JsonConvert.SerializeObject(bulkQueryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
+                    path = $"exchange/{configuration.LeagueId}";
+                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService), poeApiService.Options);
+                    baseUri = languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId;
                 }
                 else
                 {
-                    var queryRequest = new QueryRequest(item, languageProvider.Language);
-                    body = new StringContent(JsonConvert.SerializeObject(queryRequest, httpClientProvider.JsonSerializerSettings), Encoding.UTF8, "application/json");
+                    path = $"search/{configuration.LeagueId}";
+                    json = JsonSerializer.Serialize(new QueryRequest(item, languageProvider.Language), poeApiService.Options);
+                    baseUri = languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId;
                 }
 
-                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + $"{(isBulk ? "exchange" : "search")}/" + configuration.LeagueId, body);
+                var body = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + path, body);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<QueryResult<string>>(content);
+                    var test = await response.Content.ReadAsStringAsync();
+                    var content = await response.Content.ReadAsStreamAsync();
+                    result = await JsonSerializer.DeserializeAsync<QueryResult<string>>(content, poeApiService.Options);
 
-                    var baseUri = isBulk ? languageProvider.Language.PoeTradeExchangeBaseUrl : languageProvider.Language.PoeTradeSearchBaseUrl;
-                    result.Uri = new Uri(baseUri + configuration.LeagueId + "/" + result.Id);
+                    result.Uri = new Uri($"{baseUri}/{result.Id}");
+                }
+                else
+                {
+                    logger.Log("Querying failed.");
                 }
             }
-            catch
+            catch (Exception e)
             {
+                logger.Log("Querying error.");
+                logger.LogException(e);
                 return null;
             }
 
@@ -134,15 +146,17 @@ namespace Sidekick.Business.Trades
                 var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<QueryResult<ListingResult>>(content);
+                    var content = await response.Content.ReadAsStreamAsync();
+                    result = await JsonSerializer.DeserializeAsync<QueryResult<ListingResult>>(content, new JsonSerializerOptions()
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    });
                 }
             }
             catch
             {
                 return null;
             }
-
 
             return result;
         }

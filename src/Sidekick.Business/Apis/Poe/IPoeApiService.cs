@@ -1,5 +1,5 @@
-using Sidekick.Business.Apis.Poe.Models;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.Poe
@@ -8,6 +8,6 @@ namespace Sidekick.Business.Apis.Poe
     {
         Task<List<TReturn>> Fetch<TReturn>();
 
-        Task<QueryResult<TReturn>> Query<TReturn>(QueryEnum type, object data);
+        JsonSerializerOptions Options { get; }
     }
 }

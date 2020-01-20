@@ -24,7 +24,7 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.HttpClientProvider.JsonSerializerSettings);
+                    var priceInfo = JsonConvert.DeserializeObject<PriceInfo>(result, Legacy.JsonSerializerSettings);
                     priceInfo.ItemText = itemText;
                     return priceInfo;
                 }

@@ -1,28 +1,28 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
     public class Filters
     {
-        [JsonProperty(PropertyName = "misc_filters")]
+        [JsonPropertyName("misc_filters")]
         public MiscFilter MiscFilters { get; set; } = new MiscFilter();
 
-        [JsonProperty(PropertyName = "weapon_filters")]
+        [JsonPropertyName("weapon_filters")]
         public WeaponFilter WeaponFilters { get; set; } = new WeaponFilter();
 
-        [JsonProperty(PropertyName = "armour_filters")]
+        [JsonPropertyName("armour_filters")]
         public ArmorFilter ArmourFilter { get; set; } = new ArmorFilter();
 
-        [JsonProperty(PropertyName = "socket_filters")]
+        [JsonPropertyName("socket_filters")]
         public SocketFilter SocketFilter { get; set; } = new SocketFilter();
 
-        [JsonProperty(PropertyName = "req_filters")]
+        [JsonPropertyName("req_filters")]
         public RequierementFilter RequierementFilter { get; set; } = new RequierementFilter();
 
-        [JsonProperty(PropertyName = "type_filters")]
+        [JsonPropertyName("type_filters")]
         public TypeFilter TypeFilter { get; set; } = new TypeFilter();
 
-        [JsonProperty(PropertyName = "map_filters")]
+        [JsonPropertyName("map_filters")]
         public MapFilter MapFilter { get; set; } = new MapFilter();
     }
 }
