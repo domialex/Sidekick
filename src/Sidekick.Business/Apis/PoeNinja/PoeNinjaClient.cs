@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -41,9 +42,9 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             var url = $"{POE_NINJA_ITEMOVERVIEW_BASE_URL}?league={league}&type={itemType}";
 
-            var responseString = await PerformRequestAndValidateResponse(url);
+            var responseStream = await PerformRequestAndValidateResponse(url);
 
-            return JsonSerializer.Deserialize<PoeNinjaQueryResult<PoeNinjaItem>>(responseString, Options);
+            return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, Options);
         }
 
         public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency)
@@ -51,27 +52,27 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             var url = $"{POE_NINJA_CURRENCYOVERVIEW_BASE_URL}?league={league}&type={currency}";
 
-            var responseString = await PerformRequestAndValidateResponse(url);
+            var responseStream = await PerformRequestAndValidateResponse(url);
 
-            return JsonSerializer.Deserialize<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseString, Options);
+            return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseStream, Options);
         }
 
-        private async Task<string> PerformRequestAndValidateResponse(string url)
+        private async Task<Stream> PerformRequestAndValidateResponse(string url)
         {
             var response = await _client.GetAsync(url);
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseStream = await response.Content.ReadAsStreamAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"poe.ninja returned an error for {url}: [{response.StatusCode}] {responseString}");
+                throw new Exception($"poe.ninja returned an error for {url}: [{response.StatusCode}] {responseStream}");
             }
 
-            if (String.IsNullOrEmpty(responseString))
+            if (responseStream == null)
             {
                 throw new Exception("poe.ninja returned an empty result. Check the provided league.");
             }
 
-            return responseString;
+            return responseStream;
         }
     }
 }
