@@ -46,9 +46,6 @@ namespace Sidekick
         public static ILeagueService LeagueService { get; private set; }
 
         [Obsolete]
-        public static JsonSerializerSettings JsonSerializerSettings { get; private set; }
-
-        [Obsolete]
         public static void Initialize()
         {
             InitializeService = Program.ServiceProvider.GetService<IInitializer>();
@@ -60,11 +57,6 @@ namespace Sidekick
             HttpClientProvider = Program.ServiceProvider.GetService<IHttpClientProvider>();
             LeagueService = Program.ServiceProvider.GetService<ILeagueService>();
             UILanguageProvider = Program.ServiceProvider.GetService<IUILanguageProvider>();
-
-            JsonSerializerSettings = new JsonSerializerSettings();
-            JsonSerializerSettings.Converters.Add(new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() });
-            JsonSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            JsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
     }
 }
