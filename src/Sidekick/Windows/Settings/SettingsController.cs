@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
-using Sidekick.Core.Loggers;
-using Sidekick.Core.Settings;
 using System;
 using System.IO;
 using System.Windows.Forms.Integration;
+using Newtonsoft.Json;
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using WindowsHook;
 
 namespace Sidekick.Windows.Settings
@@ -56,6 +56,7 @@ namespace Sidekick.Windows.Settings
 
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
+                settings.GeneralSettings.Add(GeneralSetting.RetainClipboard, "True");
                 settings.CurrentWikiSettings = WikiSetting.PoeWiki;
 
                 // #TODO: Add more default settings
