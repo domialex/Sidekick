@@ -4,55 +4,23 @@ using System.Reflection;
 using System.Text.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
+using Sidekick.Core.Update.Github_API;
+using System.Linq;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Core.Update
 {
-    /* Implement in Program.cs
-    var updateManager = new UpdateManager();
-    if (updateManager.CheckUpdate())
+    public class UpdateManager : IUpdateManager
     {
-        if(MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButtons.YesNo) == DialogResult.Yes)
-        {
-            if (updateManager.UpdateSidekick())
-            {
-                ProcessHelper.mutex = null;
-                updateManager.Restart();
-            }
-            else
-            {
-                MessageBox.Show("Update failed!");                       
-            }
-            return;
-        }              
-    }
-    */
-
-    public class UpdateManager
-    {
-        #region Github API
-        public class GithubRelease
-        {
-            public string Name { get; set; }
-            public Asset[] Assets { get; set; }
-        }
-
-        public class Asset
-        {
-            public string Url { get; set; }
-            public string Name { get; set; }
-            [JsonPropertyName("browser_download_url")]
-            public string DownloadUrl { get; set; }
-        }
-        #endregion
-
         private readonly string INSTALL_DIR;
         private readonly string TMP_DIR;
         private readonly string ZIP_PATH;
-        
+
+        private GithubRelease _latestRelease;
+
         public UpdateManager()
         {
             INSTALL_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -64,20 +32,33 @@ namespace Sidekick.Helpers
         /// Checks if there is a newer release available on github
         /// </summary>
         /// <returns></returns>
-        public bool CheckUpdate()
+        public async Task<bool> NewVersionAvailable()
         {
-            // TODO
-            return true;
+#if DEBUG
+            return await Task.Run(() => { return false; });
+#else
+            _latestRelease = await GetLatestRelease();
+            if (_latestRelease != null)
+            {
+                var latestVersion = new Version(Regex.Match(_latestRelease.Tag, @"(\d+\.){2}\d+").ToString());
+                var currentVersion = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).GetName().Version;
+
+                var result = currentVersion.CompareTo(latestVersion);
+                return result < 0 ? true : false;
+            }
+                        
+            return false;
+#endif
+
         }
 
         /// <summary>
         /// Trys to update sidekick
         /// </summary>
         /// <returns></returns>
-        public bool UpdateSidekick()
+        public async Task<bool> UpdateSidekick()
         {
-            //TODO: ProgressBar
-            if (Task.Run(() => DownloadNewestRelease()).Result)
+            if (await DownloadNewestRelease())
             {
                 if (BackupFiles())
                 {
@@ -88,6 +69,48 @@ namespace Sidekick.Helpers
 
             RollbackUpdate();
             return false;
+        }
+
+        /// <summary>
+        /// Determines latest release on github. Pre-releases do not count as release, therefore we need to get the list of releases first, if no actual latest release can be found
+        /// </summary>
+        /// <returns></returns>
+        private async Task<GithubRelease> GetLatestRelease()
+        {
+            GithubRelease latestRelease = null;
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.BaseAddress = new Uri("https://api.github.com");
+                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var jsonOptions = new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true };
+
+                    var response = await httpClient.GetAsync("/repos/domialex/Sidekick/releases/latest");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        latestRelease = await JsonSerializer.DeserializeAsync<GithubRelease>(await response.Content.ReadAsStreamAsync(), jsonOptions);
+                    }
+                    else
+                    {
+                        //Get List of releases if there is no correct latest release ( should only happen if there are only pre-releases)
+                        var listResponse = await httpClient.GetAsync("/repos/domialex/Sidekick/releases");
+                        if (listResponse.IsSuccessStatusCode)
+                        {
+                            var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), jsonOptions);
+                            latestRelease = githubReleaseList[0];
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return latestRelease;
         }
 
         /// <summary>
@@ -125,30 +148,10 @@ namespace Sidekick.Helpers
                 httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await httpClient.GetAsync("/repos/domialex/Sidekick/releases/latest");
-                GithubRelease githubRelease = null;
-
-                var jsonOptions = new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true };
-
-                if (response.IsSuccessStatusCode)
-                {
-                    githubRelease = await JsonSerializer.DeserializeAsync<GithubRelease>(await response.Content.ReadAsStreamAsync(), jsonOptions);
-                }
-                else
-                {
-                    //Get List of releases if there is no correct latest release ( should only happen if there are only pre-releases)
-                    var listResponse = await httpClient.GetAsync("/repos/domialex/Sidekick/releases");
-                    if (listResponse.IsSuccessStatusCode)
-                    {
-                        var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), jsonOptions);
-                        githubRelease = githubReleaseList[0];
-                    }                   
-                }
-
-                if (githubRelease != null)
+                if (_latestRelease != null)
                 {
                     //download zip file and save to disk
-                    using (Stream contentStream = await (await httpClient.GetAsync(githubRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
+                    using (Stream contentStream = await (await httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         await contentStream.CopyToAsync(stream);
                     }
@@ -177,7 +180,8 @@ namespace Sidekick.Helpers
 
                 foreach (var file in Directory.EnumerateFiles(INSTALL_DIR))
                 {
-                    if(!file.EndsWith(".zip"))
+                    //keep settings and already downloaded file 
+                    if(!file.EndsWith(".zip") && !file.EndsWith(".json"))
                     {
                         var fileName = Path.GetFileName(file);
                         File.Move(file, Path.Combine(TMP_DIR, fileName));

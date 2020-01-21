@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Update;
 using System.IO;
 
 namespace Sidekick.Core
@@ -33,7 +34,7 @@ namespace Sidekick.Core
         {
             services.AddSingleton<IInitializer, Initializer>();
             services.AddInitializableService<ILogger, Logger>();
-
+            services.AddSingleton<IUpdateManager, UpdateManager>();
             return services;
         }
 

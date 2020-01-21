@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Update;
 using Sidekick.Helpers;
 using Sidekick.Helpers.Input;
 using Sidekick.Helpers.NativeMethods;
@@ -8,10 +9,11 @@ using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sidekick
-{
+{   
     class Program
     {
         public static ServiceProvider ServiceProvider;
@@ -26,8 +28,27 @@ namespace Sidekick
             if (!instanceResult) return;
             GC.KeepAlive(mutex);
             ProcessHelper.mutex = mutex;
+
             ServiceProvider = Startup.InitializeServices();
 
+            var updateManagerService = ServiceProvider.GetService<IUpdateManager>();
+            if (Task.Run(() => updateManagerService.NewVersionAvailable()).Result)
+            {
+                if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (Task.Run(() => updateManagerService.UpdateSidekick()).Result)
+                    {
+                        ProcessHelper.mutex = null;
+                        MessageBox.Show("Update finished! Restarting Sidekick!", "AutoUpdater", MessageBoxButtons.OK);
+                        updateManagerService.Restart();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Update failed!");
+                    }
+                    return;
+                }
+            }
             Legacy.Initialize();
             TrayIcon.Initialize();
 
