@@ -11,6 +11,26 @@ using System.Diagnostics;
 
 namespace Sidekick.Helpers
 {
+    /* Implement in Program.cs
+    var updateManager = new UpdateManager();
+    if (updateManager.CheckUpdate())
+    {
+        if(MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButtons.YesNo) == DialogResult.Yes)
+        {
+            if (updateManager.UpdateSidekick())
+            {
+                ProcessHelper.mutex = null;
+                updateManager.Restart();
+            }
+            else
+            {
+                MessageBox.Show("Update failed!");                       
+            }
+            return;
+        }              
+    }
+    */
+
     public class UpdateManager
     {
         #region Github API
