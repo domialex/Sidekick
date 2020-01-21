@@ -1,9 +1,3 @@
-using Sidekick.Core.Loggers;
-using Sidekick.Core.Settings;
-using Sidekick.Helpers.NativeMethods;
-using Sidekick.Windows.Overlay;
-using Sidekick.Windows.Prediction;
-using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +5,11 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Helpers.NativeMethods;
+using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Settings;
 using WindowsHook;
 using KeyEventArgs = WindowsHook.KeyEventArgs;
 
@@ -153,9 +152,14 @@ namespace Sidekick.Helpers.Input
                 OverlayController.Open();
 
                 var queryResult = await Legacy.TradeClient.GetListings(item);
-
                 if (queryResult != null)
                 {
+                    var poeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                    if (poeNinjaItem != null)
+                    {
+                        queryResult.PoeNinjaItem = poeNinjaItem;
+                        queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
+                    }
                     OverlayController.SetQueryResult(queryResult);
                     return;
                 }
@@ -266,11 +270,21 @@ namespace Sidekick.Helpers.Input
 
         private static async Task<Business.Parsers.Models.Item> TriggerCopyAction()
         {
+            bool retain = bool.Parse(SettingsController.GetSettingsInstance()?.GeneralSettings[GeneralSetting.RetainClipboard] ?? "false");
+            var clipboardText = string.Empty;
+            if (retain)
+                clipboardText = ClipboardHelper.GetText();
+
+            ClipboardHelper.SetDataObject(string.Empty);
+
             SendKeys.SendWait(KeyCommands.COPY);
             Thread.Sleep(100);
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
+
+            if (retain)
+                ClipboardHelper.SetDataObject(clipboardText);
 
             if (string.IsNullOrWhiteSpace(itemText))
             {

@@ -12,7 +12,8 @@ namespace Sidekick
               .AddSidekickConfiguration()
               .AddSidekickCoreServices()
               .AddSidekickBusinessServices()
-              .AddSidekickServices();
+              .AddSidekickServices()
+              .AddPoeNinja();
 
             return services.BuildServiceProvider();
         }
