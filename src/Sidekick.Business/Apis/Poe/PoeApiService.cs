@@ -28,8 +28,6 @@ namespace Sidekick.Business.Apis.Poe
 
         public Task OnBeforeInit()
         {
-            client.BaseAddress = languageProvider.Language.PoeTradeApiBaseUrl;
-
             return Task.CompletedTask;
         }
 
@@ -49,25 +47,25 @@ namespace Sidekick.Business.Apis.Poe
 
         public async Task<List<TReturn>> Fetch<TReturn>()
         {
-            string path = string.Empty;
+            string path;
             string name = string.Empty;
             switch (typeof(TReturn).Name)
             {
                 case nameof(ItemCategory):
                     name = "items";
-                    path += "data/items/";
+                    path = "data/items/";
                     break;
                 case nameof(League):
                     name = "leagues";
-                    path += "data/leagues/";
+                    path = "data/leagues/";
                     break;
                 case nameof(StaticItemCategory):
                     name = "static items";
-                    path += "data/static/";
+                    path = "data/static/";
                     break;
                 case nameof(AttributeCategory):
                     name = "attributes";
-                    path += "data/stats/";
+                    path = "data/stats/";
                     break;
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
@@ -80,7 +78,7 @@ namespace Sidekick.Business.Apis.Poe
             {
                 try
                 {
-                    var response = await client.GetAsync(path);
+                    var response = await client.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + path);
                     var content = await response.Content.ReadAsStreamAsync();
 
                     result = await JsonSerializer.DeserializeAsync<QueryResult<TReturn>>(content, Options);
