@@ -51,7 +51,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         /// Refreshes the cache with the specified league.
         /// </summary>
         /// <param name="league">The league.</param>
-        public async Task Refresh()
+        public async Task OnAfterInit()
         {
             Items = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
             foreach (var itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>())
@@ -87,17 +87,5 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             LastRefreshTimestamp = DateTime.Now;
         }
-
-        public async Task OnAfterInit()
-        {
-            await Refresh();
-        }
-    }
-
-    public class PoeNinjaCacheItem<T> where T : PoeNinjaResult
-    {
-        public string Type { get; set; }
-
-        public List<T> Items { get; set; }
     }
 }

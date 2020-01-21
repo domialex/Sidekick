@@ -53,18 +53,4 @@ namespace Sidekick.Business.Apis.PoeNinja.Models
 
         public string DetailsId { get; set; }
     }
-
-    public class Modifier
-    {
-        public string Text { get; set; }
-
-        public bool Optional { get; set; }
-    }
-
-    public class SparkLine
-    {
-        public double TotalChange { get; set; }
-
-        public List<double?> Data { get; set; }
-    }
 }
