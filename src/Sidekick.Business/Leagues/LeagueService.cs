@@ -10,20 +10,20 @@ namespace Sidekick.Business.Leagues
 {
     public class LeagueService : ILeagueService, IOnInit, IOnReset
     {
-        private readonly IPoeApiService poeApiService;
+        private readonly IPoeApiClient poeApiClient;
         private readonly Configuration configuration;
 
-        public LeagueService(IPoeApiService poeApiService,
+        public LeagueService(IPoeApiClient poeApiClient,
             Configuration configuration)
         {
-            this.poeApiService = poeApiService;
+            this.poeApiClient = poeApiClient;
             this.configuration = configuration;
         }
 
         public async Task OnInit()
         {
             Leagues = null;
-            Leagues = await poeApiService.Fetch<League>();
+            Leagues = await poeApiClient.Fetch<League>();
 
             if (string.IsNullOrEmpty(configuration.LeagueId))
             {

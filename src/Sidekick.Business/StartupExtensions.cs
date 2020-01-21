@@ -28,7 +28,7 @@ namespace Sidekick.Business
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
-            services.AddInitializableService<IPoeApiService, PoeApiService>();
+            services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
             services.AddInitializableService<IItemCategoryService, ItemCategoryService>();
             services.AddInitializableService<ILeagueService, LeagueService>();
