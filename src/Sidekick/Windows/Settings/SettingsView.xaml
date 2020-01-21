@@ -50,7 +50,7 @@
                     <GroupBox x:Name="groupBoxLanguageSettings" Header="LanguageSettings" Grid.Row="0" Grid.Column="1" Margin="1">
                         <Label x:Name="labelLanguageDescription" Content="Choose Sidekick's UI Language" HorizontalAlignment="Left" Margin="20,13,0,0" VerticalAlignment="Top" Width="187" Foreground="{DynamicResource LightColor}" FontSize="11"/>
                     </GroupBox>
-                    <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0" Margin="1">
+                    <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0" Margin="1,1,1,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -71,6 +71,7 @@
                                     <ContextMenu Visibility="Collapsed"/>
                                 </TextBox.ContextMenu>
                             </TextBox>
+                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)RetainClipboard]}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1" Margin="1"></GroupBox>
