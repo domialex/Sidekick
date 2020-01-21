@@ -134,6 +134,7 @@ namespace Sidekick.Windows.Overlay
                 newQueryResult.Item = this.queryResult.Item;
                 newQueryResult.Total = queryToAppend.Total;
                 newQueryResult.Uri = this.queryResult.Uri;
+                newQueryResult.PoeNinjaItem = this.queryResult.PoeNinjaItem;
 
                 var newResults = new List<ListingResult>();
                 newResults.AddRange(this.queryResult.Result);

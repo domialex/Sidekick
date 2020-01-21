@@ -1,21 +1,18 @@
-using Microsoft.Extensions.Logging;
-using Sidekick.Business.Trades.Results;
-using Sidekick.Core.Initialization;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Configuration;
+using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
 
     /// <summary>
-    /// poe.ninja cache. The basic idea is fetching current poe.ninja with specified interval (e.g. hourly) in the background.
-    /// imo it'd be overkill to request their api every time. Also perfomance. 
+    /// poe.ninja cache.
+    /// Fetch poe.ninja with specified interval in the background.
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
     public class PoeNinjaCache : IPoeNinjaCache, IOnAfterInit
@@ -31,8 +28,8 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
-        private List<PoeNinjaItem> FlatItems => Items.SelectMany(c => c.Items).ToList();
-        private List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(c => c.Items).ToList();
+        private List<PoeNinjaItem> FlatItems => Items.SelectMany(x => x.Items).ToList();
+        private List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(x => x.Items).ToList();
 
         public PoeNinjaCache(IPoeNinjaClient client, Configuration configuration)
         {
@@ -57,34 +54,38 @@ namespace Sidekick.Business.Apis.PoeNinja
         public async Task Refresh()
         {
             Items = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
-            foreach (var itemType in Enum.GetValues(typeof(ItemType)))
+            foreach (var itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>())
             {
-                var result = await _client.GetItemOverview(_configuration.LeagueId, (ItemType)itemType);
-                PoeNinjaCacheItem<PoeNinjaItem> item = new PoeNinjaCacheItem<PoeNinjaItem>()
+                var result = await _client.QueryItem(_configuration.LeagueId, itemType);
+                if (result != null)
                 {
-                    Type = itemType.ToString(),
-                    Items = result.Lines
-                };
+                    var item = new PoeNinjaCacheItem<PoeNinjaItem>()
+                    {
+                        Type = itemType.ToString(),
+                        Items = result.Lines
+                    };
 
-                Items.Add(item);
+                    Items.Add(item);
+                }
             }
 
             Currencies = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
-
-            foreach(var currency in Enum.GetValues(typeof(CurrencyType)))
+            foreach (var currency in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())
             {
-                var result = await _client.GetCurrencyOverview(_configuration.LeagueId, (CurrencyType)currency);
-                PoeNinjaCacheItem<PoeNinjaCurrency> item = new PoeNinjaCacheItem<PoeNinjaCurrency>()
+                var result = await _client.QueryItem(_configuration.LeagueId, currency);
+                if (result != null)
                 {
-                    Type = currency.ToString(),
-                    Items = result.Lines
-                };
+                    var item = new PoeNinjaCacheItem<PoeNinjaCurrency>()
+                    {
+                        Type = currency.ToString(),
+                        Items = result.Lines
+                    };
 
-                Currencies.Add(item);
+                    Currencies.Add(item);
+                }
             }
 
             LastRefreshTimestamp = DateTime.Now;
-            //_logger.LogInformation($"poe.ninja cache refreshed for league {SelectedLeague.Id}.");
         }
 
         public async Task OnAfterInit()

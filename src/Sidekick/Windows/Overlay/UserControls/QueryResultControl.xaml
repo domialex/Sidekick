@@ -61,7 +61,7 @@
                 </Style>
             </TextBox.Style>
             <TextBox.Text>
-                <MultiBinding StringFormat="Ø {0}c">
+                <MultiBinding StringFormat="poe.ninja: {0}c">
                     <Binding Path="PoeNinjaItem.ChaosValue" />
                 </MultiBinding>
             </TextBox.Text>

@@ -1,15 +1,12 @@
-using Sidekick.Business.Apis.PoeNinja.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.PoeNinja.Models;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
     public interface IPoeNinjaClient
     {
-        Task<PoeNinjaQueryResult<PoeNinjaItem>> GetItemOverview(string league, ItemType itemType);
+        Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType);
 
-        Task<PoeNinjaQueryResult<PoeNinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency);
+        Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency);
     }
 }

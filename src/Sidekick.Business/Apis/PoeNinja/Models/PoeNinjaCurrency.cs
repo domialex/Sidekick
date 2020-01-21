@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.PoeNinja.Models
 {
@@ -32,18 +28,23 @@ namespace Sidekick.Business.Apis.PoeNinja.Models
 
         [JsonPropertyName("league_id")]
         public int LeagueId { get; set; }
+
         [JsonPropertyName("pay_currency_id")]
         public int PayCurrencyId { get; set; }
+
         [JsonPropertyName("get_currency_id")]
         public int GetCurrencyId { get; set; }
+
         [JsonPropertyName("sample_time_utc")]
         public DateTime SampleTimeUtc { get; set; }
 
         public int Count { get; set; }
 
         public double Value { get; set; }
+
         [JsonPropertyName("data_point_count")]
         public int DataPointCount { get; set; }
+
         [JsonPropertyName("includes_secondary")]
         public bool IncludesSecondary { get; set; }
 

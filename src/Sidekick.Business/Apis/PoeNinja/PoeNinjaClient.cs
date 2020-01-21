@@ -1,78 +1,71 @@
-using Sidekick.Business.Http;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.IO;
+using System.Threading.Tasks;
+using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Business.Http;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
     public class PoeNinjaClient : IPoeNinjaClient
     {
-        public JsonSerializerOptions Options
+        private readonly static Uri POE_NINJA_API_BASE_URL = new Uri("https://poe.ninja/api/data/");
+        private readonly HttpClient httpClient;
+        private readonly ILogger logger;
+        private JsonSerializerOptions _jsonSerializerOptions;
+
+        public PoeNinjaClient(IHttpClientProvider httpClientProvider, ILogger logger)
         {
-            get
+            httpClient = httpClientProvider.HttpClient;
+            httpClient.BaseAddress = POE_NINJA_API_BASE_URL;
+
+            this.logger = logger;
+
+            var jsonSerializerOptions = new JsonSerializerOptions()
             {
-                var options = new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    IgnoreNullValues = true,
-                };
-                options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                return options;
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true,
+            };
+            jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            _jsonSerializerOptions = jsonSerializerOptions;
+        }
+
+        public async Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType)
+        {
+            var url = $"itemoverview?league={leagueId}&type={itemType}";
+
+            try
+            {
+                var response = await httpClient.GetAsync(url);
+                var responseStream = await response.Content.ReadAsStreamAsync();
+                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, _jsonSerializerOptions);
             }
-        }
-
-        public readonly static Uri POE_NINJA_ITEMOVERVIEW_BASE_URL = new Uri("https://poe.ninja/api/data/itemoverview");
-        public readonly static Uri POE_NINJA_CURRENCYOVERVIEW_BASE_URL = new Uri("https://poe.ninja/api/data/currencyoverview");
-        private readonly HttpClient _client;
-
-        public PoeNinjaClient(IHttpClientProvider httpClientProvider)
-        {
-            _client = httpClientProvider.HttpClient;
-        }
-
-        public async Task<PoeNinjaQueryResult<PoeNinjaItem>> GetItemOverview(string league, ItemType itemType)
-        {
-
-            var url = $"{POE_NINJA_ITEMOVERVIEW_BASE_URL}?league={league}&type={itemType}";
-
-            var responseStream = await PerformRequestAndValidateResponse(url);
-
-            return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, Options);
-        }
-
-        public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> GetCurrencyOverview(string league, CurrencyType currency)
-        {
-
-            var url = $"{POE_NINJA_CURRENCYOVERVIEW_BASE_URL}?league={league}&type={currency}";
-
-            var responseStream = await PerformRequestAndValidateResponse(url);
-
-            return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseStream, Options);
-        }
-
-        private async Task<Stream> PerformRequestAndValidateResponse(string url)
-        {
-            var response = await _client.GetAsync(url);
-            var responseStream = await response.Content.ReadAsStreamAsync();
-
-            if (!response.IsSuccessStatusCode)
+            catch
             {
-                throw new Exception($"poe.ninja returned an error for {url}: [{response.StatusCode}] {responseStream}");
+                logger.Log($"Could not fetch {itemType} from poe.ninja");
             }
 
-            if (responseStream == null)
+            return null;
+        }
+
+        public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency)
+        {
+            var url = $"currencyoverview?league={leagueId}&type={currency}";
+
+            try
             {
-                throw new Exception("poe.ninja returned an empty result. Check the provided league.");
+                var response = await httpClient.GetAsync(url);
+                var responseStream = await response.Content.ReadAsStreamAsync();
+                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseStream, _jsonSerializerOptions);
+            }
+            catch
+            {
+                logger.Log($"Could not fetch {currency} from poe.ninja");
             }
 
-            return responseStream;
+            return null;
         }
     }
 }
