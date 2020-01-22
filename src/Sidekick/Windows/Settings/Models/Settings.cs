@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
-using Sidekick.Helpers.POEWikiAPI;
 using WindowsHook;
 
 namespace Sidekick.Windows.Settings.Models
@@ -33,7 +32,7 @@ namespace Sidekick.Windows.Settings.Models
         {
             if (CurrentWikiSettings == WikiSetting.PoeWiki)
             {
-                return POEWikiHelper.Open;
+                return Legacy.PoeWikiClient.Open;
             }
             else if (CurrentWikiSettings == WikiSetting.PoeDb)
             {

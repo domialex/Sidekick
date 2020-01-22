@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages.Client;
@@ -28,6 +29,7 @@ namespace Sidekick.Business
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<IPoeDbClient, PoeDbClient>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
+            services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
