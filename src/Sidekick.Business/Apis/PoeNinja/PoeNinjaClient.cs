@@ -19,7 +19,6 @@ namespace Sidekick.Business.Apis.PoeNinja
         public PoeNinjaClient(IHttpClientProvider httpClientProvider, ILogger logger)
         {
             httpClient = httpClientProvider.HttpClient;
-            httpClient.BaseAddress = POE_NINJA_API_BASE_URL;
 
             this.logger = logger;
 
@@ -34,7 +33,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public async Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType)
         {
-            var url = $"itemoverview?league={leagueId}&type={itemType}";
+            var url = $"{POE_NINJA_API_BASE_URL}itemoverview?league={leagueId}&type={itemType}";
 
             try
             {
@@ -52,7 +51,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency)
         {
-            var url = $"currencyoverview?league={leagueId}&type={currency}";
+            var url = $"{POE_NINJA_API_BASE_URL}currencyoverview?league={leagueId}&type={currency}";
 
             try
             {
