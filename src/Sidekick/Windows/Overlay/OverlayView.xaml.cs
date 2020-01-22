@@ -103,7 +103,7 @@ namespace Sidekick.Windows.Overlay
         private async void GetPricePrediction(string itemText)
         {
             var predictionResult = await PriceInfoClient.GetItemPricePrediction(itemText);
-            if (predictionResult.ErrorCode != 0)
+            if (predictionResult?.ErrorCode != 0)
             {
                 return;
             }

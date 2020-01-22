@@ -26,8 +26,6 @@ namespace Sidekick.Helpers.POEPriceInfoAPI
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
-
-
             }
             catch
             {
