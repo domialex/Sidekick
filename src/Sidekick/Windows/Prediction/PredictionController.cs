@@ -1,7 +1,7 @@
 using Sidekick.Helpers.NativeMethods;
-using Sidekick.Helpers.POEPriceInfoAPI.Models;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.Prediction

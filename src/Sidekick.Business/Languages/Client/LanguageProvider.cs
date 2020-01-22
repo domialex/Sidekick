@@ -1,11 +1,11 @@
-using Sidekick.Business.Languages.Client.Implementations;
-using Sidekick.Core.Extensions;
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sidekick.Business.Languages.Client.Implementations;
+using Sidekick.Core.Extensions;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Languages.Client
 {
@@ -34,6 +34,8 @@ namespace Sidekick.Business.Languages.Client
         private List<LanguageAttribute> AvailableLanguages { get; set; }
 
         public string DefaultLanguage => "English";
+
+        public bool IsEnglish => Current.Name == "English";
 
         public LanguageAttribute Current => AvailableLanguages.First(x => x.DescriptionRarity == Language.DescriptionRarity);
 
