@@ -8,6 +8,7 @@ using Sidekick.Core.Initialization;
 using Sidekick.Windows.TrayIcon;
 using Sidekick.Windows.Overlay;
 using Sidekick.Helpers.Input;
+using Sidekick.Windows.Prediction;
 
 namespace Sidekick
 {
@@ -33,6 +34,9 @@ namespace Sidekick
 
             Legacy.Initialize(serviceProvider);
 
+            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
+
             var initializeService = serviceProvider.GetService<IInitializer>();
             initializeService.Initialize();
 
@@ -42,8 +46,9 @@ namespace Sidekick
             // Overlay.
             OverlayController.Initialize();
 
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetService<TrayIconViewModel>();
+            // Price Prediction
+            PredictionController.Initialize();
+
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -52,6 +57,7 @@ namespace Sidekick
             serviceProvider.Dispose();
             EventsHandler.Dispose();
             OverlayController.Dispose();
+            PredictionController.Dispose();
             base.OnExit(e);
         }
 

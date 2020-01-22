@@ -32,6 +32,7 @@ namespace Sidekick.Core.Initialization
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
 
+
             IsReady = false;
             await OnReset();
             await OnBeforeInit();

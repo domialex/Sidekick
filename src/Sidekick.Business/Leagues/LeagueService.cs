@@ -2,7 +2,6 @@ using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,33 +10,22 @@ namespace Sidekick.Business.Leagues
 {
     public class LeagueService : ILeagueService, IOnInit, IOnReset
     {
-        private readonly IPoeApiService poeApiService;
+        private readonly IPoeApiClient poeApiClient;
         private readonly Configuration configuration;
 
         public List<League> Leagues { get; private set; }
 
-        public event Action LeaguesUpdated;
-
-        public LeagueService(IPoeApiService poeApiService,
+        public LeagueService(IPoeApiClient poeApiClient,
             Configuration configuration)
         {
-            this.poeApiService = poeApiService;
+            this.poeApiClient = poeApiClient;
             this.configuration = configuration;
-        }
-
-        private void NotifyLeaguesUpdated()
-        {
-            foreach (var handler in LeaguesUpdated?.GetInvocationList())
-            {
-                ((Action)handler)();
-            }
         }
 
         public async Task OnInit()
         {
             Leagues = null;
-            Leagues = await poeApiService.Fetch<League>();
-            NotifyLeaguesUpdated();
+            Leagues = await poeApiClient.Fetch<League>();
 
             if (string.IsNullOrEmpty(configuration.LeagueId))
             {

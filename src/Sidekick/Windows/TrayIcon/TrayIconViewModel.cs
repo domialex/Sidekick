@@ -9,10 +9,19 @@ using System.Collections.ObjectModel;
 using Sidekick.Windows.TrayIcon.Models;
 using System.Linq;
 using Sidekick.Core.Configuration;
+using Sidekick.Core.Initialization;
 
 namespace Sidekick.Windows.TrayIcon
 {
-    public class TrayIconViewModel : NotifyBase
+    public interface ITrayIconViewModel
+    {
+        string SettingsHeader { get; set; }
+        string ShowLogsHeader { get; set; }
+        string ExitHeader { get; set; }
+
+    }
+
+    public class TrayIconViewModel : NotifyBase, ITrayIconViewModel, IOnAfterInit
     {
         #region Property backing fields
 
@@ -39,7 +48,6 @@ namespace Sidekick.Windows.TrayIcon
             this.leagueService = leagueService;
 
             uiLanguageProvider.UILanguageChanged += UpdateLanguage;
-            leagueService.LeaguesUpdated += UpdateLeagues;
             UpdateLanguage();
             Leagues = new ObservableCollection<League>();
         }
@@ -51,7 +59,18 @@ namespace Sidekick.Windows.TrayIcon
             ExitHeader = uiLanguageProvider.Language.TrayIconExit;
         }
 
-        private void UpdateLeagues()
+        private void ChangeLeague(string id)
+        {
+            foreach (var league in Leagues)
+            {
+                league.IsCurrent = league.Id == id;
+            }
+
+            configuration.LeagueId = id;
+            configuration.Save();
+        }
+
+        public Task OnAfterInit()
         {
             var leagues = leagueService.Leagues.Select(l => new League
             {
@@ -66,17 +85,8 @@ namespace Sidekick.Windows.TrayIcon
             {
                 Leagues.Add(league);
             }
-        }
 
-        private void ChangeLeague(string id)
-        {
-            foreach (var league in Leagues)
-            {
-                league.IsCurrent = league.Id == id;
-            }
-
-            configuration.LeagueId = id;
-            configuration.Save();
+            return Task.CompletedTask;
         }
 
         public ICommand ChangeLeagueCommand => new RelayCommand(leagueId => ChangeLeague(leagueId.ToString()));

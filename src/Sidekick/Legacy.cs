@@ -1,7 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Languages.UI;
@@ -46,6 +44,9 @@ namespace Sidekick
         public static ILeagueService LeagueService { get; private set; }
 
         [Obsolete]
+        public static IPoeNinjaCache PoeNinjaCache { get; private set; }
+
+        [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
         {
             InitializeService = serviceProvider.GetService<IInitializer>();
@@ -57,6 +58,7 @@ namespace Sidekick
             HttpClientProvider = serviceProvider.GetService<IHttpClientProvider>();
             LeagueService = serviceProvider.GetService<ILeagueService>();
             UILanguageProvider = serviceProvider.GetService<IUILanguageProvider>();
+            PoeNinjaCache = serviceProvider.GetService<IPoeNinjaCache>();
         }
     }
 }

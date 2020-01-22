@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.Poe
 {
-    public interface IPoeApiService
+    public interface IPoeApiClient
     {
         Task<List<TReturn>> Fetch<TReturn>();
 
