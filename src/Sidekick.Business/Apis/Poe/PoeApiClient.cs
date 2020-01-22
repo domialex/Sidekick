@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Business.Apis.Poe
 {
-    public class PoeApiService : IPoeApiService, IOnBeforeInit
+    public class PoeApiClient : IPoeApiClient, IOnBeforeInit
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly HttpClient client;
 
-        public PoeApiService(ILogger logger,
+        public PoeApiClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
