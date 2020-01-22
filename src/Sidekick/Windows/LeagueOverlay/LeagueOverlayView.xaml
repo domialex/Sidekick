@@ -23,7 +23,7 @@
                 <Grid Background="{DynamicResource BackgroundColor}"/>
             </TabItem>
             <TabItem x:Name="tabItemBetrayal" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}" Header="Betrayal">
-                <Grid Background="{DynamicResource BackgroundColor}">
+                <Grid Background="{DynamicResource BackgroundColor}" Margin="0,0,0,-1">
                     <Grid.RowDefinitions>
                         <RowDefinition x:Name="rowMemberImage" Height="100"/>
                         <RowDefinition x:Name="rowMemberName" Height="30"/>
@@ -52,6 +52,11 @@
                         <ColumnDefinition x:Name="columnVagan" Width="64"/>
                         <ColumnDefinition x:Name="columnVorici" Width="64"/>
                     </Grid.ColumnDefinitions>
+                    <!--Legend-->
+                    <Label x:Name="labelLegendHighValue" Content="Very valuable" Grid.Column="5" HorizontalAlignment="Left" Height="27" Margin="4,84,0,-40" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="102" Foreground="{DynamicResource HighValueColor}" FontWeight="Bold"/>
+                    <Label x:Name="labelLegendGoodValue" Content="Valuable" Grid.Column="7" HorizontalAlignment="Left" Height="27" Margin="17,84,0,-40" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="102" Foreground="{DynamicResource MediumValueColor}" FontWeight="Bold"/>
+                    <Label x:Name="labelLegendNormalValue" Content="Less valuable" Grid.Column="9" HorizontalAlignment="Left" Height="27" Margin="2,84,0,-40" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="102" Foreground="{DynamicResource LowValueColor}" FontWeight="Bold"/>
+                    <Label x:Name="labelLegendNoValue" Content="Not valuable" Grid.Column="11" HorizontalAlignment="Left" Height="27" Margin="20,84,0,-40" Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="102" Foreground="{DynamicResource VeryLowValueColor}" FontWeight="Bold"/>
                     <!--Types-->
                     <Label Grid.Row="2" Grid.Column="0" Content="T" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="F" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -62,25 +67,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="1" Content="Aisling" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockAislingTransportation">
                         <Span>Veiled</Span>
                         <LineBreak/>
                         <Span>Weapons</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockAislingFortification">
                         <Span>Veiled</Span>
                         <LineBreak/>
                         <Span>Armor</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockAislingResearch">
                         <Span>Add Veiled</Span>
                         <LineBreak/>
                         <Span>Mod(s)</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockAislingIntervention">
                         <Span>Veiled</Span>
                         <LineBreak/>
                         <Span>Jewellery</Span>
@@ -90,23 +95,23 @@
                     <Rectangle Grid.Row="1" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="2" Content="Cameria" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockCameriaTransportation">
                         <Span>Timeworn</Span>
                         <LineBreak/>
                         <Span>Relics</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockCameriaFortification">
                         <Span>Harbinger</Span>
                         <LineBreak/>
                         <Span>Orbs</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockCameriaResearch">
                         <Span>Sextants</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockCameriaIntervention">
                         <Span>Sulphite</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -115,26 +120,26 @@
                     <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Elreon.png" Margin="117,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
                     <Rectangle Grid.Row="1" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="3" Content="Elreon" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-                    <Rectangle Grid.Row="2" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <Rectangle Grid.Row="2" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockElreonTransportation">
                         <Span>Unique</Span>
                         <LineBreak/>
                         <Span>Weapons</Span>
                     </TextBlock>
-                    <Rectangle Grid.Row="3" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <Rectangle Grid.Row="3" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockElreonFortification">
                         <Span>Unique</Span>
                         <LineBreak/>
                         <Span>Armor</Span>
                     </TextBlock>
-                    <Rectangle Grid.Row="4" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <Rectangle Grid.Row="4" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockElreonResearch">
                         <Span>Unique</Span>
                         <LineBreak/>
                         <Span>Jewellery</Span>
                     </TextBlock>
-                    <Rectangle Grid.Row="5" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <Rectangle Grid.Row="5" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockElreonIntervention">
                         <Span>Reliquary</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -144,25 +149,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="4" Content="Gravicius" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGraviciusTransportation">
                         <Span>Div Card</Span>
                         <LineBreak/>
                         <Span>Stack</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="4" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGraviciusFortification">
                         <Span>Random</Span>
                         <LineBreak/>
                         <Span>Div Cards</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="4" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGraviciusResearch">
                         <Span>Swap</Span>
                         <LineBreak/>
                         <Span>Div Card</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGraviciusIntervention">
                         <Span>Div Card</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -172,25 +177,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="5" Content="Guff" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGuffTransportation">
                         <Span>Chaos</Span>
                         <LineBreak/>
                         <Span>Crafting</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="5" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGuffFortification">
                         <Span>Essence</Span>
                         <LineBreak/>
                         <Span>Crafting</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="5" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGuffResearch">
                         <Span>Anull/Ex</Span>
                         <LineBreak/>
                         <Span>Crafting</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="5" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockGuffIntervention">
                         <Span>Alteration</Span>
                         <LineBreak/>
                         <Span>Crafting</Span>
@@ -200,23 +205,23 @@
                     <Rectangle Grid.Row="1" Grid.Column="6" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="6" Content="Haku" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="6" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHakuTransportation">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Items</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="6" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHakuFortification">
                         <Span>Strognboxes</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="6" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHakuResearch">
                         <Span>Quality</Span>
                         <LineBreak/>
                         <Span>Items</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="6" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHakuIntervention">
                         <Span>Strongbox</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -226,25 +231,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="7" Content="Hillock" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="7" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHillockTransportation">
                         <Span>Weapon</Span>
                         <LineBreak/>
                         <Span>Quality</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="7" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHillockFortification">
                         <Span>Armor</Span>
                         <LineBreak/>
                         <Span>Quality</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHillockResearch">
                         <Span>Flask</Span>
                         <LineBreak/>
                         <Span>Quality</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockHillockIntervention">
                         <Span>Map</Span>
                         <LineBreak/>
                         <Span>Quality</Span>
@@ -254,25 +259,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="8" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="8" Content="It That Fled" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="8" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
-                        <Span>Breach</Span>
-                        <LineBreak/>
-                        <Span>Splinter</Span>
+                    <TextBlock Grid.Row="2" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockItThatFledTransportation">
+                    <Span>Breach</Span>
+                    <LineBreak/>
+                    <Span>Splinter</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="8" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockItThatFledFortification">
                         <Span>Abyss</Span>
                         <LineBreak/>
                         <Span>Jewels</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="8" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockItThatFledResearch">
                         <Span>Upgrade</Span>
                         <LineBreak/>
                         <Span>Breachstone</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="8" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockItThatFledIntervention">
                         <Span>Breach</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -282,25 +287,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="9" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="9" Content="Janus" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="9" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJanusTransportation">
                         <Span>Quality</Span>
                         <LineBreak/>
                         <Span>Currency</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="9" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJanusFortification">
                         <Span>Currency</Span>
                         <LineBreak/>
                         <Span>Shards</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="9" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJanusResearch">
                         <Span>Perandus</Span>
                         <LineBreak/>
                         <Span>Coins</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="9" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJanusIntervention">
                         <Span>Perandus</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -310,23 +315,23 @@
                     <Rectangle Grid.Row="1" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="10" Content="Jorgin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="10" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJorginTransportation">
                         <Span>Talismans</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="10" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJorginFortification">
                         <Span>Bestiary</Span>
                         <LineBreak/>
                         <Span>Items</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJorginResearch">
                         <Span>Amulet to</Span>
                         <LineBreak/>
                         <Span>Talisman</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockJorginIntervention">
                         <Span>Bestiary</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -336,21 +341,21 @@
                     <Rectangle Grid.Row="1" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="11" Content="Korell" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="11" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockKorrelTransportation">
                         <Span>Essences</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockKorrelFortifcation">
                         <Span>Map</Span>
                         <LineBreak/>
                         <Span>Fragments</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockKorrelResearch">
                         <Span>Fossils</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockKorrelIntervention">
                         <Span>Elder</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -360,25 +365,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="12" Content="Leo" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="12" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockLeoTransportation">
                         <Span>Silver</Span>
                         <LineBreak/>
                         <Span>Coins</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockLeoFortification">
                         <Span>Random</Span>
                         <LineBreak/>
                         <Span>Currency</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockLeoResearch">
                         <Span>Currency</Span>
                         <LineBreak/>
                         <Span>Use</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="12" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockLeoIntervention">
                         <Span>Torment</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -388,25 +393,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="13" Content="Riker" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRikerTransportation">
                         <Span>Take One</Span>
                         <LineBreak/>
                         <Span>Currency</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="13" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRikerFortification">
                         <Span>Take One</Span>
                         <LineBreak/>
                         <Span>Unqiue</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="13" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRikerResearch">
                         <Span>Take One</Span>
                         <LineBreak/>
                         <Span>Veiled</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRikerIntervention">
                         <Span>Take One</Span>
                         <LineBreak/>
                         <Span>Div Card</Span>
@@ -416,25 +421,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="14" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="14" Content="Rin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRinTransportation">
                         <Span>Normal</Span>
                         <LineBreak/>
                         <Span>Maps</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRinFortification">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Maps</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRinResearch">
                         <Span>Unique</Span>
                         <LineBreak/>
                         <Span>Maps</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="14" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockRinIntervention">
                         <Span>Cartography</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -444,25 +449,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="15" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="15" Content="Tora" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="15" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockToraTransportation">
                         <Span>Pick Item</Span>
                         <LineBreak/>
                         <Span>[Timed]</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="15" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockToraFortification">
                         <Span>Enchanted</Span>
                         <LineBreak/>
                         <Span>Items</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="15" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockToraResearch">
                         <Span>Gem</Span>
                         <LineBreak/>
                         <Span>Experience</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="15" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockToraIntervention">
                         <Span>Harbinger</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>
@@ -472,25 +477,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="16" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="16" Content="Vagan" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVaganTransportation">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Weapons</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVaganFortification">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Armor</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVaganResearch">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Jewellery</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVaganIntervention">
                         <Span>Rare</Span>
                         <LineBreak/>
                         <Span>Jewels</Span>
@@ -500,25 +505,25 @@
                     <Rectangle Grid.Row="1" Grid.Column="17" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="17" Content="Vorici" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="17" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="2" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="2" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVoriciTransportation">
                         <Span>Quality</Span>
                         <LineBreak/>
                         <Span>Gems</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="3" Grid.Column="17" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="3" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="3" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVoriciFortification">
                         <Span>Linking</Span>
                         <LineBreak/>
                         <Span>Currency</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="4" Grid.Column="17" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="4" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="4" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVoriciResearch">
                         <Span>White</Span>
                         <LineBreak/>
                         <Span>Sockets</Span>
                     </TextBlock>
                     <Rectangle Grid.Row="5" Grid.Column="17" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
-                    <TextBlock Grid.Row="5" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock Grid.Row="5" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVoriciIntervention">
                         <Span>Shaper</Span>
                         <LineBreak/>
                         <Span>Scarab</Span>

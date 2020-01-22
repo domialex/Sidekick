@@ -87,6 +87,7 @@ namespace Sidekick.Helpers.Input
                 OverlayController.Hide();
             }
 
+            // Just temporary for testing
             if (e.KeyCode == WindowsHook.Keys.F2)
             {
                 var x = new Windows.LeagueOverlay.LeagueOverlayView();
