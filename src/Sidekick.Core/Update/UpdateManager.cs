@@ -22,9 +22,15 @@ namespace Sidekick.Core.Update
 
         private GithubRelease _latestRelease;
 
-        public UpdateManager()
-        {
-            
+        private HttpClient _httpClient;
+
+        public UpdateManager(IHttpClientFactory httpClientFactory)
+        {           
+            _httpClient = httpClientFactory.CreateClient();
+            _httpClient.BaseAddress = new Uri("https://api.github.com");
+            _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             INSTALL_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             TMP_DIR = Path.Combine(INSTALL_DIR, "tmp");
             ZIP_PATH = Path.Combine(INSTALL_DIR, "update.zip");
@@ -77,37 +83,30 @@ namespace Sidekick.Core.Update
             GithubRelease latestRelease = null;
             try
             {
-                using (var httpClient = new HttpClient())
+                var jsonOptions = new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true };
+
+                var response = await _httpClient.GetAsync("/repos/domialex/Sidekick/releases/latest");
+                if (response.IsSuccessStatusCode)
                 {
-                    httpClient.BaseAddress = new Uri("https://api.github.com");
-                    httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    var jsonOptions = new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true };
-
-                    var response = await httpClient.GetAsync("/repos/domialex/Sidekick/releases/latest");
-                    if (response.IsSuccessStatusCode)
+                    latestRelease = await JsonSerializer.DeserializeAsync<GithubRelease>(await response.Content.ReadAsStreamAsync(), jsonOptions);
+                }
+                else
+                {
+                    //Get List of releases if there is no latest release ( should only happen if there are only pre-releases)
+                    var listResponse = await _httpClient.GetAsync("/repos/domialex/Sidekick/releases");
+                    if (listResponse.IsSuccessStatusCode)
                     {
-                        latestRelease = await JsonSerializer.DeserializeAsync<GithubRelease>(await response.Content.ReadAsStreamAsync(), jsonOptions);
-                    }
-                    else
-                    {
-                        //Get List of releases if there is no latest release ( should only happen if there are only pre-releases)
-                        var listResponse = await httpClient.GetAsync("/repos/domialex/Sidekick/releases");
-                        if (listResponse.IsSuccessStatusCode)
+                        var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), jsonOptions);
+
+                        // Iterate through version list to determine latest version
+                        var highestVersionNo = new Version("0.0.0.0");
+                        foreach (var release in githubReleaseList)
                         {
-                            var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), jsonOptions);
-
-                            // Iterate through version list to determine latest version
-                            var  highestVersionNo = new Version("0.0.0.0");
-                            foreach (var release in githubReleaseList)
+                            var releaseVersion = new Version(Regex.Match(release.Tag, @"(\d+\.){2}\d+").ToString());
+                            if (highestVersionNo?.CompareTo(releaseVersion) < 0)
                             {
-                                var releaseVersion = new Version(Regex.Match(release.Tag, @"(\d+\.){2}\d+").ToString());
-                                if (highestVersionNo?.CompareTo(releaseVersion) < 0)
-                                {
-                                    highestVersionNo = releaseVersion;
-                                    latestRelease = release;
-                                }
+                                highestVersionNo = releaseVersion;
+                                latestRelease = release;
                             }
                         }
                     }
@@ -149,22 +148,15 @@ namespace Sidekick.Core.Update
         /// <returns></returns>
         private async Task<bool> DownloadNewestRelease()
         {
-            using (var httpClient = new HttpClient())
+            if (_latestRelease != null)
             {
-                httpClient.BaseAddress = new Uri("https://api.github.com");
-                httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
-                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                if (_latestRelease != null)
+                //download zip file and save to disk
+                using (Stream contentStream = await (await _httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    //download zip file and save to disk
-                    using (Stream contentStream = await (await httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
-                    {
-                        await contentStream.CopyToAsync(stream);
-                    }
+                    await contentStream.CopyToAsync(stream);
                 }
             }
-           
+
             return true;
         }
         /// <summary>
