@@ -6,6 +6,8 @@ namespace Sidekick.Business.Languages.Client
     {
         string DefaultLanguage { get; }
 
+        bool IsEnglish { get; }
+
         ILanguage Language { get; }
 
         LanguageAttribute Current { get; }

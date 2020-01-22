@@ -1,5 +1,9 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
+using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Languages.UI;
@@ -9,7 +13,6 @@ using Sidekick.Business.Trades;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
-using System;
 
 namespace Sidekick
 {
@@ -47,6 +50,15 @@ namespace Sidekick
         public static IPoeNinjaCache PoeNinjaCache { get; private set; }
 
         [Obsolete]
+        public static IPoeDbClient PoeDbClient { get; private set; }
+
+        [Obsolete]
+        public static IPoePriceInfoClient PoePriceInfoClient { get; private set; }
+
+        [Obsolete]
+        public static IPoeWikiClient PoeWikiClient { get; private set; }
+
+        [Obsolete]
         public static void Initialize()
         {
             InitializeService = Program.ServiceProvider.GetService<IInitializer>();
@@ -59,6 +71,9 @@ namespace Sidekick
             LeagueService = Program.ServiceProvider.GetService<ILeagueService>();
             UILanguageProvider = Program.ServiceProvider.GetService<IUILanguageProvider>();
             PoeNinjaCache = Program.ServiceProvider.GetService<IPoeNinjaCache>();
+            PoeDbClient = Program.ServiceProvider.GetService<IPoeDbClient>();
+            PoePriceInfoClient = Program.ServiceProvider.GetService<IPoePriceInfoClient>();
+            PoeWikiClient = Program.ServiceProvider.GetService<IPoeWikiClient>();
         }
     }
 }

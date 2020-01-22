@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Helpers.POEPriceInfoAPI.Models
+namespace Sidekick.Business.Apis.PoePriceInfo.Models
 {
     public class PriceInfoResult
     {

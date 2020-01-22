@@ -12,6 +12,13 @@
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helpers\POEDbAPI\**" />
+    <EmbeddedResource Remove="Helpers\POEDbAPI\**" />
+    <None Remove="Helpers\POEDbAPI\**" />
+    <Page Remove="Helpers\POEDbAPI\**" />
+  </ItemGroup>
     
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.191211002" />
