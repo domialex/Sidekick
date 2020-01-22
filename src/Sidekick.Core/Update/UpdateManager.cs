@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using Sidekick.Core.Update.Github_API;
 using System.Linq;
 
+
 namespace Sidekick.Core.Update
 {
     public class UpdateManager : IUpdateManager
@@ -23,6 +24,7 @@ namespace Sidekick.Core.Update
 
         public UpdateManager()
         {
+            
             INSTALL_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             TMP_DIR = Path.Combine(INSTALL_DIR, "tmp");
             ZIP_PATH = Path.Combine(INSTALL_DIR, "update.zip");
@@ -33,10 +35,7 @@ namespace Sidekick.Core.Update
         /// </summary>
         /// <returns></returns>
         public async Task<bool> NewVersionAvailable()
-        {
-#if DEBUG
-            return await Task.Run(() => { return false; });
-#else
+        {         
             _latestRelease = await GetLatestRelease();
             if (_latestRelease != null)
             {
@@ -48,8 +47,6 @@ namespace Sidekick.Core.Update
             }
                         
             return false;
-#endif
-
         }
 
         /// <summary>
@@ -95,19 +92,29 @@ namespace Sidekick.Core.Update
                     }
                     else
                     {
-                        //Get List of releases if there is no correct latest release ( should only happen if there are only pre-releases)
+                        //Get List of releases if there is no latest release ( should only happen if there are only pre-releases)
                         var listResponse = await httpClient.GetAsync("/repos/domialex/Sidekick/releases");
                         if (listResponse.IsSuccessStatusCode)
                         {
                             var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), jsonOptions);
-                            latestRelease = githubReleaseList[0];
+
+                            // Iterate through version list to determine latest version
+                            var  highestVersionNo = new Version("0.0.0.0");
+                            foreach (var release in githubReleaseList)
+                            {
+                                var releaseVersion = new Version(Regex.Match(release.Tag, @"(\d+\.){2}\d+").ToString());
+                                if (highestVersionNo?.CompareTo(releaseVersion) < 0)
+                                {
+                                    highestVersionNo = releaseVersion;
+                                    latestRelease = release;
+                                }
+                            }
                         }
                     }
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
             return latestRelease;
