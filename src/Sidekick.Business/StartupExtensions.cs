@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages.Client;
@@ -24,6 +25,7 @@ namespace Sidekick.Business
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
+            services.AddSingleton<IPoeDbClient, PoeDbClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
