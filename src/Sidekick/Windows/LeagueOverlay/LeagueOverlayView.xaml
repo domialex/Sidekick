@@ -1,0 +1,537 @@
+<Window x:Class="Sidekick.Windows.LeagueOverlay.LeagueOverlayView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sidekick.Windows.LeagueOverlay"
+        mc:Ignorable="d"
+        Title="LeagueOverlayView" Height="520" Width="1200" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" BorderThickness="1">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="../Styles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <TabControl HorizontalAlignment="Left" Height="489" VerticalAlignment="Top" Width="1192" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" Foreground="White">
+            <TabItem x:Name="tabItemIncursion" Header="Incursion" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}">
+                <Grid Background="{DynamicResource BackgroundColor}"/>
+            </TabItem>
+            <TabItem x:Name="tabItemDelve" Header="Delve" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}">
+                <Grid Background="{DynamicResource BackgroundColor}"/>
+            </TabItem>
+            <TabItem x:Name="tabItemBetrayal" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}" Header="Betrayal">
+                <Grid Background="{DynamicResource BackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="rowMemberImage" Height="100"/>
+                        <RowDefinition x:Name="rowMemberName" Height="30"/>
+                        <RowDefinition x:Name="rowTransportationReward" Height="70"/>
+                        <RowDefinition x:Name="rowFortificationReward" Height="70"/>
+                        <RowDefinition x:Name="rowResearchReward" Height="70"/>
+                        <RowDefinition x:Name="rowInterrogationReward" Height="70"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="columnRewardType" Width="Auto"/>
+                        <ColumnDefinition x:Name="columnAisling" Width="64"/>
+                        <ColumnDefinition x:Name="columnCameria" Width="64"/>
+                        <ColumnDefinition x:Name="columnElreaon" Width="64"/>
+                        <ColumnDefinition x:Name="columnGravicius" Width="64"/>
+                        <ColumnDefinition x:Name="columnGuff" Width="64"/>
+                        <ColumnDefinition x:Name="columnHaku" Width="75"/>
+                        <ColumnDefinition x:Name="columnHillock" Width="64"/>
+                        <ColumnDefinition x:Name="columnItThatFled" Width="75"/>
+                        <ColumnDefinition x:Name="columnJanus" Width="64"/>
+                        <ColumnDefinition x:Name="columnJorgin" Width="64"/>
+                        <ColumnDefinition x:Name="columnKorell" Width="64"/>
+                        <ColumnDefinition x:Name="columnLeo" Width="64"/>
+                        <ColumnDefinition x:Name="columnRiker" Width="64"/>
+                        <ColumnDefinition x:Name="columnRin" Width="75"/>
+                        <ColumnDefinition x:Name="columnTora" Width="67"/>
+                        <ColumnDefinition x:Name="columnVagan" Width="64"/>
+                        <ColumnDefinition x:Name="columnVorici" Width="64"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Types-->
+                    <Label Grid.Row="2" Grid.Column="0" Content="T" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label Grid.Row="3" Grid.Column="0" Content="F" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label Grid.Row="4" Grid.Column="0" Content="R" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Label Grid.Row="5" Grid.Column="0" Content="I" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <!--Aisling-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Aisling.png" Margin="28,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                    <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="Aisling" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Veiled</Span>
+                        <LineBreak/>
+                        <Span>Weapons</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Veiled</Span>
+                        <LineBreak/>
+                        <Span>Armor</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Add Veiled</Span>
+                        <LineBreak/>
+                        <Span>Mod(s)</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Veiled</Span>
+                        <LineBreak/>
+                        <Span>Jewellery</Span>
+                    </TextBlock>
+                    <!--Cameria-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Cameria.png" Margin="52,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
+                    <Rectangle Grid.Row="1" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="2" Content="Cameria" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Timeworn</Span>
+                        <LineBreak/>
+                        <Span>Relics</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Harbinger</Span>
+                        <LineBreak/>
+                        <Span>Orbs</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Sextants</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Sulphite</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Elreon-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Elreon.png" Margin="117,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
+                    <Rectangle Grid.Row="1" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="3" Content="Elreon" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Unique</Span>
+                        <LineBreak/>
+                        <Span>Weapons</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Unique</Span>
+                        <LineBreak/>
+                        <Span>Armor</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Unique</Span>
+                        <LineBreak/>
+                        <Span>Jewellery</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="3" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Reliquary</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Gravicius-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Gravicius.png" Margin="51,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="3"/>
+                    <Rectangle Grid.Row="1" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="4" Content="Gravicius" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Div Card</Span>
+                        <LineBreak/>
+                        <Span>Stack</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="4" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Random</Span>
+                        <LineBreak/>
+                        <Span>Div Cards</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="4" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Swap</Span>
+                        <LineBreak/>
+                        <Span>Div Card</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Div Card</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Guff-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Guff.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="4"/>
+                    <Rectangle Grid.Row="1" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="5" Content="Guff" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Chaos</Span>
+                        <LineBreak/>
+                        <Span>Crafting</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="5" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Essence</Span>
+                        <LineBreak/>
+                        <Span>Crafting</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="5" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Anull/Ex</Span>
+                        <LineBreak/>
+                        <Span>Crafting</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="5" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="5" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Alteration</Span>
+                        <LineBreak/>
+                        <Span>Crafting</Span>
+                    </TextBlock>
+                    <!--Haku-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Haku.png" Margin="55,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="5"/>
+                    <Rectangle Grid.Row="1" Grid.Column="6" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="6" Content="Haku" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="6" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Items</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="6" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Strognboxes</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="6" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Quality</Span>
+                        <LineBreak/>
+                        <Span>Items</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="6" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="6" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Strongbox</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Hillock-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Hillock.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="6"/>
+                    <Rectangle Grid.Row="1" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="7" Content="Hillock" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="7" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Weapon</Span>
+                        <LineBreak/>
+                        <Span>Quality</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="7" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Armor</Span>
+                        <LineBreak/>
+                        <Span>Quality</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Flask</Span>
+                        <LineBreak/>
+                        <Span>Quality</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="7" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Map</Span>
+                        <LineBreak/>
+                        <Span>Quality</Span>
+                    </TextBlock>
+                    <!--It That Fled-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/It_That_Fled.png" Margin="57,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="7"/>
+                    <Rectangle Grid.Row="1" Grid.Column="8" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="8" Content="It That Fled" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="8" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Breach</Span>
+                        <LineBreak/>
+                        <Span>Splinter</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="8" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Abyss</Span>
+                        <LineBreak/>
+                        <Span>Jewels</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="8" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Upgrade</Span>
+                        <LineBreak/>
+                        <Span>Breachstone</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="8" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="8" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Breach</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Janus-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Janus.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="8"/>
+                    <Rectangle Grid.Row="1" Grid.Column="9" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="9" Content="Janus" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="9" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Quality</Span>
+                        <LineBreak/>
+                        <Span>Currency</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="9" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Currency</Span>
+                        <LineBreak/>
+                        <Span>Shards</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="9" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Perandus</Span>
+                        <LineBreak/>
+                        <Span>Coins</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="9" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="9" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Perandus</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Jorgin-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Jorgin.png" Margin="47,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="9"/>
+                    <Rectangle Grid.Row="1" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="10" Content="Jorgin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="10" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Talismans</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="10" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Bestiary</Span>
+                        <LineBreak/>
+                        <Span>Items</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Amulet to</Span>
+                        <LineBreak/>
+                        <Span>Talisman</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="10" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Bestiary</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Korell-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Korell.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="10"/>
+                    <Rectangle Grid.Row="1" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="11" Content="Korell" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="11" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Essences</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Map</Span>
+                        <LineBreak/>
+                        <Span>Fragments</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Fossils</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="11" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Elder</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Leo-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Leo.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="11"/>
+                    <Rectangle Grid.Row="1" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="12" Content="Leo" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="12" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Silver</Span>
+                        <LineBreak/>
+                        <Span>Coins</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Random</Span>
+                        <LineBreak/>
+                        <Span>Currency</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Currency</Span>
+                        <LineBreak/>
+                        <Span>Use</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="12" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="12" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Torment</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Riker-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Riker.png" Margin="53,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="12"/>
+                    <Rectangle Grid.Row="1" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="13" Content="Riker" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Take One</Span>
+                        <LineBreak/>
+                        <Span>Currency</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="13" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Take One</Span>
+                        <LineBreak/>
+                        <Span>Unqiue</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="13" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Take One</Span>
+                        <LineBreak/>
+                        <Span>Veiled</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="13" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Take One</Span>
+                        <LineBreak/>
+                        <Span>Div Card</Span>
+                    </TextBlock>
+                    <!--Rin-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Rin.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="13"/>
+                    <Rectangle Grid.Row="1" Grid.Column="14" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="14" Content="Rin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Normal</Span>
+                        <LineBreak/>
+                        <Span>Maps</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Maps</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Unique</Span>
+                        <LineBreak/>
+                        <Span>Maps</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="14" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="14" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Cartography</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Tora-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Tora.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="14"/>
+                    <Rectangle Grid.Row="1" Grid.Column="15" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="15" Content="Tora" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="15" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Pick Item</Span>
+                        <LineBreak/>
+                        <Span>[Timed]</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="15" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Enchanted</Span>
+                        <LineBreak/>
+                        <Span>Items</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="15" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Gem</Span>
+                        <LineBreak/>
+                        <Span>Experience</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="15" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="15" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Harbinger</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                    <!--Vagan-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Vagan.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="15"/>
+                    <Rectangle Grid.Row="1" Grid.Column="16" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="16" Content="Vagan" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Weapons</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Armor</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Jewellery</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Rare</Span>
+                        <LineBreak/>
+                        <Span>Jewels</Span>
+                    </TextBlock>
+                    <!--Vorici-->
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Vorici.png" Margin="51,0,-19,20" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="16"/>
+                    <Rectangle Grid.Row="1" Grid.Column="17" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <Label Grid.Row="1" Grid.Column="17" Content="Vorici" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="2" Grid.Column="17" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="2" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Quality</Span>
+                        <LineBreak/>
+                        <Span>Gems</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="17" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="3" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Linking</Span>
+                        <LineBreak/>
+                        <Span>Currency</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="17" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="4" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>White</Span>
+                        <LineBreak/>
+                        <Span>Sockets</Span>
+                    </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="17" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <TextBlock Grid.Row="5" Grid.Column="17" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold">
+                        <Span>Shaper</Span>
+                        <LineBreak/>
+                        <Span>Scarab</Span>
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItemBlight" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}" Header="Blight">
+                <Grid Background="{DynamicResource BackgroundColor}"/>
+            </TabItem>
+            <TabItem x:Name="tabItemMetamorph" BorderBrush="{DynamicResource SecondaryColor}" Background="{DynamicResource BackgroundColor}" Header="Metamorph">
+                <Grid Background="{DynamicResource BackgroundColor}"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

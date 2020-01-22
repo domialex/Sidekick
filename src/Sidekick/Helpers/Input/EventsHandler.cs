@@ -87,6 +87,12 @@ namespace Sidekick.Helpers.Input
                 OverlayController.Hide();
             }
 
+            if (e.KeyCode == WindowsHook.Keys.F2)
+            {
+                var x = new Windows.LeagueOverlay.LeagueOverlayView();
+                x.ShowDialog();
+            }
+
 
             if (ProcessHelper.IsPathOfExileInFocus())
             {
