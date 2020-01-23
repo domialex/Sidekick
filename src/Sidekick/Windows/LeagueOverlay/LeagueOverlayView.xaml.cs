@@ -40,6 +40,8 @@ namespace Sidekick.Windows.LeagueOverlay
             };
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
             CurrentPage = tabItemIncursion;
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+                        typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));       // Tooltip opened indefinitly until mouse is moved
         }
 
         private void TabControlLeagueOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,9 +127,10 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockAtlasOfWorlds.Text = settings.CurrentUILanguageProvider.Language.IncursionAtlasOfWorlds;
 
             textBlockGemcuttersWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionGemcuttersWorkshop;
-            textBlockGemcuttersWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionGemcuttersWorkshop;
+            textBlockGemcuttersWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionGemcuttersWorkshopContains;
             textBlockDepartmentOfThaumaturgy.Text = settings.CurrentUILanguageProvider.Language.IncursionDepartmentOfThaumaturgy;
             textBlockDoryanisInstitute.Text = settings.CurrentUILanguageProvider.Language.IncursionDoryanisInstitute;
+            textBlockGemcuttersWorkshopContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionDoubleGemCorruptionTooltip;
 
             textBlockTormentCell.Text = settings.CurrentUILanguageProvider.Language.IncursionTormentCells;
             textBlockTormentCellsContain.Text = settings.CurrentUILanguageProvider.Language.IncursionTormentCellsContains;
@@ -159,6 +162,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockCorruptionChamberModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionCorruptionChamberModifiers;
             textBlockCatalystOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionCatalystOfCorruption;
             textBlockLocusOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionLocuOfCorruption;
+            textBlockCorruptionChamberContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionDoubleCorruptionTooltip;
 
             textBlockShrineOfEmpowerment.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfEmpowerment;
             textBlockShrineOfEmpowermentContains.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfEmpowermentContains;
@@ -171,42 +175,49 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockTempestGeneratorModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionTempestGeneratorModifiers;
             textBlockHurricaneEngine.Text = settings.CurrentUILanguageProvider.Language.IncursionHurricaneEngine;
             textBlockStormOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionStormOfCorruption;
+            textBlockTempestGeneratorContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionTopotanteModTooltip;
 
             textBlockPosionGarden.Text = settings.CurrentUILanguageProvider.Language.IncursionPoisionGarden;
             textBlockPosiionGardenContains.Text = settings.CurrentUILanguageProvider.Language.IncursionPosionGardenContains;
             textBlockPosionGardenModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionPoisonGardenModifiers;
             textBlockCultivarChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionCultivarChamber;
             textBlockToxicGrive.Text = settings.CurrentUILanguageProvider.Language.IncursionToxicGrove;
+            textBlockPosiionGardenContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionTacatiModTooltip;
 
             textBlockTrapWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshop;
             textBlockTrapWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshopContains;
             textBlockTrapWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshopModifiers;
             textBlockTempleDefenseWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionTempleDefenseWorkshop;
             textBlockDefenseResearchLab.Text = settings.CurrentUILanguageProvider.Language.IncursionDefenseResearchLab;
+            textBlockTrapWorkshopContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionMatalTooltip;
 
             textBlockPoolsOfRestoration.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestoration;
             textBlockPoolsOfRestorationContains.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestorationContains;
             textBlockPoolsOfRestorationModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestorationModifiers;
             textBlockSanctumOfVitality.Text = settings.CurrentUILanguageProvider.Language.IncursionSanctumOfVitality;
             textBlockSanctumOfImmortality.Text = settings.CurrentUILanguageProvider.Language.IncursionSanctumOfImmortality;
+            textBlockPoolsOfRestorationContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionGuateliztzModTooltip;
 
             textBlockFlameWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshop;
             textBlockFlameWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshopContains;
             textBlockFlameWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshopModifiers;
             textBlockOmnitectForge.Text = settings.CurrentUILanguageProvider.Language.IncursionOmnitectForge;
             textBlockCrucibleOfFlame.Text = settings.CurrentUILanguageProvider.Language.IncursionCrucibleOfFlame;
+            textBlockFlameWorkshopContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionPuhuarteModTooltuip;
 
             textBlockLightningWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshop;
             textBlockLightningWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshopContains;
             textBlockLightningWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshopModifiers;
             textBlockOmnitectReactorPlant.Text = settings.CurrentUILanguageProvider.Language.IncursionOmnitectReactorPlant;
             textBlockConduitOfLightning.Text = settings.CurrentUILanguageProvider.Language.IncursionConduitOfLightning;
+            textBlockLightningWorkshopContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionXopecModTooltip;
 
             textBlockHatchery.Text = settings.CurrentUILanguageProvider.Language.IncursionHatchery;
             textBlockHatcherModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionHatcheryModifiers;
             textBlockHatcheryContains.Text = settings.CurrentUILanguageProvider.Language.IncursionHatcheryContains;
             textBlockAutomationLab.Text = settings.CurrentUILanguageProvider.Language.IncursionAutomationLab;
             textBlockHybridisationChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionHybridisationChamber;
+            textBlockHatcheryContains.ToolTip = settings.CurrentUILanguageProvider.Language.IncursionCitaqualotlModTooltip;
 
             textBlockRoyalMeetingRoom.Text = settings.CurrentUILanguageProvider.Language.IncursionRoyalMeetingRoom;
             textBlockRoyalMeetingRoomContains.Text = settings.CurrentUILanguageProvider.Language.IncursionRoyalMeetingRoomContains;

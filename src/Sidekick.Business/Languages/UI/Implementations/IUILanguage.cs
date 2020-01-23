@@ -234,6 +234,16 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string IncursionHeaderContains { get; }
         string IncursionHeaderModifiers { get; }
 
+        string IncursionDoubleGemCorruptionTooltip { get; }
+        string IncursionDoubleCorruptionTooltip { get; }
+        string IncursionTopotanteModTooltip { get; }
+        string IncursionTacatiModTooltip { get; }
+        string IncursionMatalTooltip { get; }
+        string IncursionGuateliztzModTooltip { get; }
+        string IncursionPuhuarteModTooltuip { get; }
+        string IncursionXopecModTooltip { get; }
+        string IncursionCitaqualotlModTooltip { get; }
+
         #endregion
     }
 }

@@ -429,5 +429,23 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string IncursionHeaderContains => throw new System.NotImplementedException();
 
         public string IncursionHeaderModifiers => throw new System.NotImplementedException();
+
+        public string IncursionDoubleGemCorruptionTooltip => throw new System.NotImplementedException();
+
+        public string IncursionDoubleCorruptionTooltip => throw new System.NotImplementedException();
+
+        public string IncursionTopotanteModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionTacatiModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionMatalTooltip => throw new System.NotImplementedException();
+
+        public string IncursionGuateliztzModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionPuhuarteModTooltuip => throw new System.NotImplementedException();
+
+        public string IncursionXopecModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionCitaqualotlModTooltip => throw new System.NotImplementedException();
     }
 }

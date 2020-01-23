@@ -236,6 +236,112 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string IncursionHeaderContains => "Contains";
         public string IncursionHeaderModifiers => "Modifiers";
 
+        public string IncursionDoubleGemCorruptionTooltip => "Applies to corruptions to a Gem\nPossible to get a 21/23 Gem";
+        public string IncursionDoubleCorruptionTooltip => "Possible outcomes: \nChange all sockets to white \nAdd two imnplicit Vaal modifiers \nTransform Sacrifical Garb into Shadowstitch \nTransform into a rare Item with random influence \nDestroy the item";
+        public string IncursionTopotanteModTooltip => "Possible Prefixes: \nAdd Fire/Cold/Lightning Damage to Attacks\n25% of Physical Damage Converted to Fire/Cold/Lighning Damage\n" +
+                                                    "---------------------------------------------------------------------\nAdd Fire/Cold/Lightning Damage \nDamage Penetrates 13-15% Fire/Cold/Lightning Resistance \n" +
+                                                    "---------------------------------------------------------------------\n75-115% increased Fire/Cold/Lightning Damage \nAdd Fire/Cold/Lightning Damage to Spells";
+        public string IncursionTacatiModTooltip => "Prefix: \n" +
+                                                   "155-169% increased Physical Damage+\n" +
+                                                   "Gain 9-10% of Physical Damage as Extra Chaos Damage\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "70-110% increased Spell Damage\n" +
+                                                   "Gain 5% of Non-Chaos Damage as Extra Chaos Damage\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "Suffix: \n" +
+                                                   "23-38% increased Cast Speed\n" +
+                                                   "Adds 17-57 Chaos Damage to Spells\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "14-27% increased Attack Speed\n" +
+                                                   "Adds 23-61 Chaos Damage\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "31-35% to Chaos Resistance\n" +
+                                                   "9-10% reduced Chaos Damage taken Over Time\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "13-18% increased Posision Duration\n" +
+                                                   "26-30% increased Chaos Damage\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "30% chance to Poision on Hit\n" +
+                                                   "26-30% increased Chaos Damage\n" +
+                                                   "--------------------------------------------------------\n" +
+                                                   "31-35% increased Damage with Poison\n" +
+                                                   "Adds 17-61 Chaos Damage";
+
+        public string IncursionMatalTooltip => "Prefix: \n" +
+                                               "30% increased Movement Speed\n" +
+                                               "5-6% chance to Dodge Spell Hits\n" +
+                                               "--------------------------------------\n" +
+                                               "90-138% increased Trap/Mine Damage\n" +
+                                               "--------------------------------------\n" +
+                                               "+2 to Level of socketed Trap/Trap or Mine Gems\n" +
+                                               "--------------------------------------\n" +
+                                               "Suffix: \n" +
+                                               "20-33% increased Trap/Mine Throwing Speed\n" +
+                                               "--------------------------------------\n" +
+                                               "14-22% increased Cooldown Recovery Speed for Throwing Traps\n" +
+                                               "17-30% increased Trap Duration\n" +
+                                               "--------------------------------------\n" +
+                                               "Mines have 14-22% increased Detonation Speed\n" +
+                                               "17-30% increased Mine Duration\n" +
+                                               "--------------------------------------\n" +
+                                               "Skills used by Traps/Mines have 22-37% increased Area of Effect";
+        public string IncursionGuateliztzModTooltip => "Prefix: \n" +
+                                                       "+70-119 to Maximum Life\n" +
+                                                       "3-10% increased Maximum Life+\n" +
+                                                       "--------------------------------\n" +
+                                                       "+44-47 to Maximum Energy Shield\n" +
+                                                       "7-10% increased Maximum Energy Shield\n" +
+                                                       "--------------------------------\n" +
+                                                       "+44-47 to Maximum Energy Shield\n" +
+                                                       "Regenerate 0.4% of Energy Shield per Second\n" +
+                                                       "--------------------------------\n" +
+                                                       "Suffix: \n" +
+                                                       "Regenerate 16-20 Life per Second\n" +
+                                                       "Regenerate 0.4% of Life per Second";
+        public string IncursionPuhuarteModTooltuip => "Suffix: \n" +
+                                                      "+46-48% to Fire/Cold/Lightning Resistance\n" +
+                                                      "9-10% of Physical Damage from Hits taken as Fire/Cold/Lightning Damage\n" +
+                                                      "------------------------------------------\n" +
+                                                      "+46-48% to Fire/Cold/Lightning Resistance\n" +
+                                                      "0.4% of Fire/Cold/Lightning Damage leeched as Life\n" +
+                                                      "------------------------------------------\n" +
+                                                      "+46-48% to Fire/Cold/Lightning Resistance\n" +
+                                                      "On of the following matching the Resistance:\n" +
+                                                      "(45-52) to (75-78) added Fire Damage against Burning Enemies\n" +
+                                                      "(30-50)% increased Damage with Hits against Chilled Enemies\n" +
+                                                      "(40-60)% increased Critical Strike Chance against Shocked Enemies";
+        public string IncursionXopecModTooltip => "Prefix: \n" +
+                                                  "+69-73 to maximum Mana\n" +
+                                                  "7-10% increased maximum Mana\n" +
+                                                  "--------------------------------\n" +
+                                                  "+74-78 to maximum Mana\n" +
+                                                  "+2-3 Mana gained for each Enemy hit by your Attacks\n" +
+                                                  "--------------------------------\n" +
+                                                  "+74-78 to maximum Mana\n" +
+                                                  "Regenerate 5-7 Mana per Second\n" +
+                                                  "--------------------------------\n" +
+                                                  "+69-73 to maximum Mana\n" +
+                                                  "3-5% reduced Mana Reserved\n" +
+                                                  "--------------------------------\n" +
+                                                  "+74-78 to maximum Mana\n" +
+                                                  "-6-8 to Total Mana Cost of Skills\n" +
+                                                  "--------------------------------\n" +
+                                                  "+74-78 to maximum Mana\n" +
+                                                  "Non-Channelling Skills have -6-8 to Total Mana Cost";
+        public string IncursionCitaqualotlModTooltip => "Prefix: \n" +
+                                                        "Minions deal 90-138 increased Damage\n" +
+                                                        "------------------------------------\n" +
+                                                        "+2 to Level of socketed Minion Gems\n" +
+                                                        "------------------------------------\n" +
+                                                        "Minions deal 70-110 increased Damage\n" +
+                                                        "Minions have 5% Chance to deal Double Damage\n" +
+                                                        "------------------------------------\n" +
+                                                        "Suffix: \n" +
+                                                        "Minions have 13-40% increased Attack Speed\n" +
+                                                        "Minions have 13-40% increased Cast Speed\n" +
+                                                        "------------------------------------\n" +
+                                                        "17-30% increased Minion Duration";
+
         #endregion
     }
 }
