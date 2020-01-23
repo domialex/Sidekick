@@ -37,6 +37,7 @@ namespace Sidekick.Business.Languages.Client.Implementations
         public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
         public string PrefixBlighted => "Blighted";
         public string DescriptionExperience => "ประสบการณ์: ";
+        public string DescriptionOrgan => "ใช้: ";
         public string KeywordProphecy => "(prophecy)";
         public string KeywordVaal => "วาล์";
         public string KeywordCatalyst => "Catalyst";
