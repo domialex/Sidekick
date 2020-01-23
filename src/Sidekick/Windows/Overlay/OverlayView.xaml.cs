@@ -209,5 +209,10 @@ namespace Sidekick.Windows.Overlay
                 overlayIsUpdatable = true;
             }
         }
+
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.HideWindowAndClearData();
+        }
     }
 }

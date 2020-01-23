@@ -52,6 +52,8 @@
 
         <UserControls:QueryResultControl DataContext="{Binding Path=queryResult}" Grid.Row="0" Grid.ColumnSpan="2" />
 
+        <Button x:Name="closeButton" Content="×" HorizontalAlignment="Right" Margin="0,-1,-1,0" VerticalAlignment="Top" Width="16" Grid.Column="1" Grid.Row="0" Click="OnCloseButtonClick" IsCancel="True" FontWeight="Bold" Panel.ZIndex="1"/>
+
         <TextBox Name="txtPrediction" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Margin="5" />
 
         <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource AccentColor}" />

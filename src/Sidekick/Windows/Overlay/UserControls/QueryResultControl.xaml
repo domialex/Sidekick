@@ -48,7 +48,7 @@
 
         <TextBox Text="{Binding Path=Item.Name, Mode=OneWay}" Grid.Row="0" FontWeight="Bold" Margin="5 5 0 0" Foreground="{Binding Item.Rarity, Converter={StaticResource RarityToColorConverter}}"/>
 
-        <TextBox Grid.Row="0" Grid.Column="1"  FontWeight="Bold" TextAlignment="Right" Margin="5 0 5 0">
+        <TextBox Grid.Row="0" Grid.Column="1"  FontWeight="Bold" TextAlignment="Right" Margin="5,0,20,0">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                     <Setter Property="Foreground" Value="White" />
