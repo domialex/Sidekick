@@ -9,6 +9,7 @@ namespace Sidekick.Core.Settings
         ItemWiki,
         FindItems,
         LeaveParty,
-        OpenSearch
+        OpenSearch,
+        OpenLeagueOverview,
     }
 }

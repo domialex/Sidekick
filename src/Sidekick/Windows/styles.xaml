@@ -85,6 +85,11 @@
     <SolidColorBrush x:Key="LightColor" Color="#FF5994CE" />
     <SolidColorBrush x:Key="AccentColor" Color="#FF3A4E93" />
 
+    <SolidColorBrush x:Key="HighValueColor" Color="#FFBB0B0B"/>
+    <SolidColorBrush x:Key="MediumValueColor" Color="#FFBFA500"/>
+    <SolidColorBrush x:Key="LowValueColor" Color="#FF4E910B"/>
+    <SolidColorBrush x:Key="VeryLowValueColor" Color="#FF6282F1"/>
+
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
 
     <!--#region TextBox -->
