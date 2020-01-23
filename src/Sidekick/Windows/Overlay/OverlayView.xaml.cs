@@ -53,7 +53,7 @@ namespace Sidekick.Windows.Overlay
             Hide();
         }
 
-        private Task UpdateUIText()
+        private void UpdateUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
             textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
@@ -61,7 +61,6 @@ namespace Sidekick.Windows.Overlay
             textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
             textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
             textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
-            return Task.CompletedTask;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -99,10 +98,10 @@ namespace Sidekick.Windows.Overlay
         }
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
 
-        private async void GetPricePrediction(string itemText)
+        private async Task GetPricePrediction(string itemText)
         {
             var predictionResult = await Legacy.PoePriceInfoClient.GetItemPricePrediction(itemText);
-            if (predictionResult.ErrorCode != 0)
+            if (predictionResult?.ErrorCode != 0)
             {
                 return;
             }

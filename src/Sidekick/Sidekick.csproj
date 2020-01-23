@@ -14,6 +14,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
+    <None Remove="Resources\ExaltedOrb.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Helpers\POEDbAPI\**" />
     <EmbeddedResource Remove="Helpers\POEDbAPI\**" />
     <None Remove="Helpers\POEDbAPI\**" />
@@ -21,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
     <None Remove="Windows\LeagueOverlay\img\Cameria.png" />
     <None Remove="Windows\LeagueOverlay\img\Elreon.png" />
@@ -47,6 +53,10 @@
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     <PackageReference Include="WindowsBase" Version="4.6.1055.0" />
     <PackageReference Include="WindowsHook" Version="1.0.1" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
     
   <ItemGroup>
@@ -111,6 +121,9 @@
     <EmbeddedResource Include="Windows\LeagueOverlay\img\Vorici.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>  
+  <ItemGroup>
+    <Resource Include="Resources\ExaltedOrb.ico" />
   </ItemGroup>
 
   <ItemGroup>

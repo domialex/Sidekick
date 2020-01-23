@@ -13,6 +13,8 @@ namespace Sidekick.Business.Leagues
         private readonly IPoeApiClient poeApiClient;
         private readonly Configuration configuration;
 
+        public List<League> Leagues { get; private set; }
+
         public LeagueService(IPoeApiClient poeApiClient,
             Configuration configuration)
         {
@@ -38,7 +40,5 @@ namespace Sidekick.Business.Leagues
 
             return Task.CompletedTask;
         }
-
-        public List<League> Leagues { get; private set; }
     }
 }
