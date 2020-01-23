@@ -13,8 +13,8 @@ namespace Sidekick.Business.Languages.UI
 
         List<UILanguageAttribute> AvailableLanguages { get; }
 
-        event Func<Task> UILanguageChanged;
+        event Action UILanguageChanged;
 
-        Task SetLanguage(UILanguageAttribute language);
+        void SetLanguage(UILanguageAttribute language);
     }
 }
