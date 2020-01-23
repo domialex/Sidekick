@@ -196,7 +196,12 @@ namespace Sidekick.Core.Update
         /// </summary>
         public void Restart()
         {
-            Process.Start(Path.Combine(INSTALL_DIR, "Sidekick.exe"));
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = Path.Combine(INSTALL_DIR, "Sidekick.exe"),
+                UseShellExecute = false,
+            };
+            Process.Start(startInfo);
         }
     }
 }

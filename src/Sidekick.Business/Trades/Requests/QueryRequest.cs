@@ -144,7 +144,7 @@ namespace Sidekick.Business.Trades.Requests
             {
                 if (((MapItem)item).Rarity == language.RarityUnique)
                 {
-                    Query.Name == item.Name;
+                    Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
                     {
                         Option = "Unique",

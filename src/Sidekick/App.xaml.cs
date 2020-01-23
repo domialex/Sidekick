@@ -9,6 +9,8 @@ using Sidekick.Windows.TrayIcon;
 using Sidekick.Windows.Overlay;
 using Sidekick.Helpers.Input;
 using Sidekick.Windows.Prediction;
+using Sidekick.Core.Update;
+using System.Threading.Tasks;
 
 namespace Sidekick
 {
@@ -49,6 +51,26 @@ namespace Sidekick
             // Price Prediction
             PredictionController.Initialize();
 
+            var updateManagerService = serviceProvider.GetService<IUpdateManager>();
+            if (Task.Run(() => updateManagerService.NewVersionAvailable()).Result)
+            {
+                if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    if (Task.Run(() => updateManagerService.UpdateSidekick()).Result)
+                    {
+                        mutex = null;
+                        ProcessHelper.mutex = null;
+                        MessageBox.Show("Update finished! Restarting Sidekick!", "AutoUpdater", MessageBoxButton.OK);
+                        updateManagerService.Restart();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Update failed!");
+                    }
+                    App.Current.Shutdown();
+                    return;
+                }
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)
