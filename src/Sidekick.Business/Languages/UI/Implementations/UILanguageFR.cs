@@ -165,5 +165,39 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BetrayalLegendLessValuable => throw new System.NotImplementedException();
 
         public string BetrayalLegendNotValuable => throw new System.NotImplementedException();
+
+        public string BetrayalAislingResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalCameriaTransportationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalGuffTransportationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalGuffFortificationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalGuffResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalGuffInterventionTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalHillockTransportationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalHillockFortificationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalHillockResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalHillockInterventionTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalItThatFledResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalJorginResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalLeoResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalToraTransportationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalToraFortificationTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalToraResearchTooltip => throw new System.NotImplementedException();
+
+        public string BetrayalVoriceResearchTooltip => throw new System.NotImplementedException();
     }
 }

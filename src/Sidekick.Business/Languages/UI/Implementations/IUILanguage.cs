@@ -25,7 +25,9 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalAislingFortification { get; }
         string BetrayalAislingResearch { get; }
         string BetrayalAislingIntervention { get; }
+        string BetrayalAislingResearchTooltip { get; }
         string BetrayalCameriaTransportation { get; }
+        string BetrayalCameriaTransportationTooltip { get; }
         string BetrayalCameriaFortification { get; }
         string BetrayalCameriaResearch { get; }
         string BetrayalCameriaIntervention { get; }
@@ -38,20 +40,29 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalGraviciusResearch { get; }
         string BetrayalGraviciusIntervention { get; }
         string BetrayalGuffTransportation { get; }
+        string BetrayalGuffTransportationTooltip { get; }
         string BetrayalGuffFortification { get; }
+        string BetrayalGuffFortificationTooltip { get; }
         string BetrayalGuffResearch { get; }
+        string BetrayalGuffResearchTooltip { get; }
         string BetrayalGuffIntervention { get; }
+        string BetrayalGuffInterventionTooltip { get; }
         string BetrayalHakuTransportation { get; }
         string BetrayalHakuFortification { get; }
         string BetrayalHakuResearch { get; }
         string BetrayalHakuIntervention { get; }
         string BetrayalHillockTransportation { get; }
+        string BetrayalHillockTransportationTooltip { get; }
         string BetrayalHillockFortification { get; }
+        string BetrayalHillockFortificationTooltip { get; }
         string BetrayalHillockResearch { get; }
+        string BetrayalHillockResearchTooltip { get; }
         string BetrayalHillockIntervention { get; }
+        string BetrayalHillockInterventionTooltip { get; }
         string BetrayalItThatFledTransportation { get; }
         string BetrayalItThatFledFortification { get; }
         string BetrayalItThatFledResearch { get; }
+        string BetrayalItThatFledResearchTooltip { get; }
         string BetrayalItThatFledIntervention { get; }
         string BetrayalJanusTransportaion { get; }
         string BetrayalJanusFortification { get; }
@@ -60,6 +71,7 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalJorginTransportation { get; }
         string BetrayalJorginFortification { get; }
         string BetrayalJorginResearch { get; }
+        string BetrayalJorginResearchTooltip { get; }
         string BetrayalJorginIntervention { get; }
         string BetrayalKorrellTransportation { get; }
         string BetrayalKorrelFortification { get; }
@@ -68,6 +80,7 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalLeoTransportation { get; }
         string BetrayalLeoFortification { get; }
         string BetrayalLeoResearch { get; }
+        string BetrayalLeoResearchTooltip { get; }
         string BetrayalLeoIntervention { get; }
         string BetrayalRikerTransportation { get; }
         string BetrayalRikerFortification { get; }
@@ -78,8 +91,11 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalRinResearch { get; }
         string BetrayalRinIntervention { get; }
         string BetrayalToraTransportation { get; }
+        string BetrayalToraTransportationTooltip { get; }
         string BetrayalToraFortification { get; }
+        string BetrayalToraFortificationTooltip { get; }
         string BetrayalToraResearch { get; }
+        string BetrayalToraResearchTooltip { get; }
         string BetrayalToraIntervention { get; }
         string BetrayalVaganTransportation { get; }
         string BetrayalVaganFortification { get; }
@@ -88,6 +104,7 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string BetrayalVoriciTransportation { get; }
         string BetrayalVoriciFortification { get; }
         string BetrayalVoriciResearch { get; }
+        string BetrayalVoriceResearchTooltip { get; }
         string BetrayalVoriciIntervention { get; }
         string BetrayalLegendVeryValuable { get; }
         string BetrayalLegendValuable { get; }

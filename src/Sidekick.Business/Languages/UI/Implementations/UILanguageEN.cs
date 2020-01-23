@@ -94,5 +94,23 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BetrayalLegendValuable => "Valuable";
         public string BetrayalLegendLessValuable => "Less valuable";
         public string BetrayalLegendNotValuable => "Not valuable";
+
+        public string BetrayalAislingResearchTooltip => "Level1: 1 Mod\nLevel2: Low Chance for 2 Mods\nLevel3: 2 Mods";
+        public string BetrayalCameriaTransportationTooltip => "League Specific Items\n(Headhunter possible)";
+        public string BetrayalGuffTransportationTooltip => "1 Alch\n200 Chaos\n6 Exalted\n20 Divine\n20 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds";
+        public string BetrayalGuffFortificationTooltip => "20 Scouring\n5 * 4 Essences\n20 Exalted\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds";
+        public string BetrayalGuffResearchTooltip => "1 Alch\n100 Anullment\n100 Exalted\n1 Divine\n1 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds";
+        public string BetrayalGuffInterventionTooltip => "1 Transmutation\n200 Alteration\n100 AUgmentation\n1 Regal\n1 Exalted\n1 Divine\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds";
+        public string BetrayalHillockTransportationTooltip => "Level1: 24 %\nLevel2: 26 %\nLevel3: 28%";
+        public string BetrayalHillockFortificationTooltip => "Level1: 24 %\nLevel2: 26 %\nLevel3: 28 %";
+        public string BetrayalHillockResearchTooltip => "Level1: 22 %\nLevel2: 24 %\nLevel3: 26%";
+        public string BetrayalHillockInterventionTooltip => "Level1: 25 %\nLevel2: 30 %\nLevel3: 35 %";
+        public string BetrayalItThatFledResearchTooltip => "Level1: Charged\nLevel2: Enriched\nLevel3: Pure";
+        public string BetrayalJorginResearchTooltip => "Level1: Level 1 Talisman\nLevel2: Level 2 Talisman\nLevel3: Level 3 Talisman";
+        public string BetrayalLeoResearchTooltip => "Level1: Blessed Orb\nLevel2: Divine Orb\nLevel3: Exalted Orb";
+        public string BetrayalToraTransportationTooltip => "Time Limit: 8 Seconds\nCurrency\nDivination Cards\nUniques\nItem Level 100 Rare";
+        public string BetrayalToraFortificationTooltip => "Level1: Gloves\nLevel2: Boots\nLevel3: Helmet";
+        public string BetrayalToraResearchTooltip => "Level1: 20m Exp\nLevel2: 70m Exp\nLevel3: 200m Exp";
+        public string BetrayalVoriceResearchTooltip => "Level1: 1 White Socket\nLevel2: 1-2 White Sockets\nLevel3: 1-3 White Sockets";
     }
 }

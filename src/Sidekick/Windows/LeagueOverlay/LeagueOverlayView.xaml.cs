@@ -27,19 +27,21 @@ namespace Sidekick.Windows.LeagueOverlay
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
         }
 
-        private Task UpdateBetrayalUIText()
+        private void UpdateBetrayalUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
 
             textBlockAislingTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalAislingTransportaion;
             textBlockAislingFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalAislingFortification;
             textBlockAislingResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalAislingResearch;
+            textBlockAislingResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalAislingResearchTooltip;
             textBlockAislingIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalAislingIntervention;
 
             textBlockCameriaFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalCameriaFortification;
             textBlockCameriaIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalCameriaIntervention;
             textBlockCameriaResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalCameriaResearch;
             textBlockCameriaTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalCameriaTransportation;
+            textBlockCameriaTransportation.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalCameriaTransportationTooltip;
 
             textBlockElreonFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalElreonFortification;
             textBlockElreonIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalElreonIntervention;
@@ -52,9 +54,13 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockGraviciusTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalGraviciusTransportation;
 
             textBlockGuffFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalGuffFortification;
+            textBlockGuffFortification.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalGuffFortificationTooltip;
             textBlockGuffIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalGuffIntervention;
+            textBlockGuffIntervention.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalGuffInterventionTooltip;
             textBlockGuffResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalGuffResearch;
+            textBlockGuffResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalGuffResearchTooltip;
             textBlockGuffTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalGuffTransportation;
+            textBlockGuffTransportation.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalGuffTransportationTooltip;
 
             textBlockHakuFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalHakuFortification;
             textBlockHakuIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalHakuIntervention;
@@ -62,13 +68,18 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockHakuTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalHakuTransportation;
 
             textBlockHillockFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalHillockFortification;
+            textBlockHillockFortification.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalHillockFortificationTooltip;
             textBlockHillockIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalHillockIntervention;
+            textBlockHillockIntervention.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalHillockInterventionTooltip;
             textBlockHillockResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalHillockResearch;
+            textBlockHillockResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalHillockResearchTooltip;
             textBlockHillockTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalHillockTransportation;
+            textBlockHillockTransportation.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalHillockTransportationTooltip;
 
             textBlockItThatFledFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalItThatFledFortification;
             textBlockItThatFledIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalItThatFledIntervention;
             textBlockItThatFledResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalItThatFledResearch;
+            textBlockItThatFledResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalItThatFledResearchTooltip;
             textBlockItThatFledTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalItThatFledTransportation;
 
             textBlockJanusFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalJanusFortification;
@@ -79,6 +90,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockJorginFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalJorginFortification;
             textBlockJorginIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalJorginIntervention;
             textBlockJorginResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalJorginResearch;
+            textBlockJorginResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalJorginResearchTooltip;
             textBlockJorginTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalJorginTransportation;
 
             textBlockKorrelFortifcation.Text = settings.CurrentUILanguageProvider.Language.BetrayalKorrelFortification;
@@ -89,6 +101,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockLeoFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalLeoFortification;
             textBlockLeoIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalLeoIntervention;
             textBlockLeoResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalLeoResearch;
+            textBlockLeoResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalLeoResearchTooltip;
             textBlockLeoTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalLeoTransportation;
 
             textBlockRikerFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalRikerFortification;
@@ -102,9 +115,12 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockRinTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalRinTransportation;
 
             textBlockToraFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalToraFortification;
+            textBlockToraFortification.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalToraFortificationTooltip;
             textBlockToraIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalToraIntervention;
             textBlockToraResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalToraResearch;
+            textBlockToraResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalToraResearchTooltip;
             textBlockToraTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalToraTransportation;
+            textBlockToraTransportation.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalToraTransportationTooltip;
 
             textBlockVaganFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalVaganFortification;
             textBlockVaganIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalVaganIntervention;
@@ -114,14 +130,13 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockVoriciFortification.Text = settings.CurrentUILanguageProvider.Language.BetrayalVoriciFortification;
             textBlockVoriciIntervention.Text = settings.CurrentUILanguageProvider.Language.BetrayalVoriciIntervention;
             textBlockVoriciResearch.Text = settings.CurrentUILanguageProvider.Language.BetrayalVoriciResearch;
+            textBlockVoriciResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalVoriceResearchTooltip;
             textBlockVoriciTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalVoriciTransportation;
 
             labelLegendHighValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendVeryValuable;
             labelLegendGoodValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendValuable;
             labelLegendNormalValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendLessValuable;
             labelLegendNoValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendNotValuable;
-
-            return Task.CompletedTask;
         }
     }
 }

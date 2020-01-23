@@ -474,7 +474,7 @@
                     </TextBlock>
                     <!--Vagan-->
                     <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Vagan.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="15"/>
-                    <Rectangle Grid.Row="1" Grid.Column="16" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
+                    <Rectangle Grid.Row="1" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="16" Content="Vagan" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="2" Grid.Column="16" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="textBlockVaganTransportation">
