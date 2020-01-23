@@ -30,7 +30,7 @@ namespace Sidekick.Windows.LeagueOverlay
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
-                { tabItemIncursion, new[] { 980, 1025 } },
+                { tabItemIncursion, new[] { 980, 1030 } },
                 { tabItemDelve, new[] { 500, 500 } },
                 { tabItemBetrayal, new[] { 520, 1200 } },
                 { tabItemBlight, new[] { 500, 500 } },
@@ -57,6 +57,8 @@ namespace Sidekick.Windows.LeagueOverlay
 
                 Height = windowSize[0];
                 Width = windowSize[1];
+                tabControlLeagueOverlay.Height = windowSize[0];
+                tabControlLeagueOverlay.Width = windowSize[1];
             }
         }
 

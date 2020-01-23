@@ -49,437 +49,572 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="columnLevel1" Width="140"/>
-                        <ColumnDefinition x:Name="columnLevel2" Width="170"/>
+                        <ColumnDefinition x:Name="columnLevel2" Width="175"/>
                         <ColumnDefinition x:Name="columnLevel3" Width="150"/>
                         <ColumnDefinition x:Name="columnContains" Width="280"/>
                         <ColumnDefinition x:Name="columnModifiers" Width="260"/>
                     </Grid.ColumnDefinitions>
                     <!--Header-->
+                    <Rectangle Grid.Row="0" Grid.Column="0" Stroke="Black" />
                     <Label Grid.Row="0" Grid.Column="0" Content="Level 1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="0" Grid.Column="1" Stroke="Black" />
                     <Label Grid.Row="0" Grid.Column="1" Content="Level 2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="0" Grid.Column="2" Stroke="Black" />
                     <Label Grid.Row="0" Grid.Column="2" Content="Level 3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="0" Grid.Column="3" Stroke="Black" />
                     <Label Grid.Row="0" Grid.Column="3" Content="Contains" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="0" Grid.Column="4" Stroke="Black" />
                     <Label Grid.Row="0" Grid.Column="4" Content="Modifiers" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
                     <!--Legend-->
+                    <Rectangle Grid.Row="26" Grid.Column="0" Stroke="Black" />
                     <Label Grid.Row="26" Grid.Column="0" Content="Legend" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="26" Grid.Column="1" Stroke="Black" />
                     <Label Grid.Row="26" Grid.Column="1" Content="Very Valuable" Foreground="{DynamicResource HighValueColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="26" Grid.Column="2" Stroke="Black" />
                     <Label Grid.Row="26" Grid.Column="2" Content="Valuable" Foreground="{DynamicResource MediumValueColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="26" Grid.Column="3" Stroke="Black" />
                     <Label Grid.Row="26" Grid.Column="3" Content="Less Valuable" Foreground="{DynamicResource LowValueColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="26" Grid.Column="4" Stroke="Black" />
                     <Label Grid.Row="26" Grid.Column="4" Content="Not Valuable" Foreground="{DynamicResource VeryLowValueColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
                     <!--Guardhouse-->
+                    <Rectangle Grid.Row="1" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Guardhouse</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Barracks</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="1" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="1" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of War</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="1" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="1" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold"/>
+                    <Rectangle Grid.Row="1" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="1" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>+10/20/30 % Monster Pack Size</Span>
                     </TextBlock>
                     <!--Workshop-->
+                    <Rectangle Grid.Row="2" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="2" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="2" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Engineering Department</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="2" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Factory</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="2" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="2" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Criticals Rank 3 Recipe</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="2" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="2" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>5/10/15 % increased Quantity of Items</Span>
                         <LineBreak/>
                         <Span>Unique Boss has 15/25/35 % increased Life</Span>
                     </TextBlock>
                     <!--Explosives Room-->
+                    <Rectangle Grid.Row="3" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Explosives Room</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="3" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Demolition Lab</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="3" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Shrine of Unmaking</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="3" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>1/2/3 Explosive Kegs</Span>
                         <LineBreak/>
                         <Span>[Used to unlock doors]</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="3" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="3" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Splinter Research Lab-->
+                    <Rectangle Grid.Row="4" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Splinter Research Lab</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Breach Containment Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="4" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>House of the Others</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="4" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level1: 2 Clasped Hands</Span>
+                        <Span>Level 1: 2 Clasped Hands</Span>
                         <LineBreak/>
-                        <Span>Level2: 1 Breach</Span>
+                        <Span>Level 2: 1 Breach</Span>
                         <LineBreak/>
-                        <Span>Level3: 3 Breaches</Span>
+                        <Span>Level 3: 3 Breaches</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="4" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="4" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Vault-->
+                    <Rectangle Grid.Row="5" Grid.Column="0" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Vault</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="5" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Treasury</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="5" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Wealth of the Vaal</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="5" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Currency Items, including stacks and shards</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="5" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="5" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Sparring Room-->
+                    <Rectangle Grid.Row="6" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sparring Room</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="6" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="6" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Arena of Valour</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="6" Grid.Column="2" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="6" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Champions</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="6" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="6" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Weapons</Span>
                         <LineBreak/>
                         <Span>Accuracy Rank 3 Recipe</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="6" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="6" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>10/15/20 % increased Monster Damage</Span>
                     </TextBlock>
                     <!--Armourer's Workshop-->
+                    <Rectangle Grid.Row="7" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="7" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Armourer's Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="7" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="7" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Armoury</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="7" Grid.Column="2" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="7" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Chamber of Iron</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="7" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="7" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Armour</Span>
                         <LineBreak/>
                         <Span>Animate Guardian Recipe</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="7" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="7" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>10/20/30 % more Monster Life</Span>
                     </TextBlock>
                     <!--Jeweller's Workshop-->
+                    <Rectangle Grid.Row="8" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="8" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Jeweller's Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="8" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="8" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Jewellery Forge</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="8" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="8" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Glittering Halls</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="8" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="8" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Jewellery, Talismans, Div Cards</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="8" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="8" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Surveyor's Study-->
+                    <Rectangle Grid.Row="9" Grid.Column="0" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="9" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Surveyor's Study</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="9" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="9" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Office of Cartography</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="9" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="9" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Altas of Worlds</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="9" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="9" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Maps (possible Vaal Prefix)</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="9" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="9" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Gemcutter's Workshop-->
+                    <Rectangle Grid.Row="10" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="10" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Gemcutter's Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="10" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="10" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Department of Thaumaturgy</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="10" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="10" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Doryani's Institue</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="10" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="10" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Gems</Span>
+                        <Span>\t\t\tGems</Span>
                         <LineBreak/>
-                        <Span>Level3: Gem Double Corruption</Span>
+                        <Span>Level 3: Gem Double Corruption</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="10" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="10" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Torment Cells-->
+                    <Rectangle Grid.Row="11" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="11" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Torment Cells</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="11" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="11" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Torture Cages</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="11" Grid.Column="2" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="11" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sadist's Den</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="11" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="11" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Room contains 3/5/7 Tormented Spirits</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="11" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="11" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Strongbox Chamber-->
+                    <Rectangle Grid.Row="12" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="12" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Strongbox Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="12" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="12" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Locks</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="12" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="12" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Court of Sealed Death</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="12" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="12" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Room contains 2/4/6 Strongboxes</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="12" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="12" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Hall of Mettle-->
+                    <Rectangle Grid.Row="13" Grid.Column="0" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="13" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Mettle</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="13" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="13" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Heroes</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="13" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="13" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Legends</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="13" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="13" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level1: Timeless Monolith</Span>
+                        <Span>Level 1: Timeless Monolith</Span>
                         <LineBreak/>
-                        <Span>Level2: Guaranteed War Hoard</Span>
+                        <Span>Level 2: Guaranteed War Hoard</Span>
                         <LineBreak/>
-                        <Span>Level3: Guaranteed General</Span>
+                        <Span>Level 3: Guaranteed General</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="13" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="13" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Sacrifical Chamber-->
+                    <Rectangle Grid.Row="14" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="14" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sacrifical Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="14" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="14" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Offerings</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="14" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="14" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Apex of Ascension</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="14" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="14" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level1: Change Unique to other</Span>
+                        <Span>Level 1: Change Unique to other</Span>
                         <LineBreak/>
-                        <Span>Level2: Can obtain League Specific Items</Span>
+                        <Span>Level 2: Can obtain League Specific Items</Span>
                         <LineBreak/>
-                        <Span>Level3: Unique item of same class/Vial Update</Span>
+                        <Span>Level 3: Unique item of same class/Vial Update</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="14" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="14" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Storage Room-->
+                    <Rectangle Grid.Row="15" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="15" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Storage Room</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="15" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="15" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Warehouses</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="15" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="15" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Museum of Artifacts</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="15" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="15" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Random item-specific Chests</Span>
                         <LineBreak/>
-                        <Span>Level3: League Specific items possible</Span>
+                        <Span>Level 3: League Specific items possible</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="15" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="15" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                     </TextBlock>
                     <!--Corruption Chamber-->
+                    <Rectangle Grid.Row="16" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="16" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Corruption Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="16" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="16" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Catalyst of Corruption</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="16" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="16" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Locus of Corruption</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="16" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="16" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Double Corruption</Span>
+                        <Span>Level 3: Double Corruption</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="16" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="16" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>-6/8/10 % maximum Player Resistances</Span>
                     </TextBlock>
                     <!--Shrine of Empowerment-->
+                    <Rectangle Grid.Row="17" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="17" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Shrine of Empowerment</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="17" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="17" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sanctum of Unity</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="17" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="17" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Temple Nexus</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="17" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="17" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Upgrades connected rooms by 1</Span>
+                        <Span>Level 3: Upgrades connected rooms by 1 tier</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="17" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="17" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>10/15/20 % increased Attack/Cast Speed</Span>
                     </TextBlock>
                     <!--Tempest Generator-->
+                    <Rectangle Grid.Row="18" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="18" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Tempest Generator</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="18" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="18" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hurricane Engine</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="18" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="18" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Storm of Corruption</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="18" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="18" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Item with Topotante Mod</Span>
+                        <Span>Level 3: Item with Topotante Mod</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="18" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="18" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Add Tempests</Span>
                     </TextBlock>
                     <!--Posion Garden-->
+                    <Rectangle Grid.Row="19" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="19" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Poison Garden</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="19" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="19" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Cultivar Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="19" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="19" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Toxic Grove</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="19" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="19" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Chaos Damge Rank 3 Recipe</Span>
                         <LineBreak/>
-                        <Span>Level3: Item with Tacati mod or Unique</Span>
+                        <Span>Level 3: Item with Tacati mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="19" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="19" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Spawn Caustic Ground Plants</Span>
                     </TextBlock>
                     <!--Trap Workshop-->
+                    <Rectangle Grid.Row="20" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="20" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Trap Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="20" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="20" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Temple Defense Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="20" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="20" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Defense Research Lab</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="20" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="20" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Traps and Mines Rank 2 Recipe</Span>
                         <LineBreak/>
-                        <Span>Level3: Item with Matatl mod or Unique</Span>
+                        <Span>Level 3: Item with Matatl mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="20" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="20" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Adds Labyrinth Traps</Span>
                     </TextBlock>
                     <!--Pools of Restoration-->
+                    <Rectangle Grid.Row="21" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="21" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Pools of Restoration</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="21" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="21" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sanctum of Vitality</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="21" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="21" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Sanctum of Immortality</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="21" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="21" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Leech Rank 2 Recipe</Span>
                         <LineBreak/>
-                        <Span>Level3: Item with Guatelitzi mod or Unique</Span>
+                        <Span>Level 3: Item with Guatelitzi mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="21" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="21" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Monsters regenerate 4/6/8 % Life per Second</Span>
                     </TextBlock>
                     <!--Flame Workshop-->
+                    <Rectangle Grid.Row="22" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="22" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Flame Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="22" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="22" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Omnitect Forge</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="22" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="22" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Crucible of Flame</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="22" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="22" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Item with Puhuarte mod or Unique</Span>
+                        <Span>Level 3: Item with Puhuarte mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="22" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="22" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Augments the Omitect with fire</Span>
                     </TextBlock>
                     <!--Lightning Workshop-->
+                    <Rectangle Grid.Row="23" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="23" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Lightning Workshop</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="23" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="23" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Omnitect Reactor Plant</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="23" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="23" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Conduit of Lightning</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="23" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="23" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Item with Xopec mod or Unique</Span>
+                        <Span>Level 3: Item with Xopec mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="23" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="23" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Augments the Omnitect with Lightning</Span>
                     </TextBlock>
                     <!--Hatchery-->
+                    <Rectangle Grid.Row="24" Grid.Column="0" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="24" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hatchery</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="24" Grid.Column="1" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="24" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Automaton Lab</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="24" Grid.Column="2" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="24" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hybridisation Chamber</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="24" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="24" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Item with Citaqualotl mod or Unique</Span>
+                        <Span>Level 3: Item with Citaqualotl mod or Unique</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="24" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="24" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Augments the Omnitect with Minions</Span>
                     </TextBlock>
                     <!--Royal Meeting Room-->
+                    <Rectangle Grid.Row="25" Grid.Column="0" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="25" Grid.Column="0" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Royal Meeting Room</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="25" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="25" Grid.Column="1" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Hall of Lords</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="25" Grid.Column="2" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <TextBlock Grid.Row="25" Grid.Column="2" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>Throne of Atziri</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="25" Grid.Column="3" Stroke="Black" />
                     <TextBlock Grid.Row="25" Grid.Column="3" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
-                        <Span>Level3: Atziri Boss</Span>
+                        <Span>Level 3: Atziri Boss</Span>
                     </TextBlock>
+                    <Rectangle Grid.Row="25" Grid.Column="4" Stroke="Black" />
                     <TextBlock Grid.Row="25" Grid.Column="4" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FontWeight="Bold">
                         <Span>10/15/20 % increased Attack/Cast Speed</Span>
                     </TextBlock>
