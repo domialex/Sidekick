@@ -29,6 +29,7 @@ namespace Sidekick.Business.Languages.Client
         string DescriptionItemRarity { get; }
         string DescriptionMonsterPackSize { get; }
         string DescriptionExperience { get; }
+        string DescriptionOrgan { get; }
 
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }

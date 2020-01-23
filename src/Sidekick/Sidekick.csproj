@@ -6,6 +6,8 @@
     <TargetFramework>net48</TargetFramework>
     <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <FileVersion>0.4.0.0</FileVersion>
     <!-- TODO: Add dotnet core support in MouseKeyHook, remove System.Windows.Forms reference, ... profit
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PublishSingleFile>true</PublishSingleFile>
@@ -15,20 +17,48 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="Resources\ExaltedOrb.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Compile Remove="Helpers\POEDbAPI\**" />
+    <EmbeddedResource Remove="Helpers\POEDbAPI\**" />
+    <None Remove="Helpers\POEDbAPI\**" />
+    <Page Remove="Helpers\POEDbAPI\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
+    <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
+    <None Remove="Windows\LeagueOverlay\img\Cameria.png" />
+    <None Remove="Windows\LeagueOverlay\img\Elreon.png" />
+    <None Remove="Windows\LeagueOverlay\img\Gravicius.png" />
+    <None Remove="Windows\LeagueOverlay\img\Guff.png" />
+    <None Remove="Windows\LeagueOverlay\img\Haku.png" />
+    <None Remove="Windows\LeagueOverlay\img\Hillock.png" />
+    <None Remove="Windows\LeagueOverlay\img\It_That_Fled.png" />
+    <None Remove="Windows\LeagueOverlay\img\Janus.png" />
+    <None Remove="Windows\LeagueOverlay\img\Jorgin.png" />
+    <None Remove="Windows\LeagueOverlay\img\Korell.png" />
+    <None Remove="Windows\LeagueOverlay\img\Leo.png" />
+    <None Remove="Windows\LeagueOverlay\img\Riker.png" />
+    <None Remove="Windows\LeagueOverlay\img\Rin.png" />
+    <None Remove="Windows\LeagueOverlay\img\Tora.png" />
+    <None Remove="Windows\LeagueOverlay\img\Vagan.png" />
+    <None Remove="Windows\LeagueOverlay\img\Vorici.png" />
   </ItemGroup>
     
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.191211002" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <!-- TODO: MouseKeyHook support for netcoreapp3.1? - https://github.com/gmamaladze/globalmousekeyhook -->
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     <PackageReference Include="WindowsBase" Version="4.6.1055.0" />
     <PackageReference Include="WindowsHook" Version="1.0.1" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
     
   <ItemGroup>
@@ -40,6 +70,62 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>  
+  <ItemGroup>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Aisling.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Cameria.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Elreon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Gravicius.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Guff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Haku.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Hillock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\It_That_Fled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Janus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Jorgin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Korell.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Leo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Riker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Rin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Tora.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Vagan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Vorici.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>  
+  <ItemGroup>
+    <Resource Include="Resources\ExaltedOrb.ico" />
   </ItemGroup>
 
   <ItemGroup>

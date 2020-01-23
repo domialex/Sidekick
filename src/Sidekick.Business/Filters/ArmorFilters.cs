@@ -1,19 +1,19 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
     public class ArmorFilters
     {
-        [JsonProperty(PropertyName = "ar")]
+        [JsonPropertyName("ar")]
         public FilterValue Armor { get; set; }
 
-        [JsonProperty(PropertyName = "es")]
+        [JsonPropertyName("es")]
         public FilterValue EnergyShield { get; set; }
 
-        [JsonProperty(PropertyName = "ev")]
+        [JsonPropertyName("ev")]
         public FilterValue Evasion { get; set; }
 
-        [JsonProperty(PropertyName = "block")]
+        [JsonPropertyName("block")]
         public FilterValue Block { get; set; }
     }
 }

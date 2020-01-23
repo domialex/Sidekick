@@ -25,7 +25,7 @@ namespace Sidekick.Helpers
             Legacy.UILanguageProvider.UILanguageChanged += ReloadUI;
         }
 
-        public static Task ReloadUI()
+        public static void ReloadUI()
         {
             var settings = SettingsController.GetSettingsInstance();
             var contextMenu = new ContextMenuStrip();
@@ -66,7 +66,6 @@ namespace Sidekick.Helpers
             contextMenu.Items.Add(settings.CurrentUILanguageProvider.Language.TrayIconExit, null, (s, e) => Application.Exit());
 
             NotifyIcon.ContextMenuStrip = contextMenu;
-            return Task.CompletedTask;
         }
 
         public static void SendNotification(string text, string title = null)

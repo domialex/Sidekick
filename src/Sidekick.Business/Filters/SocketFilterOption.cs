@@ -1,19 +1,19 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Sidekick.Business.Filters
 {
     public class SocketFilterOption : FilterValue
     {
-        [JsonProperty(PropertyName = "r")]
+        [JsonPropertyName("r")]
         public int? Red { get; set; }
 
-        [JsonProperty(PropertyName = "g")]
+        [JsonPropertyName("g")]
         public int? Green { get; set; }
 
-        [JsonProperty(PropertyName = "b")]
+        [JsonPropertyName("b")]
         public int? Blue { get; set; }
 
-        [JsonProperty(PropertyName = "w")]
+        [JsonPropertyName("w")]
         public int? White { get; set; }
     }
 }

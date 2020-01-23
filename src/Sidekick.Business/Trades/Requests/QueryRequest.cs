@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
-using System;
-using System.Collections.Generic;
 
 namespace Sidekick.Business.Trades.Requests
 {
@@ -100,6 +100,14 @@ namespace Sidekick.Business.Trades.Requests
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
             }
+            else if (itemType == typeof(OrganItem))
+            {
+                Query.Term = item.Name;
+                Query.Filters.TypeFilter.Filters.Category = new FilterOption()
+                {
+                    Option = "monster.sample"
+                };
+            }
             else if (itemType == typeof(CurrencyItem))
             {
                 Query.Type = item.Name;
@@ -144,6 +152,7 @@ namespace Sidekick.Business.Trades.Requests
             {
                 if (((MapItem)item).Rarity == language.RarityUnique)
                 {
+                    Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
                     {
                         Option = "Unique",
