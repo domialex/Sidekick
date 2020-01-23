@@ -20,11 +20,44 @@ namespace Sidekick.Windows.LeagueOverlay
     /// </summary>
     public partial class LeagueOverlayView : Window
     {
+        private Dictionary<TabItem, int[]> tabPageSizeDictionary;
+        private TabItem CurrentPage;
+
         public LeagueOverlayView()
         {
             InitializeComponent();
             UpdateBetrayalUIText();
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
+            tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
+            {
+                { tabItemIncursion, new[] { 980, 1025 } },
+                { tabItemDelve, new[] { 500, 500 } },
+                { tabItemBetrayal, new[] { 520, 1200 } },
+                { tabItemBlight, new[] { 500, 500 } },
+                { tabItemMetamorph, new[] { 500, 500 } },
+            };
+            tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
+            CurrentPage = tabItemIncursion;
+        }
+
+        private void TabControlLeagueOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CurrentPage = tabControlLeagueOverlay.SelectedItem as TabItem;
+            SetCurrentPageWindowSize();
+        }
+
+        private void SetCurrentPageWindowSize()
+        {
+            if(CurrentPage != null)
+            {
+                if(!tabPageSizeDictionary.TryGetValue(CurrentPage, out var windowSize))
+                {
+                    throw new Exception("Window Size for TabPage is not defined correctly");
+                }
+
+                Height = windowSize[0];
+                Width = windowSize[1];
+            }
         }
 
         private void UpdateBetrayalUIText()
