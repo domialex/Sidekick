@@ -24,6 +24,7 @@ namespace Sidekick.Business.Languages.Client.Implementations
         public string DescriptionSockets => "Châsses: ";
         public string DescriptionItemLevel => "Niveau de l'objet: ";
         public string DescriptionExperience => "Expérience: ";
+        public string DescriptionOrgan => "Aptitude : ";
         public string PrefixSuperior => "supérieure";
         public string InfluenceShaper => "Façonneur";
         public string InfluenceElder => "l'Ancien";
