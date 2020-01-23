@@ -22,6 +22,12 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string OverlayItemLevel => "iLvl";
         public string OverlayAge => "Age";
 
+        public string LeagueLegendVeryValuable => "Very Valuable";
+        public string LeagueLegendValuable => "Valuable";
+        public string LeagueLegendLessValuable => "Less valuable";
+        public string LeagueLegendNotValuable => "Not valuable";
+
+        #region Betrayal
         public string BetrayalAislingTransportaion => "Veiled\nWeapons";
         public string BetrayalAislingFortification => "Veiled\nArmor";
         public string BetrayalAislingResearch => "Add Veiled\nMod(s)";
@@ -90,10 +96,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BetrayalVoriciFortification => "Linking\nCurrency";
         public string BetrayalVoriciResearch => "White\nSocktes";
         public string BetrayalVoriciIntervention => "Shaper\nScarab";
-        public string BetrayalLegendVeryValuable => "Very Valuable";
-        public string BetrayalLegendValuable => "Valuable";
-        public string BetrayalLegendLessValuable => "Less valuable";
-        public string BetrayalLegendNotValuable => "Not valuable";
 
         public string BetrayalAislingResearchTooltip => "Level1: 1 Mod\nLevel2: Low Chance for 2 Mods\nLevel3: 2 Mods";
         public string BetrayalCameriaTransportationTooltip => "League Specific Items\n(Headhunter possible)";
@@ -112,5 +114,128 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BetrayalToraFortificationTooltip => "Level1: Gloves\nLevel2: Boots\nLevel3: Helmet";
         public string BetrayalToraResearchTooltip => "Level1: 20m Exp\nLevel2: 70m Exp\nLevel3: 200m Exp";
         public string BetrayalVoriceResearchTooltip => "Level1: 1 White Socket\nLevel2: 1-2 White Sockets\nLevel3: 1-3 White Sockets";
+
+        #endregion
+
+        #region Incursion
+
+        public string IncursionGuardhouse => "Guardhouse";
+        public string IncursionBarracks => "Barracks";
+        public string IncursionHallOfWar => "Hall of War";
+        public string IncursionGuardhouseModifiers => "+10/20/30 % Monster Pack Size";
+        public string IncursionWorkshop => "Workshop";
+        public string IncursionEngineeringDepartment => "Engineering Department";
+        public string IncursionFactory => "Factory";
+        public string IncursionWorkshopContains => "Criticals Rank 3 Recipe";
+        public string IncursionWorkshopModifiers => "5/10/15 % increased Quantity of Items\nUnique Boss has 15/25/35 % increased Life";
+        public string IncursionExplosivesRoom => "Explosives Room";
+        public string IncursionDemolitionLab => "Demolition Lab";
+        public string IncursionShrineOfUnmaking => "Shrine of Unmaking";
+        public string IncursionExplosivesRoomContains => "1/2/3 Explosive Kegs\n[Used to unlock doors]";
+        public string IncursionSplinterResearchLab => "Splinter Research Lab";
+        public string IncursionBreachContainmentChamber => "Breach Containment Chamber";
+        public string IncursionHouseOfOthers => "House of the Others";
+        public string IncursionSplinterResearchLabContains => "Level 1: 2 Clasped Hands\nLevel 2: 1 Breach\nLevel 3: 3 Breaches";
+        public string IncursionVault => "Vault";
+        public string IncursionTreasury => "Treasury";
+        public string IncursionWealthOfTheVaal => "Wealth of the Vaal";
+        public string IncursionVaultContains => "Currency Items inckuding Stacks and Shards";
+        public string IncursionSparringRoom => "Sparring Room";
+        public string IncursionArenaOfValour => "Arena of Valour";
+        public string IncursionHallOfChampions => "Hall of Champions";
+        public string IncursionSparringRoomContains => "     Weapons\nAccuracy Rank 3 Recipe";
+        public string IncursionSparringRoomModifiers => "10/15/20 % increased Monster Damage";
+        public string IncursionArmourersWorkshop => "Armourer's Workshop";
+        public string IncursionArmoury => "Armoury";
+        public string IncursionChamberOfIron => "Chamber of Iron";
+        public string IncursionArmourersWorkshopContains => "     Armour\nAnimate Guardian Recipe";
+        public string IncursionArmourersWorkshopModifiers => "10/20/30 & more Monster Life";
+        public string IncursionJewellersWorkshop => "Jeweller's Workshop";
+        public string IncursionJewelleryForge => "Jewellery Forge";
+        public string IncursionGlitteringHalls => "Glittering Halls";
+        public string IncursionJewellersWorkshopContains => "Jewellery, Talismans, Div Cards";
+        public string IncursionSurveyorsStudy => "Surveyor's Study";
+        public string IncursionOfficeOfCartography => "Office of Cartography";
+        public string IncursionAtlasOfWorlds => "Atlas of Worlds";
+        public string IncursionSurveyorsStudyContains => "Maps (possible Vaal Prefix)";
+        public string IncursionGemcuttersWorkshop => "Gemcutter's Workshop";
+        public string IncursionDepartmentOfThaumaturgy => "Department of Thaumaturgy";
+        public string IncursionDoryanisInstitute => "Doryani's Institute";
+        public string IncursionGemcuttersWorkshopContains => "     Gems\nLevel 3: Double Gem Corruption";
+        public string IncursionTormentCells => "Torment Cells";
+        public string IncursionTortureCages => "Torture Cages";
+        public string IncursionSadistsDen => "Sadist's Den";
+        public string IncursionTormentCellsContains => "Room contains 3/5/7 Tormented Spirits";
+        public string IncursionStrongboxChamber => "Strongbox Chamber";
+        public string IncursionHallOfLocks => "Hall of Locks";
+        public string IncursionCourtOfTheSealedDeath => "Court of Sealed Death";
+        public string IncursionStrongboxChamberContains => "Room contains 2/4/6 Stringboxes";
+        public string IncursionHallOfMettle => "Hall of Mettle";
+        public string IncursionHallOfHeroes => "Hall of Heroes";
+        public string IncursionHallOfLegends => "Hall of Legends";
+        public string IncursionHallOfMettleContains => "Level 1: Timeless Monolith\nLevel 2: Guaranteed War Hoard\nLevel 3: Guaranteed General";
+        public string IncursionSacrificalChamber => "Sacrifical Chamber";
+        public string IncursionHallOfOfferings => "Hall of Offerings";
+        public string IncursionApexOfAscension => "Apex of Ascension";
+        public string IncursionSacrificalChamberContains => "Level 1: Change Unique to other\nLevel 2: Can obtain League Specific Items\nLevel 3: Unique Item of same class/Vial Upgrade";
+        public string IncursionStorageRoom => "Storage Room";
+        public string IncursionWarehouses => "Warehouses";
+        public string IncursionMuseumOfArtifacts => "Museum of Artifacts";
+        public string IncursionStorageRoomContains => "Random Item-Specific Chests\nLevel 3: League Specific Items possible";
+        public string IncursionCorruptionChamber => "Corruption Chamber";
+        public string IncursionCatalystOfCorruption => "Catalyst of Corruption";
+        public string IncursionLocuOfCorruption => "Locus of Corruption";
+        public string IncursionCorruptionChamberContains => "Level 3: Double Corruption";
+        public string IncursionCorruptionChamberModifiers => "-6/8/10 % maximum Player Resistances";
+        public string IncursionShrineOfEmpowerment => "Shrine of Empowerment";
+        public string IncursionSanctumOfUnity => "Sanctum of Unity";
+        public string IncursionTempleNexus => "Temple Nexus";
+        public string IncursionShrineOfEmpowermentContains => "Level 3: Upgrade connected rooms by 1 tier";
+        public string IncursionShrineOfEmpowermentModifiers => "10/15/20 % increased Attack/Cast Speed";
+        public string IncursionTempestGenerator => "Tempest Generator";
+        public string IncursionHurricaneEngine => "Hurricane Engine";
+        public string IncursionStormOfCorruption => "Storm of Corruption";
+        public string IncursionTempestGeneratorContains => "Level 3: Topolante Mod";
+        public string IncursionTempestGeneratorModifiers => "Adds Tempests";
+        public string IncursionPoisionGarden => "Posion Garden";
+        public string IncursionCultivarChamber => "Cultivar Chamber";
+        public string IncursionToxicGrove => "Toxic Grove";
+        public string IncursionPosionGardenContains => "Chaos Damage Rank 3 Recipe\nLevel 3: Tacati Mod or Apep's Slumber";
+        public string IncursionPoisonGardenModifiers => "Spawn Caustic Ground Plants";
+        public string IncursionTrapWorkshop => "Trap Workshop";
+        public string IncursionTempleDefenseWorkshop => "Temple Defense Workshop";
+        public string IncursionDefenseResearchLab => "Denfense Research Lab";
+        public string IncursionTrapWorkshopContains => "Traps and Mines Rank 2 Recipe\nLevel 3: Matatl Mod or Architect's Hand";
+        public string IncursionTrapWorkshopModifiers => "Adds Labyrinth Traps";
+        public string IncursionPoolsOfRestoration => "Pools of Restoration";
+        public string IncursionSanctumOfVitality => "Sanctum of Vitality";
+        public string IncursionSanctumOfImmortality => "Sanctum of Immortality";
+        public string IncursionPoolsOfRestorationContains => "     Leech Rank 2 Recipe\nLevel 3: Guatelitzi Mod or Mask of the Spirit Drinker";
+        public string IncursionPoolsOfRestorationModifiers => "Monster regenerate 4/6/8 % Life per Second";
+        public string IncursionFlameWorkshop => "Flame Workshop";
+        public string IncursionOmnitectForge => "Omnitect Forge";
+        public string IncursionCrucibleOfFlame => "Crucible of Flame";
+        public string IncursionFlameWorkshopContains => "Level 3: Puhuarte Mod or Story of the Vaal";
+        public string IncursionFlameWorkshopModifiers => "Augments the Omnitect with fire";
+        public string IncursionLightningWorkshop => "Lightning Workshop";
+        public string IncursionOmnitectReactorPlant => "Omnitect Reactor Plant";
+        public string IncursionConduitOfLightning => "Conduit of Lightning";
+        public string IncursionLightningWorkshopContains => "Level 3: Xopec Mod or Dance o fthe Offered";
+        public string IncursionLightningWorkshopModifiers => "Augments the Omnitect with lightning";
+        public string IncursionHatchery => "Hatchery";
+        public string IncursionAutomationLab => "Automation Lab";
+        public string IncursionHybridisationChamber => "Hybridisation Chamber";
+        public string IncursionHatcheryContains => "Level 3: Citaqualotl Mod or Coward's Chains";
+        public string IncursionHatcheryModifiers => "Augments the Omnitect with minions";
+        public string IncursionRoyalMeetingRoom => "Royal Meeting Room";
+        public string IncursionHallOfLords => "Hall of Lords";
+        public string IncursionThroneOfAtziri => "Throne of Atziri";
+        public string IncursionRoyalMeetingRoomContains => "Level 3: Atziri Boss";
+        public string IncursionRoyalMeetingRoomModifiers => "10/15/20 % increased Attack/Cast Speed";
+
+        public string IncursionHeaderContains => "Contains";
+        public string IncursionHeaderModifiers => "Modifiers";
+
+        #endregion
     }
 }

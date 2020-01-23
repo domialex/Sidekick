@@ -27,10 +27,12 @@ namespace Sidekick.Windows.LeagueOverlay
         {
             InitializeComponent();
             UpdateBetrayalUIText();
+            UpdateIncursionUIText();
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
-                { tabItemIncursion, new[] { 980, 1030 } },
+                { tabItemIncursion, new[] { 980, 1050 } },
                 { tabItemDelve, new[] { 500, 500 } },
                 { tabItemBetrayal, new[] { 520, 1200 } },
                 { tabItemBlight, new[] { 500, 500 } },
@@ -60,6 +62,157 @@ namespace Sidekick.Windows.LeagueOverlay
                 tabControlLeagueOverlay.Height = windowSize[0];
                 tabControlLeagueOverlay.Width = windowSize[1];
             }
+        }
+
+        private void UpdateIncursionUIText()
+        {
+            var settings = SettingsController.GetSettingsInstance();
+
+            labelIncursionHeaderContains.Content = settings.CurrentUILanguageProvider.Language.IncursionHeaderContains;
+            labelIncursionHeaderModifiers.Content = settings.CurrentUILanguageProvider.Language.IncursionHeaderModifiers;
+
+            labelIncursionLegendVeryValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendVeryValuable;
+            labelIncursionLegendValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendValuable;
+            labelIncursionLegendNotValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendNotValuable;
+            labelIncursionLegendLessValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendLessValuable;
+
+            textBlockGuardhouse.Text = settings.CurrentUILanguageProvider.Language.IncursionGuardhouse;
+            textBlockBarracks.Text = settings.CurrentUILanguageProvider.Language.IncursionBarracks;
+            textBlockHallOfWar.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfWar;
+            textBlockGuardhouseModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionGuardhouseModifiers;
+
+            textBlockWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionWorkshop;
+            textBlockWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionWorkshopContains;
+            textBlockWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionWorkshopModifiers;
+            textBlockEngineeringDepartment.Text = settings.CurrentUILanguageProvider.Language.IncursionEngineeringDepartment;
+            textBlockFactory.Text = settings.CurrentUILanguageProvider.Language.IncursionFactory;
+
+            textBlockExplosivesRoom.Text = settings.CurrentUILanguageProvider.Language.IncursionExplosivesRoom;
+            textBlockExplosivesRoomContains.Text = settings.CurrentUILanguageProvider.Language.IncursionExplosivesRoomContains;
+            textBlockDemolitionLab.Text = settings.CurrentUILanguageProvider.Language.IncursionDemolitionLab;
+            textBlockShrineOfUnmaking.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfUnmaking;
+
+            textBlockSplinterReasearchLab.Text = settings.CurrentUILanguageProvider.Language.IncursionSplinterResearchLab;
+            textBlockSplinterResearchLabContains.Text = settings.CurrentUILanguageProvider.Language.IncursionSplinterResearchLabContains;
+            textBlockBreachContainmentChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionBreachContainmentChamber;
+            textBlockHouseOfTheOthers.Text = settings.CurrentUILanguageProvider.Language.IncursionHouseOfOthers;
+
+            textBlockVault.Text = settings.CurrentUILanguageProvider.Language.IncursionVault;
+            textBlockVaultContains.Text = settings.CurrentUILanguageProvider.Language.IncursionVaultContains;
+            textBlockTreasury.Text = settings.CurrentUILanguageProvider.Language.IncursionTreasury;
+            textBlockWealthOfTheVaal.Text = settings.CurrentUILanguageProvider.Language.IncursionWealthOfTheVaal;
+
+            textBlockSparringRoom.Text = settings.CurrentUILanguageProvider.Language.IncursionSparringRoom;
+            textBlockSparringRoomContains.Text = settings.CurrentUILanguageProvider.Language.IncursionSparringRoomContains;
+            textBlockSparringRoomModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionSparringRoomModifiers;
+            textBlockArenaOfValour.Text = settings.CurrentUILanguageProvider.Language.IncursionArenaOfValour;
+            textBlockHallOfChampions.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfChampions;
+
+            textBlockArmourersWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionArmourersWorkshop;
+            textBlockArmourersWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionArmourersWorkshopContains;
+            textBlockArmourersWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionArmourersWorkshopModifiers;
+            textBlockArmoury.Text = settings.CurrentUILanguageProvider.Language.IncursionArmoury;
+            textBlockChamberOfIron.Text = settings.CurrentUILanguageProvider.Language.IncursionChamberOfIron;
+
+            textBlockJewellersWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionJewellersWorkshop;
+            textBlockJewellersWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionJewellersWorkshopContains;
+            textBlockJewelleryForge.Text = settings.CurrentUILanguageProvider.Language.IncursionJewelleryForge;
+            textBlockGlitteringHalls.Text = settings.CurrentUILanguageProvider.Language.IncursionGlitteringHalls;
+
+            textBlockSurveyorsStudy.Text = settings.CurrentUILanguageProvider.Language.IncursionSurveyorsStudy;
+            textBlockSurveyorsStudyContains.Text = settings.CurrentUILanguageProvider.Language.IncursionSurveyorsStudyContains;
+            textBlockOfficeOfCartography.Text = settings.CurrentUILanguageProvider.Language.IncursionOfficeOfCartography;
+            textBlockAtlasOfWorlds.Text = settings.CurrentUILanguageProvider.Language.IncursionAtlasOfWorlds;
+
+            textBlockGemcuttersWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionGemcuttersWorkshop;
+            textBlockGemcuttersWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionGemcuttersWorkshop;
+            textBlockDepartmentOfThaumaturgy.Text = settings.CurrentUILanguageProvider.Language.IncursionDepartmentOfThaumaturgy;
+            textBlockDoryanisInstitute.Text = settings.CurrentUILanguageProvider.Language.IncursionDoryanisInstitute;
+
+            textBlockTormentCell.Text = settings.CurrentUILanguageProvider.Language.IncursionTormentCells;
+            textBlockTormentCellsContain.Text = settings.CurrentUILanguageProvider.Language.IncursionTormentCellsContains;
+            textBlockTortureCages.Text = settings.CurrentUILanguageProvider.Language.IncursionTortureCages;
+            textBlockSadistsDen.Text = settings.CurrentUILanguageProvider.Language.IncursionSadistsDen;
+
+            textBlockStrongboxChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionStrongboxChamber;
+            textBlockStrongboxChamberContains.Text = settings.CurrentUILanguageProvider.Language.IncursionStrongboxChamberContains;
+            textBlockHallOfLocks.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfLocks;
+            textBlockCourtOfSealedDeath.Text = settings.CurrentUILanguageProvider.Language.IncursionCourtOfTheSealedDeath;
+
+            textBlockHallOfMettle.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfMettle;
+            textBlockHallOfMettleContains.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfMettleContains;
+            textBlockHallOfHeroes.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfHeroes;
+            textBlockHallOfLegends.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfLegends;
+
+            textBlockSacrificalChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionSacrificalChamber;
+            textBlockSacrificalChamberContains.Text = settings.CurrentUILanguageProvider.Language.IncursionSacrificalChamberContains;
+            textBlockHallOfOfferings.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfOfferings;
+            textBlockApexOfAscension.Text = settings.CurrentUILanguageProvider.Language.IncursionApexOfAscension;
+
+            textBlockStorageRoom.Text = settings.CurrentUILanguageProvider.Language.IncursionStorageRoom;
+            textBlockStorageRoomContains.Text = settings.CurrentUILanguageProvider.Language.IncursionStorageRoomContains;
+            textBlockWarehouses.Text = settings.CurrentUILanguageProvider.Language.IncursionWarehouses;
+            textBlockMuseumOfArtifacts.Text = settings.CurrentUILanguageProvider.Language.IncursionMuseumOfArtifacts;
+
+            textBlockCorruptionChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionCorruptionChamber;
+            textBlockCorruptionChamberContains.Text = settings.CurrentUILanguageProvider.Language.IncursionCorruptionChamberContains;
+            textBlockCorruptionChamberModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionCorruptionChamberModifiers;
+            textBlockCatalystOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionCatalystOfCorruption;
+            textBlockLocusOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionLocuOfCorruption;
+
+            textBlockShrineOfEmpowerment.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfEmpowerment;
+            textBlockShrineOfEmpowermentContains.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfEmpowermentContains;
+            textBlockShrineOfEmpowermentModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionShrineOfEmpowermentModifiers;
+            textBlockSanctumOfUnity.Text = settings.CurrentUILanguageProvider.Language.IncursionSanctumOfUnity;
+            textBlockTempleNexus.Text = settings.CurrentUILanguageProvider.Language.IncursionTempleNexus;
+
+            textBlockTempestGenerator.Text = settings.CurrentUILanguageProvider.Language.IncursionTempestGenerator;
+            textBlockTempestGeneratorContains.Text = settings.CurrentUILanguageProvider.Language.IncursionTempestGeneratorContains;
+            textBlockTempestGeneratorModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionTempestGeneratorModifiers;
+            textBlockHurricaneEngine.Text = settings.CurrentUILanguageProvider.Language.IncursionHurricaneEngine;
+            textBlockStormOfCorruption.Text = settings.CurrentUILanguageProvider.Language.IncursionStormOfCorruption;
+
+            textBlockPosionGarden.Text = settings.CurrentUILanguageProvider.Language.IncursionPoisionGarden;
+            textBlockPosiionGardenContains.Text = settings.CurrentUILanguageProvider.Language.IncursionPosionGardenContains;
+            textBlockPosionGardenModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionPoisonGardenModifiers;
+            textBlockCultivarChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionCultivarChamber;
+            textBlockToxicGrive.Text = settings.CurrentUILanguageProvider.Language.IncursionToxicGrove;
+
+            textBlockTrapWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshop;
+            textBlockTrapWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshopContains;
+            textBlockTrapWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionTrapWorkshopModifiers;
+            textBlockTempleDefenseWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionTempleDefenseWorkshop;
+            textBlockDefenseResearchLab.Text = settings.CurrentUILanguageProvider.Language.IncursionDefenseResearchLab;
+
+            textBlockPoolsOfRestoration.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestoration;
+            textBlockPoolsOfRestorationContains.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestorationContains;
+            textBlockPoolsOfRestorationModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionPoolsOfRestorationModifiers;
+            textBlockSanctumOfVitality.Text = settings.CurrentUILanguageProvider.Language.IncursionSanctumOfVitality;
+            textBlockSanctumOfImmortality.Text = settings.CurrentUILanguageProvider.Language.IncursionSanctumOfImmortality;
+
+            textBlockFlameWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshop;
+            textBlockFlameWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshopContains;
+            textBlockFlameWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionFlameWorkshopModifiers;
+            textBlockOmnitectForge.Text = settings.CurrentUILanguageProvider.Language.IncursionOmnitectForge;
+            textBlockCrucibleOfFlame.Text = settings.CurrentUILanguageProvider.Language.IncursionCrucibleOfFlame;
+
+            textBlockLightningWorkshop.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshop;
+            textBlockLightningWorkshopContains.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshopContains;
+            textBlockLightningWorkshopModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionLightningWorkshopModifiers;
+            textBlockOmnitectReactorPlant.Text = settings.CurrentUILanguageProvider.Language.IncursionOmnitectReactorPlant;
+            textBlockConduitOfLightning.Text = settings.CurrentUILanguageProvider.Language.IncursionConduitOfLightning;
+
+            textBlockHatchery.Text = settings.CurrentUILanguageProvider.Language.IncursionHatchery;
+            textBlockHatcherModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionHatcheryModifiers;
+            textBlockHatcheryContains.Text = settings.CurrentUILanguageProvider.Language.IncursionHatcheryContains;
+            textBlockAutomationLab.Text = settings.CurrentUILanguageProvider.Language.IncursionAutomationLab;
+            textBlockHybridisationChamber.Text = settings.CurrentUILanguageProvider.Language.IncursionHybridisationChamber;
+
+            textBlockRoyalMeetingRoom.Text = settings.CurrentUILanguageProvider.Language.IncursionRoyalMeetingRoom;
+            textBlockRoyalMeetingRoomContains.Text = settings.CurrentUILanguageProvider.Language.IncursionRoyalMeetingRoomContains;
+            textBlockRoyalMeetingRoomModifiers.Text = settings.CurrentUILanguageProvider.Language.IncursionRoyalMeetingRoomModifiers;
+            textBlockHallOfLords.Text = settings.CurrentUILanguageProvider.Language.IncursionHallOfLords;
+            textBlockThroneOfAtziri.Text = settings.CurrentUILanguageProvider.Language.IncursionThroneOfAtziri;
         }
 
         private void UpdateBetrayalUIText()
@@ -168,10 +321,10 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockVoriciResearch.ToolTip = settings.CurrentUILanguageProvider.Language.BetrayalVoriceResearchTooltip;
             textBlockVoriciTransportation.Text = settings.CurrentUILanguageProvider.Language.BetrayalVoriciTransportation;
 
-            labelLegendHighValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendVeryValuable;
-            labelLegendGoodValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendValuable;
-            labelLegendNormalValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendLessValuable;
-            labelLegendNoValue.Content = settings.CurrentUILanguageProvider.Language.BetrayalLegendNotValuable;
+            labelLegendHighValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendVeryValuable;
+            labelLegendGoodValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendValuable;
+            labelLegendNormalValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendLessValuable;
+            labelLegendNoValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendNotValuable;
         }
     }
 }
