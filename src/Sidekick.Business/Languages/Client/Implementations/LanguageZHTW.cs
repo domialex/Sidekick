@@ -24,6 +24,7 @@ namespace Sidekick.Business.Languages.Client.Implementations
         public string DescriptionSockets => "插槽: ";
         public string DescriptionItemLevel => "物品等級: ";
         public string DescriptionExperience => "經驗值: ";
+        public string DescriptionOrgan => "使用: ";
         public string PrefixSuperior => "精良的";
         public string InfluenceShaper => "塑者之物";
         public string InfluenceElder => "尊師之物";

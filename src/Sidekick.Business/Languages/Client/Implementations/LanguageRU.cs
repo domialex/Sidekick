@@ -36,6 +36,7 @@ namespace Sidekick.Business.Languages.Client.Implementations
         public string DescriptionMonsterPackSize => "Размер групп монстров: ";
         public string PrefixBlighted => "Заражённая";
         public string DescriptionExperience => "Опыт: ";
+        public string DescriptionOrgan => "Использует: ";
         public string KeywordProphecy => "пророчество";
         public string KeywordVaal => "Ваал";
         public string KeywordCatalyst => "катализатор";

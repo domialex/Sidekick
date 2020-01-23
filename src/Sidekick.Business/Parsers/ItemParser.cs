@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Maps;
@@ -6,9 +9,6 @@ using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Core.Loggers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sidekick.Business.Parsers
 {
@@ -39,7 +39,7 @@ namespace Sidekick.Business.Parsers
         public Item ParseItem(string itemText)
         {
             Item item = null;
-            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, hasNote;
+            bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, isOrgan, hasNote;
 
             try
             {
@@ -52,6 +52,7 @@ namespace Sidekick.Business.Parsers
                 isCorrupted = lines.Any(x => x == languageProvider.Language.DescriptionCorrupted);
                 isMap = lines.Any(x => x.Contains(languageProvider.Language.DescriptionMapTier));
                 isBlighted = lines.Any(x => x.Contains(languageProvider.Language.PrefixBlighted));
+                isOrgan = lines.Any(x => x.Contains(languageProvider.Language.DescriptionOrgan));
                 hasNote = lines.LastOrDefault().Contains("Note");
 
                 var rarity = lines[0].Replace(languageProvider.Language.DescriptionRarity, string.Empty);
@@ -95,6 +96,13 @@ namespace Sidekick.Business.Parsers
                     }
 
                     ((MapItem)item).IsBlight = isBlighted ? "true" : "false";
+                }
+                else if (isOrgan)
+                {
+                    item = new OrganItem
+                    {
+                        Name = lines[1]
+                    };
                 }
                 else if (rarity == languageProvider.Language.RarityUnique)
                 {
