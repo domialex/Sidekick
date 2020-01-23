@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Sidekick.Helpers.NativeMethods
 {
@@ -85,32 +87,20 @@ namespace Sidekick.Helpers.NativeMethods
             }
         }
 
-        public static async void SetText(string text)
+        public static async Task SetText(string text)
         {
             if (text == null)
                 text = string.Empty;
 
-            if (Thread.CurrentThread != Program.MAIN_DISPATCHER.Thread)
-            {
-                await Program.MAIN_DISPATCHER.InvokeAsync(() => SetText(text));
-                return;
-            }
-
-            System.Windows.Clipboard.SetText(text);
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => System.Windows.Clipboard.SetText(text));
         }
 
-        public static async void SetDataObject(object data)
+        public static async Task SetDataObject(object data)
         {
             if (data == null)
                 data = string.Empty;
 
-            if (Thread.CurrentThread != Program.MAIN_DISPATCHER.Thread)
-            {
-                await Program.MAIN_DISPATCHER.InvokeAsync(() => SetDataObject(data));
-                return;
-            }
-
-            System.Windows.Clipboard.SetDataObject(data);
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() => System.Windows.Clipboard.SetDataObject(data));
         }
     }
 }

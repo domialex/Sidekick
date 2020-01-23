@@ -58,7 +58,7 @@ namespace Sidekick.Helpers.Input
             _globalHook.OnSequence(assignment);
         }
 
-        private static void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
+        private static async void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
         {
             if (SettingsController.IsDisplayed)
             {
@@ -93,32 +93,32 @@ namespace Sidekick.Helpers.Input
                 if (setting == KeybindSetting.PriceCheck)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerItemFetch);
+                    await TriggerItemFetch();
                 }
                 else if (setting == KeybindSetting.ItemWiki)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerItemWiki);
+                    await TriggerItemWiki();
                 }
                 else if (setting == KeybindSetting.Hideout)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerHideout);
+                    TriggerHideout();
                 }
                 else if (setting == KeybindSetting.FindItems)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerFindItem);
+                    await TriggerFindItem();
                 }
                 else if (setting == KeybindSetting.LeaveParty)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerLeaveParty);
+                    TriggerLeaveParty();
                 }
                 else if (setting == KeybindSetting.OpenSearch)
                 {
                     e.Handled = true;
-                    Task.Run(TriggerOpenSearch);
+                    await TriggerOpenSearch();
                 }
             }
         }
@@ -142,7 +142,7 @@ namespace Sidekick.Helpers.Input
             }
         }
 
-        private static async void TriggerItemFetch()
+        private static async Task TriggerItemFetch()
         {
             Legacy.Logger.Log("Hotkey for pricing item triggered.");
 
@@ -178,8 +178,7 @@ namespace Sidekick.Helpers.Input
             Legacy.Logger.Log("Hotkey for leaving party triggered");
 
             // this operation is only valid if the user has added their character name to the settings file
-            string name = string.Empty;
-            SettingsController.GetSettingsInstance().GeneralSettings.TryGetValue(GeneralSetting.CharacterName, out name);
+            SettingsController.GetSettingsInstance().GeneralSettings.TryGetValue(GeneralSetting.CharacterName, out var name);
             if (string.IsNullOrEmpty(name))
             {
                 Legacy.Logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
@@ -192,7 +191,7 @@ namespace Sidekick.Helpers.Input
         /// <summary>
         /// Attempts to fill the search field of the stash tab with the current items name if any
         /// </summary>
-        private static async void TriggerFindItem()
+        private static async Task TriggerFindItem()
         {
             // Unregister input listeners to not end up in infinite loop since we are sending ctrl+f in the command here
             _handleEvents = false;
@@ -200,8 +199,9 @@ namespace Sidekick.Helpers.Input
             Legacy.Logger.Log("Hotkey for finding item triggered.");
 
             Business.Parsers.Models.Item item = null;
-            string clipboardContents = ClipboardHelper.GetText();
-            bool restoreClipboard = true;
+            var clipboardContents = ClipboardHelper.GetText();
+            var restoreClipboard = true;
+
             if (!string.IsNullOrEmpty(clipboardContents))
             {
                 // check if clipboard contains an old item copy
@@ -211,26 +211,28 @@ namespace Sidekick.Helpers.Input
             }
 
             // we still need to fetch the item under the cursor if any and make sure we don't use old contents
-            ClipboardHelper.SetText(string.Empty);
+            await ClipboardHelper.SetText(string.Empty);
             item = await TriggerCopyAction();
             if (item != null)
             {
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
                 string searchText = item.Name;
-                ClipboardHelper.SetText(searchText);
+                await ClipboardHelper.SetText(searchText);
 
                 SendKeys.SendWait(KeyCommands.FIND_ITEMS);
             }
 
-            Thread.Sleep(250);
+            await Task.Delay(250);
 
             if (restoreClipboard)
-                ClipboardHelper.SetText(clipboardContents);
+            {
+                await ClipboardHelper.SetText(clipboardContents);
+            }
 
             _handleEvents = true;
         }
 
-        public static async void TriggerItemWiki()
+        public static async Task TriggerItemWiki()
         {
             Legacy.Logger.Log("Hotkey for opening wiki triggered.");
 
@@ -252,7 +254,7 @@ namespace Sidekick.Helpers.Input
             SendKeys.SendWait(KeyCommands.HIDEOUT);
         }
 
-        public static async void TriggerOpenSearch()
+        public static async Task TriggerOpenSearch()
         {
             Legacy.Logger.Log("Hotkey for opening search query in browser triggered.");
 
@@ -272,19 +274,25 @@ namespace Sidekick.Helpers.Input
         {
             bool retain = bool.Parse(SettingsController.GetSettingsInstance()?.GeneralSettings[GeneralSetting.RetainClipboard] ?? "false");
             var clipboardText = string.Empty;
-            if (retain)
-                clipboardText = ClipboardHelper.GetText();
 
-            ClipboardHelper.SetDataObject(string.Empty);
+            if (retain)
+            {
+                clipboardText = ClipboardHelper.GetText();
+            }
+
+            await ClipboardHelper.SetDataObject(string.Empty);
 
             SendKeys.SendWait(KeyCommands.COPY);
-            Thread.Sleep(100);
+
+            await Task.Delay(100);
 
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
 
             if (retain)
-                ClipboardHelper.SetDataObject(clipboardText);
+            {
+                await ClipboardHelper.SetDataObject(clipboardText);
+            }
 
             if (string.IsNullOrWhiteSpace(itemText))
             {

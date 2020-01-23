@@ -1,10 +1,3 @@
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Trades.Results;
-using Sidekick.Helpers.POEPriceInfoAPI;
-using Sidekick.Windows.Overlay.UserControls;
-using Sidekick.Windows.Overlay.ViewModels;
-using Sidekick.Windows.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +6,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Trades.Results;
+using Sidekick.Windows.Overlay.UserControls;
+using Sidekick.Windows.Overlay.ViewModels;
+using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.Overlay
 {
@@ -39,7 +37,7 @@ namespace Sidekick.Windows.Overlay
         {
             get { return queryResultValue; }
             set { queryResultValue = value; NotifyPropertyChanged(); }
-        }            
+        }
 
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
@@ -55,7 +53,7 @@ namespace Sidekick.Windows.Overlay
             Hide();
         }
 
-        private Task UpdateUIText()
+        private void UpdateUIText()
         {
             var settings = SettingsController.GetSettingsInstance();
             textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
@@ -63,7 +61,6 @@ namespace Sidekick.Windows.Overlay
             textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
             textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
             textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
-            return Task.CompletedTask;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -101,10 +98,10 @@ namespace Sidekick.Windows.Overlay
         }
         delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
 
-        private async void GetPricePrediction(string itemText)
+        private async Task GetPricePrediction(string itemText)
         {
-            var predictionResult = await PriceInfoClient.GetItemPricePrediction(itemText);
-            if (predictionResult.ErrorCode != 0)
+            var predictionResult = await Legacy.PoePriceInfoClient.GetItemPricePrediction(itemText);
+            if (predictionResult?.ErrorCode != 0)
             {
                 return;
             }
