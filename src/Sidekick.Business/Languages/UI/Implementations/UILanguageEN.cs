@@ -343,5 +343,91 @@ namespace Sidekick.Business.Languages.UI.Implementations
                                                         "17-30% increased Minion Duration";
 
         #endregion
+
+        #region Blight
+
+        public string BlightClearOil => "Clear Oil";
+        public string BlightClearOilEffect => "+5% Monster Pack Size\n" +
+                                              "+10% reduced Monster Movement Speed";
+        public string BlightSepiaOil => "Sepia Oil";
+        public string BlightSepiaOilEffect => "+5% Monster Pack Size\n" +
+                                              "Towers deal 20% more Damage";
+        public string BlightAmberOil => "Amber Oil";
+        public string BlightAmberOilEffect => "+5% Monster Pack Size\n" +
+                                              "20% reduced Cost of Towers";
+        public string BlightVerdantOil => "Verdant Oil";
+        public string BlightVerdantOilEffect => "+15% Monster Pack Size";
+        public string BlightTealOil => "Teal Oil";
+        public string BlightTealOilEffect => "+5% Monster Pack Size\n" +
+                                             "2 Blight Chests are Lucky";
+        public string BlightAzureOil => "Azure Oil";
+        public string BlightAzureOilEffect => "+5% Monster Pack Size\n" +
+                                              "15% increased Experience";
+        public string BlightVioletOil => "Violet Oil";
+        public string BlightVioletOilEffect => "+5% Monster Pack Size\n" +
+                                               "30% increased Quantity of Items";
+        public string BlightCrimsonOil => "Crimson Oil";
+        public string BlightCrimsonOilEffect => "+5% Monster Pack Size\n" +
+                                                "3 Blight Chests are Lucky";
+        public string BlightBlackOil => "Black Oil";
+        public string BlightBlackOilEffect => "+5% Monster Pack Size\n" +
+                                              "10% chance for Blight Chests to have an\n" +
+                                              "additional reward" ;
+        public string BlightOpalescentOil => "Opalescent Oil";
+        public string BlightOpalescentOilEffect => "+25% Monster Pack Size";
+        public string BlightSilverOil => "Silver Oil";
+        public string BlightSilverOilEffect => "+5% Monster Pack Size\n" +
+                                               "5 Blight Chests are Lucky";
+        public string BlightGoldenOil => "Golden Oil";
+        public string BlightGoldenOilEffect => "+5% Monster Pack Size\n" +
+                                               "25% chance for Blight Chests to have an\n" +
+                                               "additional Reward";
+
+        #endregion
+
+        #region Metamorph
+
+        public string MetamorphAbrasiveCatalyst => "Abrasive Catalyst";
+
+        public string MetamorphAbrasiveCatalystEffect => "Add Quality that enchances\n" +
+                                                         "Attack modifiers";
+
+        public string MetamorphFertileCatalyst => "Fertile Catalyst";
+
+        public string MetamorphFertileCatalystEffect => "Add Quality that enhances\n" +
+                                                        "Life and Mana Modifiers";
+
+        public string MetamorphImbuedCatalyst => "Imbued Catalyst";
+
+        public string MetamorphImbuedCatalystEffect => "Add Quality that enhances\n" +
+                                                       "Caster Modifiers";
+
+        public string MetamorphIntrinsicCatalyst => "Intrinsic Catalyst";
+
+        public string MetamorphIntrinsicCatalystEffect => "Adds Quality that enhances\n" +
+                                                          "Attribute Modifiers";
+
+        public string MetamorphPrismaticCatalyst => "Prismatic Catalyst";
+
+        public string MetamorphPrismaticCatalystEffect => "Adds Quality that enhances\n" +
+                                                          "Resistance Modifiers";
+
+        public string MetamorphTemperingCatalyst => "Tempering Catalyst";
+
+        public string MetamorphTemperingCatalystEffect => "Add Quality that enhances\n" +
+                                                          "Defense Modifiers";
+
+        public string MetamorphTurbulentCatalyst => "Turbulent Catalyst";
+
+        public string MetamorphTurbulentCatalystEffect => "Adds Quality that enhances\n" +
+                                                          "Elemental Damage Modifiers";
+
+        public string MetamorphInformationHeader => "Information";
+
+        public string MetamorphInformationText => "Can be applied to: \n" +
+                                                  "Rings, Amulets, Belts \n" +
+                                                  "Applying a Catalyst removes all other Quality";
+
+        #endregion
     }
 }
