@@ -30,6 +30,18 @@
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Amber_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Azure_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Black_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Clear_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Crimson_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Golden_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Opalescent_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Sepia_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Silver_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Teal_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Verdant_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Violet_Oil.png" />
     <None Remove="Windows\LeagueOverlay\img\Cameria.png" />
     <None Remove="Windows\LeagueOverlay\img\Elreon.png" />
     <None Remove="Windows\LeagueOverlay\img\Gravicius.png" />
@@ -128,6 +140,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Vorici.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Amber_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Azure_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Black_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Clear_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Crimson_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Golden_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Opalescent_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Sepia_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Silver_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Teal_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Verdant_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Violet_Oil.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Abrasive_Catalyst.png">

@@ -28,14 +28,18 @@ namespace Sidekick.Windows.LeagueOverlay
             InitializeComponent();
             UpdateBetrayalUIText();
             UpdateIncursionUIText();
+            UpdateBlightUIText();
+            UpdateMetamorphUIText();
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBlightUIText;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateMetamorphUIText;
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
                 { tabItemIncursion, new[] { 980, 1050 } },
                 { tabItemDelve, new[] { 500, 500 } },
                 { tabItemBetrayal, new[] { 520, 1200 } },
-                { tabItemBlight, new[] { 500, 500 } },
+                { tabItemBlight, new[] { 605, 1165 } },
                 { tabItemMetamorph, new[] { 315, 1115 } },
             };
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
@@ -336,6 +340,81 @@ namespace Sidekick.Windows.LeagueOverlay
             labelLegendGoodValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendValuable;
             labelLegendNormalValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendLessValuable;
             labelLegendNoValue.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendNotValuable;
+        }
+
+        private void UpdateBlightUIText()
+        {
+            var settings = SettingsController.GetSettingsInstance();
+
+            labelBlightLegendLessValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendLessValuable;
+            labelBlightLegendNotValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendNotValuable;
+            labelBlightLegendValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendValuable;
+            labelBlightLegendVeryValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendVeryValuable;
+
+            labelClearOil.Content = settings.CurrentUILanguageProvider.Language.BlightClearOil;
+            textBlockClearOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightClearOilEffect;
+
+            labelSepiaOil.Content = settings.CurrentUILanguageProvider.Language.BlightSepiaOil;
+            textBlockSepiaOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightSepiaOilEffect;
+
+            labelAmberOil.Content = settings.CurrentUILanguageProvider.Language.BlightAmberOil;
+            textBlockAmberOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightAmberOilEffect;
+
+            labelVerdantOil.Content = settings.CurrentUILanguageProvider.Language.BlightVerdantOil;
+            textBlockVerdantOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightVerdantOilEffect;
+
+            labelTealOil.Content = settings.CurrentUILanguageProvider.Language.BlightTealOil;
+            textBlockTealOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightTealOilEffect;
+
+            labelAzureOil.Content = settings.CurrentUILanguageProvider.Language.BlightAzureOil;
+            textBlockAzureOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightAzureOilEffect;
+
+            labelVioletOil.Content = settings.CurrentUILanguageProvider.Language.BlightVioletOil;
+            textBlockVioletOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightVioletOilEffect;
+
+            labelCrimsonOil.Content = settings.CurrentUILanguageProvider.Language.BlightCrimsonOil;
+            textBlockCrimsonOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightCrimsonOilEffect;
+
+            labelBlackOil.Content = settings.CurrentUILanguageProvider.Language.BlightBlackOil;
+            textBlockBlackOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightBlackOilEffect;
+
+            labelOpalescentOil.Content = settings.CurrentUILanguageProvider.Language.BlightOpalescentOil;
+            textBlockOpalescentOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightOpalescentOilEffect;
+
+            labelSilverOil.Content = settings.CurrentUILanguageProvider.Language.BlightSilverOil;
+            textBlockSilverOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightSilverOilEffect;
+
+            labelGoldenOil.Content = settings.CurrentUILanguageProvider.Language.BlightGoldenOil;
+            textBlockGoldenOilEffect.Text = settings.CurrentUILanguageProvider.Language.BlightGoldenOilEffect;
+        }
+
+        private void UpdateMetamorphUIText()
+        {
+            var settings = SettingsController.GetSettingsInstance();
+
+            labelAbrasiveCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphAbrasiveCatalyst;
+            textBlockAbrasiveCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphAbrasiveCatalystEffect;
+
+            labelFertileCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphFertileCatalyst;
+            textBlockFertileCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphFertileCatalyst;
+
+            labelImbuedCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphImbuedCatalyst;
+            textBlockImbuedCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphImbuedCatalystEffect;
+
+            labelIntrinsicCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphIntrinsicCatalyst;
+            textBlockIntrinsicCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphIntrinsicCatalystEffect;
+
+            labelPrismaticCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphPrismaticCatalyst;
+            textBlockPrismaticCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphPrismaticCatalystEffect;
+
+            labelTemperingCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphTemperingCatalyst;
+            textBlockTemperingCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphTemperingCatalystEffect;
+
+            labelTurbulentCatalyst.Content = settings.CurrentUILanguageProvider.Language.MetamorphTurbulentCatalyst;
+            textBlockTurbulentCatalystEffect.Text = settings.CurrentUILanguageProvider.Language.MetamorphTurbulentCatalystEffect;
+
+            labelMetamorphInformation.Content = settings.CurrentUILanguageProvider.Language.MetamorphInformationHeader;
+            textBlockMetamorphInformationText.Text = settings.CurrentUILanguageProvider.Language.MetamorphInformationText;
         }
     }
 }

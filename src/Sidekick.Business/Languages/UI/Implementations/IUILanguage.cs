@@ -245,5 +245,55 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string IncursionCitaqualotlModTooltip { get; }
 
         #endregion
+
+        #region Blight
+
+        string BlightClearOil { get; }
+        string BlightClearOilEffect { get; }
+        string BlightSepiaOil { get; }
+        string BlightSepiaOilEffect { get; }
+        string BlightAmberOil { get; }
+        string BlightAmberOilEffect { get; }
+        string BlightVerdantOil { get; }
+        string BlightVerdantOilEffect { get; }
+        string BlightTealOil { get; }
+        string BlightTealOilEffect { get; }
+        string BlightAzureOil { get; }
+        string BlightAzureOilEffect { get; }
+        string BlightVioletOil { get; }
+        string BlightVioletOilEffect { get; }
+        string BlightCrimsonOil { get; }
+        string BlightCrimsonOilEffect { get; }
+        string BlightBlackOil { get; }
+        string BlightBlackOilEffect { get; }
+        string BlightOpalescentOil { get; }
+        string BlightOpalescentOilEffect { get; }
+        string BlightSilverOil { get; }
+        string BlightSilverOilEffect { get; }
+        string BlightGoldenOil { get; }
+        string BlightGoldenOilEffect { get; }
+
+        #endregion
+
+        #region Metamorph
+
+        string MetamorphAbrasiveCatalyst { get; }
+        string MetamorphAbrasiveCatalystEffect { get; }
+        string MetamorphFertileCatalyst { get; }
+        string MetamorphFertileCatalystEffect { get; }
+        string MetamorphImbuedCatalyst { get; }
+        string MetamorphImbuedCatalystEffect { get; }
+        string MetamorphIntrinsicCatalyst { get; }
+        string MetamorphIntrinsicCatalystEffect { get; }
+        string MetamorphPrismaticCatalyst { get; }
+        string MetamorphPrismaticCatalystEffect { get; }
+        string MetamorphTemperingCatalyst { get; }
+        string MetamorphTemperingCatalystEffect { get; }
+        string MetamorphTurbulentCatalyst { get; }
+        string MetamorphTurbulentCatalystEffect { get; }
+        string MetamorphInformationHeader { get; }
+        string MetamorphInformationText { get; }
+
+        #endregion
     }
 }
