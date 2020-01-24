@@ -57,7 +57,7 @@ All help is very welcomed.
 
 ## Thanks
 - [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
-- [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) - Keyboard hooks
+- [WindowsHook](https://github.com/topstarai/WindowsHook) - Keyboard and mouse hooks
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
 
 ## Donations
