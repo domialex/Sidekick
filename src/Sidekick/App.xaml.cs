@@ -24,9 +24,9 @@ namespace Sidekick
         private Mutex mutex;
 
         private ServiceProvider serviceProvider;
-        private TaskbarIcon trayIcon;
+        private static TaskbarIcon trayIcon;
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
@@ -34,13 +34,15 @@ namespace Sidekick
 
             serviceProvider = Sidekick.Startup.InitializeServices();
 
+            await RunAutoUpdate();
+
             Legacy.Initialize(serviceProvider);
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
 
             var initializeService = serviceProvider.GetService<IInitializer>();
-            initializeService.Initialize();
+            await initializeService.Initialize();
 
             // Keyboard hooks.
             EventsHandler.Initialize();
@@ -50,13 +52,16 @@ namespace Sidekick
 
             // Price Prediction
             PredictionController.Initialize();
+        }
 
+        private async Task RunAutoUpdate()
+        {
             var updateManagerService = serviceProvider.GetService<IUpdateManager>();
-            if (Task.Run(() => updateManagerService.NewVersionAvailable()).Result)
+            if (await updateManagerService.NewVersionAvailable())
             {
                 if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (Task.Run(() => updateManagerService.UpdateSidekick()).Result)
+                    if (await updateManagerService.UpdateSidekick())
                     {
                         mutex = null;
                         ProcessHelper.mutex = null;
@@ -67,8 +72,8 @@ namespace Sidekick
                     {
                         MessageBox.Show("Update failed!");
                     }
+
                     App.Current.Shutdown();
-                    return;
                 }
             }
         }
@@ -92,6 +97,11 @@ namespace Sidekick
             }
 
             ProcessHelper.mutex = mutex;
+        }
+
+        public static void ShowNotifcation(string title, string text = null)
+        {
+            trayIcon.ShowBalloonTip(title, text, trayIcon.Icon, largeIcon: true);
         }
     }
 }

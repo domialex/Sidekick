@@ -158,13 +158,13 @@ namespace Sidekick.Business.Languages.UI.Implementations
 
         public string BetrayalVoriciIntervention => throw new System.NotImplementedException();
 
-        public string BetrayalLegendVeryValuable => throw new System.NotImplementedException();
+        public string LeagueLegendVeryValuable => throw new System.NotImplementedException();
 
-        public string BetrayalLegendValuable => throw new System.NotImplementedException();
+        public string LeagueLegendValuable => throw new System.NotImplementedException();
 
-        public string BetrayalLegendLessValuable => throw new System.NotImplementedException();
+        public string LeagueLegendLessValuable => throw new System.NotImplementedException();
 
-        public string BetrayalLegendNotValuable => throw new System.NotImplementedException();
+        public string LeagueLegendNotValuable => throw new System.NotImplementedException();
 
         public string BetrayalAislingResearchTooltip => throw new System.NotImplementedException();
 
@@ -199,5 +199,253 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BetrayalToraResearchTooltip => throw new System.NotImplementedException();
 
         public string BetrayalVoriceResearchTooltip => throw new System.NotImplementedException();
+
+        public string IncursionGuardhouse => throw new System.NotImplementedException();
+
+        public string IncursionBarracks => throw new System.NotImplementedException();
+
+        public string IncursionHallOfWar => throw new System.NotImplementedException();
+
+        public string IncursionGuardhouseModifiers => throw new System.NotImplementedException();
+
+        public string IncursionWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionEngineeringDepartment => throw new System.NotImplementedException();
+
+        public string IncursionFactory => throw new System.NotImplementedException();
+
+        public string IncursionWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionWorkshopModifiers => throw new System.NotImplementedException();
+
+        public string IncursionExplosivesRoom => throw new System.NotImplementedException();
+
+        public string IncursionDemolitionLab => throw new System.NotImplementedException();
+
+        public string IncursionShrineOfUnmaking => throw new System.NotImplementedException();
+
+        public string IncursionExplosivesRoomContains => throw new System.NotImplementedException();
+
+        public string IncursionSplinterResearchLab => throw new System.NotImplementedException();
+
+        public string IncursionBreachContainmentChamber => throw new System.NotImplementedException();
+
+        public string IncursionHouseOfOthers => throw new System.NotImplementedException();
+
+        public string IncursionSplinterResearchLabContains => throw new System.NotImplementedException();
+
+        public string IncursionVault => throw new System.NotImplementedException();
+
+        public string IncursionTreasury => throw new System.NotImplementedException();
+
+        public string IncursionWealthOfTheVaal => throw new System.NotImplementedException();
+
+        public string IncursionVaultContains => throw new System.NotImplementedException();
+
+        public string IncursionSparringRoom => throw new System.NotImplementedException();
+
+        public string IncursionArenaOfValour => throw new System.NotImplementedException();
+
+        public string IncursionHallOfChampions => throw new System.NotImplementedException();
+
+        public string IncursionSparringRoomContains => throw new System.NotImplementedException();
+
+        public string IncursionSparringRoomModifiers => throw new System.NotImplementedException();
+
+        public string IncursionArmourersWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionArmoury => throw new System.NotImplementedException();
+
+        public string IncursionChamberOfIron => throw new System.NotImplementedException();
+
+        public string IncursionArmourersWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionArmourersWorkshopModifiers => throw new System.NotImplementedException();
+
+        public string IncursionJewellersWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionJewelleryForge => throw new System.NotImplementedException();
+
+        public string IncursionGlitteringHalls => throw new System.NotImplementedException();
+
+        public string IncursionJewellersWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionSurveyorsStudy => throw new System.NotImplementedException();
+
+        public string IncursionOfficeOfCartography => throw new System.NotImplementedException();
+
+        public string IncursionAtlasOfWorlds => throw new System.NotImplementedException();
+
+        public string IncursionSurveyorsStudyContains => throw new System.NotImplementedException();
+
+        public string IncursionGemcuttersWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionDepartmentOfThaumaturgy => throw new System.NotImplementedException();
+
+        public string IncursionDoryanisInstitute => throw new System.NotImplementedException();
+
+        public string IncursionGemcuttersWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionTormentCells => throw new System.NotImplementedException();
+
+        public string IncursionTortureCages => throw new System.NotImplementedException();
+
+        public string IncursionSadistsDen => throw new System.NotImplementedException();
+
+        public string IncursionTormentCellsContains => throw new System.NotImplementedException();
+
+        public string IncursionStrongboxChamber => throw new System.NotImplementedException();
+
+        public string IncursionHallOfLocks => throw new System.NotImplementedException();
+
+        public string IncursionCourtOfTheSealedDeath => throw new System.NotImplementedException();
+
+        public string IncursionStrongboxChamberContains => throw new System.NotImplementedException();
+
+        public string IncursionHallOfMettle => throw new System.NotImplementedException();
+
+        public string IncursionHallOfHeroes => throw new System.NotImplementedException();
+
+        public string IncursionHallOfLegends => throw new System.NotImplementedException();
+
+        public string IncursionHallOfMettleContains => throw new System.NotImplementedException();
+
+        public string IncursionSacrificalChamber => throw new System.NotImplementedException();
+
+        public string IncursionHallOfOfferings => throw new System.NotImplementedException();
+
+        public string IncursionApexOfAscension => throw new System.NotImplementedException();
+
+        public string IncursionSacrificalChamberContains => throw new System.NotImplementedException();
+
+        public string IncursionStorageRoom => throw new System.NotImplementedException();
+
+        public string IncursionWarehouses => throw new System.NotImplementedException();
+
+        public string IncursionMuseumOfArtifacts => throw new System.NotImplementedException();
+
+        public string IncursionStorageRoomContains => throw new System.NotImplementedException();
+
+        public string IncursionCorruptionChamber => throw new System.NotImplementedException();
+
+        public string IncursionCatalystOfCorruption => throw new System.NotImplementedException();
+
+        public string IncursionLocuOfCorruption => throw new System.NotImplementedException();
+
+        public string IncursionCorruptionChamberContains => throw new System.NotImplementedException();
+
+        public string IncursionCorruptionChamberModifiers => throw new System.NotImplementedException();
+
+        public string IncursionShrineOfEmpowerment => throw new System.NotImplementedException();
+
+        public string IncursionSanctumOfUnity => throw new System.NotImplementedException();
+
+        public string IncursionTempleNexus => throw new System.NotImplementedException();
+
+        public string IncursionShrineOfEmpowermentContains => throw new System.NotImplementedException();
+
+        public string IncursionShrineOfEmpowermentModifiers => throw new System.NotImplementedException();
+
+        public string IncursionTempestGenerator => throw new System.NotImplementedException();
+
+        public string IncursionHurricaneEngine => throw new System.NotImplementedException();
+
+        public string IncursionStormOfCorruption => throw new System.NotImplementedException();
+
+        public string IncursionTempestGeneratorContains => throw new System.NotImplementedException();
+
+        public string IncursionTempestGeneratorModifiers => throw new System.NotImplementedException();
+
+        public string IncursionPoisionGarden => throw new System.NotImplementedException();
+
+        public string IncursionCultivarChamber => throw new System.NotImplementedException();
+
+        public string IncursionToxicGrove => throw new System.NotImplementedException();
+
+        public string IncursionPosionGardenContains => throw new System.NotImplementedException();
+
+        public string IncursionPoisonGardenModifiers => throw new System.NotImplementedException();
+
+        public string IncursionTrapWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionTempleDefenseWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionDefenseResearchLab => throw new System.NotImplementedException();
+
+        public string IncursionTrapWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionTrapWorkshopModifiers => throw new System.NotImplementedException();
+
+        public string IncursionPoolsOfRestoration => throw new System.NotImplementedException();
+
+        public string IncursionSanctumOfVitality => throw new System.NotImplementedException();
+
+        public string IncursionSanctumOfImmortality => throw new System.NotImplementedException();
+
+        public string IncursionPoolsOfRestorationContains => throw new System.NotImplementedException();
+
+        public string IncursionPoolsOfRestorationModifiers => throw new System.NotImplementedException();
+
+        public string IncursionFlameWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionOmnitectForge => throw new System.NotImplementedException();
+
+        public string IncursionCrucibleOfFlame => throw new System.NotImplementedException();
+
+        public string IncursionFlameWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionFlameWorkshopModifiers => throw new System.NotImplementedException();
+
+        public string IncursionLightningWorkshop => throw new System.NotImplementedException();
+
+        public string IncursionOmnitectReactorPlant => throw new System.NotImplementedException();
+
+        public string IncursionConduitOfLightning => throw new System.NotImplementedException();
+
+        public string IncursionLightningWorkshopContains => throw new System.NotImplementedException();
+
+        public string IncursionLightningWorkshopModifiers => throw new System.NotImplementedException();
+
+        public string IncursionHatchery => throw new System.NotImplementedException();
+
+        public string IncursionAutomationLab => throw new System.NotImplementedException();
+
+        public string IncursionHybridisationChamber => throw new System.NotImplementedException();
+
+        public string IncursionHatcheryContains => throw new System.NotImplementedException();
+
+        public string IncursionHatcheryModifiers => throw new System.NotImplementedException();
+
+        public string IncursionRoyalMeetingRoom => throw new System.NotImplementedException();
+
+        public string IncursionHallOfLords => throw new System.NotImplementedException();
+
+        public string IncursionThroneOfAtziri => throw new System.NotImplementedException();
+
+        public string IncursionRoyalMeetingRoomContains => throw new System.NotImplementedException();
+
+        public string IncursionRoyalMeetingRoomModifiers => throw new System.NotImplementedException();
+
+        public string IncursionHeaderContains => throw new System.NotImplementedException();
+
+        public string IncursionHeaderModifiers => throw new System.NotImplementedException();
+
+        public string IncursionDoubleGemCorruptionTooltip => throw new System.NotImplementedException();
+
+        public string IncursionDoubleCorruptionTooltip => throw new System.NotImplementedException();
+
+        public string IncursionTopotanteModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionTacatiModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionMatalTooltip => throw new System.NotImplementedException();
+
+        public string IncursionGuateliztzModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionPuhuarteModTooltuip => throw new System.NotImplementedException();
+
+        public string IncursionXopecModTooltip => throw new System.NotImplementedException();
+
+        public string IncursionCitaqualotlModTooltip => throw new System.NotImplementedException();
     }
 }
