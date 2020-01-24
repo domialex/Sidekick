@@ -36,7 +36,7 @@ namespace Sidekick.Windows.LeagueOverlay
                 { tabItemDelve, new[] { 500, 500 } },
                 { tabItemBetrayal, new[] { 520, 1200 } },
                 { tabItemBlight, new[] { 500, 500 } },
-                { tabItemMetamorph, new[] { 500, 500 } },
+                { tabItemMetamorph, new[] { 315, 1115 } },
             };
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
             CurrentPage = tabItemIncursion;
