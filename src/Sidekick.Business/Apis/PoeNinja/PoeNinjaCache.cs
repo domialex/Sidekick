@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -17,24 +19,24 @@ namespace Sidekick.Business.Apis.PoeNinja
     /// </summary>
     public class PoeNinjaCache : IPoeNinjaCache, IOnAfterInit
     {
-        private readonly IPoeNinjaClient _client;
-        private readonly Configuration _configuration;
+        private readonly IPoeNinjaClient client;
+        private readonly ILogger logger;
+        private readonly Configuration configuration;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
 
-        public List<PoeNinjaCacheItem<PoeNinjaItem>> Items { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
-
-        public List<PoeNinjaCacheItem<PoeNinjaCurrency>> Currencies { get; private set; } = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
+        public List<PoeNinjaItem> Items { get; private set; } = new List<PoeNinjaItem>();
+        public List<PoeNinjaCurrency> Currencies { get; private set; } = new List<PoeNinjaCurrency>();
 
         public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
-        private List<PoeNinjaItem> FlatItems => Items.SelectMany(x => x.Items).ToList();
-        private List<PoeNinjaItem> FlatCurrencies => Items.SelectMany(x => x.Items).ToList();
-
-        public PoeNinjaCache(IPoeNinjaClient client, Configuration configuration)
+        public PoeNinjaCache(IPoeNinjaClient client,
+                             ILogger logger,
+                             Configuration configuration)
         {
-            _client = client;
-            _configuration = configuration;
+            this.client = client;
+            this.logger = logger;
+            this.configuration = configuration;
         }
         public PoeNinjaItem GetItem(Item item)
         {
@@ -43,7 +45,8 @@ namespace Sidekick.Business.Apis.PoeNinja
             //{
             //    throw new Exception("Cache not yet initialized. Call Refresh() before trying to get an item.");
             //}
-            return FlatItems.FirstOrDefault(c => c.Name == item.Name);
+            return Items.FirstOrDefault(x => x.Name == item.Name);
+
         }
 
 
@@ -53,39 +56,25 @@ namespace Sidekick.Business.Apis.PoeNinja
         /// <param name="league">The league.</param>
         public async Task OnAfterInit()
         {
-            Items = new List<PoeNinjaCacheItem<PoeNinjaItem>>();
-            foreach (var itemType in Enum.GetValues(typeof(ItemType)).Cast<ItemType>())
-            {
-                var result = await _client.QueryItem(_configuration.LeagueId, itemType);
-                if (result != null)
-                {
-                    var item = new PoeNinjaCacheItem<PoeNinjaItem>()
-                    {
-                        Type = itemType.ToString(),
-                        Items = result.Lines
-                    };
+            logger.Log($"Fetching PoeNinja cache.");
 
-                    Items.Add(item);
-                }
-            }
+            var itemsTasks = Enum.GetValues(typeof(ItemType))
+                                 .Cast<ItemType>()
+                                 .Select(x => new { itemType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                 .ToList();
+            var currenciesTasks = Enum.GetValues(typeof(CurrencyType))
+                                      .Cast<CurrencyType>()
+                                      .Select(x => new { currencyType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                      .ToList();
 
-            Currencies = new List<PoeNinjaCacheItem<PoeNinjaCurrency>>();
-            foreach (var currency in Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>())
-            {
-                var result = await _client.QueryItem(_configuration.LeagueId, currency);
-                if (result != null)
-                {
-                    var item = new PoeNinjaCacheItem<PoeNinjaCurrency>()
-                    {
-                        Type = currency.ToString(),
-                        Items = result.Lines
-                    };
+            await Task.WhenAll(itemsTasks.Select(x => x.request).Cast<Task>().Concat(currenciesTasks.Select(x => x.request).Cast<Task>()));
 
-                    Currencies.Add(item);
-                }
-            }
+            Items.AddRange(itemsTasks.Select(x => new PoeNinjaCacheItem<PoeNinjaItem> { Type = x.itemType.ToString(), Items = x.request.Result.Lines }).SelectMany(x => x.Items));
+            Currencies.AddRange(currenciesTasks.Select(x => new PoeNinjaCacheItem<PoeNinjaCurrency> { Type = x.currencyType.ToString(), Items = x.request.Result.Lines }).SelectMany(x => x.Items));
 
             LastRefreshTimestamp = DateTime.Now;
+
+            logger.Log($"PoeNinja cache fetched.");
         }
     }
 }

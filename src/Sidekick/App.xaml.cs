@@ -70,14 +70,14 @@ namespace Sidekick
             updateManagerService.ReportProgress = _splashScreen.UpdateProgress;
             if (await updateManagerService.NewVersionAvailable())
             {
-                if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     if (await updateManagerService.UpdateSidekick())
                     {                      
                         mutex = null;
                         ProcessHelper.mutex = null;
                         _splashScreen.UpdateProgress("Update finished!", 100);
-                        MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
+                        MessageBox.Show("Update finished. Restarting Sidekick.", "Sidekick Update", MessageBoxButton.OK);
                         updateManagerService.Restart();
                     }
                     else
