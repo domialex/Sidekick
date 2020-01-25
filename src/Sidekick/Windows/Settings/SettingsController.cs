@@ -104,16 +104,13 @@ namespace Sidekick.Windows.Settings
                 //If settings have never been initialized, create new settings, otherwise clear and reload settings
                 if (_settings == null) _settings = new Models.Settings();
                 else _settings.Clear();
-
-                if (string.IsNullOrEmpty(settingsString))
-                {
-                    _settings = LoadDefaultSettings();
-                }
-                else
+               
+                if (!string.IsNullOrEmpty(settingsString))
                 {
                     _settings = JsonConvert.DeserializeObject<Models.Settings>(settingsString);
-                    // TODO: Add new settings, that aren't in the settings file yet
                 }
+
+                MigrateNewSettings();
                 return _settings;
             }
             catch
@@ -121,6 +118,34 @@ namespace Sidekick.Windows.Settings
                 Legacy.Logger.Log("Could not load settings", LogState.Error);
                 throw;
             }
+        }
+
+        private static void MigrateNewSettings()
+        {
+            var defaultSettings = LoadDefaultSettings();
+
+            bool settingsWereMissing = false;
+            // General Settings
+            foreach (var defaultSetting in defaultSettings.GeneralSettings)
+            {
+                if (!_settings.GeneralSettings.ContainsKey(defaultSetting.Key))
+                {
+                    _settings.GeneralSettings.Add(defaultSetting);
+                    settingsWereMissing = true;
+                }                   
+            }
+
+            //Keybind Settings
+            foreach (var defaultSetting in defaultSettings.KeybindSettings)
+            {
+                if (!_settings.KeybindSettings.ContainsKey(defaultSetting.Key))
+                {
+                    _settings.KeybindSettings.Add(defaultSetting);
+                    settingsWereMissing = true;
+                }
+            }
+
+            if (settingsWereMissing) SaveSettings();
         }
 
         /// <summary>

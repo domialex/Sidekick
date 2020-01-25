@@ -11,6 +11,7 @@ using Sidekick.Helpers.Input;
 using Sidekick.Windows.Prediction;
 using Sidekick.Core.Update;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Sidekick
 {
@@ -26,21 +27,25 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private static TaskbarIcon trayIcon;
 
+        private Windows.SplashScreen _splashScreen = new Windows.SplashScreen();
+
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             EnsureSingleInstance();
 
-            serviceProvider = Sidekick.Startup.InitializeServices();
+            _splashScreen.UpdateProgress("Initializing Providers...", 0);
+            _splashScreen.Show();
 
-            await RunAutoUpdate();
+            serviceProvider = Sidekick.Startup.InitializeServices();
 
             Legacy.Initialize(serviceProvider);
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
 
+            _splashScreen.UpdateProgress("Initializing Services...", 50);
             var initializeService = serviceProvider.GetService<IInitializer>();
             await initializeService.Initialize();
 
@@ -52,20 +57,27 @@ namespace Sidekick
 
             // Price Prediction
             PredictionController.Initialize();
+
+            _splashScreen.UpdateProgress("Initialized!", 100);
+
+            await RunAutoUpdate();           
+            _splashScreen.Close();
         }
 
         private async Task RunAutoUpdate()
         {
             var updateManagerService = serviceProvider.GetService<IUpdateManager>();
+            updateManagerService.ReportProgress = _splashScreen.UpdateProgress;
             if (await updateManagerService.NewVersionAvailable())
             {
-                if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "AutoUpdater", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     if (await updateManagerService.UpdateSidekick())
-                    {
+                    {                      
                         mutex = null;
                         ProcessHelper.mutex = null;
-                        MessageBox.Show("Update finished! Restarting Sidekick!", "AutoUpdater", MessageBoxButton.OK);
+                        _splashScreen.UpdateProgress("Update finished!", 100);
+                        MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
                         updateManagerService.Restart();
                     }
                     else
@@ -80,6 +92,7 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
+            _splashScreen = null;
             trayIcon.Dispose();
             serviceProvider.Dispose();
             EventsHandler.Dispose();
