@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sidekick.Windows"
         mc:Ignorable="d"
-        Title="SplashScreen" Height="150" Width="400" WindowStyle="None" Topmost="True"
+        Title="SplashScreen" Height="150" Width="400" WindowStyle="None"
         WindowStartupLocation="CenterScreen" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}"
         ResizeMode="NoResize" Margin="1" >
     <Window.Resources>
@@ -28,7 +28,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Foreground="{DynamicResource PrimaryColor}" Content="Sidekick" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="50" FontWeight="Bold"/>
-        <Label Grid.Row="1" Grid.Column="0" Foreground="{DynamicResource LightColor}" Content="{Binding UpdateStep, FallbackValue=Loading, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Bottom" FontSize="12"/>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Foreground="{DynamicResource LightColor}" Content="{Binding UpdateStep, FallbackValue=Loading, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Bottom" FontSize="12"/>
         <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent" BorderBrush="Transparent" Value="{Binding ProgressValue, FallbackValue=0, UpdateSourceTrigger=PropertyChanged}" Foreground="{DynamicResource LightColor}"/>
     </Grid>
 </Window>

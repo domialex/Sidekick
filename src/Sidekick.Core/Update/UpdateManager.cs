@@ -24,6 +24,9 @@ namespace Sidekick.Core.Update
 
         private HttpClient _httpClient;
 
+        private Action<string, int> reportProgress;
+        public Action<string, int> ReportProgress { set { reportProgress = value; } }
+
         public UpdateManager(IHttpClientFactory httpClientFactory)
         {           
             _httpClient = httpClientFactory.CreateClient();
@@ -41,7 +44,8 @@ namespace Sidekick.Core.Update
         /// </summary>
         /// <returns></returns>
         public async Task<bool> NewVersionAvailable()
-        {         
+        {
+            reportProgress.Invoke("Checking for Updates...", 0);
             _latestRelease = await GetLatestRelease();
             if (_latestRelease != null)
             {
@@ -84,7 +88,6 @@ namespace Sidekick.Core.Update
             try
             {
                 var jsonOptions = new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true };
-
                 var response = await _httpClient.GetAsync("/repos/domialex/Sidekick/releases/latest");
                 if (response.IsSuccessStatusCode)
                 {
@@ -124,6 +127,7 @@ namespace Sidekick.Core.Update
         /// </summary>
         private void ApplyUpdate()
         {
+            reportProgress.Invoke("Applying update...", 80);
             ZipFile.ExtractToDirectory(ZIP_PATH, INSTALL_DIR);
             File.Delete(ZIP_PATH);
         }
@@ -148,6 +152,7 @@ namespace Sidekick.Core.Update
         /// <returns></returns>
         private async Task<bool> DownloadNewestRelease()
         {
+            reportProgress.Invoke("Downloading latest release from GitHub...", 30);
             if (_latestRelease != null)
             {
                 if (File.Exists(ZIP_PATH)) File.Delete(ZIP_PATH);
@@ -168,6 +173,7 @@ namespace Sidekick.Core.Update
         {
             try
             {
+                reportProgress.Invoke("Backuping current version...", 50);
                 if (Directory.Exists(TMP_DIR))
                 {
                     Directory.Delete(TMP_DIR, true);

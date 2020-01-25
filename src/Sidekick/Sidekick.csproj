@@ -6,7 +6,7 @@
     <TargetFramework>net48</TargetFramework>
     <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
     <FileVersion>0.4.0.0</FileVersion>
     <!-- TODO: Add dotnet core support in MouseKeyHook, remove System.Windows.Forms reference, ... profit
     <TargetFramework>netcoreapp3.1</TargetFramework>

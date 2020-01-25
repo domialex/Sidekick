@@ -37,43 +37,41 @@ namespace Sidekick
 
             _splashScreen.UpdateProgress("Initializing Providers...", 0);
             _splashScreen.Show();
-           
+
             serviceProvider = Sidekick.Startup.InitializeServices();
 
-            _splashScreen.UpdateProgress("Initializing Tray Icon...", 10);
             Legacy.Initialize(serviceProvider);
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
 
-            _splashScreen.UpdateProgress("Initializing Services...", 20);
+            _splashScreen.UpdateProgress("Initializing Services...", 50);
             var initializeService = serviceProvider.GetService<IInitializer>();
             await initializeService.Initialize();
 
-            _splashScreen.UpdateProgress("Initializing Handlers...", 30);
             // Keyboard hooks.
             EventsHandler.Initialize();
 
-            _splashScreen.UpdateProgress("Initializing Controllers...", 40);
             // Overlay.
             OverlayController.Initialize();
 
             // Price Prediction
             PredictionController.Initialize();
-            await RunAutoUpdate();
-            _splashScreen.UpdateProgress("Finished!", 100);
+
+            _splashScreen.UpdateProgress("Initialized!", 100);
+
+            await RunAutoUpdate();           
             _splashScreen.Close();
         }
 
         private async Task RunAutoUpdate()
         {
-            _splashScreen.UpdateProgress("Checking for Updates...", 50);
             var updateManagerService = serviceProvider.GetService<IUpdateManager>();
+            updateManagerService.ReportProgress = _splashScreen.UpdateProgress;
             if (await updateManagerService.NewVersionAvailable())
             {
                 if (MessageBox.Show("There is a new update of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    _splashScreen.UpdateProgress("Updating Sidekick...", 70);
                     if (await updateManagerService.UpdateSidekick())
                     {                      
                         mutex = null;
