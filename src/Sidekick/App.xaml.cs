@@ -12,6 +12,7 @@ using Sidekick.Windows.Prediction;
 using Sidekick.Core.Update;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace Sidekick
 {
@@ -35,6 +36,8 @@ namespace Sidekick
 
             EnsureSingleInstance();
 
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+            typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));       // Tooltip opened indefinitly until mouse is moved
             _splashScreen.UpdateProgress("Initializing Providers...", 0);
             _splashScreen.Show();
 

@@ -49,9 +49,6 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
-            ToolTipService.ShowDurationProperty.OverrideMetadata(
-                        typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));       // Tooltip opened indefinitly until mouse is moved
-            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateUIText;
             UpdateUIText();
             Hide();
         }

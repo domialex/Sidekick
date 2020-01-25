@@ -621,7 +621,140 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemDelve" Header="Delve" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}">
-                <Grid Background="{DynamicResource BackgroundColor}"/>
+                <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="370" Width="1000">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="170"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Mines-->
+                    <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black"/>
+                    <Label Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Mines" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveMines"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockDelveMinesFossils">
+                        <TextBlock Text="Metallic Fossil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Serrated Foosil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Pristine Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Aetheric Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                    </TextBlock>
+                    <!--Magma Fissure-->
+                    <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Black"/>
+                    <Label Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Magma Fissure" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveMagmaFissure"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockMagmaFissureFossils">
+                        <TextBlock Text="Scorched Fossil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Pristine Foosil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Prismatic Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Enchanted Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Encrusted Fossil*" Foreground="{DynamicResource LowValueColor}"/>
+                    </TextBlock>
+                    <!--Sulfur Vents-->
+                    <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Black"/>
+                    <Label Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Sulfur Vents" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveSulfurVents"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockSulfurVentsFossils">
+                        <TextBlock Text="Metallic Fossil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Aetheric Foosil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Perfect Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Encrusted Fossil*" Foreground="{DynamicResource LowValueColor}"/>
+                    </TextBlock>
+                    <!--Frozen Hollow-->
+                    <Rectangle Grid.Column="3" Grid.Row="0" Stroke="Black"/>
+                    <Label Grid.Column="3" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Frozen Hollow" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveFrozenHollow"/>
+                    <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockFrozenHolloeFossils">
+                        <TextBlock Text="Frigid Fossil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Serrated Foosil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Prismatic Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Shuddering Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Sanctified Fossil*" Foreground="{DynamicResource HighValueColor}"/>
+                    </TextBlock>
+                    <!--Fungal Caverns-->
+                    <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Black"/>
+                    <Label Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Fungal Caverns" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveFungalCaverns"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockDelveFungalCavernsFossils">
+                        <TextBlock Text="Dense Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Aberrant Foosil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Perfect Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Corroded Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Gilded Fossil*" Foreground="{DynamicResource MediumValueColor}"/>
+                    </TextBlock>
+                    <!--Petrified Forest-->
+                    <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Black"/>
+                    <Label Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Petrified Forest" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelvePetrifiedForest"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="labelDelvePetrifiedForestFossils">
+                        <TextBlock Text="Bound Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Dense Foosil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Jagged Fossil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Corroded Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Sanctified Fossil*" Foreground="{DynamicResource HighValueColor}"/>
+                    </TextBlock>
+                    <!--Abyssal Depths-->
+                    <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Black"/>
+                    <Label Grid.Column="2" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Abyssal Depths" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveAbyssalDepths"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,52,0,24" Name="textBlockAbyssalDepthsFossils">
+                        <TextBlock Text="Bound Fossil" Foreground="{DynamicResource LowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Aberrant Foosil" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Lucent Fossil*" Foreground="{DynamicResource VeryLowValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Gilded Fossil*" Foreground="{DynamicResource MediumValueColor}"/>
+                    </TextBlock>
+                    <!--Fossil Room-->
+                    <Rectangle Grid.Column="3" Grid.Row="1" Stroke="Black"/>
+                    <Label Grid.Column="3" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Fossil Room" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelDelveFossilRoom"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,49,0,20" Name="textBlockDelveFossilRoomFossils">
+                        <TextBlock Text="Glyphic Fossil" Foreground="{DynamicResource HighValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Fractured Foosil" Foreground="{DynamicResource HighValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Faceted Fossil" Foreground="{DynamicResource HighValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Bloodstained Fossil" Foreground="{DynamicResource HighValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Tangled Fossil" Foreground="{DynamicResource MediumValueColor}"/>
+                        <LineBreak/>
+                        <TextBlock Text="Hollow Fossil" Foreground="{DynamicResource HighValueColor}"/>
+                    </TextBlock>
+                    <!--Legend-->
+                    <Rectangle Grid.Column="0" Grid.Row="2" Stroke="Black"/>
+                    <Rectangle Grid.Column="1" Grid.Row="2" Stroke="Black"/>
+                    <Rectangle Grid.Column="2" Grid.Row="2" Stroke="Black"/>
+                    <Rectangle Grid.Column="3" Grid.Row="2" Stroke="Black"/>
+                    <Label Grid.Column="0" Grid.Row="2" Content="Legend" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Name="labelDelveLegend"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="Not valuable" Foreground="{DynamicResource VeryLowValueColor}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0" Name="labelDelveLegendNotValuable"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="Less valuable" Foreground="{DynamicResource LowValueColor}" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0" Name="labelDelveLegendLessValuable"/>
+                    <Label Grid.Column="2" Grid.Row="2" Content="Valuable" Foreground="{DynamicResource MediumValueColor}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Margin="20,0,0,0" Name="labelDelveLegendValuable"/>
+                    <Label Grid.Column="2" Grid.Row="2" Content="Very valuable" Foreground="{DynamicResource HighValueColor}" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0" Name="labelDelveLegendVeryValuable"/>
+                    <!--Information-->
+                    <Label Grid.Column="3" Grid.Row="2" Content="*Can only be found behind fractured walls" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="labelDelveInformation"/>
+                </Grid>
             </TabItem>
             <TabItem x:Name="tabItemBetrayal" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}" Header="Betrayal">
                 <Grid Background="{DynamicResource BackgroundColor}" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Left">
