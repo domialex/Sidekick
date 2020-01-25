@@ -429,5 +429,44 @@ namespace Sidekick.Business.Languages.UI.Implementations
                                                   "Applying a Catalyst removes all other Quality";
 
         #endregion
+
+        #region Delve
+
+        public string DelveAberrantFossil => "Abberant Fossil";
+        public string DelveAethericFossil => "Aetheric Fossil";
+        public string DelveBloodstainedFossil => "Bloodstained Fossil";
+        public string DelveBoundFossil => "Bound Fossil";
+        public string DelveCorrodedFossil => "Corroded Fossil";
+        public string DelveDenseFossil => "Dense Fossil";
+        public string DelveEnchantedFossil => "Enchanted Fossil";
+        public string DelveEncrustedFossil => "Encrusted Fossil";
+        public string DelveFacetedFossil => "Faceted Fossil";
+        public string DelveFracturedFossil => "Fractured Fossil";
+        public string DelveFrigidFossil => "Frigid Fossil";
+        public string DelveGildedFossil => "Gilded Fossil";
+        public string DelveGlyphicFossil => "Glyphic Fossil";
+        public string DelveHollowFossil => "Hollow Fossil";
+        public string DelveJaggedFossil => "Jagged Fossil";
+        public string DelveLucentFossil => "Lucent Fossil";
+        public string DelveMetallicFossil => "Metallic Fossil";
+        public string DelvePerfectFossil => "Perfect Fossil";
+        public string DelvePrismaticFossil => "Prismatic Fossil";
+        public string DelvePristineFossil => "Pristine Fossil";
+        public string DelveSanctifiedFossil => "Sanctified Fossil";
+        public string DelveScorchedFossil => "Scorched Fossil";
+        public string DelveSerratedFossil => "Serrated Fossil";
+        public string DelveShudderingFossil => "Shuddering Fossil";
+        public string DelveTangledFossil => "Tangled Fossil";
+        public string DelveMines => "Mines";
+        public string DelveFungalCaverns => "Fungal Caverns";
+        public string DelvePetrifiedForest => "Petrified Forest";
+        public string DelveAbyssalDepths => "Abyssal Depths";
+        public string DelveFrozenHollow => "Frozen Hollow";
+        public string DelveMagmaFissure => "Magma Fissure";
+        public string DelveSulfurVents => "Sulfur Vents";
+        public string DelveFossilRoom => "Fossil Room";
+        public string DelveInformation => "*Can only be found behind fractured walls";
+
+        #endregion
     }
 }
