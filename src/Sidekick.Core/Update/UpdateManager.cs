@@ -32,7 +32,7 @@ namespace Sidekick.Core.Update
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             INSTALL_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            TMP_DIR = Path.Combine(INSTALL_DIR, "tmp");
+            TMP_DIR = Path.Combine(INSTALL_DIR, "UpdateBackup");
             ZIP_PATH = Path.Combine(INSTALL_DIR, "update.zip");
         }
 
@@ -150,6 +150,7 @@ namespace Sidekick.Core.Update
         {
             if (_latestRelease != null)
             {
+                if (File.Exists(ZIP_PATH)) File.Delete(ZIP_PATH);
                 //download zip file and save to disk
                 using (Stream contentStream = await (await _httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
@@ -177,6 +178,14 @@ namespace Sidekick.Core.Update
                     Directory.CreateDirectory(TMP_DIR);
                 }
 
+                // Backup resource folders etc.
+                foreach (var directory in Directory.EnumerateDirectories(INSTALL_DIR))
+                {
+                    if (directory != TMP_DIR)
+                        Directory.Move(directory, Path.Combine(TMP_DIR, new DirectoryInfo(directory).Name));
+                }
+
+                // Backup install files
                 foreach (var file in Directory.EnumerateFiles(INSTALL_DIR))
                 {
                     //keep settings and already downloaded file 
