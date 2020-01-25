@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
@@ -48,6 +49,8 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
+            ToolTipService.ShowDurationProperty.OverrideMetadata(
+                        typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));       // Tooltip opened indefinitly until mouse is moved
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateUIText;
             UpdateUIText();
             Hide();

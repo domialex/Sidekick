@@ -1,5 +1,6 @@
 using Sidekick.Business.Trades.Results;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -21,10 +22,18 @@ namespace Sidekick.Windows.Overlay.UserControls
             priceTextbox.Text = listingResult.Listing.Price?.Amount + " " + listingResult.Listing.Price?.Currency;
             itemLevelTextbox.Text = listingResult.Item.Ilvl.ToString();
             ageTextbox.Text = GetHumanReadableTimeSpan(listingResult.Listing.Indexed);
+            priceTextbox.ToolTip = DecodeBase64String(listingResult.Item.Extended.Text);
+
             if (listingResult.Item.Corrupted)
             {
                 priceTextbox.Foreground = new SolidColorBrush(Color.FromRgb(210, 0, 0));
             }
+        }
+
+        private string DecodeBase64String(string base64)
+        {
+            var bytes = System.Convert.FromBase64String(base64);
+            return System.Text.Encoding.UTF8.GetString(bytes);
         }
 
         private string GetHumanReadableTimeSpan(DateTime time)
