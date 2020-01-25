@@ -30,6 +30,18 @@
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Amber_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Azure_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Black_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Clear_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Crimson_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Golden_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Opalescent_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Sepia_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Silver_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Teal_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Verdant_Oil.png" />
+    <None Remove="Windows\LeagueOverlay\img\Blight\Violet_Oil.png" />
     <None Remove="Windows\LeagueOverlay\img\Cameria.png" />
     <None Remove="Windows\LeagueOverlay\img\Elreon.png" />
     <None Remove="Windows\LeagueOverlay\img\Gravicius.png" />
@@ -41,6 +53,13 @@
     <None Remove="Windows\LeagueOverlay\img\Jorgin.png" />
     <None Remove="Windows\LeagueOverlay\img\Korell.png" />
     <None Remove="Windows\LeagueOverlay\img\Leo.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Abrasive_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Fertile_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Imbued_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Intrinsic_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Prismatic_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Tempering_Catalyst.png" />
+    <None Remove="Windows\LeagueOverlay\img\Metamorph\Turbulent_Catalyst.png" />
     <None Remove="Windows\LeagueOverlay\img\Riker.png" />
     <None Remove="Windows\LeagueOverlay\img\Rin.png" />
     <None Remove="Windows\LeagueOverlay\img\Tora.png" />
@@ -72,55 +91,112 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>  
   <ItemGroup>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Aisling.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Aisling.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Cameria.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Cameria.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Elreon.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Elreon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Gravicius.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Gravicius.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Guff.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Guff.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Haku.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Haku.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Hillock.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Hillock.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\It_That_Fled.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\It_That_Fled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Janus.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Janus.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Jorgin.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Jorgin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Korell.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Korell.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Leo.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Leo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Riker.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Riker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Rin.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Rin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Tora.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Tora.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Vagan.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Vagan.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\LeagueOverlay\img\Vorici.png">
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Betrayal\Vorici.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Amber_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Azure_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Black_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Clear_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Crimson_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Golden_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Opalescent_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Sepia_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Silver_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Teal_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Verdant_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Blight\Violet_Oil.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Abrasive_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Fertile_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Imbued_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Intrinsic_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Prismatic_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Tempering_Catalyst.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LeagueOverlay\img\Metamorph\Turbulent_Catalyst.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>  
@@ -141,5 +217,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Windows\LeagueOverlay\img\Delve\" />
   </ItemGroup>
 </Project>

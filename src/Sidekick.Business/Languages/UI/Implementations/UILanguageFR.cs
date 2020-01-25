@@ -447,5 +447,85 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string IncursionXopecModTooltip => throw new System.NotImplementedException();
 
         public string IncursionCitaqualotlModTooltip => throw new System.NotImplementedException();
+
+        public string BlightClearOil => throw new System.NotImplementedException();
+
+        public string BlightClearOilEffect => throw new System.NotImplementedException();
+
+        public string BlightSepiaOil => throw new System.NotImplementedException();
+
+        public string BlightSepiaOilEffect => throw new System.NotImplementedException();
+
+        public string BlightAmberOil => throw new System.NotImplementedException();
+
+        public string BlightAmberOilEffect => throw new System.NotImplementedException();
+
+        public string BlightVerdantOil => throw new System.NotImplementedException();
+
+        public string BlightVerdantOilEffect => throw new System.NotImplementedException();
+
+        public string BlightTealOil => throw new System.NotImplementedException();
+
+        public string BlightTealOilEffect => throw new System.NotImplementedException();
+
+        public string BlightAzureOil => throw new System.NotImplementedException();
+
+        public string BlightAzureOilEffect => throw new System.NotImplementedException();
+
+        public string BlightVioletOil => throw new System.NotImplementedException();
+
+        public string BlightVioletOilEffect => throw new System.NotImplementedException();
+
+        public string BlightCrimsonOil => throw new System.NotImplementedException();
+
+        public string BlightCrimsonOilEffect => throw new System.NotImplementedException();
+
+        public string BlightBlackOil => throw new System.NotImplementedException();
+
+        public string BlightBlackOilEffect => throw new System.NotImplementedException();
+
+        public string BlightOpalescentOil => throw new System.NotImplementedException();
+
+        public string BlightOpalescentOilEffect => throw new System.NotImplementedException();
+
+        public string BlightSilverOil => throw new System.NotImplementedException();
+
+        public string BlightSilverOilEffect => throw new System.NotImplementedException();
+
+        public string BlightGoldenOil => throw new System.NotImplementedException();
+
+        public string BlightGoldenOilEffect => throw new System.NotImplementedException();
+
+        public string MetamorphAbrasiveCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphAbrasiveCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphFertileCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphFertileCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphImbuedCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphImbuedCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphIntrinsicCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphIntrinsicCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphPrismaticCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphPrismaticCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphTemperingCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphTemperingCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphTurbulentCatalyst => throw new System.NotImplementedException();
+
+        public string MetamorphTurbulentCatalystEffect => throw new System.NotImplementedException();
+
+        public string MetamorphInformationHeader => throw new System.NotImplementedException();
+
+        public string MetamorphInformationText => throw new System.NotImplementedException();
     }
 }

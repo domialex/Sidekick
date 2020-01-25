@@ -664,7 +664,7 @@
                     <Label Grid.Row="4" Grid.Column="0" Content="R" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="I" Foreground="{DynamicResource TextColor}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <!--Aisling-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Aisling.png" Margin="28,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Aisling.png" Margin="28,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
                     <Rectangle Grid.Row="1" Grid.Column="1" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="1" Content="Aisling" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="1" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
@@ -692,7 +692,7 @@
                         <Span>Jewellery</Span>
                     </TextBlock>
                     <!--Cameria-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Cameria.png" Margin="52,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Cameria.png" Margin="52,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
                     <Rectangle Grid.Row="1" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="2" Content="Cameria" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="2" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
@@ -718,7 +718,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Elreon-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Elreon.png" Margin="117,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Elreon.png" Margin="117,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="1"/>
                     <Rectangle Grid.Row="1" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="3" Content="Elreon" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="3" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
@@ -746,7 +746,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Gravicius-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Gravicius.png" Margin="51,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="3"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Gravicius.png" Margin="51,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="3"/>
                     <Rectangle Grid.Row="1" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="4" Content="Gravicius" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="4" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
@@ -774,7 +774,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Guff-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Guff.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="4"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Guff.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="4"/>
                     <Rectangle Grid.Row="1" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="5" Content="Guff" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="5" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
@@ -802,7 +802,7 @@
                         <Span>Crafting</Span>
                     </TextBlock>
                     <!--Haku-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Haku.png" Margin="55,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="5"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Haku.png" Margin="55,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="5"/>
                     <Rectangle Grid.Row="1" Grid.Column="6" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="6" Content="Haku" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="6" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -828,7 +828,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Hillock-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Hillock.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="6"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Hillock.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="6"/>
                     <Rectangle Grid.Row="1" Grid.Column="7" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="7" Content="Hillock" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="7" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -856,7 +856,7 @@
                         <Span>Quality</Span>
                     </TextBlock>
                     <!--It That Fled-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/It_That_Fled.png" Margin="57,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="7"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/It_That_Fled.png" Margin="57,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="7"/>
                     <Rectangle Grid.Row="1" Grid.Column="8" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="8" Content="It That Fled" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="8" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
@@ -884,7 +884,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Janus-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Janus.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="8"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="90" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Janus.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="8"/>
                     <Rectangle Grid.Row="1" Grid.Column="9" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="9" Content="Janus" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="9" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -912,7 +912,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Jorgin-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Jorgin.png" Margin="47,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="9"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Jorgin.png" Margin="47,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="9"/>
                     <Rectangle Grid.Row="1" Grid.Column="10" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="10" Content="Jorgin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="10" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -938,7 +938,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Korell-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Korell.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="10"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Korell.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="10"/>
                     <Rectangle Grid.Row="1" Grid.Column="11" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="11" Content="Korell" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="11" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -962,7 +962,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Leo-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Leo.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="11"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Leo.png" Margin="49,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="11"/>
                     <Rectangle Grid.Row="1" Grid.Column="12" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="12" Content="Leo" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="12" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -990,7 +990,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Riker-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Riker.png" Margin="53,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="12"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Riker.png" Margin="53,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="12"/>
                     <Rectangle Grid.Row="1" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="13" Content="Riker" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="13" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
@@ -1018,7 +1018,7 @@
                         <Span>Div Card</Span>
                     </TextBlock>
                     <!--Rin-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Rin.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="13"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Rin.png" Margin="58,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="13"/>
                     <Rectangle Grid.Row="1" Grid.Column="14" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="14" Content="Rin" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="14" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
@@ -1046,7 +1046,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Tora-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Tora.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="14"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Tora.png" Margin="63,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="14"/>
                     <Rectangle Grid.Row="1" Grid.Column="15" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="15" Content="Tora" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="15" Fill="{DynamicResource MediumValueColor}" Stroke="Black"/>
@@ -1074,7 +1074,7 @@
                         <Span>Scarab</Span>
                     </TextBlock>
                     <!--Vagan-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Vagan.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="15"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Vagan.png" Margin="54,0,0,20" Grid.ColumnSpan="3" Grid.RowSpan="2" Grid.Column="15"/>
                     <Rectangle Grid.Row="1" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="16" Content="Vagan" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="16" Fill="{DynamicResource VeryLowValueColor}" Stroke="Black"/>
@@ -1102,7 +1102,7 @@
                         <Span>Jewels</Span>
                     </TextBlock>
                     <!--Vorici-->
-                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Vorici.png" Margin="51,0,-19,20" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="16"/>
+                    <Image Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="112" Width="94" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Vorici.png" Margin="51,0,-19,20" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Column="16"/>
                     <Rectangle Grid.Row="1" Grid.Column="17" Fill="{DynamicResource HighValueColor}" Stroke="Black"/>
                     <Label Grid.Row="1" Grid.Column="17" Content="Vorici" Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
                     <Rectangle Grid.Row="2" Grid.Column="17" Fill="{DynamicResource LowValueColor}" Stroke="Black"/>
@@ -1132,10 +1132,225 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemBlight" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource BackgroundColor}" Header="Blight">
-                <Grid Background="{DynamicResource BackgroundColor}"/>
+                <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1152" Height="550">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="125"/>
+                        <RowDefinition Height="125"/>
+                        <RowDefinition Height="125"/>
+                        <RowDefinition Height="125"/>
+                        <RowDefinition Name="rowLegend" Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Legend-->
+                    <Label x:Name="labelBlightLegend" Grid.Column="0" Grid.Row="4" Foreground="{DynamicResource TextColor}" Content="Legend" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+                    <Label x:Name="labelBlightLegendNotValuable" Grid.Column="1" Grid.Row="4" Foreground="{DynamicResource VeryLowValueColor}" Content="Not valuable" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                    <Label x:Name="labelBlightLegendLessValuable" Grid.Column="1" Grid.Row="4" Foreground="{DynamicResource LowValueColor}" Content="Less valuable" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" FontSize="14"/>
+                    <Label x:Name="labelBlightLegendValuable" Grid.Column="2" Grid.Row="4" Foreground="{DynamicResource MediumValueColor}" Content="Valuable" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                    <Label x:Name="labelBlightLegendVeryValuable" Grid.Column="2" Grid.Row="4" Foreground="{DynamicResource HighValueColor}" Content="Very valuable" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" FontSize="14"/>
+
+                    <!--Clear Oil-->
+                    <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Clear_Oil.png"/>
+                    <Label x:Name="labelClearOil" Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource VeryLowValueColor}" Content="Clear Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockClearOilEffect" Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>+10% Reduced Monster Movement Speed</Span>
+                    </TextBlock>
+                    <!--Sepia Oil-->
+                    <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Sepia_Oil.png"/>
+                    <Label x:Name="labelSepiaOil" Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource VeryLowValueColor}" Content="Sepia Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockSepiaOilEffect" Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>Towers deal 20% more Damage</Span>
+                    </TextBlock>
+                    <!--Amber Oil-->
+                    <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Amber_Oil.png"/>
+                    <Label x:Name="labelAmberOil" Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource VeryLowValueColor}" Content="Amber Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockAmberOilEffect" Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>20% reduced Cost of Towers</Span>
+                    </TextBlock>
+                    <!--Verdant Oil-->
+                    <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Verdant_Oil.png"/>
+                    <Label x:Name="labelVerdantOil" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource VeryLowValueColor}" Content="Verdant Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockVerdantOilEffect" Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+15% Monster Pack Size</Span>
+                    </TextBlock>
+                    <!--Teal Oil-->
+                    <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Teal_Oil.png"/>
+                    <Label x:Name="labelTealOil" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource LowValueColor}" Content="Teal Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockTealOilEffect" Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>2 Blight Chests are Lucky</Span>
+                    </TextBlock>
+                    <!--Azure Oil-->
+                    <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Azure_Oil.png"/>
+                    <Label x:Name="labelAzureOil" Grid.Column="2" Grid.Row="1" Foreground="{DynamicResource VeryLowValueColor}" Content="Azure Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockAzureOilEffect" Grid.Column="2" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>15% increased Experience</Span>
+                    </TextBlock>
+                    <!--Violet Oil-->
+                    <Rectangle Grid.Column="0" Grid.Row="2" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="2" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Violet_Oil.png"/>
+                    <Label x:Name="labelVioletOil" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource LowValueColor}" Content="Violet Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockVioletOilEffect" Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>30% increased Quantity of Items</Span>
+                    </TextBlock>
+                    <!--Crimson Oil-->
+                    <Rectangle Grid.Column="1" Grid.Row="2" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="2" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Crimson_Oil.png"/>
+                    <Label x:Name="labelCrimsonOil" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource MediumValueColor}" Content="Crimson Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockCrimsonOilEffect" Grid.Column="1" Grid.Row="2" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>3 Blight Chests are Lucky</Span>
+                    </TextBlock>
+                    <!--Black Oil-->
+                    <Rectangle Grid.Column="2" Grid.Row="2" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="2" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Black_Oil.png"/>
+                    <Label x:Name="labelBlackOil" Grid.Column="2" Grid.Row="2" Foreground="{DynamicResource MediumValueColor}" Content="Black Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockBlackOilEffect" Grid.Column="2" Grid.Row="2" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>10% chance for Blight Chests to have an</Span>
+                        <LineBreak/>
+                        <Span>additional reward</Span>
+                    </TextBlock>
+                    <!--Opalescent Oil-->
+                    <Rectangle Grid.Column="0" Grid.Row="3" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="3" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Opalescent_Oil.png"/>
+                    <Label x:Name="labelOpalescentOil" Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource MediumValueColor}" Content="Opalescent Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockOpalescentOilEffect" Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+25% Monster Pack Size</Span>
+                    </TextBlock>
+                    <!--Silver Oil-->
+                    <Rectangle Grid.Column="1" Grid.Row="3" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="3" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Silver_Oil.png"/>
+                    <Label x:Name="labelSilverOil" Grid.Column="1" Grid.Row="3" Foreground="{DynamicResource HighValueColor}" Content="Silver Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockSilverOilEffect" Grid.Column="1" Grid.Row="3" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>5 Blight Chests are Lucky</Span>
+                    </TextBlock>
+                    <!--Golden Oil-->
+                    <Rectangle Grid.Column="2" Grid.Row="3" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="3" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Blight/Golden_Oil.png"/>
+                    <Label x:Name="labelGoldenOil" Grid.Column="2" Grid.Row="3" Foreground="{DynamicResource HighValueColor}" Content="Golden Oil" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="textBlockGoldenOilEffect" Grid.Column="2" Grid.Row="3" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="110,50,0,20" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Span>+5% Monster Pack Size</Span>
+                        <LineBreak/>
+                        <Span>25% chance for Blight Chests to have an</Span>
+                        <LineBreak/>
+                        <Span>additional Reward</Span>
+                    </TextBlock>
+
+                </Grid>
             </TabItem>
             <TabItem x:Name="tabItemMetamorph" BorderBrush="{DynamicResource SecondaryColor}" Background="{DynamicResource BackgroundColor}" Header="Metamorph">
-                <Grid Background="{DynamicResource BackgroundColor}"/>
+                <Grid Background="{DynamicResource BackgroundColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="260" Width="1100">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Abrasive Catalyst-->
+                    <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Abrasive_Catalyst.png"/>
+                    <Label Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Abrasive Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelAbrasiveCatalyst"/>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAbrasiveCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Attack Modifiers</Span>
+                    </TextBlock>
+                    <!--Fertile Catalyst-->
+                    <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Fertile_Catalyst.png"/>
+                    <Label Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Fertile Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelFertileCatalyst"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockFertileCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Life and Mana Modifiers</Span>
+                    </TextBlock>
+                    <!--Imbued Catalyst-->
+                    <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Imbued_Catalyst.png"/>
+                    <Label Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Imbued Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelImbuedCatalyst"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockImbuedCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Caster Modifiers</Span>
+                    </TextBlock>
+                    <!--Intrinsic Catalyst-->
+                    <Rectangle Grid.Column="3" Grid.Row="0" Stroke="Black" />
+                    <Image Grid.Column="3" Grid.Row="0" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Intrinsic_Catalyst.png"/>
+                    <Label Grid.Column="3" Grid.Row="0" Foreground="{DynamicResource TextColor}" Content="Intrinsic Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelIntrinsicCatalyst"/>
+                    <TextBlock Grid.Column="3" Grid.Row="0" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockIntrinsicCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Attribute Modifiers</Span>
+                    </TextBlock>
+                    <!--Prismatic Catalyst-->
+                    <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="0" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Prismatic_Catalyst.png"/>
+                    <Label Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Prismatic Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelPrismaticCatalyst"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockPrismaticCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Resistance Modifiers</Span>
+                    </TextBlock>
+                    <!--Tempering Catalyst-->
+                    <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="1" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Tempering_Catalyst.png"/>
+                    <Label Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Tempering Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelTemperingCatalyst"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockTemperingCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Defense Modifiers</Span>
+                    </TextBlock>
+                    <!--Turbulent Catalyst-->
+                    <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Black" />
+                    <Image Grid.Column="2" Grid.Row="1" Width="78" Height="78" Margin="10,20,0,0" HorizontalAlignment="Left" Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Metamorph/Turbulent_Catalyst.png"/>
+                    <Label Grid.Column="2" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Turbulent Catalyst" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelTurbulentCatalyst"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="90,50,0,20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockTurbulentCatalystEffect">
+                        <Span>Adds Quality that enhances</Span>
+                        <LineBreak/>
+                        <Span>Elemental Damage Modifiers</Span>
+                    </TextBlock>
+                    <!--Information-->
+                    <Rectangle Grid.Column="3" Grid.Row="1" Stroke="Black" />
+                    <Label Grid.Column="3" Grid.Row="1" Foreground="{DynamicResource TextColor}" Content="Information" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="15" Margin="0,5,0,0" Name="labelMetamorphInformation"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" Foreground="{DynamicResource TextColor}" FontWeight="Bold" Margin="10,49,10,10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="71" Width="255" Name="textBlockMetamorphInformationText">
+                        <Span>Can be applied to:</Span>
+                        <LineBreak/>
+                        <Span>Rings, Amulets, Belts</Span>
+                        <LineBreak/>
+                        <Span>Applying a Catalyst removes all other Quality</Span>
+                    </TextBlock>
+                </Grid>
             </TabItem>
         </TabControl>
 
