@@ -5,8 +5,8 @@ using System.Windows;
 using System.Windows.Input;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.TrayIcon.Models;
 
@@ -36,11 +36,11 @@ namespace Sidekick.Windows.TrayIcon
 
         public ObservableCollection<League> Leagues { get; private set; }
 
-        private readonly Core.Settings.SidekickSettings configuration;
+        private readonly SidekickSettings configuration;
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly ILeagueService leagueService;
 
-        public TrayIconViewModel(Core.Settings.SidekickSettings configuration, IUILanguageProvider uiLanguageProvider, ILeagueService leagueService)
+        public TrayIconViewModel(SidekickSettings configuration, IUILanguageProvider uiLanguageProvider, ILeagueService leagueService)
         {
             this.configuration = configuration;
             this.uiLanguageProvider = uiLanguageProvider;

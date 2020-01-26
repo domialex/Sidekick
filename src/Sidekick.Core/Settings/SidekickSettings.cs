@@ -5,7 +5,7 @@ namespace Sidekick.Core.Settings
 {
     public class SidekickSettings
     {
-        public const string FileName = "appsettings.json";
+        public const string FileName = "Sidekick_settings.json";
 
         public string UILanguage { get; set; }
 
@@ -38,6 +38,8 @@ namespace Sidekick.Core.Settings
             var json = JsonSerializer.Serialize(this);
             var defaults = JsonSerializer.Serialize(DefaultSettings.Settings);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
+
+            var delete = false;
 
             // Backup old settings
             if (File.Exists(filePath))
@@ -77,7 +79,7 @@ namespace Sidekick.Core.Settings
 
                             foreach (var property in root.EnumerateObject())
                             {
-                                if (defaultsRoot.GetProperty(property.Name).Equals(property.Value))
+                                if (defaultsRoot.GetProperty(property.Name).ToString() == property.Value.ToString())
                                 {
                                     continue;
                                 }
@@ -88,6 +90,11 @@ namespace Sidekick.Core.Settings
                             writer.WriteEndObject();
                             writer.Flush();
                         }
+                    }
+
+                    if (writer.BytesCommitted == 0)
+                    {
+                        File.Delete(filePath);
                     }
                 }
             }

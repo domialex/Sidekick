@@ -18,7 +18,7 @@ namespace Sidekick.Core
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(Settings.SidekickSettings.FileName, optional: true, reloadOnChange: true);
+                .AddJsonFile(SidekickSettings.FileName, optional: true, reloadOnChange: true);
 
             var configuration = builder.Build();
 

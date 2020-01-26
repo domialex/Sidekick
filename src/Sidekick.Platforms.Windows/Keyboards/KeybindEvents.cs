@@ -1,9 +1,9 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using WindowsHook;
 
 namespace Sidekick.Platforms.Windows.Keyboards
@@ -45,7 +45,12 @@ namespace Sidekick.Platforms.Windows.Keyboards
 
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
+
+#if !DEBUG
             hook.MouseWheelExt += Hook_MouseWheelExt;
+#endif
+
+            Enabled = true;
         }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
@@ -84,6 +89,8 @@ namespace Sidekick.Platforms.Windows.Keyboards
                 return;
             }
 
+            Enabled = false;
+
             Task.Run(async () =>
             {
                 // Transfer the event key to a string to compare to settings
@@ -109,64 +116,54 @@ namespace Sidekick.Platforms.Windows.Keyboards
 
                 if (key == configuration.KeyCloseWindow)
                 {
-                    Enabled = false;
                     logger.Log("Keybind for closing the window triggered.");
                     await OnCloseWindow?.Invoke();
-                    Enabled = true;
                 }
 
                 if (nativeProcess.IsPathOfExileInFocus)
                 {
                     if (key == configuration.KeyPriceCheck)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for price checking triggered.");
                         await OnPriceCheck?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyItemWiki)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for opening the item wiki triggered.");
                         await OnItemWiki?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyHideout)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for going to the hideout triggered.");
                         await OnHideout?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyFindItems)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for finding the item triggered.");
                         await OnFindItems?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyLeaveParty)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for leaving the party triggered.");
                         await OnLeaveParty?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyOpenSearch)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for opening the search triggered.");
                         await OnOpenSearch?.Invoke();
-                        Enabled = true;
                     }
                     else if (key == configuration.KeyOpenLeagueOverview)
                     {
-                        Enabled = false;
                         logger.Log("Keybind for opening the league overview triggered.");
                         await OnOpenLeagueOverview?.Invoke();
-                        Enabled = true;
                     }
                 }
+            });
+
+            Task.Run(async () =>
+            {
+                await Task.Delay(100);
+                Enabled = true;
             });
         }
 

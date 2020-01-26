@@ -8,14 +8,13 @@ namespace Sidekick.Windows.Settings.UserControls
     /// </summary>
     public partial class KeybindEditor : System.Windows.Controls.UserControl
     {
-        public static readonly DependencyProperty PropertyProperty =
-      DependencyProperty.Register(nameof(Property), typeof(string), typeof(KeybindEditor), new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(nameof(Property), typeof(string), typeof(KeybindEditor));
 
-        public static readonly DependencyProperty ValueProperty =
-      DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor), new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor));
 
         public KeybindEditor()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
@@ -38,7 +37,7 @@ namespace Sidekick.Windows.Settings.UserControls
         public void Capture(string key)
         {
             // If no actual key was pressed - return
-            if (key.EndsWith("+"))
+            if (key == "Esc" || key.EndsWith("+"))
             {
                 Value = PreviousValue;
                 return;
@@ -48,12 +47,7 @@ namespace Sidekick.Windows.Settings.UserControls
             HotkeyChanged?.Invoke(this);
         }
 
-        /// <summary>
-        /// Starts to capture keyboard input when the button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HotkeyButton_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void HotkeyButton_Click(object sender, RoutedEventArgs e)
         {
             PreviousValue = Value;
             Value = null;
