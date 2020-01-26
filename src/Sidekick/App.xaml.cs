@@ -31,8 +31,6 @@ namespace Sidekick
         {
             base.OnStartup(e);
 
-            EnsureSingleInstance();
-
             ToolTipService.ShowDurationProperty.OverrideMetadata(
             typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
             _splashScreen.UpdateProgress("Initializing Providers...", 0);
@@ -41,6 +39,8 @@ namespace Sidekick
             serviceProvider = Sidekick.Startup.InitializeServices();
 
             Legacy.Initialize(serviceProvider);
+
+            EnsureSingleInstance();
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();

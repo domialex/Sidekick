@@ -62,14 +62,14 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="Character Name" Foreground="{DynamicResource LightColor}" VerticalContentAlignment="Center"/>
-                            <TextBox Grid.Row="0" Text="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)CharacterName]}"
+                            <TextBox Grid.Row="0" Text="{Binding Path=Settings.CharacterName}"
                                      Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" Margin="1" Foreground="{DynamicResource LightColor}"
                                      VerticalContentAlignment="Center" IsReadOnly="False">
                                 <TextBox.ContextMenu>
                                     <ContextMenu Visibility="Collapsed"/>
                                 </TextBox.ContextMenu>
                             </TextBox>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)RetainClipboard]}"/>
+                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.RetainClipboard}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1" Margin="1"></GroupBox>

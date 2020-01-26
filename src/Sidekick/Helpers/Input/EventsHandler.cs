@@ -105,7 +105,7 @@ namespace Sidekick.Helpers.Input
 
             if (item != null)
             {
-                if (Legacy.Configuration.CurrentWikiSettings == Core.Configuration.WikiSetting.PoeDb)
+                if (Legacy.Settings.CurrentWikiSettings == Core.Settings.WikiSetting.PoeDb)
                 {
                     Legacy.PoeDbClient.Open(item);
                 }
@@ -138,7 +138,7 @@ namespace Sidekick.Helpers.Input
         {
             var clipboardText = string.Empty;
 
-            if (Legacy.Configuration.RetainClipboard)
+            if (Legacy.Settings.RetainClipboard)
             {
                 clipboardText = ClipboardHelper.GetText();
             }
@@ -152,7 +152,7 @@ namespace Sidekick.Helpers.Input
             // Retrieve clipboard.
             var itemText = ClipboardHelper.GetText();
 
-            if (Legacy.Configuration.RetainClipboard)
+            if (Legacy.Settings.RetainClipboard)
             {
                 await ClipboardHelper.SetDataObject(clipboardText);
             }

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using Sidekick.Business.Languages.UI;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Loggers;
 using Sidekick.Platforms;
 using Sidekick.UI.Settings;
@@ -80,11 +80,11 @@ namespace Sidekick.Windows.Settings
 
         private void SelectWikiSetting()
         {
-            if (settingsViewModel.Configuration.CurrentWikiSettings == WikiSetting.PoeWiki)
+            if (settingsViewModel.Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
             {
                 radioButtonPOEWiki.IsChecked = true;
             }
-            else if (settingsViewModel.Configuration.CurrentWikiSettings == WikiSetting.PoeDb)
+            else if (settingsViewModel.Settings.CurrentWikiSettings == WikiSetting.PoeDb)
             {
                 radioButtonPOEDb.IsChecked = true;
             }
@@ -93,7 +93,7 @@ namespace Sidekick.Windows.Settings
         private void InitializeUILanguageCombobox()
         {
             comboBoxUILanguages.ItemsSource = uiLanguageProvider.AvailableLanguages.Select(x => x.Name);
-            comboBoxUILanguages.SelectedItem = settingsViewModel.Configuration.UILanguage;
+            comboBoxUILanguages.SelectedItem = settingsViewModel.Settings.UILanguage;
         }
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)

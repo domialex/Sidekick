@@ -1,59 +1,42 @@
 using System.IO;
 using System.Text.Json;
 
-namespace Sidekick.Core.Configuration
+namespace Sidekick.Core.Settings
 {
-    public class Configuration
+    public class SidekickSettings
     {
         public const string FileName = "appsettings.json";
 
-        private static readonly Configuration Defaults = new Configuration()
-        {
-            UILanguage = "English",
-            LeagueId = string.Empty,
-            CharacterName = string.Empty,
-            CurrentWikiSettings = WikiSetting.PoeWiki,
-            RetainClipboard = true,
-            KeyCloseWindow = "Space",
-            KeyPriceCheck = "Ctrl+D",
-            KeyHideout = "F5",
-            KeyItemWiki = "Alt+W",
-            KeyFindItems = "Ctrl+F",
-            KeyLeaveParty = "F4",
-            KeyOpenSearch = "Alt+Q",
-            KeyOpenLeagueOverview = "F6",
-        };
+        public string UILanguage { get; set; }
 
-        public string UILanguage { get; set; } = Defaults.UILanguage;
+        public string LeagueId { get; set; }
 
-        public string LeagueId { get; set; } = Defaults.LeagueId;
+        public WikiSetting CurrentWikiSettings { get; set; }
 
-        public WikiSetting CurrentWikiSettings { get; set; } = Defaults.CurrentWikiSettings;
+        public string CharacterName { get; set; }
 
-        public string CharacterName { get; set; } = Defaults.CharacterName;
+        public bool RetainClipboard { get; set; }
 
-        public bool RetainClipboard { get; set; } = Defaults.RetainClipboard;
+        public string KeyCloseWindow { get; set; }
 
-        public string KeyCloseWindow { get; set; } = Defaults.KeyCloseWindow;
+        public string KeyPriceCheck { get; set; }
 
-        public string KeyPriceCheck { get; set; } = Defaults.KeyPriceCheck;
+        public string KeyHideout { get; set; }
 
-        public string KeyHideout { get; set; } = Defaults.KeyHideout;
+        public string KeyItemWiki { get; set; }
 
-        public string KeyItemWiki { get; set; } = Defaults.KeyItemWiki;
+        public string KeyFindItems { get; set; }
 
-        public string KeyFindItems { get; set; } = Defaults.KeyFindItems;
+        public string KeyLeaveParty { get; set; }
 
-        public string KeyLeaveParty { get; set; } = Defaults.KeyLeaveParty;
+        public string KeyOpenSearch { get; set; }
 
-        public string KeyOpenSearch { get; set; } = Defaults.KeyOpenSearch;
-
-        public string KeyOpenLeagueOverview { get; set; } = Defaults.KeyOpenLeagueOverview;
+        public string KeyOpenLeagueOverview { get; set; }
 
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);
-            var defaults = JsonSerializer.Serialize(Defaults);
+            var defaults = JsonSerializer.Serialize(DefaultSettings.Settings);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
 
             // Backup old settings

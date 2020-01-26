@@ -1,4 +1,4 @@
-namespace Sidekick.Core.Configuration
+namespace Sidekick.Core.Settings
 {
     public enum WikiSetting
     {

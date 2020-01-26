@@ -12,7 +12,7 @@ using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Loggers;
 using Sidekick.Platforms;
 
@@ -24,7 +24,7 @@ namespace Sidekick.Business.Trades
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IStaticItemCategoryService staticItemCategoryService;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
         private readonly IPoeApiClient poeApiClient;
         private readonly INativeBrowser nativeBrowser;
 
@@ -32,7 +32,7 @@ namespace Sidekick.Business.Trades
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticItemCategoryService staticItemCategoryService,
-            Configuration configuration,
+            SidekickSettings configuration,
             IPoeApiClient poeApiClient,
             INativeBrowser nativeBrowser)
         {

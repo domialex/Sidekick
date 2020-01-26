@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Core.Loggers
 {
     public class Logger : ILogger, IOnBeforeInit, IOnInit, IOnAfterInit, IOnReset
     {
-        private readonly Configuration.Configuration configuration;
+        private readonly Settings.SidekickSettings configuration;
 
-        public Logger(Configuration.Configuration configuration)
+        public Logger(Settings.SidekickSettings configuration)
         {
             this.configuration = configuration;
         }

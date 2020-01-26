@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
-using System.IO;
 
 namespace Sidekick.Core
 {
@@ -17,14 +18,14 @@ namespace Sidekick.Core
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(Configuration.Configuration.FileName, optional: true, reloadOnChange: true);
+                .AddJsonFile(Settings.SidekickSettings.FileName, optional: true, reloadOnChange: true);
 
-            IConfigurationRoot configuration = builder.Build();
+            var configuration = builder.Build();
 
             services.AddSingleton(typeof(IConfigurationRoot), configuration);
             services.AddSingleton(typeof(IConfiguration), configuration);
 
-            var sidekickConfiguration = new Configuration.Configuration();
+            var sidekickConfiguration = DefaultSettings.CreateDefault();
             configuration.Bind(sidekickConfiguration);
             services.AddSingleton(sidekickConfiguration);
 

@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Platforms.Windows.Natives.Helpers;
@@ -14,11 +14,11 @@ namespace Sidekick.Platforms.Windows.Natives
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
 
         public NativeKeyboard(ILogger logger,
             INativeProcess nativeProcess,
-            Configuration configuration)
+            SidekickSettings configuration)
         {
             this.logger = logger;
             this.nativeProcess = nativeProcess;

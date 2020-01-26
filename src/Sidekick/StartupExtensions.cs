@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Core;
 using Sidekick.Services;
+using Sidekick.UI.Settings;
+using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
 namespace Sidekick
@@ -22,5 +24,12 @@ namespace Sidekick
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             return services;
         }
+
+        public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
+        {
+            services.AddScoped<ISettingView, SettingsView>();
+            return services;
+        }
+
     }
 }

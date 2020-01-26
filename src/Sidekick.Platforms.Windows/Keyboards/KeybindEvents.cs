@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using WindowsHook;
@@ -12,12 +12,12 @@ namespace Sidekick.Platforms.Windows.Keyboards
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
 
         public KeybindEvents(ILogger logger,
             INativeProcess nativeProcess,
-            Configuration configuration,
+            SidekickSettings configuration,
             INativeKeyboard nativeKeyboard)
         {
             this.logger = logger;

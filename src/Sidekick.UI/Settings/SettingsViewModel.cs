@@ -2,41 +2,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Business.Languages.UI;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.UI.Settings
 {
     public class SettingsViewModel : SidekickViewModel<ISettingView>
     {
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings settings;
 
         public SettingsViewModel(IServiceProvider serviceProvider,
             IUILanguageProvider uiLanguageProvider,
-            Configuration configuration)
+            SidekickSettings settings)
             : base(serviceProvider)
         {
             this.uiLanguageProvider = uiLanguageProvider;
-            this.configuration = configuration;
+            this.settings = settings;
         }
 
-        public Configuration Configuration { get; private set; }
+        public SidekickSettings Settings { get; private set; }
 
         public Dictionary<string, string> Keybinds { get; private set; } = new Dictionary<string, string>();
 
         public new void Open()
         {
-            Configuration = new Configuration();
-            AssignValues(configuration, Configuration);
+            Settings = new SidekickSettings();
+            AssignValues(settings, Settings);
 
             Keybinds.Clear();
-            Configuration.GetType()
+            Settings.GetType()
                 .GetProperties()
                 .Where(x => x.Name.StartsWith("Key"))
                 .ToList()
                 .ForEach(x =>
                 {
-                    Keybinds.Add(x.Name, x.GetValue(Configuration).ToString());
+                    Keybinds.Add(x.Name, x.GetValue(Settings).ToString());
                 });
 
             base.Open();
@@ -44,9 +44,9 @@ namespace Sidekick.UI.Settings
 
         public void Save()
         {
-            AssignValues(Configuration, configuration);
-            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.First(x => x.Name == Configuration.UILanguage));
-            configuration.Save();
+            AssignValues(Settings, settings);
+            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.First(x => x.Name == Settings.UILanguage));
+            settings.Save();
             Keybinds.Clear();
             Close();
         }
@@ -62,7 +62,7 @@ namespace Sidekick.UI.Settings
             return Keybinds.Any(x => x.Value == keybind && x.Key != ignoreKey);
         }
 
-        private static void AssignValues(Configuration src, Configuration dest)
+        private static void AssignValues(SidekickSettings src, SidekickSettings dest)
         {
             dest.CharacterName = src.CharacterName;
             dest.CurrentWikiSettings = src.CurrentWikiSettings;

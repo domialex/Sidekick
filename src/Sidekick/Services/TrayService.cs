@@ -1,23 +1,23 @@
 using System.Threading.Tasks;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Services
 {
     public class TrayService : ITrayService, IOnAfterInit
     {
-        private readonly Configuration configuration;
+        private readonly SidekickSettings settings;
 
-        public TrayService(Configuration configuration)
+        public TrayService(SidekickSettings settings)
         {
-            this.configuration = configuration;
+            this.settings = settings;
         }
 
         public Task OnAfterInit()
         {
             App.ShowNotifcation(
                 "Sidekick is ready",
-                $"Press {configuration.KeyPriceCheck.ToKeybindString()} over an item in-game to use. Press {configuration.KeyCloseWindow.ToKeybindString()} to close overlay.");
+                $"Press {settings.KeyPriceCheck.ToKeybindString()} over an item in-game to use. Press {settings.KeyCloseWindow.ToKeybindString()} to close overlay.");
 
             return Task.CompletedTask;
         }
