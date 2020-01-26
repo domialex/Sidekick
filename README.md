@@ -9,6 +9,8 @@ A Path of Exile helper that shows item prices using the **official** [Path of Ex
 
 **[Currency price check](https://streamable.com/y0x6k)**
 
+**[League Information](https://imgur.com/a/Gvc5nGL)**
+
 ## Description
 
 If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
