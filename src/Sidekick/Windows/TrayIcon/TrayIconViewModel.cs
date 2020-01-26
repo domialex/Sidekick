@@ -91,7 +91,7 @@ namespace Sidekick.Windows.TrayIcon
 
         public ICommand ChangeLeagueCommand => new RelayCommand(leagueId => ChangeLeague(leagueId.ToString()));
 
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.ViewController.Open<SettingsView>());
+        public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.ViewLocator.Open<SettingsView>());
 
         public ICommand ShowLogsCommand => new RelayCommand(_ => ApplicationLogsController.Show());
 

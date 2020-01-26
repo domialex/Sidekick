@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sidekick.UI.Views
 {
-    public class ViewController : IViewController, IDisposable
+    public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
 
-        public ViewController(IServiceProvider serviceProvider)
+        public ViewLocator(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
 

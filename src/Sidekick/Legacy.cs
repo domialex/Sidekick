@@ -70,7 +70,7 @@ namespace Sidekick
         public static INativeKeyboard NativeKeyboard { get; private set; }
 
         [Obsolete]
-        public static IViewController ViewController { get; private set; }
+        public static IViewLocator ViewLocator { get; private set; }
 
         [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
@@ -91,7 +91,7 @@ namespace Sidekick
             KeybindEvents = serviceProvider.GetService<IKeybindEvents>();
             NativeProcess = serviceProvider.GetService<INativeProcess>();
             NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
-            ViewController = serviceProvider.GetService<IViewController>();
+            ViewLocator = serviceProvider.GetService<IViewLocator>();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Sidekick.UI
     {
         public static IServiceCollection AddSidekickUIServices(this IServiceCollection services)
         {
-            services.AddSingleton<IViewController, ViewController>();
+            services.AddSingleton<IViewLocator, ViewLocator>();
 
             services.AddScoped<ISettingsViewModel, SettingsViewModel>();
 
