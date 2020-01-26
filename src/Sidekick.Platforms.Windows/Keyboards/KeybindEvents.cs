@@ -116,6 +116,7 @@ namespace Sidekick.Platforms.Windows.Keyboards
 
                 if (key == configuration.KeyCloseWindow)
                 {
+                    e.Handled = true;
                     logger.Log("Keybind for closing the window triggered.");
                     await OnCloseWindow?.Invoke();
                 }
@@ -124,36 +125,43 @@ namespace Sidekick.Platforms.Windows.Keyboards
                 {
                     if (key == configuration.KeyPriceCheck)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for price checking triggered.");
                         await OnPriceCheck?.Invoke();
                     }
                     else if (key == configuration.KeyItemWiki)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for opening the item wiki triggered.");
                         await OnItemWiki?.Invoke();
                     }
                     else if (key == configuration.KeyHideout)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for going to the hideout triggered.");
                         await OnHideout?.Invoke();
                     }
                     else if (key == configuration.KeyFindItems)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for finding the item triggered.");
                         await OnFindItems?.Invoke();
                     }
                     else if (key == configuration.KeyLeaveParty)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for leaving the party triggered.");
                         await OnLeaveParty?.Invoke();
                     }
                     else if (key == configuration.KeyOpenSearch)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for opening the search triggered.");
                         await OnOpenSearch?.Invoke();
                     }
                     else if (key == configuration.KeyOpenLeagueOverview)
                     {
+                        e.Handled = true;
                         logger.Log("Keybind for opening the league overview triggered.");
                         await OnOpenLeagueOverview?.Invoke();
                     }
