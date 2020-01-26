@@ -31,10 +31,12 @@ namespace Sidekick.Platforms.Windows.Natives
 
         private IKeyboardMouseEvents hook = null;
 
-        public async Task OnAfterInit()
+        public Task OnAfterInit()
         {
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
+
+            return Task.CompletedTask;
         }
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
