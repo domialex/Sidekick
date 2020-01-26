@@ -14,5 +14,6 @@ namespace Sidekick.Platforms
         event Func<Task> OnLeaveParty;
         event Func<Task> OnOpenSearch;
         event Func<Task> OnOpenLeagueOverview;
+        event Func<int, int, Task> OnMouseClick;
     }
 }

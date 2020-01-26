@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -72,6 +73,16 @@ namespace Sidekick.Windows.Overlay
             var positionY = desiredY + (desiredY < yMidScaled ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
 
             _overlayWindow.SetWindowPosition(positionX, positionY);
+        }
+
+        public static Point GetOverlayPosition()
+        {
+            return App.Current.Dispatcher.Invoke(new Func<Point>(() => { return new Point(_overlayWindow.Left, _overlayWindow.Top); }));
+        }
+
+        public static Size GetOverlaySize()
+        {
+            return new Size(_overlayWindow.ActualWidth, _overlayWindow.ActualHeight);
         }
 
         /// <summary>

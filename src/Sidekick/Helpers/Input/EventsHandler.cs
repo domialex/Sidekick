@@ -22,6 +22,23 @@ namespace Sidekick.Helpers.Input
             Legacy.KeybindEvents.OnFindItems += TriggerFindItem;
             Legacy.KeybindEvents.OnLeaveParty += TriggerLeaveParty;
             Legacy.KeybindEvents.OnOpenSearch += TriggerOpenSearch;
+            Legacy.KeybindEvents.OnMouseClick += MouseClicked;
+        }
+
+        private static Task MouseClicked(int x, int y)
+        {
+            if (!OverlayController.IsDisplayed || !Legacy.Settings.CloseOverlayWithMouse) return Task.CompletedTask;
+          
+            var overlayPos = OverlayController.GetOverlayPosition();
+            var overlaySize = OverlayController.GetOverlaySize();
+
+            if (x < overlayPos.X || x > overlayPos.X + overlaySize.Width
+                || y < overlayPos.Y || y > overlayPos.Y + overlaySize.Height)
+            {
+                OverlayController.Hide();
+            }
+
+            return Task.CompletedTask;
         }
 
         private static async Task TriggerItemFetch()
