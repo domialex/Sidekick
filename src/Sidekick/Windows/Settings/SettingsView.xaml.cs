@@ -91,6 +91,7 @@ namespace Sidekick.Windows.Settings
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
             viewModel.Save();
+            Close();
         }
 
         private void DiscardChanges_Click(object sender, RoutedEventArgs e)

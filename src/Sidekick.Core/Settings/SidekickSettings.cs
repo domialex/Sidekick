@@ -16,6 +16,8 @@ namespace Sidekick.Core.Settings
         public string CharacterName { get; set; }
 
         public bool RetainClipboard { get; set; }
+        public bool CloseOverlayWithMouse { get; set; }
+        public bool EnableCtrlScroll { get; set; }
 
         public string KeyCloseWindow { get; set; }
 

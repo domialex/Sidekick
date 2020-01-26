@@ -36,6 +36,7 @@ namespace Sidekick.Platforms.Windows.Keyboards
         public event Func<Task> OnLeaveParty;
         public event Func<Task> OnOpenSearch;
         public event Func<Task> OnOpenLeagueOverview;
+        public event Func<int, int, Task> OnMouseClick;
 
         private IKeyboardMouseEvents hook = null;
 
@@ -44,8 +45,9 @@ namespace Sidekick.Platforms.Windows.Keyboards
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
 
-#if !DEBUG
+#if !DEBUG  
             hook.MouseWheelExt += Hook_MouseWheelExt;
+            hook.MouseUp += Hook_MouseUp;
 #endif
 
             Enabled = true;
@@ -53,9 +55,19 @@ namespace Sidekick.Platforms.Windows.Keyboards
             return Task.CompletedTask;
         }
 
+        private void Hook_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!Enabled || !configuration.CloseOverlayWithMouse) return;
+
+            Task.Run(async () =>
+            {
+                await OnMouseClick?.Invoke(e.X, e.Y);
+            });
+        }
+
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
-            if (!Enabled)
+            if (!Enabled || !configuration.EnableCtrlScroll)
             {
                 return;
             }

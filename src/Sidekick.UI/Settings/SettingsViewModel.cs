@@ -48,19 +48,9 @@ namespace Sidekick.UI.Settings
 
         private static void AssignValues(SidekickSettings src, SidekickSettings dest)
         {
-            dest.CharacterName = src.CharacterName;
-            dest.CurrentWikiSettings = src.CurrentWikiSettings;
-            dest.KeyCloseWindow = src.KeyCloseWindow;
-            dest.KeyFindItems = src.KeyFindItems;
-            dest.KeyHideout = src.KeyHideout;
-            dest.KeyItemWiki = src.KeyItemWiki;
-            dest.KeyLeaveParty = src.KeyLeaveParty;
-            dest.KeyOpenLeagueOverview = src.KeyOpenLeagueOverview;
-            dest.KeyOpenSearch = src.KeyOpenSearch;
-            dest.KeyPriceCheck = src.KeyPriceCheck;
-            dest.LeagueId = src.LeagueId;
-            dest.RetainClipboard = src.RetainClipboard;
-            dest.UILanguage = src.UILanguage;
+            // iterates through src Settings (properties) and copies them to dest settings (properties)
+            // If there ever comes a time, where some properties do not have to be copied, we can add attributes to exclude them
+            src.GetType().GetProperties().ToList().ForEach(x => dest.GetType().GetProperty(x.Name).SetValue(dest, x.GetValue(src))); 
         }
     }
 }

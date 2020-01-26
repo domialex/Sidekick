@@ -11,6 +11,8 @@ namespace Sidekick.Core.Settings
                 CharacterName = string.Empty,
                 CurrentWikiSettings = WikiSetting.PoeWiki,
                 RetainClipboard = true,
+                CloseOverlayWithMouse = true,
+                EnableCtrlScroll = true,
                 KeyCloseWindow = "Space",
                 KeyPriceCheck = "Ctrl+D",
                 KeyHideout = "F5",

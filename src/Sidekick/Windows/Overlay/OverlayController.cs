@@ -76,6 +76,16 @@ namespace Sidekick.Windows.Overlay
             _overlayWindow.SetWindowPosition(positionX, positionY);
         }
 
+        public static Point GetOverlayPosition()
+        {
+            return App.Current.Dispatcher.Invoke(new Func<Point>(() => { return new Point(_overlayWindow.Left, _overlayWindow.Top); }));
+        }
+
+        public static Size GetOverlaySize()
+        {
+            return new Size(_overlayWindow.ActualWidth, _overlayWindow.ActualHeight);
+        }
+
         /// <summary>
         /// Handles dragging for the window when pressing any control that does NOT handle the event <see cref="RoutedEventArgs.Handled"/>.
         /// Does not apply clamping of the windows position.
