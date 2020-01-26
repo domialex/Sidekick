@@ -1,43 +1,39 @@
 using System;
 using System.IO;
-using System.Reflection;
-using System.Text.Json;
+using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.IO.Compression;
-using System.Diagnostics;
+using System.Reflection;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Sidekick.Core.Update.Github_API;
-using System.Linq;
 
 
 namespace Sidekick.Core.Update
 {
     public class UpdateManager : IUpdateManager
     {
-        private readonly string INSTALL_DIR;
-        private readonly string TMP_DIR;
-        private readonly string ZIP_PATH;
-
         private GithubRelease _latestRelease;
-
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
         private Action<string, int> reportProgress;
         public Action<string, int> ReportProgress { set { reportProgress = value; } }
 
         public UpdateManager(IHttpClientFactory httpClientFactory)
-        {           
+        {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");
             _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            INSTALL_DIR = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            TMP_DIR = Path.Combine(INSTALL_DIR, "UpdateBackup");
-            ZIP_PATH = Path.Combine(INSTALL_DIR, "update.zip");
         }
+
+        public string InstallDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        public string TempDirectory => Path.Combine(InstallDirectory, "UpdateBackup");
+
+        public string ZipPath => Path.Combine(InstallDirectory, "update.zip");
 
         /// <summary>
         /// Checks if there is a newer release available on github
@@ -55,7 +51,7 @@ namespace Sidekick.Core.Update
                 var result = currentVersion.CompareTo(latestVersion);
                 return result < 0 ? true : false;
             }
-                        
+
             return false;
         }
 
@@ -128,8 +124,8 @@ namespace Sidekick.Core.Update
         private void ApplyUpdate()
         {
             reportProgress.Invoke("Applying update...", 80);
-            ZipFile.ExtractToDirectory(ZIP_PATH, INSTALL_DIR);
-            File.Delete(ZIP_PATH);
+            ZipFile.ExtractToDirectory(ZipPath, InstallDirectory);
+            File.Delete(ZipPath);
         }
         /// <summary>
         /// Restores the backuped files
@@ -138,10 +134,10 @@ namespace Sidekick.Core.Update
         {
             try
             {
-                foreach (var file in Directory.EnumerateFiles(TMP_DIR))
+                foreach (var file in Directory.EnumerateFiles(TempDirectory))
                 {
                     var fileName = Path.GetFileName(file);
-                    File.Move(file, Path.Combine(INSTALL_DIR, fileName));
+                    File.Move(file, Path.Combine(InstallDirectory, fileName));
                 }
             }
             catch { }
@@ -155,9 +151,9 @@ namespace Sidekick.Core.Update
             reportProgress.Invoke("Downloading latest release from GitHub...", 30);
             if (_latestRelease != null)
             {
-                if (File.Exists(ZIP_PATH)) File.Delete(ZIP_PATH);
+                if (File.Exists(ZipPath)) File.Delete(ZipPath);
                 //download zip file and save to disk
-                using (Stream contentStream = await (await _httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZIP_PATH, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (Stream contentStream = await (await _httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await contentStream.CopyToAsync(stream);
                 }
@@ -174,49 +170,38 @@ namespace Sidekick.Core.Update
             try
             {
                 reportProgress.Invoke("Backuping current version...", 50);
-                if (Directory.Exists(TMP_DIR))
+                if (Directory.Exists(TempDirectory))
                 {
-                    Directory.Delete(TMP_DIR, true);
-                    Directory.CreateDirectory(TMP_DIR);
+                    Directory.Delete(TempDirectory, true);
+                    Directory.CreateDirectory(TempDirectory);
                 }
                 else
                 {
-                    Directory.CreateDirectory(TMP_DIR);
+                    Directory.CreateDirectory(TempDirectory);
                 }
 
                 // Backup resource folders etc.
-                foreach (var directory in Directory.EnumerateDirectories(INSTALL_DIR))
+                foreach (var directory in Directory.EnumerateDirectories(InstallDirectory))
                 {
-                    if (directory != TMP_DIR)
-                        Directory.Move(directory, Path.Combine(TMP_DIR, new DirectoryInfo(directory).Name));
+                    if (directory != TempDirectory)
+                    {
+                        Directory.Move(directory, Path.Combine(TempDirectory, new DirectoryInfo(directory).Name));
+                    }
                 }
 
                 // Backup install files
-                foreach (var file in Directory.EnumerateFiles(INSTALL_DIR))
+                foreach (var file in Directory.EnumerateFiles(InstallDirectory))
                 {
                     //keep settings and already downloaded file 
-                    if(!file.EndsWith(".zip") && !file.EndsWith(".json"))
+                    if (!file.EndsWith(".zip") && !file.EndsWith(".json"))
                     {
                         var fileName = Path.GetFileName(file);
-                        File.Move(file, Path.Combine(TMP_DIR, fileName));
-                    }                    
+                        File.Move(file, Path.Combine(TempDirectory, fileName));
+                    }
                 }
                 return true;
             }
             catch { return false; }
-        }
-
-        /// <summary>
-        /// Restarts the application
-        /// </summary>
-        public void Restart()
-        {
-            var startInfo = new ProcessStartInfo
-            {
-                FileName = Path.Combine(INSTALL_DIR, "Sidekick.exe"),
-                UseShellExecute = false,
-            };
-            Process.Start(startInfo);
         }
     }
 }

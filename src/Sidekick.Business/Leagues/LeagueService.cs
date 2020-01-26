@@ -1,6 +1,6 @@
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +11,12 @@ namespace Sidekick.Business.Leagues
     public class LeagueService : ILeagueService, IOnInit, IOnReset
     {
         private readonly IPoeApiClient poeApiClient;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
 
         public List<League> Leagues { get; private set; }
 
         public LeagueService(IPoeApiClient poeApiClient,
-            Configuration configuration)
+            SidekickSettings configuration)
         {
             this.poeApiClient = poeApiClient;
             this.configuration = configuration;

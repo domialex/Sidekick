@@ -1,11 +1,9 @@
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Trades.Results;
-using Sidekick.Helpers.NativeMethods;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Trades.Results;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.Overlay
@@ -53,7 +51,7 @@ namespace Sidekick.Windows.Overlay
             if (_overlayWindow == null)
                 Initialize();
 
-            var scale = 96f / ProcessHelper.GetActiveWindowDpi();
+            var scale = 96f / Legacy.NativeProcess.ActiveWindowDpi;
             var xScaled = (int)(Cursor.Position.X * scale);
             var yScaled = (int)(Cursor.Position.Y * scale);
 

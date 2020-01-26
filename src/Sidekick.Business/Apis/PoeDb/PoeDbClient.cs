@@ -1,7 +1,7 @@
 using System;
-using System.Diagnostics;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Core.Loggers;
+using Sidekick.Platforms;
 
 namespace Sidekick.Business.Apis.PoeDb
 {
@@ -13,12 +13,15 @@ namespace Sidekick.Business.Apis.PoeDb
         private const string SubUrlItem = "item.php?n=";
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
+        private readonly INativeBrowser nativeBrowser;
 
         public PoeDbClient(ILogger logger,
-            ILanguageProvider languageProvider)
+            ILanguageProvider languageProvider,
+            INativeBrowser nativeBrowser)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
+            this.nativeBrowser = nativeBrowser;
         }
 
         public void Open(Parsers.Models.Item item)
@@ -39,9 +42,7 @@ namespace Sidekick.Business.Apis.PoeDb
                 return;
             }
 
-            var url = CreateUri(item).ToString();
-            logger.Log($"Opening in browser: {url}");
-            Process.Start(url);
+            nativeBrowser.Open(CreateUri(item));
         }
 
         private Uri CreateUri(Parsers.Models.Item item)

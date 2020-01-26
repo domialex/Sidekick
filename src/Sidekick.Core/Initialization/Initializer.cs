@@ -1,10 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.Extensions;
-using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sidekick.Core.Initialization
 {
@@ -31,7 +29,6 @@ namespace Sidekick.Core.Initialization
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
-
 
             IsReady = false;
             await OnReset();

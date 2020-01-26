@@ -7,7 +7,7 @@ namespace Sidekick.Core.Loggers
     {
         List<Log> Logs { get; }
 
-        event EventHandler MessageLogged;
+        event Action MessageLogged;
 
         void Clear();
         void Log(string text, LogState state = LogState.None);

@@ -11,7 +11,6 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
-using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.Overlay
 {
@@ -55,12 +54,11 @@ namespace Sidekick.Windows.Overlay
 
         private void UpdateUIText()
         {
-            var settings = SettingsController.GetSettingsInstance();
-            textBoxAccountName.Text = settings.CurrentUILanguageProvider.Language.OverlayAccountName;
-            textBoxAge.Text = settings.CurrentUILanguageProvider.Language.OverlayAge;
-            textBoxCharacter.Text = settings.CurrentUILanguageProvider.Language.OverlayCharacter;
-            textBoxItemLevel.Text = settings.CurrentUILanguageProvider.Language.OverlayItemLevel;
-            textBoxPrice.Text = settings.CurrentUILanguageProvider.Language.OverlayPrice;
+            textBoxAccountName.Text = Legacy.UILanguageProvider.Language.OverlayAccountName;
+            textBoxAge.Text = Legacy.UILanguageProvider.Language.OverlayAge;
+            textBoxCharacter.Text = Legacy.UILanguageProvider.Language.OverlayCharacter;
+            textBoxItemLevel.Text = Legacy.UILanguageProvider.Language.OverlayItemLevel;
+            textBoxPrice.Text = Legacy.UILanguageProvider.Language.OverlayPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)

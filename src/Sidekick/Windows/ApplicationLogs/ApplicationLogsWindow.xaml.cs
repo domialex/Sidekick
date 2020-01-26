@@ -69,7 +69,7 @@ namespace Sidekick.Windows.ApplicationLogs
         }
         delegate void ScrollToEndCallback();
 
-        private void MessageLogged(object sender, EventArgs e)
+        private void MessageLogged()
         {
             SetText(GenerateLogLines);
 

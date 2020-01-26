@@ -1,6 +1,5 @@
-﻿using Sidekick.Windows.Settings.Models;
+using System;
 using System.Windows;
-using WindowsHook;
 
 namespace Sidekick.Windows.Settings.UserControls
 {
@@ -9,66 +8,50 @@ namespace Sidekick.Windows.Settings.UserControls
     /// </summary>
     public partial class KeybindEditor : System.Windows.Controls.UserControl
     {
-        public delegate void HotkeyChangedEventHandler(object sender);
-        public event HotkeyChangedEventHandler HotkeyChanged;
-        public void OnHotkeyChanged()
-        {
-            HotkeyChanged?.Invoke(this);
-        }
+        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(nameof(Property), typeof(string), typeof(KeybindEditor));
 
-        public delegate void HotkeyChangingEventHandler(object sender);
-        public event HotkeyChangingEventHandler HotkeyChanging;
-        public void OnHotkeyChanging()
-        {
-            HotkeyChanging?.Invoke(this);
-        }
-
-        public static readonly DependencyProperty HotkeyProperty =
-        DependencyProperty.Register(nameof(Hotkey), typeof(Hotkey), typeof(KeybindEditor), new FrameworkPropertyMetadata(default(Hotkey), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-        public Hotkey Hotkey
-        {
-            get => (Hotkey)GetValue(HotkeyProperty);
-            set => SetValue(HotkeyProperty, value);
-        }
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor));
 
         public KeybindEditor()
         {
+            DataContext = this;
             InitializeComponent();
         }
 
-        public void CaptureKeybinding(Keys key, Keys modifier)
+        public event Action<KeybindEditor> HotkeyChanged;
+        public event Action<KeybindEditor> HotkeyChanging;
+
+        public string Property
+        {
+            get { return (string)GetValue(PropertyProperty); }
+            set { SetValue(PropertyProperty, value); }
+        }
+        public string Value
+        {
+            get { return (string)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+
+        public string PreviousValue { get; private set; }
+
+        public void Capture(string key)
         {
             // If no actual key was pressed - return
-            if (key == Keys.LControlKey ||
-                key == Keys.RControlKey ||
-                key == Keys.LMenu ||
-                key == Keys.RMenu ||
-                key == Keys.LShiftKey ||
-                key == Keys.RShiftKey ||
-                key == Keys.LWin ||
-                key == Keys.RWin ||
-                key == Keys.Clear ||
-                key == Keys.OemClear ||
-                key == Keys.Apps)
+            if (key == "Esc" || key.EndsWith("+"))
             {
+                Value = PreviousValue;
                 return;
             }
 
-            Hotkey = new Hotkey(key, modifier);
-
-            OnHotkeyChanged();
+            Value = key;
+            HotkeyChanged?.Invoke(this);
         }
 
-        /// <summary>
-        /// Starts to capture keyboard input when the button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void HotkeyButton_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void HotkeyButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Hotkey = null;
-            OnHotkeyChanging();
+            PreviousValue = Value;
+            Value = null;
+            HotkeyChanging?.Invoke(this);
         }
     }
 }

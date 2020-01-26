@@ -1,38 +1,58 @@
-using Sidekick.Core.Settings;
-using Sidekick.Windows.Settings.UserControls;
-using System;
-using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms.Integration;
 using System.Windows.Input;
-using WindowsHook;
+using Sidekick.Business.Languages.UI;
+using Sidekick.Core.Settings;
+using Sidekick.Platforms;
+using Sidekick.UI.Settings;
+using Sidekick.UI.Views;
+using Sidekick.Windows.Settings.UserControls;
 
 namespace Sidekick.Windows.Settings
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class SettingsView : Window
+    public partial class SettingsView : Window, ISidekickView
     {
-        public event EventHandler OnWindowClosed;
+        private const int WINDOW_WIDTH = 480;
+        private const int WINDOW_HEIGHT = 320;
+        private readonly ISettingsViewModel viewModel;
+        private readonly IUILanguageProvider uiLanguageProvider;
 
-        public bool IsDisplayed => Visibility == Visibility.Visible;
-
-        public Models.Settings Settings { get; set; }
-
-        public SettingsView(int width, int height)
+        public SettingsView(ISettingsViewModel viewModel,
+            IUILanguageProvider uiLanguageProvider,
+            INativeKeyboard nativeKeyboard)
         {
-            Width = width;
-            Height = height;
+            this.viewModel = viewModel;
+            this.uiLanguageProvider = uiLanguageProvider;
+
+            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+
+            Width = WINDOW_WIDTH;
+            Height = WINDOW_HEIGHT;
 
             InitializeComponent();
-            DataContext = this;
+            DataContext = viewModel;
 
-            Settings = SettingsController.LoadSettings();
-            SetUIElementsToCurrentLanguage();
+            SetUILanguage();
             SelectWikiSetting();
-            PopulateUIComboBoxAndSetSelectedLanguage();
+            InitializeUILanguageCombobox();
+
+            ElementHost.EnableModelessKeyboardInterop(this);
+
             Show();
+        }
+
+        private Task NativeKeyboard_OnKeyDown(string key)
+        {
+            if (CurrentKeybind != null)
+            {
+                CurrentKeybind.Capture(key);
+            }
+            return Task.CompletedTask;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -40,63 +60,37 @@ namespace Sidekick.Windows.Settings
             DragMove();
         }
 
-        private void SetUIElementsToCurrentLanguage()
+        private void SetUILanguage()
         {
-            tabItemGeneral.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabGeneral;
-            tabItemKeybindings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowTabKeybindings;
-            groupBoxWikiSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiSettings;
-            groupBoxLanguageSettings.Header = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageSettings;
-            labelWikiDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowWikiDescription;
-            labelLanguageDescription.Content = Settings.CurrentUILanguageProvider.Language.SettingsWindowLanguageDescription;
+            tabItemGeneral.Header = uiLanguageProvider.Language.SettingsWindowTabGeneral;
+            tabItemKeybindings.Header = uiLanguageProvider.Language.SettingsWindowTabKeybindings;
+            groupBoxWikiSettings.Header = uiLanguageProvider.Language.SettingsWindowWikiSettings;
+            groupBoxLanguageSettings.Header = uiLanguageProvider.Language.SettingsWindowLanguageSettings;
+            labelWikiDescription.Content = uiLanguageProvider.Language.SettingsWindowWikiDescription;
+            labelLanguageDescription.Content = uiLanguageProvider.Language.SettingsWindowLanguageDescription;
         }
 
         private void SelectWikiSetting()
         {
-            if (Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
+            if (viewModel.Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
             {
                 radioButtonPOEWiki.IsChecked = true;
             }
-            else if (Settings.CurrentWikiSettings == WikiSetting.PoeDb)
+            else if (viewModel.Settings.CurrentWikiSettings == WikiSetting.PoeDb)
             {
                 radioButtonPOEDb.IsChecked = true;
             }
         }
 
-        private void UpdateWikiSetting()
+        private void InitializeUILanguageCombobox()
         {
-            if (radioButtonPOEWiki.IsChecked == true)
-            {
-                Settings.CurrentWikiSettings = WikiSetting.PoeWiki;
-            }
-            else if (radioButtonPOEDb.IsChecked == true)
-            {
-                Settings.CurrentWikiSettings = WikiSetting.PoeDb;
-            }
-        }
-
-        private void UpdateUILanguageSetting()
-        {
-            Settings.CurrentUILanguageProvider.SetLanguage(Legacy.UILanguageProvider.AvailableLanguages.First(x => x.Name == (string)comboBoxUILanguages.SelectedItem));
-        }
-
-        private void PopulateUIComboBoxAndSetSelectedLanguage()
-        {
-            comboBoxUILanguages.ItemsSource = Legacy.UILanguageProvider.AvailableLanguages.Select(x => x.Name);
-            comboBoxUILanguages.SelectedItem = Settings.CurrentUILanguage.Name;
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            OnWindowClosed?.Invoke(this, null);
-            base.OnClosing(e);
+            comboBoxUILanguages.ItemsSource = uiLanguageProvider.AvailableLanguages.Select(x => x.Name);
+            comboBoxUILanguages.SelectedItem = viewModel.Settings.UILanguage;
         }
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            UpdateWikiSetting();
-            UpdateUILanguageSetting();
-            SettingsController.SaveSettings();
-            Close();
+            viewModel.Save();
         }
 
         private void DiscardChanges_Click(object sender, RoutedEventArgs e)
@@ -104,45 +98,27 @@ namespace Sidekick.Windows.Settings
             Close();
         }
 
-        public void CaptureKeyEvents(Keys key, Keys modifier)
+        private KeybindEditor CurrentKeybind { get; set; }
+
+        private void KeybindEditor_HotkeyChanging(KeybindEditor keybind)
         {
-            if (currentChangingKeybind != null)
-            {
-                currentChangingKeybind.CaptureKeybinding(key, modifier);
-            }
+            CurrentKeybind = keybind;
         }
 
         /// <summary>
         /// Gets called after a new hotkey has been defined. Checks if that new hotkey is unique
         /// </summary>
         /// <param name="sender"></param>
-        private void KeybindEditor_HotkeyChanged(object sender)
+        private void KeybindEditor_HotkeyChanged(KeybindEditor keybind)
         {
-            var control = sender as KeybindEditor;
-            try
+            if (viewModel.IsKeybindUsed(keybind.Value, keybind.Property))
             {
-                //Check if hotkeys are unique
-                if (Settings.KeybindSettings.Values.Count(x => x?.ToString() == control.Hotkey?.ToString()) > 1)
+                if (MessageBox.Show("This hotkey already in use.") == MessageBoxResult.OK)
                 {
-                    if (MessageBox.Show("This hotkey already in use.") == MessageBoxResult.OK)
-                    {
-                        control.Hotkey = null;
-                    }
+                    keybind.Value = keybind.PreviousValue;
                 }
-                currentChangingKeybind = null;
             }
-            catch (Exception)
-            {
-                Legacy.Logger.Log("Could not validate if Hotkey is already in use.");
-                control.Hotkey = null;
-                throw;
-            }
-        }
-
-        private KeybindEditor currentChangingKeybind;
-        private void KeybindEditor_HotkeyChanging(object sender)
-        {
-            currentChangingKeybind = sender as KeybindEditor;
+            CurrentKeybind = null;
         }
     }
 }
