@@ -2,10 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:local="clr-namespace:Sidekick.Windows.Settings"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:UC="clr-namespace:Sidekick.Windows.Settings.UserControls"
-        xmlns:enums="clr-namespace:Sidekick.Core.Settings;assembly=Sidekick.Core"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip"
@@ -29,7 +27,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -39,18 +37,19 @@
             <TabItem x:Name="tabItemGeneral" Header="General">
                 <Grid Margin="0 1 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="169*"/>
+                        <ColumnDefinition Width="246*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <GroupBox x:Name="groupBoxWikiSettings" Header="Wiki Settings" Grid.Row="0" Grid.Column="0" Margin="1"></GroupBox>
-                    <GroupBox x:Name="groupBoxLanguageSettings" Header="LanguageSettings" Grid.Row="0" Grid.Column="1" Margin="1">
+                    <GroupBox x:Name="groupBoxWikiSettings" Header="Wiki Settings" Grid.Row="0" Grid.Column="0" Margin="1" Grid.ColumnSpan="2"></GroupBox>
+                    <GroupBox x:Name="groupBoxLanguageSettings" Header="LanguageSettings" Grid.Row="0" Grid.Column="2" Margin="1">
                         <Label x:Name="labelLanguageDescription" Content="Choose Sidekick's UI Language" HorizontalAlignment="Left" Margin="20,13,0,0" VerticalAlignment="Top" Width="187" Foreground="{DynamicResource LightColor}" FontSize="11"/>
                     </GroupBox>
-                    <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0" Margin="1,1,1,0">
+                    <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0" Margin="1,1,1,0" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -64,23 +63,23 @@
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="Character Name" Foreground="{DynamicResource LightColor}" VerticalContentAlignment="Center"/>
-                            <TextBox Grid.Row="0" Text="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)CharacterName]}"
+                            <TextBox Grid.Row="0" Text="{Binding Path=Settings.CharacterName}"
                                      Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" Margin="1" Foreground="{DynamicResource LightColor}"
                                      VerticalContentAlignment="Center" IsReadOnly="False">
                                 <TextBox.ContextMenu>
                                     <ContextMenu Visibility="Collapsed"/>
                                 </TextBox.ContextMenu>
                             </TextBox>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)RetainClipboard]}"/>
+                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.RetainClipboard}"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1" Margin="1"></GroupBox>
-                    <Grid HorizontalAlignment="Left" Height="151" Margin="1,19,0,0" VerticalAlignment="Top" Width="241" RenderTransformOrigin="0.48,0.51">
+                    <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="2" Margin="1"></GroupBox>
+                    <Grid HorizontalAlignment="Left" Height="151" Margin="1,19,0,0" VerticalAlignment="Top" Width="241" RenderTransformOrigin="0.48,0.51" Grid.ColumnSpan="2">
                         <RadioButton x:Name="radioButtonPOEWiki" Content="POE Wiki" HorizontalAlignment="Left" Margin="19,55,0,0" VerticalAlignment="Top" Background="White" Foreground="{DynamicResource LightColor}"/>
                         <RadioButton x:Name="radioButtonPOEDb" Content="POE Db" HorizontalAlignment="Left" Margin="19,87,0,0" VerticalAlignment="Top" Foreground="{DynamicResource LightColor}"/>
                         <Label x:Name="labelWikiDescription" Content="Choose which Wiki Page should be displayed" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="231" Foreground="{DynamicResource LightColor}" FontSize="11"/>
                     </Grid>
-                    <ComboBox x:Name="comboBoxUILanguages" Grid.Column="1" HorizontalAlignment="Left" Margin="26,77,0,0" VerticalAlignment="Top" Width="190" BorderBrush="White" Foreground="Black">
+                    <ComboBox x:Name="comboBoxUILanguages" Grid.Column="2" HorizontalAlignment="Left" Margin="26,77,0,0" VerticalAlignment="Top" Width="190" BorderBrush="White" Foreground="Black">
                         <ComboBox.Background>
                             <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                 <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -91,18 +90,14 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItemKeybindings" Header="Keybindings">
-                <ScrollViewer Name="_keybindingsViewer" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Path=Settings.KeybindSettings}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Path=Keybinds}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="200"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Content="{Binding Path=Key}" Foreground="{DynamicResource LightColor}" VerticalContentAlignment="Center"/>
-                                    <UC:KeybindEditor Grid.Column="1" Hotkey="{Binding Path=Value}" HotkeyChanged="KeybindEditor_HotkeyChanged" HotkeyChanging="KeybindEditor_HotkeyChanging"/>
-                                </Grid>
+                                <UC:KeybindEditor Value="{Binding Path=Value}"
+                                                  Property="{Binding Path=Key}"
+                                                  HotkeyChanged="KeybindEditor_HotkeyChanged"
+                                                  HotkeyChanging="KeybindEditor_HotkeyChanging" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 
@@ -21,7 +21,7 @@ namespace Sidekick.Business.Apis.PoeNinja
     {
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
 
@@ -32,7 +32,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger logger,
-                             Configuration configuration)
+                             SidekickSettings configuration)
         {
             this.client = client;
             this.logger = logger;

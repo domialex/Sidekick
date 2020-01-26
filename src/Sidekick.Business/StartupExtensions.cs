@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.PoeDb;
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Categories;
@@ -28,6 +29,7 @@ namespace Sidekick.Business
             services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<IPoeDbClient, PoeDbClient>();
+            services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
@@ -39,6 +41,7 @@ namespace Sidekick.Business
             services.AddInitializableService<IItemCategoryService, ItemCategoryService>();
             services.AddInitializableService<ILeagueService, LeagueService>();
             services.AddInitializableService<IMapService, MapService>();
+            services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();
 
             return services;

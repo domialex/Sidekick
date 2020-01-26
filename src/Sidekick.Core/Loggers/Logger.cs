@@ -1,14 +1,21 @@
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Settings;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Core.Loggers
 {
     public class Logger : ILogger, IOnBeforeInit, IOnInit, IOnAfterInit, IOnReset
     {
-        public event EventHandler MessageLogged;
+        private readonly SidekickSettings configuration;
+
+        public Logger(SidekickSettings configuration)
+        {
+            this.configuration = configuration;
+        }
+
+        public event Action MessageLogged;
         public List<Log> Logs { get; private set; } = new List<Log>();
 
         public void Log(string text, LogState state = LogState.None)
@@ -31,7 +38,7 @@ namespace Sidekick.Core.Loggers
             }
 
             Logs.Add(log);
-            MessageLogged?.Invoke(null, null);
+            MessageLogged?.Invoke();
         }
 
         public void LogException(Exception e)
@@ -71,7 +78,7 @@ namespace Sidekick.Core.Loggers
         public Task OnAfterInit()
         {
             Log("Sidekick after initialization.");
-            Log($"Sidekick is ready, press {KeybindSetting.PriceCheck.GetTemplate()} over an item in-game to use. Press {KeybindSetting.CloseWindow.GetTemplate()} to close overlay.");
+            Log($"Sidekick is ready, press {configuration.KeyPriceCheck.ToKeybindString()} over an item in-game to use. Press {configuration.KeyCloseWindow.ToKeybindString()} to close overlay.");
             return Task.CompletedTask;
         }
 

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Sidekick.Core.Configuration;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.PoePriceInfo.Models
@@ -12,12 +12,12 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
     {
         private const string PoePricesBaseUrl = "https://www.poeprices.info/api";
         private readonly ILogger logger;
-        private readonly Configuration configuration;
+        private readonly SidekickSettings configuration;
         private readonly HttpClient client;
 
         public PoePriceInfoClient(ILogger logger,
             IHttpClientFactory httpClientFactory,
-            Configuration configuration)
+            SidekickSettings configuration)
         {
             this.logger = logger;
             this.configuration = configuration;

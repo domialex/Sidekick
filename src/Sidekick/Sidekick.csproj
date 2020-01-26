@@ -69,7 +69,6 @@
     
   <ItemGroup>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.191211002" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <!-- TODO: MouseKeyHook support for netcoreapp3.1? - https://github.com/gmamaladze/globalmousekeyhook -->
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     <PackageReference Include="WindowsBase" Version="4.6.1055.0" />
@@ -81,7 +80,9 @@
   </ItemGroup>
     
   <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Platforms.Windows\Sidekick.Platforms.Windows.csproj" />
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\Sidekick.UI\Sidekick.UI.csproj" />
   </ItemGroup>
 
   <!-- TODO: These will go away when moved to netcoreapp3.1 -->  

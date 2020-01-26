@@ -10,9 +10,11 @@ using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
-using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
+using Sidekick.Platforms;
+using Sidekick.UI.Views;
 
 namespace Sidekick
 {
@@ -23,7 +25,7 @@ namespace Sidekick
         public static IInitializer InitializeService { get; private set; }
 
         [Obsolete]
-        public static Configuration Configuration { get; private set; }
+        public static SidekickSettings Settings { get; private set; }
 
         [Obsolete]
         public static ILogger Logger { get; private set; }
@@ -59,10 +61,25 @@ namespace Sidekick
         public static IPoeWikiClient PoeWikiClient { get; private set; }
 
         [Obsolete]
+        public static IKeybindEvents KeybindEvents { get; private set; }
+
+        [Obsolete]
+        public static INativeProcess NativeProcess { get; private set; }
+
+        [Obsolete]
+        public static INativeKeyboard NativeKeyboard { get; private set; }
+
+        [Obsolete]
+        public static INativeClipboard NativeClipboard { get; private set; }
+
+        [Obsolete]
+        public static IViewLocator ViewLocator { get; private set; }
+
+        [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
         {
             InitializeService = serviceProvider.GetService<IInitializer>();
-            Configuration = serviceProvider.GetService<Configuration>();
+            Settings = serviceProvider.GetService<SidekickSettings>();
             Logger = serviceProvider.GetService<ILogger>();
             TradeClient = serviceProvider.GetService<ITradeClient>();
             LanguageProvider = serviceProvider.GetService<ILanguageProvider>();
@@ -74,6 +91,11 @@ namespace Sidekick
             PoeDbClient = serviceProvider.GetService<IPoeDbClient>();
             PoePriceInfoClient = serviceProvider.GetService<IPoePriceInfoClient>();
             PoeWikiClient = serviceProvider.GetService<IPoeWikiClient>();
+            KeybindEvents = serviceProvider.GetService<IKeybindEvents>();
+            NativeProcess = serviceProvider.GetService<INativeProcess>();
+            NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
+            NativeClipboard = serviceProvider.GetService<INativeClipboard>();
+            ViewLocator = serviceProvider.GetService<IViewLocator>();
         }
     }
 }
