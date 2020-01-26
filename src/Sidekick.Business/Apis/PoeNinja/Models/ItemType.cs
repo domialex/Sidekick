@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Sidekick.Business.Apis.PoeNinja.Models
 {
     public enum ItemType
@@ -17,8 +11,8 @@ namespace Sidekick.Business.Apis.PoeNinja.Models
         DivinationCard,
         Prophecy,
         SkillGem,
-        BaseType,
-        HelmetEnchant,
+        //BaseType, // This is ~13mb of raw data, in memory it eats ~40mb.
+        //HelmetEnchant,
         UniqueMap,
         Map,
         UniqueJewel,

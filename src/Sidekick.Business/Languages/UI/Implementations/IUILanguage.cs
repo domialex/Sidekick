@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Sidekick.Business.Languages.UI.Implementations
 {
     public interface IUILanguage
@@ -293,6 +296,46 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string MetamorphTurbulentCatalystEffect { get; }
         string MetamorphInformationHeader { get; }
         string MetamorphInformationText { get; }
+
+        #endregion
+
+        #region Delve
+
+        string DelveAberrantFossil { get; }
+        string DelveAethericFossil { get; }
+        string DelveBloodstainedFossil { get; }
+        string DelveBoundFossil { get; }
+        string DelveCorrodedFossil { get; }
+        string DelveDenseFossil { get; }
+        string DelveEnchantedFossil { get; }
+        string DelveEncrustedFossil { get; }
+        string DelveFacetedFossil { get; }
+        string DelveFracturedFossil { get; }
+        string DelveFrigidFossil { get; }
+        string DelveGildedFossil { get; }
+        string DelveGlyphicFossil { get; }
+        string DelveHollowFossil { get; }
+        string DelveJaggedFossil { get; }
+        string DelveLucentFossil { get; }
+        string DelveMetallicFossil { get; }
+        string DelvePerfectFossil { get; }
+        string DelvePrismaticFossil { get; }
+        string DelvePristineFossil { get; }
+        string DelveSanctifiedFossil { get; }
+        string DelveScorchedFossil { get; }
+        string DelveSerratedFossil { get; }
+        string DelveShudderingFossil { get; }
+        string DelveTangledFossil { get; }
+
+        string DelveMines { get; }
+        string DelveFungalCaverns { get; }
+        string DelvePetrifiedForest { get; }
+        string DelveAbyssalDepths { get; }
+        string DelveFrozenHollow { get; }
+        string DelveMagmaFissure { get; }
+        string DelveSulfurVents { get; }
+        string DelveFossilRoom { get; }
+        string DelveInformation { get; }
 
         #endregion
     }

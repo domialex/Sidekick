@@ -527,5 +527,73 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string MetamorphInformationHeader => throw new System.NotImplementedException();
 
         public string MetamorphInformationText => throw new System.NotImplementedException();
+
+        public string DelveAberrantFossil => throw new System.NotImplementedException();
+
+        public string DelveAethericFossil => throw new System.NotImplementedException();
+
+        public string DelveBloodstainedFossil => throw new System.NotImplementedException();
+
+        public string DelveBoundFossil => throw new System.NotImplementedException();
+
+        public string DelveCorrodedFossil => throw new System.NotImplementedException();
+
+        public string DelveDenseFossil => throw new System.NotImplementedException();
+
+        public string DelveEnchantedFossil => throw new System.NotImplementedException();
+
+        public string DelveEncrustedFossil => throw new System.NotImplementedException();
+
+        public string DelveFacetedFossil => throw new System.NotImplementedException();
+
+        public string DelveFracturedFossil => throw new System.NotImplementedException();
+
+        public string DelveFrigidFossil => throw new System.NotImplementedException();
+
+        public string DelveGildedFossil => throw new System.NotImplementedException();
+
+        public string DelveGlyphicFossil => throw new System.NotImplementedException();
+
+        public string DelveHollowFossil => throw new System.NotImplementedException();
+
+        public string DelveJaggedFossil => throw new System.NotImplementedException();
+
+        public string DelveLucentFossil => throw new System.NotImplementedException();
+
+        public string DelveMetallicFossil => throw new System.NotImplementedException();
+
+        public string DelvePerfectFossil => throw new System.NotImplementedException();
+
+        public string DelvePrismaticFossil => throw new System.NotImplementedException();
+
+        public string DelvePristineFossil => throw new System.NotImplementedException();
+
+        public string DelveSanctifiedFossil => throw new System.NotImplementedException();
+
+        public string DelveScorchedFossil => throw new System.NotImplementedException();
+
+        public string DelveSerratedFossil => throw new System.NotImplementedException();
+
+        public string DelveShudderingFossil => throw new System.NotImplementedException();
+
+        public string DelveTangledFossil => throw new System.NotImplementedException();
+
+        public string DelveMines => throw new System.NotImplementedException();
+
+        public string DelveFungalCaverns => throw new System.NotImplementedException();
+
+        public string DelvePetrifiedForest => throw new System.NotImplementedException();
+
+        public string DelveAbyssalDepths => throw new System.NotImplementedException();
+
+        public string DelveFrozenHollow => throw new System.NotImplementedException();
+
+        public string DelveMagmaFissure => throw new System.NotImplementedException();
+
+        public string DelveSulfurVents => throw new System.NotImplementedException();
+
+        public string DelveFossilRoom => throw new System.NotImplementedException();
+
+        public string DelveInformation => throw new System.NotImplementedException();
     }
 }

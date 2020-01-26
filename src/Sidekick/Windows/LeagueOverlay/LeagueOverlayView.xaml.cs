@@ -22,30 +22,64 @@ namespace Sidekick.Windows.LeagueOverlay
     {
         private Dictionary<TabItem, int[]> tabPageSizeDictionary;
         private TabItem CurrentPage;
+        private Dictionary<string, string> DelveFossilRarityDictionary;
 
         public LeagueOverlayView()
         {
             InitializeComponent();
+
+            DelveFossilRarityDictionary = new Dictionary<string, string>()
+            {
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveAberrantFossil, "LowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveAethericFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveBloodstainedFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveBoundFossil, "LowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveCorrodedFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveDenseFossil, "LowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveEnchantedFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveEncrustedFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveFacetedFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveFracturedFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveFrigidFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveGildedFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveGlyphicFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveHollowFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveJaggedFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveLucentFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveMetallicFossil, "LowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelvePerfectFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelvePrismaticFossil, "LowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelvePristineFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveSanctifiedFossil, "HighValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveScorchedFossil, "VeryLowValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveSerratedFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveShudderingFossil, "MediumValueColor" },
+                { SettingsController.GetSettingsInstance().CurrentUILanguageProvider.Language.DelveTangledFossil, "MediumValueColor" },
+            };
+
+
             UpdateBetrayalUIText();
             UpdateIncursionUIText();
             UpdateBlightUIText();
             UpdateMetamorphUIText();
+            UpdateDelveUIText();
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateBlightUIText;
             SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateMetamorphUIText;
+            SettingsController.GetSettingsInstance().CurrentUILanguageProvider.UILanguageChanged += UpdateDelveUIText;
+
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
                 { tabItemIncursion, new[] { 980, 1050 } },
-                { tabItemDelve, new[] { 500, 500 } },
+                { tabItemDelve, new[] { 425, 1015 } },
                 { tabItemBetrayal, new[] { 520, 1200 } },
                 { tabItemBlight, new[] { 605, 1165 } },
                 { tabItemMetamorph, new[] { 315, 1115 } },
             };
+
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
             CurrentPage = tabItemIncursion;
-            ToolTipService.ShowDurationProperty.OverrideMetadata(
-                        typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));       // Tooltip opened indefinitly until mouse is moved
         }
 
         private void TabControlLeagueOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,6 +102,22 @@ namespace Sidekick.Windows.LeagueOverlay
                 tabControlLeagueOverlay.Height = windowSize[0];
                 tabControlLeagueOverlay.Width = windowSize[1];
             }
+        }
+
+        private void SetTextBlockList(TextBlock block, IEnumerable<string> items)
+        {
+            block.Inlines.Clear();
+
+            foreach(var item in items)
+            {
+                var inlineBlock = new TextBlock();
+                inlineBlock.Text = item;
+                inlineBlock.SetResourceReference(Control.ForegroundProperty, DelveFossilRarityDictionary[item.Replace("*", "")]);
+                block.Inlines.Add(inlineBlock);
+                block.Inlines.Add("\n");
+            }
+
+            block.Inlines.Remove(block.Inlines.LastOrDefault());
         }
 
         private void UpdateIncursionUIText()
@@ -415,6 +465,113 @@ namespace Sidekick.Windows.LeagueOverlay
 
             labelMetamorphInformation.Content = settings.CurrentUILanguageProvider.Language.MetamorphInformationHeader;
             textBlockMetamorphInformationText.Text = settings.CurrentUILanguageProvider.Language.MetamorphInformationText;
+        }
+
+        private void UpdateDelveUIText()
+        {
+            var settings = SettingsController.GetSettingsInstance();
+            string fracturedWallInfoPointer = "*";
+
+            var mineFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveMetallicFossil,
+                settings.CurrentUILanguageProvider.Language.DelveSerratedFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePristineFossil,
+                settings.CurrentUILanguageProvider.Language.DelveAethericFossil,
+            };
+
+            var magmaFissureFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveScorchedFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePristineFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePrismaticFossil,
+                settings.CurrentUILanguageProvider.Language.DelveEnchantedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveEncrustedFossil + fracturedWallInfoPointer,
+            };
+
+            var sulfurVentsFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveMetallicFossil,
+                settings.CurrentUILanguageProvider.Language.DelveAethericFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePerfectFossil,
+                settings.CurrentUILanguageProvider.Language.DelveEncrustedFossil + fracturedWallInfoPointer,
+            };
+
+            var frozenHollowFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveFrigidFossil,
+                settings.CurrentUILanguageProvider.Language.DelveSerratedFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePrismaticFossil,
+                settings.CurrentUILanguageProvider.Language.DelveShudderingFossil,
+                settings.CurrentUILanguageProvider.Language.DelveSanctifiedFossil + fracturedWallInfoPointer,
+            };
+
+            var fungalCavernsFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveDenseFossil,
+                settings.CurrentUILanguageProvider.Language.DelveAberrantFossil,
+                settings.CurrentUILanguageProvider.Language.DelvePerfectFossil,
+                settings.CurrentUILanguageProvider.Language.DelveCorrodedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveGildedFossil + fracturedWallInfoPointer,
+            };
+
+            var petrifiedForestFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveBoundFossil,
+                settings.CurrentUILanguageProvider.Language.DelveDenseFossil,
+                settings.CurrentUILanguageProvider.Language.DelveJaggedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveCorrodedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveSanctifiedFossil + fracturedWallInfoPointer,
+            };
+
+            var abyssalDepthsFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveBoundFossil,
+                settings.CurrentUILanguageProvider.Language.DelveAberrantFossil,
+                settings.CurrentUILanguageProvider.Language.DelveLucentFossil + fracturedWallInfoPointer,
+                settings.CurrentUILanguageProvider.Language.DelveGildedFossil + fracturedWallInfoPointer,
+            };
+
+            var fossilRoomFossils = new[]
+            {
+                settings.CurrentUILanguageProvider.Language.DelveGlyphicFossil,
+                settings.CurrentUILanguageProvider.Language.DelveFracturedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveFacetedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveBloodstainedFossil,
+                settings.CurrentUILanguageProvider.Language.DelveTangledFossil,
+                settings.CurrentUILanguageProvider.Language.DelveHollowFossil,
+            };
+
+            labelDelveMines.Content = settings.CurrentUILanguageProvider.Language.DelveMines;
+            SetTextBlockList(textBlockDelveMinesFossils, mineFossils);
+
+            labelDelveMagmaFissure.Content = settings.CurrentUILanguageProvider.Language.DelveMagmaFissure;
+            SetTextBlockList(textBlockMagmaFissureFossils, magmaFissureFossils);
+
+            labelDelveSulfurVents.Content = settings.CurrentUILanguageProvider.Language.DelveSulfurVents;
+            SetTextBlockList(textBlockSulfurVentsFossils, sulfurVentsFossils);
+
+            labelDelveFrozenHollow.Content = settings.CurrentUILanguageProvider.Language.DelveFrozenHollow;
+            SetTextBlockList(textBlockFrozenHolloeFossils, frozenHollowFossils);
+
+            labelDelveFungalCaverns.Content = settings.CurrentUILanguageProvider.Language.DelveFungalCaverns;
+            SetTextBlockList(textBlockDelveFungalCavernsFossils, fungalCavernsFossils);
+
+            labelDelvePetrifiedForest.Content = settings.CurrentUILanguageProvider.Language.DelvePetrifiedForest;
+            SetTextBlockList(labelDelvePetrifiedForestFossils, petrifiedForestFossils);
+
+            labelDelveAbyssalDepths.Content = settings.CurrentUILanguageProvider.Language.DelveAbyssalDepths;
+            SetTextBlockList(textBlockAbyssalDepthsFossils, abyssalDepthsFossils);
+
+            labelDelveFossilRoom.Content = settings.CurrentUILanguageProvider.Language.DelveFossilRoom;
+            SetTextBlockList(textBlockDelveFossilRoomFossils, fossilRoomFossils);
+
+            labelDelveLegendLessValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendLessValuable;
+            labelDelveLegendNotValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendNotValuable;
+            labelDelveLegendValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendValuable;
+            labelDelveLegendVeryValuable.Content = settings.CurrentUILanguageProvider.Language.LeagueLegendVeryValuable;
+
+            labelDelveInformation.Content = settings.CurrentUILanguageProvider.Language.DelveInformation;
         }
     }
 }

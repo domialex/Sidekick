@@ -8,5 +8,6 @@ namespace Sidekick.Business.Trades.Results
         public bool Identified { get; set; }
         public bool Corrupted { get; set; }
         public int Ilvl { get; set; }
+        public ItemExtended Extended { get; set; }
     }
 }
