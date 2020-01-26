@@ -81,6 +81,7 @@ namespace Sidekick.Windows.Overlay
                     return;
                 }
 
+                this.txtPrediction.Text = null;
                 this.queryResult = queryResult;
                 this.itemListingControls?.Clear();
 
