@@ -7,11 +7,12 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.Platforms.Windows.Natives
 {
-    public class NativeProcess : INativeProcess
+    public class NativeProcess : INativeProcess, IOnAfterInit
     {
         #region DllImport
         [DllImport("user32.dll")]
@@ -183,6 +184,12 @@ namespace Sidekick.Platforms.Windows.Natives
             }
 
             return result;
+        }
+
+        public Task OnAfterInit()
+        {
+            Task.Run(CheckPermission);
+            return Task.CompletedTask;
         }
     }
 }

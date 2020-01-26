@@ -39,10 +39,8 @@ namespace Sidekick.Platforms.Windows.Keyboards
 
         private IKeyboardMouseEvents hook = null;
 
-        public async Task OnAfterInit()
+        public Task OnAfterInit()
         {
-            await nativeProcess.CheckPermission();
-
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
 
@@ -51,6 +49,8 @@ namespace Sidekick.Platforms.Windows.Keyboards
 #endif
 
             Enabled = true;
+
+            return Task.CompletedTask;
         }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)

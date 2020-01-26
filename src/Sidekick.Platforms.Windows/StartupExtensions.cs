@@ -9,10 +9,12 @@ namespace Sidekick.Platforms.Windows
     {
         public static IServiceCollection AddSidekickWindowsServices(this IServiceCollection services)
         {
+            services.AddSingleton<INativeBrowser, NativeBrowser>();
+
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
-            services.AddSingleton<INativeBrowser, NativeBrowser>();
-            services.AddSingleton<INativeProcess, NativeProcess>();
+            services.AddInitializableService<INativeProcess, NativeProcess>();
+
             return services;
         }
     }

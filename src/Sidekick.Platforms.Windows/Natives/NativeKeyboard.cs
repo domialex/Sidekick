@@ -2,9 +2,9 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using Sidekick.Platforms.Windows.Natives.Helpers;
 using WindowsHook;
 
@@ -33,8 +33,6 @@ namespace Sidekick.Platforms.Windows.Natives
 
         public async Task OnAfterInit()
         {
-            await nativeProcess.CheckPermission();
-
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
         }
