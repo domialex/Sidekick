@@ -57,6 +57,7 @@ namespace Sidekick.Windows.Settings
                 /* GeneralSettings */
                 settings.GeneralSettings.Add(GeneralSetting.CharacterName, string.Empty);
                 settings.GeneralSettings.Add(GeneralSetting.RetainClipboard, "True");
+                settings.GeneralSettings.Add(GeneralSetting.CloseOverlayWithMouse, "True");
                 settings.CurrentWikiSettings = WikiSetting.PoeWiki;
 
                 // #TODO: Add more default settings

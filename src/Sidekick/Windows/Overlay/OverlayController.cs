@@ -61,6 +61,16 @@ namespace Sidekick.Windows.Overlay
             Show();
         }
 
+        public static Point GetOverlayPosition()
+        {
+            return new Point(_overlayWindow.Left, _overlayWindow.Top);
+        }
+
+        public static Size GetOverlaySize()
+        {
+            return new Size(_overlayWindow.ActualWidth, _overlayWindow.ActualHeight);
+        }
+
         /// <summary>
         /// Ensures that the window stays within width and height of the display.
         /// </summary>

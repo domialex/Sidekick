@@ -4,6 +4,7 @@ namespace Sidekick.Core.Settings
     {
         None,
         CharacterName,
-        RetainClipboard
+        RetainClipboard,
+        CloseOverlayWithMouse
     }
 }

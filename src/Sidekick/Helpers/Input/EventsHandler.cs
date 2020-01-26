@@ -43,8 +43,10 @@ namespace Sidekick.Helpers.Input
 
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHookKeyPressHandler;
+            
             if (!Debugger.IsAttached)
             {
+                _globalHook.MouseUp += GlobalHookMousUpHandler;
                 _globalHook.MouseWheelExt += GlobalHookMouseScrollHandler;
             }
 
@@ -56,6 +58,23 @@ namespace Sidekick.Helpers.Input
             };
 
             _globalHook.OnSequence(assignment);
+        }
+
+        private static void GlobalHookMousUpHandler(object sender, WindowsHook.MouseEventArgs e)
+        {
+            var settings = SettingsController.GetSettingsInstance();
+
+            // only check mouse pos, if overlay is displayed
+            if (!OverlayController.IsDisplayed || !bool.Parse(settings.GeneralSettings[GeneralSetting.CloseOverlayWithMouse])) return;
+
+            var overlayPos = OverlayController.GetOverlayPosition();
+            var overlaySize = OverlayController.GetOverlaySize();
+
+            if(e.X < overlayPos.X || e.X > overlayPos.X + overlaySize.Width
+                || e.Y < overlayPos.Y || e.Y > overlayPos.Y + overlaySize.Height)
+            {
+                OverlayController.Hide();
+            }
         }
 
         private static async void GlobalHookKeyPressHandler(object sender, KeyEventArgs e)
