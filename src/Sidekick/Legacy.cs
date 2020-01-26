@@ -10,11 +10,11 @@ using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 using Sidekick.Platforms;
-using Sidekick.UI.Settings;
+using Sidekick.UI.Views;
 
 namespace Sidekick
 {
@@ -70,7 +70,7 @@ namespace Sidekick
         public static INativeKeyboard NativeKeyboard { get; private set; }
 
         [Obsolete]
-        public static SettingsViewModel SettingsViewModel { get; private set; }
+        public static IViewController ViewController { get; private set; }
 
         [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
@@ -91,7 +91,7 @@ namespace Sidekick
             KeybindEvents = serviceProvider.GetService<IKeybindEvents>();
             NativeProcess = serviceProvider.GetService<INativeProcess>();
             NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
-            SettingsViewModel = serviceProvider.GetService<SettingsViewModel>();
+            ViewController = serviceProvider.GetService<IViewController>();
         }
     }
 }

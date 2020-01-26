@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.UI.Settings;
+using Sidekick.UI.Views;
 
 namespace Sidekick.UI
 {
@@ -7,7 +8,10 @@ namespace Sidekick.UI
     {
         public static IServiceCollection AddSidekickUIServices(this IServiceCollection services)
         {
-            services.AddSingleton<SettingsViewModel, SettingsViewModel>();
+            services.AddSingleton<IViewController, ViewController>();
+
+            services.AddScoped<ISettingsViewModel, SettingsViewModel>();
+
             return services;
         }
     }

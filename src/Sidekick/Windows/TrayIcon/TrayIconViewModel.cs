@@ -8,6 +8,7 @@ using Sidekick.Business.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon.Models;
 
 namespace Sidekick.Windows.TrayIcon
@@ -90,7 +91,7 @@ namespace Sidekick.Windows.TrayIcon
 
         public ICommand ChangeLeagueCommand => new RelayCommand(leagueId => ChangeLeague(leagueId.ToString()));
 
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.SettingsViewModel.Open());
+        public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.ViewController.Open<SettingsView>());
 
         public ICommand ShowLogsCommand => new RelayCommand(_ => ApplicationLogsController.Show());
 

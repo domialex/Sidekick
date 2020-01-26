@@ -14,11 +14,9 @@ namespace Sidekick
               .AddSidekickConfiguration()
               .AddSidekickCoreServices()
               .AddSidekickBusinessServices()
-              .AddSidekickServices()
               .AddSidekickWindowsServices()
               .AddSidekickUIServices()
-              .AddSidekickUIWindows()
-              .AddPoeNinja();
+              .AddSidekickUIWindows();
 
             return services.BuildServiceProvider();
         }

@@ -5,9 +5,9 @@ using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Settings;
-using Sidekick.Core.Loggers;
 using Sidekick.Platforms;
 using Sidekick.UI.Settings;
+using Sidekick.UI.Views;
 using Sidekick.Windows.Settings.UserControls;
 
 namespace Sidekick.Windows.Settings
@@ -15,24 +15,19 @@ namespace Sidekick.Windows.Settings
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class SettingsView : Window, ISettingView
+    public partial class SettingsView : Window, ISidekickView
     {
         private const int WINDOW_WIDTH = 480;
         private const int WINDOW_HEIGHT = 320;
-        private readonly ILogger logger;
-        private readonly SettingsViewModel settingsViewModel;
+        private readonly ISettingsViewModel viewModel;
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly INativeKeyboard nativeKeyboard;
 
-        public SettingsView(ILogger logger,
-            SettingsViewModel settingsViewModel,
+        public SettingsView(ISettingsViewModel viewModel,
             IUILanguageProvider uiLanguageProvider,
             INativeKeyboard nativeKeyboard)
         {
-            this.logger = logger;
-            this.settingsViewModel = settingsViewModel;
+            this.viewModel = viewModel;
             this.uiLanguageProvider = uiLanguageProvider;
-            this.nativeKeyboard = nativeKeyboard;
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
 
@@ -40,13 +35,15 @@ namespace Sidekick.Windows.Settings
             Height = WINDOW_HEIGHT;
 
             InitializeComponent();
-            DataContext = settingsViewModel;
+            DataContext = viewModel;
 
             SetUILanguage();
             SelectWikiSetting();
             InitializeUILanguageCombobox();
 
             ElementHost.EnableModelessKeyboardInterop(this);
+
+            Show();
         }
 
         private Task NativeKeyboard_OnKeyDown(string key)
@@ -56,11 +53,6 @@ namespace Sidekick.Windows.Settings
                 CurrentKeybind.Capture(key);
             }
             return Task.CompletedTask;
-        }
-
-        public void Open()
-        {
-            Show();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -80,11 +72,11 @@ namespace Sidekick.Windows.Settings
 
         private void SelectWikiSetting()
         {
-            if (settingsViewModel.Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
+            if (viewModel.Settings.CurrentWikiSettings == WikiSetting.PoeWiki)
             {
                 radioButtonPOEWiki.IsChecked = true;
             }
-            else if (settingsViewModel.Settings.CurrentWikiSettings == WikiSetting.PoeDb)
+            else if (viewModel.Settings.CurrentWikiSettings == WikiSetting.PoeDb)
             {
                 radioButtonPOEDb.IsChecked = true;
             }
@@ -93,17 +85,17 @@ namespace Sidekick.Windows.Settings
         private void InitializeUILanguageCombobox()
         {
             comboBoxUILanguages.ItemsSource = uiLanguageProvider.AvailableLanguages.Select(x => x.Name);
-            comboBoxUILanguages.SelectedItem = settingsViewModel.Settings.UILanguage;
+            comboBoxUILanguages.SelectedItem = viewModel.Settings.UILanguage;
         }
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            settingsViewModel.Save();
+            viewModel.Save();
         }
 
         private void DiscardChanges_Click(object sender, RoutedEventArgs e)
         {
-            settingsViewModel.Cancel();
+            Close();
         }
 
         private KeybindEditor CurrentKeybind { get; set; }
@@ -119,7 +111,7 @@ namespace Sidekick.Windows.Settings
         /// <param name="sender"></param>
         private void KeybindEditor_HotkeyChanged(KeybindEditor keybind)
         {
-            if (settingsViewModel.IsKeybindUsed(keybind.Value, keybind.Property))
+            if (viewModel.IsKeybindUsed(keybind.Value, keybind.Property))
             {
                 if (MessageBox.Show("This hotkey already in use.") == MessageBoxResult.OK)
                 {
