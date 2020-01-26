@@ -73,6 +73,7 @@
                             </TextBox>
                             <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)RetainClipboard]}"/>
                             <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Close Overlay with Mouse Click" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)CloseOverlayWithMouse]}"/>
+                            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Enable CTRL + Scroll" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.GeneralSettings[(enums:GeneralSetting)EnableCtrlScroll]}"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="1" Margin="1"></GroupBox>

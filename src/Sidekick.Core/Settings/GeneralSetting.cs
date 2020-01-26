@@ -5,6 +5,7 @@ namespace Sidekick.Core.Settings
         None,
         CharacterName,
         RetainClipboard,
-        CloseOverlayWithMouse
+        CloseOverlayWithMouse,
+        EnableCtrlScroll
     }
 }

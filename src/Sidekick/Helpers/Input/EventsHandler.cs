@@ -153,7 +153,8 @@ namespace Sidekick.Helpers.Input
 
         private static void GlobalHookMouseScrollTask(MouseEventExtArgs e)
         {
-            if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus())
+            var settings = SettingsController.GetSettingsInstance();
+            if (!Legacy.InitializeService.IsReady || !ProcessHelper.IsPathOfExileInFocus() || !bool.Parse(settings.GeneralSettings[GeneralSetting.EnableCtrlScroll]))
             {
                 return;
             }
