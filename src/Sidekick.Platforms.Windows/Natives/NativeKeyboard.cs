@@ -76,20 +76,20 @@ namespace Sidekick.Platforms.Windows.Natives
             switch (command)
             {
                 case KeyboardCommandEnum.Copy:
-                    SendKeys.Send("^{c}");
+                    SendKeys.SendWait("^{c}");
                     break;
                 case KeyboardCommandEnum.FindItems:
-                    SendKeys.Send("^{f}^{a}^{v}{Enter}");
+                    SendKeys.SendWait("^{f}^{a}^{v}{Enter}");
                     break;
                 case KeyboardCommandEnum.Stash_Left:
-                    SendKeys.Send("{Left}");
+                    SendKeys.SendWait("{Left}");
                     break;
                 case KeyboardCommandEnum.Stash_Right:
-                    SendKeys.Send("{Right}");
+                    SendKeys.SendWait("{Right}");
                     break;
                 case KeyboardCommandEnum.GoToHideout:
 
-                    SendKeys.Send("{Enter}/hideout{Enter}{Enter}{Up}{Up}{Esc}");
+                    SendKeys.SendWait("{Enter}/hideout{Enter}{Enter}{Up}{Up}{Esc}");
                     break;
                 case KeyboardCommandEnum.LeaveParty:
                     // this operation is only valid if the user has added their character name to the settings file
@@ -98,7 +98,7 @@ namespace Sidekick.Platforms.Windows.Natives
                         logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
                         return;
                     }
-                    SendKeys.Send($"{{Enter}}/kick {configuration.CharacterName}{{Enter}}");
+                    SendKeys.SendWait($"{{Enter}}/kick {configuration.CharacterName}{{Enter}}");
                     break;
             }
         }

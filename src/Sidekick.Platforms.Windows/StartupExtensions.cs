@@ -10,6 +10,7 @@ namespace Sidekick.Platforms.Windows
         public static IServiceCollection AddSidekickWindowsServices(this IServiceCollection services)
         {
             services.AddSingleton<INativeBrowser, NativeBrowser>();
+            services.AddSingleton<INativeClipboard, NativeClipboard>();
 
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();

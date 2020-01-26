@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Sidekick.Helpers.NativeMethods;
 using Sidekick.Windows.Overlay;
 
 namespace Sidekick.Helpers.Input
@@ -48,7 +47,6 @@ namespace Sidekick.Helpers.Input
                 }
 
                 OverlayController.Hide();
-
             }
 
         }
@@ -68,7 +66,7 @@ namespace Sidekick.Helpers.Input
         private static async Task TriggerFindItem()
         {
             Business.Parsers.Models.Item item;
-            var clipboardContents = ClipboardHelper.GetText();
+            var clipboardContents = await Legacy.NativeClipboard.GetText();
             var restoreClipboard = true;
 
             if (!string.IsNullOrEmpty(clipboardContents))
@@ -80,13 +78,13 @@ namespace Sidekick.Helpers.Input
             }
 
             // we still need to fetch the item under the cursor if any and make sure we don't use old contents
-            await ClipboardHelper.SetText(string.Empty);
+            await Legacy.NativeClipboard.SetText(string.Empty);
             item = await TriggerCopyAction();
             if (item != null)
             {
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
                 var searchText = item.Name;
-                await ClipboardHelper.SetText(searchText);
+                await Legacy.NativeClipboard.SetText(searchText);
 
                 Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.FindItems);
             }
@@ -95,7 +93,7 @@ namespace Sidekick.Helpers.Input
 
             if (restoreClipboard)
             {
-                await ClipboardHelper.SetText(clipboardContents);
+                await Legacy.NativeClipboard.SetText(clipboardContents);
             }
         }
 
@@ -140,21 +138,21 @@ namespace Sidekick.Helpers.Input
 
             if (Legacy.Settings.RetainClipboard)
             {
-                clipboardText = ClipboardHelper.GetText();
+                clipboardText = await Legacy.NativeClipboard.GetText();
             }
 
-            await ClipboardHelper.SetDataObject(string.Empty);
+            await Legacy.NativeClipboard.SetText(string.Empty);
 
             Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.Copy);
 
             await Task.Delay(100);
 
             // Retrieve clipboard.
-            var itemText = ClipboardHelper.GetText();
+            var itemText = await Legacy.NativeClipboard.GetText();
 
             if (Legacy.Settings.RetainClipboard)
             {
-                await ClipboardHelper.SetDataObject(clipboardText);
+                await Legacy.NativeClipboard.SetText(clipboardText);
             }
 
             if (string.IsNullOrWhiteSpace(itemText))

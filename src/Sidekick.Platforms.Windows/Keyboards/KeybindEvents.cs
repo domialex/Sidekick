@@ -120,7 +120,7 @@ namespace Sidekick.Platforms.Windows.Keyboards
                     await OnCloseWindow?.Invoke();
                 }
 
-                if (nativeProcess.IsPathOfExileInFocus)
+                if (nativeProcess.IsPathOfExileInFocus || true)
                 {
                     if (key == configuration.KeyPriceCheck)
                     {
