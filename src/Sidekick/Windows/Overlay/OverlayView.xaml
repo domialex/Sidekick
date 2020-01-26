@@ -10,10 +10,11 @@
         WindowState="Normal"
         ResizeMode="NoResize"
         WindowStyle="None"
-        BorderThickness="1"
-        BorderBrush="{DynamicResource PrimaryColor}"
-        Background="{DynamicResource BackgroundColor}"
+        AllowsTransparency="True"
         >
+    <Window.Background>
+        <SolidColorBrush Color="Black" Opacity="0.8"/>
+    </Window.Background>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

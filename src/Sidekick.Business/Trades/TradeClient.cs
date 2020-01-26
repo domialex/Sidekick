@@ -124,7 +124,7 @@ namespace Sidekick.Business.Trades
 
             if (queryResult != null)
             {
-                var result = await Task.WhenAll(Enumerable.Range(0, 1).Select(x => GetListings(queryResult, x)));
+                var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
 
                 return new QueryResult<ListingResult>()
                 {

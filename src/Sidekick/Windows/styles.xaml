@@ -76,6 +76,21 @@
     </Style>
     <!--#endregion Scrollbars -->
 
+    <!--#region Path of Exile Colors -->
+    <!-- Type colors -->
+    <SolidColorBrush x:Key="PoEColorNormal" Color="#FFC8C8C8" />
+    <SolidColorBrush x:Key="PoEColorMagic" Color="#FF8787FE" />
+    <SolidColorBrush x:Key="PoEColorRare" Color="#FFFEFE76" />
+    <SolidColorBrush x:Key="PoEColorUnique" Color="#FFAF5F1C" />
+    <SolidColorBrush x:Key="PoEColorCurrency" Color="#FFAA9E81" />
+    <SolidColorBrush x:Key="PoEColorGem" Color="#FF0DA29B" />
+
+    <!-- Numeric values -->
+    <SolidColorBrush x:Key="PoEColorValueNormal" Color="#FF7F7F7F" />
+    <SolidColorBrush x:Key="PoEColorValueMagic" Color="#FF8787FE" />
+    <SolidColorBrush x:Key="PoEColorValueCrafted" Color="#FFB8DAF1" />
+    <!--#endregion Path of Exile Colors -->
+
     <SolidColorBrush x:Key="TextColor" Color="#FFE6E6E6" />
     <SolidColorBrush x:Key="BackgroundColor" Color="#FF1E1E1E" />
     <SolidColorBrush x:Key="BackgroundColorLight" Color="#FF252525" />
