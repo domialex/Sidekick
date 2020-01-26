@@ -1,3 +1,9 @@
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
@@ -8,13 +14,7 @@ using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Loggers;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using Sidekick.Platforms;
 
 namespace Sidekick.Business.Trades
 {
@@ -26,13 +26,15 @@ namespace Sidekick.Business.Trades
         private readonly IStaticItemCategoryService staticItemCategoryService;
         private readonly Configuration configuration;
         private readonly IPoeApiClient poeApiClient;
+        private readonly INativeBrowser nativeBrowser;
 
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticItemCategoryService staticItemCategoryService,
             Configuration configuration,
-            IPoeApiClient poeApiClient)
+            IPoeApiClient poeApiClient,
+            INativeBrowser nativeBrowser)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
@@ -40,6 +42,7 @@ namespace Sidekick.Business.Trades
             this.staticItemCategoryService = staticItemCategoryService;
             this.configuration = configuration;
             this.poeApiClient = poeApiClient;
+            this.nativeBrowser = nativeBrowser;
         }
 
         private async Task<QueryResult<string>> Query(Parsers.Models.Item item)
@@ -164,10 +167,7 @@ namespace Sidekick.Business.Trades
         public async Task OpenWebpage(Parsers.Models.Item item)
         {
             var queryResult = await Query(item);
-
-            var uri = queryResult.Uri.ToString();
-            logger.Log($"Opening in browser: {uri}");
-            Process.Start(uri);
+            nativeBrowser.Open(queryResult.Uri);
         }
     }
 }

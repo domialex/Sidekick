@@ -13,6 +13,8 @@ using Sidekick.Business.Trades;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Platforms;
+using Sidekick.UI.Settings;
 
 namespace Sidekick
 {
@@ -59,6 +61,18 @@ namespace Sidekick
         public static IPoeWikiClient PoeWikiClient { get; private set; }
 
         [Obsolete]
+        public static IKeybindEvents KeybindEvents { get; private set; }
+
+        [Obsolete]
+        public static INativeProcess NativeProcess { get; private set; }
+
+        [Obsolete]
+        public static INativeKeyboard NativeKeyboard { get; private set; }
+
+        [Obsolete]
+        public static SettingsViewModel SettingsViewModel { get; private set; }
+
+        [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
         {
             InitializeService = serviceProvider.GetService<IInitializer>();
@@ -74,6 +88,10 @@ namespace Sidekick
             PoeDbClient = serviceProvider.GetService<IPoeDbClient>();
             PoePriceInfoClient = serviceProvider.GetService<IPoePriceInfoClient>();
             PoeWikiClient = serviceProvider.GetService<IPoeWikiClient>();
+            KeybindEvents = serviceProvider.GetService<IKeybindEvents>();
+            NativeProcess = serviceProvider.GetService<INativeProcess>();
+            NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
+            SettingsViewModel = serviceProvider.GetService<SettingsViewModel>();
         }
     }
 }

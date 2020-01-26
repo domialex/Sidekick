@@ -1,15 +1,14 @@
-using System.Windows.Input;
-using System.Windows;
-using Sidekick.Business.Leagues;
-using Sidekick.Windows.Settings;
-using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Business.Languages.UI;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using Sidekick.Windows.TrayIcon.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using Sidekick.Business.Languages.UI;
+using Sidekick.Business.Leagues;
 using Sidekick.Core.Configuration;
 using Sidekick.Core.Initialization;
+using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.TrayIcon.Models;
 
 namespace Sidekick.Windows.TrayIcon
 {
@@ -91,7 +90,7 @@ namespace Sidekick.Windows.TrayIcon
 
         public ICommand ChangeLeagueCommand => new RelayCommand(leagueId => ChangeLeague(leagueId.ToString()));
 
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => SettingsController.Show());
+        public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.SettingsViewModel.Open());
 
         public ICommand ShowLogsCommand => new RelayCommand(_ => ApplicationLogsController.Show());
 

@@ -1,4 +1,3 @@
-using Sidekick.Helpers.NativeMethods;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
@@ -14,9 +13,9 @@ namespace Sidekick.Windows.Prediction
         private const int WindowWidth = 800;
         private const int WindowPadding = 5;
 
-		public static bool IsDisplayed => _predictionView?.IsDisplayed ?? false;
+        public static bool IsDisplayed => _predictionView?.IsDisplayed ?? false;
         public static void SetPriceInfoResult(PriceInfoResult info) => _predictionView.SetPriceInfoResult(info);
-        
+
         public static void Show() => _predictionView.ShowWindow();
         public static void Hide() => _predictionView.HideWindowAndClearData();
 
@@ -36,7 +35,7 @@ namespace Sidekick.Windows.Prediction
             if (_predictionView == null)
                 Initialize();
 
-            var scale = 96f / ProcessHelper.GetActiveWindowDpi();
+            var scale = 96f / Legacy.NativeProcess.ActiveWindowDpi;
             var xScaled = (int)(Cursor.Position.X * scale);
             var yScaled = (int)(Cursor.Position.Y * scale);
 
