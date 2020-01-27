@@ -1,7 +1,7 @@
 using System;
 using Sidekick.Business.Languages.Client;
 using Sidekick.Core.Loggers;
-using Sidekick.Platforms;
+using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb
 {

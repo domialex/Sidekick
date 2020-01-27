@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -80,7 +80,6 @@
   </ItemGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Platforms.Windows\Sidekick.Platforms.Windows.csproj" />
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.UI\Sidekick.UI.csproj" />
   </ItemGroup>

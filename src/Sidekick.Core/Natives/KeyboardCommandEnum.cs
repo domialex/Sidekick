@@ -1,4 +1,4 @@
-namespace Sidekick.Platforms
+namespace Sidekick.Core.Natives
 {
     public enum KeyboardCommandEnum
     {

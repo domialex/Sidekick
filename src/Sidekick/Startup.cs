@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business;
 using Sidekick.Core;
-using Sidekick.Platforms.Windows;
 using Sidekick.UI;
 
 namespace Sidekick
@@ -14,7 +13,6 @@ namespace Sidekick
               .AddSidekickConfiguration()
               .AddSidekickCoreServices()
               .AddSidekickBusinessServices()
-              .AddSidekickWindowsServices()
               .AddSidekickUIServices()
               .AddSidekickUIWindows();
 

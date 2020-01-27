@@ -3,10 +3,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
 
-namespace Sidekick.Platforms.Windows.Keyboards
+namespace Sidekick.Natives
 {
     public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable
     {

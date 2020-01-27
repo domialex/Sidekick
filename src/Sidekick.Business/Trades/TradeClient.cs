@@ -12,9 +12,9 @@ using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Loggers;
-using Sidekick.Platforms;
+using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Trades
 {
