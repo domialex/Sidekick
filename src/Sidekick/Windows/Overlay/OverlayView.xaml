@@ -82,33 +82,38 @@
                     <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox
-                    Name="textBoxAccountName"
+                <Grid
                     Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="5,5"
-                    Text="Account name" />
-                <TextBox
-                    Name="textBoxCharacter"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="Character" />
-                <TextBox
-                    Name="textBoxPrice"
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Text="Price" />
-                <TextBox
-                    Name="textBoxItemLevel"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Text="iLvl" />
-                <TextBox
-                    Name="textBoxAge"
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    HorizontalAlignment="Center"
-                    Text="Age" />
+                    Grid.ColumnSpan="5"
+                    Visibility="{Binding Path=queryResult, TargetNullValue=Hidden}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140*" />
+                        <ColumnDefinition Width="140*" />
+                        <ColumnDefinition Width="80*" />
+                        <ColumnDefinition Width="40*" />
+                        <ColumnDefinition Width="80*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Name="textBoxAccountName"
+                        Grid.Column="0"
+                        Text="Account name" />
+                    <TextBox
+                        Name="textBoxCharacter"
+                        Grid.Column="1"
+                        Text="Character" />
+                    <TextBox
+                        Name="textBoxPrice"
+                        Grid.Column="2"
+                        Text="Price" />
+                    <TextBox
+                        Name="textBoxItemLevel"
+                        Grid.Column="3"
+                        Text="iLvl" />
+                    <TextBox
+                        Name="textBoxAge"
+                        Grid.Column="4"
+                        Text="Age" />
+                </Grid>
 
                 <ScrollViewer
                     Name="_itemList"
