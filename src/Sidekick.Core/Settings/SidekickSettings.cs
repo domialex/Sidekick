@@ -41,8 +41,6 @@ namespace Sidekick.Core.Settings
             var defaults = JsonSerializer.Serialize(DefaultSettings.Settings);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
 
-            var delete = false;
-
             // Backup old settings
             if (File.Exists(filePath))
             {

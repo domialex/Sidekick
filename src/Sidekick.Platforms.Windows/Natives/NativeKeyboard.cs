@@ -31,10 +31,12 @@ namespace Sidekick.Platforms.Windows.Natives
 
         private IKeyboardMouseEvents hook = null;
 
-        public async Task OnAfterInit()
+        public Task OnAfterInit()
         {
             hook = Hook.GlobalEvents();
             hook.KeyDown += Hook_KeyDown;
+
+            return Task.CompletedTask;
         }
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
@@ -61,7 +63,7 @@ namespace Sidekick.Platforms.Windows.Natives
                 }
                 str.Append(e.KeyCode);
 
-                await OnKeyDown?.Invoke(str.ToString());
+                if (OnKeyDown != null) await OnKeyDown.Invoke(str.ToString());
             });
         }
 
@@ -92,10 +94,10 @@ namespace Sidekick.Platforms.Windows.Natives
                     SendKeys.SendWait("{Enter}/hideout{Enter}{Enter}{Up}{Up}{Esc}");
                     break;
                 case KeyboardCommandEnum.LeaveParty:
-                    // this operation is only valid if the user has added their character name to the settings file
+                    // This operation is only valid if the user has added their character name to the settings file.
                     if (string.IsNullOrEmpty(configuration.CharacterName))
                     {
-                        logger.Log("This command requires a \"CharacterName\" to be specified in the settings menu.", LogState.Warning);
+                        logger.Log(@"This command requires a ""CharacterName"" to be specified in the settings menu.", LogState.Warning);
                         return;
                     }
                     SendKeys.SendWait($"{{Enter}}/kick {configuration.CharacterName}{{Enter}}");

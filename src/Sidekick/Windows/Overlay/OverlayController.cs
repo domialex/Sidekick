@@ -31,7 +31,8 @@ namespace Sidekick.Windows.Overlay
 
         private static async void Window_ItemScrollReachedEnd(Business.Parsers.Models.Item item, int displayedItemsCount)
         {
-            var queryResult = await Legacy.TradeClient.GetListingsForSubsequentPages(item, (int)System.Math.Ceiling(displayedItemsCount / 10d));
+            var page = (int)Math.Ceiling(displayedItemsCount / 10d);
+            var queryResult = await Legacy.TradeClient.GetListingsForSubsequentPages(item, page);
             if (queryResult.Result.Any())
             {
                 _overlayWindow.AppendQueryResult(queryResult);

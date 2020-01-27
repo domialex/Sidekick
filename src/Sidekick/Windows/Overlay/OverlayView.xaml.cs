@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.Overlay.UserControls;
@@ -25,7 +24,7 @@ namespace Sidekick.Windows.Overlay
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -82,6 +81,7 @@ namespace Sidekick.Windows.Overlay
                     return;
                 }
 
+                this.txtPrediction.Text = null;
                 this.queryResult = queryResult;
                 this.itemListingControls?.Clear();
 
@@ -125,18 +125,18 @@ namespace Sidekick.Windows.Overlay
 
                 // Update queryResult
                 var newQueryResult = new QueryResult<ListingResult>();
-                newQueryResult.Id = this.queryResult.Id;
-                newQueryResult.Item = this.queryResult.Item;
+                newQueryResult.Id = queryResult.Id;
+                newQueryResult.Item = queryResult.Item;
                 newQueryResult.Total = queryToAppend.Total;
-                newQueryResult.Uri = this.queryResult.Uri;
-                newQueryResult.PoeNinjaItem = this.queryResult.PoeNinjaItem;
+                newQueryResult.Uri = queryResult.Uri;
+                newQueryResult.PoeNinjaItem = queryResult.PoeNinjaItem;
 
                 var newResults = new List<ListingResult>();
                 newResults.AddRange(this.queryResult.Result);
                 newResults.AddRange(queryToAppend.Result);
                 newQueryResult.Result = newResults;
 
-                this.queryResult = newQueryResult;
+                queryResult = newQueryResult;
                 queryToAppend.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(item => this.itemListingControls.Add(item));
 
                 dataIsUpdating = false;
@@ -180,9 +180,9 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
-                this.txtPrediction.Text = null;
-                this.queryResult = null;
-                this.itemListingControls = new ObservableCollection<ListItem>();
+                txtPrediction.Text = null;
+                queryResult = null;
+                itemListingControls = new ObservableCollection<ListItem>();
                 NotifyPropertyChanged("itemListingControls");
                 Visibility = Visibility.Hidden;
             }
@@ -191,21 +191,28 @@ namespace Sidekick.Windows.Overlay
 
         private void _itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
-            //Load next results when scrollviewer is at the bottom
-            if (_itemList.VerticalOffset == _itemList.ScrollableHeight && _itemList.ScrollableHeight > 0)
+            // The api only returns 100 results maximum.
+            if (itemListingControls.Count >= 100)
             {
-                if (overlayIsUpdatable && !dataIsUpdating)
+                return;
+            }
+
+            //Load next results when scrollviewer is at the bottom
+            if (_itemList.ScrollableHeight > 0)
+            {
+                // Query next page when reaching more than 70% of the scrollable content.
+                var breakpoint = (_itemList.VerticalOffset / _itemList.ScrollableHeight) > 0.7d;
+                if (breakpoint && overlayIsUpdatable && !dataIsUpdating)
                 {
                     dataIsUpdating = true;
                     overlayIsUpdatable = false;
-                    OnItemScrollReachedEnd(this.queryResult.Item, this.itemListingControls.Count);
+                    OnItemScrollReachedEnd(queryResult.Item, itemListingControls.Count);
+                    return;
                 }
             }
-            else
-            {
-                // UI update is finished, when the scrollviewer is reset (newly added items will move the scrollbar)
-                overlayIsUpdatable = true;
-            }
+
+            // UI update is finished, when the scrollviewer is reset (newly added items will move the scrollbar)
+            overlayIsUpdatable = true;
         }
     }
 }
