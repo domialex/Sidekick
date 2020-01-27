@@ -271,7 +271,7 @@
                             <Setter TargetName="Panel" Property="Background" Value="{DynamicResource SolidColorBrush_Background}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Panel" Property="Background" Value="{DynamicResource SolidColorBrush_BackgroundLight}" />
+                            <Setter TargetName="Panel" Property="Background" Value="{DynamicResource SolidColorBrush_Background}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
