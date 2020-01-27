@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
 

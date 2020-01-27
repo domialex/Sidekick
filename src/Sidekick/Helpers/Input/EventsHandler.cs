@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Sidekick.Core.Natives;
 using Sidekick.Windows.Overlay;
 
 namespace Sidekick.Helpers.Input
@@ -28,7 +29,7 @@ namespace Sidekick.Helpers.Input
         private static Task MouseClicked(int x, int y)
         {
             if (!OverlayController.IsDisplayed || !Legacy.Settings.CloseOverlayWithMouse) return Task.CompletedTask;
-          
+
             var overlayPos = OverlayController.GetOverlayPosition();
             var overlaySize = OverlayController.GetOverlaySize();
 
@@ -73,7 +74,7 @@ namespace Sidekick.Helpers.Input
         /// </summary>
         private static Task TriggerLeaveParty()
         {
-            Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.LeaveParty);
+            Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.LeaveParty);
             return Task.CompletedTask;
         }
 
@@ -103,7 +104,7 @@ namespace Sidekick.Helpers.Input
                 var searchText = item.Name;
                 await Legacy.NativeClipboard.SetText(searchText);
 
-                Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.FindItems);
+                Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.FindItems);
             }
 
             await Task.Delay(250);
@@ -136,7 +137,7 @@ namespace Sidekick.Helpers.Input
         /// </summary>
         private static Task TriggerHideout()
         {
-            Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.GoToHideout);
+            Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.GoToHideout);
             return Task.CompletedTask;
         }
 
@@ -160,7 +161,7 @@ namespace Sidekick.Helpers.Input
 
             await Legacy.NativeClipboard.SetText(string.Empty);
 
-            Legacy.NativeKeyboard.SendCommand(Platforms.KeyboardCommandEnum.Copy);
+            Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.Copy);
 
             await Task.Delay(100);
 

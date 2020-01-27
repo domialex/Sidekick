@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core;
+using Sidekick.Core.Natives;
 using Sidekick.Platforms.Windows.Keyboards;
 using Sidekick.Platforms.Windows.Natives;
 

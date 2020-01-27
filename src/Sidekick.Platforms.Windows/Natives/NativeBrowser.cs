@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Natives;
 
 namespace Sidekick.Platforms.Windows.Natives
 {
