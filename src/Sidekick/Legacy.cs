@@ -12,8 +12,8 @@ using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Platforms;
 using Sidekick.UI.Views;
 
 namespace Sidekick

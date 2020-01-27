@@ -12,9 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Platforms\Sidekick.Platforms.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
-    <ProjectReference Include="..\Sidekick.Platforms\Sidekick.Platforms.csproj" />
   </ItemGroup>
 
 </Project>
