@@ -22,10 +22,10 @@
                 <ResourceDictionary Source="../Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <SolidColorBrush x:Key="HighValueColor" Color="#FFBB0B0B" />
+            <SolidColorBrush x:Key="HighValueColor" Color="#FF336303" />
             <SolidColorBrush x:Key="MediumValueColor" Color="#FFBFA500" />
-            <SolidColorBrush x:Key="LowValueColor" Color="#FF4E910B" />
-            <SolidColorBrush x:Key="VeryLowValueColor" Color="#FF6282F1" />
+            <SolidColorBrush x:Key="LowValueColor" Color="#FFDA4500" />
+            <SolidColorBrush x:Key="VeryLowValueColor" Color="#FFB00000" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>

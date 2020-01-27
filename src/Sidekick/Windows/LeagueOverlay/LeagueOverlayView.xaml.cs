@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Sidekick.Windows.LeagueOverlay
 {
@@ -15,37 +17,42 @@ namespace Sidekick.Windows.LeagueOverlay
         private TabItem CurrentPage;
         private Dictionary<string, string> DelveFossilRarityDictionary;
 
+        public const string VeryLowValueColorName = "VeryLowValueColor";
+        public const string LowValueColorName = "LowValueColor";
+        public const string MediumValueColorName = "MediumValueColor";
+        public const string HighValueColorName = "HighValueColor";
+
         public LeagueOverlayView()
         {
             InitializeComponent();
 
             DelveFossilRarityDictionary = new Dictionary<string, string>()
             {
-                { Legacy.UILanguageProvider.Language.DelveAberrantFossil, "LowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveAethericFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveBloodstainedFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveBoundFossil, "LowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveCorrodedFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveDenseFossil, "LowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveEnchantedFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveEncrustedFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveFacetedFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveFracturedFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveFrigidFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveGildedFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveGlyphicFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveHollowFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveJaggedFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveLucentFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveMetallicFossil, "LowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelvePerfectFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelvePrismaticFossil, "LowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelvePristineFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveSanctifiedFossil, "HighValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveScorchedFossil, "VeryLowValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveSerratedFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveShudderingFossil, "MediumValueColor" },
-                { Legacy.UILanguageProvider.Language.DelveTangledFossil, "MediumValueColor" },
+                { Legacy.UILanguageProvider.Language.DelveAberrantFossil, LowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveAethericFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveBloodstainedFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveBoundFossil, LowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveCorrodedFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveDenseFossil, LowValueColorName},
+                { Legacy.UILanguageProvider.Language.DelveEnchantedFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveEncrustedFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveFacetedFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveFracturedFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveFrigidFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveGildedFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveGlyphicFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveHollowFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveJaggedFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveLucentFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveMetallicFossil, LowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelvePerfectFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelvePrismaticFossil, LowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelvePristineFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveSanctifiedFossil, HighValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveScorchedFossil, VeryLowValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveSerratedFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveShudderingFossil, MediumValueColorName },
+                { Legacy.UILanguageProvider.Language.DelveTangledFossil, MediumValueColorName },
             };
 
 
@@ -70,8 +77,92 @@ namespace Sidekick.Windows.LeagueOverlay
             };
 
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
+            tabControlLeagueOverlay.MouseWheel += TabControlLeagueOverlay_MouseWheel;
             CurrentPage = tabItemIncursion;
         }
+
+        public bool IsDisplayed => Visibility == Visibility.Visible;
+
+        private void TabControlLeagueOverlay_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            var currentPageIndex = tabControlLeagueOverlay.SelectedIndex;
+
+            if(e.Delta > 0 && currentPageIndex < tabControlLeagueOverlay.Items.Count)       // Scroll Up
+            {
+                tabControlLeagueOverlay.SelectedIndex = --currentPageIndex;              
+            }
+            else if(e.Delta < 0 && currentPageIndex > 0)                   // Scroll Down
+            {
+                tabControlLeagueOverlay.SelectedIndex = ++currentPageIndex;
+            }
+        }
+
+        public void ShowWindow()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new ShowWindowCallback(ShowWindow));
+            }
+            else
+            {
+                Visibility = Visibility.Visible;
+            }
+        }
+        delegate void ShowWindowCallback();
+
+        public void HideWindow()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new HideWindowCallback(HideWindow));
+            }
+            else
+            {
+                Visibility = Visibility.Hidden;
+            }
+        }
+        delegate void HideWindowCallback();
+
+        public void SetWindowPosition(int x, int y)
+        {
+            if(!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
+            }
+            else
+            {
+                Left = x;
+                Top = y;
+            }
+
+        }
+        delegate void SetWindowPositionCallback(int x, int y);
+
+        public int GetWidth()
+        {
+            if(!Dispatcher.CheckAccess())
+            {
+                return (int)Dispatcher.Invoke(new GetWidthCallback(GetWidth));
+            }
+            else
+            {
+                return (int)Width;
+            }
+        }
+        delegate int GetWidthCallback();
+
+        public int GetHeight()
+        {
+            if(!Dispatcher.CheckAccess())
+            {
+                return (int)Dispatcher.Invoke(new GetHeightCallback(GetHeight));
+            }
+            else
+            {
+                return (int)Height;
+            }
+        }
+        delegate int GetHeightCallback();
 
         private void TabControlLeagueOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -109,6 +200,12 @@ namespace Sidekick.Windows.LeagueOverlay
             }
 
             block.Inlines.Remove(block.Inlines.LastOrDefault());
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Hide();
+            e.Cancel = true;
         }
 
         private void UpdateIncursionUIText()
