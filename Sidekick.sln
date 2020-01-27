@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Core", "src\Sideki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "src\Sidekick\Sidekick.csproj", "{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Platforms.Windows", "src\Sidekick.Platforms.Windows\Sidekick.Platforms.Windows.csproj", "{4272F874-799D-4C57-8D56-356F69A4D671}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.UI", "src\Sidekick.UI\Sidekick.UI.csproj", "{F8DCDD39-7D3D-4610-A677-062410F89779}"
 EndProject
 Global
@@ -41,10 +39,6 @@ Global
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4272F874-799D-4C57-8D56-356F69A4D671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4272F874-799D-4C57-8D56-356F69A4D671}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4272F874-799D-4C57-8D56-356F69A4D671}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4272F874-799D-4C57-8D56-356F69A4D671}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Release|Any CPU.ActiveCfg = Release|Any CPU

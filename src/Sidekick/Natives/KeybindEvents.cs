@@ -7,7 +7,7 @@ using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
 
-namespace Sidekick.Platforms.Windows.Keyboards
+namespace Sidekick.Natives
 {
     public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable
     {

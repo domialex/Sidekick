@@ -6,10 +6,10 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Platforms.Windows.Natives.Helpers;
+using Sidekick.Natives.Helpers;
 using WindowsHook;
 
-namespace Sidekick.Platforms.Windows.Natives
+namespace Sidekick.Natives
 {
     public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable
     {

@@ -11,7 +11,7 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 
-namespace Sidekick.Platforms.Windows.Natives
+namespace Sidekick.Natives
 {
     public class NativeProcess : INativeProcess, IOnAfterInit
     {
