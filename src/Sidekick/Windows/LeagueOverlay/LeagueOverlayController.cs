@@ -32,8 +32,9 @@ namespace Sidekick.Windows.LeagueOverlay
             }
 
             var scale = 96f / Legacy.NativeProcess.ActiveWindowDpi;
-            var xScaled = (int)(Cursor.Position.X * scale);
-            var yScaled = (int)(Cursor.Position.Y * scale);
+
+            var xScaled = (int)(Screen.PrimaryScreen.WorkingArea.Width / 4);
+            var yScaled = (int)(Screen.PrimaryScreen.WorkingArea.Top);
 
             EnsureBounds(xScaled, yScaled, scale);
             Show();
