@@ -41,12 +41,12 @@ namespace Sidekick.Business.Apis.PoeNinja
                 var responseStream = await response.Content.ReadAsStreamAsync();
                 return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, _jsonSerializerOptions);
             }
-            catch
+            catch(Exception)
             {
                 logger.Log($"Could not fetch {itemType} from poe.ninja");
             }
 
-            return null;
+            return new PoeNinjaQueryResult<PoeNinjaItem>() { Lines = new System.Collections.Generic.List<PoeNinjaItem>() };
         }
 
         public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency)
@@ -64,7 +64,7 @@ namespace Sidekick.Business.Apis.PoeNinja
                 logger.Log($"Could not fetch {currency} from poe.ninja");
             }
 
-            return null;
+            return new PoeNinjaQueryResult<PoeNinjaCurrency>() { Lines = new System.Collections.Generic.List<PoeNinjaCurrency>() };
         }
     }
 }

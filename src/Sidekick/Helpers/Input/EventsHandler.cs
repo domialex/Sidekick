@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Sidekick.Core.Natives;
+using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 
 namespace Sidekick.Helpers.Input
@@ -14,6 +15,12 @@ namespace Sidekick.Helpers.Input
                 {
                     OverlayController.Hide();
                 }
+
+                if(LeagueOverlayController.IsDisplayed)
+                {
+                    LeagueOverlayController.Hide();
+                }
+
                 return Task.CompletedTask;
             };
 
@@ -23,6 +30,7 @@ namespace Sidekick.Helpers.Input
             Legacy.KeybindEvents.OnFindItems += TriggerFindItem;
             Legacy.KeybindEvents.OnLeaveParty += TriggerLeaveParty;
             Legacy.KeybindEvents.OnOpenSearch += TriggerOpenSearch;
+            Legacy.KeybindEvents.OnOpenLeagueOverview += TriggerLeagueOverlay;
             Legacy.KeybindEvents.OnMouseClick += MouseClicked;
         }
 
@@ -66,9 +74,14 @@ namespace Sidekick.Helpers.Input
 
                 OverlayController.Hide();
             }
-
         }
 
+        private static Task TriggerLeagueOverlay()
+        {
+            LeagueOverlayController.Open();
+            LeagueOverlayController.Show();
+            return Task.CompletedTask;
+        }
         /// <summary>
         /// Kick yourself from the current party
         /// </summary>
@@ -127,7 +140,7 @@ namespace Sidekick.Helpers.Input
                 }
                 else
                 {
-                    Legacy.PoeDbClient.Open(item);
+                    Legacy.PoeWikiClient.Open(item);
                 }
             }
         }
