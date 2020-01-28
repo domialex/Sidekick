@@ -87,11 +87,11 @@ namespace Sidekick.Windows.LeagueOverlay
         {
             var currentPageIndex = tabControlLeagueOverlay.SelectedIndex;
 
-            if(e.Delta > 0 && currentPageIndex < tabControlLeagueOverlay.Items.Count)       // Scroll Up
+            if(e.Delta > 0 && currentPageIndex > 0 )       // Scroll Up
             {
                 tabControlLeagueOverlay.SelectedIndex = --currentPageIndex;              
             }
-            else if(e.Delta < 0 && currentPageIndex > 0)                   // Scroll Down
+            else if(e.Delta < 0 && currentPageIndex <= tabControlLeagueOverlay.Items.Count)                   // Scroll Down
             {
                 tabControlLeagueOverlay.SelectedIndex = ++currentPageIndex;
             }
