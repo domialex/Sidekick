@@ -1,53 +1,59 @@
-<Window x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sidekick - Logs"
-        WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource BackgroundColor}"
-       
-        Height="320" 
-        MinHeight="320"
-        Width="960"
-        MinWidth="960">
+<Window
+    x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Sidekick - Logs"
+    Width="960"
+    Height="320"
+    MinWidth="960"
+    MinHeight="320"
+    Background="{DynamicResource SolidColorBrush_Background}"
+    WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary  Source="../Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Window.Style>
-        <Style>
-            
-        </Style>
+        <Style />
     </Window.Style>
     <ScrollViewer
-        Margin="5"
-        Background="{DynamicResource BackgroundColor}"
         Name="logsScrollViewer"
-        HorizontalScrollBarVisibility="Auto" 
+        Margin="5"
+        Background="{DynamicResource SolidColorBrush_Background}"
+        HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto">
-        <TextBox 
+        <TextBox
             Name="logsTextBox"
-            FontFamily="Consolas"
-            FontWeight="Normal"
-            FontSize="14"
-            TextBlock.LineHeight="24"
-            BorderThickness="0"
             BorderBrush="Transparent"
+            BorderThickness="0"
+            FontFamily="Consolas"
+            FontSize="14"
+            FontWeight="Normal"
             IsReadOnly="True"
+            TextBlock.LineHeight="24"
             TextWrapping="NoWrap">
             <TextBox.Foreground>
-                <SolidColorBrush >
+                <SolidColorBrush>
                     <SolidColorBrush.Color>
-                        <Color A="255" R="220" G="220" B="220" />
+                        <Color
+                            A="255"
+                            B="220"
+                            G="220"
+                            R="220" />
                     </SolidColorBrush.Color>
                 </SolidColorBrush>
             </TextBox.Foreground>
             <TextBox.Background>
-                <SolidColorBrush >
+                <SolidColorBrush>
                     <SolidColorBrush.Color>
-                        <Color A="255" R="30" G="30" B="30" />
+                        <Color
+                            A="255"
+                            B="30"
+                            G="30"
+                            R="30" />
                     </SolidColorBrush.Color>
                 </SolidColorBrush>
             </TextBox.Background>

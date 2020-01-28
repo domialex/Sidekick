@@ -81,7 +81,6 @@ namespace Sidekick.Windows.Overlay
                     return;
                 }
 
-                this.txtPrediction.Text = null;
                 this.queryResult = queryResult;
                 this.itemListingControls?.Clear();
 
@@ -165,8 +164,12 @@ namespace Sidekick.Windows.Overlay
             }
             else
             {
-                dataIsUpdating = false;
+                itemListingControls?.Clear();
                 _itemList.ScrollToTop();
+                txtPrediction.Text = null;
+                queryResult = null;
+                dataIsUpdating = false;
+
                 Visibility = Visibility.Visible;
             }
         }
@@ -192,7 +195,7 @@ namespace Sidekick.Windows.Overlay
         private void _itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
             // The api only returns 100 results maximum.
-            if (itemListingControls.Count >= 100)
+            if (!itemListingControls.Any() || itemListingControls.Count >= 100)
             {
                 return;
             }
