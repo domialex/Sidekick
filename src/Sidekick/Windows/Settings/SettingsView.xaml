@@ -15,7 +15,6 @@
         Topmost="True"
         ShowInTaskbar="False"
         WindowStyle="None"
-        BorderThickness="1 3 1 1"
         BorderBrush="{DynamicResource PrimaryColor}"
         Background="{DynamicResource BackgroundColor}"
         d:DesignHeight="450" d:DesignWidth="800"
@@ -23,98 +22,82 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary  Source="../Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="SettingsStyles.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" Background="Transparent" BorderBrush="{DynamicResource PrimaryColor}">
+    <DockPanel>
+        <WrapPanel DockPanel.Dock="Bottom">
+            <Button Content="Save Changes" Click="SaveChanges_Click"></Button>
+            <Button Content="Discard Changes" Click="DiscardChanges_Click"/>
+        </WrapPanel>
+        <TabControl DockPanel.Dock="Top">
             <TabItem x:Name="tabItemGeneral" Header="General">
-                <Grid Margin="0 1 0 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="77*"/>
-                        <ColumnDefinition Width="169*"/>
-                        <ColumnDefinition Width="246*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <GroupBox x:Name="groupBoxWikiSettings" Header="Wiki Settings" Grid.Row="0" Grid.Column="0" Margin="1" Grid.ColumnSpan="2"></GroupBox>
-                    <GroupBox x:Name="groupBoxLanguageSettings" Header="LanguageSettings" Grid.Row="0" Grid.Column="2" Margin="1">
-                        <Label x:Name="labelLanguageDescription" Content="Choose Sidekick's UI Language" HorizontalAlignment="Left" Margin="20,13,0,0" VerticalAlignment="Top" Width="187" Foreground="{DynamicResource LightColor}" FontSize="11"/>
-                    </GroupBox>
-                    <GroupBox Header="Settings Group 3" Grid.Row="1" Grid.Column="0" Margin="1,1,1,0" Grid.ColumnSpan="2">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Grid.Column="0" Content="Character Name" Foreground="{DynamicResource LightColor}" VerticalContentAlignment="Center"/>
-                            <TextBox Grid.Row="0" Text="{Binding Path=Settings.CharacterName}"
-                                     Grid.Column="1" BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" Margin="1" Foreground="{DynamicResource LightColor}"
-                                     VerticalContentAlignment="Center" IsReadOnly="False">
-                                <TextBox.ContextMenu>
-                                    <ContextMenu Visibility="Collapsed"/>
-                                </TextBox.ContextMenu>
-                            </TextBox>
-                            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Retain Clipboard Data" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.RetainClipboard}"/>
-                            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Close Overlay with Mouse Click" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}"/>
-                            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Foreground="{DynamicResource LightColor}" Content="Enable CTRL + Scroll" VerticalContentAlignment="Center" IsChecked="{Binding Path=Settings.EnableCtrlScroll}"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Settings Group 4" Grid.Row="1" Grid.Column="2" Margin="1"></GroupBox>
-                    <Grid HorizontalAlignment="Left" Height="151" Margin="1,19,0,0" VerticalAlignment="Top" Width="241" RenderTransformOrigin="0.48,0.51" Grid.ColumnSpan="2">
-                        <RadioButton x:Name="radioButtonPOEWiki" Content="POE Wiki" HorizontalAlignment="Left" Margin="19,55,0,0" VerticalAlignment="Top" Background="White" Foreground="{DynamicResource LightColor}"/>
-                        <RadioButton x:Name="radioButtonPOEDb" Content="POE Db" HorizontalAlignment="Left" Margin="19,87,0,0" VerticalAlignment="Top" Foreground="{DynamicResource LightColor}"/>
-                        <Label x:Name="labelWikiDescription" Content="Choose which Wiki Page should be displayed" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="231" Foreground="{DynamicResource LightColor}" FontSize="11"/>
-                    </Grid>
-                    <ComboBox x:Name="comboBoxUILanguages" Grid.Column="2" HorizontalAlignment="Left" Margin="26,77,0,0" VerticalAlignment="Top" Width="190" BorderBrush="White" Foreground="Black">
-                        <ComboBox.Background>
-                            <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </ComboBox.Background>
-                    </ComboBox>
-                </Grid>
+                <ScrollViewer Padding="{DynamicResource Spacer}">
+                    <StackPanel>
+                        <GroupBox Header="Language Settings">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="UI Language" />
+                                <ComboBox Grid.Column="1"
+                                            ItemsSource="{Binding Path=UILanguageOptions}"
+                                            SelectedValue="{Binding Path=Settings.UILanguage}" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Character Settings">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Character Name" />
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding Path=Settings.CharacterName}" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Wiki Settings">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Preferred Wiki" />
+                                <ComboBox Grid.Column="1"
+                                            ItemsSource="{Binding Path=WikiOptions}"
+                                            SelectedValuePath="Value"
+                                            DisplayMemberPath="Key"
+                                            SelectedValue="{Binding Path=Settings.CurrentWikiSettings}"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Other Settings">
+                            <StackPanel>
+                                <CheckBox Content="Retain Clipboard Data"
+                                          IsChecked="{Binding Path=Settings.RetainClipboard}"/>
+                                <CheckBox Content="Close Overlay with Mouse Click"
+                                          IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}"/>
+                                <CheckBox Content="Enable CTRL + Scroll"
+                                          IsChecked="{Binding Path=Settings.EnableCtrlScroll}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem x:Name="tabItemKeybindings" Header="Keybindings">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer>
                     <ItemsControl ItemsSource="{Binding Path=Keybinds}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <UC:KeybindEditor Value="{Binding Path=Value}"
-                                                  Property="{Binding Path=Key}"
-                                                  HotkeyChanged="KeybindEditor_HotkeyChanged"
-                                                  HotkeyChanging="KeybindEditor_HotkeyChanging" />
+                                <UC:KeybindEditor Label="{Binding Path=Key}"
+                                                  Value="{Binding Path=Value}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save Changes" Click="SaveChanges_Click"></Button>
-            <Button Grid.Column="1" Content="Discard Changes" Click="DiscardChanges_Click"></Button>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </Window>
