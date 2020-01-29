@@ -1,57 +1,45 @@
-using System;
 using System.Windows;
+using Bindables;
+using Sidekick.UI.Settings;
 
 namespace Sidekick.Windows.Settings.UserControls
 {
     /// <summary>
     /// Interaction logic for KeybindEditor.xaml
     /// </summary>
+    [DependencyProperty]
     public partial class KeybindEditor : System.Windows.Controls.UserControl
     {
-        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(nameof(Property), typeof(string), typeof(KeybindEditor));
+        public string Label { get; set; }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor));
+        public string Value { get; set; }
 
         public KeybindEditor()
         {
-            DataContext = this;
             InitializeComponent();
+            Grid.DataContext = this;
         }
 
-        public event Action<KeybindEditor> HotkeyChanged;
-        public event Action<KeybindEditor> HotkeyChanging;
+        public ISettingsViewModel ViewModel { get; set; }
 
-        public string Property
-        {
-            get { return (string)GetValue(PropertyProperty); }
-            set { SetValue(PropertyProperty, value); }
-        }
-        public string Value
-        {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        public string PreviousValue { get; private set; }
+        public string Key { get; set; }
 
         public void Capture(string key)
         {
             // If no actual key was pressed - return
             if (key == "Esc" || key.EndsWith("+"))
             {
-                Value = PreviousValue;
+                // Value = PreviousValue;
                 return;
             }
 
-            Value = key;
-            HotkeyChanged?.Invoke(this);
+            // Value = key;
         }
 
         private void HotkeyButton_Click(object sender, RoutedEventArgs e)
         {
-            PreviousValue = Value;
-            Value = null;
-            HotkeyChanging?.Invoke(this);
+            // PreviousValue = Value;
+            // Value = null;
         }
     }
 }

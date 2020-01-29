@@ -1,10 +1,10 @@
-using Sidekick.Business.Languages.UI.Implementations;
-using Sidekick.Core.Extensions;
-using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Sidekick.Business.Languages.UI.Implementations;
+using Sidekick.Core.Extensions;
+using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Languages.UI
 {
@@ -12,10 +12,10 @@ namespace Sidekick.Business.Languages.UI
     {
         private readonly ILogger logger;
 
-        public UILanguageProvider(ILogger logger)
+        public UILanguageProvider(ILogger logger,
+            SidekickSettings settings)
         {
             this.logger = logger;
-            Language = new UILanguageEN();
 
             AvailableLanguages = new List<UILanguageAttribute>();
             foreach (var type in typeof(UILanguageAttribute).GetImplementedAttribute())
@@ -25,12 +25,20 @@ namespace Sidekick.Business.Languages.UI
                 AvailableLanguages.Add(attribute);
             }
 
-            Language = new UILanguageEN();
+            var current = AvailableLanguages.FirstOrDefault(x => x.Name == settings.UILanguage);
+            if (current != null)
+            {
+                SetLanguage(current);
+            }
+            else
+            {
+                Language = new UILanguageEN();
+            }
         }
 
         public List<UILanguageAttribute> AvailableLanguages { get; private set; }
 
-        public UILanguageAttribute Current => AvailableLanguages.First(x => x.Name == Language.LanguageName);
+        public UILanguageAttribute Current => AvailableLanguages.FirstOrDefault(x => x.Name == Language?.LanguageName);
 
         public IUILanguage Language { get; private set; }
 
@@ -38,7 +46,7 @@ namespace Sidekick.Business.Languages.UI
 
         public void SetLanguage(UILanguageAttribute language)
         {
-            if (language.Name != Current.Name)
+            if (language.Name != Current?.Name)
             {
                 logger.Log($"Changed UI language to {language.Name}.");
                 Language = (IUILanguage)Activator.CreateInstance(language.ImplementationType);
@@ -48,7 +56,12 @@ namespace Sidekick.Business.Languages.UI
 
         private void NotifyLanguageSet()
         {
-            foreach (var handler in UILanguageChanged?.GetInvocationList())
+            if (UILanguageChanged == null)
+            {
+                return;
+            }
+
+            foreach (var handler in UILanguageChanged.GetInvocationList())
             {
                 ((Action)handler)();
             }
