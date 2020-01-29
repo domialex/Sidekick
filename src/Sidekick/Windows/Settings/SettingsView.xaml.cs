@@ -8,16 +8,11 @@ namespace Sidekick.Windows.Settings
 {
     public partial class SettingsView : Window, ISidekickView
     {
-        private const int WINDOW_WIDTH = 480;
-        private const int WINDOW_HEIGHT = 320;
         private readonly ISettingsViewModel viewModel;
 
         public SettingsView(ISettingsViewModel viewModel)
         {
             this.viewModel = viewModel;
-
-            Width = WINDOW_WIDTH;
-            Height = WINDOW_HEIGHT;
 
             InitializeComponent();
             DataContext = viewModel;
