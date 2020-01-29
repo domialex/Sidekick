@@ -10,7 +10,7 @@ using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Settings
 {
-    public class SettingsViewModel : SidekickViewModel, ISettingsViewModel, IDisposable
+    public class SettingsViewModel : ISettingsViewModel, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -20,9 +20,7 @@ namespace Sidekick.UI.Settings
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
-            INativeKeyboard nativeKeyboard,
-            IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            INativeKeyboard nativeKeyboard)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;

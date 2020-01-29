@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Languages.UI;
 
 namespace Sidekick.UI.Views
 {
@@ -20,6 +23,14 @@ namespace Sidekick.UI.Views
         public void Open<TView>()
             where TView : ISidekickView
         {
+            var uiLanguageProvider = serviceProvider.GetService<IUILanguageProvider>();
+
+            var cultureInfo = new CultureInfo(uiLanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
             var view = new ViewInstance(
                 serviceProvider.CreateScope(),
                 typeof(TView)
