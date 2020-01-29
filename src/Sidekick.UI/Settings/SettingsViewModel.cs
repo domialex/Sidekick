@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Settings
 {
@@ -53,24 +54,22 @@ namespace Sidekick.UI.Settings
 
         public SidekickSettings Settings { get; private set; }
 
-        public Dictionary<string, string> Keybinds { get; private set; } = new Dictionary<string, string>();
+        public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
 
         public KeyValuePair<string, string>? CurrentKeybind { get; set; }
 
-        public Dictionary<string, string> WikiOptions { get; private set; } = new Dictionary<string, string>();
+        public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
 
-        public Dictionary<string, string> UILanguageOptions { get; private set; } = new Dictionary<string, string>();
+        public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
 
         public void Save()
         {
             var keybindProperties = Settings.GetType().GetProperties();
 
-            Keybinds
-                .ToList()
-                .ForEach(keybind =>
-                {
-                    keybindProperties.First(x => x.Name == keybind.Key).SetValue(Settings, keybind.Value);
-                });
+            foreach (var keybind in Keybinds)
+            {
+                keybindProperties.First(x => x.Name == keybind.Key).SetValue(Settings, keybind.Value);
+            };
 
             AssignValues(Settings, sidekickSettings);
             uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == Settings.UILanguage));
@@ -79,7 +78,7 @@ namespace Sidekick.UI.Settings
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
         {
-            return Keybinds.Any(x => x.Value == keybind && x.Key != ignoreKey);
+            return Keybinds.ToCollection().Any(x => x.Value == keybind && x.Key != ignoreKey);
         }
 
         private static void AssignValues(SidekickSettings src, SidekickSettings dest)
