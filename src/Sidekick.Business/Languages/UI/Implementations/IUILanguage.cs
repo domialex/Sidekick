@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 namespace Sidekick.Business.Languages.UI.Implementations
 {
     public interface IUILanguage
@@ -10,13 +7,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
         string TrayIconSettings { get; }
         string TrayIconShowLogs { get; }
         string TrayIconExit { get; }
-
-        string SettingsWindowTabGeneral { get; }
-        string SettingsWindowTabKeybindings { get; }
-        string SettingsWindowWikiSettings { get; }
-        string SettingsWindowWikiDescription { get; }
-        string SettingsWindowLanguageSettings { get; }
-        string SettingsWindowLanguageDescription { get; }
 
         string OverlayAccountName { get; }
         string OverlayCharacter { get; }

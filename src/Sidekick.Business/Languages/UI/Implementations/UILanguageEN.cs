@@ -1,20 +1,13 @@
 namespace Sidekick.Business.Languages.UI.Implementations
 {
-    [UILanguage("English")]
+    [UILanguage("en")]
     public class UILanguageEN : IUILanguage
     {
-        public string LanguageName => "English";
+        public string LanguageName => "en";
 
         public string TrayIconSettings => "Settings";
         public string TrayIconShowLogs => "Show Logs";
         public string TrayIconExit => "Exit";
-
-        public string SettingsWindowTabGeneral => "General";
-        public string SettingsWindowTabKeybindings => "Keybindings";
-        public string SettingsWindowWikiSettings => "Wiki Settings";
-        public string SettingsWindowWikiDescription => "Choose which Wiki Page should be displayed";
-        public string SettingsWindowLanguageSettings => "Language Settings";
-        public string SettingsWindowLanguageDescription => "Choose Sidekick's UI Language";
 
         public string OverlayAccountName => "Account Name";
         public string OverlayCharacter => "Character";
@@ -372,7 +365,7 @@ namespace Sidekick.Business.Languages.UI.Implementations
         public string BlightBlackOil => "Black Oil";
         public string BlightBlackOilEffect => "+5% Monster Pack Size\n" +
                                               "10% chance for Blight Chests to have an\n" +
-                                              "additional reward" ;
+                                              "additional reward";
         public string BlightOpalescentOil => "Opalescent Oil";
         public string BlightOpalescentOilEffect => "+25% Monster Pack Size";
         public string BlightSilverOil => "Silver Oil";

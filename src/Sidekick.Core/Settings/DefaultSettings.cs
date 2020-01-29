@@ -6,7 +6,7 @@ namespace Sidekick.Core.Settings
         {
             return new SidekickSettings()
             {
-                UILanguage = "English",
+                UILanguage = "en",
                 LeagueId = string.Empty,
                 CharacterName = string.Empty,
                 CurrentWikiSettings = WikiSetting.PoeWiki,

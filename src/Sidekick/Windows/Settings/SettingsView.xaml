@@ -5,6 +5,7 @@
     xmlns:UC="clr-namespace:Sidekick.Windows.Settings.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:r="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
     Width="640"
     Height="400"
     AllowsTransparency="True"
@@ -30,54 +31,56 @@
                 Width="100"
                 Height="40"
                 Click="DiscardChanges_Click"
-                Content="Cancel" />
+                Content="{x:Static r:SettingResources.Cancel}" />
             <Button
                 Width="100"
                 Height="40"
                 Click="SaveChanges_Click"
-                Content="Ok" />
+                Content="{x:Static r:SettingResources.Ok}" />
         </WrapPanel>
         <TabControl
             Grid.Row="0"
             Background="Transparent"
             BorderBrush="Transparent"
             TabStripPlacement="Left">
-            <TabItem x:Name="tabItemGeneral" Header="General">
+            <TabItem Header="General">
                 <ScrollViewer>
                     <StackPanel>
-                        <GroupBox Header="Language Settings">
+                        <GroupBox Header="{x:Static r:SettingResources.Language_Title}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Label Content="UI Language" />
+                                <Label Content="{x:Static r:SettingResources.Language_UI}" />
                                 <ComboBox
                                     Grid.Column="1"
+                                    DisplayMemberPath="Key"
                                     ItemsSource="{Binding Path=UILanguageOptions}"
-                                    SelectedValue="{Binding Path=Settings.UILanguage}" />
+                                    SelectedValue="{Binding Path=Settings.UILanguage}"
+                                    SelectedValuePath="Value" />
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Character Settings">
+                        <GroupBox Header="{x:Static r:SettingResources.Character_Title}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Label Content="Character Name" />
+                                <Label Content="{x:Static r:SettingResources.Character_Name}" />
                                 <TextBox
                                     Grid.Column="1"
                                     IsReadOnly="False"
                                     Text="{Binding Path=Settings.CharacterName}" />
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Wiki Settings">
+                        <GroupBox Header="{x:Static r:SettingResources.Wiki_Title}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Label Content="Preferred Wiki" />
+                                <Label Content="{x:Static r:SettingResources.Wiki_Preferred}" />
                                 <ComboBox
                                     Grid.Column="1"
                                     DisplayMemberPath="Key"
@@ -86,17 +89,17 @@
                                     SelectedValuePath="Value" />
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Other Settings">
+                        <GroupBox Header="{x:Static r:SettingResources.Other_Title}">
                             <StackPanel>
-                                <CheckBox Content="Retain Clipboard Data" IsChecked="{Binding Path=Settings.RetainClipboard}" />
-                                <CheckBox Content="Close Overlay with Mouse Click" IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}" />
-                                <CheckBox Content="Enable CTRL + Scroll" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
+                                <CheckBox Content="{x:Static r:SettingResources.Other_RetainClipboard}" IsChecked="{Binding Path=Settings.RetainClipboard}" />
+                                <CheckBox Content="{x:Static r:SettingResources.Other_CloseWithMouseClick}" IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}" />
+                                <CheckBox Content="{x:Static r:SettingResources.Other_TabScroll}" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem x:Name="tabItemKeybindings" Header="Keybindings">
+            <TabItem Header="{x:Static r:SettingResources.Tab_Keybindings}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Path=Keybinds}">
                         <ItemsControl.ItemTemplate>
