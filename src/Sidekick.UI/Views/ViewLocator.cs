@@ -28,8 +28,6 @@ namespace Sidekick.UI.Views
             var cultureInfo = new CultureInfo(uiLanguageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             var view = new ViewInstance(
                 serviceProvider.CreateScope(),
