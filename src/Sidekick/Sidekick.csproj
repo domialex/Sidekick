@@ -86,6 +86,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
     <ProjectReference Include="..\Sidekick.UI\Sidekick.UI.csproj" />
   </ItemGroup>
 

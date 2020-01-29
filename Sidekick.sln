@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "src\Sidekick\Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.UI", "src\Sidekick.UI\Sidekick.UI.csproj", "{F8DCDD39-7D3D-4610-A677-062410F89779}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Localization", "src\Sidekick.Localization\Sidekick.Localization.csproj", "{C7A61A43-9474-415E-84AD-381E45003C6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8DCDD39-7D3D-4610-A677-062410F89779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A61A43-9474-415E-84AD-381E45003C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A61A43-9474-415E-84AD-381E45003C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A61A43-9474-415E-84AD-381E45003C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A61A43-9474-415E-84AD-381E45003C6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,13 +32,13 @@ namespace Sidekick.Business.Languages.UI
             }
             else
             {
-                Language = new UILanguageEN();
+                SetLanguage(AvailableLanguages.OrderBy(x => x.Name == "en" ? 0 : 1).FirstOrDefault());
             }
         }
 
         public List<UILanguageAttribute> AvailableLanguages { get; private set; }
 
-        public UILanguageAttribute Current => AvailableLanguages.FirstOrDefault(x => x.Name == Language?.LanguageName);
+        public UILanguageAttribute Current { get; private set; }
 
         public IUILanguage Language { get; private set; }
 
@@ -46,24 +46,18 @@ namespace Sidekick.Business.Languages.UI
 
         public void SetLanguage(UILanguageAttribute language)
         {
-            if (language.Name != Current?.Name)
+            if (language != null && language.DisplayName != Current?.DisplayName)
             {
-                logger.Log($"Changed UI language to {language.Name}.");
+                logger.Log($"Changed UI language to {language.DisplayName}.");
+                Current = language;
                 Language = (IUILanguage)Activator.CreateInstance(language.ImplementationType);
-                NotifyLanguageSet();
-            }
-        }
 
-        private void NotifyLanguageSet()
-        {
-            if (UILanguageChanged == null)
-            {
-                return;
-            }
+                if (UILanguageChanged == null)
+                {
+                    return;
+                }
 
-            foreach (var handler in UILanguageChanged.GetInvocationList())
-            {
-                ((Action)handler)();
+                UILanguageChanged.Invoke();
             }
         }
     }

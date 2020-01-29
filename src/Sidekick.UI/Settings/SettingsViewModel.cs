@@ -9,7 +9,7 @@ using Sidekick.Core.Settings;
 
 namespace Sidekick.UI.Settings
 {
-    public class SettingsViewModel : ISettingsViewModel, IDisposable
+    public class SettingsViewModel : SidekickViewModel, ISettingsViewModel, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,7 +19,9 @@ namespace Sidekick.UI.Settings
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
-            INativeKeyboard nativeKeyboard)
+            INativeKeyboard nativeKeyboard,
+            IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;
@@ -37,10 +39,14 @@ namespace Sidekick.UI.Settings
                     Keybinds.Add(x.Name, x.GetValue(Settings).ToString());
                 });
 
-            WikiOptions.Add("POE Wiki", "PoeWiki");
-            WikiOptions.Add("POE Db", "PoeDb");
+            WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
+            WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
-            UILanguageOptions = uiLanguageProvider.AvailableLanguages.Select(x => x.Name).ToList();
+            uiLanguageProvider.AvailableLanguages
+                .ForEach(x =>
+                {
+                    UILanguageOptions.Add(x.DisplayName, x.Name);
+                });
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
@@ -53,7 +59,7 @@ namespace Sidekick.UI.Settings
 
         public Dictionary<string, string> WikiOptions { get; private set; } = new Dictionary<string, string>();
 
-        public List<string> UILanguageOptions { get; private set; }
+        public Dictionary<string, string> UILanguageOptions { get; private set; } = new Dictionary<string, string>();
 
         public void Save()
         {
@@ -67,7 +73,7 @@ namespace Sidekick.UI.Settings
                 });
 
             AssignValues(Settings, sidekickSettings);
-            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.First(x => x.Name == Settings.UILanguage));
+            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == Settings.UILanguage));
             sidekickSettings.Save();
         }
 

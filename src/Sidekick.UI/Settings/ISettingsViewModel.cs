@@ -10,7 +10,7 @@ namespace Sidekick.UI.Settings
         KeyValuePair<string, string>? CurrentKeybind { get; set; }
         SidekickSettings Settings { get; }
         Dictionary<string, string> WikiOptions { get; }
-        List<string> UILanguageOptions { get; }
+        Dictionary<string, string> UILanguageOptions { get; }
 
         bool IsKeybindUsed(string keybind, string ignoreKey = null);
         void Save();
