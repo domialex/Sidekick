@@ -11,11 +11,11 @@ namespace Sidekick.UI.Settings
 {
     public class SettingsViewModel : ISettingsViewModel, IDisposable
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
@@ -69,7 +69,6 @@ namespace Sidekick.UI.Settings
             AssignValues(Settings, sidekickSettings);
             uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.First(x => x.Name == Settings.UILanguage));
             sidekickSettings.Save();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Settings)));
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)

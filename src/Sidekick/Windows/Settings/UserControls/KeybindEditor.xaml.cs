@@ -1,4 +1,5 @@
 using System.Windows;
+using Bindables;
 using Sidekick.UI.Settings;
 
 namespace Sidekick.Windows.Settings.UserControls
@@ -6,22 +7,12 @@ namespace Sidekick.Windows.Settings.UserControls
     /// <summary>
     /// Interaction logic for KeybindEditor.xaml
     /// </summary>
+    [DependencyProperty]
     public partial class KeybindEditor : System.Windows.Controls.UserControl
     {
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(nameof(Label), typeof(string), typeof(KeybindEditor), new PropertyMetadata(""));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor), new PropertyMetadata(""));
+        public string Label { get; set; }
 
-        public string Label
-        {
-            get { return (string)GetValue(LabelProperty); }
-            set { SetValue(LabelProperty, value); }
-        }
-
-        public string Value
-        {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
+        public string Value { get; set; }
 
         public KeybindEditor()
         {

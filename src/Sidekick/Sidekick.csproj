@@ -28,6 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bindables.Fody" Version="6.0.0" />
+    <PackageReference Include="Fody" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
     <None Remove="Windows\LeagueOverlay\img\Blight\Amber_Oil.png" />
