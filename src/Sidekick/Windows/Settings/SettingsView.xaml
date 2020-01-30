@@ -45,7 +45,7 @@
             TabStripPlacement="Left">
             <TabItem Header="General">
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel Margin="5,0,0,0">
                         <GroupBox Header="{x:Static r:SettingResources.Language_Title}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -104,7 +104,10 @@
                     <ItemsControl ItemsSource="{Binding Path=Keybinds}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <UC:KeybindEditor Label="{Binding Path=Key}" Value="{Binding Path=Value}" />
+                                <UC:KeybindEditor
+                                    Key="{Binding Path=Key}"
+                                    ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}"
+                                    Value="{Binding Path=Value}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

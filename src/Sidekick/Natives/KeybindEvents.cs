@@ -1,10 +1,10 @@
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Windows.Overlay;
 using WindowsHook;
 
 namespace Sidekick.Natives
@@ -43,8 +43,8 @@ namespace Sidekick.Natives
 
         public Task OnAfterInit()
         {
+            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
             hook = Hook.GlobalEvents();
-            hook.KeyDown += Hook_KeyDown;
 
 #if !DEBUG
             hook.MouseWheelExt += Hook_MouseWheelExt;
@@ -93,85 +93,68 @@ namespace Sidekick.Natives
             });
         }
 
-        private void Hook_KeyDown(object sender, KeyEventArgs e)
+        private bool NativeKeyboard_OnKeyDown(string input)
         {
             if (!Enabled)
             {
-                return;
+                return false;
             }
 
             Enabled = false;
 
-            // Transfer the event key to a string to compare to settings.
-            var str = new StringBuilder();
-            if (e.Modifiers.HasFlag(Keys.Control))
-            {
-                str.Append("Ctrl+");
-            }
-            if (e.Modifiers.HasFlag(Keys.Shift))
-            {
-                str.Append("Shift+");
-            }
-            if (e.Modifiers.HasFlag(Keys.Alt))
-            {
-                str.Append("Alt+");
-            }
-            if (e.Modifiers.HasFlag(Keys.LWin))
-            {
-                str.Append("Win+");
-            }
-            str.Append(e.KeyCode);
-            var key = str.ToString();
+            var keybindFound = false;
 
-            if (key == configuration.KeyCloseWindow)
+            if (input == configuration.Key_CloseWindow)
             {
-                // TODO: Check if Overlay is opened and PoE in focus before using e.Handled here.
-                //e.Handled = true;
+                if (OverlayController.IsDisplayed)
+                {
+                    keybindFound = true;
+                }
                 logger.Log("Keybind for closing the window triggered.");
                 if (OnCloseWindow != null) Task.Run(OnCloseWindow);
             }
 
             if (nativeProcess.IsPathOfExileInFocus)
             {
-                if (key == configuration.KeyPriceCheck)
+                if (input == configuration.Key_CheckPrices)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for price checking triggered.");
                     if (OnPriceCheck != null) Task.Run(OnPriceCheck);
                 }
-                else if (key == configuration.KeyItemWiki)
+                else if (input == configuration.Key_OpenWiki)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for opening the item wiki triggered.");
                     if (OnItemWiki != null) Task.Run(OnItemWiki);
                 }
-                else if (key == configuration.KeyHideout)
+                else if (input == configuration.Key_GoToHideout)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for going to the hideout triggered.");
                     if (OnHideout != null) Task.Run(OnHideout);
                 }
-                else if (key == configuration.KeyFindItems)
+                else if (input == configuration.Key_FindItems)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for finding the item triggered.");
                     if (OnFindItems != null) Task.Run(OnFindItems);
                 }
-                else if (key == configuration.KeyLeaveParty)
+                else if (input == configuration.Key_LeaveParty)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for leaving the party triggered.");
                     if (OnLeaveParty != null) Task.Run(OnLeaveParty);
                 }
-                else if (key == configuration.KeyOpenSearch)
+                else if (input == configuration.Key_OpenSearch)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for opening the search triggered.");
                     if (OnOpenSearch != null) Task.Run(OnOpenSearch);
                 }
-                else if (key == configuration.KeyOpenLeagueOverview)
+                else if (input == configuration.Key_OpenLeagueOverview)
                 {
-                    e.Handled = true;
+                    keybindFound = true;
                     logger.Log("Keybind for opening the league overview triggered.");
                     if (OnOpenLeagueOverview != null) Task.Run(OnOpenLeagueOverview);
                 }
@@ -182,11 +165,13 @@ namespace Sidekick.Natives
                 await Task.Delay(5);
                 Enabled = true;
             });
+
+            return keybindFound;
         }
 
         public void Dispose()
         {
-            hook.KeyDown -= Hook_KeyDown;
+            nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
             hook.MouseWheelExt -= Hook_MouseWheelExt;
             hook.Dispose();
         }

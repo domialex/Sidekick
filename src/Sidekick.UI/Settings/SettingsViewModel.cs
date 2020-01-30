@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -54,7 +52,7 @@ namespace Sidekick.UI.Settings
 
         public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
 
-        public KeyValuePair<string, string>? CurrentKeybind { get; set; }
+        public string CurrentKey { get; set; }
 
         public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
 
@@ -86,15 +84,27 @@ namespace Sidekick.UI.Settings
             src.GetType().GetProperties().ToList().ForEach(x => x.SetValue(dest, x.GetValue(src)));
         }
 
-        private Task NativeKeyboard_OnKeyDown(string key)
+        private bool NativeKeyboard_OnKeyDown(string input)
         {
-            if (key == "Esc")
+            if (string.IsNullOrEmpty(CurrentKey))
             {
-                CurrentKeybind = null;
-                return Task.CompletedTask;
+                return false;
             }
 
-            return Task.CompletedTask;
+            if (input == "Escape")
+            {
+                CurrentKey = null;
+                return true;
+            }
+
+            if (!IsKeybindUsed(input, CurrentKey))
+            {
+                var currentKeybind = Keybinds.ToCollection().FirstOrDefault(x => x.Key == CurrentKey);
+                currentKeybind.Value = input;
+            }
+
+            CurrentKey = null;
+            return true;
         }
 
         public void Dispose()

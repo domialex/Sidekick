@@ -7,10 +7,11 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Content="{Binding Path=Label}" />
+        <Label Content="{Binding Label}" />
         <Button
             Grid.Column="1"
+            Background="{Binding BackgroundColor}"
             Click="HotkeyButton_Click"
-            Content="{Binding Path=Value}" />
+            Content="{Binding Value}" />
     </Grid>
 </UserControl>

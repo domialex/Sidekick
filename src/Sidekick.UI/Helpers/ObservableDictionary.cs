@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Sidekick.UI.Helpers
@@ -166,50 +165,6 @@ namespace Sidekick.UI.Helpers
         private ObservableKeyValuePair<TKey, TValue> GetPairByValue(TValue value)
         {
             return ToCollection().FirstOrDefault(i => i.Value.Equals(value));
-        }
-    }
-
-    [Serializable]
-    public sealed class ObservableKeyValuePair<TKey, TValue> : INotifyPropertyChanged
-    {
-        private TKey _key;
-        private TValue _value;
-
-        public TKey Key
-        {
-            get { return _key; }
-            set
-            {
-                _key = value;
-                OnPropertyChanged("Key");
-            }
-        }
-
-        public TValue Value
-        {
-            get { return _value; }
-            set
-            {
-                _value = value;
-                OnPropertyChanged("Value");
-            }
-        }
-
-        public ObservableKeyValuePair()
-        { }
-
-        public ObservableKeyValuePair(TKey key, TValue value)
-        {
-            _key = key;
-            _value = value;
-        }
-
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

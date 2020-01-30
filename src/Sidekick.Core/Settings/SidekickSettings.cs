@@ -16,24 +16,26 @@ namespace Sidekick.Core.Settings
         public string CharacterName { get; set; }
 
         public bool RetainClipboard { get; set; }
+
         public bool CloseOverlayWithMouse { get; set; }
+
         public bool EnableCtrlScroll { get; set; }
 
-        public string KeyCloseWindow { get; set; }
+        public string Key_CloseWindow { get; set; }
 
-        public string KeyPriceCheck { get; set; }
+        public string Key_CheckPrices { get; set; }
 
-        public string KeyHideout { get; set; }
+        public string Key_GoToHideout { get; set; }
 
-        public string KeyItemWiki { get; set; }
+        public string Key_OpenWiki { get; set; }
 
-        public string KeyFindItems { get; set; }
+        public string Key_FindItems { get; set; }
 
-        public string KeyLeaveParty { get; set; }
+        public string Key_LeaveParty { get; set; }
 
-        public string KeyOpenSearch { get; set; }
+        public string Key_OpenSearch { get; set; }
 
-        public string KeyOpenLeagueOverview { get; set; }
+        public string Key_OpenLeagueOverview { get; set; }
 
         public void Save()
         {
