@@ -17,7 +17,7 @@ namespace Sidekick.Services
         {
             App.ShowNotifcation(
                 "Sidekick is ready",
-                $"Press {settings.KeyPriceCheck.ToKeybindString()} over an item in-game to use. Press {settings.KeyCloseWindow.ToKeybindString()} to close overlay.");
+                $"Press {settings.Key_CheckPrices.ToKeybindString()} over an item in-game to use. Press {settings.Key_CloseWindow.ToKeybindString()} to close overlay.");
 
             return Task.CompletedTask;
         }

@@ -1,25 +1,17 @@
-<UserControl x:Class="Sidekick.Windows.Settings.UserControls.KeybindEditor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Sidekick.Windows.Settings.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="480">
-
-    <Grid>
+<UserControl
+    x:Class="Sidekick.Windows.Settings.UserControls.KeybindEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid x:Name="Grid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Content="{Binding Property, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
-               Foreground="{DynamicResource LightColor}"
-               VerticalContentAlignment="Center" />
-        <Button x:Name="HotkeyButton"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Click="HotkeyButton_Click"
-                Content="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"
-                Grid.Column="1" />
+        <Label Content="{Binding Label}" />
+        <Button
+            Grid.Column="1"
+            Background="{Binding BackgroundColor}"
+            Click="HotkeyButton_Click"
+            Content="{Binding Value}" />
     </Grid>
 </UserControl>

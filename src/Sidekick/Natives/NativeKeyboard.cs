@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,22 +14,30 @@ namespace Sidekick.Natives
 {
     public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable
     {
+        private static List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
+            WindowsHook.Keys.ControlKey,
+            WindowsHook.Keys.LControlKey,
+            WindowsHook.Keys.RControlKey,
+            WindowsHook.Keys.ShiftKey,
+            WindowsHook.Keys.RShiftKey,
+            WindowsHook.Keys.LShiftKey,
+            WindowsHook.Keys.RWin,
+            WindowsHook.Keys.LWin,
+        };
+
         private readonly ILogger logger;
-        private readonly INativeProcess nativeProcess;
         private readonly SidekickSettings configuration;
 
         public NativeKeyboard(ILogger logger,
-            INativeProcess nativeProcess,
             SidekickSettings configuration)
         {
             this.logger = logger;
-            this.nativeProcess = nativeProcess;
             this.configuration = configuration;
         }
 
         public bool Enabled { get; set; }
 
-        public event Func<string, Task> OnKeyDown;
+        public event Func<string, bool> OnKeyDown;
 
         private IKeyboardMouseEvents hook = null;
 
@@ -42,30 +51,40 @@ namespace Sidekick.Natives
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
         {
-            Task.Run(async () =>
+            if (KEYS_INVALID.Contains(e.KeyCode))
             {
-                // Transfer the event key to a string to compare to settings
-                var str = new StringBuilder();
-                if (e.Modifiers.HasFlag(WindowsHook.Keys.Control))
-                {
-                    str.Append("Ctrl+");
-                }
-                if (e.Modifiers.HasFlag(WindowsHook.Keys.Shift))
-                {
-                    str.Append("Shift+");
-                }
-                if (e.Modifiers.HasFlag(WindowsHook.Keys.Alt))
-                {
-                    str.Append("Alt+");
-                }
-                if (e.Modifiers.HasFlag(WindowsHook.Keys.LWin))
-                {
-                    str.Append("Win+");
-                }
-                str.Append(e.KeyCode);
+                return;
+            }
 
-                if (OnKeyDown != null) await OnKeyDown.Invoke(str.ToString());
-            });
+            // Transfer the event key to a string to compare to settings
+            var str = new StringBuilder();
+            if (e.Modifiers.HasFlag(WindowsHook.Keys.Control))
+            {
+                str.Append("Ctrl+");
+            }
+            if (e.Modifiers.HasFlag(WindowsHook.Keys.Shift))
+            {
+                str.Append("Shift+");
+            }
+            if (e.Modifiers.HasFlag(WindowsHook.Keys.Alt))
+            {
+                str.Append("Alt+");
+            }
+            if (e.Modifiers.HasFlag(WindowsHook.Keys.LWin) || e.Modifiers.HasFlag(WindowsHook.Keys.RWin))
+            {
+                str.Append("Win+");
+            }
+
+            str.Append(e.KeyCode);
+
+            if (OnKeyDown != null)
+            {
+                var result = OnKeyDown.Invoke(str.ToString());
+                if (result)
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         public void Dispose()

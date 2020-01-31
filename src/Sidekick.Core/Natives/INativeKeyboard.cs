@@ -1,11 +1,10 @@
 using System;
-using System.Threading.Tasks;
 
 namespace Sidekick.Core.Natives
 {
     public interface INativeKeyboard
     {
-        event Func<string, Task> OnKeyDown;
+        event Func<string, bool> OnKeyDown;
         void SendCommand(KeyboardCommandEnum command);
         bool IsKeyPressed(string key);
     }

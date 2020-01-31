@@ -1,32 +1,91 @@
-<Window x:Class="Sidekick.Windows.Prediction.PredictionView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sidekick.Windows.Prediction"
-        mc:Ignorable="d"
-        Title="PredictionView" Height="450" Width="800" Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+<Window
+    x:Class="Sidekick.Windows.Prediction.PredictionView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Sidekick.Windows.Prediction"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="PredictionView"
+    Width="800"
+    Height="450"
+    BorderThickness="1"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary  Source="../Styles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Background="{DynamicResource BackgroundColor}">
-        <RichTextBox x:Name="textBoxItemStats" HorizontalAlignment="Left" Height="394" Margin="31,35,0,0" VerticalAlignment="Top" Width="288" IsReadOnly="True" Background="{DynamicResource BackgroundColorLight}" BorderBrush="{DynamicResource SecondaryColor}" Foreground="{DynamicResource TextColor}">
-            <FlowDocument/>
+    <Grid>
+        <RichTextBox
+            x:Name="textBoxItemStats"
+            Width="288"
+            Height="394"
+            Margin="31,35,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            IsReadOnly="True">
+            <FlowDocument />
         </RichTextBox>
-        <GroupBox Header="Price Prediction" HorizontalAlignment="Left" Height="283" Margin="352,35,0,0" VerticalAlignment="Top" Width="402" Background="{DynamicResource BackgroundColorLight}" BorderBrush="{DynamicResource SecondaryColor}" Foreground="{DynamicResource SecondaryColor}">
-            <Grid HorizontalAlignment="Left" Height="263" VerticalAlignment="Top" Width="392" Margin="0,0,-2,-3">
-                <Label Content="Price" HorizontalAlignment="Left" Margin="35,21,0,0" VerticalAlignment="Top" Width="78" Foreground="{DynamicResource TextColor}"/>
-                <Label x:Name="labelPriceRange" Content="Label" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="117" Foreground="{DynamicResource TextColor}"/>
-                <Label Content="Confidence" HorizontalAlignment="Left" Margin="247,21,0,0" VerticalAlignment="Top" Width="77" Foreground="{DynamicResource TextColor}"/>
-                <Label x:Name="labelConfidence" Content="Label" HorizontalAlignment="Left" Margin="247,52,0,0" VerticalAlignment="Top" Width="72" Foreground="{DynamicResource TextColor}"/>
-                <Label Content="Warning Message" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Foreground="{DynamicResource TextColor}"/>
-                <RichTextBox x:Name="textBoxWarningMessage" HorizontalAlignment="Left" Height="118" Margin="13,135,0,0" VerticalAlignment="Top" Width="369" Background="{DynamicResource BackgroundColorLight}" Foreground="{DynamicResource TextColor}" IsReadOnly="True"/>
+        <GroupBox
+            Width="402"
+            Height="283"
+            Margin="352,35,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Header="Price Prediction">
+            <Grid
+                Width="392"
+                Height="263"
+                Margin="0,0,-2,-3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+                <Label
+                    Width="78"
+                    Margin="35,21,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Price" />
+                <Label
+                    x:Name="labelPriceRange"
+                    Width="117"
+                    Margin="10,52,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Label" />
+                <Label
+                    Width="77"
+                    Margin="247,21,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Confidence" />
+                <Label
+                    x:Name="labelConfidence"
+                    Width="72"
+                    Margin="247,52,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Label" />
+                <Label
+                    Margin="10,104,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Warning Message" />
+                <RichTextBox
+                    x:Name="textBoxWarningMessage"
+                    Width="369"
+                    Height="118"
+                    Margin="13,135,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    IsReadOnly="True" />
             </Grid>
         </GroupBox>
     </Grid>

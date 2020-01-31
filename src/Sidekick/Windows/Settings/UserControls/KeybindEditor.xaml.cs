@@ -1,57 +1,74 @@
-using System;
 using System.Windows;
+using System.Windows.Media;
+using Bindables;
+using Sidekick.Localization.Settings;
+using Sidekick.UI.Settings;
 
 namespace Sidekick.Windows.Settings.UserControls
 {
     /// <summary>
     /// Interaction logic for KeybindEditor.xaml
     /// </summary>
+    [DependencyProperty]
     public partial class KeybindEditor : System.Windows.Controls.UserControl
     {
-        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(nameof(Property), typeof(string), typeof(KeybindEditor));
+        public string Key { get; set; }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(string), typeof(KeybindEditor));
+        public string Value { get; set; }
+
+        public ISettingsViewModel ViewModel { get; set; }
+
+        public string Label
+        {
+            get
+            {
+                var resourceValue = SettingResources.ResourceManager.GetString(Key);
+                if (string.IsNullOrEmpty(resourceValue))
+                {
+                    return Key;
+                }
+                return resourceValue;
+            }
+        }
+
+        public SolidColorBrush BackgroundColor { get; private set; }
 
         public KeybindEditor()
         {
-            DataContext = this;
             InitializeComponent();
+            Grid.DataContext = this;
+            Unloaded += KeybindEditor_Unloaded;
+            Loaded += KeybindEditor_Loaded;
         }
 
-        public event Action<KeybindEditor> HotkeyChanged;
-        public event Action<KeybindEditor> HotkeyChanging;
-
-        public string Property
+        private void KeybindEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            get { return (string)GetValue(PropertyProperty); }
-            set { SetValue(PropertyProperty, value); }
-        }
-        public string Value
-        {
-            get { return (string)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
 
-        public string PreviousValue { get; private set; }
-
-        public void Capture(string key)
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            // If no actual key was pressed - return
-            if (key == "Esc" || key.EndsWith("+"))
+            if (e.PropertyName == nameof(ViewModel.CurrentKey))
             {
-                Value = PreviousValue;
-                return;
+                if (ViewModel != null && Key == ViewModel.CurrentKey)
+                {
+                    BackgroundColor = new SolidColorBrush(Color.FromRgb(200, 200, 200));
+                }
+                else
+                {
+                    BackgroundColor = new SolidColorBrush(Color.FromArgb(0, 200, 200, 200));
+                }
             }
+        }
 
-            Value = key;
-            HotkeyChanged?.Invoke(this);
+        private void KeybindEditor_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CurrentKey = null;
         }
 
         private void HotkeyButton_Click(object sender, RoutedEventArgs e)
         {
-            PreviousValue = Value;
-            Value = null;
-            HotkeyChanging?.Invoke(this);
+            ViewModel.CurrentKey = Key;
         }
     }
 }

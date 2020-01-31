@@ -78,7 +78,7 @@ namespace Sidekick.Core.Loggers
         public Task OnAfterInit()
         {
             Log("Sidekick after initialization.");
-            Log($"Sidekick is ready, press {configuration.KeyPriceCheck.ToKeybindString()} over an item in-game to use. Press {configuration.KeyCloseWindow.ToKeybindString()} to close overlay.");
+            Log($"Sidekick is ready, press {configuration.Key_CheckPrices.ToKeybindString()} over an item in-game to use. Press {configuration.Key_CloseWindow.ToKeybindString()} to close overlay.");
             return Task.CompletedTask;
         }
 

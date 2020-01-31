@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fody" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
   </ItemGroup>
