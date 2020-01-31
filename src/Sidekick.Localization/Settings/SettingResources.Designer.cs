@@ -88,6 +88,78 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check Prices.
+        /// </summary>
+        public static string Key_CheckPrices {
+            get {
+                return ResourceManager.GetString("Key_CheckPrices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Window.
+        /// </summary>
+        public static string Key_CloseWindow {
+            get {
+                return ResourceManager.GetString("Key_CloseWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Items.
+        /// </summary>
+        public static string Key_FindItems {
+            get {
+                return ResourceManager.GetString("Key_FindItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Hideout.
+        /// </summary>
+        public static string Key_GoToHideout {
+            get {
+                return ResourceManager.GetString("Key_GoToHideout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave Party.
+        /// </summary>
+        public static string Key_LeaveParty {
+            get {
+                return ResourceManager.GetString("Key_LeaveParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open League Overview.
+        /// </summary>
+        public static string Key_OpenLeagueOverview {
+            get {
+                return ResourceManager.GetString("Key_OpenLeagueOverview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Search.
+        /// </summary>
+        public static string Key_OpenSearch {
+            get {
+                return ResourceManager.GetString("Key_OpenSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Wiki.
+        /// </summary>
+        public static string Key_OpenWiki {
+            get {
+                return ResourceManager.GetString("Key_OpenWiki", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language Settings.
         /// </summary>
         public static string Language_Title {

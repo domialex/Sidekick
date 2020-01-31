@@ -13,14 +13,14 @@ namespace Sidekick.Core.Settings
                 RetainClipboard = true,
                 CloseOverlayWithMouse = true,
                 EnableCtrlScroll = true,
-                KeyCloseWindow = "Space",
-                KeyPriceCheck = "Ctrl+D",
-                KeyHideout = "F5",
-                KeyItemWiki = "Alt+W",
-                KeyFindItems = "Ctrl+F",
-                KeyLeaveParty = "F4",
-                KeyOpenSearch = "Alt+Q",
-                KeyOpenLeagueOverview = "F6",
+                Key_CloseWindow = "Space",
+                Key_CheckPrices = "Ctrl+D",
+                Key_GoToHideout = "F5",
+                Key_OpenWiki = "Alt+W",
+                Key_FindItems = "Ctrl+F",
+                Key_LeaveParty = "F4",
+                Key_OpenSearch = "Alt+Q",
+                Key_OpenLeagueOverview = "F6",
             };
         }
 
