@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,6 +6,7 @@ using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
+using Sidekick.UI.Helpers;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon.Models;
@@ -35,7 +35,7 @@ namespace Sidekick.Windows.TrayIcon
         public string ShowLogsHeader { get => showLogsHeader; set => NotifyProperty(ref showLogsHeader, value); }
         public string ExitHeader { get => exitHeader; set => NotifyProperty(ref exitHeader, value); }
 
-        public ObservableCollection<League> Leagues { get; private set; }
+        public AsyncObservableCollection<League> Leagues { get; private set; }
 
         private readonly SidekickSettings configuration;
         private readonly IUILanguageProvider uiLanguageProvider;
@@ -49,7 +49,7 @@ namespace Sidekick.Windows.TrayIcon
 
             uiLanguageProvider.UILanguageChanged += UpdateLanguage;
             UpdateLanguage();
-            Leagues = new ObservableCollection<League>();
+            Leagues = new AsyncObservableCollection<League>();
         }
 
         private void UpdateLanguage()
