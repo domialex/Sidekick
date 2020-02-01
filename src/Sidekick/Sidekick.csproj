@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -22,13 +22,18 @@
 
   <ItemGroup>
     <Compile Remove="Helpers\POEDbAPI\**" />
+    <Compile Remove="Windows\LeagueOverlay\img\Delve\**" />
     <EmbeddedResource Remove="Helpers\POEDbAPI\**" />
+    <EmbeddedResource Remove="Windows\LeagueOverlay\img\Delve\**" />
     <None Remove="Helpers\POEDbAPI\**" />
+    <None Remove="Windows\LeagueOverlay\img\Delve\**" />
     <Page Remove="Helpers\POEDbAPI\**" />
+    <Page Remove="Windows\LeagueOverlay\img\Delve\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Bindables.Fody" Version="6.0.0" />
+    <PackageReference Include="Costura.Fody" Version="4.1.0" />
     <PackageReference Include="Fody" Version="6.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -223,9 +228,5 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Windows\LeagueOverlay\img\Delve\" />
   </ItemGroup>
 </Project>
