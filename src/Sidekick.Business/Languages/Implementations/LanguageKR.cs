@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Languages.Client.Implementations
+namespace Sidekick.Business.Languages.Implementations
 {
     [Language("Korean", "아이템 희귀도: ")]
     public class LanguageKR : ILanguage

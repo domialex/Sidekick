@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Sidekick.Business.Languages.Client
+namespace Sidekick.Business.Languages
 {
     public interface ILanguageProvider
     {

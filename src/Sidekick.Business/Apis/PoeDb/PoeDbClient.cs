@@ -1,5 +1,5 @@
 using System;
-using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 
