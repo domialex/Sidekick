@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Languages.Client.Implementations
+namespace Sidekick.Business.Languages.Implementations
 {
     [Language("Spanish", "Rareza: ")]
     public class LanguageES : ILanguage

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Languages.UI;
+using Sidekick.Localization;
 
 namespace Sidekick.UI.Views
 {

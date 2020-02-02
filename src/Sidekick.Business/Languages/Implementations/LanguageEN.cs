@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Languages.Client.Implementations
+namespace Sidekick.Business.Languages.Implementations
 {
     [Language("English", "Rarity: ")]
     public class LanguageEN : ILanguage

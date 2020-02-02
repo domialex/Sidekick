@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Business.Languages.Client.Implementations;
+using Sidekick.Business.Languages.Implementations;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 
-namespace Sidekick.Business.Languages.Client
+namespace Sidekick.Business.Languages
 {
     public class LanguageProvider : ILanguageProvider
     {
