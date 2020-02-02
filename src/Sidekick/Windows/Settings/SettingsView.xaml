@@ -57,7 +57,7 @@
                                     Grid.Column="1"
                                     DisplayMemberPath="Key"
                                     ItemsSource="{Binding Path=UILanguageOptions}"
-                                    SelectedValue="{Binding Path=Settings.UILanguage}"
+                                    SelectedValue="{Binding Path=Settings.Language_UI}"
                                     SelectedValuePath="Value" />
                             </Grid>
                         </GroupBox>
@@ -71,7 +71,7 @@
                                 <TextBox
                                     Grid.Column="1"
                                     IsReadOnly="False"
-                                    Text="{Binding Path=Settings.CharacterName}" />
+                                    Text="{Binding Path=Settings.Character_Name}" />
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="{x:Static r:SettingResources.Wiki_Title}">
@@ -85,7 +85,7 @@
                                     Grid.Column="1"
                                     DisplayMemberPath="Key"
                                     ItemsSource="{Binding Path=WikiOptions}"
-                                    SelectedValue="{Binding Path=Settings.CurrentWikiSettings}"
+                                    SelectedValue="{Binding Path=Settings.Wiki_Preferred}"
                                     SelectedValuePath="Value" />
                             </Grid>
                         </GroupBox>
