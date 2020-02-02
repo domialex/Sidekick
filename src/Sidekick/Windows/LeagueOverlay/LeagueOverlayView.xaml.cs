@@ -8,6 +8,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using Sidekick.Localization.Leagues.Betrayal;
+using Sidekick.Localization.Leagues.Blight;
+using Sidekick.Localization.Leagues.Delve;
+using Sidekick.Localization.Leagues.Incursion;
+using Sidekick.Localization.Leagues.Metamorph;
 
 namespace Sidekick.Windows.LeagueOverlay
 {
@@ -31,31 +35,31 @@ namespace Sidekick.Windows.LeagueOverlay
 
             DelveFossilRarityDictionary = new Dictionary<string, string>()
             {
-                { Legacy.UILanguageProvider.Language.DelveAberrantFossil, LowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveAethericFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveBloodstainedFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveBoundFossil, LowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveCorrodedFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveDenseFossil, LowValueColorName},
-                { Legacy.UILanguageProvider.Language.DelveEnchantedFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveEncrustedFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveFacetedFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveFracturedFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveFrigidFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveGildedFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveGlyphicFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveHollowFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveJaggedFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveLucentFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveMetallicFossil, LowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelvePerfectFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelvePrismaticFossil, LowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelvePristineFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveSanctifiedFossil, HighValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveScorchedFossil, VeryLowValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveSerratedFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveShudderingFossil, MediumValueColorName },
-                { Legacy.UILanguageProvider.Language.DelveTangledFossil, MediumValueColorName },
+                { DelveResources.AberrantFossil, LowValueColorName },
+                { DelveResources.AethericFossil, VeryLowValueColorName },
+                { DelveResources.BloodstainedFossil, HighValueColorName },
+                { DelveResources.BoundFossil, LowValueColorName },
+                { DelveResources.CorrodedFossil, MediumValueColorName },
+                { DelveResources.DenseFossil, LowValueColorName},
+                { DelveResources.EnchantedFossil, MediumValueColorName },
+                { DelveResources.EncrustedFossil, VeryLowValueColorName },
+                { DelveResources.FacetedFossil, HighValueColorName },
+                { DelveResources.FracturedFossil, HighValueColorName },
+                { DelveResources.FrigidFossil, VeryLowValueColorName },
+                { DelveResources.GildedFossil, MediumValueColorName },
+                { DelveResources.GlyphicFossil, HighValueColorName },
+                { DelveResources.HollowFossil, HighValueColorName },
+                { DelveResources.JaggedFossil, VeryLowValueColorName },
+                { DelveResources.LucentFossil, VeryLowValueColorName },
+                { DelveResources.MetallicFossil, LowValueColorName },
+                { DelveResources.PerfectFossil, MediumValueColorName },
+                { DelveResources.PrismaticFossil, LowValueColorName },
+                { DelveResources.PristineFossil, VeryLowValueColorName },
+                { DelveResources.SanctifiedFossil, HighValueColorName },
+                { DelveResources.ScorchedFossil, VeryLowValueColorName },
+                { DelveResources.SerratedFossil, MediumValueColorName },
+                { DelveResources.ShudderingFossil, MediumValueColorName },
+                { DelveResources.TangledFossil, MediumValueColorName },
             };
 
 
@@ -217,155 +221,155 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            labelIncursionHeaderContains.Content = Legacy.UILanguageProvider.Language.IncursionHeaderContains;
-            labelIncursionHeaderModifiers.Content = Legacy.UILanguageProvider.Language.IncursionHeaderModifiers;
+            labelIncursionHeaderContains.Content = IncursionResources.HeaderContains;
+            labelIncursionHeaderModifiers.Content = IncursionResources.HeaderModifiers;
 
-            textBlockGuardhouse.Text = Legacy.UILanguageProvider.Language.IncursionGuardhouse;
-            textBlockBarracks.Text = Legacy.UILanguageProvider.Language.IncursionBarracks;
-            textBlockHallOfWar.Text = Legacy.UILanguageProvider.Language.IncursionHallOfWar;
-            textBlockGuardhouseModifiers.Text = Legacy.UILanguageProvider.Language.IncursionGuardhouseModifiers;
+            textBlockGuardhouse.Text = IncursionResources.Guardhouse;
+            textBlockBarracks.Text = IncursionResources.Barracks;
+            textBlockHallOfWar.Text = IncursionResources.HallOfWar;
+            textBlockGuardhouseModifiers.Text = IncursionResources.GuardhouseModifiers;
 
-            textBlockWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionWorkshop;
-            textBlockWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionWorkshopContains;
-            textBlockWorkshopModifiers.Text = Legacy.UILanguageProvider.Language.IncursionWorkshopModifiers;
-            textBlockEngineeringDepartment.Text = Legacy.UILanguageProvider.Language.IncursionEngineeringDepartment;
-            textBlockFactory.Text = Legacy.UILanguageProvider.Language.IncursionFactory;
+            textBlockWorkshop.Text = IncursionResources.Workshop;
+            textBlockWorkshopContains.Text = IncursionResources.WorkshopContains;
+            textBlockWorkshopModifiers.Text = IncursionResources.WorkshopModifiers;
+            textBlockEngineeringDepartment.Text = IncursionResources.EngineeringDepartment;
+            textBlockFactory.Text = IncursionResources.Factory;
 
-            textBlockExplosivesRoom.Text = Legacy.UILanguageProvider.Language.IncursionExplosivesRoom;
-            textBlockExplosivesRoomContains.Text = Legacy.UILanguageProvider.Language.IncursionExplosivesRoomContains;
-            textBlockDemolitionLab.Text = Legacy.UILanguageProvider.Language.IncursionDemolitionLab;
-            textBlockShrineOfUnmaking.Text = Legacy.UILanguageProvider.Language.IncursionShrineOfUnmaking;
+            textBlockExplosivesRoom.Text = IncursionResources.ExplosivesRoom;
+            textBlockExplosivesRoomContains.Text = IncursionResources.ExplosivesRoomContains;
+            textBlockDemolitionLab.Text = IncursionResources.DemolitionLab;
+            textBlockShrineOfUnmaking.Text = IncursionResources.ShrineOfUnmaking;
 
-            textBlockSplinterReasearchLab.Text = Legacy.UILanguageProvider.Language.IncursionSplinterResearchLab;
-            textBlockSplinterResearchLabContains.Text = Legacy.UILanguageProvider.Language.IncursionSplinterResearchLabContains;
-            textBlockBreachContainmentChamber.Text = Legacy.UILanguageProvider.Language.IncursionBreachContainmentChamber;
-            textBlockHouseOfTheOthers.Text = Legacy.UILanguageProvider.Language.IncursionHouseOfOthers;
+            textBlockSplinterReasearchLab.Text = IncursionResources.SplinterResearchLab;
+            textBlockSplinterResearchLabContains.Text = IncursionResources.SplinterResearchLabContains;
+            textBlockBreachContainmentChamber.Text = IncursionResources.BreachContainmentChamber;
+            textBlockHouseOfTheOthers.Text = IncursionResources.HouseOfOthers;
 
-            textBlockVault.Text = Legacy.UILanguageProvider.Language.IncursionVault;
-            textBlockVaultContains.Text = Legacy.UILanguageProvider.Language.IncursionVaultContains;
-            textBlockTreasury.Text = Legacy.UILanguageProvider.Language.IncursionTreasury;
-            textBlockWealthOfTheVaal.Text = Legacy.UILanguageProvider.Language.IncursionWealthOfTheVaal;
+            textBlockVault.Text = IncursionResources.Vault;
+            textBlockVaultContains.Text = IncursionResources.VaultContains;
+            textBlockTreasury.Text = IncursionResources.Treasury;
+            textBlockWealthOfTheVaal.Text = IncursionResources.WealthOfTheVaal;
 
-            textBlockSparringRoom.Text = Legacy.UILanguageProvider.Language.IncursionSparringRoom;
-            textBlockSparringRoomContains.Text = Legacy.UILanguageProvider.Language.IncursionSparringRoomContains;
-            textBlockSparringRoomModifiers.Text = Legacy.UILanguageProvider.Language.IncursionSparringRoomModifiers;
-            textBlockArenaOfValour.Text = Legacy.UILanguageProvider.Language.IncursionArenaOfValour;
-            textBlockHallOfChampions.Text = Legacy.UILanguageProvider.Language.IncursionHallOfChampions;
+            textBlockSparringRoom.Text = IncursionResources.SparringRoom;
+            textBlockSparringRoomContains.Text = IncursionResources.SparringRoomContains;
+            textBlockSparringRoomModifiers.Text = IncursionResources.SparringRoomModifiers;
+            textBlockArenaOfValour.Text = IncursionResources.ArenaOfValour;
+            textBlockHallOfChampions.Text = IncursionResources.HallOfChampions;
 
-            textBlockArmourersWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionArmourersWorkshop;
-            textBlockArmourersWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionArmourersWorkshopContains;
-            textBlockArmourersWorkshopModifiers.Text = Legacy.UILanguageProvider.Language.IncursionArmourersWorkshopModifiers;
-            textBlockArmoury.Text = Legacy.UILanguageProvider.Language.IncursionArmoury;
-            textBlockChamberOfIron.Text = Legacy.UILanguageProvider.Language.IncursionChamberOfIron;
+            textBlockArmourersWorkshop.Text = IncursionResources.ArmourersWorkshop;
+            textBlockArmourersWorkshopContains.Text = IncursionResources.ArmourersWorkshopContains;
+            textBlockArmourersWorkshopModifiers.Text = IncursionResources.ArmourersWorkshopModifiers;
+            textBlockArmoury.Text = IncursionResources.Armoury;
+            textBlockChamberOfIron.Text = IncursionResources.ChamberOfIron;
 
-            textBlockJewellersWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionJewellersWorkshop;
-            textBlockJewellersWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionJewellersWorkshopContains;
-            textBlockJewelleryForge.Text = Legacy.UILanguageProvider.Language.IncursionJewelleryForge;
-            textBlockGlitteringHalls.Text = Legacy.UILanguageProvider.Language.IncursionGlitteringHalls;
+            textBlockJewellersWorkshop.Text = IncursionResources.JewellersWorkshop;
+            textBlockJewellersWorkshopContains.Text = IncursionResources.JewellersWorkshopContains;
+            textBlockJewelleryForge.Text = IncursionResources.JewelleryForge;
+            textBlockGlitteringHalls.Text = IncursionResources.GlitteringHalls;
 
-            textBlockSurveyorsStudy.Text = Legacy.UILanguageProvider.Language.IncursionSurveyorsStudy;
-            textBlockSurveyorsStudyContains.Text = Legacy.UILanguageProvider.Language.IncursionSurveyorsStudyContains;
-            textBlockOfficeOfCartography.Text = Legacy.UILanguageProvider.Language.IncursionOfficeOfCartography;
-            textBlockAtlasOfWorlds.Text = Legacy.UILanguageProvider.Language.IncursionAtlasOfWorlds;
+            textBlockSurveyorsStudy.Text = IncursionResources.SurveyorsStudy;
+            textBlockSurveyorsStudyContains.Text = IncursionResources.SurveyorsStudyContains;
+            textBlockOfficeOfCartography.Text = IncursionResources.OfficeOfCartography;
+            textBlockAtlasOfWorlds.Text = IncursionResources.AtlasOfWorlds;
 
-            textBlockGemcuttersWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionGemcuttersWorkshop;
-            textBlockGemcuttersWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionGemcuttersWorkshopContains;
-            textBlockDepartmentOfThaumaturgy.Text = Legacy.UILanguageProvider.Language.IncursionDepartmentOfThaumaturgy;
-            textBlockDoryanisInstitute.Text = Legacy.UILanguageProvider.Language.IncursionDoryanisInstitute;
-            textBlockGemcuttersWorkshopContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionDoubleGemCorruptionTooltip;
+            textBlockGemcuttersWorkshop.Text = IncursionResources.GemcuttersWorkshop;
+            textBlockGemcuttersWorkshopContains.Text = IncursionResources.GemcuttersWorkshopContains;
+            textBlockDepartmentOfThaumaturgy.Text = IncursionResources.DepartmentOfThaumaturgy;
+            textBlockDoryanisInstitute.Text = IncursionResources.DoryanisInstitute;
+            textBlockGemcuttersWorkshopContains.ToolTip = IncursionResources.DoubleGemCorruptionTooltip;
 
-            textBlockTormentCell.Text = Legacy.UILanguageProvider.Language.IncursionTormentCells;
-            textBlockTormentCellsContain.Text = Legacy.UILanguageProvider.Language.IncursionTormentCellsContains;
-            textBlockTortureCages.Text = Legacy.UILanguageProvider.Language.IncursionTortureCages;
-            textBlockSadistsDen.Text = Legacy.UILanguageProvider.Language.IncursionSadistsDen;
+            textBlockTormentCell.Text = IncursionResources.TormentCells;
+            textBlockTormentCellsContain.Text = IncursionResources.TormentCellsContains;
+            textBlockTortureCages.Text = IncursionResources.TortureCages;
+            textBlockSadistsDen.Text = IncursionResources.SadistsDen;
 
-            textBlockStrongboxChamber.Text = Legacy.UILanguageProvider.Language.IncursionStrongboxChamber;
-            textBlockStrongboxChamberContains.Text = Legacy.UILanguageProvider.Language.IncursionStrongboxChamberContains;
-            textBlockHallOfLocks.Text = Legacy.UILanguageProvider.Language.IncursionHallOfLocks;
-            textBlockCourtOfSealedDeath.Text = Legacy.UILanguageProvider.Language.IncursionCourtOfTheSealedDeath;
+            textBlockStrongboxChamber.Text = IncursionResources.StrongboxChamber;
+            textBlockStrongboxChamberContains.Text = IncursionResources.StrongboxChamberContains;
+            textBlockHallOfLocks.Text = IncursionResources.HallOfLocks;
+            textBlockCourtOfSealedDeath.Text = IncursionResources.CourtOfTheSealedDeath;
 
-            textBlockHallOfMettle.Text = Legacy.UILanguageProvider.Language.IncursionHallOfMettle;
-            textBlockHallOfMettleContains.Text = Legacy.UILanguageProvider.Language.IncursionHallOfMettleContains;
-            textBlockHallOfHeroes.Text = Legacy.UILanguageProvider.Language.IncursionHallOfHeroes;
-            textBlockHallOfLegends.Text = Legacy.UILanguageProvider.Language.IncursionHallOfLegends;
+            textBlockHallOfMettle.Text = IncursionResources.HallOfMettle;
+            textBlockHallOfMettleContains.Text = IncursionResources.HallOfMettleContains;
+            textBlockHallOfHeroes.Text = IncursionResources.HallOfHeroes;
+            textBlockHallOfLegends.Text = IncursionResources.HallOfLegends;
 
-            textBlockSacrificalChamber.Text = Legacy.UILanguageProvider.Language.IncursionSacrificalChamber;
-            textBlockSacrificalChamberContains.Text = Legacy.UILanguageProvider.Language.IncursionSacrificalChamberContains;
-            textBlockHallOfOfferings.Text = Legacy.UILanguageProvider.Language.IncursionHallOfOfferings;
-            textBlockApexOfAscension.Text = Legacy.UILanguageProvider.Language.IncursionApexOfAscension;
+            textBlockSacrificalChamber.Text = IncursionResources.SacrificalChamber;
+            textBlockSacrificalChamberContains.Text = IncursionResources.SacrificalChamberContains;
+            textBlockHallOfOfferings.Text = IncursionResources.HallOfOfferings;
+            textBlockApexOfAscension.Text = IncursionResources.ApexOfAscension;
 
-            textBlockStorageRoom.Text = Legacy.UILanguageProvider.Language.IncursionStorageRoom;
-            textBlockStorageRoomContains.Text = Legacy.UILanguageProvider.Language.IncursionStorageRoomContains;
-            textBlockWarehouses.Text = Legacy.UILanguageProvider.Language.IncursionWarehouses;
-            textBlockMuseumOfArtifacts.Text = Legacy.UILanguageProvider.Language.IncursionMuseumOfArtifacts;
+            textBlockStorageRoom.Text = IncursionResources.StorageRoom;
+            textBlockStorageRoomContains.Text = IncursionResources.StorageRoomContains;
+            textBlockWarehouses.Text = IncursionResources.Warehouses;
+            textBlockMuseumOfArtifacts.Text = IncursionResources.MuseumOfArtifacts;
 
-            textBlockCorruptionChamber.Text = Legacy.UILanguageProvider.Language.IncursionCorruptionChamber;
-            textBlockCorruptionChamberContains.Text = Legacy.UILanguageProvider.Language.IncursionCorruptionChamberContains;
-            textBlockCorruptionChamberModifiers.Text = Legacy.UILanguageProvider.Language.IncursionCorruptionChamberModifiers;
-            textBlockCatalystOfCorruption.Text = Legacy.UILanguageProvider.Language.IncursionCatalystOfCorruption;
-            textBlockLocusOfCorruption.Text = Legacy.UILanguageProvider.Language.IncursionLocuOfCorruption;
-            textBlockCorruptionChamberContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionDoubleCorruptionTooltip;
+            textBlockCorruptionChamber.Text = IncursionResources.CorruptionChamber;
+            textBlockCorruptionChamberContains.Text = IncursionResources.CorruptionChamberContains;
+            textBlockCorruptionChamberModifiers.Text = IncursionResources.CorruptionChamberModifiers;
+            textBlockCatalystOfCorruption.Text = IncursionResources.CatalystOfCorruption;
+            textBlockLocusOfCorruption.Text = IncursionResources.LocuOfCorruption;
+            textBlockCorruptionChamberContains.ToolTip = IncursionResources.DoubleCorruptionTooltip;
 
-            textBlockShrineOfEmpowerment.Text = Legacy.UILanguageProvider.Language.IncursionShrineOfEmpowerment;
-            textBlockShrineOfEmpowermentContains.Text = Legacy.UILanguageProvider.Language.IncursionShrineOfEmpowermentContains;
-            textBlockShrineOfEmpowermentModifiers.Text = Legacy.UILanguageProvider.Language.IncursionShrineOfEmpowermentModifiers;
-            textBlockSanctumOfUnity.Text = Legacy.UILanguageProvider.Language.IncursionSanctumOfUnity;
-            textBlockTempleNexus.Text = Legacy.UILanguageProvider.Language.IncursionTempleNexus;
+            textBlockShrineOfEmpowerment.Text = IncursionResources.ShrineOfEmpowerment;
+            textBlockShrineOfEmpowermentContains.Text = IncursionResources.ShrineOfEmpowermentContains;
+            textBlockShrineOfEmpowermentModifiers.Text = IncursionResources.ShrineOfEmpowermentModifiers;
+            textBlockSanctumOfUnity.Text = IncursionResources.SanctumOfUnity;
+            textBlockTempleNexus.Text = IncursionResources.TempleNexus;
 
-            textBlockTempestGenerator.Text = Legacy.UILanguageProvider.Language.IncursionTempestGenerator;
-            textBlockTempestGeneratorContains.Text = Legacy.UILanguageProvider.Language.IncursionTempestGeneratorContains;
-            textBlockTempestGeneratorModifiers.Text = Legacy.UILanguageProvider.Language.IncursionTempestGeneratorModifiers;
-            textBlockHurricaneEngine.Text = Legacy.UILanguageProvider.Language.IncursionHurricaneEngine;
-            textBlockStormOfCorruption.Text = Legacy.UILanguageProvider.Language.IncursionStormOfCorruption;
-            textBlockTempestGeneratorContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionTopotanteModTooltip;
+            textBlockTempestGenerator.Text = IncursionResources.TempestGenerator;
+            textBlockTempestGeneratorContains.Text = IncursionResources.TempestGeneratorContains;
+            textBlockTempestGeneratorModifiers.Text = IncursionResources.TempestGeneratorModifiers;
+            textBlockHurricaneEngine.Text = IncursionResources.HurricaneEngine;
+            textBlockStormOfCorruption.Text = IncursionResources.StormOfCorruption;
+            textBlockTempestGeneratorContains.ToolTip = IncursionResources.TopotanteModTooltip;
 
-            textBlockPosionGarden.Text = Legacy.UILanguageProvider.Language.IncursionPoisionGarden;
-            textBlockPosiionGardenContains.Text = Legacy.UILanguageProvider.Language.IncursionPosionGardenContains;
-            textBlockPosionGardenModifiers.Text = Legacy.UILanguageProvider.Language.IncursionPoisonGardenModifiers;
-            textBlockCultivarChamber.Text = Legacy.UILanguageProvider.Language.IncursionCultivarChamber;
-            textBlockToxicGrive.Text = Legacy.UILanguageProvider.Language.IncursionToxicGrove;
-            textBlockPosiionGardenContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionTacatiModTooltip;
+            textBlockPosionGarden.Text = IncursionResources.PoisionGarden;
+            textBlockPosiionGardenContains.Text = IncursionResources.PosionGardenContains;
+            textBlockPosionGardenModifiers.Text = IncursionResources.PoisonGardenModifiers;
+            textBlockCultivarChamber.Text = IncursionResources.CultivarChamber;
+            textBlockToxicGrive.Text = IncursionResources.ToxicGrove;
+            textBlockPosiionGardenContains.ToolTip = IncursionResources.TacatiModTooltip;
 
-            textBlockTrapWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionTrapWorkshop;
-            textBlockTrapWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionTrapWorkshopContains;
-            textBlockTrapWorkshopModifiers.Text = Legacy.UILanguageProvider.Language.IncursionTrapWorkshopModifiers;
-            textBlockTempleDefenseWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionTempleDefenseWorkshop;
-            textBlockDefenseResearchLab.Text = Legacy.UILanguageProvider.Language.IncursionDefenseResearchLab;
-            textBlockTrapWorkshopContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionMatalTooltip;
+            textBlockTrapWorkshop.Text = IncursionResources.TrapWorkshop;
+            textBlockTrapWorkshopContains.Text = IncursionResources.TrapWorkshopContains;
+            textBlockTrapWorkshopModifiers.Text = IncursionResources.TrapWorkshopModifiers;
+            textBlockTempleDefenseWorkshop.Text = IncursionResources.TempleDefenseWorkshop;
+            textBlockDefenseResearchLab.Text = IncursionResources.DefenseResearchLab;
+            textBlockTrapWorkshopContains.ToolTip = IncursionResources.MatalTooltip;
 
-            textBlockPoolsOfRestoration.Text = Legacy.UILanguageProvider.Language.IncursionPoolsOfRestoration;
-            textBlockPoolsOfRestorationContains.Text = Legacy.UILanguageProvider.Language.IncursionPoolsOfRestorationContains;
-            textBlockPoolsOfRestorationModifiers.Text = Legacy.UILanguageProvider.Language.IncursionPoolsOfRestorationModifiers;
-            textBlockSanctumOfVitality.Text = Legacy.UILanguageProvider.Language.IncursionSanctumOfVitality;
-            textBlockSanctumOfImmortality.Text = Legacy.UILanguageProvider.Language.IncursionSanctumOfImmortality;
-            textBlockPoolsOfRestorationContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionGuateliztzModTooltip;
+            textBlockPoolsOfRestoration.Text = IncursionResources.PoolsOfRestoration;
+            textBlockPoolsOfRestorationContains.Text = IncursionResources.PoolsOfRestorationContains;
+            textBlockPoolsOfRestorationModifiers.Text = IncursionResources.PoolsOfRestorationModifiers;
+            textBlockSanctumOfVitality.Text = IncursionResources.SanctumOfVitality;
+            textBlockSanctumOfImmortality.Text = IncursionResources.SanctumOfImmortality;
+            textBlockPoolsOfRestorationContains.ToolTip = IncursionResources.GuateliztzModTooltip;
 
-            textBlockFlameWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionFlameWorkshop;
-            textBlockFlameWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionFlameWorkshopContains;
-            textBlockFlameWorkshopModifiers.Text = Legacy.UILanguageProvider.Language.IncursionFlameWorkshopModifiers;
-            textBlockOmnitectForge.Text = Legacy.UILanguageProvider.Language.IncursionOmnitectForge;
-            textBlockCrucibleOfFlame.Text = Legacy.UILanguageProvider.Language.IncursionCrucibleOfFlame;
-            textBlockFlameWorkshopContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionPuhuarteModTooltuip;
+            textBlockFlameWorkshop.Text = IncursionResources.FlameWorkshop;
+            textBlockFlameWorkshopContains.Text = IncursionResources.FlameWorkshopContains;
+            textBlockFlameWorkshopModifiers.Text = IncursionResources.FlameWorkshopModifiers;
+            textBlockOmnitectForge.Text = IncursionResources.OmnitectForge;
+            textBlockCrucibleOfFlame.Text = IncursionResources.CrucibleOfFlame;
+            textBlockFlameWorkshopContains.ToolTip = IncursionResources.PuhuarteModTooltuip;
 
-            textBlockLightningWorkshop.Text = Legacy.UILanguageProvider.Language.IncursionLightningWorkshop;
-            textBlockLightningWorkshopContains.Text = Legacy.UILanguageProvider.Language.IncursionLightningWorkshopContains;
-            textBlockLightningWorkshopModifiers.Text = Legacy.UILanguageProvider.Language.IncursionLightningWorkshopModifiers;
-            textBlockOmnitectReactorPlant.Text = Legacy.UILanguageProvider.Language.IncursionOmnitectReactorPlant;
-            textBlockConduitOfLightning.Text = Legacy.UILanguageProvider.Language.IncursionConduitOfLightning;
-            textBlockLightningWorkshopContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionXopecModTooltip;
+            textBlockLightningWorkshop.Text = IncursionResources.LightningWorkshop;
+            textBlockLightningWorkshopContains.Text = IncursionResources.LightningWorkshopContains;
+            textBlockLightningWorkshopModifiers.Text = IncursionResources.LightningWorkshopModifiers;
+            textBlockOmnitectReactorPlant.Text = IncursionResources.OmnitectReactorPlant;
+            textBlockConduitOfLightning.Text = IncursionResources.ConduitOfLightning;
+            textBlockLightningWorkshopContains.ToolTip = IncursionResources.XopecModTooltip;
 
-            textBlockHatchery.Text = Legacy.UILanguageProvider.Language.IncursionHatchery;
-            textBlockHatcherModifiers.Text = Legacy.UILanguageProvider.Language.IncursionHatcheryModifiers;
-            textBlockHatcheryContains.Text = Legacy.UILanguageProvider.Language.IncursionHatcheryContains;
-            textBlockAutomationLab.Text = Legacy.UILanguageProvider.Language.IncursionAutomationLab;
-            textBlockHybridisationChamber.Text = Legacy.UILanguageProvider.Language.IncursionHybridisationChamber;
-            textBlockHatcheryContains.ToolTip = Legacy.UILanguageProvider.Language.IncursionCitaqualotlModTooltip;
+            textBlockHatchery.Text = IncursionResources.Hatchery;
+            textBlockHatcherModifiers.Text = IncursionResources.HatcheryModifiers;
+            textBlockHatcheryContains.Text = IncursionResources.HatcheryContains;
+            textBlockAutomationLab.Text = IncursionResources.AutomationLab;
+            textBlockHybridisationChamber.Text = IncursionResources.HybridisationChamber;
+            textBlockHatcheryContains.ToolTip = IncursionResources.CitaqualotlModTooltip;
 
-            textBlockRoyalMeetingRoom.Text = Legacy.UILanguageProvider.Language.IncursionRoyalMeetingRoom;
-            textBlockRoyalMeetingRoomContains.Text = Legacy.UILanguageProvider.Language.IncursionRoyalMeetingRoomContains;
-            textBlockRoyalMeetingRoomModifiers.Text = Legacy.UILanguageProvider.Language.IncursionRoyalMeetingRoomModifiers;
-            textBlockHallOfLords.Text = Legacy.UILanguageProvider.Language.IncursionHallOfLords;
-            textBlockThroneOfAtziri.Text = Legacy.UILanguageProvider.Language.IncursionThroneOfAtziri;
+            textBlockRoyalMeetingRoom.Text = IncursionResources.RoyalMeetingRoom;
+            textBlockRoyalMeetingRoomContains.Text = IncursionResources.RoyalMeetingRoomContains;
+            textBlockRoyalMeetingRoomModifiers.Text = IncursionResources.RoyalMeetingRoomModifiers;
+            textBlockHallOfLords.Text = IncursionResources.HallOfLords;
+            textBlockThroneOfAtziri.Text = IncursionResources.ThroneOfAtziri;
         }
 
         private void UpdateBetrayalUIText()
@@ -483,41 +487,41 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            labelClearOil.Content = Legacy.UILanguageProvider.Language.BlightClearOil;
-            textBlockClearOilEffect.Text = Legacy.UILanguageProvider.Language.BlightClearOilEffect;
+            labelClearOil.Content = BlightResources.ClearOil;
+            textBlockClearOilEffect.Text = BlightResources.ClearOilEffect;
 
-            labelSepiaOil.Content = Legacy.UILanguageProvider.Language.BlightSepiaOil;
-            textBlockSepiaOilEffect.Text = Legacy.UILanguageProvider.Language.BlightSepiaOilEffect;
+            labelSepiaOil.Content = BlightResources.SepiaOil;
+            textBlockSepiaOilEffect.Text = BlightResources.SepiaOilEffect;
 
-            labelAmberOil.Content = Legacy.UILanguageProvider.Language.BlightAmberOil;
-            textBlockAmberOilEffect.Text = Legacy.UILanguageProvider.Language.BlightAmberOilEffect;
+            labelAmberOil.Content = BlightResources.AmberOil;
+            textBlockAmberOilEffect.Text = BlightResources.AmberOilEffect;
 
-            labelVerdantOil.Content = Legacy.UILanguageProvider.Language.BlightVerdantOil;
-            textBlockVerdantOilEffect.Text = Legacy.UILanguageProvider.Language.BlightVerdantOilEffect;
+            labelVerdantOil.Content = BlightResources.VerdantOil;
+            textBlockVerdantOilEffect.Text = BlightResources.VerdantOilEffect;
 
-            labelTealOil.Content = Legacy.UILanguageProvider.Language.BlightTealOil;
-            textBlockTealOilEffect.Text = Legacy.UILanguageProvider.Language.BlightTealOilEffect;
+            labelTealOil.Content = BlightResources.TealOil;
+            textBlockTealOilEffect.Text = BlightResources.TealOilEffect;
 
-            labelAzureOil.Content = Legacy.UILanguageProvider.Language.BlightAzureOil;
-            textBlockAzureOilEffect.Text = Legacy.UILanguageProvider.Language.BlightAzureOilEffect;
+            labelAzureOil.Content = BlightResources.AzureOil;
+            textBlockAzureOilEffect.Text = BlightResources.AzureOilEffect;
 
-            labelVioletOil.Content = Legacy.UILanguageProvider.Language.BlightVioletOil;
-            textBlockVioletOilEffect.Text = Legacy.UILanguageProvider.Language.BlightVioletOilEffect;
+            labelVioletOil.Content = BlightResources.VioletOil;
+            textBlockVioletOilEffect.Text = BlightResources.VioletOilEffect;
 
-            labelCrimsonOil.Content = Legacy.UILanguageProvider.Language.BlightCrimsonOil;
-            textBlockCrimsonOilEffect.Text = Legacy.UILanguageProvider.Language.BlightCrimsonOilEffect;
+            labelCrimsonOil.Content = BlightResources.CrimsonOil;
+            textBlockCrimsonOilEffect.Text = BlightResources.CrimsonOilEffect;
 
-            labelBlackOil.Content = Legacy.UILanguageProvider.Language.BlightBlackOil;
-            textBlockBlackOilEffect.Text = Legacy.UILanguageProvider.Language.BlightBlackOilEffect;
+            labelBlackOil.Content = BlightResources.BlackOil;
+            textBlockBlackOilEffect.Text = BlightResources.BlackOilEffect;
 
-            labelOpalescentOil.Content = Legacy.UILanguageProvider.Language.BlightOpalescentOil;
-            textBlockOpalescentOilEffect.Text = Legacy.UILanguageProvider.Language.BlightOpalescentOilEffect;
+            labelOpalescentOil.Content = BlightResources.OpalescentOil;
+            textBlockOpalescentOilEffect.Text = BlightResources.OpalescentOilEffect;
 
-            labelSilverOil.Content = Legacy.UILanguageProvider.Language.BlightSilverOil;
-            textBlockSilverOilEffect.Text = Legacy.UILanguageProvider.Language.BlightSilverOilEffect;
+            labelSilverOil.Content = BlightResources.SilverOil;
+            textBlockSilverOilEffect.Text = BlightResources.SilverOilEffect;
 
-            labelGoldenOil.Content = Legacy.UILanguageProvider.Language.BlightGoldenOil;
-            textBlockGoldenOilEffect.Text = Legacy.UILanguageProvider.Language.BlightGoldenOilEffect;
+            labelGoldenOil.Content = BlightResources.GoldenOil;
+            textBlockGoldenOilEffect.Text = BlightResources.GoldenOilEffect;
         }
 
         private void UpdateMetamorphUIText()
@@ -526,29 +530,29 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            labelAbrasiveCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphAbrasiveCatalyst;
-            textBlockAbrasiveCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphAbrasiveCatalystEffect;
+            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst; 
+            textBlockAbrasiveCatalystEffect.Text = MetamorphResources.AbrasiveCatalystEffect;
 
-            labelFertileCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphFertileCatalyst;
-            textBlockFertileCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphFertileCatalyst;
+            labelFertileCatalyst.Content = MetamorphResources.FertileCatalyst;
+            textBlockFertileCatalystEffect.Text = MetamorphResources.FertileCatalyst;
 
-            labelImbuedCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphImbuedCatalyst;
-            textBlockImbuedCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphImbuedCatalystEffect;
+            labelImbuedCatalyst.Content = MetamorphResources.ImbuedCatalyst;
+            textBlockImbuedCatalystEffect.Text = MetamorphResources.ImbuedCatalystEffect;
 
-            labelIntrinsicCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphIntrinsicCatalyst;
-            textBlockIntrinsicCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphIntrinsicCatalystEffect;
+            labelIntrinsicCatalyst.Content = MetamorphResources.IntrinsicCatalyst;
+            textBlockIntrinsicCatalystEffect.Text = MetamorphResources.IntrinsicCatalystEffect;
 
-            labelPrismaticCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphPrismaticCatalyst;
-            textBlockPrismaticCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphPrismaticCatalystEffect;
+            labelPrismaticCatalyst.Content = MetamorphResources.PrismaticCatalyst;
+            textBlockPrismaticCatalystEffect.Text = MetamorphResources.PrismaticCatalystEffect;
 
-            labelTemperingCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphTemperingCatalyst;
-            textBlockTemperingCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphTemperingCatalystEffect;
+            labelTemperingCatalyst.Content = MetamorphResources.TemperingCatalyst;
+            textBlockTemperingCatalystEffect.Text = MetamorphResources.TemperingCatalystEffect;
 
-            labelTurbulentCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphTurbulentCatalyst;
-            textBlockTurbulentCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphTurbulentCatalystEffect;
+            labelTurbulentCatalyst.Content = MetamorphResources.TurbulentCatalyst;
+            textBlockTurbulentCatalystEffect.Text = MetamorphResources.TurbulentCatalystEffect;
 
-            labelMetamorphInformation.Content = Legacy.UILanguageProvider.Language.MetamorphInformationHeader;
-            textBlockMetamorphInformationText.Text = Legacy.UILanguageProvider.Language.MetamorphInformationText;
+            labelMetamorphInformation.Content = MetamorphResources.InformationHeader;
+            textBlockMetamorphInformationText.Text = MetamorphResources.InformationText;
         }
 
         private void UpdateDelveUIText()
@@ -561,99 +565,99 @@ namespace Sidekick.Windows.LeagueOverlay
 
             var mineFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveMetallicFossil,
-                Legacy.UILanguageProvider.Language.DelveSerratedFossil,
-                Legacy.UILanguageProvider.Language.DelvePristineFossil,
-                Legacy.UILanguageProvider.Language.DelveAethericFossil,
+                DelveResources.MetallicFossil,
+                DelveResources.SerratedFossil,
+                DelveResources.PristineFossil,
+                DelveResources.AethericFossil,
             };
 
             var magmaFissureFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveScorchedFossil,
-                Legacy.UILanguageProvider.Language.DelvePristineFossil,
-                Legacy.UILanguageProvider.Language.DelvePrismaticFossil,
-                Legacy.UILanguageProvider.Language.DelveEnchantedFossil,
-                Legacy.UILanguageProvider.Language.DelveEncrustedFossil + fracturedWallInfoPointer,
+                DelveResources.ScorchedFossil,
+                DelveResources.PristineFossil,
+                DelveResources.PrismaticFossil,
+                DelveResources.EnchantedFossil,
+                DelveResources.EncrustedFossil + fracturedWallInfoPointer,
             };
 
             var sulfurVentsFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveMetallicFossil,
-                Legacy.UILanguageProvider.Language.DelveAethericFossil,
-                Legacy.UILanguageProvider.Language.DelvePerfectFossil,
-                Legacy.UILanguageProvider.Language.DelveEncrustedFossil + fracturedWallInfoPointer,
+                DelveResources.MetallicFossil,
+                DelveResources.AethericFossil,
+                DelveResources.PerfectFossil,
+                DelveResources.EncrustedFossil + fracturedWallInfoPointer,
             };
 
             var frozenHollowFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveFrigidFossil,
-                Legacy.UILanguageProvider.Language.DelveSerratedFossil,
-                Legacy.UILanguageProvider.Language.DelvePrismaticFossil,
-                Legacy.UILanguageProvider.Language.DelveShudderingFossil,
-                Legacy.UILanguageProvider.Language.DelveSanctifiedFossil + fracturedWallInfoPointer,
+                DelveResources.FrigidFossil,
+                DelveResources.SerratedFossil,
+                DelveResources.PrismaticFossil,
+                DelveResources.ShudderingFossil,
+                DelveResources.SanctifiedFossil + fracturedWallInfoPointer,
             };
 
             var fungalCavernsFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveDenseFossil,
-                Legacy.UILanguageProvider.Language.DelveAberrantFossil,
-                Legacy.UILanguageProvider.Language.DelvePerfectFossil,
-                Legacy.UILanguageProvider.Language.DelveCorrodedFossil,
-                Legacy.UILanguageProvider.Language.DelveGildedFossil + fracturedWallInfoPointer,
+                DelveResources.DenseFossil,
+                DelveResources.AberrantFossil,
+                DelveResources.PerfectFossil,
+                DelveResources.CorrodedFossil,
+                DelveResources.GildedFossil + fracturedWallInfoPointer,
             };
 
             var petrifiedForestFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveBoundFossil,
-                Legacy.UILanguageProvider.Language.DelveDenseFossil,
-                Legacy.UILanguageProvider.Language.DelveJaggedFossil,
-                Legacy.UILanguageProvider.Language.DelveCorrodedFossil,
-                Legacy.UILanguageProvider.Language.DelveSanctifiedFossil + fracturedWallInfoPointer,
+                DelveResources.BoundFossil,
+                DelveResources.DenseFossil,
+                DelveResources.JaggedFossil,
+                DelveResources.CorrodedFossil,
+                DelveResources.SanctifiedFossil + fracturedWallInfoPointer,
             };
 
             var abyssalDepthsFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveBoundFossil,
-                Legacy.UILanguageProvider.Language.DelveAberrantFossil,
-                Legacy.UILanguageProvider.Language.DelveLucentFossil + fracturedWallInfoPointer,
-                Legacy.UILanguageProvider.Language.DelveGildedFossil + fracturedWallInfoPointer,
+                DelveResources.BoundFossil,
+                DelveResources.AberrantFossil,
+                DelveResources.LucentFossil + fracturedWallInfoPointer,
+                DelveResources.GildedFossil + fracturedWallInfoPointer,
             };
 
             var fossilRoomFossils = new[]
             {
-                Legacy.UILanguageProvider.Language.DelveGlyphicFossil,
-                Legacy.UILanguageProvider.Language.DelveFracturedFossil,
-                Legacy.UILanguageProvider.Language.DelveFacetedFossil,
-                Legacy.UILanguageProvider.Language.DelveBloodstainedFossil,
-                Legacy.UILanguageProvider.Language.DelveTangledFossil,
-                Legacy.UILanguageProvider.Language.DelveHollowFossil,
+                DelveResources.GlyphicFossil,
+                DelveResources.FracturedFossil,
+                DelveResources.FacetedFossil,
+                DelveResources.BloodstainedFossil,
+                DelveResources.TangledFossil,
+                DelveResources.HollowFossil,
             };
 
-            labelDelveMines.Content = Legacy.UILanguageProvider.Language.DelveMines;
+            labelDelveMines.Content = DelveResources.Mines;
             SetTextBlockList(textBlockDelveMinesFossils, mineFossils);
 
-            labelDelveMagmaFissure.Content = Legacy.UILanguageProvider.Language.DelveMagmaFissure;
+            labelDelveMagmaFissure.Content = DelveResources.MagmaFissure;
             SetTextBlockList(textBlockMagmaFissureFossils, magmaFissureFossils);
 
-            labelDelveSulfurVents.Content = Legacy.UILanguageProvider.Language.DelveSulfurVents;
+            labelDelveSulfurVents.Content = DelveResources.SulfurVents;
             SetTextBlockList(textBlockSulfurVentsFossils, sulfurVentsFossils);
 
-            labelDelveFrozenHollow.Content = Legacy.UILanguageProvider.Language.DelveFrozenHollow;
+            labelDelveFrozenHollow.Content = DelveResources.FrozenHollow;
             SetTextBlockList(textBlockFrozenHolloeFossils, frozenHollowFossils);
 
-            labelDelveFungalCaverns.Content = Legacy.UILanguageProvider.Language.DelveFungalCaverns;
+            labelDelveFungalCaverns.Content = DelveResources.FungalCaverns;
             SetTextBlockList(textBlockDelveFungalCavernsFossils, fungalCavernsFossils);
 
-            labelDelvePetrifiedForest.Content = Legacy.UILanguageProvider.Language.DelvePetrifiedForest;
+            labelDelvePetrifiedForest.Content = DelveResources.PetrifiedForest;
             SetTextBlockList(labelDelvePetrifiedForestFossils, petrifiedForestFossils);
 
-            labelDelveAbyssalDepths.Content = Legacy.UILanguageProvider.Language.DelveAbyssalDepths;
+            labelDelveAbyssalDepths.Content = DelveResources.AbyssalDepths;
             SetTextBlockList(textBlockAbyssalDepthsFossils, abyssalDepthsFossils);
 
-            labelDelveFossilRoom.Content = Legacy.UILanguageProvider.Language.DelveFossilRoom;
+            labelDelveFossilRoom.Content = DelveResources.FossilRoom;
             SetTextBlockList(textBlockDelveFossilRoomFossils, fossilRoomFossils);
 
-            labelDelveInformation.Content = Legacy.UILanguageProvider.Language.DelveInformation;
+            labelDelveInformation.Content = DelveResources.Information;
         }
     }
 }

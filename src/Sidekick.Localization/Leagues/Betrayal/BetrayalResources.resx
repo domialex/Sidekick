@@ -118,258 +118,379 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AislingTransportaion" xml:space="preserve">
-    <value>Veiled\nWeapons</value>
+    <value>Veiled
+Weapons</value>
   </data>
   <data name="AislingFortification" xml:space="preserve">
-    <value>Veiled\nArmor</value>
+    <value>Veiled
+Armor</value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
-    <value>Add Veiled\nMod(s)</value>
+    <value>Add Veiled
+Mod(s)</value>
   </data>
   <data name="AislingIntervention" xml:space="preserve">
-    <value>Veiled\nJewellery</value>
+    <value>Veiled
+Jewellery</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
-    <value>Timeworn\nRelics</value>
+    <value>Timeworn
+Relics</value>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
-    <value>Harbinger\nOrbs</value>
+    <value>Harbinger
+Orbs</value>
   </data>
   <data name="CameriaResearch" xml:space="preserve">
     <value>Sextants</value>
   </data>
   <data name="CameriaIntervention" xml:space="preserve">
-    <value>Sulphite\nScarab</value>
+    <value>Sulphite
+Scarab</value>
   </data>
   <data name="ElreonTransportation" xml:space="preserve">
-    <value>Unique\nWeapons</value>
+    <value>Unique
+Weapons</value>
   </data>
   <data name="ElreonFortification" xml:space="preserve">
-    <value>Unique\nArmor</value>
+    <value>Unique
+Armor</value>
   </data>
   <data name="ElreonResearch" xml:space="preserve">
-    <value>Unique\nJewellery</value>
+    <value>Unique
+Jewellery</value>
   </data>
   <data name="ElreonIntervention" xml:space="preserve">
-    <value>Reliquary\nScarabs</value>
+    <value>Reliquary
+Scarabs</value>
   </data>
   <data name="GraviciusTransportation" xml:space="preserve">
-    <value>Div Card\nStack</value>
+    <value>Div Card
+Stack</value>
   </data>
   <data name="GraviciusFortification" xml:space="preserve">
-    <value>Random\nDiv Cards</value>
+    <value>Random
+Div Cards</value>
   </data>
   <data name="GraviciusResearch" xml:space="preserve">
-    <value>Swap\nDiv Cards</value>
+    <value>Swap
+Div Cards</value>
   </data>
   <data name="GraviciusIntervention" xml:space="preserve">
-    <value>Div Card\nScarab</value>
+    <value>Div Card
+Scarab</value>
   </data>
   <data name="GuffTransportation" xml:space="preserve">
-    <value>Chaos\nCrafting</value>
+    <value>Chaos
+Crafting</value>
   </data>
   <data name="GuffFortification" xml:space="preserve">
-    <value>Essence\nCrafting</value>
+    <value>Essence
+Crafting</value>
   </data>
   <data name="GuffResearch" xml:space="preserve">
-    <value>Annull\\Ex\nCrafting</value>
+    <value>Annull\\Ex
+Crafting</value>
   </data>
   <data name="GuffIntervention" xml:space="preserve">
-    <value>Alteration\nCrafting</value>
+    <value>Alteration
+Crafting</value>
   </data>
   <data name="HakuTransportation" xml:space="preserve">
-    <value>Rare\nItems</value>
+    <value>Rare
+Items</value>
   </data>
   <data name="HakuFortification" xml:space="preserve">
     <value>Strongboxes</value>
   </data>
   <data name="HakuResearch" xml:space="preserve">
-    <value>Quality\nItems</value>
+    <value>Quality
+Items</value>
   </data>
   <data name="HakuIntervention" xml:space="preserve">
-    <value>Strongbox\nScarab</value>
+    <value>Strongbox
+Scarab</value>
   </data>
   <data name="HillockTransportation" xml:space="preserve">
-    <value>Weapon\nQuality</value>
+    <value>Weapon
+Quality</value>
   </data>
   <data name="HillockFortification" xml:space="preserve">
-    <value>Armor\nQuality</value>
+    <value>Armor
+Quality</value>
   </data>
   <data name="HillockResearch" xml:space="preserve">
-    <value>Flask\nQuality</value>
+    <value>Flask
+Quality</value>
   </data>
   <data name="HillockIntervention" xml:space="preserve">
-    <value>Map\nQuality</value>
+    <value>Map
+Quality</value>
   </data>
   <data name="ItThatFledTransportation" xml:space="preserve">
-    <value>Breach\nSplinter</value>
+    <value>Breach
+Splinter</value>
   </data>
   <data name="ItThatFledFortification" xml:space="preserve">
-    <value>Abyss\nJewels</value>
+    <value>Abyss
+Jewels</value>
   </data>
   <data name="ItThatFledResearch" xml:space="preserve">
-    <value>Upgrade\nBreachstone</value>
+    <value>Upgrade
+Breachstone</value>
   </data>
   <data name="ItThatFledIntervention" xml:space="preserve">
-    <value>Breach\nScarab</value>
+    <value>Breach
+Scarab</value>
   </data>
   <data name="JanusTransportaion" xml:space="preserve">
-    <value>Quality\nCurrency</value>
+    <value>Quality
+Currency</value>
   </data>
   <data name="JanusFortification" xml:space="preserve">
-    <value>Currency\nShards</value>
+    <value>Currency
+Shards</value>
   </data>
   <data name="JanusResearch" xml:space="preserve">
-    <value>Perandus\nCoins</value>
+    <value>Perandus
+Coins</value>
   </data>
   <data name="JanusIntervention" xml:space="preserve">
-    <value>Perandus\nScarab</value>
+    <value>Perandus
+Scarab</value>
   </data>
   <data name="JorginTransportation" xml:space="preserve">
     <value>Talismans</value>
   </data>
   <data name="JorginFortification" xml:space="preserve">
-    <value>Bestiary\nItems</value>
+    <value>Bestiary
+Items</value>
   </data>
   <data name="JorginResearch" xml:space="preserve">
-    <value>Amulet to\nTalisman</value>
+    <value>Amulet to
+Talisman</value>
   </data>
   <data name="JorginIntervention" xml:space="preserve">
-    <value>Bestiary\nScarab</value>
+    <value>Bestiary
+Scarab</value>
   </data>
   <data name="KorrellTransportation" xml:space="preserve">
     <value>Essences</value>
   </data>
   <data name="KorrelFortification" xml:space="preserve">
-    <value>Map\nFragments</value>
+    <value>Map
+Fragments</value>
   </data>
   <data name="KorrellResearch" xml:space="preserve">
     <value>Fossils</value>
   </data>
   <data name="KorrelIntervention" xml:space="preserve">
-    <value>Elder\nScarab</value>
+    <value>Elder
+Scarab</value>
   </data>
   <data name="LeoTransportation" xml:space="preserve">
-    <value>Silver\nCoins</value>
+    <value>Silver
+Coins</value>
   </data>
   <data name="LeoFortification" xml:space="preserve">
-    <value>Random\nCurrency</value>
+    <value>Random
+Currency</value>
   </data>
   <data name="LeoResearch" xml:space="preserve">
-    <value>Currency\nUse</value>
+    <value>Currency
+Use</value>
   </data>
   <data name="LeoIntervention" xml:space="preserve">
-    <value>Torment\nScarab</value>
+    <value>Torment
+Scarab</value>
   </data>
   <data name="RikerTransportation" xml:space="preserve">
-    <value>Take One\nCurrency</value>
+    <value>Take One
+Currency</value>
   </data>
   <data name="RikerFortification" xml:space="preserve">
-    <value>Take One\nUnique</value>
+    <value>Take One
+Unique</value>
   </data>
   <data name="RikerResearch" xml:space="preserve">
-    <value>Take One\nVeiled</value>
+    <value>Take One
+Veiled</value>
   </data>
   <data name="RikerIntervention" xml:space="preserve">
-    <value>Take On\nDiv Card</value>
+    <value>Take On
+Div Card</value>
   </data>
   <data name="RinTransportation" xml:space="preserve">
-    <value>Normal\nMaps</value>
+    <value>Normal
+Maps</value>
   </data>
   <data name="RinFortification" xml:space="preserve">
-    <value>Rare\nMaps</value>
+    <value>Rare
+Maps</value>
   </data>
   <data name="RinResearch" xml:space="preserve">
-    <value>Unique\nMaps</value>
+    <value>Unique
+Maps</value>
   </data>
   <data name="RinIntervention" xml:space="preserve">
-    <value>Cartography\nScarab</value>
+    <value>Cartography
+Scarab</value>
   </data>
   <data name="ToraTransportation" xml:space="preserve">
-    <value>Pick Item\n[Timed]</value>
+    <value>Pick Item
+[Timed]</value>
   </data>
   <data name="ToraFortification" xml:space="preserve">
-    <value>Enchanted\nItems</value>
+    <value>Enchanted
+Items</value>
   </data>
   <data name="ToraResearch" xml:space="preserve">
-    <value>Gem\nExperience</value>
+    <value>Gem
+Experience</value>
   </data>
   <data name="ToraIntervention" xml:space="preserve">
-    <value>Harbinger\nScarab</value>
+    <value>Harbinger
+Scarab</value>
   </data>
   <data name="VaganTransportation" xml:space="preserve">
-    <value>Rare\nWeapons</value>
+    <value>Rare
+Weapons</value>
   </data>
   <data name="VaganFortification" xml:space="preserve">
-    <value>Rare\nArmor</value>
+    <value>Rare
+Armor</value>
   </data>
   <data name="VaganResearch" xml:space="preserve">
-    <value>Rare\nJewellery</value>
+    <value>Rare
+Jewellery</value>
   </data>
   <data name="VaganIntervention" xml:space="preserve">
-    <value>Rare\nJewels</value>
+    <value>Rare
+Jewels</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
-    <value>Quality\nGems</value>
+    <value>Quality
+Gems</value>
   </data>
   <data name="VoriciFortification" xml:space="preserve">
-    <value>Linking\nCurrency</value>
+    <value>Linking
+Currency</value>
   </data>
   <data name="VoriciResearch" xml:space="preserve">
-    <value>White\nSocktes</value>
+    <value>White
+Socktes</value>
   </data>
   <data name="VoriciIntervention" xml:space="preserve">
-    <value>Shaper\nScarab</value>
+    <value>Shaper
+Scarab</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
-    <value>Level1: 1 Mod\nLevel2: Low Chance for 2 Mods\nLevel3: 2 Mods</value>
+    <value>Level1: 1 Mod
+Level2: Low Chance for 2 Mods
+Level3: 2 Mods</value>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
-    <value>League Specific Items\n(Headhunter possible)</value>
+    <value>League Specific Items
+(Headhunter possible)</value>
   </data>
   <data name="GuffTransportationTooltip" xml:space="preserve">
-    <value>1 Alch\n200 Chaos\n6 Exalted\n20 Divine\n20 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds</value>
+    <value>1 Alch
+200 Chaos
+6 Exalted
+20 Divine
+20 Blessed
+1 Vaal
+Level1: 8 Seconds
+Level2: 12 Seconds
+Level3: 18 Seconds</value>
   </data>
   <data name="GuffFortificationTooltip" xml:space="preserve">
-    <value>20 Scouring\n5 * 4 Essences\n20 Exalted\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds</value>
+    <value>20 Scouring
+5 * 4 Essences
+20 Exalted
+1 Vaal
+Level1: 8 Seconds
+Level2: 12 Seconds
+Level3: 18 Seconds</value>
   </data>
   <data name="GuffResearchTooltip" xml:space="preserve">
-    <value>1 Alch\n100 Anullment\n100 Exalted\n1 Divine\n1 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds</value>
+    <value>1 Alch
+100 Anullment
+100 Exalted
+1 Divine
+1 Blessed
+1 Vaal
+Level1: 8 Seconds
+Level2: 12 Seconds
+Level3: 18 Seconds</value>
   </data>
   <data name="GuffInterventionTooltip" xml:space="preserve">
-    <value>1 Transmutation\n200 Alteration\n100 AUgmentation\n1 Regal\n1 Exalted\n1 Divine\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds</value>
+    <value>1 Transmutation
+200 Alteration
+100 AUgmentation
+1 Regal
+1 Exalted
+1 Divine
+1 Vaal
+Level1: 8 Seconds
+Level2: 12 Seconds
+Level3: 18 Seconds</value>
   </data>
   <data name="HillockTransportationTooltip" xml:space="preserve">
-    <value>Level1: 24 %\nLevel2: 26 %\nLevel3: 28%</value>
+    <value>Level1: 24 %
+Level2: 26 %
+Level3: 28%</value>
   </data>
   <data name="HillockFortificationTooltip" xml:space="preserve">
-    <value>Level1: 24 %\nLevel2: 26 %\nLevel3: 28 %</value>
+    <value>Level1: 24 %
+Level2: 26 %
+Level3: 28 %</value>
   </data>
   <data name="HillockResearchTooltip" xml:space="preserve">
-    <value>Level1: 22 %\nLevel2: 24 %\nLevel3: 26%</value>
+    <value>Level1: 22 %
+Level2: 24 %
+Level3: 26%</value>
   </data>
   <data name="HillockInterventionTooltip" xml:space="preserve">
-    <value>Level1: 25 %\nLevel2: 30 %\nLevel3: 35 %</value>
+    <value>Level1: 25 %
+Level2: 30 %
+Level3: 35 %</value>
   </data>
   <data name="ItThatFledResearchTooltip" xml:space="preserve">
-    <value>Level1: Charged\nLevel2: Enriched\nLevel3: Pure</value>
+    <value>Level1: Charged
+Level2: Enriched
+Level3: Pure</value>
   </data>
   <data name="JorginResearchTooltip" xml:space="preserve">
-    <value>Level1: Level 1 Talisman\nLevel2: Level 2 Talisman\nLevel3: Level 3 Talisman</value>
+    <value>Level1: Level 1 Talisman
+Level2: Level 2 Talisman
+Level3: Level 3 Talisman</value>
   </data>
   <data name="LeoResearchTooltip" xml:space="preserve">
-    <value>Level1: Blessed Orb\nLevel2: Divine Orb\nLevel3: Exalted Orb</value>
+    <value>Level1: Blessed Orb
+Level2: Divine Orb
+Level3: Exalted Orb</value>
   </data>
   <data name="ToraTransportationTooltip" xml:space="preserve">
-    <value>Time Limit: 8 Seconds\nCurrency\nDivination Cards\nUniques\nItem Level 100 Rare</value>
+    <value>Time Limit: 8 Seconds
+Currency
+Divination Cards
+Uniques
+Item Level 100 Rare</value>
   </data>
   <data name="ToraFortificationTooltip" xml:space="preserve">
-    <value>Level1: Gloves\nLevel2: Boots\nLevel3: Helmet</value>
+    <value>Level1: Gloves
+Level2: Boots
+Level3: Helmet</value>
   </data>
   <data name="ToraResearchTooltip" xml:space="preserve">
-    <value>Level1: 20m Exp\nLevel2: 70m Exp\nLevel3: 200m Exp</value>
+    <value>Level1: 20m Exp
+Level2: 70m Exp
+Level3: 200m Exp</value>
   </data>
   <data name="VoriceResearchTooltip" xml:space="preserve">
-    <value>Level1: 1 White Socket\nLevel2: 1-2 White Sockets\nLevel3: 1-3 White Sockets</value>
+    <value>Level1: 1 White Socket
+Level2: 1-2 White Sockets
+Level3: 1-3 White Sockets</value>
   </data>
 </root>
