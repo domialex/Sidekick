@@ -21,7 +21,7 @@ namespace Sidekick.Core.Loggers
 
         private void Initializer_OnProgress(ProgressEventArgs obj)
         {
-            Log($"{obj.TotalPercentage}% - {obj.Message} ({obj.Message})");
+            Log($"{obj.TotalPercentage}% - {obj.Message} ({obj.ServiceName})");
         }
 
         public event Action MessageLogged;
