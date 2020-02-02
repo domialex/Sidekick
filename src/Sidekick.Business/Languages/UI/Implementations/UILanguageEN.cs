@@ -5,12 +5,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         public string LanguageName => "en";
 
-        public string OverlayAccountName => "Account Name";
-        public string OverlayCharacter => "Character";
-        public string OverlayPrice => "Price";
-        public string OverlayItemLevel => "iLvl";
-        public string OverlayAge => "Age";
-
         public string LeagueLegendVeryValuable => "Very Valuable";
         public string LeagueLegendValuable => "Valuable";
         public string LeagueLegendLessValuable => "Less valuable";

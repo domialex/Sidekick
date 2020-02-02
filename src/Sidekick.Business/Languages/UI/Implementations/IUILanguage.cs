@@ -4,12 +4,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         string LanguageName { get; }
 
-        string OverlayAccountName { get; }
-        string OverlayCharacter { get; }
-        string OverlayPrice { get; }
-        string OverlayItemLevel { get; }
-        string OverlayAge { get; }
-
         string LeagueLegendVeryValuable { get; }
         string LeagueLegendValuable { get; }
         string LeagueLegendLessValuable { get; }
