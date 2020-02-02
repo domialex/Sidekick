@@ -5,10 +5,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         public new string LanguageName => "de";
 
-        public new string TrayIconSettings => "Einstellungen";
-        public new string TrayIconShowLogs => "Logs anzeigen";
-        public new string TrayIconExit => "Beenden";
-
         public new string OverlayAccountName => "Acount Name";
         public new string OverlayCharacter => "Charakter";
         public new string OverlayPrice => "Preis";
