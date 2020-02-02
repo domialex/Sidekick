@@ -1,4 +1,6 @@
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -6,6 +8,7 @@ using Sidekick.Business.Languages.UI;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
+using Sidekick.Localization.Tray;
 using Sidekick.UI.Helpers;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Settings;
@@ -54,9 +57,13 @@ namespace Sidekick.Windows.TrayIcon
 
         private void UpdateLanguage()
         {
-            SettingsHeader = uiLanguageProvider.Language.TrayIconSettings;
-            ShowLogsHeader = uiLanguageProvider.Language.TrayIconShowLogs;
-            ExitHeader = uiLanguageProvider.Language.TrayIconExit;
+            var cultureInfo = new CultureInfo(uiLanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            SettingsHeader = TrayResources.Settings;
+            ShowLogsHeader = TrayResources.ShowLogs;
+            ExitHeader = TrayResources.Exit;
         }
 
         private void ChangeLeague(string id)

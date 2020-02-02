@@ -23,6 +23,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Tray\TrayResources.Designer.cs">
+      <DependentUpon>TrayResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +40,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Splash\SplashResources.resx">
       <LastGenOutput>SplashResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Tray\TrayResources.resx">
+      <LastGenOutput>TrayResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>

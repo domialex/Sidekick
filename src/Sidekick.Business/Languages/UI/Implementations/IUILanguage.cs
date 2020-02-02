@@ -4,10 +4,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         string LanguageName { get; }
 
-        string TrayIconSettings { get; }
-        string TrayIconShowLogs { get; }
-        string TrayIconExit { get; }
-
         string OverlayAccountName { get; }
         string OverlayCharacter { get; }
         string OverlayPrice { get; }
