@@ -1,13 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Localization.PriceCheck;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 
@@ -53,11 +55,15 @@ namespace Sidekick.Windows.Overlay
 
         private void UpdateUIText()
         {
-            textBoxAccountName.Text = Legacy.UILanguageProvider.Language.OverlayAccountName;
-            textBoxAge.Text = Legacy.UILanguageProvider.Language.OverlayAge;
-            textBoxCharacter.Text = Legacy.UILanguageProvider.Language.OverlayCharacter;
-            textBoxItemLevel.Text = Legacy.UILanguageProvider.Language.OverlayItemLevel;
-            textBoxPrice.Text = Legacy.UILanguageProvider.Language.OverlayPrice;
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            textBoxAccountName.Text = PriceCheckResources.OverlayAccountName;
+            textBoxAge.Text = PriceCheckResources.OverlayAge;
+            textBoxCharacter.Text = PriceCheckResources.OverlayCharacter;
+            textBoxItemLevel.Text = PriceCheckResources.OverlayItemLevel;
+            textBoxPrice.Text = PriceCheckResources.OverlayPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)
