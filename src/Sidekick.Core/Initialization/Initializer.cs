@@ -111,36 +111,35 @@ namespace Sidekick.Core.Initialization
 
         private async Task OnBeforeInit()
         {
-            await Task.WhenAll(beforeInitServices.Select(s => Task.Run(async () =>
+            foreach (var s in beforeInitServices)
             {
                 ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - Start Before Init");
                 await s.OnBeforeInit();
                 BeforeInitCompleted++;
                 ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - End Before Init");
-            })));
-
+            }
         }
 
         private async Task OnInit()
         {
-            await Task.WhenAll(initServices.Select(s => Task.Run(async () =>
+            foreach (var s in initServices)
             {
                 ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - Start Init");
                 await s.OnInit();
                 InitCompleted++;
                 ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - End Init");
-            })));
+            }
         }
 
         private async Task OnAfterInit()
         {
-            await Task.WhenAll(afterInitServices.Select(s => Task.Run(async () =>
+            foreach (var s in afterInitServices)
             {
                 ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - Start After Init");
                 await s.OnAfterInit();
                 AfterInitCompleted++;
                 ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - End After Init");
-            })));
+            }
         }
     }
 }
