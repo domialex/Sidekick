@@ -5,11 +5,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         public string LanguageName => "en";
 
-        public string LeagueLegendVeryValuable => "Very Valuable";
-        public string LeagueLegendValuable => "Valuable";
-        public string LeagueLegendLessValuable => "Less valuable";
-        public string LeagueLegendNotValuable => "Not valuable";
-
         #region Betrayal
         public string BetrayalAislingTransportaion => "Veiled\nWeapons";
         public string BetrayalAislingFortification => "Veiled\nArmor";

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -87,11 +89,11 @@ namespace Sidekick.Windows.LeagueOverlay
         {
             var currentPageIndex = tabControlLeagueOverlay.SelectedIndex;
 
-            if(e.Delta > 0 && currentPageIndex > 0 )       // Scroll Up
+            if (e.Delta > 0 && currentPageIndex > 0)       // Scroll Up
             {
-                tabControlLeagueOverlay.SelectedIndex = --currentPageIndex;              
+                tabControlLeagueOverlay.SelectedIndex = --currentPageIndex;
             }
-            else if(e.Delta < 0 && currentPageIndex <= tabControlLeagueOverlay.Items.Count)                   // Scroll Down
+            else if (e.Delta < 0 && currentPageIndex <= tabControlLeagueOverlay.Items.Count)                   // Scroll Down
             {
                 tabControlLeagueOverlay.SelectedIndex = ++currentPageIndex;
             }
@@ -125,7 +127,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         public void SetWindowPosition(int x, int y)
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
             }
@@ -140,7 +142,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         public int GetWidth()
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 return (int)Dispatcher.Invoke(new GetWidthCallback(GetWidth));
             }
@@ -153,7 +155,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         public int GetHeight()
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 return (int)Dispatcher.Invoke(new GetHeightCallback(GetHeight));
             }
@@ -210,13 +212,12 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateIncursionUIText()
         {
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
             labelIncursionHeaderContains.Content = Legacy.UILanguageProvider.Language.IncursionHeaderContains;
             labelIncursionHeaderModifiers.Content = Legacy.UILanguageProvider.Language.IncursionHeaderModifiers;
-
-            labelIncursionLegendVeryValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendVeryValuable;
-            labelIncursionLegendValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendValuable;
-            labelIncursionLegendNotValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendNotValuable;
-            labelIncursionLegendLessValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendLessValuable;
 
             textBlockGuardhouse.Text = Legacy.UILanguageProvider.Language.IncursionGuardhouse;
             textBlockBarracks.Text = Legacy.UILanguageProvider.Language.IncursionBarracks;
@@ -368,6 +369,10 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateBetrayalUIText()
         {
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
             textBlockAislingTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalAislingTransportaion;
             textBlockAislingFortification.Text = Legacy.UILanguageProvider.Language.BetrayalAislingFortification;
             textBlockAislingResearch.Text = Legacy.UILanguageProvider.Language.BetrayalAislingResearch;
@@ -469,19 +474,13 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockVoriciResearch.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciResearch;
             textBlockVoriciResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalVoriceResearchTooltip;
             textBlockVoriciTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciTransportation;
-
-            labelLegendHighValue.Content = Legacy.UILanguageProvider.Language.LeagueLegendVeryValuable;
-            labelLegendGoodValue.Content = Legacy.UILanguageProvider.Language.LeagueLegendValuable;
-            labelLegendNormalValue.Content = Legacy.UILanguageProvider.Language.LeagueLegendLessValuable;
-            labelLegendNoValue.Content = Legacy.UILanguageProvider.Language.LeagueLegendNotValuable;
         }
 
         private void UpdateBlightUIText()
         {
-            labelBlightLegendLessValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendLessValuable;
-            labelBlightLegendNotValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendNotValuable;
-            labelBlightLegendValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendValuable;
-            labelBlightLegendVeryValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendVeryValuable;
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
             labelClearOil.Content = Legacy.UILanguageProvider.Language.BlightClearOil;
             textBlockClearOilEffect.Text = Legacy.UILanguageProvider.Language.BlightClearOilEffect;
@@ -522,6 +521,10 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateMetamorphUIText()
         {
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
             labelAbrasiveCatalyst.Content = Legacy.UILanguageProvider.Language.MetamorphAbrasiveCatalyst;
             textBlockAbrasiveCatalystEffect.Text = Legacy.UILanguageProvider.Language.MetamorphAbrasiveCatalystEffect;
 
@@ -549,6 +552,10 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateDelveUIText()
         {
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
             string fracturedWallInfoPointer = "*";
 
             var mineFossils = new[]
@@ -644,11 +651,6 @@ namespace Sidekick.Windows.LeagueOverlay
 
             labelDelveFossilRoom.Content = Legacy.UILanguageProvider.Language.DelveFossilRoom;
             SetTextBlockList(textBlockDelveFossilRoomFossils, fossilRoomFossils);
-
-            labelDelveLegendLessValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendLessValuable;
-            labelDelveLegendNotValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendNotValuable;
-            labelDelveLegendValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendValuable;
-            labelDelveLegendVeryValuable.Content = Legacy.UILanguageProvider.Language.LeagueLegendVeryValuable;
 
             labelDelveInformation.Content = Legacy.UILanguageProvider.Language.DelveInformation;
         }

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Sidekick.Windows.LeagueOverlay"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:r="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
     Width="1200"
     Height="980"
     AllowsTransparency="True"
@@ -169,13 +170,12 @@
                         Grid.Column="1"
                         Stroke="Black" />
                     <Label
-                        Name="labelIncursionLegendVeryValuable"
                         Grid.Row="26"
                         Grid.Column="1"
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="Very Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <Rectangle
@@ -183,13 +183,12 @@
                         Grid.Column="2"
                         Stroke="Black" />
                     <Label
-                        Name="labelIncursionLegendValuable"
                         Grid.Row="26"
                         Grid.Column="2"
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Rectangle
@@ -197,13 +196,12 @@
                         Grid.Column="3"
                         Stroke="Black" />
                     <Label
-                        Name="labelIncursionLegendLessValuable"
                         Grid.Row="26"
                         Grid.Column="3"
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="Less Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Rectangle
@@ -211,13 +209,12 @@
                         Grid.Column="4"
                         Stroke="Black" />
                     <Label
-                        Name="labelIncursionLegendNotValuable"
                         Grid.Row="26"
                         Grid.Column="4"
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="Not Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <!--  Guardhouse  -->
@@ -2509,43 +2506,39 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource SolidColorBrush_Text}" />
                     <Label
-                        Name="labelDelveLegendNotValuable"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="20,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Not valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <Label
-                        Name="labelDelveLegendLessValuable"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="0,0,20,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="Less valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
-                        Name="labelDelveLegendValuable"
                         Grid.Row="2"
                         Grid.Column="2"
                         Margin="20,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
-                        Name="labelDelveLegendVeryValuable"
                         Grid.Row="2"
                         Grid.Column="2"
                         Margin="0,0,20,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="Very valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <!--  Information  -->
@@ -2599,7 +2592,6 @@
                     </Grid.ColumnDefinitions>
                     <!--  Legend  -->
                     <Label
-                        x:Name="labelLegendHighValue"
                         Grid.Row="5"
                         Grid.Column="5"
                         Grid.ColumnSpan="2"
@@ -2608,11 +2600,10 @@
                         Margin="4,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Very valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <Label
-                        x:Name="labelLegendGoodValue"
                         Grid.Row="5"
                         Grid.Column="7"
                         Grid.ColumnSpan="2"
@@ -2621,11 +2612,10 @@
                         Margin="17,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
-                        x:Name="labelLegendNormalValue"
                         Grid.Row="5"
                         Grid.Column="9"
                         Grid.ColumnSpan="2"
@@ -2634,11 +2624,10 @@
                         Margin="2,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Less valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
-                        x:Name="labelLegendNoValue"
                         Grid.Row="5"
                         Grid.Column="11"
                         Grid.ColumnSpan="2"
@@ -2647,7 +2636,7 @@
                         Margin="20,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="Not valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <!--  Types  -->
@@ -4291,46 +4280,42 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource SolidColorBrush_Text}" />
                     <Label
-                        x:Name="labelBlightLegendNotValuable"
                         Grid.Row="4"
                         Grid.Column="1"
                         Margin="50,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Not valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <Label
-                        x:Name="labelBlightLegendLessValuable"
                         Grid.Row="4"
                         Grid.Column="1"
                         Margin="0,0,50,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="Less valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
-                        x:Name="labelBlightLegendValuable"
                         Grid.Row="4"
                         Grid.Column="2"
                         Margin="50,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
-                        x:Name="labelBlightLegendVeryValuable"
                         Grid.Row="4"
                         Grid.Column="2"
                         Margin="0,0,50,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="Very valuable"
+                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />

@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Leagues\LeagueResources.Designer.cs">
+      <DependentUpon>LeagueResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="PriceCheck\PriceCheckResources.Designer.cs">
       <DependentUpon>PriceCheckResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -36,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Leagues\LeagueResources.resx">
+      <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="PriceCheck\PriceCheckResources.resx">
       <LastGenOutput>PriceCheckResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -55,6 +64,10 @@
       <LastGenOutput>TrayResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Leagues\Betrayal\" />
   </ItemGroup>
 
 </Project>

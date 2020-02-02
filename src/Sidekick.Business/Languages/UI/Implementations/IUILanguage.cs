@@ -4,11 +4,6 @@ namespace Sidekick.Business.Languages.UI.Implementations
     {
         string LanguageName { get; }
 
-        string LeagueLegendVeryValuable { get; }
-        string LeagueLegendValuable { get; }
-        string LeagueLegendLessValuable { get; }
-        string LeagueLegendNotValuable { get; }
-
         // TODO: Move Values for Overlays to classes
 
         #region Betrayal
