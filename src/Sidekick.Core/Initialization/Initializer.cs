@@ -100,13 +100,13 @@ namespace Sidekick.Core.Initialization
 
         private async Task OnReset()
         {
-            await Task.WhenAll(resetServices.Select(s => Task.Run(async () =>
+            foreach (var s in resetServices)
             {
                 ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Reset");
                 await s.OnReset();
                 ResetCompleted++;
                 ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Reset");
-            })));
+            }
         }
 
         private async Task OnBeforeInit()
