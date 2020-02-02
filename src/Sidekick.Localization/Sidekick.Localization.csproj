@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Leagues\Betrayal\BetrayalResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BetrayalResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Leagues\LeagueResources.Designer.cs">
       <DependentUpon>LeagueResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -41,6 +46,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BetrayalResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Leagues\LeagueResources.resx">
       <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -64,10 +73,6 @@
       <LastGenOutput>TrayResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Leagues\Betrayal\" />
   </ItemGroup>
 
 </Project>

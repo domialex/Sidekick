@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Sidekick.Localization.Leagues.Betrayal;
 
 namespace Sidekick.Windows.LeagueOverlay
 {
@@ -373,107 +374,107 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            textBlockAislingTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalAislingTransportaion;
-            textBlockAislingFortification.Text = Legacy.UILanguageProvider.Language.BetrayalAislingFortification;
-            textBlockAislingResearch.Text = Legacy.UILanguageProvider.Language.BetrayalAislingResearch;
-            textBlockAislingResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalAislingResearchTooltip;
-            textBlockAislingIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalAislingIntervention;
+            textBlockAislingTransportation.Text = BetrayalResources.AislingTransportaion;
+            textBlockAislingFortification.Text = BetrayalResources.AislingFortification;
+            textBlockAislingResearch.Text = BetrayalResources.AislingResearch;
+            textBlockAislingResearch.ToolTip = BetrayalResources.AislingResearchTooltip;
+            textBlockAislingIntervention.Text = BetrayalResources.AislingIntervention;
 
-            textBlockCameriaFortification.Text = Legacy.UILanguageProvider.Language.BetrayalCameriaFortification;
-            textBlockCameriaIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalCameriaIntervention;
-            textBlockCameriaResearch.Text = Legacy.UILanguageProvider.Language.BetrayalCameriaResearch;
-            textBlockCameriaTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalCameriaTransportation;
-            textBlockCameriaTransportation.ToolTip = Legacy.UILanguageProvider.Language.BetrayalCameriaTransportationTooltip;
+            textBlockCameriaFortification.Text = BetrayalResources.CameriaFortification;
+            textBlockCameriaIntervention.Text = BetrayalResources.CameriaIntervention;
+            textBlockCameriaResearch.Text = BetrayalResources.CameriaResearch;
+            textBlockCameriaTransportation.Text = BetrayalResources.CameriaTransportation;
+            textBlockCameriaTransportation.ToolTip = BetrayalResources.CameriaTransportationTooltip;
 
-            textBlockElreonFortification.Text = Legacy.UILanguageProvider.Language.BetrayalElreonFortification;
-            textBlockElreonIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalElreonIntervention;
-            textBlockElreonResearch.Text = Legacy.UILanguageProvider.Language.BetrayalElreonResearch;
-            textBlockElreonTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalElreonTransportation;
+            textBlockElreonFortification.Text = BetrayalResources.ElreonFortification;
+            textBlockElreonIntervention.Text = BetrayalResources.ElreonIntervention;
+            textBlockElreonResearch.Text = BetrayalResources.ElreonResearch;
+            textBlockElreonTransportation.Text = BetrayalResources.ElreonTransportation;
 
-            textBlockGraviciusFortification.Text = Legacy.UILanguageProvider.Language.BetrayalGraviciusFortification;
-            textBlockGraviciusIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalGraviciusIntervention;
-            textBlockGraviciusResearch.Text = Legacy.UILanguageProvider.Language.BetrayalGraviciusResearch;
-            textBlockGraviciusTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalGraviciusTransportation;
+            textBlockGraviciusFortification.Text = BetrayalResources.GraviciusFortification;
+            textBlockGraviciusIntervention.Text = BetrayalResources.GraviciusIntervention;
+            textBlockGraviciusResearch.Text = BetrayalResources.GraviciusResearch;
+            textBlockGraviciusTransportation.Text = BetrayalResources.GraviciusTransportation;
 
-            textBlockGuffFortification.Text = Legacy.UILanguageProvider.Language.BetrayalGuffFortification;
-            textBlockGuffFortification.ToolTip = Legacy.UILanguageProvider.Language.BetrayalGuffFortificationTooltip;
-            textBlockGuffIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalGuffIntervention;
-            textBlockGuffIntervention.ToolTip = Legacy.UILanguageProvider.Language.BetrayalGuffInterventionTooltip;
-            textBlockGuffResearch.Text = Legacy.UILanguageProvider.Language.BetrayalGuffResearch;
-            textBlockGuffResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalGuffResearchTooltip;
-            textBlockGuffTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalGuffTransportation;
-            textBlockGuffTransportation.ToolTip = Legacy.UILanguageProvider.Language.BetrayalGuffTransportationTooltip;
+            textBlockGuffFortification.Text = BetrayalResources.GuffFortification;
+            textBlockGuffFortification.ToolTip = BetrayalResources.GuffFortificationTooltip;
+            textBlockGuffIntervention.Text = BetrayalResources.GuffIntervention;
+            textBlockGuffIntervention.ToolTip = BetrayalResources.GuffInterventionTooltip;
+            textBlockGuffResearch.Text = BetrayalResources.GuffResearch;
+            textBlockGuffResearch.ToolTip = BetrayalResources.GuffResearchTooltip;
+            textBlockGuffTransportation.Text = BetrayalResources.GuffTransportation;
+            textBlockGuffTransportation.ToolTip = BetrayalResources.GuffTransportationTooltip;
 
-            textBlockHakuFortification.Text = Legacy.UILanguageProvider.Language.BetrayalHakuFortification;
-            textBlockHakuIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalHakuIntervention;
-            textBlockHakuResearch.Text = Legacy.UILanguageProvider.Language.BetrayalHakuResearch;
-            textBlockHakuTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalHakuTransportation;
+            textBlockHakuFortification.Text = BetrayalResources.HakuFortification;
+            textBlockHakuIntervention.Text = BetrayalResources.HakuIntervention;
+            textBlockHakuResearch.Text = BetrayalResources.HakuResearch;
+            textBlockHakuTransportation.Text = BetrayalResources.HakuTransportation;
 
-            textBlockHillockFortification.Text = Legacy.UILanguageProvider.Language.BetrayalHillockFortification;
-            textBlockHillockFortification.ToolTip = Legacy.UILanguageProvider.Language.BetrayalHillockFortificationTooltip;
-            textBlockHillockIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalHillockIntervention;
-            textBlockHillockIntervention.ToolTip = Legacy.UILanguageProvider.Language.BetrayalHillockInterventionTooltip;
-            textBlockHillockResearch.Text = Legacy.UILanguageProvider.Language.BetrayalHillockResearch;
-            textBlockHillockResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalHillockResearchTooltip;
-            textBlockHillockTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalHillockTransportation;
-            textBlockHillockTransportation.ToolTip = Legacy.UILanguageProvider.Language.BetrayalHillockTransportationTooltip;
+            textBlockHillockFortification.Text = BetrayalResources.HillockFortification;
+            textBlockHillockFortification.ToolTip = BetrayalResources.HillockFortificationTooltip;
+            textBlockHillockIntervention.Text = BetrayalResources.HillockIntervention;
+            textBlockHillockIntervention.ToolTip = BetrayalResources.HillockInterventionTooltip;
+            textBlockHillockResearch.Text = BetrayalResources.HillockResearch;
+            textBlockHillockResearch.ToolTip = BetrayalResources.HillockResearchTooltip;
+            textBlockHillockTransportation.Text = BetrayalResources.HillockTransportation;
+            textBlockHillockTransportation.ToolTip = BetrayalResources.HillockTransportationTooltip;
 
-            textBlockItThatFledFortification.Text = Legacy.UILanguageProvider.Language.BetrayalItThatFledFortification;
-            textBlockItThatFledIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalItThatFledIntervention;
-            textBlockItThatFledResearch.Text = Legacy.UILanguageProvider.Language.BetrayalItThatFledResearch;
-            textBlockItThatFledResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalItThatFledResearchTooltip;
-            textBlockItThatFledTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalItThatFledTransportation;
+            textBlockItThatFledFortification.Text = BetrayalResources.ItThatFledFortification;
+            textBlockItThatFledIntervention.Text = BetrayalResources.ItThatFledIntervention;
+            textBlockItThatFledResearch.Text = BetrayalResources.ItThatFledResearch;
+            textBlockItThatFledResearch.ToolTip = BetrayalResources.ItThatFledResearchTooltip;
+            textBlockItThatFledTransportation.Text = BetrayalResources.ItThatFledTransportation;
 
-            textBlockJanusFortification.Text = Legacy.UILanguageProvider.Language.BetrayalJanusFortification;
-            textBlockJanusIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalJanusIntervention;
-            textBlockJanusResearch.Text = Legacy.UILanguageProvider.Language.BetrayalJanusResearch;
-            textBlockJanusTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalJanusTransportaion;
+            textBlockJanusFortification.Text = BetrayalResources.JanusFortification;
+            textBlockJanusIntervention.Text = BetrayalResources.JanusIntervention;
+            textBlockJanusResearch.Text = BetrayalResources.JanusResearch;
+            textBlockJanusTransportation.Text = BetrayalResources.JanusTransportaion;
 
-            textBlockJorginFortification.Text = Legacy.UILanguageProvider.Language.BetrayalJorginFortification;
-            textBlockJorginIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalJorginIntervention;
-            textBlockJorginResearch.Text = Legacy.UILanguageProvider.Language.BetrayalJorginResearch;
-            textBlockJorginResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalJorginResearchTooltip;
-            textBlockJorginTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalJorginTransportation;
+            textBlockJorginFortification.Text = BetrayalResources.JorginFortification;
+            textBlockJorginIntervention.Text = BetrayalResources.JorginIntervention;
+            textBlockJorginResearch.Text = BetrayalResources.JorginResearch;
+            textBlockJorginResearch.ToolTip = BetrayalResources.JorginResearchTooltip;
+            textBlockJorginTransportation.Text = BetrayalResources.JorginTransportation;
 
-            textBlockKorrelFortifcation.Text = Legacy.UILanguageProvider.Language.BetrayalKorrelFortification;
-            textBlockKorrelIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalKorrelIntervention;
-            textBlockKorrelResearch.Text = Legacy.UILanguageProvider.Language.BetrayalKorrellResearch;
-            textBlockKorrelTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalKorrellTransportation;
+            textBlockKorrelFortifcation.Text = BetrayalResources.KorrelFortification;
+            textBlockKorrelIntervention.Text = BetrayalResources.KorrelIntervention;
+            textBlockKorrelResearch.Text = BetrayalResources.KorrellResearch;
+            textBlockKorrelTransportation.Text = BetrayalResources.KorrellTransportation;
 
-            textBlockLeoFortification.Text = Legacy.UILanguageProvider.Language.BetrayalLeoFortification;
-            textBlockLeoIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalLeoIntervention;
-            textBlockLeoResearch.Text = Legacy.UILanguageProvider.Language.BetrayalLeoResearch;
-            textBlockLeoResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalLeoResearchTooltip;
-            textBlockLeoTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalLeoTransportation;
+            textBlockLeoFortification.Text = BetrayalResources.LeoFortification;
+            textBlockLeoIntervention.Text = BetrayalResources.LeoIntervention;
+            textBlockLeoResearch.Text = BetrayalResources.LeoResearch;
+            textBlockLeoResearch.ToolTip = BetrayalResources.LeoResearchTooltip;
+            textBlockLeoTransportation.Text = BetrayalResources.LeoTransportation;
 
-            textBlockRikerFortification.Text = Legacy.UILanguageProvider.Language.BetrayalRikerFortification;
-            textBlockRikerIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalRikerIntervention;
-            textBlockRikerResearch.Text = Legacy.UILanguageProvider.Language.BetrayalRikerResearch;
-            textBlockRikerTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalRikerTransportation;
+            textBlockRikerFortification.Text = BetrayalResources.RikerFortification;
+            textBlockRikerIntervention.Text = BetrayalResources.RikerIntervention;
+            textBlockRikerResearch.Text = BetrayalResources.RikerResearch;
+            textBlockRikerTransportation.Text = BetrayalResources.RikerTransportation;
 
-            textBlockRinFortification.Text = Legacy.UILanguageProvider.Language.BetrayalRinFortification;
-            textBlockRinIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalRinIntervention;
-            textBlockRinResearch.Text = Legacy.UILanguageProvider.Language.BetrayalRinResearch;
-            textBlockRinTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalRinTransportation;
+            textBlockRinFortification.Text = BetrayalResources.RinFortification;
+            textBlockRinIntervention.Text = BetrayalResources.RinIntervention;
+            textBlockRinResearch.Text = BetrayalResources.RinResearch;
+            textBlockRinTransportation.Text = BetrayalResources.RinTransportation;
 
-            textBlockToraFortification.Text = Legacy.UILanguageProvider.Language.BetrayalToraFortification;
-            textBlockToraFortification.ToolTip = Legacy.UILanguageProvider.Language.BetrayalToraFortificationTooltip;
-            textBlockToraIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalToraIntervention;
-            textBlockToraResearch.Text = Legacy.UILanguageProvider.Language.BetrayalToraResearch;
-            textBlockToraResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalToraResearchTooltip;
-            textBlockToraTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalToraTransportation;
-            textBlockToraTransportation.ToolTip = Legacy.UILanguageProvider.Language.BetrayalToraTransportationTooltip;
+            textBlockToraFortification.Text = BetrayalResources.ToraFortification;
+            textBlockToraFortification.ToolTip = BetrayalResources.ToraFortificationTooltip;
+            textBlockToraIntervention.Text = BetrayalResources.ToraIntervention;
+            textBlockToraResearch.Text = BetrayalResources.ToraResearch;
+            textBlockToraResearch.ToolTip = BetrayalResources.ToraResearchTooltip;
+            textBlockToraTransportation.Text = BetrayalResources.ToraTransportation;
+            textBlockToraTransportation.ToolTip = BetrayalResources.ToraTransportationTooltip;
 
-            textBlockVaganFortification.Text = Legacy.UILanguageProvider.Language.BetrayalVaganFortification;
-            textBlockVaganIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalVaganIntervention;
-            textBlockVaganResearch.Text = Legacy.UILanguageProvider.Language.BetrayalVaganResearch;
-            textBlockVaganTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalVaganTransportation;
+            textBlockVaganFortification.Text = BetrayalResources.VaganFortification;
+            textBlockVaganIntervention.Text = BetrayalResources.VaganIntervention;
+            textBlockVaganResearch.Text = BetrayalResources.VaganResearch;
+            textBlockVaganTransportation.Text = BetrayalResources.VaganTransportation;
 
-            textBlockVoriciFortification.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciFortification;
-            textBlockVoriciIntervention.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciIntervention;
-            textBlockVoriciResearch.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciResearch;
-            textBlockVoriciResearch.ToolTip = Legacy.UILanguageProvider.Language.BetrayalVoriceResearchTooltip;
-            textBlockVoriciTransportation.Text = Legacy.UILanguageProvider.Language.BetrayalVoriciTransportation;
+            textBlockVoriciFortification.Text = BetrayalResources.VoriciFortification;
+            textBlockVoriciIntervention.Text = BetrayalResources.VoriciIntervention;
+            textBlockVoriciResearch.Text = BetrayalResources.VoriciResearch;
+            textBlockVoriciResearch.ToolTip = BetrayalResources.VoriceResearchTooltip;
+            textBlockVoriciTransportation.Text = BetrayalResources.VoriciTransportation;
         }
 
         private void UpdateBlightUIText()
