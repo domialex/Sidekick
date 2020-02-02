@@ -63,36 +63,36 @@ namespace Sidekick.Localization.Leagues {
         /// <summary>
         ///   Looks up a localized string similar to Less Valuable.
         /// </summary>
-        public static string LeagueLegendLessValuable {
+        public static string LegendLessValuable {
             get {
-                return ResourceManager.GetString("LeagueLegendLessValuable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not Valuable.
-        /// </summary>
-        public static string LeagueLegendNotValuable {
-            get {
-                return ResourceManager.GetString("LeagueLegendNotValuable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valuable.
-        /// </summary>
-        public static string LeagueLegendValuable {
-            get {
-                return ResourceManager.GetString("LeagueLegendValuable", resourceCulture);
+                return ResourceManager.GetString("LegendLessValuable", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Very Valuable.
         /// </summary>
-        public static string LeagueLegendVeryValuable {
+        public static string LegendMoreValuable {
             get {
-                return ResourceManager.GetString("LeagueLegendVeryValuable", resourceCulture);
+                return ResourceManager.GetString("LegendMoreValuable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Valuable.
+        /// </summary>
+        public static string LegendNotValuable {
+            get {
+                return ResourceManager.GetString("LegendNotValuable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valuable.
+        /// </summary>
+        public static string LegendValuable {
+            get {
+                return ResourceManager.GetString("LegendValuable", resourceCulture);
             }
         }
     }

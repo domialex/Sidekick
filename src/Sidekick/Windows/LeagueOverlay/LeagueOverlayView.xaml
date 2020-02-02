@@ -175,7 +175,7 @@
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
+                        Content="{x:Static r:LeagueResources.LegendMoreValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <Rectangle
@@ -188,7 +188,7 @@
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
+                        Content="{x:Static r:LeagueResources.LegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Rectangle
@@ -201,7 +201,7 @@
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
+                        Content="{x:Static r:LeagueResources.LegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Rectangle
@@ -214,7 +214,7 @@
                         Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
+                        Content="{x:Static r:LeagueResources.LegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <!--  Guardhouse  -->
@@ -2511,7 +2511,7 @@
                         Margin="20,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
+                        Content="{x:Static r:LeagueResources.LegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <Label
@@ -2520,7 +2520,7 @@
                         Margin="0,0,20,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
+                        Content="{x:Static r:LeagueResources.LegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
@@ -2529,7 +2529,7 @@
                         Margin="20,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
+                        Content="{x:Static r:LeagueResources.LegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
@@ -2538,7 +2538,7 @@
                         Margin="0,0,20,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
+                        Content="{x:Static r:LeagueResources.LegendMoreValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <!--  Information  -->
@@ -2600,7 +2600,7 @@
                         Margin="4,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
+                        Content="{x:Static r:LeagueResources.LegendMoreValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <Label
@@ -2612,7 +2612,7 @@
                         Margin="17,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
+                        Content="{x:Static r:LeagueResources.LegendValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
@@ -2624,7 +2624,7 @@
                         Margin="2,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
+                        Content="{x:Static r:LeagueResources.LegendLessValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
@@ -2636,7 +2636,7 @@
                         Margin="20,84,0,-40"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
+                        Content="{x:Static r:LeagueResources.LegendNotValuable}"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <!--  Types  -->
@@ -4285,7 +4285,7 @@
                         Margin="50,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendNotValuable}"
+                        Content="{x:Static r:LeagueResources.LegendNotValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
@@ -4295,7 +4295,7 @@
                         Margin="0,0,50,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendLessValuable}"
+                        Content="{x:Static r:LeagueResources.LegendLessValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
@@ -4305,7 +4305,7 @@
                         Margin="50,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendValuable}"
+                        Content="{x:Static r:LeagueResources.LegendValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
@@ -4315,7 +4315,7 @@
                         Margin="0,0,50,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Content="{x:Static r:LeagueResources.LeagueLegendVeryValuable}"
+                        Content="{x:Static r:LeagueResources.LegendMoreValuable}"
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />

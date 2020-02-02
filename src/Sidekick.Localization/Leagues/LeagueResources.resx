@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LeagueLegendLessValuable" xml:space="preserve">
+  <data name="LegendLessValuable" xml:space="preserve">
     <value>Less Valuable</value>
   </data>
-  <data name="LeagueLegendNotValuable" xml:space="preserve">
+  <data name="LegendNotValuable" xml:space="preserve">
     <value>Not Valuable</value>
   </data>
-  <data name="LeagueLegendValuable" xml:space="preserve">
+  <data name="LegendValuable" xml:space="preserve">
     <value>Valuable</value>
   </data>
-  <data name="LeagueLegendVeryValuable" xml:space="preserve">
+  <data name="LegendMoreValuable" xml:space="preserve">
     <value>Very Valuable</value>
   </data>
 </root>
