@@ -7,7 +7,7 @@ namespace Sidekick.Core.Settings
     {
         public const string FileName = "Sidekick_settings.json";
 
-        public string Language { get; set; }
+        public string Language_UI { get; set; }
 
         public string LeagueId { get; set; }
 

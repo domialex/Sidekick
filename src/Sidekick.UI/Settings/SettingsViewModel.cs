@@ -68,7 +68,7 @@ namespace Sidekick.UI.Settings
             };
 
             AssignValues(Settings, sidekickSettings);
-            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == Settings.Language));
+            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == Settings.Language_UI));
             sidekickSettings.Save();
         }
 
