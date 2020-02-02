@@ -25,7 +25,7 @@ namespace Sidekick.Business.Languages.UI
                 AvailableLanguages.Add(attribute);
             }
 
-            var current = AvailableLanguages.FirstOrDefault(x => x.Name == settings.UILanguage);
+            var current = AvailableLanguages.FirstOrDefault(x => x.Name == settings.Language);
             if (current != null)
             {
                 SetLanguage(current);

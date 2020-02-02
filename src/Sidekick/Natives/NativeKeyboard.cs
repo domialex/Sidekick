@@ -115,12 +115,12 @@ namespace Sidekick.Natives
                     break;
                 case KeyboardCommandEnum.LeaveParty:
                     // This operation is only valid if the user has added their character name to the settings file.
-                    if (string.IsNullOrEmpty(configuration.CharacterName))
+                    if (string.IsNullOrEmpty(configuration.Character_Name))
                     {
                         logger.Log(@"This command requires a ""CharacterName"" to be specified in the settings menu.", LogState.Warning);
                         return;
                     }
-                    SendKeys.SendWait($"{{Enter}}/kick {configuration.CharacterName}{{Enter}}");
+                    SendKeys.SendWait($"{{Enter}}/kick {configuration.Character_Name}{{Enter}}");
                     break;
             }
         }

@@ -134,7 +134,7 @@ namespace Sidekick.Helpers.Input
 
             if (item != null)
             {
-                if (Legacy.Settings.CurrentWikiSettings == Core.Settings.WikiSetting.PoeDb)
+                if (Legacy.Settings.Wiki_Preferred == Core.Settings.WikiSetting.PoeDb)
                 {
                     Legacy.PoeDbClient.Open(item);
                 }
