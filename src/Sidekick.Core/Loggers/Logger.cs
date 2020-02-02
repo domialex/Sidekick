@@ -1,18 +1,27 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Core.Loggers
 {
-    public class Logger : ILogger, IOnBeforeInit, IOnInit, IOnAfterInit, IOnReset
+    public class Logger : ILogger, IDisposable
     {
         private readonly SidekickSettings configuration;
+        private readonly IInitializer initializer;
 
-        public Logger(SidekickSettings configuration)
+        public Logger(SidekickSettings configuration,
+            IInitializer initializer)
         {
             this.configuration = configuration;
+            this.initializer = initializer;
+
+            initializer.OnProgress += Initializer_OnProgress;
+        }
+
+        private void Initializer_OnProgress(ProgressEventArgs obj)
+        {
+            Log($"{obj.TotalPercentage}% - {obj.Message} ({obj.Message})");
         }
 
         public event Action MessageLogged;
@@ -25,20 +34,23 @@ namespace Sidekick.Core.Loggers
                 return;
             }
 
-            var log = new Log()
+            lock (Logs)
             {
-                Date = DateTime.Now,
-                Message = text,
-                State = state
-            };
+                var log = new Log()
+                {
+                    Date = DateTime.Now,
+                    Message = text,
+                    State = state
+                };
 
-            if (Logs.Count >= 100)
-            {
-                Logs.RemoveAt(0);
+                if (Logs.Count >= 100)
+                {
+                    Logs.RemoveRange(0, Logs.Count - 100);
+                }
+
+                Logs.Add(log);
+                MessageLogged?.Invoke();
             }
-
-            Logs.Add(log);
-            MessageLogged?.Invoke();
         }
 
         public void LogException(Exception e)
@@ -63,29 +75,9 @@ namespace Sidekick.Core.Loggers
             Logs.Clear();
         }
 
-        public Task OnBeforeInit()
+        public void Dispose()
         {
-            Log("Sidekick before initialization.");
-            return Task.CompletedTask;
-        }
-
-        public Task OnInit()
-        {
-            Log("Sidekick initialization.");
-            return Task.CompletedTask;
-        }
-
-        public Task OnAfterInit()
-        {
-            Log("Sidekick after initialization.");
-            Log($"Sidekick is ready, press {configuration.Key_CheckPrices.ToKeybindString()} over an item in-game to use. Press {configuration.Key_CloseWindow.ToKeybindString()} to close overlay.");
-            return Task.CompletedTask;
-        }
-
-        public Task OnReset()
-        {
-            Log("Sidekick reset.");
-            return Task.CompletedTask;
+            initializer.OnProgress -= Initializer_OnProgress;
         }
     }
 }

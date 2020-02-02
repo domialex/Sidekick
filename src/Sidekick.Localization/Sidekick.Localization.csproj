@@ -18,6 +18,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SettingResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Splash\SplashResources.Designer.cs">
+      <DependentUpon>SplashResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +32,10 @@
     <EmbeddedResource Update="Settings\SettingResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SettingResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Splash\SplashResources.resx">
+      <LastGenOutput>SplashResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

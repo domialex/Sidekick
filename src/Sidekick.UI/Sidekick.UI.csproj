@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
   </ItemGroup>
 
 </Project>

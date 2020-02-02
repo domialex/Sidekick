@@ -19,7 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Styles.xaml" />
+                <ResourceDictionary Source="../Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -29,17 +29,14 @@
             <RowDefinition />
             <RowDefinition Height="30" />
             <RowDefinition Height="15" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="8" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <Label
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             Content="Sidekick"
@@ -49,20 +46,30 @@
 
         <Label
             Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
             VerticalContentAlignment="Bottom"
-            Content="{Binding UpdateStep, FallbackValue=Loading, UpdateSourceTrigger=PropertyChanged}"
+            Content="{Binding Title, FallbackValue=Loading}"
             FontSize="12"
             Foreground="{DynamicResource SolidColorBrush_Light}" />
 
         <ProgressBar
             Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
             Background="Transparent"
             BorderBrush="Transparent"
             Foreground="{DynamicResource SolidColorBrush_Light}"
-            Value="{Binding ProgressValue, FallbackValue=0, UpdateSourceTrigger=PropertyChanged}" />
+            Value="{Binding Percentage, FallbackValue=0}" />
+
+        <Label
+            Grid.Row="3"
+            VerticalContentAlignment="Bottom"
+            Content="{Binding StepTitle, FallbackValue=Loading}"
+            FontSize="10"
+            Foreground="{DynamicResource SolidColorBrush_Light}" />
+
+        <ProgressBar
+            Grid.Row="4"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            Foreground="{DynamicResource SolidColorBrush_Light}"
+            Value="{Binding StepPercentage, FallbackValue=0}" />
     </Grid>
 </Window>
