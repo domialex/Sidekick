@@ -22,6 +22,50 @@ namespace Sidekick.Core.Initialization
             this.serviceProvider = serviceProvider;
         }
 
+        #region Progress
+        private int ResetCount { get; set; }
+        private int ResetCompleted { get; set; }
+        private int ResetPercentage => ResetCount == 0 ? 0 : ResetCompleted * 100 / ResetCount;
+        private int BeforeInitCount { get; set; }
+        private int BeforeInitCompleted { get; set; }
+        private int BeforeInitPercentage => BeforeInitCount == 0 ? 0 : BeforeInitCompleted * 100 / BeforeInitCount;
+        private int InitCount { get; set; }
+        private int InitCompleted { get; set; }
+        private int InitPercentage => InitCount == 0 ? 0 : InitCompleted * 100 / InitCount;
+        private int AfterInitCount { get; set; }
+        private int AfterInitCompleted { get; set; }
+        private int AfterInitPercentage => AfterInitCount == 0 ? 0 : AfterInitCompleted * 100 / AfterInitCount;
+
+        private int TotalPercentage =>
+            BeforeInitCount + InitCount + AfterInitCount == 0 ? 0 :
+            (BeforeInitCompleted + InitCompleted + AfterInitCompleted) * 100 / (BeforeInitCount + InitCount + AfterInitCount);
+
+        public event Action<ProgressEventArgs> OnProgress;
+
+        public void ReportProgress(ProgressTypeEnum progressType, string serviceName, string message)
+        {
+            var percentage = TotalPercentage;
+
+            switch (progressType)
+            {
+                case ProgressTypeEnum.Reset: percentage = ResetPercentage; break;
+                case ProgressTypeEnum.BeforeInit: percentage = BeforeInitPercentage; break;
+                case ProgressTypeEnum.Init: percentage = InitPercentage; break;
+                case ProgressTypeEnum.AfterInit: percentage = AfterInitPercentage; break;
+            }
+
+            OnProgress?.Invoke(new ProgressEventArgs()
+            {
+                ServiceName = serviceName,
+                Message = message,
+                Percentage = percentage,
+                TotalPercentage = TotalPercentage,
+                Type = progressType,
+            });
+        }
+
+        #endregion
+
         public async Task Initialize()
         {
             // Doing this here, injecting dependencies in constructor causes dependency loops
@@ -29,6 +73,11 @@ namespace Sidekick.Core.Initialization
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
+
+            ResetCount = resetServices.Count;
+            BeforeInitCount = beforeInitServices.Count;
+            InitCount = initServices.Count;
+            AfterInitCount = afterInitServices.Count;
 
             IsReady = false;
             await OnReset();
@@ -51,23 +100,47 @@ namespace Sidekick.Core.Initialization
 
         private async Task OnReset()
         {
-            await Task.WhenAll(resetServices.Select(s => s.OnReset()));
+            await Task.WhenAll(resetServices.Select(s => Task.Run(async () =>
+            {
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Reset");
+                await s.OnReset();
+                ResetCompleted++;
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Reset");
+            })));
         }
 
         private async Task OnBeforeInit()
         {
-            await Task.WhenAll(beforeInitServices.Select(s => s.OnBeforeInit()));
+            await Task.WhenAll(beforeInitServices.Select(s => Task.Run(async () =>
+            {
+                ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - Start Before Init");
+                await s.OnBeforeInit();
+                BeforeInitCompleted++;
+                ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - End Before Init");
+            })));
 
         }
 
         private async Task OnInit()
         {
-            await Task.WhenAll(initServices.Select(s => s.OnInit()));
+            await Task.WhenAll(initServices.Select(s => Task.Run(async () =>
+            {
+                ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - Start Init");
+                await s.OnInit();
+                InitCompleted++;
+                ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - End Init");
+            })));
         }
 
         private async Task OnAfterInit()
         {
-            await Task.WhenAll(afterInitServices.Select(s => s.OnAfterInit()));
+            await Task.WhenAll(afterInitServices.Select(s => Task.Run(async () =>
+            {
+                ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - Start After Init");
+                await s.OnAfterInit();
+                AfterInitCompleted++;
+                ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - End After Init");
+            })));
         }
     }
 }
