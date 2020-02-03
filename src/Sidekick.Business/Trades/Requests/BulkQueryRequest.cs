@@ -1,6 +1,6 @@
 using Sidekick.Business.Categories;
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using System.Collections.Generic;

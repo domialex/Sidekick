@@ -8,32 +8,40 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Update.Github_API;
 
 
 namespace Sidekick.Core.Update
 {
-    public class UpdateManager : IUpdateManager
+    public class UpdateManager : IUpdateManager, IOnBeforeInit
     {
-        private GithubRelease _latestRelease;
         private readonly HttpClient _httpClient;
+        private readonly IInitializer initializer;
 
-        private Action<string, int> reportProgress;
-        public Action<string, int> ReportProgress { set { reportProgress = value; } }
-
-        public UpdateManager(IHttpClientFactory httpClientFactory)
+        public UpdateManager(IHttpClientFactory httpClientFactory,
+            IInitializer initializer)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");
             _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            this.initializer = initializer;
         }
 
         public string InstallDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        public string TempDirectory => Path.Combine(InstallDirectory, "UpdateBackup");
+        private string TempDirectory => Path.Combine(InstallDirectory, "UpdateBackup");
 
-        public string ZipPath => Path.Combine(InstallDirectory, "update.zip");
+        private string ZipPath => Path.Combine(InstallDirectory, "update.zip");
+
+        private GithubRelease LatestRelease { get; set; }
+
+        public Task OnBeforeInit()
+        {
+            return Task.CompletedTask;
+        }
 
         /// <summary>
         /// Checks if there is a newer release available on github
@@ -41,11 +49,12 @@ namespace Sidekick.Core.Update
         /// <returns></returns>
         public async Task<bool> NewVersionAvailable()
         {
-            reportProgress.Invoke("Checking for Updates...", 0);
-            _latestRelease = await GetLatestRelease();
-            if (_latestRelease != null)
+            initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Checking for Updates...");
+            LatestRelease = await GetLatestRelease();
+            if (LatestRelease != null)
             {
-                var latestVersion = new Version(Regex.Match(_latestRelease.Tag, @"(\d+\.){2}\d+").ToString());
+                var latestVersion = new Version(Regex.Match(LatestRelease.Tag, @"(\d+\.){2}\d+").ToString());
+                // var currentVersion = new Version("0.2.0");
                 var currentVersion = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).GetName().Version;
 
                 var result = currentVersion.CompareTo(latestVersion);
@@ -123,7 +132,7 @@ namespace Sidekick.Core.Update
         /// </summary>
         private void ApplyUpdate()
         {
-            reportProgress.Invoke("Applying update...", 80);
+            initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Applying update...");
             ZipFile.ExtractToDirectory(ZipPath, InstallDirectory);
             File.Delete(ZipPath);
         }
@@ -148,12 +157,12 @@ namespace Sidekick.Core.Update
         /// <returns></returns>
         private async Task<bool> DownloadNewestRelease()
         {
-            reportProgress.Invoke("Downloading latest release from GitHub...", 30);
-            if (_latestRelease != null)
+            initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Downloading latest release from GitHub...");
+            if (LatestRelease != null)
             {
                 if (File.Exists(ZipPath)) File.Delete(ZipPath);
                 //download zip file and save to disk
-                using (Stream contentStream = await (await _httpClient.GetAsync(_latestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (Stream contentStream = await (await _httpClient.GetAsync(LatestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await contentStream.CopyToAsync(stream);
                 }
@@ -169,7 +178,7 @@ namespace Sidekick.Core.Update
         {
             try
             {
-                reportProgress.Invoke("Backuping current version...", 50);
+                initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Backuping current version...");
                 if (Directory.Exists(TempDirectory))
                 {
                     Directory.Delete(TempDirectory, true);

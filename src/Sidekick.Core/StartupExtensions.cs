@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
@@ -36,7 +35,7 @@ namespace Sidekick.Core
         {
             services.AddSingleton<IInitializer, Initializer>();
             services.AddInitializableService<ILogger, Logger>();
-            services.AddSingleton<IUpdateManager>(x => new UpdateManager(x.GetRequiredService<IHttpClientFactory>()));
+            services.AddSingleton<IUpdateManager, UpdateManager>();
             return services;
         }
 

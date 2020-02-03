@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using Sidekick.Business.Languages.UI;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Localization;
 using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Settings
@@ -68,7 +68,7 @@ namespace Sidekick.UI.Settings
             };
 
             AssignValues(Settings, sidekickSettings);
-            uiLanguageProvider.SetLanguage(uiLanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == Settings.UILanguage));
+            uiLanguageProvider.SetLanguage(Settings.Language_UI);
             sidekickSettings.Save();
         }
 

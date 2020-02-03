@@ -8,7 +8,7 @@ using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages.Client;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;

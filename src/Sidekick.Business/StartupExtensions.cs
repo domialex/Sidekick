@@ -6,8 +6,7 @@ using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages.Client;
-using Sidekick.Business.Languages.UI;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers;
@@ -34,7 +33,6 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
-            services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();

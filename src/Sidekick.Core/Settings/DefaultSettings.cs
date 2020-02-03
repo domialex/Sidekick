@@ -6,10 +6,10 @@ namespace Sidekick.Core.Settings
         {
             return new SidekickSettings()
             {
-                UILanguage = "en",
+                Language_UI = "en",
                 LeagueId = string.Empty,
-                CharacterName = string.Empty,
-                CurrentWikiSettings = WikiSetting.PoeWiki,
+                Character_Name = string.Empty,
+                Wiki_Preferred = WikiSetting.PoeWiki,
                 RetainClipboard = true,
                 CloseOverlayWithMouse = true,
                 EnableCtrlScroll = true,

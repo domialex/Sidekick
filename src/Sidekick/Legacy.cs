@@ -5,8 +5,7 @@ using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages.Client;
-using Sidekick.Business.Languages.UI;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
@@ -14,6 +13,7 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Localization;
 using Sidekick.UI.Views;
 
 namespace Sidekick
@@ -22,7 +22,7 @@ namespace Sidekick
     public static class Legacy
     {
         [Obsolete]
-        public static IInitializer InitializeService { get; private set; }
+        public static IInitializer Initializer { get; private set; }
 
         [Obsolete]
         public static SidekickSettings Settings { get; private set; }
@@ -78,7 +78,7 @@ namespace Sidekick
         [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            InitializeService = serviceProvider.GetService<IInitializer>();
+            Initializer = serviceProvider.GetService<IInitializer>();
             Settings = serviceProvider.GetService<SidekickSettings>();
             Logger = serviceProvider.GetService<ILogger>();
             TradeClient = serviceProvider.GetService<ITradeClient>();

@@ -7,13 +7,13 @@ namespace Sidekick.Core.Settings
     {
         public const string FileName = "Sidekick_settings.json";
 
-        public string UILanguage { get; set; }
+        public string Language_UI { get; set; }
 
         public string LeagueId { get; set; }
 
-        public WikiSetting CurrentWikiSettings { get; set; }
+        public WikiSetting Wiki_Preferred { get; set; }
 
-        public string CharacterName { get; set; }
+        public string Character_Name { get; set; }
 
         public bool RetainClipboard { get; set; }
 

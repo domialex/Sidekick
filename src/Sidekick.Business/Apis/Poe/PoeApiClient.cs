@@ -1,13 +1,13 @@
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Languages.Client;
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Languages;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.Poe
 {

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Languages.Client;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Core.Settings;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {

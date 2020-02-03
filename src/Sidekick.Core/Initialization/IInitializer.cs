@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 namespace Sidekick.Core.Initialization
@@ -7,5 +8,7 @@ namespace Sidekick.Core.Initialization
         Task Initialize();
         Task Reset();
         bool IsReady { get; }
+        event Action<ProgressEventArgs> OnProgress;
+        void ReportProgress(ProgressTypeEnum progressType, string serviceName, string message);
     }
 }
