@@ -30,7 +30,7 @@ namespace Sidekick.Core.Update
             this.initializer = initializer;
         }
 
-        public string InstallDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public string InstallDirectory => Path.GetDirectoryName(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).Location);
 
         private string TempDirectory => Path.Combine(InstallDirectory, "UpdateBackup");
 

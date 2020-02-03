@@ -172,8 +172,11 @@ namespace Sidekick.Natives
         public void Dispose()
         {
             nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
-            hook.MouseWheelExt -= Hook_MouseWheelExt;
-            hook.Dispose();
+            if(hook != null) // Hook will be null if auto update was successful
+            {
+                hook.MouseWheelExt -= Hook_MouseWheelExt;
+                hook.Dispose();
+            }           
         }
     }
 }

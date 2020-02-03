@@ -89,8 +89,11 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            hook.KeyDown -= Hook_KeyDown;
-            hook.Dispose();
+            if(hook != null) // Hook will be null if auto update was successful
+            {
+                hook.KeyDown -= Hook_KeyDown;
+                hook.Dispose();
+            }          
         }
 
         public void SendCommand(KeyboardCommandEnum command)
