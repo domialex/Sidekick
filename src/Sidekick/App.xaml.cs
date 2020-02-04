@@ -12,7 +12,6 @@ using Sidekick.Helpers.Input;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
-using Sidekick.Windows.TrayIcon;
 
 namespace Sidekick
 {
@@ -33,7 +32,7 @@ namespace Sidekick
             ToolTipService.ShowDurationProperty.OverrideMetadata(
             typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
 
-            serviceProvider = Sidekick.Startup.InitializeServices();
+            serviceProvider = Sidekick.Startup.InitializeServices(this);
 
             Legacy.Initialize(serviceProvider);
 
@@ -42,9 +41,6 @@ namespace Sidekick
             await RunAutoUpdate();
 
             EnsureSingleInstance();
-
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
 
             await serviceProvider.GetService<IInitializer>().Initialize();
 
@@ -105,11 +101,6 @@ namespace Sidekick
             {
                 Current.Shutdown();
             }
-        }
-
-        public static void ShowNotifcation(string title, string text = null)
-        {
-            trayIcon.ShowBalloonTip(title, text, trayIcon.Icon, largeIcon: true);
         }
     }
 }
