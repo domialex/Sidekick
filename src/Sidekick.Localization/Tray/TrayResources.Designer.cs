@@ -70,6 +70,24 @@ namespace Sidekick.Localization.Tray {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Press {0} over an item in-game to use. Press {1} to close overlay..
+        /// </summary>
+        public static string Notification_Message {
+            get {
+                return ResourceManager.GetString("Notification_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidekick is ready.
+        /// </summary>
+        public static string Notification_Title {
+            get {
+                return ResourceManager.GetString("Notification_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {

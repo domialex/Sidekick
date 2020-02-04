@@ -40,7 +40,7 @@ namespace Sidekick.UI.Settings
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
             leagueService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
-            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.DisplayName, x.Name));
+            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }

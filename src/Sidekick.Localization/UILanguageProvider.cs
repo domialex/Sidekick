@@ -39,6 +39,11 @@ namespace Sidekick.Localization
             Current = new CultureInfo(name);
             Thread.CurrentThread.CurrentCulture = Current;
             Thread.CurrentThread.CurrentUICulture = Current;
+
+            if (UILanguageChanged != null)
+            {
+                UILanguageChanged.Invoke();
+            }
         }
     }
 }
