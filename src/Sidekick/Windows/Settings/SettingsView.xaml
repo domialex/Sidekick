@@ -67,9 +67,24 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Label Content="{x:Static r:SettingResources.Character_Name}" />
-                                <TextBox
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Label Content="{x:Static r:SettingResources.Character_League}" />
+                                <ComboBox
                                     Grid.Column="1"
+                                    DisplayMemberPath="Key"
+                                    ItemsSource="{Binding Path=LeagueOptions}"
+                                    SelectedValue="{Binding Path=Settings.LeagueId}"
+                                    SelectedValuePath="Value" />
+                                <Label Grid.Row="1" Content="{x:Static r:SettingResources.Character_Name}" />
+                                <TextBox
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Background="{DynamicResource SolidColorBrush_Text}"
+                                    BorderBrush="{DynamicResource SolidColorBrush_Primary}"
+                                    BorderThickness="1"
                                     IsReadOnly="False"
                                     Text="{Binding Path=Settings.Character_Name}" />
                             </Grid>
