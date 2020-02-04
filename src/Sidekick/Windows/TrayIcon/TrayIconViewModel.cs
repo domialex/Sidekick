@@ -1,11 +1,7 @@
 using System.Globalization;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Sidekick.Business.Leagues;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;
 using Sidekick.Localization.Tray;
@@ -24,7 +20,7 @@ namespace Sidekick.Windows.TrayIcon
 
     }
 
-    public class TrayIconViewModel : NotifyBase, ITrayIconViewModel, IOnAfterInit
+    public class TrayIconViewModel : NotifyBase, ITrayIconViewModel
     {
         #region Property backing fields
 
@@ -42,17 +38,14 @@ namespace Sidekick.Windows.TrayIcon
 
         private readonly SidekickSettings configuration;
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly ILeagueService leagueService;
 
-        public TrayIconViewModel(SidekickSettings configuration, IUILanguageProvider uiLanguageProvider, ILeagueService leagueService)
+        public TrayIconViewModel(SidekickSettings configuration, IUILanguageProvider uiLanguageProvider)
         {
             this.configuration = configuration;
             this.uiLanguageProvider = uiLanguageProvider;
-            this.leagueService = leagueService;
 
             uiLanguageProvider.UILanguageChanged += UpdateLanguage;
             UpdateLanguage();
-            Leagues = new AsyncObservableCollection<League>();
         }
 
         private void UpdateLanguage()
@@ -65,38 +58,6 @@ namespace Sidekick.Windows.TrayIcon
             ShowLogsHeader = TrayResources.ShowLogs;
             ExitHeader = TrayResources.Exit;
         }
-
-        private void ChangeLeague(string id)
-        {
-            foreach (var league in Leagues)
-            {
-                league.IsCurrent = league.Id == id;
-            }
-
-            configuration.LeagueId = id;
-            configuration.Save();
-        }
-
-        public Task OnAfterInit()
-        {
-            var leagues = leagueService.Leagues.Select(l => new League
-            {
-                Id = l.Id,
-                Name = l.Text,
-                IsCurrent = l.Id == configuration.LeagueId
-            });
-
-            Leagues.Clear();
-
-            foreach (var league in leagues)
-            {
-                Leagues.Add(league);
-            }
-
-            return Task.CompletedTask;
-        }
-
-        public ICommand ChangeLeagueCommand => new RelayCommand(leagueId => ChangeLeague(leagueId.ToString()));
 
         public ICommand ShowSettingsCommand => new RelayCommand(_ => Legacy.ViewLocator.Open<SettingsView>());
 

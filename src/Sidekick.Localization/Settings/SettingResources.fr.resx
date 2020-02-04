@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="Character_League" xml:space="preserve">
+    <value>Ligue</value>
+  </data>
   <data name="Character_Name" xml:space="preserve">
     <value>Nom du personnage</value>
   </data>

@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;
@@ -18,11 +19,13 @@ namespace Sidekick.UI.Settings
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
-            INativeKeyboard nativeKeyboard)
+            INativeKeyboard nativeKeyboard,
+            ILeagueService leagueService)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
+
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
 
@@ -31,19 +34,13 @@ namespace Sidekick.UI.Settings
                 .GetProperties()
                 .Where(x => x.Name.StartsWith("Key"))
                 .ToList()
-                .ForEach(x =>
-                {
-                    Keybinds.Add(x.Name, x.GetValue(Settings).ToString());
-                });
+                .ForEach(x => Keybinds.Add(x.Name, x.GetValue(Settings).ToString()));
 
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
-            uiLanguageProvider.AvailableLanguages
-                .ForEach(x =>
-                {
-                    UILanguageOptions.Add(x.DisplayName, x.Name);
-                });
+            leagueService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.DisplayName, x.Name));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
@@ -55,6 +52,8 @@ namespace Sidekick.UI.Settings
         public string CurrentKey { get; set; }
 
         public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
 
         public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
 

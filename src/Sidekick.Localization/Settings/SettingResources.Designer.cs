@@ -70,6 +70,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to League.
+        /// </summary>
+        public static string Character_League {
+            get {
+                return ResourceManager.GetString("Character_League", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Character Name.
         /// </summary>
         public static string Character_Name {
