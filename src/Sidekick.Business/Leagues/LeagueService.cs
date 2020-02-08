@@ -1,14 +1,15 @@
-using Sidekick.Business.Apis.Poe;
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Core.Settings;
-using Sidekick.Core.Initialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Core.Initialization;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Leagues
 {
-    public class LeagueService : ILeagueService, IOnInit, IOnReset
+    public class LeagueService : ILeagueService, IOnInit, IDisposable
     {
         private readonly IPoeApiClient poeApiClient;
         private readonly SidekickSettings configuration;
@@ -34,11 +35,9 @@ namespace Sidekick.Business.Leagues
             }
         }
 
-        public Task OnReset()
+        public void Dispose()
         {
             Leagues = null;
-
-            return Task.CompletedTask;
         }
     }
 }

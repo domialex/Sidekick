@@ -28,8 +28,6 @@ namespace Sidekick.Windows.TrayIcon
             this.settings = settings;
             this.uiLanguageProvider = uiLanguageProvider;
             this.viewLocator = viewLocator;
-
-            uiLanguageProvider.UILanguageChanged += InitContextMenu;
         }
 
         private TaskbarIcon TrayIcon { get; set; }
@@ -49,6 +47,7 @@ namespace Sidekick.Windows.TrayIcon
                 TrayIcon = (TaskbarIcon)application.FindResource("TrayIcon");
                 TrayIcon.DataContext = this;
 
+                uiLanguageProvider.UILanguageChanged += InitContextMenu;
                 InitContextMenu();
 
                 TrayIcon.ShowBalloonTip(

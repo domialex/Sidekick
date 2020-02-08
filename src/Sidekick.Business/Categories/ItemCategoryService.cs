@@ -1,12 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Sidekick.Business.Categories
 {
-    public class ItemCategoryService : IItemCategoryService, IOnInit, IOnReset
+    public class ItemCategoryService : IItemCategoryService, IOnInit, IDisposable
     {
         private readonly IPoeApiClient poeApiClient;
 
@@ -23,11 +24,9 @@ namespace Sidekick.Business.Categories
             Categories = await poeApiClient.Fetch<ItemCategory>();
         }
 
-        public Task OnReset()
+        public void Dispose()
         {
             Categories = null;
-
-            return Task.CompletedTask;
         }
     }
 }

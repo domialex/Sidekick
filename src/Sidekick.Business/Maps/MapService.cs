@@ -1,13 +1,14 @@
-using Sidekick.Business.Categories;
-using Sidekick.Business.Maps.Models;
-using Sidekick.Core.Initialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sidekick.Business.Categories;
+using Sidekick.Business.Maps.Models;
+using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Maps
 {
-    public class MapService : IMapService, IOnAfterInit, IOnReset
+    public class MapService : IMapService, IOnAfterInit, IDisposable
     {
         private readonly IStaticItemCategoryService staticItemCategoryService;
 
@@ -30,11 +31,9 @@ namespace Sidekick.Business.Maps
             return Task.CompletedTask;
         }
 
-        public Task OnReset()
+        public void Dispose()
         {
             MapNames = null;
-
-            return Task.CompletedTask;
         }
     }
 }

@@ -57,7 +57,6 @@ namespace Sidekick.Business.Languages
 
             if (SetLanguage(language.Name))
             {
-                await initializeService.Reset();
                 await initializeService.Initialize();
             }
         }
