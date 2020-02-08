@@ -6,6 +6,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition MaxWidth="25" />
         </Grid.ColumnDefinitions>
         <Label Content="{Binding Label}" />
         <Button
@@ -13,5 +14,10 @@
             Background="{Binding BackgroundColor}"
             Click="HotkeyButton_Click"
             Content="{Binding Value}" />
+        <Button
+            Grid.Column="2"
+            Background="{Binding BackgroundColor}"
+            Click="ClearButton_Click"
+            Content="X" />
     </Grid>
 </UserControl>

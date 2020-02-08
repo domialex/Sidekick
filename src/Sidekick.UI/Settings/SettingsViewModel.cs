@@ -106,6 +106,11 @@ namespace Sidekick.UI.Settings
             return true;
         }
 
+        public void Clear(string key)
+        {
+            Keybinds.ToCollection().FirstOrDefault(x => x.Key == key).Value = string.Empty;
+        }
+
         public void Dispose()
         {
             nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
