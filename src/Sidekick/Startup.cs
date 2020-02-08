@@ -8,7 +8,7 @@ namespace Sidekick
 {
     public static class Startup
     {
-        public static ServiceProvider InitializeServices()
+        public static ServiceProvider InitializeServices(App application)
         {
             var services = new ServiceCollection()
               .AddSidekickConfiguration()
@@ -17,6 +17,8 @@ namespace Sidekick
               .AddSidekickLocalization()
               .AddSidekickUIServices()
               .AddSidekickUIWindows();
+
+            services.AddSingleton(application);
 
             return services.BuildServiceProvider();
         }

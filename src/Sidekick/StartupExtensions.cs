@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Natives;
-using Sidekick.Services;
 using Sidekick.Windows;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
@@ -19,8 +18,7 @@ namespace Sidekick
             services.AddScoped<SettingsView, SettingsView>();
             services.AddScoped<SplashScreen, SplashScreen>();
 
-            services.AddInitializableService<ITrayService, TrayService>();
-            services.AddInitializableService<ITrayIconViewModel, TrayIconViewModel>();
+            services.AddInitializableService<TrayIconViewModel, TrayIconViewModel>();
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
             services.AddInitializableService<INativeProcess, NativeProcess>();

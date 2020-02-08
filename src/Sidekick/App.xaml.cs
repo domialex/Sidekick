@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -12,7 +13,6 @@ using Sidekick.Helpers.Input;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
-using Sidekick.Windows.TrayIcon;
 
 namespace Sidekick
 {
@@ -33,7 +33,7 @@ namespace Sidekick
             ToolTipService.ShowDurationProperty.OverrideMetadata(
             typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
 
-            serviceProvider = Sidekick.Startup.InitializeServices();
+            serviceProvider = Sidekick.Startup.InitializeServices(this);
 
             Legacy.Initialize(serviceProvider);
 
@@ -42,9 +42,6 @@ namespace Sidekick
             await RunAutoUpdate();
 
             EnsureSingleInstance();
-
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetService<ITrayIconViewModel>();
 
             await serviceProvider.GetService<IInitializer>().Initialize();
 
@@ -67,24 +64,32 @@ namespace Sidekick
             {
                 if (MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (await updateManagerService.UpdateSidekick())
+                    try
                     {
-                        Legacy.NativeProcess.Mutex = null;
-                        MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
-
-                        var startInfo = new ProcessStartInfo
+                        if (await updateManagerService.UpdateSidekick())
                         {
-                            FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
-                            UseShellExecute = false,
-                        };
-                        Process.Start(startInfo);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Update failed!");
-                    }
+                            Legacy.NativeProcess.Mutex = null;
+                            MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
 
-                    Current.Shutdown();
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
+                                UseShellExecute = false,
+                            };
+                            Process.Start(startInfo);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Update failed!");
+                        }
+
+                        Current.Shutdown();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Update failed! Please update manually.");
+                        Legacy.NativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                    }
                 }
             }
         }
@@ -105,11 +110,6 @@ namespace Sidekick
             {
                 Current.Shutdown();
             }
-        }
-
-        public static void ShowNotifcation(string title, string text = null)
-        {
-            trayIcon.ShowBalloonTip(title, text, trayIcon.Icon, largeIcon: true);
         }
     }
 }

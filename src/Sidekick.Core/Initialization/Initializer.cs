@@ -10,7 +10,7 @@ namespace Sidekick.Core.Initialization
     {
         public bool IsReady { get; private set; }
 
-        private List<IOnReset> resetServices;
+        private List<IDisposable> disposableServices;
         private List<IOnBeforeInit> beforeInitServices;
         private List<IOnInit> initServices;
         private List<IOnAfterInit> afterInitServices;
@@ -69,18 +69,18 @@ namespace Sidekick.Core.Initialization
         public async Task Initialize()
         {
             // Doing this here, injecting dependencies in constructor causes dependency loops
-            resetServices = GetImplementations(resetServices);
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
+            disposableServices = disposableServices ?? GetDisposableServices();
 
-            ResetCount = resetServices.Count;
+            ResetCount = disposableServices.Count;
             BeforeInitCount = beforeInitServices.Count;
             InitCount = initServices.Count;
             AfterInitCount = afterInitServices.Count;
 
             IsReady = false;
-            await OnReset();
+            OnDispose();
             await OnBeforeInit();
             await OnInit();
             await OnAfterInit();
@@ -92,20 +92,23 @@ namespace Sidekick.Core.Initialization
             return implementationList ?? serviceProvider.GetServices<T>().ToList();
         }
 
-        public async Task Reset()
+        private List<IDisposable> GetDisposableServices()
         {
-            IsReady = false;
-            await OnReset();
+            var services = new List<IDisposable>();
+            services.AddRange(beforeInitServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
+            services.AddRange(initServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
+            services.AddRange(afterInitServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
+            return services.Distinct().ToList();
         }
 
-        private async Task OnReset()
+        private void OnDispose()
         {
-            foreach (var s in resetServices)
+            foreach (var s in disposableServices)
             {
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Reset");
-                await s.OnReset();
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Dispose");
+                s.Dispose();
                 ResetCompleted++;
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Reset");
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Dispose");
             }
         }
 

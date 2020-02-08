@@ -14,5 +14,6 @@ namespace Sidekick.UI.Settings
 
         bool IsKeybindUsed(string keybind, string ignoreKey = null);
         void Save();
+        void Clear(string key);
     }
 }

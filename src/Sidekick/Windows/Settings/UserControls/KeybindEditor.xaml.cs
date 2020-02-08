@@ -70,5 +70,10 @@ namespace Sidekick.Windows.Settings.UserControls
         {
             ViewModel.CurrentKey = Key;
         }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Clear(Key);
+        }
     }
 }

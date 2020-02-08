@@ -23,6 +23,8 @@ namespace Sidekick.Natives
             WindowsHook.Keys.LShiftKey,
             WindowsHook.Keys.RWin,
             WindowsHook.Keys.LWin,
+            WindowsHook.Keys.LMenu,
+            WindowsHook.Keys.RMenu,
         };
 
         private readonly ILogger logger;
@@ -89,11 +91,11 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            if(hook != null) // Hook will be null if auto update was successful
+            if (hook != null) // Hook will be null if auto update was successful
             {
                 hook.KeyDown -= Hook_KeyDown;
                 hook.Dispose();
-            }          
+            }
         }
 
         public void SendCommand(KeyboardCommandEnum command)
