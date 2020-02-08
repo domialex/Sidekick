@@ -96,7 +96,7 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon.Dispose();
+            trayIcon?.Dispose();
             serviceProvider.Dispose();
             OverlayController.Dispose();
             PredictionController.Dispose();
