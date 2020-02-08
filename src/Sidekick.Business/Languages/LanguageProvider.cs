@@ -56,7 +56,6 @@ namespace Sidekick.Business.Languages
                         logger.Log($"Changed language support to {language.Name}.");
                         Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
 
-                        await initializeService.Reset();
                         await initializeService.Initialize();
                     }
 
