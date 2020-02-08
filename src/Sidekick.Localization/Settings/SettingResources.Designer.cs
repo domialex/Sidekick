@@ -169,6 +169,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reply to latest whisper.
+        /// </summary>
+        public static string Key_ReplyToLatestWhisper {
+            get {
+                return ResourceManager.GetString("Key_ReplyToLatestWhisper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language Settings.
         /// </summary>
         public static string Language_Title {

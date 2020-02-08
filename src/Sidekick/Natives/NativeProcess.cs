@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
@@ -10,6 +11,9 @@ using System.Windows.Forms;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sidekick.Natives
 {
@@ -33,6 +37,19 @@ namespace Sidekick.Natives
         #endregion
 
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
+        private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
+
+
+        private readonly string clientLogFileName = "Client.txt";
+        private readonly string clientLogFolderName = "logs";
+
+        public string ClientLogPath
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(GetPathOfExileProcess().GetMainModuleFileName()), clientLogFolderName, clientLogFileName);
+            }
+        }
 
         private const int STANDARD_RIGHTS_REQUIRED = 0xF0000;
         private const int TOKEN_ASSIGN_PRIMARY = 0x1;
@@ -64,6 +81,20 @@ namespace Sidekick.Natives
         {
             GetWindowThreadProcessId(GetForegroundWindow(), out var processID);
             return Process.GetProcessById(processID);
+        }
+
+        private Process GetPathOfExileProcess()
+        {
+            foreach (var processName in PossibleProcessNames)
+            {
+                var process = Process.GetProcessesByName(processName).FirstOrDefault();
+                if (process != null)
+                {
+                    return process;
+                }
+            }
+
+            return null;
         }
 
         public float ActiveWindowDpi

@@ -14,6 +14,7 @@ namespace Sidekick.Core.Natives
         event Func<Task> OnLeaveParty;
         event Func<Task> OnOpenSearch;
         event Func<Task> OnOpenLeagueOverview;
+        event Func<Task> OnWhisperReply;
         event Func<int, int, Task> OnMouseClick;
     }
 }

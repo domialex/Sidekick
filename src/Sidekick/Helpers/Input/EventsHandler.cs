@@ -31,7 +31,20 @@ namespace Sidekick.Helpers.Input
             Legacy.KeybindEvents.OnLeaveParty += TriggerLeaveParty;
             Legacy.KeybindEvents.OnOpenSearch += TriggerOpenSearch;
             Legacy.KeybindEvents.OnOpenLeagueOverview += TriggerLeagueOverlay;
+            Legacy.KeybindEvents.OnWhisperReply += TriggerReplyToLatestWhisper;
             Legacy.KeybindEvents.OnMouseClick += MouseClicked;
+        }
+
+        private static Task TriggerReplyToLatestWhisper()
+        {
+            var characterName = Legacy.WhisperService.GetLatestWhisperCharacterName();
+            if(!string.IsNullOrEmpty(characterName))
+            {
+                Legacy.NativeClipboard.SetText(string.Empty);
+                Legacy.NativeClipboard.SetText($"@{characterName} ");
+                Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.ReplyToLatestWhisper);
+            }
+            return Task.CompletedTask;
         }
 
         private static Task MouseClicked(int x, int y)

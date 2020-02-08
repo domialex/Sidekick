@@ -8,5 +8,6 @@ namespace Sidekick.Core.Natives
         Copy,
         FindItems,
         LeaveParty,
+        ReplyToLatestWhisper
     }
 }

@@ -13,6 +13,7 @@ using Sidekick.Business.Parsers;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
+using Sidekick.Business.Whispers;
 using Sidekick.Core;
 
 namespace Sidekick.Business
@@ -41,6 +42,7 @@ namespace Sidekick.Business
             services.AddInitializableService<IMapService, MapService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();
+            services.AddInitializableService<IWhisperService, WhisperService>();
 
             return services;
         }

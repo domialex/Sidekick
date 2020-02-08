@@ -279,7 +279,7 @@
                     <Grid Name="Panel">
                         <Border
                             Name="Border"
-                            Width="100"
+                            Width="140"
                             Height="40"
                             Margin="0"
                             Padding="0"
