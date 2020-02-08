@@ -9,6 +9,8 @@ namespace Sidekick.Core.Settings
 
         public string Language_UI { get; set; }
 
+        public string Language_Parser { get; set; }
+
         public string LeagueId { get; set; }
 
         public WikiSetting Wiki_Preferred { get; set; }

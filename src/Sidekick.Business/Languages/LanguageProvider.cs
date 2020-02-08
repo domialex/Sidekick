@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Business.Languages.Implementations;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Languages
 {
@@ -13,12 +13,15 @@ namespace Sidekick.Business.Languages
     {
         private readonly ILogger logger;
         private readonly IInitializer initializeService;
+        private readonly SidekickSettings settings;
 
         public LanguageProvider(ILogger logger,
-            IInitializer initializeService)
+            IInitializer initializeService,
+            SidekickSettings settings)
         {
             this.logger = logger;
             this.initializeService = initializeService;
+            this.settings = settings;
 
             AvailableLanguages = new List<LanguageAttribute>();
             foreach (var type in typeof(LanguageAttribute).GetImplementedAttribute())
@@ -28,7 +31,10 @@ namespace Sidekick.Business.Languages
                 AvailableLanguages.Add(attribute);
             }
 
-            Language = new LanguageEN();
+            if (!SetLanguage(settings.Language_Parser))
+            {
+                SetLanguage(DefaultLanguage);
+            }
         }
 
         private List<LanguageAttribute> AvailableLanguages { get; set; }
@@ -47,24 +53,37 @@ namespace Sidekick.Business.Languages
         /// </summary>
         public async Task FindAndSetLanguage(string itemDescription)
         {
-            foreach (var language in AvailableLanguages)
+            var language = AvailableLanguages.FirstOrDefault(x => itemDescription.Contains(x.DescriptionRarity));
+
+            if (SetLanguage(language.Name))
             {
-                if (itemDescription.Contains(language.DescriptionRarity))
-                {
-                    if (Language.DescriptionRarity != language.DescriptionRarity)
-                    {
-                        logger.Log($"Changed language support to {language.Name}.");
-                        Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
+                await initializeService.Reset();
+                await initializeService.Initialize();
+            }
+        }
 
-                        await initializeService.Reset();
-                        await initializeService.Initialize();
-                    }
+        private bool SetLanguage(string name)
+        {
+            var language = AvailableLanguages.FirstOrDefault(x => x.Name == name);
 
-                    return;
-                }
+            if (language == null)
+            {
+                logger.Log($"Couldn't find language {language.Name}.");
+                return false;
             }
 
-            logger.Log("This Path of Exile language is not yet supported.");
+            if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
+            {
+                logger.Log($"Changed language support to {language.Name}.");
+                Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
+
+                settings.Language_Parser = name;
+                settings.Save();
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
