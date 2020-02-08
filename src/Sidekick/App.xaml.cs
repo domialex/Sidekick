@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -63,24 +64,32 @@ namespace Sidekick
             {
                 if (MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (await updateManagerService.UpdateSidekick())
+                    try
                     {
-                        Legacy.NativeProcess.Mutex = null;
-                        MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
-
-                        var startInfo = new ProcessStartInfo
+                        if (await updateManagerService.UpdateSidekick())
                         {
-                            FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
-                            UseShellExecute = false,
-                        };
-                        Process.Start(startInfo);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Update failed!");
-                    }
+                            Legacy.NativeProcess.Mutex = null;
+                            MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
 
-                    Current.Shutdown();
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
+                                UseShellExecute = false,
+                            };
+                            Process.Start(startInfo);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Update failed!");
+                        }
+
+                        Current.Shutdown();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Update failed! Please update manually.");
+                        Legacy.NativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                    }
                 }
             }
         }

@@ -61,6 +61,9 @@ namespace Sidekick
         public static INativeClipboard NativeClipboard { get; private set; }
 
         [Obsolete]
+        public static INativeBrowser NativeBrowser { get; private set; }
+
+        [Obsolete]
         public static IViewLocator ViewLocator { get; private set; }
 
         [Obsolete]
@@ -80,6 +83,7 @@ namespace Sidekick
             NativeProcess = serviceProvider.GetService<INativeProcess>();
             NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
             NativeClipboard = serviceProvider.GetService<INativeClipboard>();
+            NativeBrowser = serviceProvider.GetService<INativeBrowser>();
             ViewLocator = serviceProvider.GetService<IViewLocator>();
         }
     }
