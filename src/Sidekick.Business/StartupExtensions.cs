@@ -34,6 +34,7 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
+            services.AddSingleton<IWhisperService, WhisperService>();
 
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
@@ -41,8 +42,7 @@ namespace Sidekick.Business
             services.AddInitializableService<ILeagueService, LeagueService>();
             services.AddInitializableService<IMapService, MapService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
-            services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();
-            services.AddInitializableService<IWhisperService, WhisperService>();
+            services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();           
 
             return services;
         }

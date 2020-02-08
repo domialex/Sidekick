@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Whispers
-{   
-    public class WhisperService : IWhisperService, IOnAfterInit
+{
+    public class WhisperService : IWhisperService
     {
         private INativeProcess pathOfExileProcess;
-        private string ClientLogFile;
         public WhisperService(INativeProcess pathOfExileProcess)
         {
             this.pathOfExileProcess = pathOfExileProcess;
@@ -20,9 +15,10 @@ namespace Sidekick.Business.Whispers
 
         public string GetLatestWhisperCharacterName()
         {
-            if (!pathOfExileProcess.IsPathOfExileInFocus || ClientLogFile == null) return String.Empty;
+            var clientLogFile = pathOfExileProcess?.ClientLogPath;
+            if (!pathOfExileProcess.IsPathOfExileInFocus || clientLogFile == null) return string.Empty;
 
-            using (var stream = new FileStream(this.ClientLogFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var stream = new FileStream(clientLogFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 if (stream.Length == 0)
                 {
@@ -42,16 +38,10 @@ namespace Sidekick.Business.Whispers
                         return match.Value.Substring(lastWhitespacePos, match.Value.Length - lastWhitespacePos);
                     }
 
-                    stream.Position = stream.Position - 1;
+                    stream.Position -= 1;
                 }               
             }
             return null;
-        }
-
-        public Task OnAfterInit()
-        {
-            this.ClientLogFile = pathOfExileProcess.ClientLogPath;
-            return Task.CompletedTask;
         }
 
         /// <summary>
