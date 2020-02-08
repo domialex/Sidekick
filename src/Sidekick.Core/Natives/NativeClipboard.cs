@@ -11,7 +11,10 @@ namespace Sidekick.Core.Natives
 
         public async Task SetText(string text)
         {
-            await TextCopy.Clipboard.SetTextAsync(text);
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                await TextCopy.Clipboard.SetTextAsync(text);
+            }
         }
     }
 }
