@@ -7,6 +7,7 @@ using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
+using Sidekick.Business.Whispers;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -67,6 +68,9 @@ namespace Sidekick
         public static IViewLocator ViewLocator { get; private set; }
 
         [Obsolete]
+        public static IWhisperService WhisperService { get; private set; }
+
+        [Obsolete]
         public static void Initialize(IServiceProvider serviceProvider)
         {
             Settings = serviceProvider.GetService<SidekickSettings>();
@@ -85,6 +89,7 @@ namespace Sidekick
             NativeClipboard = serviceProvider.GetService<INativeClipboard>();
             NativeBrowser = serviceProvider.GetService<INativeBrowser>();
             ViewLocator = serviceProvider.GetService<IViewLocator>();
+            WhisperService = serviceProvider.GetService<IWhisperService>();
         }
     }
 }

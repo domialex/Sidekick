@@ -118,75 +118,75 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="Character_League" xml:space="preserve">
-    <value>League</value>
+    <value>Liga</value>
   </data>
   <data name="Character_Name" xml:space="preserve">
-    <value>Character Name</value>
+    <value>Charakter Name</value>
   </data>
   <data name="Character_Title" xml:space="preserve">
-    <value>Character Settings</value>
+    <value>Charaktereinstellungen</value>
   </data>
   <data name="Key_CheckPrices" xml:space="preserve">
-    <value>Check Prices</value>
+    <value>Prüfe Preise</value>
   </data>
   <data name="Key_CloseWindow" xml:space="preserve">
-    <value>Close Window</value>
+    <value>Fenster schließen</value>
   </data>
   <data name="Key_FindItems" xml:space="preserve">
-    <value>Find Items</value>
+    <value>Gegenstandssuche</value>
   </data>
   <data name="Key_GoToHideout" xml:space="preserve">
-    <value>Go to Hideout</value>
+    <value>Gehe zu Versteck</value>
   </data>
   <data name="Key_LeaveParty" xml:space="preserve">
-    <value>Leave Party</value>
+    <value>Gruppe verlassen</value>
   </data>
   <data name="Key_OpenLeagueOverview" xml:space="preserve">
-    <value>Open League Overview</value>
+    <value>Öffne Liga Übersicht</value>
   </data>
   <data name="Key_OpenSearch" xml:space="preserve">
-    <value>Open Search</value>
+    <value>Öffne Suche</value>
   </data>
   <data name="Key_OpenWiki" xml:space="preserve">
-    <value>Open Wiki</value>
+    <value>Öffne Wiki</value>
   </data>
   <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
-    <value>Reply to latest whisper</value>
+    <value>Auf letztes Flüstern antworten</value>
   </data>
   <data name="Language_Title" xml:space="preserve">
-    <value>Language Settings</value>
+    <value>Spracheinstellungen</value>
   </data>
   <data name="Language_UI" xml:space="preserve">
-    <value>UI Language</value>
+    <value>UI Sprache</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Other_CloseWithMouseClick" xml:space="preserve">
-    <value>Close Overlay with Mouse Click</value>
+    <value>Schließe Overlay per Mausklick</value>
   </data>
   <data name="Other_RetainClipboard" xml:space="preserve">
-    <value>Retain Clipboard Data</value>
+    <value>Behalte Daten in Zwischenablage</value>
   </data>
   <data name="Other_TabScroll" xml:space="preserve">
-    <value>Enable Tab Scrolling with Ctrl + Scroll</value>
+    <value>Aktiviere Registerwechsel mit Strg + Mausrad</value>
   </data>
   <data name="Other_Title" xml:space="preserve">
-    <value>Other Settings</value>
+    <value>Andere Einstellungen</value>
   </data>
   <data name="Tab_General" xml:space="preserve">
-    <value>General</value>
+    <value>Allgemein</value>
   </data>
   <data name="Tab_Keybindings" xml:space="preserve">
-    <value>Keybindings</value>
+    <value>Tastenkombinationen</value>
   </data>
   <data name="Wiki_Preferred" xml:space="preserve">
-    <value>Preferred Wiki</value>
+    <value>Bevorzugtes Wiki</value>
   </data>
   <data name="Wiki_Title" xml:space="preserve">
-    <value>Wiki Settings</value>
+    <value>Wiki Einstellungen</value>
   </data>
 </root>

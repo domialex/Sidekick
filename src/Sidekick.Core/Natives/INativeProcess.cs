@@ -9,5 +9,6 @@ namespace Sidekick.Core.Natives
         bool IsPathOfExileInFocus { get; }
         Task CheckPermission();
         float ActiveWindowDpi { get; }
+        string ClientLogPath { get; }
     }
 }

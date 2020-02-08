@@ -37,6 +37,7 @@ namespace Sidekick.Natives
         public event Func<Task> OnLeaveParty;
         public event Func<Task> OnOpenSearch;
         public event Func<Task> OnOpenLeagueOverview;
+        public event Func<Task> OnWhisperReply;
         public event Func<int, int, Task> OnMouseClick;
 
         private IKeyboardMouseEvents hook = null;
@@ -157,6 +158,12 @@ namespace Sidekick.Natives
                     keybindFound = true;
                     logger.Log("Keybind for opening the league overview triggered.");
                     if (OnOpenLeagueOverview != null) Task.Run(OnOpenLeagueOverview);
+                }
+                else if(input == configuration.Key_ReplyToLatestWhisper)
+                {
+                    keybindFound = true;
+                    logger.Log("Keybind for replying to most recent whisper triggered.");
+                    if (OnWhisperReply != null) Task.Run(OnWhisperReply);
                 }
             }
 

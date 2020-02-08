@@ -127,6 +127,9 @@ namespace Sidekick.Natives
                     }
                     SendKeys.SendWait($"{{Enter}}/kick {configuration.Character_Name}{{Enter}}");
                     break;
+                case KeyboardCommandEnum.ReplyToLatestWhisper:
+                    SendKeys.SendWait("{Enter}^{a}^{v}");
+                    break;
             }
         }
 

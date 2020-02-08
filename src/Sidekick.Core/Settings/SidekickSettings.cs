@@ -39,6 +39,8 @@ namespace Sidekick.Core.Settings
 
         public string Key_OpenLeagueOverview { get; set; }
 
+        public string Key_ReplyToLatestWhisper { get; set; }
+
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);
