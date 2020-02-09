@@ -73,7 +73,7 @@ namespace Sidekick.Natives
         {
             Task.Run(() =>
             {
-                if (!Enabled || !configuration.EnableCtrlScroll || !nativeProcess.IsPathOfExileInFocus)
+                if (!configuration.EnableCtrlScroll || !nativeProcess.IsPathOfExileInFocus)
                 {
                     return;
                 }
@@ -162,9 +162,15 @@ namespace Sidekick.Natives
 
             Task.Run(async () =>
             {
-                await Task.Delay(5);
+                await Task.Delay(500);
                 Enabled = true;
             });
+
+            // We need to make sure some key combinations make it into the game no matter what
+            if (keybindFound)
+            {
+                keybindFound = input != "Ctrl+F";
+            }
 
             return keybindFound;
         }
@@ -172,11 +178,11 @@ namespace Sidekick.Natives
         public void Dispose()
         {
             nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
-            if(hook != null) // Hook will be null if auto update was successful
+            if (hook != null) // Hook will be null if auto update was successful
             {
                 hook.MouseWheelExt -= Hook_MouseWheelExt;
                 hook.Dispose();
-            }           
+            }
         }
     }
 }

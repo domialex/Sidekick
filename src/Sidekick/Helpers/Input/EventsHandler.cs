@@ -16,7 +16,7 @@ namespace Sidekick.Helpers.Input
                     OverlayController.Hide();
                 }
 
-                if(LeagueOverlayController.IsDisplayed)
+                if (LeagueOverlayController.IsDisplayed)
                 {
                     LeagueOverlayController.Hide();
                 }
