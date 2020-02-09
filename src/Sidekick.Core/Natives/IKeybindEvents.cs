@@ -6,15 +6,16 @@ namespace Sidekick.Core.Natives
     public interface IKeybindEvents
     {
         bool Enabled { get; set; }
-        event Func<Task> OnCloseWindow;
-        event Func<Task> OnPriceCheck;
-        event Func<Task> OnHideout;
-        event Func<Task> OnItemWiki;
-        event Func<Task> OnFindItems;
-        event Func<Task> OnLeaveParty;
-        event Func<Task> OnOpenSearch;
-        event Func<Task> OnOpenLeagueOverview;
-        event Func<Task> OnWhisperReply;
+
+        event Func<Task<bool>> OnCloseWindow;
+        event Func<Task<bool>> OnPriceCheck;
+        event Func<Task<bool>> OnHideout;
+        event Func<Task<bool>> OnItemWiki;
+        event Func<Task<bool>> OnFindItems;
+        event Func<Task<bool>> OnLeaveParty;
+        event Func<Task<bool>> OnOpenSearch;
+        event Func<Task<bool>> OnOpenLeagueOverview;
+        event Func<Task<bool>> OnWhisperReply;
         event Func<int, int, Task> OnMouseClick;
     }
 }

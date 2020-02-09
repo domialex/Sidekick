@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
@@ -36,8 +37,10 @@ namespace Sidekick.Business.Parsers
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public Item ParseItem(string itemText)
+        public async Task<Item> ParseItem(string itemText)
         {
+            await languageProvider.FindAndSetLanguage(itemText);
+
             Item item = null;
             bool isIdentified, hasQuality, isCorrupted, isMap, isBlighted, isOrgan, hasNote;
 

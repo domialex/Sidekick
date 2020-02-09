@@ -11,17 +11,21 @@ namespace Sidekick.Helpers.Input
         {
             Legacy.KeybindEvents.OnCloseWindow += () =>
             {
+                var handled = false;
+
                 if (OverlayController.IsDisplayed)
                 {
                     OverlayController.Hide();
+                    handled = true;
                 }
 
                 if (LeagueOverlayController.IsDisplayed)
                 {
                     LeagueOverlayController.Hide();
+                    handled = true;
                 }
 
-                return Task.CompletedTask;
+                return Task.FromResult(handled);
             };
 
             Legacy.KeybindEvents.OnPriceCheck += TriggerItemFetch;
@@ -35,16 +39,17 @@ namespace Sidekick.Helpers.Input
             Legacy.KeybindEvents.OnMouseClick += MouseClicked;
         }
 
-        private static Task TriggerReplyToLatestWhisper()
+        private static Task<bool> TriggerReplyToLatestWhisper()
         {
             var characterName = Legacy.WhisperService.GetLatestWhisperCharacterName();
-            if(!string.IsNullOrEmpty(characterName))
+            if (!string.IsNullOrEmpty(characterName))
             {
                 Legacy.NativeClipboard.SetText(string.Empty);
                 Legacy.NativeClipboard.SetText($"@{characterName} ");
                 Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.ReplyToLatestWhisper);
+                return Task.FromResult(true);
             }
-            return Task.CompletedTask;
+            return Task.FromResult(false);
         }
 
         private static Task MouseClicked(int x, int y)
@@ -63,7 +68,7 @@ namespace Sidekick.Helpers.Input
             return Task.CompletedTask;
         }
 
-        private static async Task TriggerItemFetch()
+        private static async Task<bool> TriggerItemFetch()
         {
             Legacy.Logger.Log("Hotkey for pricing item triggered.");
 
@@ -82,66 +87,62 @@ namespace Sidekick.Helpers.Input
                         queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
                     }
                     OverlayController.SetQueryResult(queryResult);
-                    return;
+                    return true;
                 }
 
                 OverlayController.Hide();
+                return true;
             }
+
+            return false;
         }
 
-        private static Task TriggerLeagueOverlay()
+        private static Task<bool> TriggerLeagueOverlay()
         {
             LeagueOverlayController.Open();
             LeagueOverlayController.Show();
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
         /// <summary>
         /// Kick yourself from the current party
         /// </summary>
-        private static Task TriggerLeaveParty()
+        private static Task<bool> TriggerLeaveParty()
         {
             Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.LeaveParty);
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
         /// <summary>
         /// Attempts to fill the search field of the stash tab with the current items name if any
         /// </summary>
-        private static async Task TriggerFindItem()
+        private static async Task<bool> TriggerFindItem()
         {
-            Business.Parsers.Models.Item item;
-            var clipboardContents = await Legacy.NativeClipboard.GetText();
             var restoreClipboard = true;
 
-            if (!string.IsNullOrEmpty(clipboardContents))
-            {
-                // check if clipboard contains an old item copy
-                // if so, we should not restore the clipboard to previous item
-                item = Legacy.ItemParser.ParseItem(clipboardContents);
-                restoreClipboard = item == null && clipboardContents != null;
-            }
-
-            // we still need to fetch the item under the cursor if any and make sure we don't use old contents
-            await Legacy.NativeClipboard.SetText(string.Empty);
-            item = await TriggerCopyAction();
+            var item = await TriggerCopyAction();
             if (item != null)
             {
+                var clipboardContents = await Legacy.NativeClipboard.GetText();
+
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
                 var searchText = item.Name;
+                Legacy.Logger.Log(item.Name);
                 await Legacy.NativeClipboard.SetText(searchText);
 
                 Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.FindItems);
+
+                if (restoreClipboard)
+                {
+                    await Task.Delay(250);
+                    await Legacy.NativeClipboard.SetText(clipboardContents);
+                }
+                return true;
             }
 
-            await Task.Delay(250);
-
-            if (restoreClipboard)
-            {
-                await Legacy.NativeClipboard.SetText(clipboardContents);
-            }
+            return false;
         }
 
-        public static async Task TriggerItemWiki()
+        public static async Task<bool> TriggerItemWiki()
         {
             var item = await TriggerCopyAction();
 
@@ -155,25 +156,32 @@ namespace Sidekick.Helpers.Input
                 {
                     Legacy.PoeWikiClient.Open(item);
                 }
+
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>
         /// Triggers the goto hideout command and restores the chat to your previous entry
         /// </summary>
-        private static Task TriggerHideout()
+        private static Task<bool> TriggerHideout()
         {
             Legacy.NativeKeyboard.SendCommand(KeyboardCommandEnum.GoToHideout);
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
 
-        public static async Task TriggerOpenSearch()
+        public static async Task<bool> TriggerOpenSearch()
         {
             var item = await TriggerCopyAction();
             if (item != null)
             {
                 await Legacy.TradeClient.OpenWebpage(item);
+                return true;
             }
+
+            return false;
         }
 
         private static async Task<Business.Parsers.Models.Item> TriggerCopyAction()
@@ -205,11 +213,8 @@ namespace Sidekick.Helpers.Input
                 return null;
             }
 
-            // Detect the language of the item in the clipboard.
-            await Legacy.LanguageProvider.FindAndSetLanguage(itemText);
-
             // Parse and return item
-            return Legacy.ItemParser.ParseItem(itemText);
+            return await Legacy.ItemParser.ParseItem(itemText);
         }
     }
 }

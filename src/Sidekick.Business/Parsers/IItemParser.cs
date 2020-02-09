@@ -1,9 +1,10 @@
-﻿using Sidekick.Business.Parsers.Models;
+using System.Threading.Tasks;
+using Sidekick.Business.Parsers.Models;
 
 namespace Sidekick.Business.Parsers
 {
     public interface IItemParser
     {
-        Item ParseItem(string text);
+        Task<Item> ParseItem(string itemText);
     }
 }
