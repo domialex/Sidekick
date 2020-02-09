@@ -2,7 +2,7 @@
 
 A Path of Exile helper that shows item prices using the **official** [Path of Exile Trade API](https://www.pathofexile.com/trade) instead of [poe.trade](http://poe.trade).
 
-![Sidekick preview image](https://i.imgur.com/AfTmf9f.png)
+![Sidekick preview image](https://i.imgur.com/U2qJzWe.png)
 
 ## Demo videos (old version)
 **[Item price check](https://streamable.com/raz6q)**
