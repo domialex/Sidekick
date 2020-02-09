@@ -159,7 +159,7 @@ namespace Sidekick.Natives
                     logger.Log("Keybind for opening the league overview triggered.");
                     if (OnOpenLeagueOverview != null) Task.Run(OnOpenLeagueOverview);
                 }
-                else if(input == configuration.Key_ReplyToLatestWhisper)
+                else if (input == configuration.Key_ReplyToLatestWhisper)
                 {
                     keybindFound = true;
                     logger.Log("Keybind for replying to most recent whisper triggered.");

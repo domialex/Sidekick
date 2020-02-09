@@ -26,7 +26,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         public static void Open()
         {
-            if(overlayWindow == null)
+            if (overlayWindow == null)
             {
                 Initialize();
             }
