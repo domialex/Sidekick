@@ -2,9 +2,9 @@
 
 A Path of Exile helper that shows item prices using the **official** [Path of Exile Trade API](https://www.pathofexile.com/trade) instead of [poe.trade](http://poe.trade).
 
-![Sidekick preview image](https://i.imgur.com/KWaasdg.png)
+![Sidekick preview image](https://i.imgur.com/AfTmf9f.png)
 
-## Demo videos
+## Demo videos (old version)
 **[Item price check](https://streamable.com/raz6q)**
 
 **[Currency price check](https://streamable.com/y0x6k)**
@@ -13,7 +13,7 @@ A Path of Exile helper that shows item prices using the **official** [Path of Ex
 
 If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
 
-Sidekick should be able to price check a lot of items now, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
+Sidekick should be able to price check almost every item, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
 
 **Enjoy!**
 
@@ -26,43 +26,21 @@ All help is very welcomed.
 
 ## Installation
 1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155).
-2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.3.0-beta/Sidekick.v0.3.0.Beta.zip) and extract anywhere on your computer.
+2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.4.0-beta/Sidekick.v0.4.0.Beta.zip) and extract anywhere on your computer.
 3. Run and enjoy.
 
 ## Usage
 1. Run **Sidekick.exe**.
-2. Select your [current league](https://i.imgur.com/7uFb7NF.png)
+2. Select your league in the settings if needed.
 3. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for better results.
-4. In **Path of Exile**, hover an item and press **Ctrl+D**.
-5. To close the overlay, press **Escape**.
+4. In **Path of Exile**, hover an item and press **Ctrl+D** (default hotkey).
+5. To close the overlay, press **Space** (default hotkey).
 
-### Hotkeys
-- **Ctrl+D** to price check an item
-- **Escape** to close overlay
-- **Ctrl+Scroll wheel** navigates your **stash tabs**
-- **F5** goes to your **hideout**
-- **Alt+W** - Open the Wiki page for an item (only English version of Path of Exile)
-- **Shift+Z twice** will close Sidekick
-
-*All hotkeys will be configurable in the future.*
-
-## Roadmap
-1. Parse all items
-2. Support [poe.ninja](https://poe.ninja)
-3. Support [poeprices.info](https://www.poeprices.info)
-4. Settings page
-   - Change hotkeys
-   - Default attributes to price check
-5. Results pagination
+*All hotkeys can be changed.*
 
 ## Thanks
 - [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
 - [WindowsHook](https://github.com/topstarai/WindowsHook) - Keyboard and mouse hooks
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
-
-## Donations
-I've been receiving messages from people who expressed interest in supporting the project with donations.
-
-Please know that I will work on this project because I enjoy it! There is no need to donate 😋.
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/domialex)
+- [poe.ninja](https://poe.ninja/)
+- [Poe Price Info](https://www.poeprices.info/)
