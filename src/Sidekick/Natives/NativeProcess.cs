@@ -72,8 +72,24 @@ namespace Sidekick.Natives
 
         public Mutex Mutex { get; set; }
 
-
         public bool IsPathOfExileInFocus => ActiveWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
+
+        public bool IsSidekickInFocus
+        {
+            get
+            {
+                var activatedHandle = GetForegroundWindow();
+                if (activatedHandle == IntPtr.Zero)
+                {
+                    return false;
+                }
+
+                var procId = Process.GetCurrentProcess().Id;
+                GetWindowThreadProcessId(activatedHandle, out var activeProcId);
+
+                return activeProcId == procId;
+            }
+        }
 
         private string ActiveWindowTitle => GetActiveWindowProcess()?.MainWindowTitle;
 

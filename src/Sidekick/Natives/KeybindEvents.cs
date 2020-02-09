@@ -4,7 +4,6 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Windows.Overlay;
 using WindowsHook;
 
 namespace Sidekick.Natives
@@ -29,15 +28,15 @@ namespace Sidekick.Natives
 
         public bool Enabled { get; set; }
 
-        public event Func<Task> OnCloseWindow;
-        public event Func<Task> OnPriceCheck;
-        public event Func<Task> OnHideout;
-        public event Func<Task> OnItemWiki;
-        public event Func<Task> OnFindItems;
-        public event Func<Task> OnLeaveParty;
-        public event Func<Task> OnOpenSearch;
-        public event Func<Task> OnOpenLeagueOverview;
-        public event Func<Task> OnWhisperReply;
+        public event Func<Task<bool>> OnCloseWindow;
+        public event Func<Task<bool>> OnPriceCheck;
+        public event Func<Task<bool>> OnHideout;
+        public event Func<Task<bool>> OnItemWiki;
+        public event Func<Task<bool>> OnFindItems;
+        public event Func<Task<bool>> OnLeaveParty;
+        public event Func<Task<bool>> OnOpenSearch;
+        public event Func<Task<bool>> OnOpenLeagueOverview;
+        public event Func<Task<bool>> OnWhisperReply;
         public event Func<int, int, Task> OnMouseClick;
 
         private IKeyboardMouseEvents hook = null;
@@ -96,90 +95,65 @@ namespace Sidekick.Natives
 
         private bool NativeKeyboard_OnKeyDown(string input)
         {
-            if (!Enabled)
+            if (Enabled && (nativeProcess.IsPathOfExileInFocus || nativeProcess.IsSidekickInFocus))
             {
-                return false;
+                Enabled = false;
+                Task.Run(async () =>
+                {
+                    await Task.Delay(500);
+                    Enabled = true;
+                });
+
+                Task<bool> task = null;
+
+                ExecuteKeybind("Close Window", configuration.Key_CloseWindow, input, OnCloseWindow, ref task);
+                ExecuteKeybind("Check Prices", configuration.Key_CheckPrices, input, OnPriceCheck, ref task);
+                ExecuteKeybind("Open Wiki", configuration.Key_OpenWiki, input, OnItemWiki, ref task);
+                ExecuteKeybind("Go to Hideout", configuration.Key_GoToHideout, input, OnHideout, ref task);
+                ExecuteKeybind("Find Items", configuration.Key_FindItems, input, OnFindItems, ref task);
+                ExecuteKeybind("Leave Party", configuration.Key_LeaveParty, input, OnLeaveParty, ref task);
+                ExecuteKeybind("Open Search", configuration.Key_OpenSearch, input, OnOpenSearch, ref task);
+                ExecuteKeybind("Open League Overview", configuration.Key_OpenLeagueOverview, input, OnOpenLeagueOverview, ref task);
+                ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
+
+                // We need to make sure some key combinations make it into the game if the keybind returns false
+                SendInputIf("Ctrl+F", input, task);
+                SendInputIf("Space", input, task);
+
+                return task != null;
             }
 
-            Enabled = false;
+            return false;
+        }
 
-            var keybindFound = false;
-
-            if (input == configuration.Key_CloseWindow)
+        private void ExecuteKeybind(string name, string keybind, string input, Func<Task<bool>> func, ref Task<bool> returnTask)
+        {
+            if (input == keybind)
             {
-                if (OverlayController.IsDisplayed)
+                logger.Log($"Keybind Triggered - {name}");
+                if (func != null)
                 {
-                    keybindFound = true;
-                }
-                logger.Log("Keybind for closing the window triggered.");
-                if (OnCloseWindow != null) Task.Run(OnCloseWindow);
-            }
-
-            if (nativeProcess.IsPathOfExileInFocus)
-            {
-                if (input == configuration.Key_CheckPrices)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for price checking triggered.");
-                    if (OnPriceCheck != null) Task.Run(OnPriceCheck);
-                }
-                else if (input == configuration.Key_OpenWiki)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for opening the item wiki triggered.");
-                    if (OnItemWiki != null) Task.Run(OnItemWiki);
-                }
-                else if (input == configuration.Key_GoToHideout)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for going to the hideout triggered.");
-                    if (OnHideout != null) Task.Run(OnHideout);
-                }
-                else if (input == configuration.Key_FindItems)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for finding the item triggered.");
-                    if (OnFindItems != null) Task.Run(OnFindItems);
-                }
-                else if (input == configuration.Key_LeaveParty)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for leaving the party triggered.");
-                    if (OnLeaveParty != null) Task.Run(OnLeaveParty);
-                }
-                else if (input == configuration.Key_OpenSearch)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for opening the search triggered.");
-                    if (OnOpenSearch != null) Task.Run(OnOpenSearch);
-                }
-                else if (input == configuration.Key_OpenLeagueOverview)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for opening the league overview triggered.");
-                    if (OnOpenLeagueOverview != null) Task.Run(OnOpenLeagueOverview);
-                }
-                else if(input == configuration.Key_ReplyToLatestWhisper)
-                {
-                    keybindFound = true;
-                    logger.Log("Keybind for replying to most recent whisper triggered.");
-                    if (OnWhisperReply != null) Task.Run(OnWhisperReply);
+                    returnTask = func.Invoke();
                 }
             }
+        }
 
-            Task.Run(async () =>
+        // We need to make sure some key combinations make it into the game no matter what
+        private void SendInputIf(string keybind, string input, Task<bool> task)
+        {
+            if (task != null && input == keybind)
             {
-                await Task.Delay(500);
-                Enabled = true;
-            });
-
-            // We need to make sure some key combinations make it into the game no matter what
-            if (keybindFound)
-            {
-                keybindFound = input != "Ctrl+F";
+                Task.Run(async () =>
+                {
+                    if (!await task)
+                    {
+                        Enabled = false;
+                        nativeKeyboard.SendInput(keybind);
+                        await Task.Delay(200);
+                        Enabled = true;
+                    }
+                });
             }
-
-            return keybindFound;
         }
 
         public void Dispose()

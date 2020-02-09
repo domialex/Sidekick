@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sidekick.Core.Initialization;
@@ -131,6 +132,15 @@ namespace Sidekick.Natives
                     SendKeys.SendWait("{Enter}^{a}^{v}");
                     break;
             }
+        }
+
+        public void SendInput(string input)
+        {
+            var sendKeyStr = input
+                .Replace("Ctrl+", "^")
+                .Replace("Space", " ");
+            sendKeyStr = Regex.Replace(sendKeyStr, "([a-zA-Z])", "{$1}");
+            SendKeys.SendWait(sendKeyStr);
         }
 
         public bool IsKeyPressed(string key)

@@ -25,13 +25,13 @@ namespace Sidekick.Business.Whispers
                     return null;
                 }
                 stream.Position = stream.Length - 1;
-                while(stream.Position > 0)
+                while (stream.Position > 0)
                 {
                     var currentLine = GetLine(stream);
 
                     // See if the current line contains a received whisper
                     var match = Regex.Match(currentLine, @"(@From){1}\s.+?(?=:)", RegexOptions.Singleline);
-                    if(match.Success)
+                    if (match.Success)
                     {
                         // No extract only character name
                         int lastWhitespacePos = match.Value.LastIndexOf(" ") + 1;
@@ -39,7 +39,7 @@ namespace Sidekick.Business.Whispers
                     }
 
                     stream.Position -= 1;
-                }               
+                }
             }
             return null;
         }

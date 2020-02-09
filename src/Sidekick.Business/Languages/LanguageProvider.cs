@@ -55,7 +55,7 @@ namespace Sidekick.Business.Languages
         {
             var language = AvailableLanguages.FirstOrDefault(x => itemDescription.Contains(x.DescriptionRarity));
 
-            if (SetLanguage(language.Name))
+            if (language != null && SetLanguage(language.Name))
             {
                 await initializeService.Initialize();
             }
