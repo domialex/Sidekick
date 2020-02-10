@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Sidekick
+namespace Sidekick.Windows.TrayIcon
 {
     public class RelayCommand : ICommand
     {

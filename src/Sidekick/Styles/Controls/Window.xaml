@@ -13,4 +13,15 @@
         <Setter Property="ShowInTaskbar" Value="False" />
         <Setter Property="Topmost" Value="True" />
     </Style>
+
+    <Style
+        x:Key="WindowTool"
+        BasedOn="{StaticResource {x:Type Window}}"
+        TargetType="Window">
+        <Setter Property="WindowStyle" Value="ToolWindow" />
+        <Setter Property="AllowsTransparency" Value="False" />
+        <Setter Property="ResizeMode" Value="CanResize" />
+        <Setter Property="ShowInTaskbar" Value="True" />
+        <Setter Property="Topmost" Value="False" />
+    </Style>
 </ResourceDictionary>

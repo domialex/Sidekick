@@ -24,7 +24,7 @@
                 Click="SaveChanges_Click"
                 Content="{x:Static r:SettingResources.Ok}" />
         </WrapPanel>
-        <TabControl TabStripPlacement="Left">
+        <TabControl Margin="{StaticResource SpacerBottom}" TabStripPlacement="Left">
             <TabItem Header="{x:Static r:SettingResources.Tab_General}">
                 <ScrollViewer>
                     <StackPanel>

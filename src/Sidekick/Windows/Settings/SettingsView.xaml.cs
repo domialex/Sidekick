@@ -1,5 +1,4 @@
 using System.Windows;
-using System.Windows.Forms.Integration;
 using System.Windows.Input;
 using Sidekick.UI.Settings;
 using Sidekick.UI.Views;
@@ -16,8 +15,6 @@ namespace Sidekick.Windows.Settings
 
             InitializeComponent();
             DataContext = viewModel;
-
-            ElementHost.EnableModelessKeyboardInterop(this);
 
             Show();
         }

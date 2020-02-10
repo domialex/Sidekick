@@ -3,6 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI">
     <Style
+        x:Key="TextArea"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="TextBox" />
+    <Style
         x:Key="{x:Type TextBox}"
         BasedOn="{StaticResource {x:Type TextBox}}"
         TargetType="TextBox">
