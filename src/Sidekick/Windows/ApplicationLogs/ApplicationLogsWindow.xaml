@@ -9,13 +9,7 @@
     MinHeight="320"
     Background="{DynamicResource SolidColorBrush_Background}"
     WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+
     <Window.Style>
         <Style />
     </Window.Style>

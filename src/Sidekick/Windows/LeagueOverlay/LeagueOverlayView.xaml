@@ -19,10 +19,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <SolidColorBrush x:Key="HighValueColor" Color="#FF336303" />
             <SolidColorBrush x:Key="MediumValueColor" Color="#FFBFA500" />
             <SolidColorBrush x:Key="LowValueColor" Color="#FFDA4500" />

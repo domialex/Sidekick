@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -17,6 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AdonisUI" Version="1.13.0" />
+    <PackageReference Include="AdonisUI.ClassicTheme" Version="1.13.0" />
     <PackageReference Include="Bindables.Fody" Version="6.0.0" />
     <PackageReference Include="Fody" Version="6.1.0">
       <PrivateAssets>all</PrivateAssets>
@@ -201,5 +203,32 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\Controls\Button.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\GroupBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\TabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\CheckBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\Label.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\ComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\TextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Main.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

@@ -8,44 +8,29 @@
     xmlns:r="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
     Width="680"
     Height="400"
-    AllowsTransparency="True"
-    Background="{DynamicResource SolidColorBrush_BackgroundTransparent}"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
-    ResizeMode="NoResize"
-    ShowInTaskbar="False"
-    Topmost="True"
     WindowStartupLocation="CenterScreen"
-    WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
     </Window.Resources>
+
+    <Window.Style>
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
+    </Window.Style>
 
     <DockPanel Margin="10">
         <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
             <Button
-                Width="100"
-                Height="40"
+                Margin="{StaticResource SpacerLeft}"
                 Click="DiscardChanges_Click"
                 Content="{x:Static r:SettingResources.Cancel}" />
-            <Button
-                Width="100"
-                Height="40"
-                Click="SaveChanges_Click"
-                Content="{x:Static r:SettingResources.Ok}" />
+            <Button Click="SaveChanges_Click" Content="{x:Static r:SettingResources.Ok}" />
         </WrapPanel>
-        <TabControl
-            Grid.Row="0"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            TabStripPlacement="Left">
+        <TabControl TabStripPlacement="Left">
             <TabItem Header="{x:Static r:SettingResources.Tab_General}">
                 <ScrollViewer>
-                    <StackPanel Margin="5,0,0,0">
+                    <StackPanel>
                         <GroupBox Header="{x:Static r:SettingResources.Language_Title}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -82,10 +67,6 @@
                                 <TextBox
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    Background="{DynamicResource SolidColorBrush_Text}"
-                                    BorderBrush="{DynamicResource SolidColorBrush_Primary}"
-                                    BorderThickness="1"
-                                    IsReadOnly="False"
                                     Text="{Binding Path=Settings.Character_Name}" />
                             </Grid>
                         </GroupBox>
