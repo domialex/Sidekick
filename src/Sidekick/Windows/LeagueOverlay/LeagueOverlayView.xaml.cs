@@ -34,41 +34,15 @@ namespace Sidekick.Windows.LeagueOverlay
         {
             InitializeComponent();
 
-            DelveFossilRarityDictionary = new Dictionary<string, string>()
-            {
-                { DelveResources.AberrantFossil, LowValueColorName },
-                { DelveResources.AethericFossil, VeryLowValueColorName },
-                { DelveResources.BloodstainedFossil, HighValueColorName },
-                { DelveResources.BoundFossil, LowValueColorName },
-                { DelveResources.CorrodedFossil, MediumValueColorName },
-                { DelveResources.DenseFossil, LowValueColorName},
-                { DelveResources.EnchantedFossil, MediumValueColorName },
-                { DelveResources.EncrustedFossil, VeryLowValueColorName },
-                { DelveResources.FacetedFossil, HighValueColorName },
-                { DelveResources.FracturedFossil, HighValueColorName },
-                { DelveResources.FrigidFossil, VeryLowValueColorName },
-                { DelveResources.GildedFossil, MediumValueColorName },
-                { DelveResources.GlyphicFossil, HighValueColorName },
-                { DelveResources.HollowFossil, HighValueColorName },
-                { DelveResources.JaggedFossil, VeryLowValueColorName },
-                { DelveResources.LucentFossil, VeryLowValueColorName },
-                { DelveResources.MetallicFossil, LowValueColorName },
-                { DelveResources.PerfectFossil, MediumValueColorName },
-                { DelveResources.PrismaticFossil, LowValueColorName },
-                { DelveResources.PristineFossil, VeryLowValueColorName },
-                { DelveResources.SanctifiedFossil, HighValueColorName },
-                { DelveResources.ScorchedFossil, VeryLowValueColorName },
-                { DelveResources.SerratedFossil, MediumValueColorName },
-                { DelveResources.ShudderingFossil, MediumValueColorName },
-                { DelveResources.TangledFossil, MediumValueColorName },
-            };
-
+            UpdateFossilRarityDictionary();
             UpdateHeaderUIText();
             UpdateBetrayalUIText();
             UpdateIncursionUIText();
             UpdateBlightUIText();
             UpdateMetamorphUIText();
             UpdateDelveUIText();
+
+            Legacy.UILanguageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateHeaderUIText;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
@@ -217,6 +191,38 @@ namespace Sidekick.Windows.LeagueOverlay
             e.Cancel = true;
         }
 
+        private void UpdateFossilRarityDictionary()
+        {
+            DelveFossilRarityDictionary = new Dictionary<string, string>()
+            {
+                { DelveResources.AberrantFossil, LowValueColorName },
+                { DelveResources.AethericFossil, VeryLowValueColorName },
+                { DelveResources.BloodstainedFossil, HighValueColorName },
+                { DelveResources.BoundFossil, LowValueColorName },
+                { DelveResources.CorrodedFossil, MediumValueColorName },
+                { DelveResources.DenseFossil, LowValueColorName},
+                { DelveResources.EnchantedFossil, MediumValueColorName },
+                { DelveResources.EncrustedFossil, VeryLowValueColorName },
+                { DelveResources.FacetedFossil, HighValueColorName },
+                { DelveResources.FracturedFossil, HighValueColorName },
+                { DelveResources.FrigidFossil, VeryLowValueColorName },
+                { DelveResources.GildedFossil, MediumValueColorName },
+                { DelveResources.GlyphicFossil, HighValueColorName },
+                { DelveResources.HollowFossil, HighValueColorName },
+                { DelveResources.JaggedFossil, VeryLowValueColorName },
+                { DelveResources.LucentFossil, VeryLowValueColorName },
+                { DelveResources.MetallicFossil, LowValueColorName },
+                { DelveResources.PerfectFossil, MediumValueColorName },
+                { DelveResources.PrismaticFossil, LowValueColorName },
+                { DelveResources.PristineFossil, VeryLowValueColorName },
+                { DelveResources.SanctifiedFossil, HighValueColorName },
+                { DelveResources.ScorchedFossil, VeryLowValueColorName },
+                { DelveResources.SerratedFossil, MediumValueColorName },
+                { DelveResources.ShudderingFossil, MediumValueColorName },
+                { DelveResources.TangledFossil, MediumValueColorName },
+            };
+        }
+
         private void UpdateHeaderUIText()
         {
             var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
@@ -235,6 +241,8 @@ namespace Sidekick.Windows.LeagueOverlay
             var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            labelIncrusionLengend.Content = IncursionResources.Legend;
 
             labelIncursionHeaderContains.Content = IncursionResources.HeaderContains;
             labelIncursionHeaderModifiers.Content = IncursionResources.HeaderModifiers;
@@ -308,7 +316,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockHallOfHeroes.Text = IncursionResources.HallOfHeroes;
             textBlockHallOfLegends.Text = IncursionResources.HallOfLegends;
 
-            textBlockSacrificalChamber.Text = IncursionResources.SacrificalChamber;
+            textBlockSacrificalChamber.Text = IncursionResources.SacrificialChamber;
             textBlockSacrificalChamberContains.Text = IncursionResources.SacrificalChamberContains;
             textBlockHallOfOfferings.Text = IncursionResources.HallOfOfferings;
             textBlockApexOfAscension.Text = IncursionResources.ApexOfAscension;
@@ -376,7 +384,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockHatchery.Text = IncursionResources.Hatchery;
             textBlockHatcherModifiers.Text = IncursionResources.HatcheryModifiers;
             textBlockHatcheryContains.Text = IncursionResources.HatcheryContains;
-            textBlockAutomationLab.Text = IncursionResources.AutomationLab;
+            textBlockAutomationLab.Text = IncursionResources.AutomatonLab;
             textBlockHybridisationChamber.Text = IncursionResources.HybridisationChamber;
             textBlockHatcheryContains.ToolTip = IncursionResources.CitaqualotlModTooltip;
 
@@ -392,6 +400,11 @@ namespace Sidekick.Windows.LeagueOverlay
             var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            labelBetrayalLegendNotValuable.Content = LeagueResources.LegendNotValuable;
+            labelBetrayalLegendLessValuable.Content = LeagueResources.LegendLessValuable;
+            labelBetrayalLegendValuable.Content = LeagueResources.LegendValuable;
+            labelBetrayalLegendMoreValuable.Content = LeagueResources.LegendMoreValuable;
 
             labelBetrayalTypeTransportation.Content = BetrayalResources.TypeTransportation;
             labelBetrayalTypeResearch.Content = BetrayalResources.TypeResearch;
@@ -523,6 +536,8 @@ namespace Sidekick.Windows.LeagueOverlay
             var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            labelBlightLegend.Content = BlightResources.Legend;
 
             labelClearOil.Content = BlightResources.ClearOil;
             textBlockClearOilEffect.Text = BlightResources.ClearOilEffect;
@@ -696,6 +711,10 @@ namespace Sidekick.Windows.LeagueOverlay
 
             labelDelveInformation.Content = DelveResources.Information;
             labelDelveLegend.Content = DelveResources.Legend;
+            labelDelveLegendNotValuable.Content = LeagueResources.LegendNotValuable;
+            labelDelveLegendLowValuable.Content = LeagueResources.LegendLessValuable;
+            labelDelveLegendValuable.Content = LeagueResources.LegendValuable;
+            labelDelveLegendMoreValuable.Content = LeagueResources.LegendMoreValuable;
         }
     }
 }

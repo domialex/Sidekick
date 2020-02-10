@@ -157,6 +157,7 @@
                         Grid.Column="0"
                         Stroke="Black" />
                     <Label
+                        x:Name="labelIncrusionLengend"
                         Grid.Row="26"
                         Grid.Column="0"
                         Margin="0"
@@ -2520,6 +2521,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource SolidColorBrush_Text}" />
                     <Label
+                        x:Name="labelDelveLegendNotValuable"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="20,0,0,0"
@@ -2529,6 +2531,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource VeryLowValueColor}" />
                     <Label
+                        x:Name="labelDelveLegendLowValuable"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="0,0,20,0"
@@ -2538,6 +2541,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
+                        x:Name="labelDelveLegendValuable"
                         Grid.Row="2"
                         Grid.Column="2"
                         Margin="20,0,0,0"
@@ -2547,6 +2551,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
+                        x:Name="labelDelveLegendMoreValuable"
                         Grid.Row="2"
                         Grid.Column="2"
                         Margin="0,0,20,0"
@@ -2607,6 +2612,7 @@
                     </Grid.ColumnDefinitions>
                     <!--  Legend  -->
                     <Label
+                        x:Name="labelBetrayalLegendMoreValuable"
                         Grid.Row="5"
                         Grid.Column="6"
                         Grid.ColumnSpan="2"
@@ -2619,6 +2625,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource HighValueColor}" />
                     <Label
+                        x:Name="labelBetrayalLegendValuable"
                         Grid.Row="5"
                         Grid.Column="8"
                         Grid.ColumnSpan="2"
@@ -2631,6 +2638,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource MediumValueColor}" />
                     <Label
+                        x:Name="labelBetrayalLegendLessValuable"
                         Grid.Row="5"
                         Grid.Column="10"
                         Grid.ColumnSpan="2"
@@ -2643,6 +2651,7 @@
                         FontWeight="Bold"
                         Foreground="{DynamicResource LowValueColor}" />
                     <Label
+                        x:Name="labelBetrayalLegendNotValuable"
                         Grid.Row="5"
                         Grid.Column="12"
                         Grid.ColumnSpan="2"
@@ -2739,11 +2748,11 @@
                         Name="textBlockAislingFortification"
                         Grid.Row="3"
                         Grid.Column="1"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         TextAlignment="Center"
                         FontWeight="Bold"
-                        Foreground="{DynamicResource SolidColorBrush_Text}" Grid.ColumnSpan="3" Margin="10,0,0,0">
+                        Foreground="{DynamicResource SolidColorBrush_Text}" Grid.ColumnSpan="2" Margin="1,0,0,0">
                         <Span>Veiled</Span>
                         <LineBreak />
                         <Span>Armor</Span>
@@ -2756,11 +2765,12 @@
                     <TextBlock
                         Name="textBlockAislingResearch"
                         Grid.Row="4"
+                        Grid.Column="1"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         TextAlignment="Center"
                         FontWeight="Bold"
-                        Foreground="{DynamicResource SolidColorBrush_Text}" Grid.ColumnSpan="4" Margin="38,0,0,0">
+                        Foreground="{DynamicResource SolidColorBrush_Text}" Grid.ColumnSpan="2" Margin="1,0,0,0">
                         <Span>Add Veiled</Span>
                         <LineBreak />
                         <Span>Mod(s)</Span>

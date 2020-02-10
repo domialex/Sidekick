@@ -70,7 +70,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n20% reduced Cost of Towers.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///20% reduced Cost of Towers.
         /// </summary>
         public static string AmberOilEffect {
             get {
@@ -88,7 +89,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n15% increased Experience.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///15% increased Experience.
         /// </summary>
         public static string AzureOilEffect {
             get {
@@ -106,7 +108,9 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n10% chance for Blight Chests to have an\nadditional reward.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///10% chance for Blight Chests to have an
+        ///additional reward.
         /// </summary>
         public static string BlackOilEffect {
             get {
@@ -124,7 +128,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n+10% reduced Monster Movement Speed.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///+10% reduced Monster Movement Speed.
         /// </summary>
         public static string ClearOilEffect {
             get {
@@ -142,7 +147,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n3 Blight Chests are Lucky.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///3 Blight Chests are Lucky.
         /// </summary>
         public static string CrimsonOilEffect {
             get {
@@ -160,11 +166,22 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n25% chance for Blight Chests to have an\nadditional Reward.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///25% chance for Blight Chests to have an
+        ///additional Reward.
         /// </summary>
         public static string GoldenOilEffect {
             get {
                 return ResourceManager.GetString("GoldenOilEffect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend.
+        /// </summary>
+        public static string Legend {
+            get {
+                return ResourceManager.GetString("Legend", resourceCulture);
             }
         }
         
@@ -215,7 +232,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n5 Blight Chests are Lucky.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///5 Blight Chests are Lucky.
         /// </summary>
         public static string SilverOilEffect {
             get {
@@ -233,7 +251,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n2 Blight Chests are Lucky.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///2 Blight Chests are Lucky.
         /// </summary>
         public static string TealOilEffect {
             get {
@@ -269,7 +288,8 @@ namespace Sidekick.Localization.Leagues.Blight {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +5% Monster Pack Size\n30% increased Quantity of Items.
+        ///   Looks up a localized string similar to +5% Monster Pack Size
+        ///30% increased Quantity of Items.
         /// </summary>
         public static string VioletOilEffect {
             get {
