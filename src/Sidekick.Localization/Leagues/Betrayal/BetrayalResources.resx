@@ -353,20 +353,19 @@ Experience</value>
 Scarab</value>
   </data>
   <data name="VaganTransportation" xml:space="preserve">
-    <value>Rare
-Weapons</value>
+    <value>Legion
+Splinters</value>
   </data>
   <data name="VaganFortification" xml:space="preserve">
-    <value>Rare
-Armor</value>
+    <value>Legion
+Chests</value>
   </data>
   <data name="VaganResearch" xml:space="preserve">
-    <value>Rare
-Jewellery</value>
+    <value>Incubators</value>
   </data>
   <data name="VaganIntervention" xml:space="preserve">
-    <value>Rare
-Jewels</value>
+    <value>Legion
+Scarab</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
     <value>Quality
