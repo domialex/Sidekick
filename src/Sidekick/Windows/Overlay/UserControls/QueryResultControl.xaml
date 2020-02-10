@@ -17,6 +17,9 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\..\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="BorderBrush" Value="Transparent" />
