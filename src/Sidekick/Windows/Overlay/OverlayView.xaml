@@ -13,9 +13,6 @@
     WindowStyle="None">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type VM:ListItem}">
                 <StackPanel>
                     <StackPanel.Style>
