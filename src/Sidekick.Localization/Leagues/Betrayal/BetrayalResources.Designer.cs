@@ -278,7 +278,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         /// <summary>
         ///   Looks up a localized string similar to 1 Transmutation
         ///200 Alteration
-        ///100 AUgmentation
+        ///100 Augmentation
         ///1 Regal
         ///1 Exalted
         ///1 Divine
