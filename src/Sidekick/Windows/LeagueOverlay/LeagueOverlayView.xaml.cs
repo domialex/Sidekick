@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using Sidekick.Localization.Leagues;
 using Sidekick.Localization.Leagues.Betrayal;
 using Sidekick.Localization.Leagues.Blight;
 using Sidekick.Localization.Leagues.Delve;
@@ -62,12 +63,13 @@ namespace Sidekick.Windows.LeagueOverlay
                 { DelveResources.TangledFossil, MediumValueColorName },
             };
 
-
+            UpdateHeaderUIText();
             UpdateBetrayalUIText();
             UpdateIncursionUIText();
             UpdateBlightUIText();
             UpdateMetamorphUIText();
             UpdateDelveUIText();
+            Legacy.UILanguageProvider.UILanguageChanged += UpdateHeaderUIText;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
             Legacy.UILanguageProvider.UILanguageChanged += UpdateBlightUIText;
@@ -213,6 +215,19 @@ namespace Sidekick.Windows.LeagueOverlay
         {
             Hide();
             e.Cancel = true;
+        }
+
+        private void UpdateHeaderUIText()
+        {
+            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            tabItemIncursion.Header = LeagueResources.LeagueNameIncrusion;
+            tabItemDelve.Header = LeagueResources.LeagueNameDelve;
+            tabItemBetrayal.Header = LeagueResources.LeagueNameBetrayal;
+            tabItemBlight.Header = LeagueResources.LeagueNameBlight;
+            tabItemMetamorph.Header = LeagueResources.LeagueNameMetamorph;
         }
 
         private void UpdateIncursionUIText()
@@ -378,28 +393,38 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
+            labelBetrayalTypeTransportation.Content = BetrayalResources.TypeTransportation;
+            labelBetrayalTypeResearch.Content = BetrayalResources.TypeResearch;
+            labelBetrayalTypeFortification.Content = BetrayalResources.TypeFortification;
+            labelBetrayalTypeIntervention.Content = BetrayalResources.TypeIntervention;
+
+            labelAislingName.Content = BetrayalResources.AislingName;
             textBlockAislingTransportation.Text = BetrayalResources.AislingTransportaion;
             textBlockAislingFortification.Text = BetrayalResources.AislingFortification;
             textBlockAislingResearch.Text = BetrayalResources.AislingResearch;
             textBlockAislingResearch.ToolTip = BetrayalResources.AislingResearchTooltip;
             textBlockAislingIntervention.Text = BetrayalResources.AislingIntervention;
 
+            labelCameriaName.Content = BetrayalResources.CameriaName;
             textBlockCameriaFortification.Text = BetrayalResources.CameriaFortification;
             textBlockCameriaIntervention.Text = BetrayalResources.CameriaIntervention;
             textBlockCameriaResearch.Text = BetrayalResources.CameriaResearch;
             textBlockCameriaTransportation.Text = BetrayalResources.CameriaTransportation;
             textBlockCameriaTransportation.ToolTip = BetrayalResources.CameriaTransportationTooltip;
 
+            labelElreonName.Content = BetrayalResources.ElreonName;
             textBlockElreonFortification.Text = BetrayalResources.ElreonFortification;
             textBlockElreonIntervention.Text = BetrayalResources.ElreonIntervention;
             textBlockElreonResearch.Text = BetrayalResources.ElreonResearch;
             textBlockElreonTransportation.Text = BetrayalResources.ElreonTransportation;
 
+            labelGraviciusName.Content = BetrayalResources.GraviciusName;
             textBlockGraviciusFortification.Text = BetrayalResources.GraviciusFortification;
             textBlockGraviciusIntervention.Text = BetrayalResources.GraviciusIntervention;
             textBlockGraviciusResearch.Text = BetrayalResources.GraviciusResearch;
             textBlockGraviciusTransportation.Text = BetrayalResources.GraviciusTransportation;
 
+            labelGuffName.Content = BetrayalResources.GuffName;
             textBlockGuffFortification.Text = BetrayalResources.GuffFortification;
             textBlockGuffFortification.ToolTip = BetrayalResources.GuffFortificationTooltip;
             textBlockGuffIntervention.Text = BetrayalResources.GuffIntervention;
@@ -409,11 +434,13 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockGuffTransportation.Text = BetrayalResources.GuffTransportation;
             textBlockGuffTransportation.ToolTip = BetrayalResources.GuffTransportationTooltip;
 
+            labelHakuName.Content = BetrayalResources.HakuName;
             textBlockHakuFortification.Text = BetrayalResources.HakuFortification;
             textBlockHakuIntervention.Text = BetrayalResources.HakuIntervention;
             textBlockHakuResearch.Text = BetrayalResources.HakuResearch;
             textBlockHakuTransportation.Text = BetrayalResources.HakuTransportation;
 
+            labelHillockName.Content = BetrayalResources.HillockName;
             textBlockHillockFortification.Text = BetrayalResources.HillockFortification;
             textBlockHillockFortification.ToolTip = BetrayalResources.HillockFortificationTooltip;
             textBlockHillockIntervention.Text = BetrayalResources.HillockIntervention;
@@ -423,44 +450,52 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockHillockTransportation.Text = BetrayalResources.HillockTransportation;
             textBlockHillockTransportation.ToolTip = BetrayalResources.HillockTransportationTooltip;
 
+            labelItThatFledName.Content = BetrayalResources.ItThatFledName;
             textBlockItThatFledFortification.Text = BetrayalResources.ItThatFledFortification;
             textBlockItThatFledIntervention.Text = BetrayalResources.ItThatFledIntervention;
             textBlockItThatFledResearch.Text = BetrayalResources.ItThatFledResearch;
             textBlockItThatFledResearch.ToolTip = BetrayalResources.ItThatFledResearchTooltip;
             textBlockItThatFledTransportation.Text = BetrayalResources.ItThatFledTransportation;
 
+            labelJanusName.Content = BetrayalResources.JanusName;
             textBlockJanusFortification.Text = BetrayalResources.JanusFortification;
             textBlockJanusIntervention.Text = BetrayalResources.JanusIntervention;
             textBlockJanusResearch.Text = BetrayalResources.JanusResearch;
             textBlockJanusTransportation.Text = BetrayalResources.JanusTransportaion;
 
+            labelJorginName.Content = BetrayalResources.JorginName;
             textBlockJorginFortification.Text = BetrayalResources.JorginFortification;
             textBlockJorginIntervention.Text = BetrayalResources.JorginIntervention;
             textBlockJorginResearch.Text = BetrayalResources.JorginResearch;
             textBlockJorginResearch.ToolTip = BetrayalResources.JorginResearchTooltip;
             textBlockJorginTransportation.Text = BetrayalResources.JorginTransportation;
 
-            textBlockKorrelFortifcation.Text = BetrayalResources.KorrelFortification;
-            textBlockKorrelIntervention.Text = BetrayalResources.KorrelIntervention;
-            textBlockKorrelResearch.Text = BetrayalResources.KorrellResearch;
-            textBlockKorrelTransportation.Text = BetrayalResources.KorrellTransportation;
+            labelKorellName.Content = BetrayalResources.KorellName;
+            textBlockKorellFortifcation.Text = BetrayalResources.KorellFortification;
+            textBlockKorellIntervention.Text = BetrayalResources.KorellIntervention;
+            textBlockKorellResearch.Text = BetrayalResources.KorellResearch;
+            textBlockKorellTransportation.Text = BetrayalResources.KorellTransportation;
 
+            labelLeoName.Content = BetrayalResources.LeoName;
             textBlockLeoFortification.Text = BetrayalResources.LeoFortification;
             textBlockLeoIntervention.Text = BetrayalResources.LeoIntervention;
             textBlockLeoResearch.Text = BetrayalResources.LeoResearch;
             textBlockLeoResearch.ToolTip = BetrayalResources.LeoResearchTooltip;
             textBlockLeoTransportation.Text = BetrayalResources.LeoTransportation;
 
+            labelRikerName.Content = BetrayalResources.RikerName;
             textBlockRikerFortification.Text = BetrayalResources.RikerFortification;
             textBlockRikerIntervention.Text = BetrayalResources.RikerIntervention;
             textBlockRikerResearch.Text = BetrayalResources.RikerResearch;
             textBlockRikerTransportation.Text = BetrayalResources.RikerTransportation;
 
+            labelRinName.Content = BetrayalResources.RinName;
             textBlockRinFortification.Text = BetrayalResources.RinFortification;
             textBlockRinIntervention.Text = BetrayalResources.RinIntervention;
             textBlockRinResearch.Text = BetrayalResources.RinResearch;
             textBlockRinTransportation.Text = BetrayalResources.RinTransportation;
 
+            labelToraName.Content = BetrayalResources.ToraName;
             textBlockToraFortification.Text = BetrayalResources.ToraFortification;
             textBlockToraFortification.ToolTip = BetrayalResources.ToraFortificationTooltip;
             textBlockToraIntervention.Text = BetrayalResources.ToraIntervention;
@@ -469,11 +504,13 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockToraTransportation.Text = BetrayalResources.ToraTransportation;
             textBlockToraTransportation.ToolTip = BetrayalResources.ToraTransportationTooltip;
 
+            labelVaganName.Content = BetrayalResources.VaganName;
             textBlockVaganFortification.Text = BetrayalResources.VaganFortification;
             textBlockVaganIntervention.Text = BetrayalResources.VaganIntervention;
             textBlockVaganResearch.Text = BetrayalResources.VaganResearch;
             textBlockVaganTransportation.Text = BetrayalResources.VaganTransportation;
 
+            labelVoriciName.Content = BetrayalResources.VoriciName;
             textBlockVoriciFortification.Text = BetrayalResources.VoriciFortification;
             textBlockVoriciIntervention.Text = BetrayalResources.VoriciIntervention;
             textBlockVoriciResearch.Text = BetrayalResources.VoriciResearch;
@@ -658,6 +695,7 @@ namespace Sidekick.Windows.LeagueOverlay
             SetTextBlockList(textBlockDelveFossilRoomFossils, fossilRoomFossils);
 
             labelDelveInformation.Content = DelveResources.Information;
+            labelDelveLegend.Content = DelveResources.Legend;
         }
     }
 }
