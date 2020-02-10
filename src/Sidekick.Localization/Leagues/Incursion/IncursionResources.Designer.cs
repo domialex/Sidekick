@@ -88,7 +88,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Armour\nAnimate Guardian Recipe.
+        ///   Looks up a localized string similar to  Armour
+        ///Animate Guardian Recipe.
         /// </summary>
         public static string ArmourersWorkshopContains {
             get {
@@ -169,7 +170,19 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prefix: \nMinions deal 90-138 increased Damage\n------------------------------------\n+2 to Level of socketed Minion Gems\n------------------------------------\nMinions deal 70-110 increased Damage\nMinions have 5% Chance to deal Double Damage\n------------------------------------\nSuffix: \nMinions have 13-40% increased Attack Speed\nMinions have 13-40% increased Cast Speed\n------------------------------------\n17-30% increased Minion Duration.
+        ///   Looks up a localized string similar to Prefix: 
+        ///Minions deal 90-138 increased Damage
+        ///------------------------------------
+        ///+2 to Level of socketed Minion Gems
+        ///------------------------------------
+        ///Minions deal 70-110 increased Damage
+        ///Minions have 5% Chance to deal Double Damage
+        ///------------------------------------
+        ///Suffix: 
+        ///Minions have 13-40% increased Attack Speed
+        ///Minions have 13-40% increased Cast Speed
+        ///------------------------------------
+        ///17-30% increased Minion Duration.
         /// </summary>
         public static string CitaqualotlModTooltip {
             get {
@@ -277,7 +290,12 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Possible outcomes: \nChange all sockets to white \nAdd two imnplicit Vaal modifiers \nTransform Sacrifical Garb into Shadowstitch \nTransform into a rare Item with random influence \nDestroy the item.
+        ///   Looks up a localized string similar to Possible outcomes: 
+        ///Change all sockets to white 
+        ///Add two imnplicit Vaal modifiers 
+        ///Transform Sacrifical Garb into Shadowstitch 
+        ///Transform into a rare Item with random influence 
+        ///Destroy the item.
         /// </summary>
         public static string DoubleCorruptionTooltip {
             get {
@@ -286,7 +304,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Applies to corruptions to a Gem\nPossible to get a 21/23 Gem.
+        ///   Looks up a localized string similar to Applies two corruptions to a Gem
+        ///Possible to get a 21/23 Gem.
         /// </summary>
         public static string DoubleGemCorruptionTooltip {
             get {
@@ -313,7 +332,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1/2/3 Explosive Kegs\n[Used to unlock doors].
+        ///   Looks up a localized string similar to 1/2/3 Explosive Kegs
+        ///[Used to unlock doors].
         /// </summary>
         public static string ExplosivesRoomContains {
             get {
@@ -367,7 +387,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to      Gems\nLevel 3: Double Gem Corruption.
+        ///   Looks up a localized string similar to      Gems
+        ///Level 3: Double Gem Corruption.
         /// </summary>
         public static string GemcuttersWorkshopContains {
             get {
@@ -403,7 +424,19 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prefix: \n+70-119 to Maximum Life\n3-10% increased Maximum Life\n--------------------------------\n+44-47 to Maximum Energy Shield\n7-10% increased Maximum Energy Shield\n--------------------------------\n+44-47 to Maximum Energy Shield\nRegenerate 0.4% of Energy Shield per Second\n--------------------------------\nSuffix: \nRegenerate 16-20 Life per Second\nRegenerate 0.4% of Life per Second.
+        ///   Looks up a localized string similar to Prefix: 
+        ///+70-119 to Maximum Life
+        ///3-10% increased Maximum Life
+        ///--------------------------------
+        ///+44-47 to Maximum Energy Shield
+        ///7-10% increased Maximum Energy Shield
+        ///--------------------------------
+        ///+44-47 to Maximum Energy Shield
+        ///Regenerate 0.4% of Energy Shield per Second
+        ///--------------------------------
+        ///Suffix: 
+        ///Regenerate 16-20 Life per Second
+        ///Regenerate 0.4% of Life per Second.
         /// </summary>
         public static string GuateliztzModTooltip {
             get {
@@ -466,7 +499,9 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 1: Timeless Monolith\nLevel 2: Guaranteed War Hoard\nLevel 3: Guaranteed General.
+        ///   Looks up a localized string similar to Level 1: Timeless Monolith
+        ///Level 2: Guaranteed War Hoard
+        ///Level 3: Guaranteed General.
         /// </summary>
         public static string HallOfMettleContains {
             get {
@@ -601,7 +636,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 3: Xopec Mod or Dance o fthe Offered.
+        ///   Looks up a localized string similar to Level 3: Xopec Mod or Dance of the Offered.
         /// </summary>
         public static string LightningWorkshopContains {
             get {
@@ -628,7 +663,21 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prefix: \n30% increased Movement Speed\n5-6% chance to Dodge Spell Hits\n--------------------------------------\n90-138% increased Trap/Mine Damage\n--------------------------------------\n+2 to Level of socketed Trap/Trap or Mine Gems\n--------------------------------------\nSuffix: \n20-33% increased Trap/Mine Throwing Speed\n--------------------------------------\n14-22% increased Cooldown Recovery Speed for Throwing Traps\n17-30% increased Trap Duration\n--------------------------------------\nMines hav [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Prefix: 
+        ///30% increased Movement Speed
+        ///5-6% chance to Dodge Spell Hits
+        ///--------------------------------------
+        ///90-138% increased Trap/Mine Damage
+        ///--------------------------------------
+        ///+2 to Level of socketed Trap or Mine Gems
+        ///--------------------------------------
+        ///Suffix: 
+        ///20-33% increased Trap/Mine Throwing Speed
+        ///--------------------------------------
+        ///14-22% increased Cooldown Recovery Speed for Throwing Traps
+        ///17-30% increased Trap Duration
+        ///--------------------------------------
+        ///Mines have 14- [rest of string was truncated]&quot;;.
         /// </summary>
         public static string MatalTooltip {
             get {
@@ -700,7 +749,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leech Rank 2 Recipe\nLevel 3: Guatelitzi Mod or Mask of the Spirit Drinker.
+        ///   Looks up a localized string similar to Leech Rank 2 Recipe
+        ///Level 3: Guatelitzi Mod or Mask of the Spirit Drinker.
         /// </summary>
         public static string PoolsOfRestorationContains {
             get {
@@ -718,7 +768,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe\nLevel 3: Tacati Mod or Apep&apos;s Slumber.
+        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe
+        ///Level 3: Tacati Mod or Apep&apos;s Slumber.
         /// </summary>
         public static string PosionGardenContains {
             get {
@@ -727,7 +778,17 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suffix: \n+46-48% to Fire/Cold/Lightning Resistance\n9-10% of Physical Damage from Hits taken as Fire/Cold/Lightning Damage\n------------------------------------------\n+46-48% to Fire/Cold/Lightning Resistance\n0.4% of Fire/Cold/Lightning Damage leeched as Life\n------------------------------------------\n+46-48% to Fire/Cold/Lightning Resistance\nOn of the following matching the Resistance:\n(45-52) to (75-78) added Fire Damage against Burning Enemies\n(30-50)% increased Damage with Hits against Chilled E [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Suffix: 
+        ///+46-48% to Fire/Cold/Lightning Resistance
+        ///9-10% of Physical Damage from Hits taken as Fire/Cold/Lightning Damage
+        ///------------------------------------------
+        ///+46-48% to Fire/Cold/Lightning Resistance
+        ///0.4% of Fire/Cold/Lightning Damage leeched as Life
+        ///------------------------------------------
+        ///+46-48% to Fire/Cold/Lightning Resistance
+        ///On of the following matching the Resistance:
+        ///(45-52) to (75-78) added Fire Damage against Burning Enemies
+        ///(30-50)% increased Damage with Hits against Chilled E [rest of string was truncated]&quot;;.
         /// </summary>
         public static string PuhuarteModTooltuip {
             get {
@@ -772,7 +833,9 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 1: Change Unique to other\nLevel 2: Can obtain League Specific Items\nLevel 3: Unique Item of same class/Vial Upgrade.
+        ///   Looks up a localized string similar to Level 1: Change Unique to other
+        ///Level 2: Can obtain League Specific Items
+        ///Level 3: Unique Item of same class/Vial Upgrade.
         /// </summary>
         public static string SacrificalChamberContains {
             get {
@@ -862,7 +925,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Weapons\nAccuracy Rank 3 Recipe.
+        ///   Looks up a localized string similar to  Weapons
+        ///Accuracy Rank 3 Recipe.
         /// </summary>
         public static string SparringRoomContains {
             get {
@@ -889,7 +953,9 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 1: 2 Clasped Hands\nLevel 2: 1 Breach\nLevel 3: 3 Breaches.
+        ///   Looks up a localized string similar to Level 1: 2 Clasped Hands
+        ///Level 2: 1 Breach
+        ///Level 3: 3 Breaches.
         /// </summary>
         public static string SplinterResearchLabContains {
             get {
@@ -907,7 +973,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random Item-Specific Chests\nLevel 3: League Specific Items possible.
+        ///   Looks up a localized string similar to Random Item-Specific Chests
+        ///Level 3: League Specific Items possible.
         /// </summary>
         public static string StorageRoomContains {
             get {
@@ -961,7 +1028,20 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prefix: \n155-169% increased Physical Damage+\nGain 9-10% of Physical Damage as Extra Chaos Damage\n--------------------------------------------------------\n70-110% increased Spell Damage\nGain 5% of Non-Chaos Damage as Extra Chaos Damage\n--------------------------------------------------------\nSuffix: \n23-38% increased Cast Speed\nAdds 17-57 Chaos Damage to Spells\n--------------------------------------------------------\n14-27% increased Attack Speed\nAdds 23-61 Chaos Damage\n------------------------- [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Prefix: 
+        ///155-169% increased Physical Damage
+        ///Gain 9-10% of Physical Damage as Extra Chaos Damage
+        ///--------------------------------------------------------
+        ///70-110% increased Spell Damage
+        ///Gain 5% of Non-Chaos Damage as Extra Chaos Damage
+        ///--------------------------------------------------------
+        ///Suffix: 
+        ///23-38% increased Cast Speed
+        ///Adds 17-57 Chaos Damage to Spells
+        ///--------------------------------------------------------
+        ///14-27% increased Attack Speed
+        ///Adds 23-61 Chaos Damage
+        ///-------------------------- [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TacatiModTooltip {
             get {
@@ -1024,7 +1104,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Possible Prefixes: \nAdd Fire/Cold/Lightning Damage to Attacks\n25% of Physical Damage Converted to Fire/Cold/Lighning Damage\n---------------------------------------------------------------------\nAdd Fire/Cold/Lightning Damage \nDamage Penetrates 13-15% Fire/Cold/Lightning Resistance \n---------------------------------------------------------------------\n75-115% increased Fire/Cold/Lightning Damage \nAdd Fire/Cold/Lightning Damage to Spells.
+        ///   Looks up a localized string similar to Prefixe: 
+        ///Add Fire/Cold/Lightning Damage to Attacks
+        ///25% of Physical Damage Converted to Fire/Cold/Lighning Damage
+        ///---------------------------------------------------------------------
+        ///Add Fire/Cold/Lightning Damage 
+        ///Damage Penetrates 13-15% Fire/Cold/Lightning Resistance 
+        ///---------------------------------------------------------------------
+        ///75-115% increased Fire/Cold/Lightning Damage 
+        ///Add Fire/Cold/Lightning Damage to Spells.
         /// </summary>
         public static string TopotanteModTooltip {
             get {
@@ -1078,7 +1166,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Traps and Mines Rank 2 Recipe\nLevel 3: Matatl Mod or Architect&apos;s Hand.
+        ///   Looks up a localized string similar to Traps and Mines Rank 2 Recipe
+        ///Level 3: Matatl Mod or Architect&apos;s Hand.
         /// </summary>
         public static string TrapWorkshopContains {
             get {
@@ -1114,7 +1203,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Currency Items inckuding Stacks and Shards.
+        ///   Looks up a localized string similar to Currency Items including Stacks and Shards.
         /// </summary>
         public static string VaultContains {
             get {
@@ -1159,7 +1248,8 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 5/10/15 % increased Quantity of Items\nUnique Boss has 15/25/35 % increased Life.
+        ///   Looks up a localized string similar to 5/10/15 % increased Quantity of Items
+        ///Unique Boss has 15/25/35 % increased Life.
         /// </summary>
         public static string WorkshopModifiers {
             get {
@@ -1168,7 +1258,24 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Prefix: \n+69-73 to maximum Mana\n7-10% increased maximum Mana\n--------------------------------\n+74-78 to maximum Mana\n+2-3 Mana gained for each Enemy hit by your Attacks\n--------------------------------\n+74-78 to maximum Mana\nRegenerate 5-7 Mana per Second\n--------------------------------\n+69-73 to maximum Mana\n3-5% reduced Mana Reserved\n--------------------------------\n+74-78 to maximum Mana\n-6-8 to Total Mana Cost of Skills\n--------------------------------\n+74-78 to maximum Mana\nNon-Channe [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Prefix: 
+        ///+69-73 to maximum Mana
+        ///7-10% increased maximum Mana
+        ///--------------------------------
+        ///+74-78 to maximum Mana
+        ///+2-3 Mana gained for each Enemy hit by your Attacks
+        ///--------------------------------
+        ///+74-78 to maximum Mana
+        ///Regenerate 5-7 Mana per Second
+        ///--------------------------------
+        ///+69-73 to maximum Mana
+        ///3-5% reduced Mana Reserved
+        ///--------------------------------
+        ///+74-78 to maximum Mana
+        ///-6-8 to Total Mana Cost of Skills
+        ///--------------------------------
+        ///+74-78 to maximum Mana
+        ///Non-Channe [rest of string was truncated]&quot;;.
         /// </summary>
         public static string XopecModTooltip {
             get {

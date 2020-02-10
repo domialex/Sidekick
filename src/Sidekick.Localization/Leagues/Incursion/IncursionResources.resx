@@ -182,7 +182,7 @@ Level 3: 3 Breaches</value>
     <value>Wealth of the Vaal</value>
   </data>
   <data name="VaultContains" xml:space="preserve">
-    <value>Currency Items inckuding Stacks and Shards</value>
+    <value>Currency Items including Stacks and Shards</value>
   </data>
   <data name="SparringRoom" xml:space="preserve">
     <value>Sparring Room</value>
@@ -436,7 +436,7 @@ Level 3: Guatelitzi Mod or Mask of the Spirit Drinker</value>
     <value>Conduit of Lightning</value>
   </data>
   <data name="LightningWorkshopContains" xml:space="preserve">
-    <value>Level 3: Xopec Mod or Dance o fthe Offered</value>
+    <value>Level 3: Xopec Mod or Dance of the Offered</value>
   </data>
   <data name="LightningWorkshopModifiers" xml:space="preserve">
     <value>Augments the Omnitect with lightning</value>
@@ -478,7 +478,7 @@ Level 3: Guatelitzi Mod or Mask of the Spirit Drinker</value>
     <value>Modifiers</value>
   </data>
   <data name="DoubleGemCorruptionTooltip" xml:space="preserve">
-    <value>Applies to corruptions to a Gem
+    <value>Applies two corruptions to a Gem
 Possible to get a 21/23 Gem</value>
   </data>
   <data name="DoubleCorruptionTooltip" xml:space="preserve">
@@ -490,7 +490,7 @@ Transform into a rare Item with random influence
 Destroy the item</value>
   </data>
   <data name="TopotanteModTooltip" xml:space="preserve">
-    <value>Possible Prefixes: 
+    <value>Prefixe: 
 Add Fire/Cold/Lightning Damage to Attacks
 25% of Physical Damage Converted to Fire/Cold/Lighning Damage
 ---------------------------------------------------------------------
@@ -502,7 +502,7 @@ Add Fire/Cold/Lightning Damage to Spells</value>
   </data>
   <data name="TacatiModTooltip" xml:space="preserve">
     <value>Prefix: 
-155-169% increased Physical Damage+
+155-169% increased Physical Damage
 Gain 9-10% of Physical Damage as Extra Chaos Damage
 --------------------------------------------------------
 70-110% increased Spell Damage
@@ -534,7 +534,7 @@ Adds 17-61 Chaos Damage</value>
 --------------------------------------
 90-138% increased Trap/Mine Damage
 --------------------------------------
-+2 to Level of socketed Trap/Trap or Mine Gems
++2 to Level of socketed Trap or Mine Gems
 --------------------------------------
 Suffix: 
 20-33% increased Trap/Mine Throwing Speed
