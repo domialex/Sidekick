@@ -8,7 +8,8 @@
         <ResourceDictionary Source="Controls/TabControl.xaml" />
         <ResourceDictionary Source="Controls/TextBox.xaml" />
         <ResourceDictionary Source="Controls/Window.xaml" />
-    </ResourceDictionary.MergedDictionaries>
 
-    <Thickness x:Key="SpacerLeft" Left="8" />
+        <ResourceDictionary Source="Variables/Fonts.xaml" />
+        <ResourceDictionary Source="Variables/Spacers.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

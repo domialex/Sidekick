@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\ExaltedOrb.png" />
     <None Remove="Windows\LeagueOverlay\img\Aisling.png" />
     <None Remove="Windows\LeagueOverlay\img\Blight\Amber_Oil.png" />
     <None Remove="Windows\LeagueOverlay\img\Blight\Azure_Oil.png" />
@@ -188,6 +189,7 @@
   </ItemGroup>  
   <ItemGroup>
     <Resource Include="Resources\ExaltedOrb.ico" />
+    <Resource Include="Resources\ExaltedOrb.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -228,6 +230,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Main.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Variables\Fonts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Variables\Spacers.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

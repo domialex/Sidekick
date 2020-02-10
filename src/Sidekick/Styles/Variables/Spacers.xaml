@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Thickness
+        x:Key="Spacer"
+        Bottom="8"
+        Left="8"
+        Right="8"
+        Top="8" />
+    <Thickness x:Key="SpacerTop" Top="8" />
+    <Thickness x:Key="SpacerLeft" Left="8" />
+    <Thickness x:Key="SpacerRight" Right="8" />
+    <Thickness x:Key="SpacerBottom" Bottom="8" />
+</ResourceDictionary>
