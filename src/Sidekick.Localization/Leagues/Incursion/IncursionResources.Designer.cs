@@ -645,7 +645,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 3: Xopec Mod or Dance o fthe Offered.
+        ///   Looks up a localized string similar to Level 3: Xopec Mod or Dance of the Offered.
         /// </summary>
         public static string LightningWorkshopContains {
             get {
@@ -1212,7 +1212,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Currency Items inckuding Stacks and Shards.
+        ///   Looks up a localized string similar to Currency Items including Stacks and Shards.
         /// </summary>
         public static string VaultContains {
             get {
