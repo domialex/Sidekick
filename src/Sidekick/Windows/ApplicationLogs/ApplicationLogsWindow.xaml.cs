@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Sidekick.Windows.ApplicationLogs
 {
@@ -15,6 +16,11 @@ namespace Sidekick.Windows.ApplicationLogs
             Legacy.Logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
             Show();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
 
         public void SetText(string text)
@@ -59,6 +65,11 @@ namespace Sidekick.Windows.ApplicationLogs
         {
             OnWindowClosed?.Invoke(this, null);
             base.OnClosing(e);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
