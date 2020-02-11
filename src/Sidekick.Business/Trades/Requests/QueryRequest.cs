@@ -11,6 +11,8 @@ namespace Sidekick.Business.Trades.Requests
     {
         public QueryRequest(Parsers.Models.Item item, ILanguage language)
         {
+            Query.Status.Option = StatusType.Online;
+
             var itemType = item.GetType();
 
             if (itemType == typeof(EquippableItem))
