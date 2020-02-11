@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sidekick.Business.Trades.Requests
 {
@@ -12,6 +12,8 @@ namespace Sidekick.Business.Trades.Requests
     {
         public BulkQueryRequest(Item item, ILanguage language, IStaticItemCategoryService staticItemCategoryService)
         {
+            Exchange.Status.Option = StatusType.Online;
+
             var itemType = item.GetType();
 
             if (itemType == typeof(CurrencyItem))

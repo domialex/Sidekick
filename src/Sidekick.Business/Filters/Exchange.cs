@@ -8,6 +8,6 @@ namespace Sidekick.Business.Filters
 
         public List<string> Have { get; set; } = new List<string>();
 
-        public string Status = "online";
+        public Status Status { get; set; } = new Status();
     }
 }
