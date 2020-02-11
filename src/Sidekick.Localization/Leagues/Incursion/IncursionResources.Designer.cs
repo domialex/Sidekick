@@ -304,7 +304,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Applies to corruptions to a Gem
+        ///   Looks up a localized string similar to Applies two corruptions to a Gem
         ///Possible to get a 21/23 Gem.
         /// </summary>
         public static string DoubleGemCorruptionTooltip {
@@ -678,7 +678,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         ///--------------------------------------
         ///90-138% increased Trap/Mine Damage
         ///--------------------------------------
-        ///+2 to Level of socketed Trap/Trap or Mine Gems
+        ///+2 to Level of socketed Trap or Mine Gems
         ///--------------------------------------
         ///Suffix: 
         ///20-33% increased Trap/Mine Throwing Speed
@@ -686,7 +686,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         ///14-22% increased Cooldown Recovery Speed for Throwing Traps
         ///17-30% increased Trap Duration
         ///--------------------------------------
-        ///Mines hav [rest of string was truncated]&quot;;.
+        ///Mines have 14- [rest of string was truncated]&quot;;.
         /// </summary>
         public static string MatalTooltip {
             get {
@@ -1038,7 +1038,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         
         /// <summary>
         ///   Looks up a localized string similar to Prefix: 
-        ///155-169% increased Physical Damage+
+        ///155-169% increased Physical Damage
         ///Gain 9-10% of Physical Damage as Extra Chaos Damage
         ///--------------------------------------------------------
         ///70-110% increased Spell Damage
@@ -1050,7 +1050,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         ///--------------------------------------------------------
         ///14-27% increased Attack Speed
         ///Adds 23-61 Chaos Damage
-        ///------------------------- [rest of string was truncated]&quot;;.
+        ///-------------------------- [rest of string was truncated]&quot;;.
         /// </summary>
         public static string TacatiModTooltip {
             get {
@@ -1113,7 +1113,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Possible Prefixes: 
+        ///   Looks up a localized string similar to Prefixe: 
         ///Add Fire/Cold/Lightning Damage to Attacks
         ///25% of Physical Damage Converted to Fire/Cold/Lighning Damage
         ///---------------------------------------------------------------------

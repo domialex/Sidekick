@@ -314,7 +314,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         /// <summary>
         ///   Looks up a localized string similar to 1 Transmutation
         ///200 Alteration
-        ///100 AUgmentation
+        ///100 Augmentation
         ///1 Regal
         ///1 Exalted
         ///1 Divine
@@ -1027,8 +1027,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare
-        ///Armor.
+        ///   Looks up a localized string similar to Legion
+        ///Chests.
         /// </summary>
         public static string VaganFortification {
             get {
@@ -1037,8 +1037,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare
-        ///Jewels.
+        ///   Looks up a localized string similar to Legion
+        ///Scarab.
         /// </summary>
         public static string VaganIntervention {
             get {
@@ -1056,8 +1056,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare
-        ///Jewellery.
+        ///   Looks up a localized string similar to Incubators.
         /// </summary>
         public static string VaganResearch {
             get {
@@ -1066,8 +1065,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare
-        ///Weapons.
+        ///   Looks up a localized string similar to Legion
+        ///Splinters.
         /// </summary>
         public static string VaganTransportation {
             get {
