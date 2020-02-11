@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Leagues
@@ -27,8 +28,8 @@ namespace Sidekick.Business.Leagues
         {
             Leagues = null;
             Leagues = await poeApiClient.Fetch<League>();
-
-            if (string.IsNullOrEmpty(configuration.LeagueId))
+            if (string.IsNullOrEmpty(configuration.LeagueId) ||
+                !Leagues.Exists(x => x.Id == configuration.LeagueId))
             {
                 configuration.LeagueId = Leagues.FirstOrDefault().Id;
                 configuration.Save();

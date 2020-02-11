@@ -9,7 +9,7 @@ namespace Sidekick.Localization
 {
     public class UILanguageProvider : IUILanguageProvider
     {
-        private static string[] SupportedLanguages = new[] { "en", "fr", "de" };
+        private static string[] SupportedLanguages = new[] { "en", "fr", "de", "zh-tw" };
 
         public event Action UILanguageChanged;
 

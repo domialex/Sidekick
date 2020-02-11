@@ -241,6 +241,15 @@ namespace Sidekick.Localization.Leagues.Delve {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legend.
+        /// </summary>
+        public static string Legend {
+            get {
+                return ResourceManager.GetString("Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lucent Fossil.
         /// </summary>
         public static string LucentFossil {

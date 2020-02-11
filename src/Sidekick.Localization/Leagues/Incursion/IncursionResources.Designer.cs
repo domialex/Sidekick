@@ -125,11 +125,11 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automation Lab.
+        ///   Looks up a localized string similar to Automaton Lab.
         /// </summary>
-        public static string AutomationLab {
+        public static string AutomatonLab {
             get {
-                return ResourceManager.GetString("AutomationLab", resourceCulture);
+                return ResourceManager.GetString("AutomatonLab", resourceCulture);
             }
         }
         
@@ -171,11 +171,11 @@ namespace Sidekick.Localization.Leagues.Incursion {
         
         /// <summary>
         ///   Looks up a localized string similar to Prefix: 
-        ///Minions deal 90-138 increased Damage
+        ///Minions deal 90-138% increased Damage
         ///------------------------------------
         ///+2 to Level of socketed Minion Gems
         ///------------------------------------
-        ///Minions deal 70-110 increased Damage
+        ///Minions deal 70-110% increased Damage
         ///Minions have 5% Chance to deal Double Damage
         ///------------------------------------
         ///Suffix: 
@@ -254,7 +254,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Denfense Research Lab.
+        ///   Looks up a localized string similar to Defense Research Lab.
         /// </summary>
         public static string DefenseResearchLab {
             get {
@@ -627,6 +627,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legend.
+        /// </summary>
+        public static string Legend {
+            get {
+                return ResourceManager.GetString("Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lightning Workshop.
         /// </summary>
         public static string LightningWorkshop {
@@ -722,7 +731,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Posion Garden.
+        ///   Looks up a localized string similar to Poison Garden.
         /// </summary>
         public static string PoisionGarden {
             get {
@@ -824,15 +833,6 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sacrifical Chamber.
-        /// </summary>
-        public static string SacrificalChamber {
-            get {
-                return ResourceManager.GetString("SacrificalChamber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Level 1: Change Unique to other
         ///Level 2: Can obtain League Specific Items
         ///Level 3: Unique Item of same class/Vial Upgrade.
@@ -840,6 +840,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         public static string SacrificalChamberContains {
             get {
                 return ResourceManager.GetString("SacrificalChamberContains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sacrificial Chamber.
+        /// </summary>
+        public static string SacrificialChamber {
+            get {
+                return ResourceManager.GetString("SacrificialChamber", resourceCulture);
             }
         }
         
@@ -1001,7 +1010,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Room contains 2/4/6 Stringboxes.
+        ///   Looks up a localized string similar to Room contains 2/4/6 Strongboxes.
         /// </summary>
         public static string StrongboxChamberContains {
             get {
