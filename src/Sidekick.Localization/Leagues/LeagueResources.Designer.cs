@@ -61,6 +61,51 @@ namespace Sidekick.Localization.Leagues {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Betrayal.
+        /// </summary>
+        public static string LeagueNameBetrayal {
+            get {
+                return ResourceManager.GetString("LeagueNameBetrayal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blight.
+        /// </summary>
+        public static string LeagueNameBlight {
+            get {
+                return ResourceManager.GetString("LeagueNameBlight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delve.
+        /// </summary>
+        public static string LeagueNameDelve {
+            get {
+                return ResourceManager.GetString("LeagueNameDelve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incrusion.
+        /// </summary>
+        public static string LeagueNameIncrusion {
+            get {
+                return ResourceManager.GetString("LeagueNameIncrusion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metamorph.
+        /// </summary>
+        public static string LeagueNameMetamorph {
+            get {
+                return ResourceManager.GetString("LeagueNameMetamorph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Less Valuable.
         /// </summary>
         public static string LegendLessValuable {

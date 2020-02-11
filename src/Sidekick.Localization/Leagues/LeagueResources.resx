@@ -129,4 +129,19 @@
   <data name="LegendMoreValuable" xml:space="preserve">
     <value>Very Valuable</value>
   </data>
+  <data name="LeagueNameBetrayal" xml:space="preserve">
+    <value>Betrayal</value>
+  </data>
+  <data name="LeagueNameBlight" xml:space="preserve">
+    <value>Blight</value>
+  </data>
+  <data name="LeagueNameDelve" xml:space="preserve">
+    <value>Delve</value>
+  </data>
+  <data name="LeagueNameIncrusion" xml:space="preserve">
+    <value>Incrusion</value>
+  </data>
+  <data name="LeagueNameMetamorph" xml:space="preserve">
+    <value>Metamorph</value>
+  </data>
 </root>

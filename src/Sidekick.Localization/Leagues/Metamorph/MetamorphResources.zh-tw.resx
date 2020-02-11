@@ -117,91 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClearOil" xml:space="preserve">
-    <value>Clear Oil</value>
+  <data name="AbrasiveCatalyst" xml:space="preserve">
+    <value>研磨的催化劑</value>
   </data>
-  <data name="ClearOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-+10% reduced Monster Movement Speed</value>
+  <data name="AbrasiveCatalystEffect" xml:space="preserve">
+    <value>攻擊詞綴</value>
   </data>
-  <data name="SepiaOil" xml:space="preserve">
-    <value>Sepia Oil</value>
+  <data name="FertileCatalyst" xml:space="preserve">
+    <value>富饒的催化劑</value>
   </data>
-  <data name="SepiaOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-Towers deal 20% more Damage</value>
+  <data name="FertileCatalystEffect" xml:space="preserve">
+    <value>生命和魔力詞綴</value>
   </data>
-  <data name="AmberOil" xml:space="preserve">
-    <value>Amber Oil</value>
+  <data name="ImbuedCatalyst" xml:space="preserve">
+    <value>充能的催化劑</value>
   </data>
-  <data name="AmberOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-20% reduced Cost of Towers</value>
+  <data name="ImbuedCatalystEffect" xml:space="preserve">
+    <value>法術詞綴</value>
   </data>
-  <data name="VerdantOil" xml:space="preserve">
-    <value>Verdant Oil</value>
+  <data name="IntrinsicCatalyst" xml:space="preserve">
+    <value>本質的催化劑</value>
   </data>
-  <data name="VerdantOilEffect" xml:space="preserve">
-    <value>+15% Monster Pack Size</value>
+  <data name="IntrinsicCatalystEffect" xml:space="preserve">
+    <value>能力值詞綴</value>
   </data>
-  <data name="TealOil" xml:space="preserve">
-    <value>Teal Oil</value>
+  <data name="PrismaticCatalyst" xml:space="preserve">
+    <value>多稜的催化劑</value>
   </data>
-  <data name="TealOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-2 Blight Chests are Lucky</value>
+  <data name="PrismaticCatalystEffect" xml:space="preserve">
+    <value>抗性詞綴</value>
   </data>
-  <data name="AzureOil" xml:space="preserve">
-    <value>Azure Oil</value>
+  <data name="TemperingCatalyst" xml:space="preserve">
+    <value>冶鍊的催化劑</value>
   </data>
-  <data name="AzureOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-15% increased Experience</value>
+  <data name="TemperingCatalystEffect" xml:space="preserve">
+    <value>防禦詞綴</value>
   </data>
-  <data name="VioletOil" xml:space="preserve">
-    <value>Violet Oil</value>
+  <data name="TurbulentCatalyst" xml:space="preserve">
+    <value>洶湧的催化劑</value>
   </data>
-  <data name="VioletOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-30% increased Quantity of Items</value>
+  <data name="TurbulentCatalystEffect" xml:space="preserve">
+    <value>元素傷害詞綴</value>
   </data>
-  <data name="CrimsonOil" xml:space="preserve">
-    <value>Crimson Oil</value>
+  <data name="InformationHeader" xml:space="preserve">
+    <value>資訊</value>
   </data>
-  <data name="CrimsonOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-3 Blight Chests are Lucky</value>
-  </data>
-  <data name="BlackOil" xml:space="preserve">
-    <value>Black Oil</value>
-  </data>
-  <data name="BlackOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-10% chance for Blight Chests to have an
-additional reward</value>
-  </data>
-  <data name="OpalescentOil" xml:space="preserve">
-    <value>Opalescent Oil</value>
-  </data>
-  <data name="OpalescentOilEffect" xml:space="preserve">
-    <value>+25% Monster Pack Size</value>
-  </data>
-  <data name="SilverOil" xml:space="preserve">
-    <value>Silver Oil</value>
-  </data>
-  <data name="SilverOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-5 Blight Chests are Lucky</value>
-  </data>
-  <data name="GoldenOil" xml:space="preserve">
-    <value>Golden Oil</value>
-  </data>
-  <data name="GoldenOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-25% chance for Blight Chests to have an
-additional Reward</value>
-  </data>
-  <data name="Legend" xml:space="preserve">
-    <value>Legend</value>
+  <data name="InformationText" xml:space="preserve">
+    <value>可以使用於戒指、項鍊或腰帶。
+重複使用會取代其他品質類型。</value>
   </data>
 </root>

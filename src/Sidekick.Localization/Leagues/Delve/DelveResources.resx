@@ -219,4 +219,7 @@
   <data name="Information" xml:space="preserve">
     <value>*Can only be found behind fractured walls</value>
   </data>
+  <data name="Legend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
 </root>

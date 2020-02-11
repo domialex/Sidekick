@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,91 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClearOil" xml:space="preserve">
-    <value>Clear Oil</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
   </data>
-  <data name="ClearOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-+10% reduced Monster Movement Speed</value>
+  <data name="Character_League" xml:space="preserve">
+    <value>聯盟</value>
   </data>
-  <data name="SepiaOil" xml:space="preserve">
-    <value>Sepia Oil</value>
+  <data name="Character_Name" xml:space="preserve">
+    <value>角色名稱</value>
   </data>
-  <data name="SepiaOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-Towers deal 20% more Damage</value>
+  <data name="Character_Title" xml:space="preserve">
+    <value>角色設定</value>
   </data>
-  <data name="AmberOil" xml:space="preserve">
-    <value>Amber Oil</value>
+  <data name="Key_CheckPrices" xml:space="preserve">
+    <value>查詢價錢</value>
   </data>
-  <data name="AmberOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-20% reduced Cost of Towers</value>
+  <data name="Key_CloseWindow" xml:space="preserve">
+    <value>關閉視窗</value>
   </data>
-  <data name="VerdantOil" xml:space="preserve">
-    <value>Verdant Oil</value>
+  <data name="Key_FindItems" xml:space="preserve">
+    <value>查詢物品</value>
   </data>
-  <data name="VerdantOilEffect" xml:space="preserve">
-    <value>+15% Monster Pack Size</value>
+  <data name="Key_GoToHideout" xml:space="preserve">
+    <value>回到藏身處</value>
   </data>
-  <data name="TealOil" xml:space="preserve">
-    <value>Teal Oil</value>
+  <data name="Key_LeaveParty" xml:space="preserve">
+    <value>離開組隊</value>
   </data>
-  <data name="TealOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-2 Blight Chests are Lucky</value>
+  <data name="Key_OpenLeagueOverview" xml:space="preserve">
+    <value>聯盟機制小幫手</value>
   </data>
-  <data name="AzureOil" xml:space="preserve">
-    <value>Azure Oil</value>
+  <data name="Key_OpenSearch" xml:space="preserve">
+    <value>在瀏覽器中開啟查詢結果</value>
   </data>
-  <data name="AzureOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-15% increased Experience</value>
+  <data name="Key_OpenWiki" xml:space="preserve">
+    <value>開啟資料庫</value>
   </data>
-  <data name="VioletOil" xml:space="preserve">
-    <value>Violet Oil</value>
+  <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
+    <value>回復最近的密語</value>
   </data>
-  <data name="VioletOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-30% increased Quantity of Items</value>
+  <data name="Language_Title" xml:space="preserve">
+    <value>語言設定</value>
   </data>
-  <data name="CrimsonOil" xml:space="preserve">
-    <value>Crimson Oil</value>
+  <data name="Language_UI" xml:space="preserve">
+    <value>介面語言</value>
   </data>
-  <data name="CrimsonOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-3 Blight Chests are Lucky</value>
+  <data name="Ok" xml:space="preserve">
+    <value>確定</value>
   </data>
-  <data name="BlackOil" xml:space="preserve">
-    <value>Black Oil</value>
+  <data name="Other_CloseWithMouseClick" xml:space="preserve">
+    <value>滑鼠點擊時關閉視窗</value>
   </data>
-  <data name="BlackOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-10% chance for Blight Chests to have an
-additional reward</value>
+  <data name="Other_RetainClipboard" xml:space="preserve">
+    <value>保留剪貼簿內容</value>
   </data>
-  <data name="OpalescentOil" xml:space="preserve">
-    <value>Opalescent Oil</value>
+  <data name="Other_TabScroll" xml:space="preserve">
+    <value>Ctrl+滾輪滾動倉庫標籤</value>
   </data>
-  <data name="OpalescentOilEffect" xml:space="preserve">
-    <value>+25% Monster Pack Size</value>
+  <data name="Other_Title" xml:space="preserve">
+    <value>其他設定</value>
   </data>
-  <data name="SilverOil" xml:space="preserve">
-    <value>Silver Oil</value>
+  <data name="Tab_General" xml:space="preserve">
+    <value>一般</value>
   </data>
-  <data name="SilverOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-5 Blight Chests are Lucky</value>
+  <data name="Tab_Keybindings" xml:space="preserve">
+    <value>快捷鍵</value>
   </data>
-  <data name="GoldenOil" xml:space="preserve">
-    <value>Golden Oil</value>
+  <data name="Wiki_Preferred" xml:space="preserve">
+    <value>想使用的資料庫</value>
   </data>
-  <data name="GoldenOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-25% chance for Blight Chests to have an
-additional Reward</value>
-  </data>
-  <data name="Legend" xml:space="preserve">
-    <value>Legend</value>
+  <data name="Wiki_Title" xml:space="preserve">
+    <value>資料庫設定</value>
   </data>
 </root>

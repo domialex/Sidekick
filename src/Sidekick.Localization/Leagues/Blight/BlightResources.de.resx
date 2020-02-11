@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,91 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ClearOil" xml:space="preserve">
-    <value>Clear Oil</value>
-  </data>
-  <data name="ClearOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-+10% reduced Monster Movement Speed</value>
-  </data>
-  <data name="SepiaOil" xml:space="preserve">
-    <value>Sepia Oil</value>
-  </data>
-  <data name="SepiaOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-Towers deal 20% more Damage</value>
-  </data>
   <data name="AmberOil" xml:space="preserve">
-    <value>Amber Oil</value>
+    <value>Bernsteinfarbenes Öl</value>
   </data>
   <data name="AmberOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-20% reduced Cost of Towers</value>
-  </data>
-  <data name="VerdantOil" xml:space="preserve">
-    <value>Verdant Oil</value>
-  </data>
-  <data name="VerdantOilEffect" xml:space="preserve">
-    <value>+15% Monster Pack Size</value>
-  </data>
-  <data name="TealOil" xml:space="preserve">
-    <value>Teal Oil</value>
-  </data>
-  <data name="TealOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-2 Blight Chests are Lucky</value>
+    <value>+5% Monstergruppengröße
+20% reduzierte Turmkosten</value>
   </data>
   <data name="AzureOil" xml:space="preserve">
-    <value>Azure Oil</value>
+    <value>Azurblaues Öl</value>
   </data>
   <data name="AzureOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-15% increased Experience</value>
-  </data>
-  <data name="VioletOil" xml:space="preserve">
-    <value>Violet Oil</value>
-  </data>
-  <data name="VioletOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-30% increased Quantity of Items</value>
-  </data>
-  <data name="CrimsonOil" xml:space="preserve">
-    <value>Crimson Oil</value>
-  </data>
-  <data name="CrimsonOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-3 Blight Chests are Lucky</value>
+    <value>+5% Monstergruppengröße
+15% mehr Erfahrung</value>
   </data>
   <data name="BlackOil" xml:space="preserve">
-    <value>Black Oil</value>
+    <value>Schwarzes Öl</value>
   </data>
   <data name="BlackOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-10% chance for Blight Chests to have an
-additional reward</value>
+    <value>+5% Monstergruppengröße
+10% Chance, dass Blight Kisten eine
+weitere Belohnung enthalten</value>
   </data>
-  <data name="OpalescentOil" xml:space="preserve">
-    <value>Opalescent Oil</value>
+  <data name="ClearOil" xml:space="preserve">
+    <value>Klares Öl</value>
   </data>
-  <data name="OpalescentOilEffect" xml:space="preserve">
-    <value>+25% Monster Pack Size</value>
+  <data name="ClearOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
++10% reduzierte Monstergeschwindigkeit</value>
   </data>
-  <data name="SilverOil" xml:space="preserve">
-    <value>Silver Oil</value>
+  <data name="CrimsonOil" xml:space="preserve">
+    <value>Blutrotes Öl</value>
   </data>
-  <data name="SilverOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-5 Blight Chests are Lucky</value>
+  <data name="CrimsonOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
+3 Blight Kisten sind wertvoll</value>
   </data>
   <data name="GoldenOil" xml:space="preserve">
-    <value>Golden Oil</value>
+    <value>Goldenes Öl</value>
   </data>
   <data name="GoldenOilEffect" xml:space="preserve">
-    <value>+5% Monster Pack Size
-25% chance for Blight Chests to have an
-additional Reward</value>
+    <value>+5% Monstergruppengröße
+25% Chance, dass Blight Kisten eine
+weitere Belohnung enthalten</value>
   </data>
-  <data name="Legend" xml:space="preserve">
-    <value>Legend</value>
+  <data name="OpalescentOil" xml:space="preserve">
+    <value>Opalisierendes Öl</value>
+  </data>
+  <data name="OpalescentOilEffect" xml:space="preserve">
+    <value>+25% Monstergruppengröße</value>
+  </data>
+  <data name="SepiaOil" xml:space="preserve">
+    <value>Sepiafarbenes Öl</value>
+  </data>
+  <data name="SepiaOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
+Türme verursachen 20% mehr Schaden</value>
+  </data>
+  <data name="SilverOil" xml:space="preserve">
+    <value>Silbernes Öl</value>
+  </data>
+  <data name="SilverOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
+5 Blight Kisten sind wertvoll</value>
+  </data>
+  <data name="TealOil" xml:space="preserve">
+    <value>Blaugrünes Öl</value>
+  </data>
+  <data name="TealOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
+2 Blight Kisten sind wertvoll</value>
+  </data>
+  <data name="VerdantOil" xml:space="preserve">
+    <value>Grünes Öl</value>
+  </data>
+  <data name="VerdantOilEffect" xml:space="preserve">
+    <value>+15% Monstergruppengröße</value>
+  </data>
+  <data name="VioletOil" xml:space="preserve">
+    <value>Violettes Öl</value>
+  </data>
+  <data name="VioletOilEffect" xml:space="preserve">
+    <value>+5% Monstergruppengröße
+30% erhöhte Menge an Gegenständen</value>
   </data>
 </root>

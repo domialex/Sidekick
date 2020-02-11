@@ -61,7 +61,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Veiled\nArmor.
+        ///   Looks up a localized string similar to Veiled
+        ///Armor.
         /// </summary>
         public static string AislingFortification {
             get {
@@ -70,7 +71,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Veiled\nJewellery.
+        ///   Looks up a localized string similar to Veiled
+        ///Jewellery.
         /// </summary>
         public static string AislingIntervention {
             get {
@@ -79,7 +81,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Veiled\nMod(s).
+        ///   Looks up a localized string similar to Aisling.
+        /// </summary>
+        public static string AislingName {
+            get {
+                return ResourceManager.GetString("AislingName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Veiled
+        ///Mod(s).
         /// </summary>
         public static string AislingResearch {
             get {
@@ -88,7 +100,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 1 Mod\nLevel2: Low Chance for 2 Mods\nLevel3: 2 Mods.
+        ///   Looks up a localized string similar to Level1: 1 Mod
+        ///Level2: Low Chance for 2 Mods
+        ///Level3: 2 Mods.
         /// </summary>
         public static string AislingResearchTooltip {
             get {
@@ -97,7 +111,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Veiled\nWeapons.
+        ///   Looks up a localized string similar to Veiled
+        ///Weapons.
         /// </summary>
         public static string AislingTransportaion {
             get {
@@ -106,7 +121,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Harbinger\nOrbs.
+        ///   Looks up a localized string similar to Harbinger
+        ///Orbs.
         /// </summary>
         public static string CameriaFortification {
             get {
@@ -115,11 +131,21 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sulphite\nScarab.
+        ///   Looks up a localized string similar to Sulphite
+        ///Scarab.
         /// </summary>
         public static string CameriaIntervention {
             get {
                 return ResourceManager.GetString("CameriaIntervention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cameria.
+        /// </summary>
+        public static string CameriaName {
+            get {
+                return ResourceManager.GetString("CameriaName", resourceCulture);
             }
         }
         
@@ -133,7 +159,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timeworn\nRelics.
+        ///   Looks up a localized string similar to Timeworn
+        ///Relics.
         /// </summary>
         public static string CameriaTransportation {
             get {
@@ -142,7 +169,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to League Specific Items\n(Headhunter possible).
+        ///   Looks up a localized string similar to League Specific Items
+        ///(Headhunter possible).
         /// </summary>
         public static string CameriaTransportationTooltip {
             get {
@@ -151,7 +179,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique\nArmor.
+        ///   Looks up a localized string similar to Unique
+        ///Armor.
         /// </summary>
         public static string ElreonFortification {
             get {
@@ -160,7 +189,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reliquary\nScarabs.
+        ///   Looks up a localized string similar to Reliquary
+        ///Scarabs.
         /// </summary>
         public static string ElreonIntervention {
             get {
@@ -169,7 +199,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique\nJewellery.
+        ///   Looks up a localized string similar to Elreon.
+        /// </summary>
+        public static string ElreonName {
+            get {
+                return ResourceManager.GetString("ElreonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unique
+        ///Jewellery.
         /// </summary>
         public static string ElreonResearch {
             get {
@@ -178,7 +218,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique\nWeapons.
+        ///   Looks up a localized string similar to Unique
+        ///Weapons.
         /// </summary>
         public static string ElreonTransportation {
             get {
@@ -187,7 +228,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random\nDiv Cards.
+        ///   Looks up a localized string similar to Random
+        ///Div Cards.
         /// </summary>
         public static string GraviciusFortification {
             get {
@@ -196,7 +238,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Div Card\nScarab.
+        ///   Looks up a localized string similar to Div Card
+        ///Scarab.
         /// </summary>
         public static string GraviciusIntervention {
             get {
@@ -205,7 +248,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Swap\nDiv Cards.
+        ///   Looks up a localized string similar to Gravicius.
+        /// </summary>
+        public static string GraviciusName {
+            get {
+                return ResourceManager.GetString("GraviciusName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Swap
+        ///Div Cards.
         /// </summary>
         public static string GraviciusResearch {
             get {
@@ -214,7 +267,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Div Card\nStack.
+        ///   Looks up a localized string similar to Div Card
+        ///Stack.
         /// </summary>
         public static string GraviciusTransportation {
             get {
@@ -223,7 +277,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Essence\nCrafting.
+        ///   Looks up a localized string similar to Essence
+        ///Crafting.
         /// </summary>
         public static string GuffFortification {
             get {
@@ -232,7 +287,13 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 20 Scouring\n5 * 4 Essences\n20 Exalted\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds.
+        ///   Looks up a localized string similar to 20 Scouring
+        ///5 * 4 Essences
+        ///20 Exalted
+        ///1 Vaal
+        ///Level1: 8 Seconds
+        ///Level2: 12 Seconds
+        ///Level3: 18 Seconds.
         /// </summary>
         public static string GuffFortificationTooltip {
             get {
@@ -241,7 +302,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alteration\nCrafting.
+        ///   Looks up a localized string similar to Alteration
+        ///Crafting.
         /// </summary>
         public static string GuffIntervention {
             get {
@@ -250,7 +312,16 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 Transmutation\n200 Alteration\n100 AUgmentation\n1 Regal\n1 Exalted\n1 Divine\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds.
+        ///   Looks up a localized string similar to 1 Transmutation
+        ///200 Alteration
+        ///100 Augmentation
+        ///1 Regal
+        ///1 Exalted
+        ///1 Divine
+        ///1 Vaal
+        ///Level1: 8 Seconds
+        ///Level2: 12 Seconds
+        ///Level3: 18 Seconds.
         /// </summary>
         public static string GuffInterventionTooltip {
             get {
@@ -259,7 +330,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annull\\Ex\nCrafting.
+        ///   Looks up a localized string similar to Guff.
+        /// </summary>
+        public static string GuffName {
+            get {
+                return ResourceManager.GetString("GuffName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annull\\Ex
+        ///Crafting.
         /// </summary>
         public static string GuffResearch {
             get {
@@ -268,7 +349,15 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 Alch\n100 Anullment\n100 Exalted\n1 Divine\n1 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds.
+        ///   Looks up a localized string similar to 1 Alch
+        ///100 Anullment
+        ///100 Exalted
+        ///1 Divine
+        ///1 Blessed
+        ///1 Vaal
+        ///Level1: 8 Seconds
+        ///Level2: 12 Seconds
+        ///Level3: 18 Seconds.
         /// </summary>
         public static string GuffResearchTooltip {
             get {
@@ -277,7 +366,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chaos\nCrafting.
+        ///   Looks up a localized string similar to Chaos
+        ///Crafting.
         /// </summary>
         public static string GuffTransportation {
             get {
@@ -286,7 +376,15 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 Alch\n200 Chaos\n6 Exalted\n20 Divine\n20 Blessed\n1 Vaal\nLevel1: 8 Seconds\nLevel2: 12 Seconds\nLevel3: 18 Seconds.
+        ///   Looks up a localized string similar to 1 Alch
+        ///200 Chaos
+        ///6 Exalted
+        ///20 Divine
+        ///20 Blessed
+        ///1 Vaal
+        ///Level1: 8 Seconds
+        ///Level2: 12 Seconds
+        ///Level3: 18 Seconds.
         /// </summary>
         public static string GuffTransportationTooltip {
             get {
@@ -304,7 +402,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strongbox\nScarab.
+        ///   Looks up a localized string similar to Strongbox
+        ///Scarab.
         /// </summary>
         public static string HakuIntervention {
             get {
@@ -313,7 +412,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quality\nItems.
+        ///   Looks up a localized string similar to Haku.
+        /// </summary>
+        public static string HakuName {
+            get {
+                return ResourceManager.GetString("HakuName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quality
+        ///Items.
         /// </summary>
         public static string HakuResearch {
             get {
@@ -322,7 +431,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nItems.
+        ///   Looks up a localized string similar to Rare
+        ///Items.
         /// </summary>
         public static string HakuTransportation {
             get {
@@ -331,7 +441,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Armor\nQuality.
+        ///   Looks up a localized string similar to Armor
+        ///Quality.
         /// </summary>
         public static string HillockFortification {
             get {
@@ -340,7 +451,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 24 %\nLevel2: 26 %\nLevel3: 28 %.
+        ///   Looks up a localized string similar to Level1: 24 %
+        ///Level2: 26 %
+        ///Level3: 28 %.
         /// </summary>
         public static string HillockFortificationTooltip {
             get {
@@ -349,7 +462,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map\nQuality.
+        ///   Looks up a localized string similar to Map
+        ///Quality.
         /// </summary>
         public static string HillockIntervention {
             get {
@@ -358,7 +472,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 25 %\nLevel2: 30 %\nLevel3: 35 %.
+        ///   Looks up a localized string similar to Level1: 25 %
+        ///Level2: 30 %
+        ///Level3: 35 %.
         /// </summary>
         public static string HillockInterventionTooltip {
             get {
@@ -367,7 +483,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flask\nQuality.
+        ///   Looks up a localized string similar to Hillock.
+        /// </summary>
+        public static string HillockName {
+            get {
+                return ResourceManager.GetString("HillockName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flask
+        ///Quality.
         /// </summary>
         public static string HillockResearch {
             get {
@@ -376,7 +502,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 22 %\nLevel2: 24 %\nLevel3: 26%.
+        ///   Looks up a localized string similar to Level1: 22 %
+        ///Level2: 24 %
+        ///Level3: 26%.
         /// </summary>
         public static string HillockResearchTooltip {
             get {
@@ -385,7 +513,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weapon\nQuality.
+        ///   Looks up a localized string similar to Weapon
+        ///Quality.
         /// </summary>
         public static string HillockTransportation {
             get {
@@ -394,7 +523,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 24 %\nLevel2: 26 %\nLevel3: 28%.
+        ///   Looks up a localized string similar to Level1: 24 %
+        ///Level2: 26 %
+        ///Level3: 28%.
         /// </summary>
         public static string HillockTransportationTooltip {
             get {
@@ -403,7 +534,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abyss\nJewels.
+        ///   Looks up a localized string similar to Abyss
+        ///Jewels.
         /// </summary>
         public static string ItThatFledFortification {
             get {
@@ -412,7 +544,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Breach\nScarab.
+        ///   Looks up a localized string similar to Breach
+        ///Scarab.
         /// </summary>
         public static string ItThatFledIntervention {
             get {
@@ -421,7 +554,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upgrade\nBreachstone.
+        ///   Looks up a localized string similar to ItThatFled.
+        /// </summary>
+        public static string ItThatFledName {
+            get {
+                return ResourceManager.GetString("ItThatFledName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrade
+        ///Breachstone.
         /// </summary>
         public static string ItThatFledResearch {
             get {
@@ -430,7 +573,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: Charged\nLevel2: Enriched\nLevel3: Pure.
+        ///   Looks up a localized string similar to Level1: Charged
+        ///Level2: Enriched
+        ///Level3: Pure.
         /// </summary>
         public static string ItThatFledResearchTooltip {
             get {
@@ -439,7 +584,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Breach\nSplinter.
+        ///   Looks up a localized string similar to Breach
+        ///Splinter.
         /// </summary>
         public static string ItThatFledTransportation {
             get {
@@ -448,7 +594,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Currency\nShards.
+        ///   Looks up a localized string similar to Currency
+        ///Shards.
         /// </summary>
         public static string JanusFortification {
             get {
@@ -457,7 +604,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perandus\nScarab.
+        ///   Looks up a localized string similar to Perandus
+        ///Scarab.
         /// </summary>
         public static string JanusIntervention {
             get {
@@ -466,7 +614,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perandus\nCoins.
+        ///   Looks up a localized string similar to Janus.
+        /// </summary>
+        public static string JanusName {
+            get {
+                return ResourceManager.GetString("JanusName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perandus
+        ///Coins.
         /// </summary>
         public static string JanusResearch {
             get {
@@ -475,7 +633,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quality\nCurrency.
+        ///   Looks up a localized string similar to Quality
+        ///Currency.
         /// </summary>
         public static string JanusTransportaion {
             get {
@@ -484,7 +643,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bestiary\nItems.
+        ///   Looks up a localized string similar to Bestiary
+        ///Items.
         /// </summary>
         public static string JorginFortification {
             get {
@@ -493,7 +653,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bestiary\nScarab.
+        ///   Looks up a localized string similar to Bestiary
+        ///Scarab.
         /// </summary>
         public static string JorginIntervention {
             get {
@@ -502,7 +663,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Amulet to\nTalisman.
+        ///   Looks up a localized string similar to Jorgin.
+        /// </summary>
+        public static string JorginName {
+            get {
+                return ResourceManager.GetString("JorginName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amulet to
+        ///Talisman.
         /// </summary>
         public static string JorginResearch {
             get {
@@ -511,7 +682,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: Level 1 Talisman\nLevel2: Level 2 Talisman\nLevel3: Level 3 Talisman.
+        ///   Looks up a localized string similar to Level1: Level 1 Talisman
+        ///Level2: Level 2 Talisman
+        ///Level3: Level 3 Talisman.
         /// </summary>
         public static string JorginResearchTooltip {
             get {
@@ -529,43 +702,55 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map\nFragments.
+        ///   Looks up a localized string similar to Map
+        ///Fragments.
         /// </summary>
-        public static string KorrelFortification {
+        public static string KorellFortification {
             get {
-                return ResourceManager.GetString("KorrelFortification", resourceCulture);
+                return ResourceManager.GetString("KorellFortification", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Elder\nScarab.
+        ///   Looks up a localized string similar to Elder
+        ///Scarab.
         /// </summary>
-        public static string KorrelIntervention {
+        public static string KorellIntervention {
             get {
-                return ResourceManager.GetString("KorrelIntervention", resourceCulture);
+                return ResourceManager.GetString("KorellIntervention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Korell.
+        /// </summary>
+        public static string KorellName {
+            get {
+                return ResourceManager.GetString("KorellName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Fossils.
         /// </summary>
-        public static string KorrellResearch {
+        public static string KorellResearch {
             get {
-                return ResourceManager.GetString("KorrellResearch", resourceCulture);
+                return ResourceManager.GetString("KorellResearch", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Essences.
         /// </summary>
-        public static string KorrellTransportation {
+        public static string KorellTransportation {
             get {
-                return ResourceManager.GetString("KorrellTransportation", resourceCulture);
+                return ResourceManager.GetString("KorellTransportation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Random\nCurrency.
+        ///   Looks up a localized string similar to Random
+        ///Currency.
         /// </summary>
         public static string LeoFortification {
             get {
@@ -574,7 +759,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Torment\nScarab.
+        ///   Looks up a localized string similar to Torment
+        ///Scarab.
         /// </summary>
         public static string LeoIntervention {
             get {
@@ -583,7 +769,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Currency\nUse.
+        ///   Looks up a localized string similar to Leo.
+        /// </summary>
+        public static string LeoName {
+            get {
+                return ResourceManager.GetString("LeoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency
+        ///Use.
         /// </summary>
         public static string LeoResearch {
             get {
@@ -592,7 +788,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: Blessed Orb\nLevel2: Divine Orb\nLevel3: Exalted Orb.
+        ///   Looks up a localized string similar to Level1: Blessed Orb
+        ///Level2: Divine Orb
+        ///Level3: Exalted Orb.
         /// </summary>
         public static string LeoResearchTooltip {
             get {
@@ -601,7 +799,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Silver\nCoins.
+        ///   Looks up a localized string similar to Silver
+        ///Coins.
         /// </summary>
         public static string LeoTransportation {
             get {
@@ -610,7 +809,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Take One\nUnique.
+        ///   Looks up a localized string similar to Take One
+        ///Unique.
         /// </summary>
         public static string RikerFortification {
             get {
@@ -619,7 +819,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Take On\nDiv Card.
+        ///   Looks up a localized string similar to Take On
+        ///Div Card.
         /// </summary>
         public static string RikerIntervention {
             get {
@@ -628,7 +829,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Take One\nVeiled.
+        ///   Looks up a localized string similar to Riker.
+        /// </summary>
+        public static string RikerName {
+            get {
+                return ResourceManager.GetString("RikerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take One
+        ///Veiled.
         /// </summary>
         public static string RikerResearch {
             get {
@@ -637,7 +848,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Take One\nCurrency.
+        ///   Looks up a localized string similar to Take One
+        ///Currency.
         /// </summary>
         public static string RikerTransportation {
             get {
@@ -646,7 +858,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nMaps.
+        ///   Looks up a localized string similar to Rare
+        ///Maps.
         /// </summary>
         public static string RinFortification {
             get {
@@ -655,7 +868,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cartography\nScarab.
+        ///   Looks up a localized string similar to Cartography
+        ///Scarab.
         /// </summary>
         public static string RinIntervention {
             get {
@@ -664,7 +878,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique\nMaps.
+        ///   Looks up a localized string similar to Rin.
+        /// </summary>
+        public static string RinName {
+            get {
+                return ResourceManager.GetString("RinName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unique
+        ///Maps.
         /// </summary>
         public static string RinResearch {
             get {
@@ -673,7 +897,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Normal\nMaps.
+        ///   Looks up a localized string similar to Normal
+        ///Maps.
         /// </summary>
         public static string RinTransportation {
             get {
@@ -682,7 +907,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enchanted\nItems.
+        ///   Looks up a localized string similar to Enchanted
+        ///Items.
         /// </summary>
         public static string ToraFortification {
             get {
@@ -691,7 +917,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: Gloves\nLevel2: Boots\nLevel3: Helmet.
+        ///   Looks up a localized string similar to Level1: Gloves
+        ///Level2: Boots
+        ///Level3: Helmet.
         /// </summary>
         public static string ToraFortificationTooltip {
             get {
@@ -700,7 +928,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Harbinger\nScarab.
+        ///   Looks up a localized string similar to Harbinger
+        ///Scarab.
         /// </summary>
         public static string ToraIntervention {
             get {
@@ -709,7 +938,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gem\nExperience.
+        ///   Looks up a localized string similar to Tora.
+        /// </summary>
+        public static string ToraName {
+            get {
+                return ResourceManager.GetString("ToraName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gem
+        ///Experience.
         /// </summary>
         public static string ToraResearch {
             get {
@@ -718,7 +957,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 20m Exp\nLevel2: 70m Exp\nLevel3: 200m Exp.
+        ///   Looks up a localized string similar to Level1: 20m Exp
+        ///Level2: 70m Exp
+        ///Level3: 200m Exp.
         /// </summary>
         public static string ToraResearchTooltip {
             get {
@@ -727,7 +968,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pick Item\n[Timed].
+        ///   Looks up a localized string similar to Pick Item
+        ///[Timed].
         /// </summary>
         public static string ToraTransportation {
             get {
@@ -736,7 +978,11 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time Limit: 8 Seconds\nCurrency\nDivination Cards\nUniques\nItem Level 100 Rare.
+        ///   Looks up a localized string similar to Time Limit: 8 Seconds
+        ///Currency
+        ///Divination Cards
+        ///Uniques
+        ///Item Level 100 Rare.
         /// </summary>
         public static string ToraTransportationTooltip {
             get {
@@ -745,7 +991,44 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nArmor.
+        ///   Looks up a localized string similar to F.
+        /// </summary>
+        public static string TypeFortification {
+            get {
+                return ResourceManager.GetString("TypeFortification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I.
+        /// </summary>
+        public static string TypeIntervention {
+            get {
+                return ResourceManager.GetString("TypeIntervention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R.
+        /// </summary>
+        public static string TypeResearch {
+            get {
+                return ResourceManager.GetString("TypeResearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T.
+        /// </summary>
+        public static string TypeTransportation {
+            get {
+                return ResourceManager.GetString("TypeTransportation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legion
+        ///Chests.
         /// </summary>
         public static string VaganFortification {
             get {
@@ -754,7 +1037,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nJewels.
+        ///   Looks up a localized string similar to Legion
+        ///Scarab.
         /// </summary>
         public static string VaganIntervention {
             get {
@@ -763,7 +1047,16 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nJewellery.
+        ///   Looks up a localized string similar to Vagan.
+        /// </summary>
+        public static string VaganName {
+            get {
+                return ResourceManager.GetString("VaganName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incubators.
         /// </summary>
         public static string VaganResearch {
             get {
@@ -772,7 +1065,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rare\nWeapons.
+        ///   Looks up a localized string similar to Legion
+        ///Splinters.
         /// </summary>
         public static string VaganTransportation {
             get {
@@ -781,7 +1075,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 1 White Socket\nLevel2: 1-2 White Sockets\nLevel3: 1-3 White Sockets.
+        ///   Looks up a localized string similar to Level1: 1 White Socket
+        ///Level2: 1-2 White Sockets
+        ///Level3: 1-3 White Sockets.
         /// </summary>
         public static string VoriceResearchTooltip {
             get {
@@ -790,7 +1086,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Linking\nCurrency.
+        ///   Looks up a localized string similar to Linking
+        ///Currency.
         /// </summary>
         public static string VoriciFortification {
             get {
@@ -799,7 +1096,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shaper\nScarab.
+        ///   Looks up a localized string similar to Shaper
+        ///Scarab.
         /// </summary>
         public static string VoriciIntervention {
             get {
@@ -808,7 +1106,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to White\nSocktes.
+        ///   Looks up a localized string similar to Vorici.
+        /// </summary>
+        public static string VoriciName {
+            get {
+                return ResourceManager.GetString("VoriciName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White
+        ///Socktes.
         /// </summary>
         public static string VoriciResearch {
             get {
@@ -817,7 +1125,8 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quality\nGems.
+        ///   Looks up a localized string similar to Quality
+        ///Gems.
         /// </summary>
         public static string VoriciTransportation {
             get {
