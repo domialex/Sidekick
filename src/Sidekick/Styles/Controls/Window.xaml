@@ -5,6 +5,7 @@
         TargetType="Window">
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="AllowsTransparency" Value="True" />
 
         <Style.Triggers>
             <EventTrigger RoutedEvent="Window.Loaded">
@@ -27,7 +28,6 @@
         x:Key="WindowOverlay"
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="Window">
-        <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="ShowInTaskbar" Value="False" />
         <Setter Property="Topmost" Value="True" />
     </Style>
