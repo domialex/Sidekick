@@ -12,7 +12,7 @@
     </Window.Resources>
 
     <Window.Style>
-        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
+        <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
     <Grid Margin="{StaticResource Spacer}">

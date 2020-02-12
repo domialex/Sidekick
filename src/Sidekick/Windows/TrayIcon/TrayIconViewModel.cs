@@ -7,10 +7,12 @@ using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
+using Sidekick.Helpers.Input;
 using Sidekick.Localization;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
@@ -72,6 +74,19 @@ namespace Sidekick.Windows.TrayIcon
             }
 
             TrayIcon.ContextMenu.Items.Clear();
+
+            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            {
+                Header = "DEBUG - Price check",
+                Command = new RelayCommand(_ => EventsHandler.TriggerItemFetch())
+            });
+            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            {
+                Header = "DEBUG - League Overlay",
+                Command = new RelayCommand(_ => LeagueOverlayController.Show())
+            });
+            TrayIcon.ContextMenu.Items.Add(new Separator());
+
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = TrayResources.Settings,

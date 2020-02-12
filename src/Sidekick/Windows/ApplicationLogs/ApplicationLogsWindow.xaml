@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:r="clr-namespace:Sidekick.Localization.Logs;assembly=Sidekick.Localization"
-    Title="Sidekick - Logs"
+    Title="Logs - Sidekick"
     Width="720"
     Height="360"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"

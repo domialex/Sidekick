@@ -4,10 +4,7 @@
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="Window">
         <Setter Property="WindowStyle" Value="None" />
-        <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="ResizeMode" Value="NoResize" />
-        <Setter Property="ShowInTaskbar" Value="False" />
-        <Setter Property="Topmost" Value="True" />
 
         <Style.Triggers>
             <EventTrigger RoutedEvent="Window.Loaded">
@@ -24,5 +21,14 @@
                 </EventTrigger.Actions>
             </EventTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="WindowOverlay"
+        BasedOn="{StaticResource {x:Type Window}}"
+        TargetType="Window">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="ShowInTaskbar" Value="False" />
+        <Setter Property="Topmost" Value="True" />
     </Style>
 </ResourceDictionary>
