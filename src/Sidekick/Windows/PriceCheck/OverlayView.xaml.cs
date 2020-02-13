@@ -9,10 +9,10 @@ using System.Windows;
 using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Windows.Overlay.UserControls;
-using Sidekick.Windows.Overlay.ViewModels;
+using Sidekick.Windows.PriceCheck.UserControls;
+using Sidekick.Windows.PriceCheck.ViewModels;
 
-namespace Sidekick.Windows.Overlay
+namespace Sidekick.Windows.PriceCheck
 {
     public partial class OverlayWindow : Window, INotifyPropertyChanged
     {

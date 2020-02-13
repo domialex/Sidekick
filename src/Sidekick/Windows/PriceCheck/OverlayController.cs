@@ -7,7 +7,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
 using Cursor = System.Windows.Forms.Cursor;
 
-namespace Sidekick.Windows.Overlay
+namespace Sidekick.Windows.PriceCheck
 {
     public static class OverlayController
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Sidekick.Core.Natives;
 using Sidekick.Windows.LeagueOverlay;
-using Sidekick.Windows.Overlay;
+using Sidekick.Windows.PriceCheck;
 
 namespace Sidekick.Helpers.Input
 {

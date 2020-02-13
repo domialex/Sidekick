@@ -1,10 +1,9 @@
-using Sidekick.Business.Trades.Results;
 using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Sidekick.Business.Trades.Results;
 
-namespace Sidekick.Windows.Overlay.UserControls
+namespace Sidekick.Windows.PriceCheck.UserControls
 {
     public partial class ItemListingControl : UserControl
     {

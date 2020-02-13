@@ -12,7 +12,7 @@ using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.LeagueOverlay;
-using Sidekick.Windows.Overlay;
+using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon

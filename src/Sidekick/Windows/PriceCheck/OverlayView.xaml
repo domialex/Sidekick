@@ -1,8 +1,8 @@
 <Window
-    x:Class="Sidekick.Windows.Overlay.OverlayWindow"
+    x:Class="Sidekick.Windows.PriceCheck.OverlayWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:VM="clr-namespace:Sidekick.Windows.Overlay.ViewModels"
+    xmlns:VM="clr-namespace:Sidekick.Windows.PriceCheck.ViewModels"
     xmlns:r="clr-namespace:Sidekick.Localization.PriceCheck;assembly=Sidekick.Localization">
     <Window.Resources>
         <ResourceDictionary>

@@ -11,8 +11,8 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.Windows.LeagueOverlay;
-using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
+using Sidekick.Windows.PriceCheck;
 
 namespace Sidekick
 {

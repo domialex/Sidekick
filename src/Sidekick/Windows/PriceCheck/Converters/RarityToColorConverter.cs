@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Sidekick.Windows.Overlay.Converters
+namespace Sidekick.Windows.PriceCheck.Converters
 {
     public class RarityToColorConverter : IValueConverter
     {
