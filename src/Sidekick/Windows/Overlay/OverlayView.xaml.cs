@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Localization.PriceCheck;
 using Sidekick.Windows.Overlay.UserControls;
 using Sidekick.Windows.Overlay.ViewModels;
 
@@ -49,21 +48,7 @@ namespace Sidekick.Windows.Overlay
             Height = height;
             InitializeComponent();
             DataContext = this;
-            UpdateUIText();
             Hide();
-        }
-
-        private void UpdateUIText()
-        {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            textBoxAccountName.Text = PriceCheckResources.OverlayAccountName;
-            textBoxAge.Text = PriceCheckResources.OverlayAge;
-            textBoxCharacter.Text = PriceCheckResources.OverlayCharacter;
-            textBoxItemLevel.Text = PriceCheckResources.OverlayItemLevel;
-            textBoxPrice.Text = PriceCheckResources.OverlayPrice;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -222,6 +207,14 @@ namespace Sidekick.Windows.Overlay
 
             // UI update is finished, when the scrollviewer is reset (newly added items will move the scrollbar)
             overlayIsUpdatable = true;
+        }
+
+        private void openQueryLink(object sender, RequestNavigateEventArgs e)
+        {
+            var uri = e.Uri.ToString();
+            Legacy.Logger.Log(string.Format("Opening in browser: {0}", uri));
+            Process.Start(uri);
+            e.Handled = true;
         }
     }
 }

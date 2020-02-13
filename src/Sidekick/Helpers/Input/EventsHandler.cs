@@ -72,33 +72,7 @@ namespace Sidekick.Helpers.Input
         {
             Legacy.Logger.Log("Hotkey for pricing item triggered.");
 
-            // var item = await TriggerCopyAction();
-            var item = await Legacy.ItemParser.ParseItem(@"Rarity: Unique
-Blood of the Karui
-Sanctified Life Flask
---------
-Quality: +20% (augmented)
-Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
-Consumes 15 of 30 Charges on use
-Currently has 30 Charges
---------
-Requirements:
-Level: 50
---------
-Item Level: 75
---------
-100% increased Life Recovered
-15% increased Recovery rate
-Recover Full Life at the end of the Flask Effect
---------
-""Kaom fought and killed for his people.
-Kaom bled for his people.
-And so the people gave, the people bled,
-So their King might go on.""
-- Lavianga, Advisor to Kaom
---------
-Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
-");
+            var item = await TriggerCopyAction();
             if (item != null)
             {
                 OverlayController.Open();

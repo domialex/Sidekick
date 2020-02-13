@@ -7,12 +7,12 @@ using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
-using Sidekick.Helpers.Input;
 using Sidekick.Localization;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.LeagueOverlay;
+using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
@@ -75,10 +75,60 @@ namespace Sidekick.Windows.TrayIcon
 
             TrayIcon.ContextMenu.Items.Clear();
 
+#if DEBUG
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = "DEBUG - Price check",
-                Command = new RelayCommand(_ => EventsHandler.TriggerItemFetch())
+                Command = new RelayCommand(async (_) =>
+                {
+                    var item = await Legacy.ItemParser.ParseItem(@"Rarity: Unique
+Blood of the Karui
+Sanctified Life Flask
+--------
+Quality: +20% (augmented)
+Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
+Consumes 15 of 30 Charges on use
+Currently has 30 Charges
+--------
+Requirements:
+Level: 50
+--------
+Item Level: 75
+--------
+100% increased Life Recovered
+15% increased Recovery rate
+Recover Full Life at the end of the Flask Effect
+--------
+""Kaom fought and killed for his people.
+Kaom bled for his people.
+And so the people gave, the people bled,
+So their King might go on.""
+- Lavianga, Advisor to Kaom
+--------
+Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
+");
+
+                    if (item != null)
+                    {
+                        OverlayController.Open();
+
+                        var queryResult = await Legacy.TradeClient.GetListings(item);
+                        if (queryResult != null)
+                        {
+                            var poeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                            if (poeNinjaItem != null)
+                            {
+                                queryResult.PoeNinjaItem = poeNinjaItem;
+                                queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
+                            }
+                            OverlayController.SetQueryResult(queryResult);
+                            return;
+                        }
+
+                        OverlayController.Hide();
+                    }
+
+                })
             });
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
@@ -86,6 +136,7 @@ namespace Sidekick.Windows.TrayIcon
                 Command = new RelayCommand(_ => LeagueOverlayController.Show())
             });
             TrayIcon.ContextMenu.Items.Add(new Separator());
+#endif
 
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
