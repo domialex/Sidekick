@@ -2,13 +2,11 @@
     x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:r="clr-namespace:Sidekick.Localization.Logs;assembly=Sidekick.Localization"
+    xmlns:r="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
     Title="Logs - Sidekick"
     Width="720"
     Height="360"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
-    ShowInTaskbar="True"
-    Topmost="False"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />
@@ -20,7 +18,7 @@
 
     <DockPanel Margin="{StaticResource Spacer}">
         <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
-            <Button Click="Button_Click" Content="{x:Static r:LogResources.Close}" />
+            <Button Click="Button_Click" Content="{x:Static r:ApplicationLogResources.Close}" />
         </WrapPanel>
         <ScrollViewer Name="logsScrollViewer" Margin="{StaticResource SpacerBottom}">
             <TextBox
