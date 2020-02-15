@@ -9,7 +9,6 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Loggers;
@@ -57,7 +56,8 @@ namespace Sidekick.Business.Trades
                 string path = "";
                 string json = "";
                 string baseUri = null;
-                if (item is CurrencyItem || item is DivinationCardItem)
+
+                if (IsBulk(item.Type))
                 {
                     path = $"exchange/{configuration.LeagueId}";
                     json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService), poeApiClient.Options);
@@ -168,6 +168,11 @@ namespace Sidekick.Business.Trades
         {
             var queryResult = await Query(item);
             nativeBrowser.Open(queryResult.Uri);
+        }
+
+        private bool IsBulk(string type)
+        {
+            return staticItemCategoryService.Lookup.ContainsKey(type);
         }
     }
 }
