@@ -4,8 +4,10 @@ using Sidekick.Core.Natives;
 using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
+using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Prediction;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
@@ -28,6 +30,8 @@ namespace Sidekick
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<LeagueOverlayController>();
+            services.AddSingleton<PredictionController>();
+            services.AddSingleton<ApplicationLogsController>();
 
             return services;
         }

@@ -21,20 +21,27 @@ namespace Sidekick.Windows.TrayIcon
         private readonly SidekickSettings settings;
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IViewLocator viewLocator;
+        private readonly ApplicationLogsController applicationLogsController;
 
-        public TrayIconViewModel(App application, SidekickSettings settings, IUILanguageProvider uiLanguageProvider, IViewLocator viewLocator)
+        public TrayIconViewModel(
+            App application,
+            SidekickSettings settings,
+            IUILanguageProvider uiLanguageProvider,
+            IViewLocator viewLocator,
+            ApplicationLogsController applicationLogsController)
         {
             this.application = application;
             this.settings = settings;
             this.uiLanguageProvider = uiLanguageProvider;
             this.viewLocator = viewLocator;
+            this.applicationLogsController = applicationLogsController;
         }
 
         private TaskbarIcon TrayIcon { get; set; }
 
         public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
 
-        public ICommand ShowLogsCommand => new RelayCommand(_ => ApplicationLogsController.Show());
+        public ICommand ShowLogsCommand => new RelayCommand(_ => applicationLogsController.Show());
 
         public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
 
@@ -80,7 +87,7 @@ namespace Sidekick.Windows.TrayIcon
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = TrayResources.ShowLogs,
-                Command = new RelayCommand(_ => ApplicationLogsController.Show())
+                Command = new RelayCommand(_ => applicationLogsController.Show())
             });
             TrayIcon.ContextMenu.Items.Add(new Separator());
             TrayIcon.ContextMenu.Items.Add(new MenuItem()

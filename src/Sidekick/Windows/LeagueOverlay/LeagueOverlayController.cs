@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Core.Natives;
+using Sidekick.Localization;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.LeagueOverlay
@@ -17,12 +18,12 @@ namespace Sidekick.Windows.LeagueOverlay
         private LeagueOverlayView overlayWindow;
         private int WindowPadding = 5;
 
-        public LeagueOverlayController(IKeybindEvents events, INativeProcess nativeProcess)
+        public LeagueOverlayController(IKeybindEvents events, INativeProcess nativeProcess, IUILanguageProvider languageProvider)
         {
             this.events = events;
             this.nativeProcess = nativeProcess;
 
-            overlayWindow = new LeagueOverlayView();
+            overlayWindow = new LeagueOverlayView(languageProvider);
             overlayWindow.MouseDown += Window_OnHandleMouseDrag;
 
             events.OnCloseWindow += OnCloseWindow;

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.UI.Views;
@@ -27,6 +28,8 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
         private LeagueOverlayController leagueOverlayController;
+        private INativeProcess nativeProcess;
+        private INativeBrowser nativeBrowser;
 
         private static TaskbarIcon trayIcon;
 
@@ -38,8 +41,8 @@ namespace Sidekick
             typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
-
-            Legacy.Initialize(serviceProvider);
+            nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
+            nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
             serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
 
@@ -58,7 +61,7 @@ namespace Sidekick
             serviceProvider.GetRequiredService<EventsHandler>();
 
             // Price Prediction
-            PredictionController.Initialize();
+            serviceProvider.GetRequiredService<PredictionController>();
         }
 
         private async Task RunAutoUpdate()
@@ -72,7 +75,7 @@ namespace Sidekick
                     {
                         if (await updateManagerService.UpdateSidekick())
                         {
-                            Legacy.NativeProcess.Mutex = null;
+                            nativeProcess.Mutex = null;
                             MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
 
                             var startInfo = new ProcessStartInfo
@@ -92,7 +95,7 @@ namespace Sidekick
                     catch (Exception)
                     {
                         MessageBox.Show("Update failed! Please update manually.");
-                        Legacy.NativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
                     }
                 }
             }
@@ -109,7 +112,7 @@ namespace Sidekick
 
         private void EnsureSingleInstance()
         {
-            Legacy.NativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
+            nativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
             if (!instanceResult)
             {
                 Current.Shutdown();
