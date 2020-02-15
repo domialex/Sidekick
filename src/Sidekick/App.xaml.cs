@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
@@ -27,11 +26,11 @@ namespace Sidekick
 
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
+        private PredictionController predictionController;
         private LeagueOverlayController leagueOverlayController;
+        private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
-
-        private static TaskbarIcon trayIcon;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -44,6 +43,7 @@ namespace Sidekick
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
+            Legacy.Initialize(serviceProvider);
             serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
@@ -52,16 +52,16 @@ namespace Sidekick
 
             await serviceProvider.GetService<IInitializer>().Initialize();
 
+            eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
+
             // Overlay.
             overlayController = serviceProvider.GetRequiredService<OverlayController>();
 
             // League Overlay
             leagueOverlayController = serviceProvider.GetRequiredService<LeagueOverlayController>();
 
-            serviceProvider.GetRequiredService<EventsHandler>();
-
             // Price Prediction
-            serviceProvider.GetRequiredService<PredictionController>();
+            predictionController = serviceProvider.GetRequiredService<PredictionController>();
         }
 
         private async Task RunAutoUpdate()
@@ -103,10 +103,11 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon?.Dispose();
             serviceProvider.Dispose();
+            eventsHandler.Dispose();
             overlayController.Dispose();
-            PredictionController.Dispose();
+            leagueOverlayController.Dispose();
+            predictionController.Dispose();
             base.OnExit(e);
         }
 

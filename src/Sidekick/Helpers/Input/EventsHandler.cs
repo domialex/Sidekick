@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Parsers;
@@ -8,7 +9,7 @@ using Sidekick.Core.Natives;
 
 namespace Sidekick.Helpers.Input
 {
-    public class EventsHandler
+    public class EventsHandler: IDisposable
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -38,6 +39,16 @@ namespace Sidekick.Helpers.Input
             this.tradeClient = tradeClient;
             this.wikiProvider = wikiProvider;
             Initialize();
+        }
+
+        public void Dispose()
+        {
+            events.OnItemWiki -= TriggerItemWiki;
+            events.OnHideout -= TriggerHideout;
+            events.OnFindItems -= TriggerFindItem;
+            events.OnLeaveParty -= TriggerLeaveParty;
+            events.OnOpenSearch -= TriggerOpenSearch;
+            events.OnWhisperReply -= TriggerReplyToLatestWhisper;
         }
 
         private void Initialize()

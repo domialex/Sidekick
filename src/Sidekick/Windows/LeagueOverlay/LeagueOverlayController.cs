@@ -11,7 +11,7 @@ using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.LeagueOverlay
 {
-    public class LeagueOverlayController
+    public class LeagueOverlayController: IDisposable
     {
         private readonly IKeybindEvents events;
         private readonly INativeProcess nativeProcess;
@@ -45,6 +45,13 @@ namespace Sidekick.Windows.LeagueOverlay
 
             EnsureBounds(xScaled, yScaled, scale);
             Show();
+        }
+
+        public void Dispose()
+        {
+            overlayWindow.MouseDown -= Window_OnHandleMouseDrag;
+            events.OnCloseWindow -= OnCloseWindow;
+            events.OnOpenLeagueOverview -= OnOpenLeagueOverview;
         }
 
         private void EnsureBounds(int desiredX, int desiredY, float scale)

@@ -28,7 +28,7 @@ namespace Sidekick.Windows.Prediction
             _predictionView.MouseDown += Window_OnHandleMouseDrag;
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
             _predictionView?.Close();
         }

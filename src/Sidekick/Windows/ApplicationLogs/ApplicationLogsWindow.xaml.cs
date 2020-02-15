@@ -20,7 +20,6 @@ namespace Sidekick.Windows.ApplicationLogs
             logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
             InitializeIcon();
-            Show();
         }
 
         private static MemoryStream IconStream;
