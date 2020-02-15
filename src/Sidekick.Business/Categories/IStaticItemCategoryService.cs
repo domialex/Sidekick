@@ -6,5 +6,6 @@ namespace Sidekick.Business.Categories
     public interface IStaticItemCategoryService
     {
         List<StaticItemCategory> Categories { get; }
+        Dictionary<string, string> Lookup { get; }
     }
 }
