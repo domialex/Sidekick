@@ -1,14 +1,19 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Localization;
 using Application = System.Windows.Application;
 using Cursor = System.Windows.Forms.Cursor;
@@ -19,21 +24,50 @@ namespace Sidekick.Windows.Overlay
     {
         private readonly ITradeClient tradeClient;
         private readonly INativeProcess nativeProcess;
+        private readonly IKeybindEvents events;
+        private readonly INativeClipboard clipboard;
+        private readonly ILogger logger;
+        private readonly IItemParser itemParser;
+        private readonly IPoeNinjaCache poeNinjaCache;
+        private readonly SidekickSettings settings;
         private readonly OverlayWindow overlayWindow;
 
         private static readonly int WINDOW_WIDTH = 480;
         private static readonly int WINDOW_HEIGHT = 320;
         private static readonly int WINDOW_PADDING = 5;
 
-        public OverlayController(IUILanguageProvider uiLanguageProvider, IPoePriceInfoClient poePriceInfoClient, ITradeClient tradeClient, INativeProcess nativeProcess)
+        public OverlayController(
+            IUILanguageProvider uiLanguageProvider,
+            IPoePriceInfoClient poePriceInfoClient,
+            ITradeClient tradeClient,
+            INativeProcess nativeProcess,
+            IKeybindEvents events,
+            INativeClipboard clipboard,
+            ILogger logger,
+            IItemParser itemParser,
+            IPoeNinjaCache poeNinjaCache,
+            SidekickSettings settings)
         {
             this.tradeClient = tradeClient;
             this.nativeProcess = nativeProcess;
+            this.events = events;
+            this.clipboard = clipboard;
+            this.logger = logger;
+            this.itemParser = itemParser;
+            this.poeNinjaCache = poeNinjaCache;
+            this.settings = settings;
 
             overlayWindow = new OverlayWindow(WINDOW_WIDTH, WINDOW_HEIGHT, uiLanguageProvider.Current.Name, poePriceInfoClient);
             overlayWindow.MouseDown += Window_OnHandleMouseDrag;
             overlayWindow.ItemScrollReachedEnd += Window_ItemScrollReachedEnd;
+
+            events.OnCloseWindow += OnCloseWindow;
+            events.OnPriceCheck += OnPriceCheck;
+            events.OnMouseClick += MouseClicked;
         }
+
+
+
 
         public bool IsDisplayed => overlayWindow.IsDisplayed;
         public void SetQueryResult(QueryResult<ListingResult> queryResult) => overlayWindow.SetQueryResult(queryResult);
@@ -69,6 +103,17 @@ namespace Sidekick.Windows.Overlay
             Show();
         }
 
+        public Point GetOverlayPosition()
+        {
+            Debug.Assert(Application.Current.Dispatcher != null, "Application.Current.Dispatcher != null");
+            return Application.Current.Dispatcher.Invoke(() => new Point(overlayWindow.Left, overlayWindow.Top));
+        }
+
+        public Size GetOverlaySize()
+        {
+            return new Size(overlayWindow.ActualWidth, overlayWindow.ActualHeight);
+        }
+
         /// <summary>
         /// Ensures that the window stays within width and height of the display.
         /// </summary>
@@ -84,17 +129,6 @@ namespace Sidekick.Windows.Overlay
             overlayWindow.SetWindowPosition(positionX, positionY);
         }
 
-        public Point GetOverlayPosition()
-        {
-            Debug.Assert(Application.Current.Dispatcher != null, "Application.Current.Dispatcher != null");
-            return Application.Current.Dispatcher.Invoke(() => new Point(overlayWindow.Left, overlayWindow.Top));
-        }
-
-        public Size GetOverlaySize()
-        {
-            return new Size(overlayWindow.ActualWidth, overlayWindow.ActualHeight);
-        }
-
         /// <summary>
         /// Handles dragging for the window when pressing any control that does NOT handle the event <see cref="RoutedEventArgs.Handled"/>.
         /// Does not apply clamping of the windows position.
@@ -104,6 +138,70 @@ namespace Sidekick.Windows.Overlay
             // automatically detects mouse up/down states
             if (e.ChangedButton == MouseButton.Left)
                 overlayWindow.DragMove();
+        }
+
+        private Task<bool> OnCloseWindow()
+        {
+            var handled = false;
+
+            if (IsDisplayed)
+            {
+                Hide();
+                handled = true;
+            }
+
+            return Task.FromResult(handled);
+        }
+
+        private async Task<bool> OnPriceCheck()
+        {
+            logger.Log("Hotkey for pricing item triggered.");
+
+            var text = await clipboard.Copy();
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                var item = await itemParser.ParseItem(text);
+
+                if (item != null)
+                {
+                    Open();
+
+                    var queryResult = await tradeClient.GetListings(item);
+                    if (queryResult != null)
+                    {
+                        var poeNinjaItem = poeNinjaCache.GetItem(item);
+                        if (poeNinjaItem != null)
+                        {
+                            queryResult.PoeNinjaItem = poeNinjaItem;
+                            queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                        }
+
+                        SetQueryResult(queryResult);
+                        return true;
+                    }
+
+                    Hide();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private Task MouseClicked(int x, int y)
+        {
+            if (!IsDisplayed || !settings.CloseOverlayWithMouse) return Task.CompletedTask;
+
+            var overlayPos = GetOverlayPosition();
+            var overlaySize = GetOverlaySize();
+
+            if (x < overlayPos.X || x > overlayPos.X + overlaySize.Width
+                                 || y < overlayPos.Y || y > overlayPos.Y + overlaySize.Height)
+            {
+                Hide();
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

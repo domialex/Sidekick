@@ -4,6 +4,7 @@ using Sidekick.Core.Natives;
 using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
+using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
@@ -26,6 +27,7 @@ namespace Sidekick
             services.AddInitializableService<INativeProcess, NativeProcess>();
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
+            services.AddSingleton<LeagueOverlayController>();
 
             return services;
         }

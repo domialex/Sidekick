@@ -1,19 +1,38 @@
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Whispers
 {
     public class WhisperService : IWhisperService
     {
-        private INativeProcess pathOfExileProcess;
-        public WhisperService(INativeProcess pathOfExileProcess)
+        private readonly INativeProcess pathOfExileProcess;
+        private readonly INativeClipboard clipboard;
+        private readonly INativeKeyboard keyboard;
+
+        public WhisperService(INativeProcess pathOfExileProcess, INativeClipboard clipboard, INativeKeyboard keyboard)
         {
             this.pathOfExileProcess = pathOfExileProcess;
+            this.clipboard = clipboard;
+            this.keyboard = keyboard;
         }
 
-        public string GetLatestWhisperCharacterName()
+        public Task<bool> ReplyToLatestWhisper()
+        {
+            var characterName = GetLatestWhisperCharacterName();
+            if (!string.IsNullOrEmpty(characterName))
+            {
+                clipboard.SetText(string.Empty);
+                clipboard.SetText($"@{characterName} ");
+                keyboard.SendCommand(KeyboardCommandEnum.ReplyToLatestWhisper);
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
+        }
+
+        private string GetLatestWhisperCharacterName()
         {
             var clientLogFile = pathOfExileProcess?.ClientLogPath;
             if (!pathOfExileProcess.IsPathOfExileInFocus || clientLogFile == null) return string.Empty;

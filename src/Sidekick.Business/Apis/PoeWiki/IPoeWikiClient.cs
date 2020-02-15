@@ -2,8 +2,7 @@
 
 namespace Sidekick.Business.Apis.PoeWiki
 {
-    public interface IPoeWikiClient
+    public interface IPoeWikiClient: IWikiProvider
     {
-        void Open(Item item);
     }
 }

@@ -181,6 +181,7 @@
       </e>
       <e p="src\Sidekick.Business" t="IncludeRecursive">
         <e p="Apis" t="Include">
+          <e p="IWikiProvider.cs" t="Include" />
           <e p="Poe" t="Include">
             <e p="IPoeApiClient.cs" t="Include" />
             <e p="Models" t="Include">

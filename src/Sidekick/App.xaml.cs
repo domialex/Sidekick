@@ -26,7 +26,7 @@ namespace Sidekick
 
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
-        private EventsHandler eventsHandler;
+        private LeagueOverlayController leagueOverlayController;
 
         private static TaskbarIcon trayIcon;
 
@@ -42,7 +42,6 @@ namespace Sidekick
             Legacy.Initialize(serviceProvider);
 
             serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
-            // Legacy.ViewLocator.Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
 
@@ -54,9 +53,9 @@ namespace Sidekick
             overlayController = serviceProvider.GetRequiredService<OverlayController>();
 
             // League Overlay
-            LeagueOverlayController.Initialize();
+            leagueOverlayController = serviceProvider.GetRequiredService<LeagueOverlayController>();
 
-            eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
+            serviceProvider.GetRequiredService<EventsHandler>();
 
             // Price Prediction
             PredictionController.Initialize();
