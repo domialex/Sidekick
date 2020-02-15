@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
+using Sidekick.UI.Views;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
@@ -24,6 +25,9 @@ namespace Sidekick
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
+        private OverlayController overlayController;
+        private EventsHandler eventsHandler;
+
         private static TaskbarIcon trayIcon;
 
         protected override async void OnStartup(StartupEventArgs e)
@@ -37,7 +41,8 @@ namespace Sidekick
 
             Legacy.Initialize(serviceProvider);
 
-            Legacy.ViewLocator.Open<Windows.SplashScreen>();
+            serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
+            // Legacy.ViewLocator.Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
 
@@ -46,12 +51,12 @@ namespace Sidekick
             await serviceProvider.GetService<IInitializer>().Initialize();
 
             // Overlay.
-            OverlayController.Initialize();
+            overlayController = serviceProvider.GetRequiredService<OverlayController>();
 
             // League Overlay
             LeagueOverlayController.Initialize();
 
-            EventsHandler.Initialize();
+            eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
 
             // Price Prediction
             PredictionController.Initialize();
@@ -98,7 +103,7 @@ namespace Sidekick
         {
             trayIcon?.Dispose();
             serviceProvider.Dispose();
-            OverlayController.Dispose();
+            overlayController.Dispose();
             PredictionController.Dispose();
             base.OnExit(e);
         }

@@ -1,8 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
+using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
+using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
@@ -22,6 +24,8 @@ namespace Sidekick
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
             services.AddInitializableService<INativeProcess, NativeProcess>();
+            services.AddSingleton<EventsHandler>();
+            services.AddSingleton<OverlayController>();
 
             return services;
         }

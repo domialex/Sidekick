@@ -1,21 +1,37 @@
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.PoeNinja;
+using Sidekick.Business.Trades;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Overlay;
 
 namespace Sidekick.Helpers.Input
 {
-    public static class EventsHandler
+    public class EventsHandler
     {
-        public static void Initialize()
+        private readonly OverlayController overlayController;
+        private readonly SidekickSettings settings;
+        private readonly ITradeClient tradeClient;
+        private readonly IPoeNinjaCache poeNinjaCache;
+
+        public EventsHandler(OverlayController overlayController, SidekickSettings settings, ITradeClient tradeClient, IPoeNinjaCache poeNinjaCache)
+        {
+            this.overlayController = overlayController;
+            this.settings = settings;
+            this.tradeClient = tradeClient;
+            this.poeNinjaCache = poeNinjaCache;
+            Initialize();
+        }
+        public void Initialize()
         {
             Legacy.KeybindEvents.OnCloseWindow += () =>
             {
                 var handled = false;
 
-                if (OverlayController.IsDisplayed)
+                if (overlayController.IsDisplayed)
                 {
-                    OverlayController.Hide();
+                    overlayController.Hide();
                     handled = true;
                 }
 
@@ -52,45 +68,45 @@ namespace Sidekick.Helpers.Input
             return Task.FromResult(false);
         }
 
-        private static Task MouseClicked(int x, int y)
+        private Task MouseClicked(int x, int y)
         {
-            if (!OverlayController.IsDisplayed || !Legacy.Settings.CloseOverlayWithMouse) return Task.CompletedTask;
+            if (!overlayController.IsDisplayed || !settings.CloseOverlayWithMouse) return Task.CompletedTask;
 
-            var overlayPos = OverlayController.GetOverlayPosition();
-            var overlaySize = OverlayController.GetOverlaySize();
+            var overlayPos = overlayController.GetOverlayPosition();
+            var overlaySize = overlayController.GetOverlaySize();
 
             if (x < overlayPos.X || x > overlayPos.X + overlaySize.Width
                 || y < overlayPos.Y || y > overlayPos.Y + overlaySize.Height)
             {
-                OverlayController.Hide();
+                overlayController.Hide();
             }
 
             return Task.CompletedTask;
         }
 
-        private static async Task<bool> TriggerItemFetch()
+        private async Task<bool> TriggerItemFetch()
         {
             Legacy.Logger.Log("Hotkey for pricing item triggered.");
 
             var item = await TriggerCopyAction();
             if (item != null)
             {
-                OverlayController.Open();
+                overlayController.Open();
 
-                var queryResult = await Legacy.TradeClient.GetListings(item);
+                var queryResult = await tradeClient.GetListings(item);
                 if (queryResult != null)
                 {
-                    var poeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                    var poeNinjaItem = poeNinjaCache.GetItem(item);
                     if (poeNinjaItem != null)
                     {
                         queryResult.PoeNinjaItem = poeNinjaItem;
-                        queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
+                        queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
                     }
-                    OverlayController.SetQueryResult(queryResult);
+                    overlayController.SetQueryResult(queryResult);
                     return true;
                 }
 
-                OverlayController.Hide();
+                overlayController.Hide();
                 return true;
             }
 

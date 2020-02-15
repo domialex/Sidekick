@@ -64,8 +64,8 @@ namespace Sidekick
         [Obsolete]
         public static INativeBrowser NativeBrowser { get; private set; }
 
-        [Obsolete]
-        public static IViewLocator ViewLocator { get; private set; }
+        //[Obsolete]
+       // public static IViewLocator ViewLocator { get; private set; }
 
         [Obsolete]
         public static IWhisperService WhisperService { get; private set; }
@@ -88,7 +88,7 @@ namespace Sidekick
             NativeKeyboard = serviceProvider.GetService<INativeKeyboard>();
             NativeClipboard = serviceProvider.GetService<INativeClipboard>();
             NativeBrowser = serviceProvider.GetService<INativeBrowser>();
-            ViewLocator = serviceProvider.GetService<IViewLocator>();
+            // ViewLocator = serviceProvider.GetService<IViewLocator>();
             WhisperService = serviceProvider.GetService<IWhisperService>();
         }
     }
