@@ -7,7 +7,7 @@ namespace Sidekick.UI.Leagues.Betrayal
     {
         public BetrayalLeague()
         {
-            Agents.Add(new BetrayalAgent(BetrayalResources.AislingName, RewardValue.Normal)
+            Agents.Add(new BetrayalAgent(BetrayalResources.AislingName, "Aisling.png", RewardValue.Normal)
             {
                 Transportation = new BetrayalReward(BetrayalResources.AislingTransportaion, RewardValue.Low),
                 Fortification = new BetrayalReward(BetrayalResources.AislingFortification, RewardValue.Low),
@@ -15,7 +15,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.AislingIntervention, RewardValue.Low)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.CameriaName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.CameriaName, "Cameria.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.CameriaTransportation, RewardValue.High, BetrayalResources.CameriaTransportationTooltip),
                 Fortification = new BetrayalReward(BetrayalResources.CameriaFortification, RewardValue.High),
@@ -23,7 +23,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.CameriaIntervention, RewardValue.VeryHigh)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.ElreonName, RewardValue.Low)
+            Agents.Add(new BetrayalAgent(BetrayalResources.ElreonName, "Elreon.png", RewardValue.Low)
             {
                 Transportation = new BetrayalReward(BetrayalResources.ElreonTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.ElreonFortification, RewardValue.Normal),
@@ -31,7 +31,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.ElreonIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.GraviciusName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.GraviciusName, "Gravicius.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.GraviciusTransportation, RewardValue.High),
                 Fortification = new BetrayalReward(BetrayalResources.GraviciusFortification, RewardValue.Normal),
@@ -39,7 +39,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.GraviciusIntervention, RewardValue.VeryHigh)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.GuffName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.GuffName, "Guff.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.GuffTransportation, RewardValue.High, BetrayalResources.GuffTransportationTooltip),
                 Fortification = new BetrayalReward(BetrayalResources.GuffFortification, RewardValue.Normal, BetrayalResources.GuffFortificationTooltip),
@@ -47,7 +47,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.GuffIntervention, RewardValue.Normal, BetrayalResources.GuffInterventionTooltip)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.HakuName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.HakuName, "Haku.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.HakuTransportation, RewardValue.High),
                 Fortification = new BetrayalReward(BetrayalResources.HakuFortification, RewardValue.Normal),
@@ -55,15 +55,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.HakuIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.HakuName, RewardValue.High)
-            {
-                Transportation = new BetrayalReward(BetrayalResources.HakuTransportation, RewardValue.Low),
-                Fortification = new BetrayalReward(BetrayalResources.HakuFortification, RewardValue.Low),
-                Research = new BetrayalReward(BetrayalResources.HakuResearch, RewardValue.Low),
-                Intervention = new BetrayalReward(BetrayalResources.HakuIntervention, RewardValue.High)
-            });
-
-            Agents.Add(new BetrayalAgent(BetrayalResources.HillockName, RewardValue.Normal)
+            Agents.Add(new BetrayalAgent(BetrayalResources.HillockName, "Hillock.png", RewardValue.Normal)
             {
                 Transportation = new BetrayalReward(BetrayalResources.HillockTransportation, RewardValue.Normal, BetrayalResources.HillockTransportationTooltip),
                 Fortification = new BetrayalReward(BetrayalResources.HillockFortification, RewardValue.Normal, BetrayalResources.HillockFortificationTooltip),
@@ -71,7 +63,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.HillockIntervention, RewardValue.Low, BetrayalResources.HillockInterventionTooltip)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.ItThatFledName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.ItThatFledName, "It_That_Fled.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.ItThatFledTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.ItThatFledFortification, RewardValue.Normal),
@@ -79,7 +71,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.ItThatFledIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.JanusName, RewardValue.Normal)
+            Agents.Add(new BetrayalAgent(BetrayalResources.JanusName, "Janus.png", RewardValue.Normal)
             {
                 Transportation = new BetrayalReward(BetrayalResources.JanusTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.JanusFortification, RewardValue.Normal),
@@ -87,7 +79,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.JanusIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.JorginName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.JorginName, "Jorgin.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.JorginTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.JorginFortification, RewardValue.High),
@@ -95,7 +87,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.JorginIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.KorellName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.KorellName, "Korell.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.KorellTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.KorellFortification, RewardValue.High),
@@ -103,7 +95,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.KorellIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.LeoName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.LeoName, "Leo.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.LeoTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.LeoFortification, RewardValue.High),
@@ -111,7 +103,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.LeoIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.RikerName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.RikerName, "Riker.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.RikerTransportation, RewardValue.High),
                 Fortification = new BetrayalReward(BetrayalResources.RikerFortification, RewardValue.Normal),
@@ -119,7 +111,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.RikerIntervention, RewardValue.High)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.RinName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.RinName, "Rin.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.RinTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.RinFortification, RewardValue.Normal),
@@ -127,7 +119,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.RinIntervention, RewardValue.VeryHigh)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.ToraName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.ToraName, "Tora.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.ToraTransportation, RewardValue.High, BetrayalResources.ToraTransportationTooltip),
                 Fortification = new BetrayalReward(BetrayalResources.ToraFortification, RewardValue.Normal, BetrayalResources.ToraFortificationTooltip),
@@ -135,7 +127,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.ToraIntervention, RewardValue.Normal)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.VaganName, RewardValue.High)
+            Agents.Add(new BetrayalAgent(BetrayalResources.VaganName, "Vagan.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(BetrayalResources.VaganTransportation, RewardValue.High),
                 Fortification = new BetrayalReward(BetrayalResources.VaganFortification, RewardValue.High),
@@ -143,7 +135,7 @@ namespace Sidekick.UI.Leagues.Betrayal
                 Intervention = new BetrayalReward(BetrayalResources.VaganIntervention, RewardValue.High)
             });
 
-            Agents.Add(new BetrayalAgent(BetrayalResources.VoriciName, RewardValue.VeryHigh)
+            Agents.Add(new BetrayalAgent(BetrayalResources.VoriciName, "Vorici.png", RewardValue.VeryHigh)
             {
                 Transportation = new BetrayalReward(BetrayalResources.VoriciTransportation, RewardValue.Normal),
                 Fortification = new BetrayalReward(BetrayalResources.VoriciFortification, RewardValue.High),
