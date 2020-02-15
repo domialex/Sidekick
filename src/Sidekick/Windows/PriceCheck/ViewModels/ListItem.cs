@@ -6,10 +6,10 @@ namespace Sidekick.Windows.PriceCheck.ViewModels
         {
             Index = index;
             Item = item;
-            Odd = Index % 2 != 0;
         }
+
         public int Index { get; set; }
-        public bool Odd { get; set; }
+        public bool Odd => Index % 2 != 0;
         public object Item { get; set; }
     }
 }
