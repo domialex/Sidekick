@@ -2698,7 +2698,7 @@
                         Margin="28,-1,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Source="pack://siteoforigin:,,,/Windows/LeagueOverlay/img/Betrayal/Aisling.png" />
+                        Source="/Windows/LeagueOverlay/Betrayal/Images/Aisling.png" />
                     <Rectangle
                         Grid.Row="1"
                         Grid.Column="1"

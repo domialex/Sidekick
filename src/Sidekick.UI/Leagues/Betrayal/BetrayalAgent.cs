@@ -5,7 +5,7 @@ namespace Sidekick.UI.Leagues.Betrayal
         public BetrayalAgent(string name, string imageFile, RewardValue value)
         {
             Name = name;
-            Image = $"pack://siteoforigin:,,,/Windows/LeagueOverlay/Betrayal/Images/{imageFile}";
+            Image = $"/Windows/LeagueOverlay/Betrayal/Images/{imageFile}";
             Value = value;
         }
 
