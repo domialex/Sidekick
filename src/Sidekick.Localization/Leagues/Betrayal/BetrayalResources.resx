@@ -243,7 +243,7 @@ Breachstone</value>
     <value>Breach
 Scarab</value>
   </data>
-  <data name="JanusTransportaion" xml:space="preserve">
+  <data name="JanusTransportation" xml:space="preserve">
     <value>Quality
 Currency</value>
   </data>
@@ -487,7 +487,7 @@ Level3: Helmet</value>
 Level2: 70m Exp
 Level3: 200m Exp</value>
   </data>
-  <data name="VoriceResearchTooltip" xml:space="preserve">
+  <data name="VoriciResearchTooltip" xml:space="preserve">
     <value>Level1: 1 White Socket
 Level2: 1-2 White Sockets
 Level3: 1-3 White Sockets</value>

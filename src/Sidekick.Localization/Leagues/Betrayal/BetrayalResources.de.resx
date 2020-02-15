@@ -471,11 +471,6 @@ Skarabäus</value>
     <value>Legion
 Splitter</value>
   </data>
-  <data name="VoriceResearchTooltip" xml:space="preserve">
-    <value>Level1: 1 Weißer Sockel
-Level2: 1-2 Weiße Sockel
-Level3: 1-3 Weiße Sockel</value>
-  </data>
   <data name="VoriciFortification" xml:space="preserve">
     <value>Verbindungs
 Währung</value>
@@ -487,6 +482,11 @@ Skarabäus</value>
   <data name="VoriciResearch" xml:space="preserve">
     <value>Weiße
 Sockel</value>
+  </data>
+  <data name="VoriciResearchTooltip" xml:space="preserve">
+    <value>Level1: 1 Weißer Sockel
+Level2: 1-2 Weiße Sockel
+Level3: 1-3 Weiße Sockel</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
     <value>Qualitäts
