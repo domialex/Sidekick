@@ -68,8 +68,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.zh-tw.resx">
-      <LastGenOutput>BetrayalResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

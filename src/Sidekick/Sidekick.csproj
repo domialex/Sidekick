@@ -17,10 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Windows\LeagueOverlay\Betrayal\Betrayal.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AdonisUI" Version="1.13.0" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.13.0" />
     <PackageReference Include="Bindables.Fody" Version="6.0.0" />
@@ -62,10 +58,6 @@
     <None Remove="Windows\LeagueOverlay\Metamorph\Prismatic_Catalyst.png" />
     <None Remove="Windows\LeagueOverlay\Metamorph\Tempering_Catalyst.png" />
     <None Remove="Windows\LeagueOverlay\Metamorph\Turbulent_Catalyst.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="Windows\LeagueOverlay\Betrayal\Betrayal.xaml" />
   </ItemGroup>
     
   <ItemGroup>

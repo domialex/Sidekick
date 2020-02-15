@@ -474,7 +474,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockJanusFortification.Text = BetrayalResources.JanusFortification;
             textBlockJanusIntervention.Text = BetrayalResources.JanusIntervention;
             textBlockJanusResearch.Text = BetrayalResources.JanusResearch;
-            textBlockJanusTransportation.Text = BetrayalResources.JanusTransportaion;
+            textBlockJanusTransportation.Text = BetrayalResources.JanusTransportation;
 
             labelJorginName.Content = BetrayalResources.JorginName;
             textBlockJorginFortification.Text = BetrayalResources.JorginFortification;
@@ -527,7 +527,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockVoriciFortification.Text = BetrayalResources.VoriciFortification;
             textBlockVoriciIntervention.Text = BetrayalResources.VoriciIntervention;
             textBlockVoriciResearch.Text = BetrayalResources.VoriciResearch;
-            textBlockVoriciResearch.ToolTip = BetrayalResources.VoriceResearchTooltip;
+            textBlockVoriciResearch.ToolTip = BetrayalResources.VoriciResearchTooltip;
             textBlockVoriciTransportation.Text = BetrayalResources.VoriciTransportation;
         }
 
@@ -582,7 +582,7 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst; 
+            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst;
             textBlockAbrasiveCatalystEffect.Text = MetamorphResources.AbrasiveCatalystEffect;
 
             labelFertileCatalyst.Content = MetamorphResources.FertileCatalyst;
