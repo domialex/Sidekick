@@ -6,10 +6,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Windows.PriceCheck.UserControls;
 using Sidekick.Windows.PriceCheck.ViewModels;
 
 namespace Sidekick.Windows.PriceCheck
@@ -44,11 +44,17 @@ namespace Sidekick.Windows.PriceCheck
 
         public OverlayWindow(int width, int height)
         {
-            Width = width;
-            Height = height;
             InitializeComponent();
             DataContext = this;
             Hide();
+            Loaded += OverlayWindow_Loaded;
+        }
+
+        private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+            scrollViewer?.ScrollToTop();
+            scrollViewer.ScrollChanged += _itemList_ScrollChanged;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -75,7 +81,7 @@ namespace Sidekick.Windows.PriceCheck
                 this.queryResult = queryResult;
                 this.itemListingControls?.Clear();
 
-                queryResult.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(i => this.itemListingControls?.Add(i));
+                queryResult.Result.Select((x, i) => new ListItem(x)).ToList().ForEach(i => this.itemListingControls?.Add(i));
 
                 // Hardcoded to the English value of Rare since poeprices.info only support English.
                 if (queryResult.Item.Rarity == "Rare" && queryResult.Item.IsIdentified)
@@ -127,7 +133,7 @@ namespace Sidekick.Windows.PriceCheck
                 newQueryResult.Result = newResults;
 
                 queryResult = newQueryResult;
-                queryToAppend.Result.Select((x, i) => new ListItem(i, new ItemListingControl(x))).ToList().ForEach(item => this.itemListingControls.Add(item));
+                queryToAppend.Result.Select((x, i) => new ListItem(x)).ToList().ForEach(item => this.itemListingControls.Add(item));
 
                 dataIsUpdating = false;
             }
@@ -156,12 +162,15 @@ namespace Sidekick.Windows.PriceCheck
             else
             {
                 itemListingControls?.Clear();
-                _itemList.ScrollToTop();
+
                 txtPrediction.Text = null;
                 queryResult = null;
                 dataIsUpdating = false;
 
                 Visibility = Visibility.Visible;
+
+                var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+                scrollViewer?.ScrollToTop();
             }
         }
         delegate void ShowWindowCallback();
@@ -191,11 +200,13 @@ namespace Sidekick.Windows.PriceCheck
                 return;
             }
 
+            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+
             //Load next results when scrollviewer is at the bottom
-            if (_itemList.ScrollableHeight > 0)
+            if (scrollViewer?.ScrollableHeight > 0)
             {
                 // Query next page when reaching more than 70% of the scrollable content.
-                var breakpoint = (_itemList.VerticalOffset / _itemList.ScrollableHeight) > 0.7d;
+                var breakpoint = (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.7d;
                 if (breakpoint && overlayIsUpdatable && !dataIsUpdating)
                 {
                     dataIsUpdating = true;
