@@ -1,14 +1,10 @@
-using System;
 using System.ComponentModel;
+using Sidekick.UI.Leagues.Betrayal;
 
 namespace Sidekick.UI.Leagues
 {
     public interface ILeagueViewModel : INotifyPropertyChanged
     {
-        event Action Initialized;
-        string StepTitle { get; set; }
-        int StepPercentage { get; set; }
-        string Title { get; set; }
-        int Percentage { get; set; }
+        BetrayalLeague Betrayal { get; }
     }
 }
