@@ -35,13 +35,10 @@ namespace Sidekick.Business
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IWhisperService, WhisperService>();
+
             services.AddSingleton<IPoeDbClient, PoeDbClient>();
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
-
-            services.AddSingleton(serviceProvider =>
-                serviceProvider.GetService<SidekickSettings>().Wiki_Preferred == WikiSetting.PoeDb
-                    ? (IWikiProvider) serviceProvider.GetRequiredService<IPoeDbClient>()
-                    : serviceProvider.GetRequiredService<IPoeWikiClient>());
+            services.AddSingleton<IWikiProvider, WikiProviderFactory>();
 
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
