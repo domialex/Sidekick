@@ -1,5 +1,4 @@
 using System.Windows;
-using Sidekick.Localization.Splash;
 using Sidekick.UI.Splash;
 using Sidekick.UI.Views;
 
@@ -10,21 +9,21 @@ namespace Sidekick.Windows
     /// </summary>
     public partial class SplashScreen : Window, ISidekickView
     {
-        private readonly ISplashViewModel splashViewModel;
+        private readonly ISplashViewModel viewModel;
 
-        public SplashScreen(ISplashViewModel splashViewModel)
+        public SplashScreen(ISplashViewModel viewModel)
         {
             InitializeComponent();
-            DataContext = splashViewModel;
+            DataContext = viewModel;
 
-            splashViewModel.Initialized += SplashViewModel_Initialized;
+            viewModel.Initialized += SplashViewModel_Initialized;
             Show();
-            this.splashViewModel = splashViewModel;
+            this.viewModel = viewModel;
         }
 
         private void SplashViewModel_Initialized()
         {
-            splashViewModel.Initialized -= SplashViewModel_Initialized;
+            viewModel.Initialized -= SplashViewModel_Initialized;
             Dispatcher.Invoke(Close);
         }
     }

@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Bindables;
 using Sidekick.Localization.Settings;
@@ -10,7 +11,7 @@ namespace Sidekick.Windows.Settings.UserControls
     /// Interaction logic for KeybindEditor.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class KeybindEditor : System.Windows.Controls.UserControl
+    public partial class KeybindEditor : UserControl
     {
         public string Key { get; set; }
 

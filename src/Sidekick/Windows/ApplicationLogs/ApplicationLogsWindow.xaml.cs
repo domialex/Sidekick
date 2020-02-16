@@ -1,9 +1,8 @@
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Input;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.Windows.ApplicationLogs
@@ -19,30 +18,13 @@ namespace Sidekick.Windows.ApplicationLogs
             logsTextBox.Text = GenerateLogLines;
             logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
-            InitializeIcon();
+            Show();
+            MouseLeftButtonDown += Window_MouseLeftButtonDown;
         }
 
-        private static MemoryStream IconStream;
-
-        private void InitializeIcon()
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //TODO: Do better than this, ExaltedOrb Icon is referenced in code...
-            if (IconStream == null)
-            {
-                lock (this)
-                {
-                    if (IconStream == null)
-                    {
-                        var ms = new MemoryStream();
-                        Sidekick.Resources.ExaltedOrb.Save(ms);
-                        IconStream = ms;
-                    }
-                }
-            }
-
-            IconStream.Seek(0, SeekOrigin.Begin);
-            var frame = BitmapFrame.Create(IconStream);
-            Icon = frame;
+            DragMove();
         }
 
         public void SetText(string text)
@@ -81,12 +63,17 @@ namespace Sidekick.Windows.ApplicationLogs
             }
         }
 
-        private string GenerateLogLines => string.Join(Environment.NewLine,logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
+        private string GenerateLogLines => string.Join(Environment.NewLine, logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
 
         protected override void OnClosing(CancelEventArgs e)
         {
             OnWindowClosed?.Invoke(this, null);
             base.OnClosing(e);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

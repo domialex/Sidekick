@@ -5,12 +5,17 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
+using Sidekick.Business.Apis.PoeNinja;
+using Sidekick.Business.Parsers;
+using Sidekick.Business.Trades;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
+using Sidekick.Windows.Leagues;
+using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
@@ -21,20 +26,32 @@ namespace Sidekick.Windows.TrayIcon
         private readonly SidekickSettings settings;
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IViewLocator viewLocator;
+        private readonly IItemParser itemParser;
+        private readonly ITradeClient tradeClient;
         private readonly ApplicationLogsController applicationLogsController;
+        private readonly OverlayController overlayController;
+        private readonly IPoeNinjaCache poeNinjaCache;
 
         public TrayIconViewModel(
             App application,
             SidekickSettings settings,
             IUILanguageProvider uiLanguageProvider,
             IViewLocator viewLocator,
-            ApplicationLogsController applicationLogsController)
+            IItemParser itemParser,
+            ITradeClient tradeClient,
+            ApplicationLogsController applicationLogsController,
+            OverlayController overlayController,
+            IPoeNinjaCache poeNinjaCache)
         {
             this.application = application;
             this.settings = settings;
             this.uiLanguageProvider = uiLanguageProvider;
             this.viewLocator = viewLocator;
+            this.itemParser = itemParser;
+            this.tradeClient = tradeClient;
             this.applicationLogsController = applicationLogsController;
+            this.overlayController = overlayController;
+            this.poeNinjaCache = poeNinjaCache;
         }
 
         private TaskbarIcon TrayIcon { get; set; }
@@ -79,6 +96,70 @@ namespace Sidekick.Windows.TrayIcon
             }
 
             TrayIcon.ContextMenu.Items.Clear();
+
+#if DEBUG
+            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            {
+                Header = "DEBUG - Price check",
+                Command = new RelayCommand(async (_) =>
+                {
+                    var item = await itemParser.ParseItem(@"Rarity: Unique
+Blood of the Karui
+Sanctified Life Flask
+--------
+Quality: +20% (augmented)
+Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
+Consumes 15 of 30 Charges on use
+Currently has 30 Charges
+--------
+Requirements:
+Level: 50
+--------
+Item Level: 75
+--------
+100% increased Life Recovered
+15% increased Recovery rate
+Recover Full Life at the end of the Flask Effect
+--------
+""Kaom fought and killed for his people.
+Kaom bled for his people.
+And so the people gave, the people bled,
+So their King might go on.""
+- Lavianga, Advisor to Kaom
+--------
+Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
+");
+
+                    if (item != null)
+                    {
+                        overlayController.Open();
+
+                        var queryResult = await tradeClient.GetListings(item);
+                        if (queryResult != null)
+                        {
+                            var poeNinjaItem = poeNinjaCache.GetItem(item);
+                            if (poeNinjaItem != null)
+                            {
+                                queryResult.PoeNinjaItem = poeNinjaItem;
+                                queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                            }
+                            overlayController.SetQueryResult(queryResult);
+                            return;
+                        }
+
+                        overlayController.Hide();
+                    }
+
+                })
+            });
+            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            {
+                Header = "DEBUG - League Overlay",
+                Command = new RelayCommand(_ => viewLocator.Open<LeagueView>())
+            });
+            TrayIcon.ContextMenu.Items.Add(new Separator());
+#endif
+
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = TrayResources.Settings,

@@ -2,6 +2,7 @@
     x:Class="Sidekick.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Sidekick.Windows.PriceCheck.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     ShutdownMode="OnExplicitShutdown"
@@ -9,8 +10,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AdonisUI;component/ColorSchemes/Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/AdonisUI.ClassicTheme;component/Resources.xaml" />
+
                 <ResourceDictionary Source="Windows/TrayIcon/TrayIconResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:RarityToColorConverter x:Key="RarityToColorConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

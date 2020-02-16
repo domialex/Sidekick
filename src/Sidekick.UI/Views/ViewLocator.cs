@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Localization;
@@ -18,7 +19,7 @@ namespace Sidekick.UI.Views
             Views = new List<ViewInstance>();
         }
 
-        public List<ViewInstance> Views { get; set; }
+        private List<ViewInstance> Views { get; set; }
 
         public void Open<TView>()
             where TView : ISidekickView
@@ -40,6 +41,19 @@ namespace Sidekick.UI.Views
             };
 
             Views.Add(view);
+        }
+
+        public bool IsOpened<TView>()
+        {
+            return Views.Any(x => x.ViewType == typeof(TView));
+        }
+
+        public void CloseAll()
+        {
+            for (var i = Views.Count; i > 0; i--)
+            {
+                Views[i - 1].View.Close();
+            }
         }
 
         public void Dispose()

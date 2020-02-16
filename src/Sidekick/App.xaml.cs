@@ -11,9 +11,8 @@ using Sidekick.Core.Natives;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.UI.Views;
-using Sidekick.Windows.LeagueOverlay;
-using Sidekick.Windows.Overlay;
 using Sidekick.Windows.Prediction;
+using Sidekick.Windows.PriceCheck;
 
 namespace Sidekick
 {
@@ -27,10 +26,10 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
         private PredictionController predictionController;
-        private LeagueOverlayController leagueOverlayController;
         private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
+        private IViewLocator viewLocator;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -44,21 +43,27 @@ namespace Sidekick
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
             Legacy.Initialize(serviceProvider);
-            serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
+            viewLocator = serviceProvider.GetService<IViewLocator>();
+            viewLocator.Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
 
             EnsureSingleInstance();
 
-            await serviceProvider.GetService<IInitializer>().Initialize();
+            var initializer = serviceProvider.GetService<IInitializer>();
+            initializer.OnProgress += (a) =>
+            {
+                if (!viewLocator.IsOpened<Windows.SplashScreen>())
+                {
+                    viewLocator.Open<Windows.SplashScreen>();
+                }
+            };
+            await initializer.Initialize();
 
             eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
 
             // Overlay.
             overlayController = serviceProvider.GetRequiredService<OverlayController>();
-
-            // League Overlay
-            leagueOverlayController = serviceProvider.GetRequiredService<LeagueOverlayController>();
 
             // Price Prediction
             predictionController = serviceProvider.GetRequiredService<PredictionController>();
@@ -106,7 +111,6 @@ namespace Sidekick
             serviceProvider.Dispose();
             eventsHandler.Dispose();
             overlayController.Dispose();
-            leagueOverlayController.Dispose();
             predictionController.Dispose();
             base.OnExit(e);
         }

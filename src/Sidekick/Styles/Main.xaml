@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Controls/Button.xaml" />
+        <ResourceDictionary Source="Controls/CheckBox.xaml" />
+        <ResourceDictionary Source="Controls/ComboBox.xaml" />
+        <ResourceDictionary Source="Controls/GroupBox.xaml" />
+        <ResourceDictionary Source="Controls/Label.xaml" />
+        <ResourceDictionary Source="Controls/TabControl.xaml" />
+        <ResourceDictionary Source="Controls/TextBox.xaml" />
+        <ResourceDictionary Source="Controls/Window.xaml" />
+
+        <ResourceDictionary Source="Variables/Fonts.xaml" />
+        <ResourceDictionary Source="Variables/Spacers.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

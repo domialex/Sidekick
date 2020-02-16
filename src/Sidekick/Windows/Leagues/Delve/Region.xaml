@@ -1,0 +1,30 @@
+<UserControl
+    x:Class="Sidekick.Windows.Leagues.Delve.Region"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Delve"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
+    </UserControl.Resources>
+
+    <GroupBox
+        Name="Container"
+        Width="150"
+        Padding="0">
+        <GroupBox.Header>
+            <TextBlock Padding="{StaticResource Spacer}" Text="{Binding Path=Model.Name}" />
+        </GroupBox.Header>
+        <ItemsControl ItemsSource="{Binding Path=Model.Fossils}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:Fossil Model="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </GroupBox>
+</UserControl>

@@ -25,9 +25,9 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Leagues\Incursion\IncursionResources.Designer.cs">
-      <DependentUpon>IncursionResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>IncursionResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Leagues\LeagueResources.Designer.cs">
       <DependentUpon>LeagueResources.resx</DependentUpon>
@@ -38,6 +38,11 @@
       <DependentUpon>MetamorphResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="ApplicationLogs\ApplicationLogResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ApplicationLogResources.resx</DependentUpon>
     </Compile>
     <Compile Update="PriceCheck\PriceCheckResources.Designer.cs">
       <DependentUpon>PriceCheckResources.resx</DependentUpon>
@@ -63,8 +68,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.zh-tw.resx">
-      <LastGenOutput>BetrayalResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -92,13 +96,12 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.zh-tw.resx">
       <SubType>Designer</SubType>
-      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.resx">
       <SubType>Designer</SubType>
-      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\LeagueResources.zh-tw.resx">
       <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>
@@ -117,6 +120,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>MetamorphResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ApplicationLogs\ApplicationLogResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationLogResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="PriceCheck\PriceCheckResources.resx">
       <LastGenOutput>PriceCheckResources.Designer.cs</LastGenOutput>

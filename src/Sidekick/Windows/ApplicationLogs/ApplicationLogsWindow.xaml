@@ -2,61 +2,29 @@
     x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Sidekick - Logs"
-    Width="960"
-    Height="320"
-    MinWidth="960"
-    MinHeight="320"
-    Background="{DynamicResource SolidColorBrush_Background}"
+    xmlns:r="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
+    Title="Logs - Sidekick"
+    Width="720"
+    Height="360"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
     </Window.Resources>
+
     <Window.Style>
-        <Style />
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
-    <ScrollViewer
-        Name="logsScrollViewer"
-        Margin="5"
-        Background="{DynamicResource SolidColorBrush_Background}"
-        HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Auto">
-        <TextBox
-            Name="logsTextBox"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            FontFamily="Consolas"
-            FontSize="14"
-            FontWeight="Normal"
-            IsReadOnly="True"
-            TextBlock.LineHeight="24"
-            TextWrapping="NoWrap">
-            <TextBox.Foreground>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <Color
-                            A="255"
-                            B="220"
-                            G="220"
-                            R="220" />
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
-            </TextBox.Foreground>
-            <TextBox.Background>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <Color
-                            A="255"
-                            B="30"
-                            G="30"
-                            R="30" />
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
-            </TextBox.Background>
-        </TextBox>
-    </ScrollViewer>
+
+    <DockPanel Margin="{StaticResource Spacer}">
+        <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+            <Button Click="Button_Click" Content="{x:Static r:ApplicationLogResources.Close}" />
+        </WrapPanel>
+        <ScrollViewer Name="logsScrollViewer" Margin="{StaticResource SpacerBottom}">
+            <TextBox
+                Name="logsTextBox"
+                IsReadOnly="True"
+                Style="{StaticResource TextArea}"
+                TextWrapping="NoWrap" />
+        </ScrollViewer>
+    </DockPanel>
 </Window>

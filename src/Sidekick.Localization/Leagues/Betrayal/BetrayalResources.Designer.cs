@@ -636,9 +636,9 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         ///   Looks up a localized string similar to Quality
         ///Currency.
         /// </summary>
-        public static string JanusTransportaion {
+        public static string JanusTransportation {
             get {
-                return ResourceManager.GetString("JanusTransportaion", resourceCulture);
+                return ResourceManager.GetString("JanusTransportation", resourceCulture);
             }
         }
         
@@ -1075,17 +1075,6 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level1: 1 White Socket
-        ///Level2: 1-2 White Sockets
-        ///Level3: 1-3 White Sockets.
-        /// </summary>
-        public static string VoriceResearchTooltip {
-            get {
-                return ResourceManager.GetString("VoriceResearchTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Linking
         ///Currency.
         /// </summary>
@@ -1121,6 +1110,17 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         public static string VoriciResearch {
             get {
                 return ResourceManager.GetString("VoriciResearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level1: 1 White Socket
+        ///Level2: 1-2 White Sockets
+        ///Level3: 1-3 White Sockets.
+        /// </summary>
+        public static string VoriciResearchTooltip {
+            get {
+                return ResourceManager.GetString("VoriciResearchTooltip", resourceCulture);
             }
         }
         

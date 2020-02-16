@@ -5,9 +5,9 @@ using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Windows.LeagueOverlay;
-using Sidekick.Windows.Overlay;
+using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Prediction;
+using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
@@ -20,6 +20,7 @@ namespace Sidekick
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
 
+            services.AddScoped<LeagueView, LeagueView>();
             services.AddScoped<SettingsView, SettingsView>();
             services.AddScoped<SplashScreen, SplashScreen>();
 
@@ -29,7 +30,7 @@ namespace Sidekick
             services.AddInitializableService<INativeProcess, NativeProcess>();
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
-            services.AddSingleton<LeagueOverlayController>();
+            services.AddSingleton<OverlayWindow>();
             services.AddSingleton<PredictionController>();
             services.AddSingleton<ApplicationLogsController>();
 

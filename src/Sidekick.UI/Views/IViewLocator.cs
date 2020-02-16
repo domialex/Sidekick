@@ -4,5 +4,9 @@ namespace Sidekick.UI.Views
     {
         void Open<TView>()
             where TView : ISidekickView;
+
+        bool IsOpened<TView>();
+
+        void CloseAll();
     }
 }
