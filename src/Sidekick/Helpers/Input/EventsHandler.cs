@@ -6,10 +6,12 @@ using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
+using Sidekick.UI.Views;
+using Sidekick.Windows.Leagues;
 
 namespace Sidekick.Helpers.Input
 {
-    public class EventsHandler: IDisposable
+    public class EventsHandler : IDisposable
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -19,6 +21,7 @@ namespace Sidekick.Helpers.Input
         private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
         private readonly IWikiProvider wikiProvider;
+        private readonly IViewLocator viewLocator;
 
         public EventsHandler(
             IKeybindEvents events,
@@ -28,7 +31,8 @@ namespace Sidekick.Helpers.Input
             IItemParser itemParser,
             ILogger logger,
             ITradeClient tradeClient,
-            IWikiProvider wikiProvider)
+            IWikiProvider wikiProvider,
+            IViewLocator viewLocator)
         {
             this.events = events;
             this.whisperService = whisperService;
@@ -38,6 +42,7 @@ namespace Sidekick.Helpers.Input
             this.logger = logger;
             this.tradeClient = tradeClient;
             this.wikiProvider = wikiProvider;
+            this.viewLocator = viewLocator;
             Initialize();
         }
 
@@ -59,6 +64,13 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview; ;
+        }
+
+        private Task<bool> Events_OnOpenLeagueOverview()
+        {
+            viewLocator.Open<LeagueView>();
+            return Task.FromResult(true);
         }
 
         private Task<bool> TriggerReplyToLatestWhisper()
@@ -118,7 +130,7 @@ namespace Sidekick.Helpers.Input
         /// </summary>
         private Task<bool> TriggerHideout()
         {
-           keyboard.SendCommand(KeyboardCommandEnum.GoToHideout);
+            keyboard.SendCommand(KeyboardCommandEnum.GoToHideout);
             return Task.FromResult(true);
         }
 

@@ -5,7 +5,6 @@ using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
@@ -32,7 +31,6 @@ namespace Sidekick
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
-            services.AddSingleton<LeagueOverlayController>();
             services.AddSingleton<PredictionController>();
             services.AddSingleton<ApplicationLogsController>();
 

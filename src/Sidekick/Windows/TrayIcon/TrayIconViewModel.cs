@@ -14,7 +14,6 @@ using Sidekick.Localization;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
@@ -31,7 +30,6 @@ namespace Sidekick.Windows.TrayIcon
         private readonly ITradeClient tradeClient;
         private readonly ApplicationLogsController applicationLogsController;
         private readonly OverlayController overlayController;
-        private readonly LeagueOverlayController leagueOverlayController;
         private readonly IPoeNinjaCache poeNinjaCache;
 
         public TrayIconViewModel(
@@ -43,7 +41,6 @@ namespace Sidekick.Windows.TrayIcon
             ITradeClient tradeClient,
             ApplicationLogsController applicationLogsController,
             OverlayController overlayController,
-            LeagueOverlayController leagueOverlayController,
             IPoeNinjaCache poeNinjaCache)
         {
             this.application = application;
@@ -54,7 +51,6 @@ namespace Sidekick.Windows.TrayIcon
             this.tradeClient = tradeClient;
             this.applicationLogsController = applicationLogsController;
             this.overlayController = overlayController;
-            this.leagueOverlayController = leagueOverlayController;
             this.poeNinjaCache = poeNinjaCache;
         }
 
@@ -159,11 +155,6 @@ Right click to drink.Can only hold charges while in belt.Refills as you kill mon
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = "DEBUG - League Overlay",
-                Command = new RelayCommand(_ => leagueOverlayController.Show())
-            });
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
-            {
-                Header = "DEBUG - NEW League Overlay",
                 Command = new RelayCommand(_ => viewLocator.Open<LeagueView>())
             });
             TrayIcon.ContextMenu.Items.Add(new Separator());
