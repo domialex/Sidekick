@@ -338,7 +338,7 @@ Level3: Garantierter General</value>
   <data name="LightningWorkshopModifiers" xml:space="preserve">
     <value>Erweitert den Omnitect mit Blitz</value>
   </data>
-  <data name="LocuOfCorruption" xml:space="preserve">
+  <data name="LocusOfCorruption" xml:space="preserve">
     <value>Schauplatz der Korruption</value>
   </data>
   <data name="MatalTooltip" xml:space="preserve">
@@ -373,8 +373,12 @@ Fähigkeiten, welche von Fallen/Minen genutzt werden haben 22-37% erhöhten Wirk
   <data name="OmnitectReactorPlant" xml:space="preserve">
     <value>Omnitect Reaktoranlage</value>
   </data>
-  <data name="PoisionGarden" xml:space="preserve">
+  <data name="PoisonGarden" xml:space="preserve">
     <value>Giftgarten</value>
+  </data>
+  <data name="PoisonGardenContains" xml:space="preserve">
+    <value>Chaos Schaden Rang 3 Rezept
+Level3: Tacati Modifikation oder Apeps Schlummer</value>
   </data>
   <data name="PoisonGardenModifiers" xml:space="preserve">
     <value>Erzeugt Pflanzen mit ätzendem Boden</value>
@@ -388,10 +392,6 @@ Level3: Guatelitzi Modifikation oder Maske des Seelentrinkers</value>
   </data>
   <data name="PoolsOfRestorationModifiers" xml:space="preserve">
     <value>Monster regenerieren 4/6/8 % Leben pro Sekunde</value>
-  </data>
-  <data name="PosionGardenContains" xml:space="preserve">
-    <value>Chaos Schaden Rang 3 Rezept
-Level3: Tacati Modifikation oder Apeps Schlummer</value>
   </data>
   <data name="PuhuarteModTooltuip" xml:space="preserve">
     <value>Suffix:

@@ -237,7 +237,7 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockCorruptionChamberContains.Text = IncursionResources.CorruptionChamberContains;
             textBlockCorruptionChamberModifiers.Text = IncursionResources.CorruptionChamberModifiers;
             textBlockCatalystOfCorruption.Text = IncursionResources.CatalystOfCorruption;
-            textBlockLocusOfCorruption.Text = IncursionResources.LocuOfCorruption;
+            textBlockLocusOfCorruption.Text = IncursionResources.LocusOfCorruption;
             textBlockCorruptionChamberContains.ToolTip = IncursionResources.DoubleCorruptionTooltip;
 
             textBlockShrineOfEmpowerment.Text = IncursionResources.ShrineOfEmpowerment;
@@ -253,8 +253,8 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockStormOfCorruption.Text = IncursionResources.StormOfCorruption;
             textBlockTempestGeneratorContains.ToolTip = IncursionResources.TopotanteModTooltip;
 
-            textBlockPosionGarden.Text = IncursionResources.PoisionGarden;
-            textBlockPosiionGardenContains.Text = IncursionResources.PosionGardenContains;
+            textBlockPosionGarden.Text = IncursionResources.PoisonGarden;
+            textBlockPosiionGardenContains.Text = IncursionResources.PoisonGardenContains;
             textBlockPosionGardenModifiers.Text = IncursionResources.PoisonGardenModifiers;
             textBlockCultivarChamber.Text = IncursionResources.CultivarChamber;
             textBlockToxicGrive.Text = IncursionResources.ToxicGrove;

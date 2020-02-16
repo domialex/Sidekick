@@ -324,7 +324,7 @@ Level 3: League Specific Items possible</value>
   <data name="CatalystOfCorruption" xml:space="preserve">
     <value>Catalyst of Corruption</value>
   </data>
-  <data name="LocuOfCorruption" xml:space="preserve">
+  <data name="LocusOfCorruption" xml:space="preserve">
     <value>Locus of Corruption</value>
   </data>
   <data name="CorruptionChamberContains" xml:space="preserve">
@@ -363,7 +363,7 @@ Level 3: League Specific Items possible</value>
   <data name="TempestGeneratorModifiers" xml:space="preserve">
     <value>Adds Tempests</value>
   </data>
-  <data name="PoisionGarden" xml:space="preserve">
+  <data name="PoisonGarden" xml:space="preserve">
     <value>Poison Garden</value>
   </data>
   <data name="CultivarChamber" xml:space="preserve">
@@ -372,7 +372,7 @@ Level 3: League Specific Items possible</value>
   <data name="ToxicGrove" xml:space="preserve">
     <value>Toxic Grove</value>
   </data>
-  <data name="PosionGardenContains" xml:space="preserve">
+  <data name="PoisonGardenContains" xml:space="preserve">
     <value>Chaos Damage Rank 3 Recipe
 Level 3: Tacati Mod or Apep's Slumber</value>
   </data>

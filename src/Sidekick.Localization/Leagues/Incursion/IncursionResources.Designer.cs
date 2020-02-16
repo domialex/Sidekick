@@ -665,9 +665,9 @@ namespace Sidekick.Localization.Leagues.Incursion {
         /// <summary>
         ///   Looks up a localized string similar to Locus of Corruption.
         /// </summary>
-        public static string LocuOfCorruption {
+        public static string LocusOfCorruption {
             get {
-                return ResourceManager.GetString("LocuOfCorruption", resourceCulture);
+                return ResourceManager.GetString("LocusOfCorruption", resourceCulture);
             }
         }
         
@@ -733,9 +733,19 @@ namespace Sidekick.Localization.Leagues.Incursion {
         /// <summary>
         ///   Looks up a localized string similar to Poison Garden.
         /// </summary>
-        public static string PoisionGarden {
+        public static string PoisonGarden {
             get {
-                return ResourceManager.GetString("PoisionGarden", resourceCulture);
+                return ResourceManager.GetString("PoisonGarden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe
+        ///Level 3: Tacati Mod or Apep&apos;s Slumber.
+        /// </summary>
+        public static string PoisonGardenContains {
+            get {
+                return ResourceManager.GetString("PoisonGardenContains", resourceCulture);
             }
         }
         
@@ -773,16 +783,6 @@ namespace Sidekick.Localization.Leagues.Incursion {
         public static string PoolsOfRestorationModifiers {
             get {
                 return ResourceManager.GetString("PoolsOfRestorationModifiers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe
-        ///Level 3: Tacati Mod or Apep&apos;s Slumber.
-        /// </summary>
-        public static string PosionGardenContains {
-            get {
-                return ResourceManager.GetString("PosionGardenContains", resourceCulture);
             }
         }
         

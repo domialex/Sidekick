@@ -321,7 +321,7 @@
   <data name="CatalystOfCorruption" xml:space="preserve">
     <value>腐敗孳生室</value>
   </data>
-  <data name="LocuOfCorruption" xml:space="preserve">
+  <data name="LocusOfCorruption" xml:space="preserve">
     <value>腐敗之地</value>
   </data>
   <data name="CorruptionChamberContains" xml:space="preserve">
@@ -360,7 +360,7 @@
   <data name="TempestGeneratorModifiers" xml:space="preserve">
     <value>附加某種風暴於神殿</value>
   </data>
-  <data name="PoisionGarden" xml:space="preserve">
+  <data name="PoisonGarden" xml:space="preserve">
     <value>監獄花園</value>
   </data>
   <data name="CultivarChamber" xml:space="preserve">
@@ -369,7 +369,7 @@
   <data name="ToxicGrove" xml:space="preserve">
     <value>劇毒果園</value>
   </data>
-  <data name="PosionGardenContains" xml:space="preserve">
+  <data name="PoisonGardenContains" xml:space="preserve">
     <value>三階混沌傷害工藝配方
 艾普之眠 , 特卡蒂的詞綴</value>
   </data>
