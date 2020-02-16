@@ -12,10 +12,7 @@
         <ResourceDictionary Source="/Styles/Main.xaml" />
     </UserControl.Resources>
 
-    <StackPanel
-        Name="Container"
-        Margin="{StaticResource SpacerTop}"
-        Orientation="Horizontal">
+    <StackPanel Name="Container" Orientation="Horizontal">
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"

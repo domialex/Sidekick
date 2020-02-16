@@ -18,7 +18,7 @@
         <ItemsControl ItemsSource="{Binding Path=Model.Regions}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Margin="{StaticResource SpacerRight}">
                         <local:Region Model="{Binding}" />
                     </StackPanel>
                 </DataTemplate>

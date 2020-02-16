@@ -12,25 +12,17 @@
         <ResourceDictionary Source="/Styles/Main.xaml" />
     </UserControl.Resources>
 
-    <Border
+    <GroupBox
         Name="Container"
         MinWidth="150"
         MinHeight="150"
-        Padding="5"
-        BorderBrush="Black"
-        BorderThickness="1">
-        <StackPanel>
-            <Label
-                Margin="{StaticResource SpacerBottom}"
-                Content="{Binding Path=Model.Name}"
-                FontSize="16" />
-            <ItemsControl ItemsSource="{Binding Path=Model.Fossils}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:Fossil Model="{Binding}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </Border>
+        Header="{Binding Path=Model.Name}">
+        <ItemsControl ItemsSource="{Binding Path=Model.Fossils}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:Fossil Model="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </GroupBox>
 </UserControl>

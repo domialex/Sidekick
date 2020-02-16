@@ -9,4 +9,12 @@
     <Thickness x:Key="SpacerLeft" Left="8" />
     <Thickness x:Key="SpacerRight" Right="8" />
     <Thickness x:Key="SpacerBottom" Bottom="8" />
+    <Thickness
+        x:Key="SpacerX"
+        Left="8"
+        Right="8" />
+    <Thickness
+        x:Key="SpacerY"
+        Bottom="8"
+        Top="8" />
 </ResourceDictionary>

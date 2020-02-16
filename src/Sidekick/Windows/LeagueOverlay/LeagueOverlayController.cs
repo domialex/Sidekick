@@ -30,8 +30,6 @@ namespace Sidekick.Windows.LeagueOverlay
             events.OnOpenLeagueOverview += OnOpenLeagueOverview;
         }
 
-
-
         public bool IsDisplayed => overlayWindow.IsDisplayed;
         public void Show() => overlayWindow.ShowWindow();
         public void Hide() => overlayWindow.HideWindow();
