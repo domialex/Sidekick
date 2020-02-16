@@ -1,0 +1,26 @@
+<UserControl
+    x:Class="Sidekick.Windows.Leagues.Betrayal.Agent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Betrayal">
+    <StackPanel x:Name="Container" Width="70">
+        <Border
+            MinHeight="90"
+            BorderBrush="Black"
+            BorderThickness="1">
+            <Border BorderBrush="{Binding Model.BackgroundColor}" BorderThickness="2,2,2,4">
+                <StackPanel>
+                    <Image Source="{Binding Image}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Text="{Binding Model.AgentName}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </Border>
+        <local:Reward Model="{Binding Model.Transportation}" />
+        <local:Reward Model="{Binding Model.Fortification}" />
+        <local:Reward Model="{Binding Model.Research}" />
+        <local:Reward Model="{Binding Model.Intervention}" />
+    </StackPanel>
+</UserControl>

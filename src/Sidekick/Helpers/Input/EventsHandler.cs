@@ -25,6 +25,8 @@ namespace Sidekick.Helpers.Input
                     handled = true;
                 }
 
+                Legacy.ViewLocator.CloseAll();
+
                 return Task.FromResult(handled);
             };
 

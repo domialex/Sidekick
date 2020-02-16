@@ -6,7 +6,6 @@
     Title="Logs - Sidekick"
     Width="720"
     Height="360"
-    MouseLeftButtonDown="Window_MouseLeftButtonDown"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />

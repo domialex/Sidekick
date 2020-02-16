@@ -3,6 +3,7 @@ using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Natives;
 using Sidekick.Windows;
+using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
@@ -15,6 +16,7 @@ namespace Sidekick
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
 
+            services.AddScoped<LeagueView, LeagueView>();
             services.AddScoped<SettingsView, SettingsView>();
             services.AddScoped<SplashScreen, SplashScreen>();
 

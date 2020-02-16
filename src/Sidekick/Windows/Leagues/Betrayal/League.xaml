@@ -1,0 +1,57 @@
+<UserControl
+    x:Class="Sidekick.Windows.Leagues.Betrayal.League"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Betrayal"
+    xmlns:league="clr-namespace:Sidekick.Windows.Leagues"
+    xmlns:r="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization">
+    <StackPanel Name="Container" Orientation="Horizontal">
+        <StackPanel Margin="0,90,5,0">
+            <Border MinHeight="60">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="30"
+                    Text="{x:Static r:BetrayalResources.TypeTransportation}" />
+            </Border>
+            <Border MinHeight="60">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="30"
+                    Text="{x:Static r:BetrayalResources.TypeFortification}" />
+            </Border>
+            <Border MinHeight="60">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="30"
+                    Text="{x:Static r:BetrayalResources.TypeResearch}" />
+            </Border>
+            <Border MinHeight="60">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="30"
+                    Text="{x:Static r:BetrayalResources.TypeIntervention}" />
+            </Border>
+        </StackPanel>
+        <StackPanel>
+        <ItemsControl ItemsSource="{Binding Path=Model.Agents}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <local:Agent Model="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+            <league:Legend />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

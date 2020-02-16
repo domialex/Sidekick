@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AislingFortification" xml:space="preserve">
-    <value>Verschleierte
-Rüstungen</value>
+    <value>Verschleierte Rüstungen</value>
   </data>
   <data name="AislingIntervention" xml:space="preserve">
     <value>Verschleierter
@@ -127,8 +126,7 @@ Schmuck
 </value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
-    <value>Hinzufügen verschleierter
-Modifikationen</value>
+    <value>Hinzufügen verschleierter Modifikationen</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
     <value>Level1: 1 Modifikation
@@ -136,63 +134,49 @@ Level2: Geringe Chance für 2 Modifikationen
 Level3: 2 Modifikationen</value>
   </data>
   <data name="AislingTransportaion" xml:space="preserve">
-    <value>Verschleierte
-Waffen</value>
+    <value>Verschleierte Waffen</value>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
-    <value>Sphären des
-Vorboten</value>
+    <value>Sphären des Vorboten</value>
   </data>
   <data name="CameriaIntervention" xml:space="preserve">
-    <value>Sulphite
-Skarabäus</value>
+    <value>Sulphite Skarabäus</value>
   </data>
   <data name="CameriaResearch" xml:space="preserve">
     <value>Sextanten</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
-    <value>Veraltete
-Relikte</value>
+    <value>Veraltete Relikte</value>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
-    <value>League spezifische Items
-(Kopfjäger möglich)</value>
+    <value>League spezifische Items (Kopfjäger möglich)</value>
   </data>
   <data name="ElreonFortification" xml:space="preserve">
-    <value>Einzigartige
-Rüstungen</value>
+    <value>Einzigartige Rüstungen</value>
   </data>
   <data name="ElreonIntervention" xml:space="preserve">
-    <value>Reliquien
-Skarabäus</value>
+    <value>Reliquien Skarabäus</value>
   </data>
   <data name="ElreonResearch" xml:space="preserve">
-    <value>Einzigartiger
-Schmuck</value>
+    <value>Einzigartiger Schmuck</value>
   </data>
   <data name="ElreonTransportation" xml:space="preserve">
-    <value>Einzigartige
-Waffen</value>
+    <value>Einzigartige Waffen</value>
   </data>
   <data name="GraviciusFortification" xml:space="preserve">
-    <value>Zufällige
-Weissagungskarten</value>
+    <value>Zufällige Weissagungskarten</value>
   </data>
   <data name="GraviciusIntervention" xml:space="preserve">
-    <value>Weissagungskarten
-Skarabäus</value>
+    <value>Weissagungskarten Skarabäus</value>
   </data>
   <data name="GraviciusResearch" xml:space="preserve">
-    <value>Weissagungskarten
-Austausch</value>
+    <value>Weissagungskarten Austausch</value>
   </data>
   <data name="GraviciusTransportation" xml:space="preserve">
-    <value>Weissagungskarten
-Stapel</value>
+    <value>Weissagungskarten Stapel</value>
   </data>
   <data name="GuffFortification" xml:space="preserve">
-    <value>Essenzen
-Crafting</value>
+    <value>Essenzen Crafting</value>
   </data>
   <data name="GuffFortificationTooltip" xml:space="preserve">
     <value>20 Läuterung
@@ -204,8 +188,7 @@ Level2: 12 Sekunden
 Level3: 18 Sekunden</value>
   </data>
   <data name="GuffIntervention" xml:space="preserve">
-    <value>Veränderung
-Crafting</value>
+    <value>Veränderung Crafting</value>
   </data>
   <data name="GuffInterventionTooltip" xml:space="preserve">
     <value>1 Umwandlung
@@ -220,8 +203,7 @@ Level2: 12 Sekunden
 Level3: 18 Sekunden</value>
   </data>
   <data name="GuffResearch" xml:space="preserve">
-    <value>Annulierung/Erhabene
-Crafting</value>
+    <value>Annulierung/Erhabene Crafting</value>
   </data>
   <data name="GuffResearchTooltip" xml:space="preserve">
     <value>1 Alchemie
@@ -235,8 +217,7 @@ Level2: 12 Sekunden
 Level3: 18 Sekunden</value>
   </data>
   <data name="GuffTransportation" xml:space="preserve">
-    <value>Chaos
-Crafting</value>
+    <value>Chaos Crafting</value>
   </data>
   <data name="GuffTransportationTooltip" xml:space="preserve">
     <value>1 Alchemie
@@ -253,20 +234,16 @@ Level3: 18 Sekunden</value>
     <value>Safes</value>
   </data>
   <data name="HakuIntervention" xml:space="preserve">
-    <value>Safe
-Skarabäus</value>
+    <value>Safe Skarabäus</value>
   </data>
   <data name="HakuResearch" xml:space="preserve">
-    <value>Items mit
-Qualität</value>
+    <value>Items mit Qualität</value>
   </data>
   <data name="HakuTransportation" xml:space="preserve">
-    <value>Seltene
-Items</value>
+    <value>Seltene Items</value>
   </data>
   <data name="HillockFortification" xml:space="preserve">
-    <value>Rüstung
-Qualität</value>
+    <value>Rüstung Qualität</value>
   </data>
   <data name="HillockFortificationTooltip" xml:space="preserve">
     <value>Level1: 24 %
@@ -274,8 +251,7 @@ Level2: 26 %
 Level3: 28 %</value>
   </data>
   <data name="HillockIntervention" xml:space="preserve">
-    <value>Karten
-Qualität</value>
+    <value>Karten Qualität</value>
   </data>
   <data name="HillockInterventionTooltip" xml:space="preserve">
     <value>Level1: 25 %
@@ -283,8 +259,7 @@ Level2: 30 %
 Level3: 35 %</value>
   </data>
   <data name="HillockResearch" xml:space="preserve">
-    <value>Flaschen
-Qualität</value>
+    <value>Flaschen Qualität</value>
   </data>
   <data name="HillockResearchTooltip" xml:space="preserve">
     <value>Level1: 22 %
@@ -292,8 +267,7 @@ Level2: 24 %
 Level3: 26%</value>
   </data>
   <data name="HillockTransportation" xml:space="preserve">
-    <value>Waffen
-Qualität</value>
+    <value>Waffen Qualität</value>
   </data>
   <data name="HillockTransportationTooltip" xml:space="preserve">
     <value>Level1: 24 %
@@ -301,16 +275,13 @@ Level2: 26 %
 Level3: 28%</value>
   </data>
   <data name="ItThatFledFortification" xml:space="preserve">
-    <value>Abgrund
-Juwele</value>
+    <value>Abgrund Juwele</value>
   </data>
   <data name="ItThatFledIntervention" xml:space="preserve">
-    <value>Risse
-Skarabäus</value>
+    <value>Risse Skarabäus</value>
   </data>
   <data name="ItThatFledResearch" xml:space="preserve">
-    <value>Verbessere
-Riss-Stein</value>
+    <value>Verbessere Riss-Stein</value>
   </data>
   <data name="ItThatFledResearchTooltip" xml:space="preserve">
     <value>Level1: Geladen
@@ -318,36 +289,28 @@ Level2: Angereicht
 Level3: Pur</value>
   </data>
   <data name="ItThatFledTransportation" xml:space="preserve">
-    <value>Riss
-Splitter</value>
+    <value>Riss Splitter</value>
   </data>
   <data name="JanusFortification" xml:space="preserve">
-    <value>Währungs
-Scherben</value>
+    <value>Währungs Scherben</value>
   </data>
   <data name="JanusIntervention" xml:space="preserve">
-    <value>Perandus
-Skarabäus</value>
+    <value>Perandus Skarabäus</value>
   </data>
   <data name="JanusResearch" xml:space="preserve">
-    <value>Perandus
-Münzen</value>
+    <value>Perandus Münzen</value>
   </data>
   <data name="JanusTransportation" xml:space="preserve">
-    <value>Qualitäts
-Währung</value>
+    <value>Qualitäts Währung</value>
   </data>
   <data name="JorginFortification" xml:space="preserve">
-    <value>Bestiarium
-Items</value>
+    <value>Bestiarium Items</value>
   </data>
   <data name="JorginIntervention" xml:space="preserve">
-    <value>Bestiarium
-Skarabäus</value>
+    <value>Bestiarium Skarabäus</value>
   </data>
   <data name="JorginResearch" xml:space="preserve">
-    <value>Amulett zu
-Talisman</value>
+    <value>Amulett zu Talisman</value>
   </data>
   <data name="JorginResearchTooltip" xml:space="preserve">
     <value>Level1: Level 1 Talisman
@@ -358,12 +321,10 @@ Level3: Level 3 Talisman</value>
     <value>Talismane</value>
   </data>
   <data name="KorrelFortification" xml:space="preserve">
-    <value>Karten
-Fragmente</value>
+    <value>Karten Fragmente</value>
   </data>
   <data name="KorrelIntervention" xml:space="preserve">
-    <value>Skarabäus des
-Ältesten</value>
+    <value>Skarabäus des Ältesten</value>
   </data>
   <data name="KorrellResearch" xml:space="preserve">
     <value>Fossile</value>
@@ -372,16 +333,13 @@ Fragmente</value>
     <value>Essenzen</value>
   </data>
   <data name="LeoFortification" xml:space="preserve">
-    <value>Zufällige
-Währung</value>
+    <value>Zufällige Währung</value>
   </data>
   <data name="LeoIntervention" xml:space="preserve">
-    <value>Folter
-Skarabäus</value>
+    <value>Folter Skarabäus</value>
   </data>
   <data name="LeoResearch" xml:space="preserve">
-    <value>Währungs
-Nutzung</value>
+    <value>Währungs Nutzung</value>
   </data>
   <data name="LeoResearchTooltip" xml:space="preserve">
     <value>Level1: Gesegnete Sphäre
@@ -389,43 +347,34 @@ Level2: Göttliche Sphäre
 Level3: Erhabene Sphäre</value>
   </data>
   <data name="LeoTransportation" xml:space="preserve">
-    <value>Silber
-Münzen</value>
+    <value>Silber Münzen</value>
   </data>
   <data name="RikerFortification" xml:space="preserve">
-    <value>Wähle ein
-einzigartiges Item</value>
+    <value>Wähle ein einzigartiges Item</value>
   </data>
   <data name="RikerIntervention" xml:space="preserve">
-    <value>Wähle eine
-Weissagungskarte</value>
+    <value>Wähle eine Weissagungskarte</value>
   </data>
   <data name="RikerResearch" xml:space="preserve">
-    <value>Wähle ein
-verschleiertes Item</value>
+    <value>Wähle ein verschleiertes Item</value>
   </data>
   <data name="RikerTransportation" xml:space="preserve">
-    <value>Wähle eine
-Währung</value>
+    <value>Wähle eine Währung</value>
   </data>
   <data name="RinFortification" xml:space="preserve">
     <value>Seltene Karten</value>
   </data>
   <data name="RinIntervention" xml:space="preserve">
-    <value>Kartographie
-Skarabäus</value>
+    <value>Kartographie Skarabäus</value>
   </data>
   <data name="RinResearch" xml:space="preserve">
-    <value>Einzigartige
-Karten</value>
+    <value>Einzigartige Karten</value>
   </data>
   <data name="RinTransportation" xml:space="preserve">
-    <value>Normale
-Karten</value>
+    <value>Normale Karten</value>
   </data>
   <data name="ToraFortification" xml:space="preserve">
-    <value>Verzauberte
-Items</value>
+    <value>Verzauberte Items</value>
   </data>
   <data name="ToraFortificationTooltip" xml:space="preserve">
     <value>Level1: Handschuhe
@@ -433,12 +382,10 @@ Level2: Schuhe
 Level3: Helme</value>
   </data>
   <data name="ToraIntervention" xml:space="preserve">
-    <value>Vorboten
-Skarabäus</value>
+    <value>Vorboten Skarabäus</value>
   </data>
   <data name="ToraResearch" xml:space="preserve">
-    <value>Edelstein
-Erfahrung</value>
+    <value>Edelstein Erfahrung</value>
   </data>
   <data name="ToraResearchTooltip" xml:space="preserve">
     <value>Level1: 20M Exp
@@ -446,8 +393,7 @@ Level2: 70M Exp
 Level3: 200M Exp</value>
   </data>
   <data name="ToraTransportation" xml:space="preserve">
-    <value>Wähle Item
-[Zeitbegrenzt]</value>
+    <value>Wähle Item [Zeitbegrenzt]</value>
   </data>
   <data name="ToraTransportationTooltip" xml:space="preserve">
     <value>Zeitbegrenzung: 8 Sekunden
@@ -457,31 +403,25 @@ Einzigartige Items
 Itemstufe 100 Items</value>
   </data>
   <data name="VaganFortification" xml:space="preserve">
-    <value>Legion
-Kisten</value>
+    <value>Legion Kisten</value>
   </data>
   <data name="VaganIntervention" xml:space="preserve">
-    <value>Legion
-Skarabäus</value>
+    <value>Legion Skarabäus</value>
   </data>
   <data name="VaganResearch" xml:space="preserve">
     <value>Inkubatoren</value>
   </data>
   <data name="VaganTransportation" xml:space="preserve">
-    <value>Legion
-Splitter</value>
+    <value>Legion Splitter</value>
   </data>
   <data name="VoriciFortification" xml:space="preserve">
-    <value>Verbindungs
-Währung</value>
+    <value>Verbindungs Währung</value>
   </data>
   <data name="VoriciIntervention" xml:space="preserve">
-    <value>Schöpfer
-Skarabäus</value>
+    <value>Schöpfer Skarabäus</value>
   </data>
   <data name="VoriciResearch" xml:space="preserve">
-    <value>Weiße
-Sockel</value>
+    <value>Weiße Sockel</value>
   </data>
   <data name="VoriciResearchTooltip" xml:space="preserve">
     <value>Level1: 1 Weißer Sockel
@@ -489,7 +429,6 @@ Level2: 1-2 Weiße Sockel
 Level3: 1-3 Weiße Sockel</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
-    <value>Qualitäts
-Edelsteine</value>
+    <value>Qualitäts Edelsteine</value>
   </data>
 </root>

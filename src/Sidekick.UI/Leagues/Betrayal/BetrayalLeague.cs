@@ -7,11 +7,13 @@ namespace Sidekick.UI.Leagues.Betrayal
     {
         public BetrayalLeague()
         {
+            Agents = new List<BetrayalAgent>();
+
             Agents.Add(new BetrayalAgent(BetrayalResources.AislingName, "Aisling.png", RewardValue.Normal)
             {
                 Transportation = new BetrayalReward(BetrayalResources.AislingTransportaion, RewardValue.Low),
                 Fortification = new BetrayalReward(BetrayalResources.AislingFortification, RewardValue.Low),
-                Research = new BetrayalReward(BetrayalResources.AislingResearch, RewardValue.Low, BetrayalResources.AislingResearchTooltip),
+                Research = new BetrayalReward(BetrayalResources.AislingResearch, RewardValue.Normal, BetrayalResources.AislingResearchTooltip),
                 Intervention = new BetrayalReward(BetrayalResources.AislingIntervention, RewardValue.Low)
             });
 
@@ -49,10 +51,10 @@ namespace Sidekick.UI.Leagues.Betrayal
 
             Agents.Add(new BetrayalAgent(BetrayalResources.HakuName, "Haku.png", RewardValue.High)
             {
-                Transportation = new BetrayalReward(BetrayalResources.HakuTransportation, RewardValue.High),
-                Fortification = new BetrayalReward(BetrayalResources.HakuFortification, RewardValue.Normal),
-                Research = new BetrayalReward(BetrayalResources.HakuResearch, RewardValue.Normal),
-                Intervention = new BetrayalReward(BetrayalResources.HakuIntervention, RewardValue.Normal)
+                Transportation = new BetrayalReward(BetrayalResources.HakuTransportation, RewardValue.Low),
+                Fortification = new BetrayalReward(BetrayalResources.HakuFortification, RewardValue.Low),
+                Research = new BetrayalReward(BetrayalResources.HakuResearch, RewardValue.Low),
+                Intervention = new BetrayalReward(BetrayalResources.HakuIntervention, RewardValue.High)
             });
 
             Agents.Add(new BetrayalAgent(BetrayalResources.HillockName, "Hillock.png", RewardValue.Normal)
@@ -144,6 +146,6 @@ namespace Sidekick.UI.Leagues.Betrayal
             });
         }
 
-        public List<BetrayalAgent> Agents { get; private set; } = new List<BetrayalAgent>();
+        public List<BetrayalAgent> Agents { get; private set; }
     }
 }

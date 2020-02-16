@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -222,9 +221,7 @@ namespace Sidekick.Windows.PriceCheck
 
         private void openQueryLink(object sender, RequestNavigateEventArgs e)
         {
-            var uri = e.Uri.ToString();
-            Legacy.Logger.Log(string.Format("Opening in browser: {0}", uri));
-            Process.Start(uri);
+            Legacy.NativeBrowser.Open(e.Uri);
             e.Handled = true;
         }
     }

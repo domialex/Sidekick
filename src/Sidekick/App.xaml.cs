@@ -43,7 +43,15 @@ namespace Sidekick
 
             EnsureSingleInstance();
 
-            await serviceProvider.GetService<IInitializer>().Initialize();
+            var initializer = serviceProvider.GetService<IInitializer>();
+            initializer.OnProgress += (a) =>
+            {
+                if (!Legacy.ViewLocator.IsOpened<Windows.SplashScreen>())
+                {
+                    Legacy.ViewLocator.Open<Windows.SplashScreen>();
+                }
+            };
+            await initializer.Initialize();
 
             // Overlay.
             OverlayController.Initialize();

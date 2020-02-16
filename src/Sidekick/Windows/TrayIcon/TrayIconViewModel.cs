@@ -12,6 +12,7 @@ using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.LeagueOverlay;
+using Sidekick.Windows.Leagues;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
 
@@ -134,6 +135,11 @@ Right click to drink.Can only hold charges while in belt.Refills as you kill mon
             {
                 Header = "DEBUG - League Overlay",
                 Command = new RelayCommand(_ => LeagueOverlayController.Show())
+            });
+            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            {
+                Header = "DEBUG - NEW League Overlay",
+                Command = new RelayCommand(_ => viewLocator.Open<LeagueView>())
             });
             TrayIcon.ContextMenu.Items.Add(new Separator());
 #endif

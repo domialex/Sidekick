@@ -8,6 +8,7 @@ namespace Sidekick.UI.Views
         public ViewInstance(IServiceScope scope, Type viewType)
         {
             Scope = scope;
+            ViewType = viewType;
             View = (ISidekickView)scope.ServiceProvider.GetService(viewType);
             View.Closed += View_Closed;
         }
@@ -15,6 +16,8 @@ namespace Sidekick.UI.Views
         public IServiceScope Scope { get; private set; }
 
         public ISidekickView View { get; private set; }
+
+        public Type ViewType { get; private set; }
 
         public event Action Disposed;
 

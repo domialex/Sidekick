@@ -16,6 +16,7 @@ namespace Sidekick.Windows.ApplicationLogs
             Legacy.Logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
             Show();
+            MouseLeftButtonDown += Window_MouseLeftButtonDown;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

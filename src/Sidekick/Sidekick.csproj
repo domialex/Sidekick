@@ -9,6 +9,7 @@
     <AssemblyVersion>0.5.0.0</AssemblyVersion>
     <FileVersion>0.5.0.0</FileVersion>
     <Version>0.5.0.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -17,23 +18,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Aisling.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Cameria.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Elreon.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Gravicius.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Guff.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Haku.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Hillock.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\It_That_Fled.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Janus.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Jorgin.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Korell.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Leo.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Riker.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Rin.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Tora.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Vagan.png" />
-    <None Remove="Windows\LeagueOverlay\Betrayal\Images\Vorici.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Aisling.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Cameria.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Elreon.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Gravicius.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Guff.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Haku.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Hillock.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\It_That_Fled.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Janus.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Jorgin.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Korell.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Leo.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Riker.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Rin.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Tora.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Vagan.png" />
+    <None Remove="Windows\Leagues\Betrayal\Images\Vorici.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,23 +61,23 @@
   <ItemGroup>
     <Resource Include="Resources\ExaltedOrb.ico" />
     <Resource Include="Resources\ExaltedOrb.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Aisling.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Cameria.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Elreon.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Gravicius.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Guff.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Haku.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Hillock.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\It_That_Fled.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Janus.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Jorgin.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Korell.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Leo.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Riker.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Rin.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Tora.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Vagan.png" />
-    <Resource Include="Windows\LeagueOverlay\Betrayal\Images\Vorici.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Aisling.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Cameria.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Elreon.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Gravicius.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Guff.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Haku.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Hillock.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\It_That_Fled.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Janus.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Jorgin.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Korell.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Leo.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Riker.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Rin.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Tora.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Vagan.png" />
+    <Resource Include="Windows\Leagues\Betrayal\Images\Vorici.png" />
   </ItemGroup>
 
   <ItemGroup>
