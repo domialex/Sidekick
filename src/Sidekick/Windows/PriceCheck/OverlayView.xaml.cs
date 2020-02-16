@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,8 @@ using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Core.Natives;
+using Sidekick.Localization;
 using Sidekick.Windows.PriceCheck.ViewModels;
 
 namespace Sidekick.Windows.PriceCheck
@@ -42,12 +45,14 @@ namespace Sidekick.Windows.PriceCheck
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
         private IPoePriceInfoClient poePriceInfoClient;
+        private readonly INativeBrowser nativeBrowser;
 
-        public OverlayWindow(int width, int height, string cultureName, IPoePriceInfoClient poePriceInfoClient)
+        public OverlayWindow(IPoePriceInfoClient poePriceInfoClient, INativeBrowser nativeBrowser, IUILanguageProvider iUILanguageProvider)
         {
             Thread.CurrentThread.CurrentCulture =
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureName);
+            Thread.CurrentThread.CurrentUICulture = iUILanguageProvider.Current;
             this.poePriceInfoClient = poePriceInfoClient;
+            this.nativeBrowser = nativeBrowser;
             InitializeComponent();
             DataContext = this;
             Hide();
@@ -226,7 +231,7 @@ namespace Sidekick.Windows.PriceCheck
 
         private void openQueryLink(object sender, RequestNavigateEventArgs e)
         {
-            Legacy.NativeBrowser.Open(e.Uri);
+            nativeBrowser.Open(e.Uri);
             e.Handled = true;
         }
     }

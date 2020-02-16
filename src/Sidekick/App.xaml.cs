@@ -31,6 +31,7 @@ namespace Sidekick
         private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
+        private IViewLocator viewLocator;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -44,7 +45,8 @@ namespace Sidekick
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
             Legacy.Initialize(serviceProvider);
-            serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
+            viewLocator = serviceProvider.GetService<IViewLocator>();
+            viewLocator.Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
 
@@ -53,9 +55,9 @@ namespace Sidekick
             var initializer = serviceProvider.GetService<IInitializer>();
             initializer.OnProgress += (a) =>
             {
-                if (!Legacy.ViewLocator.IsOpened<Windows.SplashScreen>())
+                if (!viewLocator.IsOpened<Windows.SplashScreen>())
                 {
-                    Legacy.ViewLocator.Open<Windows.SplashScreen>();
+                    viewLocator.Open<Windows.SplashScreen>();
                 }
             };
             await initializer.Initialize();

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
+using Sidekick.Business.Apis.PoeNinja;
+using Sidekick.Business.Parsers;
+using Sidekick.Business.Trades;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;
@@ -24,20 +27,35 @@ namespace Sidekick.Windows.TrayIcon
         private readonly SidekickSettings settings;
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IViewLocator viewLocator;
+        private readonly IItemParser itemParser;
+        private readonly ITradeClient tradeClient;
         private readonly ApplicationLogsController applicationLogsController;
+        private readonly OverlayController overlayController;
+        private readonly LeagueOverlayController leagueOverlayController;
+        private readonly IPoeNinjaCache poeNinjaCache;
 
         public TrayIconViewModel(
             App application,
             SidekickSettings settings,
             IUILanguageProvider uiLanguageProvider,
             IViewLocator viewLocator,
-            ApplicationLogsController applicationLogsController)
+            IItemParser itemParser,
+            ITradeClient tradeClient,
+            ApplicationLogsController applicationLogsController,
+            OverlayController overlayController,
+            LeagueOverlayController leagueOverlayController,
+            IPoeNinjaCache poeNinjaCache)
         {
             this.application = application;
             this.settings = settings;
             this.uiLanguageProvider = uiLanguageProvider;
             this.viewLocator = viewLocator;
+            this.itemParser = itemParser;
+            this.tradeClient = tradeClient;
             this.applicationLogsController = applicationLogsController;
+            this.overlayController = overlayController;
+            this.leagueOverlayController = leagueOverlayController;
+            this.poeNinjaCache = poeNinjaCache;
         }
 
         private TaskbarIcon TrayIcon { get; set; }
@@ -89,7 +107,7 @@ namespace Sidekick.Windows.TrayIcon
                 Header = "DEBUG - Price check",
                 Command = new RelayCommand(async (_) =>
                 {
-                    var item = await Legacy.ItemParser.ParseItem(@"Rarity: Unique
+                    var item = await itemParser.ParseItem(@"Rarity: Unique
 Blood of the Karui
 Sanctified Life Flask
 --------
@@ -118,22 +136,22 @@ Right click to drink.Can only hold charges while in belt.Refills as you kill mon
 
                     if (item != null)
                     {
-                        OverlayController.Open();
+                        overlayController.Open();
 
-                        var queryResult = await Legacy.TradeClient.GetListings(item);
+                        var queryResult = await tradeClient.GetListings(item);
                         if (queryResult != null)
                         {
-                            var poeNinjaItem = Legacy.PoeNinjaCache.GetItem(item);
+                            var poeNinjaItem = poeNinjaCache.GetItem(item);
                             if (poeNinjaItem != null)
                             {
                                 queryResult.PoeNinjaItem = poeNinjaItem;
-                                queryResult.LastRefreshTimestamp = Legacy.PoeNinjaCache.LastRefreshTimestamp;
+                                queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
                             }
-                            OverlayController.SetQueryResult(queryResult);
+                            overlayController.SetQueryResult(queryResult);
                             return;
                         }
 
-                        OverlayController.Hide();
+                        overlayController.Hide();
                     }
 
                 })
@@ -141,7 +159,7 @@ Right click to drink.Can only hold charges while in belt.Refills as you kill mon
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = "DEBUG - League Overlay",
-                Command = new RelayCommand(_ => LeagueOverlayController.Show())
+                Command = new RelayCommand(_ => leagueOverlayController.Show())
             });
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {

@@ -3,18 +3,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja;
-using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Localization;
 using Application = System.Windows.Application;
 using Cursor = System.Windows.Forms.Cursor;
 
@@ -24,7 +22,6 @@ namespace Sidekick.Windows.PriceCheck
     {
         private readonly ITradeClient tradeClient;
         private readonly INativeProcess nativeProcess;
-        private readonly IKeybindEvents events;
         private readonly INativeClipboard clipboard;
         private readonly ILogger logger;
         private readonly IItemParser itemParser;
@@ -32,13 +29,7 @@ namespace Sidekick.Windows.PriceCheck
         private readonly SidekickSettings settings;
         private readonly OverlayWindow overlayWindow;
 
-        private static readonly int WINDOW_WIDTH = 480;
-        private static readonly int WINDOW_HEIGHT = 320;
-        private static readonly int WINDOW_PADDING = 5;
-
         public OverlayController(
-            IUILanguageProvider uiLanguageProvider,
-            IPoePriceInfoClient poePriceInfoClient,
             ITradeClient tradeClient,
             INativeProcess nativeProcess,
             IKeybindEvents events,
@@ -46,18 +37,18 @@ namespace Sidekick.Windows.PriceCheck
             ILogger logger,
             IItemParser itemParser,
             IPoeNinjaCache poeNinjaCache,
-            SidekickSettings settings)
+            SidekickSettings settings,
+            IServiceProvider serviceProvider)
         {
             this.tradeClient = tradeClient;
             this.nativeProcess = nativeProcess;
-            this.events = events;
             this.clipboard = clipboard;
             this.logger = logger;
             this.itemParser = itemParser;
             this.poeNinjaCache = poeNinjaCache;
             this.settings = settings;
 
-            overlayWindow = new OverlayWindow(WINDOW_WIDTH, WINDOW_HEIGHT, uiLanguageProvider.Current.Name, poePriceInfoClient);
+            overlayWindow = serviceProvider.GetService<OverlayWindow>();
             overlayWindow.MouseDown += Window_OnHandleMouseDrag;
             overlayWindow.ItemScrollReachedEnd += Window_ItemScrollReachedEnd;
 
@@ -65,9 +56,6 @@ namespace Sidekick.Windows.PriceCheck
             events.OnPriceCheck += OnPriceCheck;
             events.OnMouseClick += MouseClicked;
         }
-
-
-
 
         public bool IsDisplayed => overlayWindow.IsDisplayed;
         public void SetQueryResult(QueryResult<ListingResult> queryResult) => overlayWindow.SetQueryResult(queryResult);
@@ -119,14 +107,14 @@ namespace Sidekick.Windows.PriceCheck
         /// </summary>
         private void EnsureBounds(int desiredX, int desiredY, float scale)
         {
-            var screenRect = Screen.FromPoint(Cursor.Position).Bounds;
-            var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
-            var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
-
-            var positionX = desiredX + (desiredX < xMidScaled ? WINDOW_PADDING : -WINDOW_WIDTH - WINDOW_PADDING);
-            var positionY = desiredY + (desiredY < yMidScaled ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
-
-            overlayWindow.SetWindowPosition(positionX, positionY);
+            // var screenRect = Screen.FromPoint(Cursor.Position).Bounds;
+            // var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
+            // var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
+            // 
+            // var positionX = desiredX + (desiredX < xMidScaled ? WINDOW_PADDING : -WINDOW_WIDTH - WINDOW_PADDING);
+            // var positionY = desiredY + (desiredY < yMidScaled ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
+            // 
+            // overlayWindow.SetWindowPosition(positionX, positionY);
         }
 
         /// <summary>

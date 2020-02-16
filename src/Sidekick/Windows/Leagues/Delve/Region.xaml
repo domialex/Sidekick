@@ -27,12 +27,7 @@
             <ItemsControl ItemsSource="{Binding Path=Model.Fossils}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock>
-                                <Label Content="{Binding Path=Name}" Foreground="{Binding Path=Color}" />
-                                <Label Content="*" />
-                            </TextBlock>
-                        </StackPanel>
+                        <local:Fossil Model="{Binding}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

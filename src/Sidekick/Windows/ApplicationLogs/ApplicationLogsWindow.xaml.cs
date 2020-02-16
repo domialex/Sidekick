@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Input;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.Windows.ApplicationLogs
@@ -63,7 +63,7 @@ namespace Sidekick.Windows.ApplicationLogs
             }
         }
 
-        private string GenerateLogLines => string.Join(Environment.NewLine,logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
+        private string GenerateLogLines => string.Join(Environment.NewLine, logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
 
         protected override void OnClosing(CancelEventArgs e)
         {
