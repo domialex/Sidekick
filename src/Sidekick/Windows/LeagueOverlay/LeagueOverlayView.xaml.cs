@@ -7,9 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Sidekick.Localization;
 using Sidekick.Localization.Leagues;
-using Sidekick.Localization.Leagues.Delve;
 using Sidekick.Localization.Leagues.Incursion;
-using Sidekick.Localization.Leagues.Metamorph;
 
 namespace Sidekick.Windows.LeagueOverlay
 {
@@ -33,20 +31,15 @@ namespace Sidekick.Windows.LeagueOverlay
             this.languageProvider = languageProvider;
             InitializeComponent();
 
-            UpdateFossilRarityDictionary();
             UpdateHeaderUIText();
             UpdateIncursionUIText();
-            UpdateMetamorphUIText();
 
-            languageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
             languageProvider.UILanguageChanged += UpdateHeaderUIText;
             languageProvider.UILanguageChanged += UpdateIncursionUIText;
-            languageProvider.UILanguageChanged += UpdateMetamorphUIText;
 
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
                 { tabItemIncursion, new[] { 980, 1050 } },
-                { tabItemMetamorph, new[] { 315, 1115 } },
             };
 
             tabControlLeagueOverlay.SelectionChanged += TabControlLeagueOverlay_SelectionChanged;
@@ -96,47 +89,6 @@ namespace Sidekick.Windows.LeagueOverlay
         }
         delegate void HideWindowCallback();
 
-        public void SetWindowPosition(int x, int y)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
-            }
-            else
-            {
-                Left = x;
-                Top = y;
-            }
-
-        }
-        delegate void SetWindowPositionCallback(int x, int y);
-
-        public int GetWidth()
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                return (int)Dispatcher.Invoke(new GetWidthCallback(GetWidth));
-            }
-            else
-            {
-                return (int)Width;
-            }
-        }
-        delegate int GetWidthCallback();
-
-        public int GetHeight()
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                return (int)Dispatcher.Invoke(new GetHeightCallback(GetHeight));
-            }
-            else
-            {
-                return (int)Height;
-            }
-        }
-        delegate int GetHeightCallback();
-
         private void TabControlLeagueOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentPage = tabControlLeagueOverlay.SelectedItem as TabItem;
@@ -182,38 +134,6 @@ namespace Sidekick.Windows.LeagueOverlay
             e.Cancel = true;
         }
 
-        private void UpdateFossilRarityDictionary()
-        {
-            DelveFossilRarityDictionary = new Dictionary<string, string>()
-            {
-                { DelveResources.AberrantFossil, LowValueColorName },
-                { DelveResources.AethericFossil, VeryLowValueColorName },
-                { DelveResources.BloodstainedFossil, HighValueColorName },
-                { DelveResources.BoundFossil, LowValueColorName },
-                { DelveResources.CorrodedFossil, MediumValueColorName },
-                { DelveResources.DenseFossil, LowValueColorName},
-                { DelveResources.EnchantedFossil, MediumValueColorName },
-                { DelveResources.EncrustedFossil, VeryLowValueColorName },
-                { DelveResources.FacetedFossil, HighValueColorName },
-                { DelveResources.FracturedFossil, HighValueColorName },
-                { DelveResources.FrigidFossil, VeryLowValueColorName },
-                { DelveResources.GildedFossil, MediumValueColorName },
-                { DelveResources.GlyphicFossil, HighValueColorName },
-                { DelveResources.HollowFossil, HighValueColorName },
-                { DelveResources.JaggedFossil, VeryLowValueColorName },
-                { DelveResources.LucentFossil, VeryLowValueColorName },
-                { DelveResources.MetallicFossil, LowValueColorName },
-                { DelveResources.PerfectFossil, MediumValueColorName },
-                { DelveResources.PrismaticFossil, LowValueColorName },
-                { DelveResources.PristineFossil, VeryLowValueColorName },
-                { DelveResources.SanctifiedFossil, HighValueColorName },
-                { DelveResources.ScorchedFossil, VeryLowValueColorName },
-                { DelveResources.SerratedFossil, MediumValueColorName },
-                { DelveResources.ShudderingFossil, MediumValueColorName },
-                { DelveResources.TangledFossil, MediumValueColorName },
-            };
-        }
-
         private void UpdateHeaderUIText()
         {
             var cultureInfo = new CultureInfo(languageProvider.Current.Name);
@@ -221,7 +141,6 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
             tabItemIncursion.Header = LeagueResources.LeagueNameIncrusion;
-            tabItemMetamorph.Header = LeagueResources.LeagueNameMetamorph;
         }
 
         private void UpdateIncursionUIText()
@@ -381,37 +300,6 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockRoyalMeetingRoomModifiers.Text = IncursionResources.RoyalMeetingRoomModifiers;
             textBlockHallOfLords.Text = IncursionResources.HallOfLords;
             textBlockThroneOfAtziri.Text = IncursionResources.ThroneOfAtziri;
-        }
-
-        private void UpdateMetamorphUIText()
-        {
-            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst;
-            textBlockAbrasiveCatalystEffect.Text = MetamorphResources.AbrasiveCatalystEffect;
-
-            labelFertileCatalyst.Content = MetamorphResources.FertileCatalyst;
-            textBlockFertileCatalystEffect.Text = MetamorphResources.FertileCatalyst;
-
-            labelImbuedCatalyst.Content = MetamorphResources.ImbuedCatalyst;
-            textBlockImbuedCatalystEffect.Text = MetamorphResources.ImbuedCatalystEffect;
-
-            labelIntrinsicCatalyst.Content = MetamorphResources.IntrinsicCatalyst;
-            textBlockIntrinsicCatalystEffect.Text = MetamorphResources.IntrinsicCatalystEffect;
-
-            labelPrismaticCatalyst.Content = MetamorphResources.PrismaticCatalyst;
-            textBlockPrismaticCatalystEffect.Text = MetamorphResources.PrismaticCatalystEffect;
-
-            labelTemperingCatalyst.Content = MetamorphResources.TemperingCatalyst;
-            textBlockTemperingCatalystEffect.Text = MetamorphResources.TemperingCatalystEffect;
-
-            labelTurbulentCatalyst.Content = MetamorphResources.TurbulentCatalyst;
-            textBlockTurbulentCatalystEffect.Text = MetamorphResources.TurbulentCatalystEffect;
-
-            labelMetamorphInformation.Content = MetamorphResources.InformationHeader;
-            textBlockMetamorphInformationText.Text = MetamorphResources.InformationText;
         }
     }
 }

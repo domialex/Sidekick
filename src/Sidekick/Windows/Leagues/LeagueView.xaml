@@ -1,7 +1,8 @@
-<Window
+<base:BaseWindow
     x:Class="Sidekick.Windows.Leagues.LeagueView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Windows"
     xmlns:betrayal="clr-namespace:Sidekick.Windows.Leagues.Betrayal"
     xmlns:blight="clr-namespace:Sidekick.Windows.Leagues.Blight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -33,4 +34,4 @@
             <metamorph:League Model="{Binding Metamorph}" />
         </TabItem>
     </TabControl>
-</Window>
+</base:BaseWindow>

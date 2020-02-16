@@ -17,7 +17,7 @@
         Margin="{StaticResource SpacerBottom}"
         BorderBrush="{Binding Path=Model.Color}"
         BorderThickness="5,0,0,0">
-        <GroupBox Width="250" Margin="0">
+        <GroupBox Width="175" Margin="0">
             <GroupBox.Header>
                 <WrapPanel>
                     <Image
