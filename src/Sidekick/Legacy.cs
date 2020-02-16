@@ -9,16 +9,16 @@ namespace Sidekick
     public static class Legacy
     {
         [Obsolete]
-         public static ILogger Logger { get; private set; }
+        public static ILogger Logger { get; private set; }
 
-         [Obsolete]
-         public static ILanguageProvider LanguageProvider { get; private set; }
+        [Obsolete]
+        public static ILanguageProvider LanguageProvider { get; private set; }
 
-         [Obsolete]
-         public static void Initialize(IServiceProvider serviceProvider)
-         {
-             Logger = serviceProvider.GetService<ILogger>();
-             LanguageProvider = serviceProvider.GetService<ILanguageProvider>();
-         }
-     }
+        [Obsolete]
+        public static void Initialize(IServiceProvider serviceProvider)
+        {
+            Logger = serviceProvider.GetService<ILogger>();
+            LanguageProvider = serviceProvider.GetService<ILanguageProvider>();
+        }
+    }
 }

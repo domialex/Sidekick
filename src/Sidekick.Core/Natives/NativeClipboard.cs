@@ -33,20 +33,20 @@ namespace Sidekick.Core.Natives
             await Task.Delay(100);
 
             // Retrieve clipboard.
-            var itemText = await GetText();
+            var text = await GetText();
 
             if (settings.RetainClipboard)
             {
                 await SetText(clipboardText);
             }
 
-            if (string.IsNullOrWhiteSpace(itemText))
+            if (string.IsNullOrWhiteSpace(text))
             {
-                logger.Log("No item detected in the clipboard.");
+                logger.Log("No text detected on the clipboard.");
                 return null;
             }
 
-            return itemText;
+            return text;
         }
 
         public async Task<string> GetText()
