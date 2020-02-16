@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Sidekick.Localization;
 using Sidekick.Localization.Leagues;
-using Sidekick.Localization.Leagues.Betrayal;
 using Sidekick.Localization.Leagues.Blight;
 using Sidekick.Localization.Leagues.Delve;
 using Sidekick.Localization.Leagues.Incursion;
@@ -37,25 +36,19 @@ namespace Sidekick.Windows.LeagueOverlay
 
             UpdateFossilRarityDictionary();
             UpdateHeaderUIText();
-            UpdateBetrayalUIText();
             UpdateIncursionUIText();
             UpdateBlightUIText();
             UpdateMetamorphUIText();
-            UpdateDelveUIText();
 
             languageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
             languageProvider.UILanguageChanged += UpdateHeaderUIText;
-            languageProvider.UILanguageChanged += UpdateBetrayalUIText;
             languageProvider.UILanguageChanged += UpdateIncursionUIText;
             languageProvider.UILanguageChanged += UpdateBlightUIText;
             languageProvider.UILanguageChanged += UpdateMetamorphUIText;
-            languageProvider.UILanguageChanged += UpdateDelveUIText;
 
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
                 { tabItemIncursion, new[] { 980, 1050 } },
-                { tabItemDelve, new[] { 425, 1015 } },
-                { tabItemBetrayal, new[] { 520, 1200 } },
                 { tabItemBlight, new[] { 605, 1165 } },
                 { tabItemMetamorph, new[] { 315, 1115 } },
             };
@@ -232,8 +225,6 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
             tabItemIncursion.Header = LeagueResources.LeagueNameIncrusion;
-            tabItemDelve.Header = LeagueResources.LeagueNameDelve;
-            tabItemBetrayal.Header = LeagueResources.LeagueNameBetrayal;
             tabItemBlight.Header = LeagueResources.LeagueNameBlight;
             tabItemMetamorph.Header = LeagueResources.LeagueNameMetamorph;
         }
@@ -397,142 +388,6 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockThroneOfAtziri.Text = IncursionResources.ThroneOfAtziri;
         }
 
-        private void UpdateBetrayalUIText()
-        {
-            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            labelBetrayalLegendNotValuable.Content = LeagueResources.LegendNotValuable;
-            labelBetrayalLegendLessValuable.Content = LeagueResources.LegendLessValuable;
-            labelBetrayalLegendValuable.Content = LeagueResources.LegendValuable;
-            labelBetrayalLegendMoreValuable.Content = LeagueResources.LegendMoreValuable;
-
-            labelBetrayalTypeTransportation.Content = BetrayalResources.TypeTransportation;
-            labelBetrayalTypeResearch.Content = BetrayalResources.TypeResearch;
-            labelBetrayalTypeFortification.Content = BetrayalResources.TypeFortification;
-            labelBetrayalTypeIntervention.Content = BetrayalResources.TypeIntervention;
-
-            labelAislingName.Content = BetrayalResources.AislingName;
-            textBlockAislingTransportation.Text = BetrayalResources.AislingTransportaion;
-            textBlockAislingFortification.Text = BetrayalResources.AislingFortification;
-            textBlockAislingResearch.Text = BetrayalResources.AislingResearch;
-            textBlockAislingResearch.ToolTip = BetrayalResources.AislingResearchTooltip;
-            textBlockAislingIntervention.Text = BetrayalResources.AislingIntervention;
-
-            labelCameriaName.Content = BetrayalResources.CameriaName;
-            textBlockCameriaFortification.Text = BetrayalResources.CameriaFortification;
-            textBlockCameriaIntervention.Text = BetrayalResources.CameriaIntervention;
-            textBlockCameriaResearch.Text = BetrayalResources.CameriaResearch;
-            textBlockCameriaTransportation.Text = BetrayalResources.CameriaTransportation;
-            textBlockCameriaTransportation.ToolTip = BetrayalResources.CameriaTransportationTooltip;
-
-            labelElreonName.Content = BetrayalResources.ElreonName;
-            textBlockElreonFortification.Text = BetrayalResources.ElreonFortification;
-            textBlockElreonIntervention.Text = BetrayalResources.ElreonIntervention;
-            textBlockElreonResearch.Text = BetrayalResources.ElreonResearch;
-            textBlockElreonTransportation.Text = BetrayalResources.ElreonTransportation;
-
-            labelGraviciusName.Content = BetrayalResources.GraviciusName;
-            textBlockGraviciusFortification.Text = BetrayalResources.GraviciusFortification;
-            textBlockGraviciusIntervention.Text = BetrayalResources.GraviciusIntervention;
-            textBlockGraviciusResearch.Text = BetrayalResources.GraviciusResearch;
-            textBlockGraviciusTransportation.Text = BetrayalResources.GraviciusTransportation;
-
-            labelGuffName.Content = BetrayalResources.GuffName;
-            textBlockGuffFortification.Text = BetrayalResources.GuffFortification;
-            textBlockGuffFortification.ToolTip = BetrayalResources.GuffFortificationTooltip;
-            textBlockGuffIntervention.Text = BetrayalResources.GuffIntervention;
-            textBlockGuffIntervention.ToolTip = BetrayalResources.GuffInterventionTooltip;
-            textBlockGuffResearch.Text = BetrayalResources.GuffResearch;
-            textBlockGuffResearch.ToolTip = BetrayalResources.GuffResearchTooltip;
-            textBlockGuffTransportation.Text = BetrayalResources.GuffTransportation;
-            textBlockGuffTransportation.ToolTip = BetrayalResources.GuffTransportationTooltip;
-
-            labelHakuName.Content = BetrayalResources.HakuName;
-            textBlockHakuFortification.Text = BetrayalResources.HakuFortification;
-            textBlockHakuIntervention.Text = BetrayalResources.HakuIntervention;
-            textBlockHakuResearch.Text = BetrayalResources.HakuResearch;
-            textBlockHakuTransportation.Text = BetrayalResources.HakuTransportation;
-
-            labelHillockName.Content = BetrayalResources.HillockName;
-            textBlockHillockFortification.Text = BetrayalResources.HillockFortification;
-            textBlockHillockFortification.ToolTip = BetrayalResources.HillockFortificationTooltip;
-            textBlockHillockIntervention.Text = BetrayalResources.HillockIntervention;
-            textBlockHillockIntervention.ToolTip = BetrayalResources.HillockInterventionTooltip;
-            textBlockHillockResearch.Text = BetrayalResources.HillockResearch;
-            textBlockHillockResearch.ToolTip = BetrayalResources.HillockResearchTooltip;
-            textBlockHillockTransportation.Text = BetrayalResources.HillockTransportation;
-            textBlockHillockTransportation.ToolTip = BetrayalResources.HillockTransportationTooltip;
-
-            labelItThatFledName.Content = BetrayalResources.ItThatFledName;
-            textBlockItThatFledFortification.Text = BetrayalResources.ItThatFledFortification;
-            textBlockItThatFledIntervention.Text = BetrayalResources.ItThatFledIntervention;
-            textBlockItThatFledResearch.Text = BetrayalResources.ItThatFledResearch;
-            textBlockItThatFledResearch.ToolTip = BetrayalResources.ItThatFledResearchTooltip;
-            textBlockItThatFledTransportation.Text = BetrayalResources.ItThatFledTransportation;
-
-            labelJanusName.Content = BetrayalResources.JanusName;
-            textBlockJanusFortification.Text = BetrayalResources.JanusFortification;
-            textBlockJanusIntervention.Text = BetrayalResources.JanusIntervention;
-            textBlockJanusResearch.Text = BetrayalResources.JanusResearch;
-            textBlockJanusTransportation.Text = BetrayalResources.JanusTransportation;
-
-            labelJorginName.Content = BetrayalResources.JorginName;
-            textBlockJorginFortification.Text = BetrayalResources.JorginFortification;
-            textBlockJorginIntervention.Text = BetrayalResources.JorginIntervention;
-            textBlockJorginResearch.Text = BetrayalResources.JorginResearch;
-            textBlockJorginResearch.ToolTip = BetrayalResources.JorginResearchTooltip;
-            textBlockJorginTransportation.Text = BetrayalResources.JorginTransportation;
-
-            labelKorellName.Content = BetrayalResources.KorellName;
-            textBlockKorellFortifcation.Text = BetrayalResources.KorellFortification;
-            textBlockKorellIntervention.Text = BetrayalResources.KorellIntervention;
-            textBlockKorellResearch.Text = BetrayalResources.KorellResearch;
-            textBlockKorellTransportation.Text = BetrayalResources.KorellTransportation;
-
-            labelLeoName.Content = BetrayalResources.LeoName;
-            textBlockLeoFortification.Text = BetrayalResources.LeoFortification;
-            textBlockLeoIntervention.Text = BetrayalResources.LeoIntervention;
-            textBlockLeoResearch.Text = BetrayalResources.LeoResearch;
-            textBlockLeoResearch.ToolTip = BetrayalResources.LeoResearchTooltip;
-            textBlockLeoTransportation.Text = BetrayalResources.LeoTransportation;
-
-            labelRikerName.Content = BetrayalResources.RikerName;
-            textBlockRikerFortification.Text = BetrayalResources.RikerFortification;
-            textBlockRikerIntervention.Text = BetrayalResources.RikerIntervention;
-            textBlockRikerResearch.Text = BetrayalResources.RikerResearch;
-            textBlockRikerTransportation.Text = BetrayalResources.RikerTransportation;
-
-            labelRinName.Content = BetrayalResources.RinName;
-            textBlockRinFortification.Text = BetrayalResources.RinFortification;
-            textBlockRinIntervention.Text = BetrayalResources.RinIntervention;
-            textBlockRinResearch.Text = BetrayalResources.RinResearch;
-            textBlockRinTransportation.Text = BetrayalResources.RinTransportation;
-
-            labelToraName.Content = BetrayalResources.ToraName;
-            textBlockToraFortification.Text = BetrayalResources.ToraFortification;
-            textBlockToraFortification.ToolTip = BetrayalResources.ToraFortificationTooltip;
-            textBlockToraIntervention.Text = BetrayalResources.ToraIntervention;
-            textBlockToraResearch.Text = BetrayalResources.ToraResearch;
-            textBlockToraResearch.ToolTip = BetrayalResources.ToraResearchTooltip;
-            textBlockToraTransportation.Text = BetrayalResources.ToraTransportation;
-            textBlockToraTransportation.ToolTip = BetrayalResources.ToraTransportationTooltip;
-
-            labelVaganName.Content = BetrayalResources.VaganName;
-            textBlockVaganFortification.Text = BetrayalResources.VaganFortification;
-            textBlockVaganIntervention.Text = BetrayalResources.VaganIntervention;
-            textBlockVaganResearch.Text = BetrayalResources.VaganResearch;
-            textBlockVaganTransportation.Text = BetrayalResources.VaganTransportation;
-
-            labelVoriciName.Content = BetrayalResources.VoriciName;
-            textBlockVoriciFortification.Text = BetrayalResources.VoriciFortification;
-            textBlockVoriciIntervention.Text = BetrayalResources.VoriciIntervention;
-            textBlockVoriciResearch.Text = BetrayalResources.VoriciResearch;
-            textBlockVoriciResearch.ToolTip = BetrayalResources.VoriciResearchTooltip;
-            textBlockVoriciTransportation.Text = BetrayalResources.VoriciTransportation;
-        }
-
         private void UpdateBlightUIText()
         {
             var cultureInfo = new CultureInfo(languageProvider.Current.Name);
@@ -607,116 +462,6 @@ namespace Sidekick.Windows.LeagueOverlay
 
             labelMetamorphInformation.Content = MetamorphResources.InformationHeader;
             textBlockMetamorphInformationText.Text = MetamorphResources.InformationText;
-        }
-
-        private void UpdateDelveUIText()
-        {
-            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            string fracturedWallInfoPointer = "*";
-
-            var mineFossils = new[]
-            {
-                DelveResources.MetallicFossil,
-                DelveResources.SerratedFossil,
-                DelveResources.PristineFossil,
-                DelveResources.AethericFossil,
-            };
-
-            var magmaFissureFossils = new[]
-            {
-                DelveResources.ScorchedFossil,
-                DelveResources.PristineFossil,
-                DelveResources.PrismaticFossil,
-                DelveResources.EnchantedFossil,
-                DelveResources.EncrustedFossil + fracturedWallInfoPointer,
-            };
-
-            var sulfurVentsFossils = new[]
-            {
-                DelveResources.MetallicFossil,
-                DelveResources.AethericFossil,
-                DelveResources.PerfectFossil,
-                DelveResources.EncrustedFossil + fracturedWallInfoPointer,
-            };
-
-            var frozenHollowFossils = new[]
-            {
-                DelveResources.FrigidFossil,
-                DelveResources.SerratedFossil,
-                DelveResources.PrismaticFossil,
-                DelveResources.ShudderingFossil,
-                DelveResources.SanctifiedFossil + fracturedWallInfoPointer,
-            };
-
-            var fungalCavernsFossils = new[]
-            {
-                DelveResources.DenseFossil,
-                DelveResources.AberrantFossil,
-                DelveResources.PerfectFossil,
-                DelveResources.CorrodedFossil,
-                DelveResources.GildedFossil + fracturedWallInfoPointer,
-            };
-
-            var petrifiedForestFossils = new[]
-            {
-                DelveResources.BoundFossil,
-                DelveResources.DenseFossil,
-                DelveResources.JaggedFossil,
-                DelveResources.CorrodedFossil,
-                DelveResources.SanctifiedFossil + fracturedWallInfoPointer,
-            };
-
-            var abyssalDepthsFossils = new[]
-            {
-                DelveResources.BoundFossil,
-                DelveResources.AberrantFossil,
-                DelveResources.LucentFossil + fracturedWallInfoPointer,
-                DelveResources.GildedFossil + fracturedWallInfoPointer,
-            };
-
-            var fossilRoomFossils = new[]
-            {
-                DelveResources.GlyphicFossil,
-                DelveResources.FracturedFossil,
-                DelveResources.FacetedFossil,
-                DelveResources.BloodstainedFossil,
-                DelveResources.TangledFossil,
-                DelveResources.HollowFossil,
-            };
-
-            labelDelveMines.Content = DelveResources.Mines;
-            SetTextBlockList(textBlockDelveMinesFossils, mineFossils);
-
-            labelDelveMagmaFissure.Content = DelveResources.MagmaFissure;
-            SetTextBlockList(textBlockMagmaFissureFossils, magmaFissureFossils);
-
-            labelDelveSulfurVents.Content = DelveResources.SulfurVents;
-            SetTextBlockList(textBlockSulfurVentsFossils, sulfurVentsFossils);
-
-            labelDelveFrozenHollow.Content = DelveResources.FrozenHollow;
-            SetTextBlockList(textBlockFrozenHolloeFossils, frozenHollowFossils);
-
-            labelDelveFungalCaverns.Content = DelveResources.FungalCaverns;
-            SetTextBlockList(textBlockDelveFungalCavernsFossils, fungalCavernsFossils);
-
-            labelDelvePetrifiedForest.Content = DelveResources.PetrifiedForest;
-            SetTextBlockList(labelDelvePetrifiedForestFossils, petrifiedForestFossils);
-
-            labelDelveAbyssalDepths.Content = DelveResources.AbyssalDepths;
-            SetTextBlockList(textBlockAbyssalDepthsFossils, abyssalDepthsFossils);
-
-            labelDelveFossilRoom.Content = DelveResources.FossilRoom;
-            SetTextBlockList(textBlockDelveFossilRoomFossils, fossilRoomFossils);
-
-            labelDelveInformation.Content = DelveResources.Information;
-            labelDelveLegend.Content = DelveResources.Legend;
-            labelDelveLegendNotValuable.Content = LeagueResources.LegendNotValuable;
-            labelDelveLegendLowValuable.Content = LeagueResources.LegendLessValuable;
-            labelDelveLegendValuable.Content = LeagueResources.LegendValuable;
-            labelDelveLegendMoreValuable.Content = LeagueResources.LegendMoreValuable;
         }
     }
 }

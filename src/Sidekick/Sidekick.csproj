@@ -35,6 +35,18 @@
     <None Remove="Windows\Leagues\Betrayal\Images\Tora.png" />
     <None Remove="Windows\Leagues\Betrayal\Images\Vagan.png" />
     <None Remove="Windows\Leagues\Betrayal\Images\Vorici.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Amber_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Azure_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Black_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Clear_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Crimson_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Golden_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Opalescent_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Sepia_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Silver_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Teal_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
+    <None Remove="Windows\Leagues\Blight\Images\Violet_Oil.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +90,18 @@
     <Resource Include="Windows\Leagues\Betrayal\Images\Tora.png" />
     <Resource Include="Windows\Leagues\Betrayal\Images\Vagan.png" />
     <Resource Include="Windows\Leagues\Betrayal\Images\Vorici.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Amber_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Azure_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Black_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Clear_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Crimson_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Golden_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Opalescent_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Sepia_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Silver_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Teal_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
+    <Resource Include="Windows\Leagues\Blight\Images\Violet_Oil.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -111,5 +135,9 @@
     <Page Update="Styles\Variables\Spacers.xaml">
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Windows\LeagueOverlay\Blight\" />
   </ItemGroup>
 </Project>
