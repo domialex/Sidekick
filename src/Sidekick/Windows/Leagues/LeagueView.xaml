@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:delve="clr-namespace:Sidekick.Windows.Leagues.Delve"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:metamorph="clr-namespace:Sidekick.Windows.Leagues.Metamorph"
     xmlns:r="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
@@ -19,14 +20,17 @@
     </Window.Style>
 
     <TabControl>
-        <TabItem Header="{x:Static r:LeagueResources.LeagueNameDelve}">
-            <delve:League Model="{Binding Delve}" />
-        </TabItem>
         <TabItem Header="{x:Static r:LeagueResources.LeagueNameBetrayal}">
             <betrayal:League Model="{Binding Betrayal}" />
         </TabItem>
         <TabItem Header="{x:Static r:LeagueResources.LeagueNameBlight}">
             <blight:League Model="{Binding Blight}" />
+        </TabItem>
+        <TabItem Header="{x:Static r:LeagueResources.LeagueNameDelve}">
+            <delve:League Model="{Binding Delve}" />
+        </TabItem>
+        <TabItem Header="{x:Static r:LeagueResources.LeagueNameMetamorph}">
+            <metamorph:League Model="{Binding Metamorph}" />
         </TabItem>
     </TabControl>
 </Window>
