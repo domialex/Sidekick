@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Sidekick.Localization;
 using Sidekick.Localization.Leagues;
-using Sidekick.Localization.Leagues.Blight;
 using Sidekick.Localization.Leagues.Delve;
 using Sidekick.Localization.Leagues.Incursion;
 using Sidekick.Localization.Leagues.Metamorph;
@@ -37,19 +36,16 @@ namespace Sidekick.Windows.LeagueOverlay
             UpdateFossilRarityDictionary();
             UpdateHeaderUIText();
             UpdateIncursionUIText();
-            UpdateBlightUIText();
             UpdateMetamorphUIText();
 
             languageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
             languageProvider.UILanguageChanged += UpdateHeaderUIText;
             languageProvider.UILanguageChanged += UpdateIncursionUIText;
-            languageProvider.UILanguageChanged += UpdateBlightUIText;
             languageProvider.UILanguageChanged += UpdateMetamorphUIText;
 
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
                 { tabItemIncursion, new[] { 980, 1050 } },
-                { tabItemBlight, new[] { 605, 1165 } },
                 { tabItemMetamorph, new[] { 315, 1115 } },
             };
 
@@ -225,7 +221,6 @@ namespace Sidekick.Windows.LeagueOverlay
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
             tabItemIncursion.Header = LeagueResources.LeagueNameIncrusion;
-            tabItemBlight.Header = LeagueResources.LeagueNameBlight;
             tabItemMetamorph.Header = LeagueResources.LeagueNameMetamorph;
         }
 
@@ -386,51 +381,6 @@ namespace Sidekick.Windows.LeagueOverlay
             textBlockRoyalMeetingRoomModifiers.Text = IncursionResources.RoyalMeetingRoomModifiers;
             textBlockHallOfLords.Text = IncursionResources.HallOfLords;
             textBlockThroneOfAtziri.Text = IncursionResources.ThroneOfAtziri;
-        }
-
-        private void UpdateBlightUIText()
-        {
-            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            labelBlightLegend.Content = BlightResources.Legend;
-
-            labelClearOil.Content = BlightResources.ClearOil;
-            textBlockClearOilEffect.Text = BlightResources.ClearOilEffect;
-
-            labelSepiaOil.Content = BlightResources.SepiaOil;
-            textBlockSepiaOilEffect.Text = BlightResources.SepiaOilEffect;
-
-            labelAmberOil.Content = BlightResources.AmberOil;
-            textBlockAmberOilEffect.Text = BlightResources.AmberOilEffect;
-
-            labelVerdantOil.Content = BlightResources.VerdantOil;
-            textBlockVerdantOilEffect.Text = BlightResources.VerdantOilEffect;
-
-            labelTealOil.Content = BlightResources.TealOil;
-            textBlockTealOilEffect.Text = BlightResources.TealOilEffect;
-
-            labelAzureOil.Content = BlightResources.AzureOil;
-            textBlockAzureOilEffect.Text = BlightResources.AzureOilEffect;
-
-            labelVioletOil.Content = BlightResources.VioletOil;
-            textBlockVioletOilEffect.Text = BlightResources.VioletOilEffect;
-
-            labelCrimsonOil.Content = BlightResources.CrimsonOil;
-            textBlockCrimsonOilEffect.Text = BlightResources.CrimsonOilEffect;
-
-            labelBlackOil.Content = BlightResources.BlackOil;
-            textBlockBlackOilEffect.Text = BlightResources.BlackOilEffect;
-
-            labelOpalescentOil.Content = BlightResources.OpalescentOil;
-            textBlockOpalescentOilEffect.Text = BlightResources.OpalescentOilEffect;
-
-            labelSilverOil.Content = BlightResources.SilverOil;
-            textBlockSilverOilEffect.Text = BlightResources.SilverOilEffect;
-
-            labelGoldenOil.Content = BlightResources.GoldenOil;
-            textBlockGoldenOilEffect.Text = BlightResources.GoldenOilEffect;
         }
 
         private void UpdateMetamorphUIText()
