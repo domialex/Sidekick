@@ -7,6 +7,7 @@
     xmlns:blight="clr-namespace:Sidekick.Windows.Leagues.Blight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:delve="clr-namespace:Sidekick.Windows.Leagues.Delve"
+    xmlns:incursion="clr-namespace:Sidekick.Windows.Leagues.Incursion"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metamorph="clr-namespace:Sidekick.Windows.Leagues.Metamorph"
     xmlns:r="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
@@ -29,6 +30,9 @@
         </TabItem>
         <TabItem Header="{x:Static r:LeagueResources.LeagueNameDelve}">
             <delve:League Model="{Binding Delve}" />
+        </TabItem>
+        <TabItem Header="{x:Static r:LeagueResources.LeagueNameIncrusion}">
+            <incursion:League Model="{Binding Incursion}" />
         </TabItem>
         <TabItem Header="{x:Static r:LeagueResources.LeagueNameMetamorph}">
             <metamorph:League Model="{Binding Metamorph}" />

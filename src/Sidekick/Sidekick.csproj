@@ -150,8 +150,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Windows\Leagues\Incursion\" />
-  </ItemGroup>
 </Project>

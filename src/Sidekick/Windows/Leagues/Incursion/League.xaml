@@ -1,0 +1,60 @@
+<UserControl
+    x:Class="Sidekick.Windows.Leagues.Incursion.League"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:league="clr-namespace:Sidekick.Windows.Leagues"
+    xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Incursion"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:r="clr-namespace:Sidekick.Localization.Leagues.Incursion;assembly=Sidekick.Localization"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
+    </UserControl.Resources>
+
+    <StackPanel Name="Container">
+        <GroupBox Padding="0">
+            <GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Width="125"
+                        Padding="{StaticResource Spacer}"
+                        Text="{x:Static r:IncursionResources.Level1}" />
+                    <TextBlock
+                        Width="125"
+                        Padding="{StaticResource Spacer}"
+                        Text="{x:Static r:IncursionResources.Level2}" />
+                    <TextBlock
+                        Width="125"
+                        Padding="{StaticResource Spacer}"
+                        Text="{x:Static r:IncursionResources.Level3}" />
+                    <TextBlock
+                        Width="250"
+                        Padding="{StaticResource Spacer}"
+                        Text="{x:Static r:IncursionResources.Contains}" />
+                    <TextBlock
+                        Width="250"
+                        Padding="{StaticResource Spacer}"
+                        Text="{x:Static r:IncursionResources.Modifiers}" />
+                </StackPanel>
+            </GroupBox.Header>
+            <ItemsControl ItemsSource="{Binding Path=Model.Rooms}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:Room Model="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </GroupBox>
+        <WrapPanel>
+            <league:Legend />
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

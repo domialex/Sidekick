@@ -8,9 +8,9 @@ namespace Sidekick.UI.Leagues.Incursion
             Modifiers = modifiers;
         }
 
-        public IncursionRoomTier Tier1 { get; set; }
-        public IncursionRoomTier Tier2 { get; set; }
-        public IncursionRoomTier Tier3 { get; set; }
+        public IncursionRoomTier Level1 { get; set; }
+        public IncursionRoomTier Level2 { get; set; }
+        public IncursionRoomTier Level3 { get; set; }
 
         public string Contains { get; set; }
         public string ContainsTooltip { get; set; }

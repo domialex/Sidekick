@@ -200,6 +200,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        public static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corruption Chamber.
         /// </summary>
         public static string CorruptionChamber {
@@ -636,6 +645,33 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level 1.
+        /// </summary>
+        public static string Level1 {
+            get {
+                return ResourceManager.GetString("Level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level 2.
+        /// </summary>
+        public static string Level2 {
+            get {
+                return ResourceManager.GetString("Level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level 3.
+        /// </summary>
+        public static string Level3 {
+            get {
+                return ResourceManager.GetString("Level3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lightning Workshop.
         /// </summary>
         public static string LightningWorkshop {
@@ -691,6 +727,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         public static string MatalTooltip {
             get {
                 return ResourceManager.GetString("MatalTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modifiers.
+        /// </summary>
+        public static string Modifiers {
+            get {
+                return ResourceManager.GetString("Modifiers", resourceCulture);
             }
         }
         

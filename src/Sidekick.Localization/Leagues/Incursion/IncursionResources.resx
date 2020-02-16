@@ -614,4 +614,19 @@ Minions have 13-40% increased Cast Speed
   <data name="Legend" xml:space="preserve">
     <value>Legend</value>
   </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="Level1" xml:space="preserve">
+    <value>Level 1</value>
+  </data>
+  <data name="Level2" xml:space="preserve">
+    <value>Level 2</value>
+  </data>
+  <data name="Level3" xml:space="preserve">
+    <value>Level 3</value>
+  </data>
+  <data name="Modifiers" xml:space="preserve">
+    <value>Modifiers</value>
+  </data>
 </root>
