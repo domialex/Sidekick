@@ -24,5 +24,8 @@ namespace Sidekick.Business.Filters
 
         [JsonPropertyName("map_filters")]
         public MapFilter MapFilter { get; set; } = new MapFilter();
+
+        [JsonPropertyName("trade_filters")]
+        public TradeFilter TradeFilters { get; set; } = new TradeFilter();
     }
 }
