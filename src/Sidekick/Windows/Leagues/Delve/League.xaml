@@ -31,10 +31,7 @@
         </ItemsControl>
         <WrapPanel>
             <league:Legend />
-            <TextBlock
-                Margin="{StaticResource SpacerTop}"
-                VerticalAlignment="Center"
-                Text="{x:Static r:DelveResources.Information}" />
+            <TextBlock VerticalAlignment="Center" Text="{x:Static r:DelveResources.Information}" />
         </WrapPanel>
     </StackPanel>
 </UserControl>
