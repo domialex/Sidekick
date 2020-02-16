@@ -15,7 +15,7 @@ namespace Sidekick.UI.Leagues.Betrayal
 
         public RewardValue Value { get; set; }
 
-        public string BackgroundColor => Value.GetColor();
+        public string Color => Value.GetColor();
 
         public BetrayalReward Transportation { get; set; }
 

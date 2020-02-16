@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:betrayal="clr-namespace:Sidekick.Windows.Leagues.Betrayal"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:delve="clr-namespace:Sidekick.Windows.Leagues.Delve"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:r="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
     SizeToContent="WidthAndHeight"
@@ -19,6 +20,9 @@
     <TabControl>
         <TabItem Header="{x:Static r:LeagueResources.LeagueNameBetrayal}">
             <betrayal:League Model="{Binding Betrayal}" />
+        </TabItem>
+        <TabItem Header="{x:Static r:LeagueResources.LeagueNameDelve}">
+            <delve:League Model="{Binding Delve}" />
         </TabItem>
     </TabControl>
 </Window>

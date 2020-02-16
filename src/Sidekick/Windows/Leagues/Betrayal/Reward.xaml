@@ -12,7 +12,7 @@
         MinHeight="60"
         BorderBrush="Black"
         BorderThickness="1">
-        <Border BorderBrush="{Binding Model.BackgroundColor}" BorderThickness="2,2,2,4">
+        <Border BorderBrush="{Binding Model.Color}" BorderThickness="2,2,2,4">
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

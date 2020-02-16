@@ -14,9 +14,9 @@ namespace Sidekick.Windows.Leagues
             Container.DataContext = this;
         }
 
-        public string LowColor => RewardValue.Low.GetColor();
-        public string NormalColor => RewardValue.Normal.GetColor();
-        public string HighColor => RewardValue.High.GetColor();
-        public string VeryHighColor => RewardValue.VeryHigh.GetColor();
+        public string LowColor => RewardValue.NoValue.GetColor();
+        public string NormalColor => RewardValue.Low.GetColor();
+        public string HighColor => RewardValue.Medium.GetColor();
+        public string VeryHighColor => RewardValue.High.GetColor();
     }
 }
