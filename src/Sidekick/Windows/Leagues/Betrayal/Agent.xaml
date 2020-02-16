@@ -7,16 +7,16 @@
         <GroupBox Margin="0" Padding="0">
             <GroupBox.Header>
                 <Border
-                    MinHeight="90"
+                    Height="90"
                     BorderBrush="Black"
                     BorderThickness="1">
-                    <Border BorderBrush="{Binding Model.Color}" BorderThickness="2,2,2,4">
+                    <Border BorderBrush="{Binding Model.Color}" BorderThickness="3,0,0,0">
                         <StackPanel>
                             <Image Source="{Binding Image}" />
                             <TextBlock
-                                HorizontalAlignment="Center"
+                                Padding="3,0,0,0"
                                 Text="{Binding Model.AgentName}"
-                                TextWrapping="Wrap" />
+                                TextWrapping="WrapWithOverflow" />
                         </StackPanel>
                     </Border>
                 </Border>

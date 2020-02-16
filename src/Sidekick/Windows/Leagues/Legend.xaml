@@ -17,28 +17,28 @@
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding LowColor}"
-            BorderThickness="2">
+            BorderThickness="4,0,0,0">
             <TextBlock Text="{x:Static r:LeagueResources.LegendNotValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding NormalColor}"
-            BorderThickness="2">
+            BorderThickness="4,0,0,0">
             <TextBlock Text="{x:Static r:LeagueResources.LegendLessValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding HighColor}"
-            BorderThickness="2">
+            BorderThickness="4,0,0,0">
             <TextBlock Text="{x:Static r:LeagueResources.LegendValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding VeryHighColor}"
-            BorderThickness="2">
+            BorderThickness="4,0,0,0">
             <TextBlock Text="{x:Static r:LeagueResources.LegendMoreValuable}" />
         </Border>
     </StackPanel>

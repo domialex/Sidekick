@@ -14,9 +14,11 @@
 
     <GroupBox
         Name="Container"
-        MinWidth="150"
-        MinHeight="150"
-        Header="{Binding Path=Model.Name}">
+        Width="150"
+        Padding="0">
+        <GroupBox.Header>
+            <TextBlock Padding="{StaticResource Spacer}" Text="{Binding Path=Model.Name}" />
+        </GroupBox.Header>
         <ItemsControl ItemsSource="{Binding Path=Model.Fossils}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

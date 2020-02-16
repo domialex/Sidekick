@@ -9,15 +9,15 @@
     mc:Ignorable="d">
     <Border
         Name="Container"
-        MinHeight="60"
+        Height="60"
         BorderBrush="Black"
         BorderThickness="1">
-        <Border BorderBrush="{Binding Model.Color}" BorderThickness="2,2,2,4">
+        <Border BorderBrush="{Binding Model.Color}" BorderThickness="3,0,0,0">
             <TextBlock
-                HorizontalAlignment="Center"
+                Padding="3,0,0,0"
                 VerticalAlignment="Center"
                 Text="{Binding Model.Reward}"
-                TextWrapping="Wrap" />
+                TextWrapping="WrapWithOverflow" />
         </Border>
     </Border>
 </UserControl>
