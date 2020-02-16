@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
@@ -15,6 +16,7 @@ using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Business
 {
@@ -28,13 +30,18 @@ namespace Sidekick.Business
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<IPoeDbClient, PoeDbClient>();
             services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
-            services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeClient, TradeClient>();
             services.AddSingleton<IWhisperService, WhisperService>();
+            services.AddSingleton<IPoeDbClient, PoeDbClient>();
+            services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
+
+            services.AddSingleton(serviceProvider =>
+                serviceProvider.GetService<SidekickSettings>().Wiki_Preferred == WikiSetting.PoeDb
+                    ? (IWikiProvider) serviceProvider.GetRequiredService<IPoeDbClient>()
+                    : serviceProvider.GetRequiredService<IPoeWikiClient>());
 
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IAttributeCategoryService, AttributeCategoryService>();
@@ -42,7 +49,7 @@ namespace Sidekick.Business
             services.AddInitializableService<ILeagueService, LeagueService>();
             services.AddInitializableService<IMapService, MapService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
-            services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();           
+            services.AddInitializableService<IStaticItemCategoryService, StaticItemCategoryService>();
 
             return services;
         }

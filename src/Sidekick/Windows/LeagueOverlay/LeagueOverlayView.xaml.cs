@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
+using Sidekick.Localization;
 using Sidekick.Localization.Leagues;
 using Sidekick.Localization.Leagues.Betrayal;
 using Sidekick.Localization.Leagues.Blight;
@@ -21,6 +21,7 @@ namespace Sidekick.Windows.LeagueOverlay
     /// </summary>
     public partial class LeagueOverlayView : Window
     {
+        private readonly IUILanguageProvider languageProvider;
         private Dictionary<TabItem, int[]> tabPageSizeDictionary;
         private TabItem CurrentPage;
         private Dictionary<string, string> DelveFossilRarityDictionary;
@@ -30,8 +31,9 @@ namespace Sidekick.Windows.LeagueOverlay
         public const string MediumValueColorName = "MediumValueColor";
         public const string HighValueColorName = "HighValueColor";
 
-        public LeagueOverlayView()
+        public LeagueOverlayView(IUILanguageProvider languageProvider)
         {
+            this.languageProvider = languageProvider;
             InitializeComponent();
 
             UpdateFossilRarityDictionary();
@@ -42,13 +44,13 @@ namespace Sidekick.Windows.LeagueOverlay
             UpdateMetamorphUIText();
             UpdateDelveUIText();
 
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateHeaderUIText;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateBetrayalUIText;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateIncursionUIText;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateBlightUIText;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateMetamorphUIText;
-            Legacy.UILanguageProvider.UILanguageChanged += UpdateDelveUIText;
+            languageProvider.UILanguageChanged += UpdateFossilRarityDictionary;
+            languageProvider.UILanguageChanged += UpdateHeaderUIText;
+            languageProvider.UILanguageChanged += UpdateBetrayalUIText;
+            languageProvider.UILanguageChanged += UpdateIncursionUIText;
+            languageProvider.UILanguageChanged += UpdateBlightUIText;
+            languageProvider.UILanguageChanged += UpdateMetamorphUIText;
+            languageProvider.UILanguageChanged += UpdateDelveUIText;
 
             tabPageSizeDictionary = new Dictionary<TabItem, int[]>()
             {
@@ -225,7 +227,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateHeaderUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -238,7 +240,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateIncursionUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -397,7 +399,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateBetrayalUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -533,7 +535,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateBlightUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
@@ -578,11 +580,11 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateMetamorphUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst; 
+            labelAbrasiveCatalyst.Content = MetamorphResources.AbrasiveCatalyst;
             textBlockAbrasiveCatalystEffect.Text = MetamorphResources.AbrasiveCatalystEffect;
 
             labelFertileCatalyst.Content = MetamorphResources.FertileCatalyst;
@@ -609,7 +611,7 @@ namespace Sidekick.Windows.LeagueOverlay
 
         private void UpdateDelveUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
+            var cultureInfo = new CultureInfo(languageProvider.Current.Name);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 

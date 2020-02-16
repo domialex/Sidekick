@@ -1,41 +1,41 @@
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Core.Natives;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.Prediction
 {
-    public static class PredictionController
+    public class PredictionController
     {
+        private readonly INativeProcess nativeProcess;
         private static PredictionView _predictionView;
 
         private const int WindowHeight = 450;
         private const int WindowWidth = 800;
         private const int WindowPadding = 5;
 
-        public static bool IsDisplayed => _predictionView?.IsDisplayed ?? false;
-        public static void SetPriceInfoResult(PriceInfoResult info) => _predictionView.SetPriceInfoResult(info);
+        public bool IsDisplayed => _predictionView?.IsDisplayed ?? false;
+        public void SetPriceInfoResult(PriceInfoResult info) => _predictionView.SetPriceInfoResult(info);
 
-        public static void Show() => _predictionView.ShowWindow();
-        public static void Hide() => _predictionView.HideWindowAndClearData();
+        public void Show() => _predictionView.ShowWindow();
+        public void Hide() => _predictionView.HideWindowAndClearData();
 
-        public static void Initialize()
+        public PredictionController(INativeProcess nativeProcess)
         {
+            this.nativeProcess = nativeProcess;
             _predictionView = new PredictionView(WindowWidth, WindowHeight);
             _predictionView.MouseDown += Window_OnHandleMouseDrag;
         }
 
-        public static void Dispose()
+        public void Dispose()
         {
             _predictionView?.Close();
         }
 
-        public static void Open()
+        public void Open()
         {
-            if (_predictionView == null)
-                Initialize();
-
-            var scale = 96f / Legacy.NativeProcess.ActiveWindowDpi;
+            var scale = 96f / nativeProcess.ActiveWindowDpi;
             var xScaled = (int)(Cursor.Position.X * scale);
             var yScaled = (int)(Cursor.Position.Y * scale);
 

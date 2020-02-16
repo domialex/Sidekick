@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Localization.PriceCheck;
 using Sidekick.Windows.Overlay.UserControls;
@@ -42,11 +43,16 @@ namespace Sidekick.Windows.Overlay
 
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
+        private IPoePriceInfoClient poePriceInfoClient;
 
-        public OverlayWindow(int width, int height)
+        public OverlayWindow(int width, int height, string cultureName, IPoePriceInfoClient poePriceInfoClient)
         {
             Width = width;
             Height = height;
+            Thread.CurrentThread.CurrentCulture =
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureName);
+            this.poePriceInfoClient = poePriceInfoClient;
+
             InitializeComponent();
             DataContext = this;
             UpdateUIText();
@@ -55,10 +61,6 @@ namespace Sidekick.Windows.Overlay
 
         private void UpdateUIText()
         {
-            var cultureInfo = new CultureInfo(Legacy.UILanguageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
             textBoxAccountName.Text = PriceCheckResources.OverlayAccountName;
             textBoxAge.Text = PriceCheckResources.OverlayAge;
             textBoxCharacter.Text = PriceCheckResources.OverlayCharacter;
@@ -103,7 +105,7 @@ namespace Sidekick.Windows.Overlay
 
         private async Task GetPricePrediction(string itemText)
         {
-            var predictionResult = await Legacy.PoePriceInfoClient.GetItemPricePrediction(itemText);
+            var predictionResult = await poePriceInfoClient.GetItemPricePrediction(itemText);
             if (predictionResult?.ErrorCode != 0)
             {
                 return;

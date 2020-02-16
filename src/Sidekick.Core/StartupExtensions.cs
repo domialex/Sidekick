@@ -21,9 +21,6 @@ namespace Sidekick.Core
 
             var configuration = builder.Build();
 
-            services.AddSingleton(typeof(IConfigurationRoot), configuration);
-            services.AddSingleton(typeof(IConfiguration), configuration);
-
             var sidekickConfiguration = DefaultSettings.CreateDefault();
             configuration.Bind(sidekickConfiguration);
             services.AddSingleton(sidekickConfiguration);

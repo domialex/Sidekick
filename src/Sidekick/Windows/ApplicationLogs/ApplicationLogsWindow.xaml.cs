@@ -4,27 +4,29 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Windows.ApplicationLogs
 {
     public partial class ApplicationLogsWindow : Window
     {
+        private readonly ILogger logger;
         public event EventHandler OnWindowClosed;
-        public ApplicationLogsWindow()
+        public ApplicationLogsWindow(ILogger logger)
         {
+            this.logger = logger;
             InitializeComponent();
             logsTextBox.Text = GenerateLogLines;
-            Legacy.Logger.MessageLogged += MessageLogged;
+            logger.MessageLogged += MessageLogged;
             logsScrollViewer.ScrollToEnd();
             InitializeIcon();
-            Show();
         }
 
         private static MemoryStream IconStream;
 
         private void InitializeIcon()
         {
-            //TODO: Do better than this, ExaltedOrb Icon is referenced in code... 
+            //TODO: Do better than this, ExaltedOrb Icon is referenced in code...
             if (IconStream == null)
             {
                 lock (this)
@@ -79,7 +81,7 @@ namespace Sidekick.Windows.ApplicationLogs
             }
         }
 
-        private string GenerateLogLines => string.Join(Environment.NewLine, Legacy.Logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
+        private string GenerateLogLines => string.Join(Environment.NewLine,logger.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
 
         protected override void OnClosing(CancelEventArgs e)
         {

@@ -104,7 +104,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0">
             <Hyperlink
                 NavigateUri="{Binding Uri}"
-                RequestNavigate="openQueryLink"
+                RequestNavigate="OpenQueryLink"
                 TextDecorations="None">
                 <TextBlock
                     Grid.Row="1"

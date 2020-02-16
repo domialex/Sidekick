@@ -2,8 +2,7 @@
 
 namespace Sidekick.Business.Apis.PoeDb
 {
-    public interface IPoeDbClient
+    public interface IPoeDbClient: IWikiProvider
     {
-        void Open(Item item);
     }
 }

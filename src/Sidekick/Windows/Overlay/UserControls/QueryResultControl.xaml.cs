@@ -11,7 +11,7 @@ namespace Sidekick.Windows.Overlay.UserControls
             InitializeComponent();
         }
 
-        private void openQueryLink(object sender, RequestNavigateEventArgs e)
+        private void OpenQueryLink(object sender, RequestNavigateEventArgs e)
         {
             var uri = e.Uri.ToString();
             Legacy.Logger.Log(string.Format("Opening in browser: {0}", uri));
