@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -159,7 +158,8 @@ namespace Sidekick.Windows.LeagueOverlay
             {
                 if (!tabPageSizeDictionary.TryGetValue(CurrentPage, out var windowSize))
                 {
-                    throw new Exception("Window Size for TabPage is not defined correctly");
+                    return;
+                    // throw new Exception("Window Size for TabPage is not defined correctly");
                 }
 
                 Height = windowSize[0];

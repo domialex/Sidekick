@@ -14,5 +14,7 @@ namespace Sidekick.UI.Leagues.Betrayal
         public string Tooltip { get; set; }
 
         public RewardValue Value { get; set; }
+
+        public string BackgroundColor => Value.GetColor();
     }
 }
