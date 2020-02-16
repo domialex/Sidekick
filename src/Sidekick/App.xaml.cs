@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
+using Sidekick.UI.Views;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
@@ -24,7 +25,12 @@ namespace Sidekick
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
-        private static TaskbarIcon trayIcon;
+        private OverlayController overlayController;
+        private PredictionController predictionController;
+        private LeagueOverlayController leagueOverlayController;
+        private EventsHandler eventsHandler;
+        private INativeProcess nativeProcess;
+        private INativeBrowser nativeBrowser;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -34,10 +40,11 @@ namespace Sidekick
             typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
+            nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
+            nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
             Legacy.Initialize(serviceProvider);
-
-            Legacy.ViewLocator.Open<Windows.SplashScreen>();
+            serviceProvider.GetService<IViewLocator>().Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
 
@@ -53,16 +60,16 @@ namespace Sidekick
             };
             await initializer.Initialize();
 
+            eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
+
             // Overlay.
-            OverlayController.Initialize();
+            overlayController = serviceProvider.GetRequiredService<OverlayController>();
 
             // League Overlay
-            LeagueOverlayController.Initialize();
-
-            EventsHandler.Initialize();
+            leagueOverlayController = serviceProvider.GetRequiredService<LeagueOverlayController>();
 
             // Price Prediction
-            PredictionController.Initialize();
+            predictionController = serviceProvider.GetRequiredService<PredictionController>();
         }
 
         private async Task RunAutoUpdate()
@@ -76,7 +83,7 @@ namespace Sidekick
                     {
                         if (await updateManagerService.UpdateSidekick())
                         {
-                            Legacy.NativeProcess.Mutex = null;
+                            nativeProcess.Mutex = null;
                             MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
 
                             var startInfo = new ProcessStartInfo
@@ -96,7 +103,7 @@ namespace Sidekick
                     catch (Exception)
                     {
                         MessageBox.Show("Update failed! Please update manually.");
-                        Legacy.NativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
                     }
                 }
             }
@@ -104,16 +111,17 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon?.Dispose();
             serviceProvider.Dispose();
-            OverlayController.Dispose();
-            PredictionController.Dispose();
+            eventsHandler.Dispose();
+            overlayController.Dispose();
+            leagueOverlayController.Dispose();
+            predictionController.Dispose();
             base.OnExit(e);
         }
 
         private void EnsureSingleInstance()
         {
-            Legacy.NativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
+            nativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
             if (!instanceResult)
             {
                 Current.Shutdown();

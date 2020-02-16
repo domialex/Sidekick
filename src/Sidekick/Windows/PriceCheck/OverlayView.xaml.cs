@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Windows.PriceCheck.ViewModels;
 
@@ -40,9 +41,13 @@ namespace Sidekick.Windows.PriceCheck
 
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
+        private IPoePriceInfoClient poePriceInfoClient;
 
-        public OverlayWindow(int width, int height)
+        public OverlayWindow(int width, int height, string cultureName, IPoePriceInfoClient poePriceInfoClient)
         {
+            Thread.CurrentThread.CurrentCulture =
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(cultureName);
+            this.poePriceInfoClient = poePriceInfoClient;
             InitializeComponent();
             DataContext = this;
             Hide();
@@ -93,7 +98,7 @@ namespace Sidekick.Windows.PriceCheck
 
         private async Task GetPricePrediction(string itemText)
         {
-            var predictionResult = await Legacy.PoePriceInfoClient.GetItemPricePrediction(itemText);
+            var predictionResult = await poePriceInfoClient.GetItemPricePrediction(itemText);
             if (predictionResult?.ErrorCode != 0)
             {
                 return;

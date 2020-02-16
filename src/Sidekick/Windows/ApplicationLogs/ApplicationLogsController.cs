@@ -1,17 +1,25 @@
-﻿namespace Sidekick.Windows.ApplicationLogs
-{
-    public static class ApplicationLogsController
-    {
-        private static ApplicationLogsWindow _applicationLogsWindow;
-        public static void Show()
-        {
-            if (_applicationLogsWindow == null)
-            {
-                _applicationLogsWindow = new ApplicationLogsWindow();
-            }
+using Sidekick.Core.Loggers;
 
-            _applicationLogsWindow.Activate();
-            _applicationLogsWindow.OnWindowClosed += (s, e) => _applicationLogsWindow = null;
+namespace Sidekick.Windows.ApplicationLogs
+{
+    public class ApplicationLogsController
+    {
+        private readonly ILogger logger;
+        private ApplicationLogsWindow applicationLogsWindow;
+
+        public ApplicationLogsController(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
+        public void Show()
+        {
+            if (applicationLogsWindow == null)
+                applicationLogsWindow = new ApplicationLogsWindow(logger);
+
+            applicationLogsWindow.Activate();
+            applicationLogsWindow.Show();
+            applicationLogsWindow.OnWindowClosed += (s, e) => applicationLogsWindow = null;
         }
     }
 }
