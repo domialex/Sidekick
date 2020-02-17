@@ -1,7 +1,8 @@
-<Window
-    x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsWindow"
+<base:BaseWindow
+    x:Class="Sidekick.Windows.ApplicationLogs.ApplicationLogsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Windows"
     xmlns:r="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
     Title="Logs - Sidekick"
     Width="720"
@@ -27,4 +28,4 @@
                 TextWrapping="NoWrap" />
         </ScrollViewer>
     </DockPanel>
-</Window>
+</base:BaseWindow>
