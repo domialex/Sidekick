@@ -24,7 +24,7 @@ namespace Sidekick.Core.Loggers
             Log($"{obj.TotalPercentage}% - {obj.Message} ({obj.ServiceName})");
         }
 
-        public event Action MessageLogged;
+        public event Action<Log> MessageLogged;
         public List<Log> Logs { get; private set; } = new List<Log>();
 
         public void Log(string text, LogState state = LogState.None)
@@ -38,7 +38,7 @@ namespace Sidekick.Core.Loggers
             {
                 var log = new Log()
                 {
-                    Date = DateTime.Now,
+                    Date = DateTimeOffset.Now,
                     Message = text,
                     State = state
                 };
@@ -49,7 +49,7 @@ namespace Sidekick.Core.Loggers
                 }
 
                 Logs.Add(log);
-                MessageLogged?.Invoke();
+                MessageLogged?.Invoke(log);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Sidekick.Core.Loggers
         {
             var log = new Log()
             {
-                Date = DateTime.Now,
+                Date = DateTimeOffset.Now,
                 Message = $"EXCEPTION! {e.Message} | {e.StackTrace}",
                 State = LogState.Error
             };

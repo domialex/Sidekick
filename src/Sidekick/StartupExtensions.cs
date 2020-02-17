@@ -20,9 +20,10 @@ namespace Sidekick
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
 
-            services.AddScoped<LeagueView, LeagueView>();
-            services.AddScoped<SettingsView, SettingsView>();
-            services.AddScoped<SplashScreen, SplashScreen>();
+            services.AddScoped<ApplicationLogsView>();
+            services.AddScoped<LeagueView>();
+            services.AddScoped<SettingsView>();
+            services.AddScoped<SplashScreen>();
 
             services.AddInitializableService<TrayIconViewModel, TrayIconViewModel>();
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
@@ -32,7 +33,6 @@ namespace Sidekick
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
             services.AddSingleton<PredictionController>();
-            services.AddSingleton<ApplicationLogsController>();
 
             return services;
         }

@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Parsers;
@@ -28,7 +27,6 @@ namespace Sidekick.Windows.TrayIcon
         private readonly IViewLocator viewLocator;
         private readonly IItemParser itemParser;
         private readonly ITradeClient tradeClient;
-        private readonly ApplicationLogsController applicationLogsController;
         private readonly OverlayController overlayController;
         private readonly IPoeNinjaCache poeNinjaCache;
 
@@ -39,7 +37,6 @@ namespace Sidekick.Windows.TrayIcon
             IViewLocator viewLocator,
             IItemParser itemParser,
             ITradeClient tradeClient,
-            ApplicationLogsController applicationLogsController,
             OverlayController overlayController,
             IPoeNinjaCache poeNinjaCache)
         {
@@ -49,20 +46,11 @@ namespace Sidekick.Windows.TrayIcon
             this.viewLocator = viewLocator;
             this.itemParser = itemParser;
             this.tradeClient = tradeClient;
-            this.applicationLogsController = applicationLogsController;
             this.overlayController = overlayController;
             this.poeNinjaCache = poeNinjaCache;
         }
 
         private TaskbarIcon TrayIcon { get; set; }
-
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
-
-        public ICommand ShowLogsCommand => new RelayCommand(_ => applicationLogsController.Show());
-
-        public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
-
-        public ContextMenu ContextMenu { get; set; }
 
         public Task OnAfterInit()
         {
@@ -168,7 +156,7 @@ Right click to drink.Can only hold charges while in belt.Refills as you kill mon
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
             {
                 Header = TrayResources.ShowLogs,
-                Command = new RelayCommand(_ => applicationLogsController.Show())
+                Command = new RelayCommand(_ => viewLocator.Open<ApplicationLogsView>())
             });
             TrayIcon.ContextMenu.Items.Add(new Separator());
             TrayIcon.ContextMenu.Items.Add(new MenuItem()
