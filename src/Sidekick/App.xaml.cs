@@ -5,15 +5,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
+using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
+using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.TrayIcon;
+
+// Enables debug specific markup in XAML
+// See: https://stackoverflow.com/a/19940157
+#if DEBUG
+[assembly: XmlnsDefinition( "debug-mode", "Namespace" )]
+#endif
 
 namespace Sidekick
 {
@@ -32,6 +43,8 @@ namespace Sidekick
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
         private IViewLocator viewLocator;
+
+        private TaskbarIcon trayIcon;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -62,6 +75,8 @@ namespace Sidekick
             };
             await initializer.Initialize();
 
+            InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
+
             eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
 
             // Overlay.
@@ -72,6 +87,18 @@ namespace Sidekick
 
             // Price Prediction
             predictionController = serviceProvider.GetRequiredService<PredictionController>();
+        }
+
+        private void InitTrayIcon(SidekickSettings settings)
+        {
+            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
+
+            trayIcon.ShowBalloonTip(
+                    TrayResources.Notification_Title,
+                    string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()),
+                    trayIcon.Icon,
+                    largeIcon: true);
         }
 
         private async Task RunAutoUpdate()

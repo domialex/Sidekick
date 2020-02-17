@@ -40,12 +40,14 @@ namespace Sidekick.Localization
             Thread.CurrentThread.CurrentCulture = Current;
             Thread.CurrentThread.CurrentUICulture = Current;
 
-            TranslationSource.Instance.CurrentCulture = Current;
 
             if (UILanguageChanged != null)
             {
                 UILanguageChanged.Invoke();
             }
+
+            // Keeping the old implementation above until all views bind directly to localized resources
+            TranslationSource.Instance.CurrentCulture = Current;
         }
     }
 }
