@@ -141,10 +141,6 @@ namespace Sidekick
         protected override void OnExit(ExitEventArgs e)
         {
             serviceProvider.Dispose();
-            eventsHandler.Dispose();
-            overlayController.Dispose();
-            leagueOverlayController.Dispose();
-            predictionController.Dispose();
             base.OnExit(e);
         }
 
