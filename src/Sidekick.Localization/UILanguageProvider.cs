@@ -40,6 +40,8 @@ namespace Sidekick.Localization
             Thread.CurrentThread.CurrentCulture = Current;
             Thread.CurrentThread.CurrentUICulture = Current;
 
+            TranslationSource.Instance.CurrentCulture = Current;
+
             if (UILanguageChanged != null)
             {
                 UILanguageChanged.Invoke();
