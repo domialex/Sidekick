@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Resources;
-using System.Text;
 
 namespace Sidekick.Localization
 {
     public class TranslationSource : INotifyPropertyChanged
     {
-        public static TranslationSource Instance { get; } = new TranslationSource();
+        public static TranslationSource Instance => new TranslationSource();
 
         private readonly Dictionary<string, ResourceManager> resourceManagerDictionary = new Dictionary<string, ResourceManager>();
 

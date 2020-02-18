@@ -135,6 +135,7 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
+            // Disposing the service provider also disposes registered all IDisposable services
             serviceProvider.Dispose();
             base.OnExit(e);
         }
