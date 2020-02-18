@@ -1,6 +1,31 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:debugEnabled="debug-mode"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Tray;assembly=Sidekick.Localization"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
     xmlns:tb="http://www.hardcodet.net/taskbar">
-    <tb:TaskbarIcon x:Key="TrayIcon" IconSource="../../Resources/ExaltedOrb.ico" />
+
+    <ContextMenu x:Shared="false" x:Key="SysTrayMenu" loc:Translation.ResourceManager="{x:Static resx:TrayResources.ResourceManager}">
+
+        <!-- Only available when debugging -->
+        <mc:AlternateContent>
+            <mc:Choice Requires="debugEnabled">
+                <MenuItem Header="DEBUG - Price Check" Command="{Binding DebugPriceCheckCommand}" />
+                <MenuItem Header="DEBUG - League Overlay" Command="{Binding DebugLeagueOverlayCommand}" />
+                <Separator />
+            </mc:Choice>
+        </mc:AlternateContent>
+        
+        <MenuItem Header="{loc:Loc Settings}" Command="{Binding ShowSettingsCommand}" />
+        <MenuItem Header="{loc:Loc ShowLogs}" Command="{Binding ShowLogsCommand}" />
+        <Separator />
+        <MenuItem Header="{loc:Loc Exit}" Command="{Binding ExitApplicationCommand}" />
+    </ContextMenu>
+
+    <tb:TaskbarIcon
+        x:Key="TrayIcon"
+        IconSource="../../Resources/ExaltedOrb.ico"
+        ContextMenu="{StaticResource SysTrayMenu}"/>
 </ResourceDictionary>

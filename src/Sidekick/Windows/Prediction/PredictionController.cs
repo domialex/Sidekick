@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
@@ -6,7 +7,7 @@ using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.Prediction
 {
-    public class PredictionController
+    public class PredictionController : IDisposable
     {
         private readonly INativeProcess nativeProcess;
         private static PredictionView _predictionView;

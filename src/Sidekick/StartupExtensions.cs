@@ -25,10 +25,10 @@ namespace Sidekick
             services.AddScoped<SettingsView>();
             services.AddScoped<SplashScreen>();
 
-            services.AddInitializableService<TrayIconViewModel, TrayIconViewModel>();
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
             services.AddInitializableService<INativeProcess, NativeProcess>();
+            services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();

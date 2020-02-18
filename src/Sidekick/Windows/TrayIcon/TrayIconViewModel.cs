@@ -1,16 +1,8 @@
-using System;
-using System.Globalization;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using Hardcodet.Wpf.TaskbarNotification;
+using System.Windows.Input;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Settings;
-using Sidekick.Localization;
-using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
@@ -19,11 +11,9 @@ using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
 {
-    public class TrayIconViewModel : IOnAfterInit, IDisposable
+    public class TrayIconViewModel
     {
         private readonly App application;
-        private readonly SidekickSettings settings;
-        private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IViewLocator viewLocator;
         private readonly IItemParser itemParser;
         private readonly ITradeClient tradeClient;
@@ -32,8 +22,6 @@ namespace Sidekick.Windows.TrayIcon
 
         public TrayIconViewModel(
             App application,
-            SidekickSettings settings,
-            IUILanguageProvider uiLanguageProvider,
             IViewLocator viewLocator,
             IItemParser itemParser,
             ITradeClient tradeClient,
@@ -41,8 +29,6 @@ namespace Sidekick.Windows.TrayIcon
             IPoeNinjaCache poeNinjaCache)
         {
             this.application = application;
-            this.settings = settings;
-            this.uiLanguageProvider = uiLanguageProvider;
             this.viewLocator = viewLocator;
             this.itemParser = itemParser;
             this.tradeClient = tradeClient;
@@ -50,48 +36,19 @@ namespace Sidekick.Windows.TrayIcon
             this.poeNinjaCache = poeNinjaCache;
         }
 
-        private TaskbarIcon TrayIcon { get; set; }
+        public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
 
-        public Task OnAfterInit()
+        public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open<ApplicationLogsView>());
+
+        public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
+
+        public ICommand DebugPriceCheckCommand => new RelayCommand(async _ => await DebugPriceCheck());
+
+        public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open<LeagueView>());
+
+        private async Task DebugPriceCheck()
         {
-            if (TrayIcon == null)
-            {
-                TrayIcon = (TaskbarIcon)application.FindResource("TrayIcon");
-                TrayIcon.DataContext = this;
-
-                uiLanguageProvider.UILanguageChanged += InitContextMenu;
-                InitContextMenu();
-
-                TrayIcon.ShowBalloonTip(
-                    TrayResources.Notification_Title,
-                    string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()),
-                    TrayIcon.Icon,
-                    largeIcon: true);
-            }
-
-            return Task.CompletedTask;
-        }
-
-        private void InitContextMenu()
-        {
-            var cultureInfo = new CultureInfo(uiLanguageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
-            if (TrayIcon.ContextMenu == null)
-            {
-                TrayIcon.ContextMenu = new ContextMenu();
-            }
-
-            TrayIcon.ContextMenu.Items.Clear();
-
-#if DEBUG
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
-            {
-                Header = "DEBUG - Price check",
-                Command = new RelayCommand(async (_) =>
-                {
-                    var item = await itemParser.ParseItem(@"Rarity: Unique
+            var item = await itemParser.ParseItem(@"Rarity: Unique
 Blood of the Karui
 Sanctified Life Flask
 --------
@@ -118,62 +75,22 @@ So their King might go on.""
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
 ");
 
-                    if (item != null)
-                    {
-                        overlayController.Open();
+            overlayController.Open();
 
-                        var queryResult = await tradeClient.GetListings(item);
-                        if (queryResult != null)
-                        {
-                            var poeNinjaItem = poeNinjaCache.GetItem(item);
-                            if (poeNinjaItem != null)
-                            {
-                                queryResult.PoeNinjaItem = poeNinjaItem;
-                                queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
-                            }
-                            overlayController.SetQueryResult(queryResult);
-                            return;
-                        }
-
-                        overlayController.Hide();
-                    }
-
-                })
-            });
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
+            var queryResult = await tradeClient.GetListings(item);
+            if (queryResult != null)
             {
-                Header = "DEBUG - League Overlay",
-                Command = new RelayCommand(_ => viewLocator.Open<LeagueView>())
-            });
-            TrayIcon.ContextMenu.Items.Add(new Separator());
-#endif
-
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
-            {
-                Header = TrayResources.Settings,
-                Command = new RelayCommand(_ => viewLocator.Open<SettingsView>())
-            });
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
-            {
-                Header = TrayResources.ShowLogs,
-                Command = new RelayCommand(_ => viewLocator.Open<ApplicationLogsView>())
-            });
-            TrayIcon.ContextMenu.Items.Add(new Separator());
-            TrayIcon.ContextMenu.Items.Add(new MenuItem()
-            {
-                Header = TrayResources.Exit,
-                Command = new RelayCommand(_ => application.Shutdown())
-            });
-        }
-
-        public void Dispose()
-        {
-            if (TrayIcon != null)
-            {
-                TrayIcon.Dispose();
+                var poeNinjaItem = poeNinjaCache.GetItem(item);
+                if (poeNinjaItem != null)
+                {
+                    queryResult.PoeNinjaItem = poeNinjaItem;
+                    queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                }
+                overlayController.SetQueryResult(queryResult);
+                return;
             }
-
-            uiLanguageProvider.UILanguageChanged -= InitContextMenu;
+            overlayController.Hide();
         }
+
     }
 }

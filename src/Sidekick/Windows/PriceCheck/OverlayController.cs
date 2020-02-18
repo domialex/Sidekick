@@ -18,7 +18,7 @@ using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.PriceCheck
 {
-    public class OverlayController
+    public class OverlayController : IDisposable
     {
         private readonly ITradeClient tradeClient;
         private readonly INativeProcess nativeProcess;
