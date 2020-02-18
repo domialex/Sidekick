@@ -25,9 +25,9 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Leagues\Incursion\IncursionResources.Designer.cs">
-      <DependentUpon>IncursionResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>IncursionResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Leagues\LeagueResources.Designer.cs">
       <DependentUpon>LeagueResources.resx</DependentUpon>
@@ -96,13 +96,12 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.zh-tw.resx">
       <SubType>Designer</SubType>
-      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.resx">
       <SubType>Designer</SubType>
-      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\LeagueResources.zh-tw.resx">
       <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>

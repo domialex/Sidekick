@@ -88,7 +88,7 @@ namespace Sidekick.Localization.Leagues {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incrusion.
+        ///   Looks up a localized string similar to Incursion.
         /// </summary>
         public static string LeagueNameIncrusion {
             get {

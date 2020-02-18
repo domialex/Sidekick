@@ -14,7 +14,6 @@
             <mc:Choice Requires="debugEnabled">
                 <MenuItem Header="DEBUG - Price Check" Command="{Binding DebugPriceCheckCommand}" />
                 <MenuItem Header="DEBUG - League Overlay" Command="{Binding DebugLeagueOverlayCommand}" />
-                <MenuItem Header="DEBUG - NEW League Overlay" Command="{Binding DebugNewLeagueOverlayCommand}" />
                 <Separator />
             </mc:Choice>
         </mc:AlternateContent>

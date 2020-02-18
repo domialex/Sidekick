@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.UI.ApplicationLogs;
 using Sidekick.UI.Leagues;
 using Sidekick.UI.Settings;
 using Sidekick.UI.Splash;
@@ -12,6 +13,7 @@ namespace Sidekick.UI
         {
             services.AddSingleton<IViewLocator, ViewLocator>();
 
+            services.AddScoped<IApplicationLogViewModel, ApplicationLogViewModel>();
             services.AddScoped<ILeagueViewModel, LeagueViewModel>();
             services.AddScoped<ISettingsViewModel, SettingsViewModel>();
             services.AddScoped<ISplashViewModel, SplashViewModel>();

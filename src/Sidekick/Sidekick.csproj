@@ -47,6 +47,13 @@
     <None Remove="Windows\Leagues\Blight\Images\Teal_Oil.png" />
     <None Remove="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
     <None Remove="Windows\Leagues\Blight\Images\Violet_Oil.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
+    <None Remove="Windows\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -102,6 +109,13 @@
     <Resource Include="Windows\Leagues\Blight\Images\Teal_Oil.png" />
     <Resource Include="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
     <Resource Include="Windows\Leagues\Blight\Images\Violet_Oil.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
+    <Resource Include="Windows\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -135,9 +149,5 @@
     <Page Update="Styles\Variables\Spacers.xaml">
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Windows\LeagueOverlay\Blight\" />
   </ItemGroup>
 </Project>

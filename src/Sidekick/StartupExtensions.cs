@@ -5,7 +5,6 @@ using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
@@ -21,9 +20,10 @@ namespace Sidekick
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
 
-            services.AddScoped<LeagueView, LeagueView>();
-            services.AddScoped<SettingsView, SettingsView>();
-            services.AddScoped<SplashScreen, SplashScreen>();
+            services.AddScoped<ApplicationLogsView>();
+            services.AddScoped<LeagueView>();
+            services.AddScoped<SettingsView>();
+            services.AddScoped<SplashScreen>();
 
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
@@ -32,9 +32,7 @@ namespace Sidekick
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
-            services.AddSingleton<LeagueOverlayController>();
             services.AddSingleton<PredictionController>();
-            services.AddSingleton<ApplicationLogsController>();
 
             return services;
         }

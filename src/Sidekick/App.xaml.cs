@@ -15,7 +15,6 @@ using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
-using Sidekick.Windows.LeagueOverlay;
 using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.TrayIcon;
@@ -38,7 +37,6 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
         private PredictionController predictionController;
-        private LeagueOverlayController leagueOverlayController;
         private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
@@ -81,9 +79,6 @@ namespace Sidekick
 
             // Overlay.
             overlayController = serviceProvider.GetRequiredService<OverlayController>();
-
-            // League Overlay
-            leagueOverlayController = serviceProvider.GetRequiredService<LeagueOverlayController>();
 
             // Price Prediction
             predictionController = serviceProvider.GetRequiredService<PredictionController>();

@@ -200,6 +200,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        public static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corruption Chamber.
         /// </summary>
         public static string CorruptionChamber {
@@ -636,6 +645,33 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level 1.
+        /// </summary>
+        public static string Level1 {
+            get {
+                return ResourceManager.GetString("Level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level 2.
+        /// </summary>
+        public static string Level2 {
+            get {
+                return ResourceManager.GetString("Level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level 3.
+        /// </summary>
+        public static string Level3 {
+            get {
+                return ResourceManager.GetString("Level3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lightning Workshop.
         /// </summary>
         public static string LightningWorkshop {
@@ -665,9 +701,9 @@ namespace Sidekick.Localization.Leagues.Incursion {
         /// <summary>
         ///   Looks up a localized string similar to Locus of Corruption.
         /// </summary>
-        public static string LocuOfCorruption {
+        public static string LocusOfCorruption {
             get {
-                return ResourceManager.GetString("LocuOfCorruption", resourceCulture);
+                return ResourceManager.GetString("LocusOfCorruption", resourceCulture);
             }
         }
         
@@ -691,6 +727,15 @@ namespace Sidekick.Localization.Leagues.Incursion {
         public static string MatalTooltip {
             get {
                 return ResourceManager.GetString("MatalTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modifiers.
+        /// </summary>
+        public static string Modifiers {
+            get {
+                return ResourceManager.GetString("Modifiers", resourceCulture);
             }
         }
         
@@ -733,9 +778,19 @@ namespace Sidekick.Localization.Leagues.Incursion {
         /// <summary>
         ///   Looks up a localized string similar to Poison Garden.
         /// </summary>
-        public static string PoisionGarden {
+        public static string PoisonGarden {
             get {
-                return ResourceManager.GetString("PoisionGarden", resourceCulture);
+                return ResourceManager.GetString("PoisonGarden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe
+        ///Level 3: Tacati Mod or Apep&apos;s Slumber.
+        /// </summary>
+        public static string PoisonGardenContains {
+            get {
+                return ResourceManager.GetString("PoisonGardenContains", resourceCulture);
             }
         }
         
@@ -773,16 +828,6 @@ namespace Sidekick.Localization.Leagues.Incursion {
         public static string PoolsOfRestorationModifiers {
             get {
                 return ResourceManager.GetString("PoolsOfRestorationModifiers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chaos Damage Rank 3 Recipe
-        ///Level 3: Tacati Mod or Apep&apos;s Slumber.
-        /// </summary>
-        public static string PosionGardenContains {
-            get {
-                return ResourceManager.GetString("PosionGardenContains", resourceCulture);
             }
         }
         

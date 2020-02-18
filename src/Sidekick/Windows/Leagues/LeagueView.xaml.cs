@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
+using System;
 using System.Windows;
-using System.Windows.Input;
 using Bindables;
-using Sidekick.Core.Natives;
 using Sidekick.UI.Leagues;
-using Sidekick.UI.Views;
 
 namespace Sidekick.Windows.Leagues
 {
@@ -12,32 +9,17 @@ namespace Sidekick.Windows.Leagues
     /// Interaction logic for LeagueView.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class LeagueView : Window, ISidekickView
+    public partial class LeagueView : BaseWindow
     {
-        private readonly IKeybindEvents keybindEvents;
-
-        public LeagueView(ILeagueViewModel leagueViewModel, IKeybindEvents keybindEvents)
+        public LeagueView(ILeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
+            : base(serviceProvider)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;
-            this.keybindEvents = keybindEvents;
             DataContext = ViewModel;
 
+            SetWindowPositionPercent(25, 0);
             Show();
-            MouseLeftButtonDown += Window_MouseLeftButtonDown;
-            keybindEvents.OnCloseWindow += KeybindEvents_OnCloseWindow;
-        }
-
-        private Task<bool> KeybindEvents_OnCloseWindow()
-        {
-            Close();
-            keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
-            return Task.FromResult(true);
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
         }
 
         public ILeagueViewModel ViewModel { get; set; }
