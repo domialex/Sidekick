@@ -7,7 +7,7 @@ namespace Sidekick.Localization
 {
     public class TranslationSource : INotifyPropertyChanged
     {
-        public static TranslationSource Instance => new TranslationSource();
+        public static TranslationSource Instance { get; } = new TranslationSource();
 
         private readonly Dictionary<string, ResourceManager> resourceManagerDictionary = new Dictionary<string, ResourceManager>();
 
