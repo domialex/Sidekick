@@ -16,16 +16,30 @@ namespace Sidekick.UI.Settings
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
+        private readonly IKeybindEvents keybindEvents;
+
+        public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public string CurrentKey { get; set; }
+
+        public SidekickSettings Settings { get; private set; }
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
-            ILeagueService leagueService)
+            ILeagueService leagueService,
+            IKeybindEvents keybindEvents)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
-
+            this.keybindEvents = keybindEvents;
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
 
@@ -45,17 +59,11 @@ namespace Sidekick.UI.Settings
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
 
-        public SidekickSettings Settings { get; private set; }
-
-        public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
-
-        public string CurrentKey { get; set; }
-
-        public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
-
-        public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
-
-        public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
+        // This is called when CurrentKey changes, thanks to Fody
+        public void OnCurrentKeyChanged()
+        {
+            keybindEvents.Enabled = CurrentKey == null;
+        }
 
         public void Save()
         {
