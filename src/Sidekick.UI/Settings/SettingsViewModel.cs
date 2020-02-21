@@ -18,18 +18,6 @@ namespace Sidekick.UI.Settings
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
 
-        public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
-
-        public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
-
-        public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
-
-        public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
-
-        public string CurrentKey { get; set; }
-
-        public SidekickSettings Settings { get; private set; }
-
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
@@ -58,6 +46,18 @@ namespace Sidekick.UI.Settings
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
+
+        public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public string CurrentKey { get; set; }
+
+        public SidekickSettings Settings { get; private set; }
 
         // This is called when CurrentKey changes, thanks to Fody
         public void OnCurrentKeyChanged()
