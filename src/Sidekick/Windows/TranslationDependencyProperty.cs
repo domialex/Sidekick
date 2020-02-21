@@ -67,7 +67,7 @@ namespace Sidekick.Windows
 
             if (string.IsNullOrEmpty(baseName))
             {
-                var parentObject = (targetObject as ItemsControl).Parent;
+                var parentObject = (targetObject as ItemsControl)?.Parent;
                 baseName = GetResourceManager(parentObject)?.BaseName ?? string.Empty;
             }
 

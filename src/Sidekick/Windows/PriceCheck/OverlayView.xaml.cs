@@ -47,10 +47,8 @@ namespace Sidekick.Windows.PriceCheck
         private IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeBrowser nativeBrowser;
 
-        public OverlayWindow(IPoePriceInfoClient poePriceInfoClient, INativeBrowser nativeBrowser, IUILanguageProvider iUILanguageProvider)
+        public OverlayWindow(IPoePriceInfoClient poePriceInfoClient, INativeBrowser nativeBrowser, IUILanguageProvider uiLanguageProvider)
         {
-            Thread.CurrentThread.CurrentCulture =
-            Thread.CurrentThread.CurrentUICulture = iUILanguageProvider.Current;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeBrowser = nativeBrowser;
             InitializeComponent();

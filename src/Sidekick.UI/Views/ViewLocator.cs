@@ -24,11 +24,9 @@ namespace Sidekick.UI.Views
         public void Open<TView>()
             where TView : ISidekickView
         {
-            var uiLanguageProvider = serviceProvider.GetService<IUILanguageProvider>();
-
-            var cultureInfo = new CultureInfo(uiLanguageProvider.Current.Name);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            // Still needed for localization of league overlay models
+            Thread.CurrentThread.CurrentCulture = TranslationSource.Instance.CurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = TranslationSource.Instance.CurrentCulture;
 
             var view = new ViewInstance(
                 serviceProvider.CreateScope(),

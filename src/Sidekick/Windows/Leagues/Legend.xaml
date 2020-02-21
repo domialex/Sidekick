@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:r="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
+    loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -18,28 +20,28 @@
             Padding="2"
             BorderBrush="{Binding LowColor}"
             BorderThickness="4,0,0,0">
-            <TextBlock Text="{x:Static r:LeagueResources.LegendNotValuable}" />
+            <TextBlock Text="{loc:Loc LegendNotValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding NormalColor}"
             BorderThickness="4,0,0,0">
-            <TextBlock Text="{x:Static r:LeagueResources.LegendLessValuable}" />
+            <TextBlock Text="{loc:Loc LegendLessValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding HighColor}"
             BorderThickness="4,0,0,0">
-            <TextBlock Text="{x:Static r:LeagueResources.LegendValuable}" />
+            <TextBlock Text="{loc:Loc LegendValuable}" />
         </Border>
         <Border
             Margin="{StaticResource SpacerRight}"
             Padding="2"
             BorderBrush="{Binding VeryHighColor}"
             BorderThickness="4,0,0,0">
-            <TextBlock Text="{x:Static r:LeagueResources.LegendMoreValuable}" />
+            <TextBlock Text="{loc:Loc LegendMoreValuable}" />
         </Border>
     </StackPanel>
 </UserControl>

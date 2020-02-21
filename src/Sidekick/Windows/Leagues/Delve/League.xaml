@@ -6,7 +6,9 @@
     xmlns:league="clr-namespace:Sidekick.Windows.Leagues"
     xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Delve"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:r="clr-namespace:Sidekick.Localization.Leagues.Delve;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Delve;assembly=Sidekick.Localization"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
+    loc:Translation.ResourceManager="{x:Static resx:DelveResources.ResourceManager}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -31,7 +33,7 @@
         </ItemsControl>
         <WrapPanel>
             <league:Legend />
-            <TextBlock VerticalAlignment="Center" Text="{x:Static r:DelveResources.Information}" />
+            <TextBlock VerticalAlignment="Center" Text="{loc:Loc Information}" />
         </WrapPanel>
     </StackPanel>
 </UserControl>
