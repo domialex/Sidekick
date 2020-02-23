@@ -9,7 +9,9 @@ namespace Sidekick.Windows.ApplicationLogs
     {
         private readonly IApplicationLogViewModel viewModel;
 
-        public ApplicationLogsView(IApplicationLogViewModel viewModel, IServiceProvider serviceProvider)
+        public ApplicationLogsView(
+            IApplicationLogViewModel viewModel,
+            IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
             this.viewModel = viewModel;
