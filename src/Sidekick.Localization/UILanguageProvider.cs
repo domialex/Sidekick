@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Localization
@@ -10,8 +9,6 @@ namespace Sidekick.Localization
     public class UILanguageProvider : IUILanguageProvider
     {
         private static string[] SupportedLanguages = new[] { "en", "fr", "de", "zh-tw" };
-
-        public event Action UILanguageChanged;
 
         public UILanguageProvider(SidekickSettings settings)
         {
@@ -32,22 +29,9 @@ namespace Sidekick.Localization
 
         public List<CultureInfo> AvailableLanguages { get; private set; }
 
-        public CultureInfo Current { get; private set; }
-
         public void SetLanguage(string name)
         {
-            Current = new CultureInfo(name);
-            Thread.CurrentThread.CurrentCulture = Current;
-            Thread.CurrentThread.CurrentUICulture = Current;
-
-
-            if (UILanguageChanged != null)
-            {
-                UILanguageChanged.Invoke();
-            }
-
-            // Keeping the old implementation above until all views bind directly to localized resources
-            TranslationSource.Instance.CurrentCulture = Current;
+            TranslationSource.Instance.CurrentCulture = new CultureInfo(name);
         }
     }
 }

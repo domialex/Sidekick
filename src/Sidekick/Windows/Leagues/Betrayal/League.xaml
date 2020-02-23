@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:league="clr-namespace:Sidekick.Windows.Leagues"
     xmlns:local="clr-namespace:Sidekick.Windows.Leagues.Betrayal"
-    xmlns:r="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization">
+    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
+    loc:Translation.ResourceManager="{x:Static resx:BetrayalResources.ResourceManager}">
+    
     <UserControl.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />
     </UserControl.Resources>
@@ -16,28 +19,28 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="30"
-                    Text="{x:Static r:BetrayalResources.TypeTransportation}" />
+                    Text="{loc:Loc TypeTransportation}" />
             </Border>
             <Border MinHeight="60">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="30"
-                    Text="{x:Static r:BetrayalResources.TypeFortification}" />
+                    Text="{loc:Loc TypeFortification}" />
             </Border>
             <Border MinHeight="60">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="30"
-                    Text="{x:Static r:BetrayalResources.TypeResearch}" />
+                    Text="{loc:Loc TypeResearch}" />
             </Border>
             <Border MinHeight="60">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="30"
-                    Text="{x:Static r:BetrayalResources.TypeIntervention}" />
+                    Text="{loc:Loc TypeIntervention}" />
             </Border>
         </StackPanel>
         <StackPanel>

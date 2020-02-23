@@ -58,8 +58,6 @@ namespace Sidekick.Windows.PriceCheck
             ILanguageProvider languageProvider,
             IStaticItemCategoryService staticItemCategoryService)
         {
-            Thread.CurrentThread.CurrentCulture =
-            Thread.CurrentThread.CurrentUICulture = iUILanguageProvider.Current;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeBrowser = nativeBrowser;
             this.languageProvider = languageProvider;
