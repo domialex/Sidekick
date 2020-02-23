@@ -28,9 +28,9 @@ namespace Sidekick.Core.Natives
 
             await SetText(string.Empty);
 
-            keyboard.SendCommand(KeyboardCommandEnum.Copy);
+            keyboard.Copy();
 
-            await Task.Delay(100);
+            await Task.Delay(50);
 
             // Retrieve clipboard.
             var text = await GetText();

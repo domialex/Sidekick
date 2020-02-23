@@ -22,6 +22,7 @@ namespace Sidekick.Windows.PriceCheck
         private readonly ITradeClient tradeClient;
         private readonly INativeProcess nativeProcess;
         private readonly INativeClipboard clipboard;
+        private readonly INativeCursor nativeCursor;
         private readonly ILogger logger;
         private readonly IItemParser itemParser;
         private readonly IPoeNinjaCache poeNinjaCache;
@@ -33,6 +34,7 @@ namespace Sidekick.Windows.PriceCheck
             INativeProcess nativeProcess,
             IKeybindEvents events,
             INativeClipboard clipboard,
+            INativeCursor nativeCursor,
             ILogger logger,
             IItemParser itemParser,
             IPoeNinjaCache poeNinjaCache,
@@ -42,6 +44,7 @@ namespace Sidekick.Windows.PriceCheck
             this.tradeClient = tradeClient;
             this.nativeProcess = nativeProcess;
             this.clipboard = clipboard;
+            this.nativeCursor = nativeCursor;
             this.logger = logger;
             this.itemParser = itemParser;
             this.poeNinjaCache = poeNinjaCache;
@@ -83,7 +86,7 @@ namespace Sidekick.Windows.PriceCheck
         public void Open()
         {
             var scale = 96f / nativeProcess.ActiveWindowDpi;
-            var cursorPosition = nativeProcess.GetCursorPosition();
+            var cursorPosition = nativeCursor.GetCursorPosition();
             var xScaled = (int)(cursorPosition.X * scale);
             var yScaled = (int)(cursorPosition.Y * scale);
 
@@ -113,7 +116,7 @@ namespace Sidekick.Windows.PriceCheck
             var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
 
             var positionX = desiredX + (desiredX < xMidScaled ? overlayWindow.Padding.Left : -overlayWindow.Width - overlayWindow.Padding.Left);
-            var positionY = desiredY + (desiredY < yMidScaled ? overlayWindow.Padding.Top : -overlayWindow.Height- overlayWindow.Padding.Top);
+            var positionY = desiredY + (desiredY < yMidScaled ? overlayWindow.Padding.Top : -overlayWindow.Height - overlayWindow.Padding.Top);
 
             overlayWindow.SetWindowPosition((int)positionX, (int)positionY);
         }

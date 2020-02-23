@@ -99,13 +99,15 @@ namespace Sidekick.Natives
             }
         }
 
+        public void Copy()
+        {
+            SendKeys.SendWait("^{c}");
+        }
+
         public void SendCommand(KeyboardCommandEnum command)
         {
             switch (command)
             {
-                case KeyboardCommandEnum.Copy:
-                    SendKeys.SendWait("^{c}");
-                    break;
                 case KeyboardCommandEnum.FindItems:
                     SendKeys.SendWait("^{f}^{a}^{v}{Enter}");
                     break;

@@ -36,11 +36,6 @@ namespace Sidekick.Windows.Prediction
 
         public void Open()
         {
-            var scale = 96f / nativeProcess.ActiveWindowDpi;
-            var xScaled = (int)(Cursor.Position.X * scale);
-            var yScaled = (int)(Cursor.Position.Y * scale);
-
-            EnsureBounds(xScaled, yScaled, scale);
             Show();
         }
 

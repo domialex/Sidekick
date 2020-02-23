@@ -5,7 +5,6 @@ namespace Sidekick.Core.Natives
         GoToHideout,
         Stash_Left,
         Stash_Right,
-        Copy,
         FindItems,
         LeaveParty,
         ReplyToLatestWhisper

@@ -17,7 +17,7 @@ namespace Sidekick.Natives
         public void Open(Uri uri)
         {
             logger.Log($"Opening in browser: {uri.AbsoluteUri}");
-            ProcessStartInfo psi = new ProcessStartInfo
+            var psi = new ProcessStartInfo
             {
                 FileName = uri.AbsoluteUri,
                 UseShellExecute = true

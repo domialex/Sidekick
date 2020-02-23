@@ -12,7 +12,6 @@ namespace Sidekick.Core.Natives
         Task CheckPermission();
         float ActiveWindowDpi { get; }
         Rectangle GetScreenDimensions();
-        Point GetCursorPosition();
         string ClientLogPath { get; }
     }
 }

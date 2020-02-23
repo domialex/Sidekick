@@ -15,14 +15,13 @@ using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
-using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.TrayIcon;
 
 // Enables debug specific markup in XAML
 // See: https://stackoverflow.com/a/19940157
 #if DEBUG
-[assembly: XmlnsDefinition( "debug-mode", "Namespace" )]
+[assembly: XmlnsDefinition("debug-mode", "Namespace")]
 #endif
 
 namespace Sidekick
@@ -36,7 +35,6 @@ namespace Sidekick
 
         private ServiceProvider serviceProvider;
         private OverlayController overlayController;
-        private PredictionController predictionController;
         private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
@@ -79,9 +77,6 @@ namespace Sidekick
 
             // Overlay.
             overlayController = serviceProvider.GetRequiredService<OverlayController>();
-
-            // Price Prediction
-            predictionController = serviceProvider.GetRequiredService<PredictionController>();
         }
 
         private void InitTrayIcon(SidekickSettings settings)

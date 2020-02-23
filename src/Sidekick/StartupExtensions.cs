@@ -6,7 +6,6 @@ using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
-using Sidekick.Windows.Prediction;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
@@ -28,11 +27,11 @@ namespace Sidekick
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
             services.AddInitializableService<INativeProcess, NativeProcess>();
+            services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
-            services.AddSingleton<PredictionController>();
 
             return services;
         }

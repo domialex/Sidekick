@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +13,6 @@ using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
-using Sidekick.Localization;
 using Sidekick.Windows.PriceCheck.ViewModels;
 
 namespace Sidekick.Windows.PriceCheck
@@ -54,7 +52,6 @@ namespace Sidekick.Windows.PriceCheck
         public OverlayWindow(
             IPoePriceInfoClient poePriceInfoClient,
             INativeBrowser nativeBrowser,
-            IUILanguageProvider iUILanguageProvider,
             ILanguageProvider languageProvider,
             IStaticItemCategoryService staticItemCategoryService)
         {
@@ -120,7 +117,7 @@ namespace Sidekick.Windows.PriceCheck
 
             Dispatcher.Invoke(() =>
             {
-                txtPrediction.Text = $"{predictionResult.Min?.ToString("F")}-{predictionResult.Max?.ToString("F")} {predictionResult.Currency}";
+                txtPrediction.Text = $"{predictionResult.Min?.ToString("F")}-{predictionResult.Max?.ToString("F")} {predictionResult.Currency} ({predictionResult.ConfidenceScore.ToString("N1")}%)";
             });
         }
 

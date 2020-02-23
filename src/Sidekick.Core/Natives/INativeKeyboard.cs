@@ -8,5 +8,6 @@ namespace Sidekick.Core.Natives
         void SendCommand(KeyboardCommandEnum command);
         void SendInput(string input);
         bool IsKeyPressed(string key);
+        void Copy();
     }
 }
