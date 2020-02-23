@@ -19,7 +19,7 @@ namespace Sidekick.Business.Categories
 
         public List<StaticItemCategory> Categories { get; private set; }
         public Dictionary<string, string> Lookup { get; private set; }
-        public Dictionary<string, string> CurrencyUrls { get; set; }
+        public Dictionary<string, string> CurrencyUrls { get; private set; }
 
         public async Task OnInit()
         {
