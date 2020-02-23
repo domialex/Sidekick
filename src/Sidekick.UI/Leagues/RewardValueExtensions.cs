@@ -6,10 +6,10 @@ namespace Sidekick.UI.Leagues
         {
             switch (value)
             {
-                case RewardValue.High: return "#38B44A";
-                case RewardValue.Medium: return "#EFB73E";
-                case RewardValue.Low: return "#E95420";
-                default: return "#DF382C";
+                case RewardValue.High: return "#469408";
+                case RewardValue.Medium: return "#ffc107";
+                case RewardValue.Low: return "#D9831F";
+                default: return "#D9230F";
             }
         }
     }

@@ -16,7 +16,7 @@
         <Border
             Padding="4,4,0,4"
             BorderBrush="{Binding Model.Color}"
-            BorderThickness="6,0,0,0">
+            BorderThickness="5,0,0,0">
             <TextBlock
                 VerticalAlignment="Center"
                 Text="{Binding Model.Name}"
