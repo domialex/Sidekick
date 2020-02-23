@@ -49,11 +49,11 @@ namespace Sidekick.Business.Apis.PoeDb
         {
             string subUrl;
 
-            if (item.Rarity == languageProvider.Language.RarityUnique)
+            if (item.Rarity == Parsers.Models.Rarity.Unique)
             {
                 subUrl = SubUrlUnique;
             }
-            else if (item.Rarity == languageProvider.Language.RarityGem)
+            else if (item.Rarity == Parsers.Models.Rarity.Gem)
             {
                 subUrl = SubUrlGem;
             }
@@ -62,8 +62,8 @@ namespace Sidekick.Business.Apis.PoeDb
                 subUrl = SubUrlItem;
             }
 
-            var searchLink = item.Rarity == languageProvider.Language.RarityUnique ? item.Name : item.Type;
-            string wikiLink = subUrl + searchLink.Replace(" ", "+");
+            var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
+            var wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri + wikiLink);
         }
     }

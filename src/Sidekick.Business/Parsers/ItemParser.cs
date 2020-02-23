@@ -58,7 +58,36 @@ namespace Sidekick.Business.Parsers
                 isOrgan = lines.Any(x => x.Contains(languageProvider.Language.DescriptionOrgan));
                 hasNote = lines.LastOrDefault().Contains("Note");
 
-                var rarity = lines[0].Replace(languageProvider.Language.DescriptionRarity, string.Empty);
+                var rarityString = lines[0].Replace(languageProvider.Language.DescriptionRarity, string.Empty);
+                var rarity = Rarity.Unknown;
+                if (rarityString == languageProvider.Language.RarityNormal)
+                {
+                    rarity = Rarity.Normal;
+                }
+                else if (rarityString == languageProvider.Language.RarityMagic)
+                {
+                    rarity = Rarity.Magic;
+                }
+                else if (rarityString == languageProvider.Language.RarityRare)
+                {
+                    rarity = Rarity.Rare;
+                }
+                else if (rarityString == languageProvider.Language.RarityUnique)
+                {
+                    rarity = Rarity.Unique;
+                }
+                else if (rarityString == languageProvider.Language.RarityCurrency)
+                {
+                    rarity = Rarity.Currency;
+                }
+                else if (rarityString == languageProvider.Language.RarityGem)
+                {
+                    rarity = Rarity.Gem;
+                }
+                else if (rarityString == languageProvider.Language.RarityDivinationCard)
+                {
+                    rarity = Rarity.DivinationCard;
+                }
 
                 if (isMap)
                 {
@@ -71,22 +100,22 @@ namespace Sidekick.Business.Parsers
                         Rarity = rarity,
                     };
 
-                    if (rarity == languageProvider.Language.RarityNormal)
+                    if (rarity == Rarity.Normal)
                     {
                         item.Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim();
                         item.Type = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Replace(languageProvider.Language.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if (rarity == languageProvider.Language.RarityMagic)        // Extract only map name
+                    else if (rarity == Rarity.Magic)        // Extract only map name
                     {
                         item.Name = languageProvider.Language.PrefixBlighted + " " + mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();
                         item.Type = mapService.MapNames.Where(c => lines[1].Contains(c)).FirstOrDefault();     // Search map name from statics
                     }
-                    else if (rarity == languageProvider.Language.RarityRare)
+                    else if (rarity == Rarity.Rare)
                     {
                         item.Name = lines[2].Trim();
                         item.Type = lines[2].Replace(languageProvider.Language.PrefixBlighted, string.Empty).Trim();
                     }
-                    else if (rarity == languageProvider.Language.RarityUnique)
+                    else if (rarity == Rarity.Unique)
                     {
                         if (!isIdentified)
                         {
@@ -107,7 +136,7 @@ namespace Sidekick.Business.Parsers
                         Name = lines[1]
                     };
                 }
-                else if (rarity == languageProvider.Language.RarityUnique)
+                else if (rarity == Rarity.Unique)
                 {
                     item = new EquippableItem
                     {
@@ -126,7 +155,7 @@ namespace Sidekick.Business.Parsers
                         };
                     }
                 }
-                else if (rarity == languageProvider.Language.RarityRare)
+                else if (rarity == Rarity.Rare)
                 {
                     item = new EquippableItem()
                     {
@@ -155,11 +184,11 @@ namespace Sidekick.Business.Parsers
                         ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
                     }
                 }
-                else if (rarity == languageProvider.Language.RarityMagic)
+                else if (rarity == Rarity.Magic)
                 {
                     throw new Exception("Magic items are not yet supported.");
                 }
-                else if (rarity == languageProvider.Language.RarityNormal)
+                else if (rarity == Rarity.Normal)
                 {
                     if (lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)))      // Equippable Item
                     {
@@ -198,7 +227,7 @@ namespace Sidekick.Business.Parsers
                             Type = lines[1],
                         };
                     }
-                    else                // Fragment
+                    else // Fragment
                     {
                         item = new FragmentItem()
                         {
@@ -207,7 +236,7 @@ namespace Sidekick.Business.Parsers
                         };
                     }
                 }
-                else if (rarity == languageProvider.Language.RarityCurrency)
+                else if (rarity == Rarity.Currency)
                 {
                     item = new CurrencyItem()
                     {
@@ -215,7 +244,7 @@ namespace Sidekick.Business.Parsers
                         Type = lines[1]
                     };
                 }
-                else if (rarity == languageProvider.Language.RarityGem)
+                else if (rarity == Rarity.Gem)
                 {
                     item = new GemItem()
                     {
@@ -231,12 +260,12 @@ namespace Sidekick.Business.Parsers
                     // Unsure if this works on non arabic lettering (ru/th/kr)
                     if ((item as GemItem).IsVaalVersion)
                     {
-                        string vaalName = lines.Where(x => x.Contains(languageProvider.Language.KeywordVaal) && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
+                        var vaalName = lines.Where(x => x.Contains(languageProvider.Language.KeywordVaal) && x.Contains(item.Name)).FirstOrDefault(); // this should capture the vaaled name version
                         item.Name = vaalName;
                         item.Type = vaalName;
                     }
                 }
-                else if (rarity == languageProvider.Language.RarityDivinationCard)
+                else if (rarity == Rarity.DivinationCard)
                 {
                     item = new DivinationCardItem()
                     {
@@ -249,16 +278,17 @@ namespace Sidekick.Business.Parsers
                     throw new NotImplementedException();
                 }
 
-                if (item != null && string.IsNullOrEmpty(item.Rarity))
+                if (!string.IsNullOrWhiteSpace(item.Name))
                 {
-                    item.Rarity = string.IsNullOrEmpty(rarity) ? "unknown" : rarity;
+                    item.Name = ParseName(item.Name);
                 }
 
-                if (!string.IsNullOrWhiteSpace(item.Name))
-                    item.Name = ParseName(item.Name);
-
                 if (!string.IsNullOrWhiteSpace(item.Type))
+                {
                     item.Type = ParseName(item.Type);
+                }
+
+                item.Rarity = rarity;
             }
             catch (Exception e)
             {
@@ -311,16 +341,15 @@ namespace Sidekick.Business.Parsers
             // trim leading prefix if any
             if (input.Contains(languageProvider.Language.DescriptionExperience))
                 input = input.Replace(languageProvider.Language.DescriptionExperience, "");
-
-            int percent = 0;
             var split = input.Split('/');
+
+            int percent;
             if (split.Length == 2)
             {
-                int max = 1; // no division by 0
-                int.TryParse(split[0], out int current);
-                int.TryParse(split[1], out max);
+                int.TryParse(split[0], out var current);
+                int.TryParse(split[1], out var max);
 
-                percent = (int)(((float)current / (float)max) * 100.0f);
+                percent = (int)(((float)current / max) * 100.0f);
                 percent = (percent < 100) ? percent : 100;
             }
             else
@@ -338,11 +367,11 @@ namespace Sidekick.Business.Parsers
                 return 0;
             }
 
-            List<int> values = new List<int>();
+            var values = new List<int>();
 
             if (!string.IsNullOrEmpty(input))
             {
-                foreach (string fragment in input.Split(' '))
+                foreach (var fragment in input.Split(' '))
                 {
                     values.Add(fragment.Count(c => c == '-') == 0 ? 0 : fragment.Count(c => c == '-') + 1);
                 }

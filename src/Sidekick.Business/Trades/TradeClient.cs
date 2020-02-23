@@ -53,8 +53,8 @@ namespace Sidekick.Business.Trades
             {
                 // TODO: More complex logic for determining bulk vs regular search
                 // Maybe also add Fragments to bulk search
-                string path = "";
-                string json = "";
+                var path = "";
+                var json = "";
                 string baseUri = null;
 
                 if (IsBulk(item.Type))
@@ -66,7 +66,7 @@ namespace Sidekick.Business.Trades
                 else
                 {
                     path = $"search/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new QueryRequest(item, languageProvider.Language), poeApiClient.Options);
+                    json = JsonSerializer.Serialize(new QueryRequest(item), poeApiClient.Options);
                     baseUri = languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId;
                 }
 
