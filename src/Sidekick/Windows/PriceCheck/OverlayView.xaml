@@ -3,8 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:VM="clr-namespace:Sidekick.Windows.PriceCheck.ViewModels"
-    xmlns:resx="clr-namespace:Sidekick.Localization.PriceCheck;assembly=Sidekick.Localization"
     xmlns:loc="clr-namespace:Sidekick.Windows"
+    xmlns:resx="clr-namespace:Sidekick.Localization.PriceCheck;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:PriceCheckResources.ResourceManager}"
     SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -85,18 +85,15 @@
                             Width="140"
                             DisplayMemberBinding="{Binding Path=CharacterName}"
                             Header="{loc:Loc OverlayCharacter}" />
-                        <GridViewColumn
-                            Width="80"
-                            DisplayMemberBinding="{Binding Path=Price}"
-                            Header="{loc:Loc OverlayPrice}">
+                        <GridViewColumn Width="80" Header="{loc:Loc OverlayPrice}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <DockPanel>
                                         <TextBlock Text="{Binding Price.Amount}" />
-                                        <TextBlock Text=" x " />
-                                        <Image Width="20" >
+                                        <TextBlock Text=" " />
+                                        <Image Height="20">
                                             <Image.Source>
-                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding Price.CurrencyUrl}"/>
+                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding Price.CurrencyUrl}" />
                                             </Image.Source>
                                         </Image>
                                     </DockPanel>
