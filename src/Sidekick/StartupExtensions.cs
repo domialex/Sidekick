@@ -6,7 +6,7 @@ using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.Prices;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 

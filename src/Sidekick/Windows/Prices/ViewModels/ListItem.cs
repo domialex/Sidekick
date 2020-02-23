@@ -1,7 +1,7 @@
 using System;
 using Sidekick.Business.Trades.Results;
 
-namespace Sidekick.Windows.PriceCheck.ViewModels
+namespace Sidekick.Windows.Prices.ViewModels
 {
     public partial class ListItem
     {

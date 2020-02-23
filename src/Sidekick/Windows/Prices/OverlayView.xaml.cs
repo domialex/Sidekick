@@ -13,9 +13,9 @@ using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
-using Sidekick.Windows.PriceCheck.ViewModels;
+using Sidekick.Windows.Prices.ViewModels;
 
-namespace Sidekick.Windows.PriceCheck
+namespace Sidekick.Windows.Prices
 {
     public partial class OverlayWindow : Window, INotifyPropertyChanged
     {
@@ -99,7 +99,7 @@ namespace Sidekick.Windows.PriceCheck
                 AppendToItemListing(queryResult.Result);
 
                 // Hardcoded to the English value of Rare since poeprices.info only support English.
-                if (queryResult.Item.Rarity == "Rare" && queryResult.Item.IsIdentified)
+                if (queryResult.Item.Rarity == Business.Parsers.Models.Rarity.Rare && queryResult.Item.IsIdentified)
                 {
                     Task.Run(() => GetPricePrediction(queryResult.Item.ItemText));
                 }

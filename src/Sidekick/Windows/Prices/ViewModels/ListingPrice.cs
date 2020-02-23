@@ -1,4 +1,4 @@
-namespace Sidekick.Windows.PriceCheck.ViewModels
+namespace Sidekick.Windows.Prices.ViewModels
 {
     public partial class ListItem
     {

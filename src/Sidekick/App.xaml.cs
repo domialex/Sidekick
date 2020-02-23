@@ -15,7 +15,7 @@ using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.Prices;
 using Sidekick.Windows.TrayIcon;
 
 // Enables debug specific markup in XAML

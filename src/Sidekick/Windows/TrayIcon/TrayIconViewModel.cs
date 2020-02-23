@@ -6,7 +6,7 @@ using Sidekick.Business.Trades;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.Prices;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
