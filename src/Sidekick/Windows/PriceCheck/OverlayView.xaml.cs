@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Business.Categories;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Localization;
@@ -46,13 +48,22 @@ namespace Sidekick.Windows.PriceCheck
         private bool dataIsUpdating = false;
         private IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeBrowser nativeBrowser;
+        private readonly ILanguageProvider languageProvider;
+        private readonly IStaticItemCategoryService staticItemCategoryService;
 
-        public OverlayWindow(IPoePriceInfoClient poePriceInfoClient, INativeBrowser nativeBrowser, IUILanguageProvider iUILanguageProvider)
+        public OverlayWindow(
+            IPoePriceInfoClient poePriceInfoClient,
+            INativeBrowser nativeBrowser,
+            IUILanguageProvider iUILanguageProvider,
+            ILanguageProvider languageProvider,
+            IStaticItemCategoryService staticItemCategoryService)
         {
             Thread.CurrentThread.CurrentCulture =
             Thread.CurrentThread.CurrentUICulture = iUILanguageProvider.Current;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeBrowser = nativeBrowser;
+            this.languageProvider = languageProvider;
+            this.staticItemCategoryService = staticItemCategoryService;
             InitializeComponent();
             DataContext = this;
             Hide();
@@ -88,9 +99,9 @@ namespace Sidekick.Windows.PriceCheck
                 }
 
                 this.queryResult = queryResult;
-                this.itemListingControls?.Clear();
+                itemListingControls?.Clear();
 
-                queryResult.Result.Select((x, i) => new ListItem(x)).ToList().ForEach(i => this.itemListingControls?.Add(i));
+                AppendToItemListing(queryResult.Result);
 
                 // Hardcoded to the English value of Rare since poeprices.info only support English.
                 if (queryResult.Item.Rarity == "Rare" && queryResult.Item.IsIdentified)
@@ -142,12 +153,24 @@ namespace Sidekick.Windows.PriceCheck
                 newQueryResult.Result = newResults;
 
                 queryResult = newQueryResult;
-                queryToAppend.Result.Select((x, i) => new ListItem(x)).ToList().ForEach(item => this.itemListingControls.Add(item));
+                AppendToItemListing(queryToAppend.Result);
 
                 dataIsUpdating = false;
             }
         }
         delegate void AppendQueryResultCallback(QueryResult<ListingResult> queryResult);
+
+        private void AppendToItemListing(IEnumerable<ListingResult> listingResults)
+        {
+            foreach (var listingResult in listingResults)
+            {
+                staticItemCategoryService.CurrencyUrls.TryGetValue(listingResult.Listing.Price.Currency, out var url);
+
+                // Find a cleaner way of getting the PoeCdnBaseUrl?
+                itemListingControls?.Add(new ListItem(listingResult, $"{languageProvider.Language.PoeCdnBaseUrl}{url}"));
+            }
+        }
+
         public void SetWindowPosition(int x, int y)
         {
             if (!Dispatcher.CheckAccess())
