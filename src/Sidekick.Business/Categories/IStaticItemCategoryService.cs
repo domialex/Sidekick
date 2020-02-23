@@ -7,5 +7,6 @@ namespace Sidekick.Business.Categories
     {
         List<StaticItemCategory> Categories { get; }
         Dictionary<string, string> Lookup { get; }
+        Dictionary<string, string> CurrencyUrls { get; }
     }
 }

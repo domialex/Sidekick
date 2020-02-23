@@ -3,15 +3,20 @@ using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.Windows.PriceCheck.ViewModels
 {
-    public class ListItem
+    public partial class ListItem
     {
-        public ListItem(ListingResult item)
+        public ListItem(ListingResult item, string currencyUrl)
         {
             AccountName = item.Listing.Account.Name;
             CharacterName = item.Listing.Account.LastCharacterName;
             if (item.Listing.Price != null)
             {
-                Price = $"{item.Listing.Price.Amount} {item.Listing.Price.Currency}";
+                Price = new ListingPrice
+                {
+                    Amount = item.Listing.Price.Amount,
+                    Currency = item.Listing.Price.Currency,
+                    CurrencyUrl = currencyUrl
+                };
             }
             ItemLevel = item.Item.Ilvl.ToString();
             Age = GetHumanReadableTimeSpan(item.Listing.Indexed);
@@ -23,7 +28,7 @@ namespace Sidekick.Windows.PriceCheck.ViewModels
 
         public string CharacterName { get; set; }
 
-        public string Price { get; set; }
+        public ListingPrice Price { get; set; }
 
         public string ItemLevel { get; set; }
 

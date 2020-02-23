@@ -85,8 +85,21 @@
                             Header="{x:Static r:PriceCheckResources.OverlayCharacter}" />
                         <GridViewColumn
                             Width="80"
-                            DisplayMemberBinding="{Binding Path=Price}"
-                            Header="{x:Static r:PriceCheckResources.OverlayPrice}" />
+                            Header="{x:Static r:PriceCheckResources.OverlayPrice}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding Price.Amount}" />
+                                        <TextBlock Text=" x " />
+                                        <Image Width="20" >
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding Price.CurrencyUrl}"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn
                             Width="40"
                             DisplayMemberBinding="{Binding Path=ItemLevel}"

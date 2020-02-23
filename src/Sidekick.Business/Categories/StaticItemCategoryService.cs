@@ -19,12 +19,14 @@ namespace Sidekick.Business.Categories
 
         public List<StaticItemCategory> Categories { get; private set; }
         public Dictionary<string, string> Lookup { get; private set; }
+        public Dictionary<string, string> CurrencyUrls { get; set; }
 
         public async Task OnInit()
         {
             Categories = null;
             Categories = await poeApiClient.Fetch<StaticItemCategory>();
             Lookup = ToLookup();
+            CurrencyUrls = GetCurrencyUrls();
         }
 
         public void Dispose()
@@ -35,6 +37,19 @@ namespace Sidekick.Business.Categories
         private Dictionary<string, string> ToLookup()
         {
             return Categories.Where(x => !x.Id.StartsWith("Maps")).SelectMany(x => x.Entries).ToDictionary(key => key.Text, value => value.Id);
+        }
+
+        private Dictionary<string, string> GetCurrencyUrls()
+        {
+            var currencies = Categories.FirstOrDefault(c => c.Id == "Currency");
+
+            // TODO: Handle this better?
+            if(currencies == null)
+            {
+                return new Dictionary<string, string>();
+            }
+
+            return currencies.Entries.ToDictionary(key => key.Id, value => value.Image.Substring(1));
         }
     }
 }
