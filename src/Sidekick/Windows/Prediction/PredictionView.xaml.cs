@@ -11,7 +11,6 @@ namespace Sidekick.Windows.Prediction
     /// </summary>
     public partial class PredictionView : Window
     {
-        private PriceInfoResult priceInfo;
         public readonly string[] PROPERTY_SEPERATOR = new string[] { "--------" };
         public readonly string[] NEWLINE_SEPERATOR = new string[] { Environment.NewLine };
 
@@ -44,7 +43,6 @@ namespace Sidekick.Windows.Prediction
                     return;
                 }
 
-                this.priceInfo = info;
                 var itemParagraph = new Paragraph();
                 //var lines = info.ItemText.Split(NEWLINE_SEPERATOR, StringSplitOptions.RemoveEmptyEntries);
 
@@ -103,7 +101,6 @@ namespace Sidekick.Windows.Prediction
             }
             else
             {
-                priceInfo = null;
                 textBoxItemStats.Document.Blocks.Clear();
                 textBoxWarningMessage.Document.Blocks.Clear();
                 labelConfidence.Content = "";

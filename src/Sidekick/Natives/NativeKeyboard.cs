@@ -15,7 +15,7 @@ namespace Sidekick.Natives
 {
     public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable
     {
-        private static List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
+        private static readonly List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
             WindowsHook.Keys.ControlKey,
             WindowsHook.Keys.LControlKey,
             WindowsHook.Keys.RControlKey,
@@ -147,15 +147,13 @@ namespace Sidekick.Natives
 
         public bool IsKeyPressed(string key)
         {
-            switch (key)
+            return key switch
             {
-                case "Ctrl":
-                    return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
-                        || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
-                        || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
-                default:
-                    throw new Exception("Unrecognized key.");
-            }
+                "Ctrl" => Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
+                                       || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
+                                       || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL),
+                _ => throw new Exception("Unrecognized key."),
+            };
         }
     }
 }

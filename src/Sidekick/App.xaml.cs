@@ -34,8 +34,6 @@ namespace Sidekick
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
-        private OverlayController overlayController;
-        private EventsHandler eventsHandler;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
         private IViewLocator viewLocator;
@@ -73,10 +71,8 @@ namespace Sidekick
 
             InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
 
-            eventsHandler = serviceProvider.GetRequiredService<EventsHandler>();
-
-            // Overlay.
-            overlayController = serviceProvider.GetRequiredService<OverlayController>();
+            serviceProvider.GetRequiredService<EventsHandler>();
+            serviceProvider.GetRequiredService<OverlayController>();
         }
 
         private void InitTrayIcon(SidekickSettings settings)

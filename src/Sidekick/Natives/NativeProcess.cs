@@ -1,19 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sidekick.Natives
 {
@@ -37,13 +37,6 @@ namespace Sidekick.Natives
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool CloseHandle(IntPtr hObject);
-
-        /// <summary>
-        /// Retrieves the cursor's position, in screen coordinates.
-        /// </summary>
-        /// <see>See MSDN documentation for further information.</see>
-        [DllImport("user32.dll")]
-        private static extern bool GetCursorPos(out Point lpPoint);
         #endregion
 
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
@@ -127,29 +120,14 @@ namespace Sidekick.Natives
         {
             get
             {
-                using (var g = Graphics.FromHwnd(GetForegroundWindow()))
-                {
-                    return g.DpiX;
-                }
+                using var g = Graphics.FromHwnd(GetForegroundWindow());
+                return g.DpiX;
             }
-        }
-
-        private int GetActiveWindowWidth()
-        {
-            GetWindowRect(GetForegroundWindow(), out var windowRect);
-            return windowRect.Width;
         }
 
         public Rectangle GetScreenDimensions()
         {
             return GetWindowRect(GetForegroundWindow(), out var rectangle) ? rectangle : default;
-        }
-
-        public Point GetCursorPosition()
-        {
-            GetCursorPos(out var lpPoint);
-
-            return lpPoint;
         }
 
         public async Task CheckPermission()
@@ -184,13 +162,11 @@ namespace Sidekick.Natives
                 Mutex?.Close();
                 try
                 {
-                    using (var p = new Process())
-                    {
-                        p.StartInfo.FileName = Application.ExecutablePath;
-                        p.StartInfo.UseShellExecute = true;
-                        p.StartInfo.Verb = "runas";
-                        p.Start();
-                    }
+                    using var p = new Process();
+                    p.StartInfo.FileName = Application.ExecutablePath;
+                    p.StartInfo.UseShellExecute = true;
+                    p.StartInfo.Verb = "runas";
+                    p.Start();
                 }
                 catch (Win32Exception e)
                 {

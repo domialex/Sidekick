@@ -44,7 +44,7 @@ namespace Sidekick.Windows.PriceCheck
 
         private bool overlayIsUpdatable = false;
         private bool dataIsUpdating = false;
-        private IPoePriceInfoClient poePriceInfoClient;
+        private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeBrowser nativeBrowser;
         private readonly ILanguageProvider languageProvider;
         private readonly IStaticItemCategoryService staticItemCategoryService;
@@ -69,7 +69,7 @@ namespace Sidekick.Windows.PriceCheck
         {
             var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
             scrollViewer?.ScrollToTop();
-            scrollViewer.ScrollChanged += _itemList_ScrollChanged;
+            scrollViewer.ScrollChanged += itemList_ScrollChanged;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -135,15 +135,17 @@ namespace Sidekick.Windows.PriceCheck
                 }
 
                 // Update queryResult
-                var newQueryResult = new QueryResult<ListingResult>();
-                newQueryResult.Id = queryResult.Id;
-                newQueryResult.Item = queryResult.Item;
-                newQueryResult.Total = queryToAppend.Total;
-                newQueryResult.Uri = queryResult.Uri;
-                newQueryResult.PoeNinjaItem = queryResult.PoeNinjaItem;
+                var newQueryResult = new QueryResult<ListingResult>
+                {
+                    Id = queryResult.Id,
+                    Item = queryResult.Item,
+                    Total = queryToAppend.Total,
+                    Uri = queryResult.Uri,
+                    PoeNinjaItem = queryResult.PoeNinjaItem
+                };
 
                 var newResults = new List<ListingResult>();
-                newResults.AddRange(this.queryResult.Result);
+                newResults.AddRange(queryResult.Result);
                 newResults.AddRange(queryToAppend.Result);
                 newQueryResult.Result = newResults;
 
@@ -219,7 +221,7 @@ namespace Sidekick.Windows.PriceCheck
         }
         delegate void HideWindowAndClearDataCallback();
 
-        private void _itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+        private void itemList_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
             // The api only returns 100 results maximum.
             if (!itemListingControls.Any() || itemListingControls.Count >= 100)

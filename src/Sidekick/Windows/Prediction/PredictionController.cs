@@ -2,14 +2,12 @@ using System;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
-using Sidekick.Core.Natives;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.Prediction
 {
     public class PredictionController : IDisposable
     {
-        private readonly INativeProcess nativeProcess;
         private static PredictionView _predictionView;
 
         private const int WindowHeight = 450;
@@ -22,9 +20,8 @@ namespace Sidekick.Windows.Prediction
         public void Show() => _predictionView.ShowWindow();
         public void Hide() => _predictionView.HideWindowAndClearData();
 
-        public PredictionController(INativeProcess nativeProcess)
+        public PredictionController()
         {
-            this.nativeProcess = nativeProcess;
             _predictionView = new PredictionView(WindowWidth, WindowHeight);
             _predictionView.MouseDown += Window_OnHandleMouseDrag;
         }
