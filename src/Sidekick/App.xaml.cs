@@ -51,7 +51,6 @@ namespace Sidekick
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
-            Legacy.Initialize(serviceProvider);
             viewLocator = serviceProvider.GetService<IViewLocator>();
             viewLocator.Open<Windows.SplashScreen>();
 
