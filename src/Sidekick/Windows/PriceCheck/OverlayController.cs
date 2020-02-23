@@ -14,7 +14,6 @@ using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Application = System.Windows.Application;
-using Cursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Windows.PriceCheck
 {
@@ -84,8 +83,9 @@ namespace Sidekick.Windows.PriceCheck
         public void Open()
         {
             var scale = 96f / nativeProcess.ActiveWindowDpi;
-            var xScaled = (int)(Cursor.Position.X * scale);
-            var yScaled = (int)(Cursor.Position.Y * scale);
+            var cursorPosition = nativeProcess.GetCursorPosition();
+            var xScaled = (int)(cursorPosition.X * scale);
+            var yScaled = (int)(cursorPosition.Y * scale);
 
             EnsureBounds(xScaled, yScaled, scale);
             Show();
@@ -107,14 +107,15 @@ namespace Sidekick.Windows.PriceCheck
         /// </summary>
         private void EnsureBounds(int desiredX, int desiredY, float scale)
         {
-            // var screenRect = Screen.FromPoint(Cursor.Position).Bounds;
-            // var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
-            // var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
-            // 
-            // var positionX = desiredX + (desiredX < xMidScaled ? WINDOW_PADDING : -WINDOW_WIDTH - WINDOW_PADDING);
-            // var positionY = desiredY + (desiredY < yMidScaled ? WINDOW_PADDING : -WINDOW_HEIGHT - WINDOW_PADDING);
-            // 
-            // overlayWindow.SetWindowPosition(positionX, positionY);
+            var screenRect = nativeProcess.GetScreenDimensions();
+
+            var xMidScaled = (screenRect.X + (screenRect.Width / 2)) * scale;
+            var yMidScaled = (screenRect.Y + (screenRect.Height / 2)) * scale;
+
+            var positionX = desiredX + (desiredX < xMidScaled ? overlayWindow.Padding.Left : -overlayWindow.Width - overlayWindow.Padding.Left);
+            var positionY = desiredY + (desiredY < yMidScaled ? overlayWindow.Padding.Top : -overlayWindow.Height- overlayWindow.Padding.Top);
+
+            overlayWindow.SetWindowPosition((int)positionX, (int)positionY);
         }
 
         /// <summary>

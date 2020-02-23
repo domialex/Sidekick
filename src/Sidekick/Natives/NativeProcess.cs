@@ -29,11 +29,21 @@ namespace Sidekick.Natives
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(IntPtr hWnd, out Rectangle lpRect);
 
+        [DllImport("user32.dll")]
+        static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
+
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool CloseHandle(IntPtr hObject);
+
+        /// <summary>
+        /// Retrieves the cursor's position, in screen coordinates.
+        /// </summary>
+        /// <see>See MSDN documentation for further information.</see>
+        [DllImport("user32.dll")]
+        private static extern bool GetCursorPos(out Point lpPoint);
         #endregion
 
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
@@ -128,6 +138,18 @@ namespace Sidekick.Natives
         {
             GetWindowRect(GetForegroundWindow(), out var windowRect);
             return windowRect.Width;
+        }
+
+        public Rectangle GetScreenDimensions()
+        {
+            return GetWindowRect(GetForegroundWindow(), out var rectangle) ? rectangle : default;
+        }
+
+        public Point GetCursorPosition()
+        {
+            GetCursorPos(out var lpPoint);
+
+            return lpPoint;
         }
 
         public async Task CheckPermission()

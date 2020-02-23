@@ -88,7 +88,21 @@
                         <GridViewColumn
                             Width="80"
                             DisplayMemberBinding="{Binding Path=Price}"
-                            Header="{loc:Loc OverlayPrice}" />
+                            Header="{loc:Loc OverlayPrice}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding Price.Amount}" />
+                                        <TextBlock Text=" x " />
+                                        <Image Width="20" >
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding Price.CurrencyUrl}"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn
                             Width="40"
                             DisplayMemberBinding="{Binding Path=ItemLevel}"
