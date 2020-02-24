@@ -1,14 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
-using PropertyChanged;
+using System.ComponentModel;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.UI.ApplicationLogs
 {
-    [AddINotifyPropertyChangedInterface]
     public class ApplicationLogViewModel : IApplicationLogViewModel, IDisposable
     {
         private readonly ILogger logger;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ApplicationLogViewModel(ILogger logger)
         {

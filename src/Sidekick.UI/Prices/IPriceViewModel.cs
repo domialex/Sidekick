@@ -10,6 +10,7 @@ namespace Sidekick.UI.Prices
     {
         bool IsFetching { get; }
         Item Item { get; }
+        string ItemColor { get; }
         PoeNinjaItem PoeNinjaItem { get; }
         DateTime? PoeNinjaLastRefreshTimestamp { get; }
         string PredictionText { get; }

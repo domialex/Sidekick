@@ -21,6 +21,7 @@ namespace Sidekick
 
             services.AddScoped<ApplicationLogsView>();
             services.AddScoped<LeagueView>();
+            services.AddScoped<PriceView>();
             services.AddScoped<SettingsView>();
             services.AddScoped<SplashScreen>();
 
@@ -30,7 +31,6 @@ namespace Sidekick
             services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
-            services.AddSingleton<OverlayWindow>();
 
             return services;
         }

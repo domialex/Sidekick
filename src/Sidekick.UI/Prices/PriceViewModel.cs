@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
@@ -13,6 +12,7 @@ using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
+using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
 {
@@ -40,6 +40,8 @@ namespace Sidekick.UI.Prices
         }
 
         public Business.Parsers.Models.Item Item { get; private set; }
+
+        public string ItemColor => Item?.GetColor();
 
         public ObservableCollection<PriceItem> Results { get; private set; }
 
@@ -72,6 +74,11 @@ namespace Sidekick.UI.Prices
 
         public async Task LoadMoreData()
         {
+            if (IsFetching || Results.Count >= 100)
+            {
+                return;
+            }
+
             var page = (int)Math.Ceiling(Results.Count / 10d);
             FetchTask = tradeClient.GetListingsForSubsequentPages(Item, page);
             QueryResult = await FetchTask;

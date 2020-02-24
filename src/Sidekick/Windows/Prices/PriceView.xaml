@@ -1,5 +1,5 @@
 <base:BaseWindow
-    x:Class="Sidekick.Windows.Prices.OverlayWindow"
+    x:Class="Sidekick.Windows.Prices.PriceView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Windows"
@@ -25,7 +25,7 @@
             DockPanel.Dock="Top"
             FontSize="16"
             FontWeight="Bold"
-            Foreground="{Binding queryResult.Item, Converter={StaticResource RarityToColorConverter}}" />
+            Foreground="{Binding ItemColor}" />
 
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
@@ -54,7 +54,7 @@
             </TextBlock>
 
             <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="{Binding queryResult.Uri}" RequestNavigate="openQueryLink">
+                <Hyperlink NavigateUri="{Binding queryResult.Uri}" RequestNavigate="OpenLink">
                     <TextBlock>
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}Showing {0} items out of {1}">

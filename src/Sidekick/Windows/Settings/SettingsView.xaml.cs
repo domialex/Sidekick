@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Input;
 using Sidekick.UI.Settings;
@@ -5,11 +6,14 @@ using Sidekick.UI.Views;
 
 namespace Sidekick.Windows.Settings
 {
-    public partial class SettingsView : Window, ISidekickView
+    public partial class SettingsView : BaseWindow, ISidekickView
     {
         private readonly ISettingsViewModel viewModel;
 
-        public SettingsView(ISettingsViewModel viewModel)
+        public SettingsView(
+            IServiceProvider serviceProvider,
+            ISettingsViewModel viewModel)
+            : base(serviceProvider)
         {
             this.viewModel = viewModel;
 

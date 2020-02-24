@@ -8,6 +8,7 @@ using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
 using Sidekick.Windows.Leagues;
+using Sidekick.Windows.Prices;
 
 namespace Sidekick.Handlers
 {
@@ -72,7 +73,8 @@ namespace Sidekick.Handlers
 
         private Task<bool> Events_OnPriceCheck()
         {
-            throw new NotImplementedException();
+            viewLocator.Open<PriceView>();
+            return Task.FromResult(true);
         }
 
         private Task<bool> Events_OnOpenLeagueOverview()
