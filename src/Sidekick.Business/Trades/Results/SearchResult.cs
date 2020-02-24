@@ -1,10 +1,9 @@
 namespace Sidekick.Business.Trades.Results
 {
-    public class ListingResult
+    public class SearchResult
     {
         public string Id { get; set; }
         public Listing Listing { get; set; }
-        public ItemListing Item { get; set; }
-        public bool Gone { get; set; }
+        public Item Item { get; set; }
     }
 }

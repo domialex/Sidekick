@@ -1,5 +1,3 @@
-using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Parsers.Models;
 using System;
 using System.Collections.Generic;
 
@@ -13,14 +11,6 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         public int Total { get; set; }
 
-        public Parsers.Models.Item Item { get; set; }
-
         public Uri Uri { get; set; }
-
-        public PoeNinjaItem PoeNinjaItem { get; set; }
-
-        public bool HasAverage => PoeNinjaItem != null;
-
-        public DateTime? LastRefreshTimestamp { get; set; }
     }
 }

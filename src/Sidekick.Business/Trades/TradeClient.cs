@@ -97,7 +97,7 @@ namespace Sidekick.Business.Trades
 
         }
 
-        public async Task<QueryResult<ListingResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
+        public async Task<QueryResult<SearchResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
         {
             var queryResult = await Query(item);
 
@@ -105,12 +105,11 @@ namespace Sidekick.Business.Trades
             {
                 var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 1).Select(x => GetListings(queryResult, x)));
 
-                return new QueryResult<ListingResult>()
+                return new QueryResult<SearchResult>()
                 {
                     Id = queryResult.Id,
                     Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
                     Total = queryResult.Total,
-                    Item = item,
                     Uri = queryResult.Uri
                 };
             }
@@ -118,7 +117,7 @@ namespace Sidekick.Business.Trades
             return null;
         }
 
-        public async Task<QueryResult<ListingResult>> GetListings(Parsers.Models.Item item)
+        public async Task<QueryResult<SearchResult>> GetListings(Parsers.Models.Item item)
         {
             var queryResult = await Query(item);
 
@@ -126,12 +125,11 @@ namespace Sidekick.Business.Trades
             {
                 var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
 
-                return new QueryResult<ListingResult>()
+                return new QueryResult<SearchResult>()
                 {
                     Id = queryResult.Id,
                     Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
                     Total = queryResult.Total,
-                    Item = item,
                     Uri = queryResult.Uri
                 };
             }
@@ -139,10 +137,10 @@ namespace Sidekick.Business.Trades
             return null;
         }
 
-        public async Task<QueryResult<ListingResult>> GetListings(QueryResult<string> queryResult, int page = 0)
+        public async Task<QueryResult<SearchResult>> GetListings(QueryResult<string> queryResult, int page = 0)
         {
             logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
-            QueryResult<ListingResult> result = null;
+            QueryResult<SearchResult> result = null;
 
             try
             {
@@ -150,7 +148,7 @@ namespace Sidekick.Business.Trades
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    result = await JsonSerializer.DeserializeAsync<QueryResult<ListingResult>>(content, new JsonSerializerOptions()
+                    result = await JsonSerializer.DeserializeAsync<QueryResult<SearchResult>>(content, new JsonSerializerOptions()
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });

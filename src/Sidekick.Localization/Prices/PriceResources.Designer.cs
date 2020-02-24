@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sidekick.Localization.PriceCheck {
+namespace Sidekick.Localization.Prices {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sidekick.Localization.PriceCheck {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class PriceCheckResources {
+    public class PriceResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal PriceCheckResources() {
+        internal PriceResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sidekick.Localization.PriceCheck {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sidekick.Localization.PriceCheck.PriceCheckResources", typeof(PriceCheckResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sidekick.Localization.Prices.PriceResources", typeof(PriceResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,78 @@ namespace Sidekick.Localization.PriceCheck {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} day.
+        /// </summary>
+        public static string Age_Day {
+            get {
+                return ResourceManager.GetString("Age_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} days.
+        /// </summary>
+        public static string Age_Days {
+            get {
+                return ResourceManager.GetString("Age_Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} hour.
+        /// </summary>
+        public static string Age_Hour {
+            get {
+                return ResourceManager.GetString("Age_Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} hours.
+        /// </summary>
+        public static string Age_Hours {
+            get {
+                return ResourceManager.GetString("Age_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} minute.
+        /// </summary>
+        public static string Age_Minute {
+            get {
+                return ResourceManager.GetString("Age_Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} minutes.
+        /// </summary>
+        public static string Age_Minutes {
+            get {
+                return ResourceManager.GetString("Age_Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to now.
+        /// </summary>
+        public static string Age_Now {
+            get {
+                return ResourceManager.GetString("Age_Now", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} seconds.
+        /// </summary>
+        public static string Age_Seconds {
+            get {
+                return ResourceManager.GetString("Age_Seconds", resourceCulture);
             }
         }
         

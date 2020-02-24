@@ -9,7 +9,7 @@ using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
 using Sidekick.Windows.Leagues;
 
-namespace Sidekick.Helpers.Input
+namespace Sidekick.Handlers
 {
     public class EventsHandler : IDisposable
     {
@@ -54,6 +54,8 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty -= TriggerLeaveParty;
             events.OnOpenSearch -= TriggerOpenSearch;
             events.OnWhisperReply -= TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
+            events.OnPriceCheck -= Events_OnPriceCheck;
         }
 
         private void Initialize()
@@ -64,7 +66,13 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview; ;
+            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
+            events.OnPriceCheck += Events_OnPriceCheck;
+        }
+
+        private Task<bool> Events_OnPriceCheck()
+        {
+            throw new NotImplementedException();
         }
 
         private Task<bool> Events_OnOpenLeagueOverview()

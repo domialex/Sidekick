@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
-using Sidekick.Helpers.Input;
+using Sidekick.Handlers;
 using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.ApplicationLogs;
@@ -30,7 +30,6 @@ namespace Sidekick
             services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
-            services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
 
             return services;

@@ -1,8 +1,6 @@
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,52 +9,88 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
-using Sidekick.Windows.Prices.ViewModels;
+using Sidekick.UI.Prices;
+using Sidekick.UI.Views;
 
 namespace Sidekick.Windows.Prices
 {
-    public partial class OverlayWindow : Window, INotifyPropertyChanged
+    public partial class OverlayWindow : BaseWindow, ISidekickView
     {
         #region Events
         public delegate void ItemScrollReachedEndHandler(Business.Parsers.Models.Item item, int displayedItemsCount);
         public event ItemScrollReachedEndHandler ItemScrollReachedEnd;
         public void OnItemScrollReachedEnd(Business.Parsers.Models.Item item, int displayedItemsCount)
         {
+
+            var page = (int)Math.Ceiling(displayedItemsCount / 10d);
+            var queryResult = await tradeClient.GetListingsForSubsequentPages(item, page);
+            if (queryResult.Result.Any())
+            {
+                overlayWindow.AppendQueryResult(queryResult);
+            }
+
             ItemScrollReachedEnd?.Invoke(item, displayedItemsCount);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
-        public ObservableCollection<ListItem> itemListingControls { get; set; } = new ObservableCollection<ListItem>();
 
-        private QueryResult<ListingResult> queryResultValue = new QueryResult<ListingResult>();
-        public QueryResult<ListingResult> queryResult
-        {
-            get { return queryResultValue; }
-            set { queryResultValue = value; NotifyPropertyChanged(); }
-        }
-
-        private bool overlayIsUpdatable = false;
-        private bool dataIsUpdating = false;
+        private readonly IPriceViewModel viewModel;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeBrowser nativeBrowser;
+        private readonly INativeClipboard nativeClipboard;
+        private readonly IItemParser itemParser;
         private readonly ILanguageProvider languageProvider;
         private readonly IStaticItemCategoryService staticItemCategoryService;
 
         public OverlayWindow(
+            IServiceProvider serviceProvider,
+            IPriceViewModel viewModel,
             IPoePriceInfoClient poePriceInfoClient,
             INativeBrowser nativeBrowser,
+            INativeClipboard nativeClipboard,
+            IItemParser itemParser,
             ILanguageProvider languageProvider,
             IStaticItemCategoryService staticItemCategoryService)
+            : base(serviceProvider)
         {
+            Task.Run(async () =>
+            {
+                var text = await nativeClipboard.Copy();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    var item = await itemParser.ParseItem(text);
+
+                    if (item != null)
+                    {
+                        Open();
+
+                        var queryResult = await tradeClient.GetListings(item);
+                        if (queryResult != null)
+                        {
+                            var poeNinjaItem = poeNinjaCache.GetItem(item);
+                            if (poeNinjaItem != null)
+                            {
+                                queryResult.PoeNinjaItem = poeNinjaItem;
+                                queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                            }
+
+                            SetQueryResult(queryResult);
+                            return true;
+                        }
+
+                        Hide();
+                        return true;
+                    }
+                }
+            });
+
+            this.viewModel = viewModel;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeBrowser = nativeBrowser;
+            this.nativeClipboard = nativeClipboard;
+            this.itemParser = itemParser;
             this.languageProvider = languageProvider;
             this.staticItemCategoryService = staticItemCategoryService;
             InitializeComponent();
@@ -72,15 +106,7 @@ namespace Sidekick.Windows.Prices
             scrollViewer.ScrollChanged += itemList_ScrollChanged;
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            Hide();
-            e.Cancel = true;
-        }
-
-        public bool IsDisplayed => Visibility == Visibility.Visible;
-
-        public void SetQueryResult(QueryResult<ListingResult> queryResult)
+        public void SetQueryResult(QueryResult<SearchResult> queryResult)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -88,14 +114,6 @@ namespace Sidekick.Windows.Prices
             }
             else
             {
-                if (!IsDisplayed)
-                {
-                    return;
-                }
-
-                this.queryResult = queryResult;
-                itemListingControls?.Clear();
-
                 AppendToItemListing(queryResult.Result);
 
                 // Hardcoded to the English value of Rare since poeprices.info only support English.
@@ -105,68 +123,9 @@ namespace Sidekick.Windows.Prices
                 }
             }
         }
-        delegate void SetQueryResultCallback(QueryResult<ListingResult> queryToAppend);
+        delegate void SetQueryResultCallback(QueryResult<SearchResult> queryToAppend);
 
-        private async Task GetPricePrediction(string itemText)
-        {
-            var predictionResult = await poePriceInfoClient.GetItemPricePrediction(itemText);
-            if (predictionResult?.ErrorCode != 0)
-            {
-                return;
-            }
-
-            Dispatcher.Invoke(() =>
-            {
-                txtPrediction.Text = $"{predictionResult.Min?.ToString("F")}-{predictionResult.Max?.ToString("F")} {predictionResult.Currency} ({predictionResult.ConfidenceScore.ToString("N1")}%)";
-            });
-        }
-
-        public void AppendQueryResult(QueryResult<ListingResult> queryToAppend)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new AppendQueryResultCallback(SetQueryResult), new object[] { queryToAppend });
-            }
-            else
-            {
-                if (!IsDisplayed)
-                {
-                    return;
-                }
-
-                // Update queryResult
-                var newQueryResult = new QueryResult<ListingResult>
-                {
-                    Id = queryResult.Id,
-                    Item = queryResult.Item,
-                    Total = queryToAppend.Total,
-                    Uri = queryResult.Uri,
-                    PoeNinjaItem = queryResult.PoeNinjaItem
-                };
-
-                var newResults = new List<ListingResult>();
-                newResults.AddRange(queryResult.Result);
-                newResults.AddRange(queryToAppend.Result);
-                newQueryResult.Result = newResults;
-
-                queryResult = newQueryResult;
-                AppendToItemListing(queryToAppend.Result);
-
-                dataIsUpdating = false;
-            }
-        }
-        delegate void AppendQueryResultCallback(QueryResult<ListingResult> queryResult);
-
-        private void AppendToItemListing(IEnumerable<ListingResult> listingResults)
-        {
-            foreach (var listingResult in listingResults)
-            {
-                staticItemCategoryService.CurrencyUrls.TryGetValue(listingResult.Listing.Price.Currency, out var url);
-
-                // Find a cleaner way of getting the PoeCdnBaseUrl?
-                itemListingControls?.Add(new ListItem(listingResult, $"{languageProvider.Language.PoeCdnBaseUrl}{url}"));
-            }
-        }
+        delegate void AppendQueryResultCallback(QueryResult<SearchResult> queryResult);
 
         public void SetWindowPosition(int x, int y)
         {
@@ -182,27 +141,12 @@ namespace Sidekick.Windows.Prices
         }
         delegate void SetWindowPositionCallback(int x, int y);
 
-        public void ShowWindow()
+        public new void Show()
         {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new ShowWindowCallback(ShowWindow));
-            }
-            else
-            {
-                itemListingControls?.Clear();
-
-                txtPrediction.Text = null;
-                queryResult = null;
-                dataIsUpdating = false;
-
-                Visibility = Visibility.Visible;
-
-                var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
-                scrollViewer?.ScrollToTop();
-            }
+            base.Show();
+            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+            scrollViewer?.ScrollToTop();
         }
-        delegate void ShowWindowCallback();
 
         public void HideWindowAndClearData()
         {

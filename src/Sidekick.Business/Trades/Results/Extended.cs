@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Sidekick.Business.Trades.Results
 {
-    public class ItemExtended
+    public class Extended
     {
         public string Text { get; set; }
     }
