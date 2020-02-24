@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoeNinja.Models;
@@ -15,6 +16,7 @@ using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.UI.Prices
 {
+    [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
     {
         private readonly ITradeClient tradeClient;
@@ -22,8 +24,6 @@ namespace Sidekick.UI.Prices
         private readonly IStaticItemCategoryService staticItemCategoryService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public PriceViewModel(
             ITradeClient tradeClient,

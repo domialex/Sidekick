@@ -1,6 +1,6 @@
 using System;
-using System.ComponentModel;
 using System.Linq;
+using PropertyChanged;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -9,10 +9,9 @@ using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Settings
 {
+    [AddINotifyPropertyChangedInterface]
     public class SettingsViewModel : ISettingsViewModel, IDisposable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;

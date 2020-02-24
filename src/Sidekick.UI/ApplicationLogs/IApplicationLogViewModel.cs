@@ -1,10 +1,9 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Sidekick.Core.Loggers;
 
 namespace Sidekick.UI.ApplicationLogs
 {
-    public interface IApplicationLogViewModel : INotifyPropertyChanged
+    public interface IApplicationLogViewModel
     {
         ObservableCollection<Log> Logs { get; }
     }

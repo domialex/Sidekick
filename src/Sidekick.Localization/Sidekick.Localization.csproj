@@ -49,6 +49,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Prices\PriceResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PriceResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Settings\SettingResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -128,6 +133,10 @@
     <EmbeddedResource Update="PriceCheck\PriceCheckResources.resx">
       <LastGenOutput>PriceCheckResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Prices\PriceResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PriceResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Settings\SettingResources.fr.resx">
       <Generator></Generator>

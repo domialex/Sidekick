@@ -12,7 +12,6 @@ namespace Sidekick.UI.Prices
             CharacterName = result.Listing.Account.LastCharacterName;
             Amount = result.Listing.Price?.Amount.ToString("N1") ?? "0";
             Currency = result.Listing.Price?.Currency;
-            CurrencyUrl = currencyUrl;
             ItemLevel = result.Item.Ilvl.ToString();
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
         }

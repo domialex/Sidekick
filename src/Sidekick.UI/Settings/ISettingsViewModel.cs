@@ -1,10 +1,9 @@
-using System.ComponentModel;
 using Sidekick.Core.Settings;
 using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Settings
 {
-    public interface ISettingsViewModel : INotifyPropertyChanged
+    public interface ISettingsViewModel
     {
         ObservableDictionary<string, string> Keybinds { get; }
         string CurrentKey { get; set; }
