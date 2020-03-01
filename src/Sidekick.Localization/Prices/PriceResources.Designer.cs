@@ -185,5 +185,23 @@ namespace Sidekick.Localization.Prices {
                 return ResourceManager.GetString("OverlayPrice", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Poe.Ninja: {0}c - Last updated: {1}.
+        /// </summary>
+        public static string PoeNinjaString {
+            get {
+                return ResourceManager.GetString("PoeNinjaString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prediction: {0} - Confidence: {1}%.
+        /// </summary>
+        public static string PredictionString {
+            get {
+                return ResourceManager.GetString("PredictionString", resourceCulture);
+            }
+        }
     }
 }

@@ -100,25 +100,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock VerticalAlignment="Center" />
-            <TextBlock VerticalAlignment="Center">
-                <TextBlock.Style>
-                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Hidden" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding queryResult.HasAverage}" Value="True">
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="poe.ninja: {0}c (Last update: {1:HH:mm})">
-                        <Binding Path="queryResult.PoeNinjaItem.ChaosValue" />
-                        <Binding Path="queryResult.LastRefreshTimestamp" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="{Binding PredictionText}"
+                Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="{Binding PoeNinjaText}"
+                Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
 
             <TextBlock Grid.Column="1" VerticalAlignment="Center">
                 <Hyperlink NavigateUri="{Binding QueryResult.Uri}" RequestNavigate="OpenLink">

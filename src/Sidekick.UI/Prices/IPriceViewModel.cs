@@ -13,8 +13,10 @@ namespace Sidekick.UI.Prices
         Item Item { get; }
         string ItemColor { get; }
         string CountString { get; }
-        PoeNinjaItem PoeNinjaItem { get; }
-        DateTime? PoeNinjaLastRefreshTimestamp { get; }
+
+        bool IsPoeNinja { get; }
+
+        bool IsPredicted { get; }
         string PredictionText { get; }
         ObservableCollection<PriceItem> Results { get; }
 

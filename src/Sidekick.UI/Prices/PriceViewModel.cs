@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
@@ -122,13 +121,13 @@ namespace Sidekick.UI.Prices
             }
         }
 
+        public bool IsPredicted => !string.IsNullOrEmpty(PredictionText);
         public string PredictionText { get; private set; }
-
         private async Task GetPredictionPrice()
         {
             PredictionText = string.Empty;
 
-            if (Item.Rarity == Business.Parsers.Models.Rarity.Rare && Item.IsIdentified)
+            if (!IsPoeNinja)
             {
                 var result = await poePriceInfoClient.GetItemPricePrediction(Item.ItemText);
                 if (result?.ErrorCode != 0)
@@ -136,23 +135,26 @@ namespace Sidekick.UI.Prices
                     return;
                 }
 
-                PredictionText = $"{result.Min?.ToString("F")}-{result.Max?.ToString("F")} {result.Currency} ({result.ConfidenceScore.ToString("N1")}%)";
+                PredictionText = string.Format(
+                    PriceResources.PredictionString,
+                    $"{result.Min?.ToString("F")}-{result.Max?.ToString("F")} {result.Currency}",
+                    result.ConfidenceScore.ToString("N1"));
             }
         }
 
-        public PoeNinjaItem PoeNinjaItem { get; private set; }
-        public DateTime? PoeNinjaLastRefreshTimestamp { get; private set; }
-
+        public bool IsPoeNinja => !string.IsNullOrEmpty(PoeNinjaText);
+        public string PoeNinjaText { get; private set; }
         private void GetPoeNinjaPrice()
         {
-            PoeNinjaItem = null;
-            PoeNinjaLastRefreshTimestamp = null;
+            PoeNinjaText = string.Empty;
 
             var poeNinjaItem = poeNinjaCache.GetItem(Item);
             if (poeNinjaItem != null)
             {
-                PoeNinjaItem = poeNinjaItem;
-                PoeNinjaLastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                PoeNinjaText = string.Format(
+                    PriceResources.PoeNinjaString,
+                    poeNinjaItem.ChaosValue,
+                    poeNinjaCache.LastRefreshTimestamp.Value.ToString("HH:mm"));
             }
         }
 
