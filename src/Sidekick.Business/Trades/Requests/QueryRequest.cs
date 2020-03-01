@@ -9,7 +9,7 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
-#warning TODO Zalher: Add Attribute Filters
+#warning TODO Zalhera: Add Attribute Filters
         public QueryRequest(Item item, ILanguage language)
         {
             Query.Status.Option = StatusType.Online;
@@ -103,6 +103,23 @@ namespace Sidekick.Business.Trades.Requests
                 {
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
+
+                if(((EquippableItem)item).AttributeDictionary != null)
+                {
+                    var statFilters = new List<StatFilter>();
+
+                    foreach(var pair in ((EquippableItem)item).AttributeDictionary)
+                    {
+                        statFilters.Add(new StatFilter()
+                        {
+                            Disabled = false,
+                            Id = pair.Key.Id,
+                            Value = pair.Value,
+                        });                        
+                    }
+
+                    Query.Stats = new List<Stat>() { new Stat() { Type = StatType.And, Filters = statFilters } };
+                }
             }
             else if (itemType == typeof(OrganItem))
             {
@@ -186,6 +203,23 @@ namespace Sidekick.Business.Trades.Requests
                 {
                     Option = ((MapItem)item).IsBlight,
                 };
+
+                if(((MapItem)item).AttributeDictionary != null)
+                {
+                    var statFilters = new List<StatFilter>();
+
+                    foreach (var pair in ((MapItem)item).AttributeDictionary)
+                    {
+                        statFilters.Add(new StatFilter()
+                        {
+                            Disabled = false,
+                            Id = pair.Key.Id,
+                            Value = pair.Value,
+                        });
+
+                        Query.Stats = new List<Stat>() { new Stat() { Type = StatType.And, Filters = statFilters } };
+                    }
+                }
             }
             else if (itemType == typeof(ProphecyItem))
             {

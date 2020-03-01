@@ -22,7 +22,8 @@ namespace Sidekick.Core.Settings
                 Key_LeaveParty = "F4",
                 Key_OpenSearch = "Alt+Q",
                 Key_OpenLeagueOverview = "F6",
-                Key_ReplyToLatestWhisper = "Ctrl+Shift+R"
+                Key_ReplyToLatestWhisper = "Ctrl+Shift+R",
+                Key_AdvancedSearch = "Alt+D",
             };
         }
 

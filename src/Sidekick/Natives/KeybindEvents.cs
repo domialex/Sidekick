@@ -38,6 +38,7 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
         public event Func<int, int, Task> OnMouseClick;
+        public event Func<Task<bool>> OnAdvancedSearch;
 
         private IKeyboardMouseEvents hook = null;
 
@@ -115,6 +116,8 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Open Search", configuration.Key_OpenSearch, input, OnOpenSearch, ref task);
                 ExecuteKeybind("Open League Overview", configuration.Key_OpenLeagueOverview, input, OnOpenLeagueOverview, ref task);
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
+                ExecuteKeybind("Advanced Search", configuration.Key_AdvancedSearch, input, OnAdvancedSearch, ref task);
+                
 
                 // We need to make sure some key combinations make it into the game if the keybind returns false
                 SendInputIf("Ctrl+F", input, task);

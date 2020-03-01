@@ -58,7 +58,7 @@ namespace Sidekick.Business.Parsers
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public async Task<Item> ParseItem(string itemText)
+        public async Task<Item> ParseItem(string itemText, bool parseAttributes)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
@@ -91,6 +91,11 @@ namespace Sidekick.Business.Parsers
                         MapTier = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionMapTier)).FirstOrDefault()),
                         Rarity = rarity,
                     };
+
+                    if(parseAttributes)
+                    {
+                        ((MapItem)item).AttributeDictionary = GetItemAttributes(lines);
+                    }
 
                     if (rarity == languageProvider.Language.RarityNormal)
                     {
@@ -133,11 +138,15 @@ namespace Sidekick.Business.Parsers
                     item = new EquippableItem
                     {
                         Name = lines[1],
-                        Type = isIdentified ? lines[2] : lines[1]
+                        Type = isIdentified ? lines[2] : lines[1],
                     };
 
+                    if(parseAttributes)
+                    {
+                        ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+                    }
+
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
-                    var attrs = GetItemAttributes(lines);
 
                     if (links >= 5)
                     {
@@ -156,6 +165,11 @@ namespace Sidekick.Business.Parsers
                         Type = isIdentified ? lines[2] : lines[1],
                         ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
                     };
+
+                    if(parseAttributes)
+                    {
+                        ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+                    }
 
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
@@ -176,8 +190,6 @@ namespace Sidekick.Business.Parsers
                     {
                         ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
                     }
-
-                    var attrs = GetItemAttributes(lines);
                 }
                 else if (rarity == languageProvider.Language.RarityMagic)
                 {
@@ -279,10 +291,14 @@ namespace Sidekick.Business.Parsers
                 }
 
                 if (!string.IsNullOrWhiteSpace(item.Name))
+                {
                     item.Name = ParseName(item.Name);
+                }
 
                 if (!string.IsNullOrWhiteSpace(item.Type))
+                {
                     item.Type = ParseName(item.Type);
+                }
             }
             catch (Exception e)
             {
@@ -476,6 +492,7 @@ namespace Sidekick.Business.Parsers
 
                 List<Attribute> attributesToSearch;
 
+#warning TODO Find a better way for special case
                 if(formattedLine.StartsWith("#% increased Energy Shield"))
                 {
                     formattedLine = formattedLine + " (Local)";
@@ -485,16 +502,6 @@ namespace Sidekick.Business.Parsers
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameCrafted, "").Trim();
                     attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryCrafted).SelectMany(c => c.Entries).ToList();
-                }
-                else if(formattedLine.Contains(languageProvider.Language.CategoryNameDelve))
-                {
-                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameDelve, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryDelve).SelectMany(c => c.Entries).ToList();
-                }
-                else if(formattedLine.Contains(languageProvider.Language.CategoryNameEnchant))
-                {
-                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameEnchant, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryEnchant).SelectMany(c => c.Entries).ToList();
                 }
                 else if(formattedLine.Contains(languageProvider.Language.CategoryNameFractured))
                 {
@@ -506,14 +513,12 @@ namespace Sidekick.Business.Parsers
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameImplicit, "").Trim();
                     attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryImplicit).SelectMany(c => c.Entries).ToList();
                 }
-                else if(formattedLine.Contains(languageProvider.Language.CategoryNameVeiled))
-                {
-                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameVeiled, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryVeiled).SelectMany(c => c.Entries).ToList();
-                }
                 else
                 {
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryExplicit).SelectMany(c => c.Entries).ToList();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryExplicit ||
+                                                                                   c.Label == languageProvider.Language.AttributeCategoryDelve ||
+                                                                                   c.Label == languageProvider.Language.AttributeCategoryEnchant ||
+                                                                                   c.Label == languageProvider.Language.AttributeCategoryVeiled).SelectMany(c => c.Entries).ToList();
                 }
 
                 var attribute = attributesToSearch.Where(c => c.Text == formattedLine).FirstOrDefault();

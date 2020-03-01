@@ -145,35 +145,43 @@ namespace Sidekick.Windows.PriceCheck
             return Task.FromResult(handled);
         }
 
+        public async Task<bool> PriceCheckItem(Business.Parsers.Models.Item item)
+        {
+            Open();
+
+            var queryResult = await tradeClient.GetListings(item);
+
+            if (queryResult != null)
+            {
+                var poeNinjaItem = poeNinjaCache.GetItem(item);
+
+                if (poeNinjaItem != null)
+                {
+                    queryResult.PoeNinjaItem = poeNinjaItem;
+                    queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
+                }
+
+                SetQueryResult(queryResult);
+                return true;
+            }
+
+            Hide();
+            return true;
+        }
+
         private async Task<bool> OnPriceCheck()
         {
             logger.Log("Hotkey for pricing item triggered.");
 
             var text = await clipboard.Copy();
+
             if (!string.IsNullOrWhiteSpace(text))
             {
-                var item = await itemParser.ParseItem(text);
+                var item = await itemParser.ParseItem(text, false);
 
                 if (item != null)
-                {
-                    Open();
-
-                    var queryResult = await tradeClient.GetListings(item);
-                    if (queryResult != null)
-                    {
-                        var poeNinjaItem = poeNinjaCache.GetItem(item);
-                        if (poeNinjaItem != null)
-                        {
-                            queryResult.PoeNinjaItem = poeNinjaItem;
-                            queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
-                        }
-
-                        SetQueryResult(queryResult);
-                        return true;
-                    }
-
-                    Hide();
-                    return true;
+                {              
+                    return await PriceCheckItem(item);
                 }
             }
 

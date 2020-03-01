@@ -4,6 +4,7 @@ using Sidekick.Core.Natives;
 using Sidekick.Helpers.Input;
 using Sidekick.Natives;
 using Sidekick.Windows;
+using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.PriceCheck;
@@ -32,6 +33,7 @@ namespace Sidekick
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<OverlayController>();
             services.AddSingleton<OverlayWindow>();
+            services.AddSingleton<AdvancedSearchController>();
 
             return services;
         }

@@ -5,6 +5,6 @@ namespace Sidekick.Business.Parsers
 {
     public interface IItemParser
     {
-        Task<Item> ParseItem(string itemText);
+        Task<Item> ParseItem(string itemText, bool parseAttributes);
     }
 }

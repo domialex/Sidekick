@@ -54,6 +54,7 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty -= TriggerLeaveParty;
             events.OnOpenSearch -= TriggerOpenSearch;
             events.OnWhisperReply -= TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview -= TriggerLeagueOverview;
         }
 
         private void Initialize()
@@ -64,10 +65,10 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview; ;
+            events.OnOpenLeagueOverview += TriggerLeagueOverview;
         }
 
-        private Task<bool> Events_OnOpenLeagueOverview()
+        private Task<bool> TriggerLeagueOverview()
         {
             viewLocator.Open<LeagueView>();
             return Task.FromResult(true);
@@ -137,6 +138,7 @@ namespace Sidekick.Helpers.Input
         private async Task<bool> TriggerOpenSearch()
         {
             var item = await TriggerCopyAction();
+
             if (item != null)
             {
                 await tradeClient.OpenWebpage(item);
@@ -149,6 +151,7 @@ namespace Sidekick.Helpers.Input
         private async Task<Business.Parsers.Models.Item> TriggerCopyAction()
         {
             var text = await clipboard.Copy();
+
             if (!string.IsNullOrWhiteSpace(text))
             {
                 return await itemParser.ParseItem(text);

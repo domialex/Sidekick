@@ -15,6 +15,7 @@ using Sidekick.Core.Update;
 using Sidekick.Helpers.Input;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
+using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.TrayIcon;
 
@@ -73,6 +74,7 @@ namespace Sidekick
 
             serviceProvider.GetRequiredService<EventsHandler>();
             serviceProvider.GetRequiredService<OverlayController>();
+            serviceProvider.GetRequiredService<AdvancedSearchController>();
         }
 
         private void InitTrayIcon(SidekickSettings settings)
