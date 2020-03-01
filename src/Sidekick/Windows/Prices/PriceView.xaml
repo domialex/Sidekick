@@ -14,62 +14,18 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <DockPanel
-        Width="600"
-        Height="320"
-        Margin="{StaticResource Spacer}">
+    <StackPanel Margin="{StaticResource Spacer}">
         <Label
             Margin="{StaticResource SpacerBottom}"
             VerticalAlignment="Center"
-            Content="{Binding Path=queryResult.Item.Name, Mode=OneWay}"
-            DockPanel.Dock="Top"
+            Content="{Binding Path=Item.Name}"
             FontSize="16"
             FontWeight="Bold"
             Foreground="{Binding ItemColor}" />
 
-        <Grid DockPanel.Dock="Bottom">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Name="txtPrediction" VerticalAlignment="Center" />
-            <TextBlock VerticalAlignment="Center">
-                <TextBlock.Style>
-                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Hidden" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding queryResult.HasAverage}" Value="True">
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="poe.ninja: {0}c (Last update: {1:HH:mm})">
-                        <Binding Path="queryResult.PoeNinjaItem.ChaosValue" />
-                        <Binding Path="queryResult.LastRefreshTimestamp" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-
-            <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="{Binding queryResult.Uri}" RequestNavigate="OpenLink">
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}Showing {0} items out of {1}">
-                                <Binding Mode="OneWay" Path="queryResult.Result.Count" />
-                                <Binding Path="queryResult.Total" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </Hyperlink>
-            </TextBlock>
-        </Grid>
-
         <GroupBox Padding="0">
             <ListView
-                Name="_itemList"
+                Name="ItemList"
                 Height="260"
                 ItemsSource="{Binding Path=itemListingControls}"
                 ScrollViewer.CanContentScroll="False">
@@ -110,5 +66,45 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-    </DockPanel>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Name="txtPrediction" VerticalAlignment="Center" />
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding queryResult.HasAverage}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="poe.ninja: {0}c (Last update: {1:HH:mm})">
+                        <Binding Path="queryResult.PoeNinjaItem.ChaosValue" />
+                        <Binding Path="queryResult.LastRefreshTimestamp" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <TextBlock Grid.Column="1" VerticalAlignment="Center">
+                <Hyperlink NavigateUri="{Binding queryResult.Uri}" RequestNavigate="OpenLink">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}Showing {0} items out of {1}">
+                                <Binding Mode="OneWay" Path="queryResult.Result.Count" />
+                                <Binding Path="queryResult.Total" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+    </StackPanel>
 </base:BaseWindow>

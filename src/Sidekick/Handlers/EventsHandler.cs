@@ -71,10 +71,11 @@ namespace Sidekick.Handlers
             events.OnPriceCheck += Events_OnPriceCheck;
         }
 
-        private Task<bool> Events_OnPriceCheck()
+        private async Task<bool> Events_OnPriceCheck()
         {
+            await clipboard.Copy();
             viewLocator.Open<PriceView>();
-            return Task.FromResult(true);
+            return true;
         }
 
         private Task<bool> Events_OnOpenLeagueOverview()

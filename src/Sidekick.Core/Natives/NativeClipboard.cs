@@ -17,6 +17,8 @@ namespace Sidekick.Core.Natives
             this.logger = logger;
         }
 
+        public string LastCopiedText { get; private set; }
+
         public async Task<string> Copy()
         {
             var clipboardText = string.Empty;
@@ -30,23 +32,17 @@ namespace Sidekick.Core.Natives
 
             keyboard.Copy();
 
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             // Retrieve clipboard.
-            var text = await GetText();
+            var LastCopiedText = await GetText();
 
             if (settings.RetainClipboard)
             {
                 await SetText(clipboardText);
             }
 
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                logger.Log("No text detected on the clipboard.");
-                return null;
-            }
-
-            return text;
+            return LastCopiedText;
         }
 
         public async Task<string> GetText()
@@ -60,6 +56,7 @@ namespace Sidekick.Core.Natives
             {
                 await TextCopy.Clipboard.SetTextAsync(text);
             }
+            LastCopiedText = text;
         }
     }
 }

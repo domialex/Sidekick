@@ -16,7 +16,6 @@ namespace Sidekick.UI.Prices
         string PredictionText { get; }
         ObservableCollection<PriceItem> Results { get; }
 
-        Task Initialize(Item item);
         Task LoadMoreData();
     }
 }

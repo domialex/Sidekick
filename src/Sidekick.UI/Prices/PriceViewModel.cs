@@ -10,8 +10,10 @@ using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
+using Sidekick.Core.Natives;
 using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
@@ -24,19 +26,27 @@ namespace Sidekick.UI.Prices
         private readonly IStaticItemCategoryService staticItemCategoryService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
+        private readonly INativeClipboard nativeClipboard;
+        private readonly IItemParser itemParser;
 
         public PriceViewModel(
             ITradeClient tradeClient,
             IPoeNinjaCache poeNinjaCache,
             IStaticItemCategoryService staticItemCategoryService,
             ILanguageProvider languageProvider,
-            IPoePriceInfoClient poePriceInfoClient)
+            IPoePriceInfoClient poePriceInfoClient,
+            INativeClipboard nativeClipboard,
+            IItemParser itemParser)
         {
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
             this.staticItemCategoryService = staticItemCategoryService;
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
+            this.nativeClipboard = nativeClipboard;
+            this.itemParser = itemParser;
+
+            Task.Run(Initialize);
         }
 
         public Business.Parsers.Models.Item Item { get; private set; }
@@ -51,9 +61,9 @@ namespace Sidekick.UI.Prices
 
         public bool IsFetching => FetchTask?.Status == TaskStatus.Running;
 
-        public async Task Initialize(Business.Parsers.Models.Item item)
+        private async Task Initialize()
         {
-            Item = item;
+            Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText);
             Results = null;
 
             if (Item == null)

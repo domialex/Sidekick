@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -23,16 +22,6 @@ namespace Sidekick.Windows.Prices
             IItemParser itemParser)
             : base(serviceProvider)
         {
-            Task.Run(async () =>
-            {
-                var text = await nativeClipboard.Copy();
-                if (!string.IsNullOrWhiteSpace(text))
-                {
-                    var item = await itemParser.ParseItem(text);
-                    await viewModel.Initialize(item);
-                }
-            });
-
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
 
@@ -46,14 +35,14 @@ namespace Sidekick.Windows.Prices
 
         private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+            var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
             scrollViewer?.ScrollToTop();
             scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged; ;
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+            var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
 
             //Load next results when scrollviewer is at the bottom
             if (scrollViewer?.ScrollableHeight > 0)
@@ -70,7 +59,7 @@ namespace Sidekick.Windows.Prices
         public new void Show()
         {
             base.Show();
-            var scrollViewer = _itemList.GetChildOfType<ScrollViewer>();
+            var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
             scrollViewer?.ScrollToTop();
         }
 
