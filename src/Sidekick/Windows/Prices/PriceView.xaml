@@ -7,7 +7,14 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}">
     <Window.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Main.xaml" />
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
     <Window.Style>
@@ -27,53 +34,73 @@
             <ListView
                 Name="ItemList"
                 Height="260"
-                ItemsSource="{Binding Path=itemListingControls}"
+                ItemsSource="{Binding Path=Results}"
                 ScrollViewer.CanContentScroll="False">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn
-                            Width="140"
-                            DisplayMemberBinding="{Binding Path=AccountName}"
-                            Header="{loc:Loc OverlayAccountName}" />
-                        <GridViewColumn
-                            Width="140"
-                            DisplayMemberBinding="{Binding Path=CharacterName}"
-                            Header="{loc:Loc OverlayCharacter}" />
-                        <GridViewColumn Width="80" Header="{loc:Loc OverlayPrice}">
+                        <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=AccountName}">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayAccountName}"
+                                Foreground="White"
+                                IsEnabled="False" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=CharacterName}">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayCharacter}"
+                                Foreground="White"
+                                IsEnabled="False" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="80">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayPrice}"
+                                Foreground="White"
+                                IsEnabled="False" />
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DockPanel>
-                                        <TextBlock Text="{Binding Price.Amount}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Amount}" />
                                         <TextBlock Text=" " />
-                                        <Image Height="20" ToolTip="{Binding Price.Currency}">
+                                        <Image
+                                            Height="20"
+                                            VerticalAlignment="Center"
+                                            ToolTip="{Binding Currency}">
                                             <Image.Source>
-                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding Price.CurrencyUrl}" />
+                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding CurrencyUrl}" />
                                             </Image.Source>
                                         </Image>
-                                    </DockPanel>
+                                    </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn
-                            Width="40"
-                            DisplayMemberBinding="{Binding Path=ItemLevel}"
-                            Header="{loc:Loc OverlayItemLevel}" />
-                        <GridViewColumn
-                            Width="80"
-                            DisplayMemberBinding="{Binding Path=Age}"
-                            Header="{loc:Loc OverlayAge}" />
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=ItemLevel}">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayItemLevel}"
+                                Foreground="White"
+                                IsEnabled="False" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=Age}">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayAge}"
+                                Foreground="White"
+                                IsEnabled="False" />
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
         </GroupBox>
 
-        <Grid>
+        <ProgressBar
+            Height="16"
+            IsIndeterminate="True"
+            Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
+
+        <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Name="txtPrediction" VerticalAlignment="Center" />
+            <TextBlock VerticalAlignment="Center" />
             <TextBlock VerticalAlignment="Center">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
@@ -94,15 +121,8 @@
             </TextBlock>
 
             <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="{Binding queryResult.Uri}" RequestNavigate="OpenLink">
-                    <TextBlock>
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}Showing {0} items out of {1}">
-                                <Binding Mode="OneWay" Path="queryResult.Result.Count" />
-                                <Binding Path="queryResult.Total" />
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
+                <Hyperlink NavigateUri="{Binding QueryResult.Uri}" RequestNavigate="OpenLink">
+                    <TextBlock Text="{Binding CountString}" />
                 </Hyperlink>
             </TextBlock>
         </Grid>

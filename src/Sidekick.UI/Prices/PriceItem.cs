@@ -10,10 +10,21 @@ namespace Sidekick.UI.Prices
         {
             AccountName = result.Listing.Account.Name;
             CharacterName = result.Listing.Account.LastCharacterName;
-            Amount = result.Listing.Price?.Amount.ToString("N1") ?? "0";
-            Currency = result.Listing.Price?.Currency;
+            if (result.Listing.Price != null)
+            {
+                if (result.Listing.Price.Amount % 1 == 0)
+                {
+                    Amount = result.Listing.Price.Amount.ToString("N0");
+                }
+                else
+                {
+                    Amount = result.Listing.Price.Amount.ToString("N1");
+                }
+                Currency = result.Listing.Price.Currency;
+            }
             ItemLevel = result.Item.Ilvl.ToString();
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
+            Item = result;
         }
 
         public SearchResult Item { get; set; }

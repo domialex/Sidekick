@@ -133,6 +133,15 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Showing {0} out of {1} items.
+        /// </summary>
+        public static string CountString {
+            get {
+                return ResourceManager.GetString("CountString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Name.
         /// </summary>
         public static string OverlayAccountName {

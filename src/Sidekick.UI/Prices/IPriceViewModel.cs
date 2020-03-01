@@ -9,8 +9,10 @@ namespace Sidekick.UI.Prices
     public interface IPriceViewModel
     {
         bool IsFetching { get; }
+        bool IsFetched { get; }
         Item Item { get; }
         string ItemColor { get; }
+        string CountString { get; }
         PoeNinjaItem PoeNinjaItem { get; }
         DateTime? PoeNinjaLastRefreshTimestamp { get; }
         string PredictionText { get; }

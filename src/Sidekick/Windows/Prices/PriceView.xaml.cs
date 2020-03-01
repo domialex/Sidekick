@@ -2,7 +2,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Sidekick.Business.Parsers;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Prices;
 using Sidekick.UI.Views;
@@ -17,9 +16,7 @@ namespace Sidekick.Windows.Prices
         public PriceView(
             IServiceProvider serviceProvider,
             IPriceViewModel viewModel,
-            INativeBrowser nativeBrowser,
-            INativeClipboard nativeClipboard,
-            IItemParser itemParser)
+            INativeBrowser nativeBrowser)
             : base(serviceProvider)
         {
             this.viewModel = viewModel;
@@ -44,11 +41,11 @@ namespace Sidekick.Windows.Prices
         {
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
 
-            //Load next results when scrollviewer is at the bottom
+            // Load next results when scrollviewer is at the bottom
             if (scrollViewer?.ScrollableHeight > 0)
             {
-                // Query next page when reaching more than 70% of the scrollable content.
-                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.7d)
+                // Query next page when reaching more than 80% of the scrollable content.
+                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.8d)
                 {
                     viewModel.LoadMoreData();
                     return;

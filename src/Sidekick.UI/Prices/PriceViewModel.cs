@@ -14,6 +14,7 @@ using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
+using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
@@ -57,9 +58,9 @@ namespace Sidekick.UI.Prices
 
         private QueryResult<SearchResult> QueryResult { get; set; }
 
-        private Task<QueryResult<SearchResult>> FetchTask { get; set; }
+        public bool IsFetching { get; private set; }
 
-        public bool IsFetching => FetchTask?.Status == TaskStatus.Running;
+        public bool IsFetched => !IsFetching;
 
         private async Task Initialize()
         {
@@ -71,13 +72,15 @@ namespace Sidekick.UI.Prices
                 return;
             }
 
-            FetchTask = tradeClient.GetListings(Item);
-            QueryResult = await FetchTask;
+            IsFetching = true;
+            QueryResult = await tradeClient.GetListings(Item);
+            IsFetching = false;
             if (QueryResult.Result.Any())
             {
                 Append(QueryResult.Result);
             }
 
+            UpdateCountString();
             GetPoeNinjaPrice();
             _ = GetPredictionPrice();
         }
@@ -90,13 +93,15 @@ namespace Sidekick.UI.Prices
             }
 
             var page = (int)Math.Ceiling(Results.Count / 10d);
-            FetchTask = tradeClient.GetListingsForSubsequentPages(Item, page);
-            QueryResult = await FetchTask;
+            IsFetching = true;
+            QueryResult = await tradeClient.GetListingsForSubsequentPages(Item, page);
+            IsFetching = false;
             if (QueryResult.Result.Any())
             {
                 Append(QueryResult.Result);
-                QueryResult.Total = Results.Count;
             }
+
+            UpdateCountString();
         }
 
         private void Append(List<SearchResult> results)
@@ -110,11 +115,10 @@ namespace Sidekick.UI.Prices
             {
                 staticItemCategoryService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
 
-                var item = new PriceItem(result)
+                Results.Add(new PriceItem(result)
                 {
                     CurrencyUrl = $"{languageProvider.Language.PoeCdnBaseUrl}{url}"
-                };
-                Results?.Add(item);
+                });
             }
         }
 
@@ -150,6 +154,12 @@ namespace Sidekick.UI.Prices
                 PoeNinjaItem = poeNinjaItem;
                 PoeNinjaLastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
             }
+        }
+
+        public string CountString { get; private set; }
+        private void UpdateCountString()
+        {
+            CountString = string.Format(PriceResources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
         }
     }
 }
