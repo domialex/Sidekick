@@ -73,7 +73,7 @@ So their King might go on.""
 - Lavianga, Advisor to Kaom
 --------
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
-");
+", false);
 
             overlayController.Open();
 

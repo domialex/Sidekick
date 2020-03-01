@@ -18,6 +18,7 @@ namespace Sidekick.Windows.AdvancedSearch
         private readonly IItemParser itemParser;
         private readonly ITradeClient tradeClient;
         private readonly OverlayController overlayController;
+        private readonly AdvancedSearchView view;
 
         public AdvancedSearchController(INativeClipboard clipboard, IKeybindEvents events, ILogger logger, IItemParser itemParser, ITradeClient tradeClient, IServiceProvider serviceProvider)
         {
@@ -26,6 +27,7 @@ namespace Sidekick.Windows.AdvancedSearch
             this.itemParser = itemParser;
             this.tradeClient = tradeClient;
             overlayController = serviceProvider.GetService<OverlayController>();
+            view = new AdvancedSearchView();
 
             events.OnCloseWindow += OnCloseWindow;
             events.OnAdvancedSearch += OnAdvancedSearch;
@@ -48,10 +50,14 @@ namespace Sidekick.Windows.AdvancedSearch
 
                 if(item != null)
                 {
+                    view.PopulateGrid(item);
+                    view.ShowWindow();
+#warning TODO Call Price Check On Ok Click in Window
                     // Build Window
                     // Get Item
 
-                    return await overlayController.PriceCheckItem(item);
+                    //return await overlayController.PriceCheckItem(item);
+                    return true;
                 }
             }
 

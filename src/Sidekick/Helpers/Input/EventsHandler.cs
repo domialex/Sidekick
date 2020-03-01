@@ -154,7 +154,7 @@ namespace Sidekick.Helpers.Input
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                return await itemParser.ParseItem(text);
+                return await itemParser.ParseItem(text, false);
             }
 
             return null;

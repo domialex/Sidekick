@@ -4,7 +4,7 @@ using Sidekick.Business.Filters;
 
 namespace Sidekick.Business.Parsers.Models
 {
-    public class MapItem : Item
+    public class MapItem : Item, IAttributeItem
     {
         public string MapTier { get; set; }
         public string ItemQuantity { get; set; }

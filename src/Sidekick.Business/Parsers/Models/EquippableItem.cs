@@ -5,7 +5,7 @@ using Sidekick.Business.Parsers.Types;
 
 namespace Sidekick.Business.Parsers.Models
 {
-    public class EquippableItem : Item
+    public class EquippableItem : Item, IAttributeItem
     {
         public string Quality { get; set; }
         public string ItemLevel { get; set; }
