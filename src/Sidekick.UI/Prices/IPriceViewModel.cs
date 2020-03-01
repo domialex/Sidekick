@@ -1,7 +1,5 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Parsers.Models;
 
 namespace Sidekick.UI.Prices

@@ -14,6 +14,7 @@ using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Localization.Prices;
+using Sidekick.UI.Helpers;
 using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
@@ -105,19 +106,25 @@ namespace Sidekick.UI.Prices
 
         private void Append(List<SearchResult> results)
         {
-            if (Results == null)
-            {
-                Results = new ObservableCollection<PriceItem>();
-            }
+            var items = new List<PriceItem>();
 
             foreach (var result in results)
             {
                 staticItemCategoryService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
 
-                Results.Add(new PriceItem(result)
+                items.Add(new PriceItem(result)
                 {
                     CurrencyUrl = $"{languageProvider.Language.PoeCdnBaseUrl}{url}"
                 });
+            }
+
+            if (Results == null)
+            {
+                Results = new ObservableCollection<PriceItem>(items);
+            }
+            else
+            {
+                items.ForEach(x => Results.Add(x));
             }
         }
 
@@ -137,7 +144,7 @@ namespace Sidekick.UI.Prices
 
                 PredictionText = string.Format(
                     PriceResources.PredictionString,
-                    $"{result.Min?.ToString("F")}-{result.Max?.ToString("F")} {result.Currency}",
+                    $"{result.Min?.ToString("N1")}-{result.Max?.ToString("N1")} {result.Currency}",
                     result.ConfidenceScore.ToString("N1"));
             }
         }

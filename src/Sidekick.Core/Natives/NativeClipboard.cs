@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Core.Natives
@@ -8,13 +7,11 @@ namespace Sidekick.Core.Natives
     {
         private readonly SidekickSettings settings;
         private readonly INativeKeyboard keyboard;
-        private readonly ILogger logger;
 
-        public NativeClipboard(SidekickSettings settings, INativeKeyboard keyboard, ILogger logger)
+        public NativeClipboard(SidekickSettings settings, INativeKeyboard keyboard)
         {
             this.settings = settings;
             this.keyboard = keyboard;
-            this.logger = logger;
         }
 
         public string LastCopiedText { get; private set; }
@@ -35,7 +32,7 @@ namespace Sidekick.Core.Natives
             await Task.Delay(100);
 
             // Retrieve clipboard.
-            var LastCopiedText = await GetText();
+            LastCopiedText = await GetText();
 
             if (settings.RetainClipboard)
             {
