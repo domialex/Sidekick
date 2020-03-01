@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Filters;
+
 namespace Sidekick.Business.Parsers.Models
 {
     public abstract class Item
@@ -8,6 +12,7 @@ namespace Sidekick.Business.Parsers.Models
         public bool IsIdentified { get; set; }
         public string Rarity { get; set; }
 
+        public Dictionary<Attribute, FilterValue> Attributes { get; set; }
         public string ItemText { get; set; }
     }
 }

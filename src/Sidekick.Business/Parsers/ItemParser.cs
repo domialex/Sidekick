@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Sidekick.Business.Categories;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
@@ -10,6 +12,9 @@ using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Core.Loggers;
+using Sidekick.Business.Apis.Poe.Models;
+using Attribute = Sidekick.Business.Apis.Poe.Models.Attribute;
+using Item = Sidekick.Business.Parsers.Models.Item;
 
 namespace Sidekick.Business.Parsers
 {
@@ -21,16 +26,32 @@ namespace Sidekick.Business.Parsers
         private readonly ILogger logger;
         private readonly IMapService mapService;
         private readonly ITokenizer itemNameTokenizer;
+        private readonly IAttributeCategoryService attributeCategories;
+
+        private readonly Regex[] AttributeRegexes;
+        private readonly Dictionary<string, string> RegexReplacementDictionary;
 
         public ItemParser(ILanguageProvider languageProvider,
             ILogger logger,
             IEnumerable<ITokenizer> tokenizers,
-            IMapService mapService)
+            IMapService mapService,
+            IAttributeCategoryService attributeService)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
             this.mapService = mapService;
+            attributeCategories = attributeService;
             itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
+
+            AttributeRegexes = new[] { new Regex(languageProvider.Language.PercentagAddedRegexPattern), new Regex(languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern),
+                                       new Regex(languageProvider.Language.AttributeIncreasedRegexPattern), new Regex(languageProvider.Language.AttributeRangeRegexPattern) };
+            RegexReplacementDictionary = new Dictionary<string, string>()
+            {
+                { languageProvider.Language.PercentagAddedRegexPattern, "#%" },
+                { languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern, "#%" },
+                { languageProvider.Language.AttributeIncreasedRegexPattern, "# " },
+                { languageProvider.Language.AttributeRangeRegexPattern, "# to # " },
+            };
         }
 
         /// <summary>
@@ -116,6 +137,7 @@ namespace Sidekick.Business.Parsers
                     };
 
                     var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
+                    var attrs = GetItemAttributes(lines);
 
                     if (links >= 5)
                     {
@@ -154,6 +176,8 @@ namespace Sidekick.Business.Parsers
                     {
                         ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
                     }
+
+                    var attrs = GetItemAttributes(lines);
                 }
                 else if (rarity == languageProvider.Language.RarityMagic)
                 {
@@ -296,14 +320,59 @@ namespace Sidekick.Business.Parsers
             return output;
         }
 
-        private string GetNumberFromString(string input)
+        private string GetNumberFromString(string input, bool allowNegative = false)
         {
             if (string.IsNullOrEmpty(input))     // Default return 0
             {
                 return "0";
             }
 
-            return new string(input.Where(c => char.IsDigit(c)).ToArray());
+            string numberStr = new string(input.Where(c => char.IsDigit(c)).ToArray());
+
+            if(allowNegative)
+            {
+                if(input.StartsWith("-"))
+                {
+                    return "-" + numberStr;
+                }
+            }
+
+            return numberStr;
+        }
+
+        private (int? min, int? max) GetNumberRange(string input)
+        {
+            if(!input.Contains(languageProvider.Language.KeywordRange))
+            {
+                var numberStr = GetNumberFromString(input, true);
+
+                if(!int.TryParse(numberStr, out var value))
+                {
+                    return (null, null);
+                }
+
+                return (value, null);
+            }
+
+            int index = input.IndexOf(languageProvider.Language.KeywordRange);
+
+            string subStr1 = GetNumberFromString(input.Substring(0, index));
+            string subStr2 = GetNumberFromString(input.Substring(index + 1, input.Length - index - 1));
+
+            int? value1 = null;
+            int? value2 = null;
+
+            if(int.TryParse(subStr1, out var result))
+            {
+                value1 = result;
+            }
+
+            if(int.TryParse(subStr2, out result))
+            {
+                value2 = result;
+            }
+
+            return (value1, value2);
         }
 
         private int ParseGemExperiencePercent(string input)
@@ -383,6 +452,80 @@ namespace Sidekick.Business.Parsers
             }
 
             return InfluenceType.None;
+        }
+
+        private Dictionary<Attribute, FilterValue> GetItemAttributes(IEnumerable<string> input)
+        {
+            var result = new Dictionary<Attribute, FilterValue>();
+
+            foreach(var line in input)
+            {
+                string formattedLine = line;
+                string formattedValue = line;
+
+                foreach(var regex in AttributeRegexes)
+                {
+                    if(regex.IsMatch(formattedLine))
+                    {
+                        var match = regex.Match(formattedLine);
+                        formattedValue = match.Value;
+                        formattedLine = regex.Replace(formattedLine, RegexReplacementDictionary[regex.ToString()]);
+                        break;
+                    }
+                }
+
+                List<Attribute> attributesToSearch;
+
+                if(formattedLine.StartsWith("#% increased Energy Shield"))
+                {
+                    formattedLine = formattedLine + " (Local)";
+                }
+
+                if(formattedLine.Contains(languageProvider.Language.CategoryNameCrafted))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameCrafted, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryCrafted).SelectMany(c => c.Entries).ToList();
+                }
+                else if(formattedLine.Contains(languageProvider.Language.CategoryNameDelve))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameDelve, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryDelve).SelectMany(c => c.Entries).ToList();
+                }
+                else if(formattedLine.Contains(languageProvider.Language.CategoryNameEnchant))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameEnchant, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryEnchant).SelectMany(c => c.Entries).ToList();
+                }
+                else if(formattedLine.Contains(languageProvider.Language.CategoryNameFractured))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameFractured, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryFractured).SelectMany(c => c.Entries).ToList();
+                }
+                else if(formattedLine.Contains(languageProvider.Language.CategoryNameImplicit))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameImplicit, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryImplicit).SelectMany(c => c.Entries).ToList();
+                }
+                else if(formattedLine.Contains(languageProvider.Language.CategoryNameVeiled))
+                {
+                    formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameVeiled, "").Trim();
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryVeiled).SelectMany(c => c.Entries).ToList();
+                }
+                else
+                {
+                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryExplicit).SelectMany(c => c.Entries).ToList();
+                }
+
+                var attribute = attributesToSearch.Where(c => c.Text == formattedLine).FirstOrDefault();
+
+                if(attribute != null)
+                {
+                    var attrValues = GetNumberRange(formattedValue);   
+                    result.Add(attribute, new FilterValue() { Min = attrValues.min, Max = attrValues.max });
+                }
+            }
+
+            return result;
         }
     }
 }

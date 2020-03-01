@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages
 {
@@ -52,5 +53,25 @@ namespace Sidekick.Business.Languages
         string InfluenceHunter { get; }
         string InfluenceRedeemer { get; }
         string InfluenceWarlord { get; }
+
+
+        string AttributeCategoryCrafted { get; }
+        string CategoryNameCrafted { get; }
+        string AttributeCategoryImplicit { get; }
+        string CategoryNameImplicit { get; }
+        string AttributeCategoryFractured { get; }
+        string CategoryNameFractured { get; }
+        string AttributeCategoryEnchant { get; }
+        string CategoryNameEnchant { get; }
+        string AttributeCategoryVeiled { get; }
+        string CategoryNameVeiled { get; }
+        string AttributeCategoryDelve { get; }
+        string CategoryNameDelve { get; }
+        string AttributeCategoryExplicit { get; }
+        string PercentagAddedRegexPattern { get; }
+        string PercentageIncreasedOrDecreasedRegexPattern { get; }
+        string AttributeIncreasedRegexPattern { get; }
+        string AttributeRangeRegexPattern { get; }
+        string KeywordRange { get; }
     }
 }

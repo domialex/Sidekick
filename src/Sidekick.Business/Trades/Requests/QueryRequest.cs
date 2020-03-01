@@ -9,6 +9,7 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
+#warning TODO Zalher: Add Attribute Filters
         public QueryRequest(Item item, ILanguage language)
         {
             Query.Status.Option = StatusType.Online;

@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -47,5 +48,43 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "ископаемое";
         public string KeywordVial => "Фиал";
         public string KeywordEssence => "сущность";
+
+        public string AttributeCategoryCrafted => throw new NotImplementedException();
+
+        public Regex PercentagAddedRegex => throw new NotImplementedException();
+
+        public string PercentagAddedRegexPattern => throw new NotImplementedException();
+
+        public string PercentageIncreasedOrDecreasedRegexPattern => throw new NotImplementedException();
+
+        public string AttributeIncreasedRegexPattern => throw new NotImplementedException();
+
+        public string CategoryNameCrafted => throw new NotImplementedException();
+
+        public string AttributeCategoryImplicit => throw new NotImplementedException();
+
+        public string CategoryNameImplicit => throw new NotImplementedException();
+
+        public string AttributeCategoryFractured => throw new NotImplementedException();
+
+        public string CategoryNameFractured => throw new NotImplementedException();
+
+        public string AttributeCategoryEnchant => throw new NotImplementedException();
+
+        public string CategoryNameEnchant => throw new NotImplementedException();
+
+        public string AttributeCategoryVeiled => throw new NotImplementedException();
+
+        public string CategoryNameVeiled => throw new NotImplementedException();
+
+        public string AttributeCategoryDelve => throw new NotImplementedException();
+
+        public string CategoryNameDelve => throw new NotImplementedException();
+
+        public string AttributeCategoryExplicit => throw new NotImplementedException();
+
+        public string AttributeRangeRegexPattern => throw new NotImplementedException();
+
+        public string KeywordRange => throw new NotImplementedException();
     }
 }
