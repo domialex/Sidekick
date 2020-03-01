@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sidekick.Windows.AdvancedSearch"
         mc:Ignorable="d"
-        Title="AdvancedSearchView" Height="582" Width="800">
+        Title="AdvancedSearchView" Height="582" Width="800" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,42 +19,11 @@
     </Window.Style>
 
     <Grid x:Name="gridAdvancedSearch" Height="561">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="columnAttribute"/>
             <ColumnDefinition x:Name="columnminValue" Width="100"/>
             <ColumnDefinition x:Name="columnMaxValue" Width="100"/>
             <ColumnDefinition x:Name="columnEnabled" Width="50"/>
         </Grid.ColumnDefinitions>
-
-        <Button Content="Search" Grid.Column="2" Grid.Row="14" HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Grid.RowSpan="3" Width="160"/>
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Attribute1" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr1"/>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Attribute2" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr2"/>
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Attribute3" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr3"/>
-        <TextBlock Grid.Column="0" Grid.Row="3" Text="Attribute4" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr4"/>
-        <TextBlock Grid.Column="0" Grid.Row="4" Text="Attribute5" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr5"/>
-        <TextBlock Grid.Column="0" Grid.Row="5" Text="Attribute6" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr6"/>
-        <TextBlock Grid.Column="0" Grid.Row="6" Text="Attribute7" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr7"/>
-        <TextBlock Grid.Column="0" Grid.Row="7" Text="Attribute8" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr8"/>
-        <TextBlock Grid.Column="0" Grid.Row="8" Text="Attribute9" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr9"/>
-        <TextBlock Grid.Column="0" Grid.Row="9" Text="Attribute10" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr10"/>
-        <TextBlock Grid.Column="0" Grid.Row="10" Text="Attribute11" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr11"/>
-        <TextBlock Grid.Column="0" Grid.Row="11" Text="Attribute12" HorizontalAlignment="Center" VerticalAlignment="Center" Name="textBlockAttr12"/>
     </Grid>
 </Window>

@@ -110,6 +110,7 @@ namespace Sidekick.Windows.PriceCheck
         private async Task GetPricePrediction(string itemText)
         {
             var predictionResult = await poePriceInfoClient.GetItemPricePrediction(itemText);
+
             if (predictionResult?.ErrorCode != 0)
             {
                 return;

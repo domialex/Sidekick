@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Sidekick.Business.Parsers.Models;
+using Sidekick.Windows.AdvancedSearch.ViewModels;
+using Sidekick.Windows.PriceCheck;
 
 namespace Sidekick.Windows.AdvancedSearch
 {
@@ -20,63 +23,122 @@ namespace Sidekick.Windows.AdvancedSearch
     /// </summary>
     public partial class AdvancedSearchView : Window
     {
-        private Dictionary<int, TextBlock> AttributeNameBlockDicitonary;
+        private const int AttributeColumnIndex = 0;
+        private const int MinValueColumnIndex = 1;
+        private const int MaxValueColumnIndex = 2;
+        private const int EnabledColumnIndex = 3;
 
-        public AdvancedSearchView()
+        public Item CurrentItem;
+        private AdvancedSearchController Controller;
+        private Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)> RowElementsDictionary;
+
+        public AdvancedSearchView(AdvancedSearchController controller)
         {
             InitializeComponent();
-            AttributeNameBlockDicitonary = new Dictionary<int, TextBlock>()
-            {
-                { 0, textBlockAttr1 },
-                { 1, textBlockAttr2 },
-                { 2, textBlockAttr3 },
-                { 3, textBlockAttr4 },
-                { 4, textBlockAttr5 },
-                { 5, textBlockAttr6 },
-                { 6, textBlockAttr7 },
-                { 7, textBlockAttr8 },
-                { 8, textBlockAttr9 },
-                { 9, textBlockAttr10 },
-                { 10, textBlockAttr11 },
-                { 11, textBlockAttr12 },
-            };
+            Controller = controller;
+            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)>();
             ClearGrid();
             Hide();
         }
 
         public void ClearGrid()
         {
-            foreach(var pair in AttributeNameBlockDicitonary)
-            {
-                pair.Value.Text = "";
-                pair.Value.IsEnabled = false;
-            }
-
-            gridAdvancedSearch.RowDefinitions.All(c => { c.Height = new GridLength(0, GridUnitType.Pixel); return true; });
-            gridAdvancedSearch.UpdateLayout();
+            gridAdvancedSearch.Children.Clear();
+            gridAdvancedSearch.RowDefinitions.Clear();
+            RowElementsDictionary.Clear();
+            CurrentItem = null;
         }
 
-        public void PopulateGrid(Business.Parsers.Models.Item item)
+        public void PopulateGrid(Item item)
         {
-            ClearGrid();
-
             if((item as IAttributeItem) == null)
             {
                 return;
             }
 
+            ClearGrid();
             var attributeItem = (IAttributeItem)item;
-            int counter = 0;
+            CurrentItem = item;
+            int rowCounter = 0;
+            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)>();
 
             foreach(var pair in attributeItem.AttributeDictionary)
             {
-                AttributeNameBlockDicitonary[counter].Text = pair.Key.Text;
-                AttributeNameBlockDicitonary[counter].IsEnabled = true;
-                gridAdvancedSearch.RowDefinitions[counter].Height = new GridLength(30, GridUnitType.Pixel);
-                counter++;
+                gridAdvancedSearch.RowDefinitions.Add(BuildRow());
+                var attributeBlock = BuildTextBlock(pair.Key.Text);
+                var minBlock = BuildTextBlock(pair.Value.Min == null ? "" : pair.Value.Min.ToString());
+                var maxBlock = BuildTextBlock(pair.Value.Max == null ? "" : pair.Value.Max.ToString());
+                var enabledCheckBox = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, IsChecked = true };
+                Grid.SetColumn(attributeBlock, AttributeColumnIndex);
+                Grid.SetRow(attributeBlock, rowCounter);
+                Grid.SetColumn(minBlock, MinValueColumnIndex);
+                Grid.SetRow(minBlock, rowCounter);
+                Grid.SetColumn(maxBlock, MaxValueColumnIndex);
+                Grid.SetRow(maxBlock, rowCounter);
+                Grid.SetColumn(enabledCheckBox, EnabledColumnIndex);
+                Grid.SetRow(enabledCheckBox, rowCounter);
+                gridAdvancedSearch.Children.Add(attributeBlock);
+                gridAdvancedSearch.Children.Add(minBlock);
+                gridAdvancedSearch.Children.Add(maxBlock);
+                gridAdvancedSearch.Children.Add(enabledCheckBox);
+                RowElementsDictionary.Add(rowCounter, (attributeBlock, minBlock, maxBlock, enabledCheckBox));
+                rowCounter++;
             }
 
+            gridAdvancedSearch.RowDefinitions.Add(BuildRow());
+            var searchButton = new Button() { Content = "Search" };
+            searchButton.Click += Search_Click;
+
+            Grid.SetColumn(searchButton, MinValueColumnIndex);
+            Grid.SetRow(searchButton, rowCounter);
+            gridAdvancedSearch.Children.Add(searchButton);
+            gridAdvancedSearch.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             gridAdvancedSearch.UpdateLayout();
+        }
+
+        private void Search_Click(object sender, EventArgs e)
+        {
+            var choosenAttributesDict = new Dictionary<Business.Apis.Poe.Models.Attribute, Business.Filters.FilterValue>();
+
+            foreach(var pair in RowElementsDictionary)
+            {
+                if(pair.Value.isChecked.IsChecked == true)
+                {
+                    var value = GetAttribute(pair.Value.attrName.Text);
+                    choosenAttributesDict.Add(value.attribute, value.value);
+                }
+            }
+
+            ((IAttributeItem)CurrentItem).AttributeDictionary = choosenAttributesDict;
+            Controller.CheckItemPrice(CurrentItem);
+        }
+
+        private (Business.Apis.Poe.Models.Attribute attribute, Business.Filters.FilterValue value) GetAttribute(string text)
+        {
+            var attr = ((IAttributeItem)CurrentItem).AttributeDictionary;
+            var entry = attr.Where(c => c.Key.Text == text).FirstOrDefault();
+
+            return (entry.Key, entry.Value);
+        }
+
+        private RowDefinition BuildRow()
+        {
+            return new RowDefinition()
+            {
+                Height = new GridLength(30, GridUnitType.Pixel),
+                MinHeight = 30,
+                MaxHeight = 30,
+            };
+        }
+
+        private TextBlock BuildTextBlock(string text)
+        {
+            return new TextBlock()
+            {
+                Text = text,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -111,5 +173,19 @@ namespace Sidekick.Windows.AdvancedSearch
             }
         }
         delegate void HideWindowAndClearDataCallback();
+
+        public void SetWindowPosition(int x, int y)
+        {
+            if(!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
+            }
+            else
+            {
+                Left = x;
+                Top = y;
+            }
+        }
+        delegate void SetWindowPositionCallback(int x, int y);
     }
 }
