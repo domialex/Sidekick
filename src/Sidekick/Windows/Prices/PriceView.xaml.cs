@@ -13,22 +13,27 @@ namespace Sidekick.Windows.Prices
     {
         private readonly IPriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
+        private readonly INativeCursor cursor;
 
         public PriceView(
             IServiceProvider serviceProvider,
             IPriceViewModel viewModel,
-            INativeBrowser nativeBrowser)
+            INativeBrowser nativeBrowser,
+            INativeCursor cursor)
             : base(serviceProvider)
         {
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
-
+            this.cursor = cursor;
             InitializeComponent();
             DataContext = viewModel;
 
             Loaded += OverlayWindow_Loaded;
 
             Show();
+
+            var position = cursor.GetCursorPosition();
+            SetWindowPositionFromBottomRight(position.X - 10, position.Y - 10);
 
             if (viewModel.IsError)
             {
