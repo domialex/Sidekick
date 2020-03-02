@@ -9,7 +9,7 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
-        public QueryRequest(Item item, ILanguage language)
+        public QueryRequest(Item item)
         {
             Query.Status.Option = StatusType.Online;
             Query.Filters.TradeFilters.Filters.SaleType = new FilterOption { Option = "priced" };

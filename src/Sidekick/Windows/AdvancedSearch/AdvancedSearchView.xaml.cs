@@ -145,21 +145,21 @@ namespace Sidekick.Windows.AdvancedSearch
         }
 
         // TODO Find a better way to access this
-        private Brush GetRarityColor(string rarity)
+        private Brush GetRarityColor(Rarity rarity)
         {
-            if (rarity == Legacy.LanguageProvider.Language.RarityNormal)
+            if (rarity == Rarity.Normal)
             {
                 return new SolidColorBrush(Color.FromRgb(200, 200, 200));
             }
-            if (rarity == Legacy.LanguageProvider.Language.RarityMagic)
+            if (rarity == Rarity.Magic)
             {
                 return new SolidColorBrush(Color.FromRgb(136, 136, 255));
             }
-            if (rarity == Legacy.LanguageProvider.Language.RarityRare)
+            if (rarity == Rarity.Rare)
             {
                 return new SolidColorBrush(Color.FromRgb(255, 255, 119));
             }
-            if (rarity == Legacy.LanguageProvider.Language.RarityUnique)
+            if (rarity == Rarity.Unique)
             {
                 return new SolidColorBrush(Color.FromRgb(175, 96, 37));
             }

@@ -168,14 +168,14 @@ namespace Sidekick.Business.Parsers
                 Name = line,
                 Type = line
             };
-                }
+        }
 
         private Item GetNormalItem(ItemProperties itemProperties, string[] lines)
         {
             if (lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel))) // Equippable Item
             {
                 var item = new EquippableItem()
-                        Type = isIdentified ? lines[2] : lines[1]
+                { 
                     Type = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim(),
                     Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim(),
                     ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
@@ -360,6 +360,7 @@ namespace Sidekick.Business.Parsers
             for (var i = 0; i < lines.Length; i++)
             {
                 var line = lines[i];
+
                 if (line == languageProvider.Language.DescriptionUnidentified)
                 {
                     properties.IsIdentified = false;
@@ -383,8 +384,6 @@ namespace Sidekick.Business.Parsers
                 else if (line.Contains(languageProvider.Language.DescriptionOrgan))
                 {
                     properties.IsOrgan = true;
-                }
-                {
                 }
                 else if (i == lines.Length - 1 && line.Contains("Note"))
                 {
