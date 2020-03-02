@@ -40,31 +40,58 @@ namespace Sidekick.Windows
             EnsureBounds();
         }
 
+        protected void SetWindowPositionFromBottomRight(double x, double y)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => SetWindowPositionFromBottomRight(x, y));
+                return;
+            }
+
+            SetWindowPosition(x - Width, y - Height);
+        }
+
+        protected void SetWindowPosition(double x, double y)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => SetWindowPosition(x, y));
+                return;
+            }
+
+            var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
+            SetWindowPositionPercent(x / screenRect.Width, y / screenRect.Height);
+        }
+
         protected void SetWindowPositionPercent(double x, double y)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(new SetWindowPositionPercentCallback(EnsureBounds), x, y);
+                Dispatcher.Invoke(() => SetWindowPositionPercent(x, y));
+                return;
             }
-            else
-            {
-                if (x > 1) { x /= 100; }
-                if (y > 1) { y /= 100; }
 
-                var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
+            if (x > 1) { x /= 100; }
+            if (y > 1) { y /= 100; }
 
-                var desiredX = screenRect.X + (screenRect.Width * x);
-                var desiredY = screenRect.Y + (screenRect.Height * y);
+            var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
-                Left = (int)desiredX;
-                Top = (int)desiredY;
-                EnsureBounds();
-            }
+            var desiredX = screenRect.X + (screenRect.Width * x);
+            var desiredY = screenRect.Y + (screenRect.Height * y);
+
+            Left = (int)desiredX;
+            Top = (int)desiredY;
+            EnsureBounds();
         }
-        private delegate void SetWindowPositionPercentCallback();
 
         protected void EnsureBounds()
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => EnsureBounds());
+                return;
+            }
+
             if (IsVisible)
             {
                 var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;

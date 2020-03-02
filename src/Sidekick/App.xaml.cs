@@ -12,7 +12,7 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
-using Sidekick.Helpers.Input;
+using Sidekick.Handlers;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.AdvancedSearch;

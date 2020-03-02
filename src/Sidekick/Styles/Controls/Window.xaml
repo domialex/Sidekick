@@ -6,6 +6,7 @@
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="NoResize" />
         <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
 
         <Style.Triggers>
             <EventTrigger RoutedEvent="Window.Loaded">

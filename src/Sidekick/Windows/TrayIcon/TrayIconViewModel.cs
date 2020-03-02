@@ -1,12 +1,10 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Sidekick.Business.Apis.PoeNinja;
-using Sidekick.Business.Parsers;
-using Sidekick.Business.Trades;
+using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.Prices;
 using Sidekick.Windows.Settings;
 
 namespace Sidekick.Windows.TrayIcon
@@ -15,25 +13,16 @@ namespace Sidekick.Windows.TrayIcon
     {
         private readonly App application;
         private readonly IViewLocator viewLocator;
-        private readonly IItemParser itemParser;
-        private readonly ITradeClient tradeClient;
-        private readonly OverlayController overlayController;
-        private readonly IPoeNinjaCache poeNinjaCache;
+        private readonly INativeClipboard nativeClipboard;
 
         public TrayIconViewModel(
             App application,
             IViewLocator viewLocator,
-            IItemParser itemParser,
-            ITradeClient tradeClient,
-            OverlayController overlayController,
-            IPoeNinjaCache poeNinjaCache)
+            INativeClipboard nativeClipboard)
         {
             this.application = application;
             this.viewLocator = viewLocator;
-            this.itemParser = itemParser;
-            this.tradeClient = tradeClient;
-            this.overlayController = overlayController;
-            this.poeNinjaCache = poeNinjaCache;
+            this.nativeClipboard = nativeClipboard;
         }
 
         public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
@@ -48,7 +37,7 @@ namespace Sidekick.Windows.TrayIcon
 
         private async Task DebugPriceCheck()
         {
-            var item = await itemParser.ParseItem(@"Rarity: Unique
+            await nativeClipboard.SetText(@"Rarity: Unique
 Blood of the Karui
 Sanctified Life Flask
 --------
@@ -75,22 +64,7 @@ So their King might go on.""
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
 ", false);
 
-            overlayController.Open();
-
-            var queryResult = await tradeClient.GetListings(item);
-            if (queryResult != null)
-            {
-                var poeNinjaItem = poeNinjaCache.GetItem(item);
-                if (poeNinjaItem != null)
-                {
-                    queryResult.PoeNinjaItem = poeNinjaItem;
-                    queryResult.LastRefreshTimestamp = poeNinjaCache.LastRefreshTimestamp;
-                }
-                overlayController.SetQueryResult(queryResult);
-                return;
-            }
-            overlayController.Hide();
+            viewLocator.Open<PriceView>();
         }
-
     }
 }
