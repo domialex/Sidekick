@@ -30,21 +30,14 @@ namespace Sidekick.Windows.Prices
 
             Show();
 
-            viewModel.OnError += ViewModel_OnError;
             if (viewModel.IsError)
             {
-                ViewModel_OnError();
+                Dispatcher.InvokeAsync(async () =>
+                {
+                    await Task.Delay(1500);
+                    Close();
+                });
             }
-        }
-
-        private void ViewModel_OnError()
-        {
-            Dispatcher.InvokeAsync(async () =>
-            {
-                await Task.Delay(1500);
-                viewModel.OnError -= ViewModel_OnError;
-                Close();
-            });
         }
 
         private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)

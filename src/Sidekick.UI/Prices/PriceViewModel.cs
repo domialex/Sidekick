@@ -59,8 +59,6 @@ namespace Sidekick.UI.Prices
 
         public Uri Uri => QueryResult?.Uri;
 
-        public event Action OnError;
-
         public bool IsError { get; private set; }
         public bool IsNotError => !IsError;
 
@@ -75,7 +73,6 @@ namespace Sidekick.UI.Prices
             if (Item == null)
             {
                 IsError = true;
-                OnError?.Invoke();
                 return;
             }
 

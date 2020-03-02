@@ -7,7 +7,6 @@ namespace Sidekick.UI.Prices
 {
     public interface IPriceViewModel
     {
-        event Action OnError;
         bool IsError { get; }
         bool IsNotError { get; }
 
