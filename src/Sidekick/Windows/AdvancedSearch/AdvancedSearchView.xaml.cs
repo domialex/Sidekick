@@ -63,13 +63,30 @@ namespace Sidekick.Windows.AdvancedSearch
             int rowCounter = 0;
             RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)>();
 
-            foreach(var pair in attributeItem.AttributeDictionary)
+            // Item Name and Type
+            gridAdvancedSearch.RowDefinitions.Add(BuildRow());
+            var itemNameBlock = BuildTextBlock(item.Name);
+            var itemTypeBlock = BuildTextBlock(item.Type);
+            itemNameBlock.Foreground = GetRarityColor(item.Rarity);
+            itemTypeBlock.Margin = new Thickness(150, 0, 0, 0);
+            gridAdvancedSearch.Children.Add(itemNameBlock);
+            gridAdvancedSearch.Children.Add(itemTypeBlock);
+            Grid.SetRow(itemNameBlock, rowCounter);
+            Grid.SetColumn(itemNameBlock, 0);
+            Grid.SetRow(itemTypeBlock, rowCounter);
+            Grid.SetColumn(itemTypeBlock, 1);
+            rowCounter++;
+
+            // Item Attributes
+            foreach (var pair in attributeItem.AttributeDictionary)
             {
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var attributeBlock = BuildTextBlock(pair.Key.Text);
                 var minBlock = BuildTextBox(pair.Value.Min == null ? "" : pair.Value.Min.ToString());
                 var maxBlock = BuildTextBox(pair.Value.Max == null ? "" : pair.Value.Max.ToString());
                 var enabledCheckBox = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, IsChecked = true };
+                enabledCheckBox.Checked += EnableTextBoxes;
+                enabledCheckBox.Unchecked += DisableTextBoxes;
                 Grid.SetColumn(attributeBlock, AttributeColumnIndex);
                 Grid.SetRow(attributeBlock, rowCounter);
                 Grid.SetColumn(minBlock, MinValueColumnIndex);
@@ -86,6 +103,36 @@ namespace Sidekick.Windows.AdvancedSearch
                 rowCounter++;
             }
 
+            // Links + Sockets + Item Level + Influence
+            if((item.GetType() == typeof(EquippableItem)))
+            {
+                gridAdvancedSearch.RowDefinitions.Add(BuildRow());
+                var equippableItem = (EquippableItem)item;
+                var socketCheckbox = new CheckBox() { Content = "Max Sockets" };        // TODO Best way to find max possible Sockets
+                var linksCheckbox = new CheckBox() { Content = "Max Links", Margin = new Thickness(90, 0,0,0) };           // TODO Find Max Links
+                var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(180,0,0,0) };
+                var itemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(200,0,0,0), Width = 30 };
+                var influenceCheckBox = new CheckBox() { Content = equippableItem.Influence.ToString(), Margin = new Thickness(360, 0, 0, 0) };
+
+                gridAdvancedSearch.Children.Add(socketCheckbox);
+                gridAdvancedSearch.Children.Add(linksCheckbox);
+                gridAdvancedSearch.Children.Add(itemLevelCheckBox);
+                gridAdvancedSearch.Children.Add(itemLevelTextBox);
+                gridAdvancedSearch.Children.Add(influenceCheckBox);
+                Grid.SetRow(socketCheckbox, rowCounter);
+                Grid.SetColumn(socketCheckbox, 0);
+                Grid.SetRow(linksCheckbox, rowCounter);
+                Grid.SetColumn(linksCheckbox, 0);
+                Grid.SetRow(itemLevelCheckBox, rowCounter);
+                Grid.SetColumn(itemLevelCheckBox, 0);
+                Grid.SetRow(itemLevelTextBox, rowCounter);
+                Grid.SetColumn(itemLevelTextBox, 0);
+                Grid.SetRow(influenceCheckBox, rowCounter);
+                Grid.SetColumn(influenceCheckBox, 0);
+                rowCounter++;
+            }
+
+            // Search Button
             gridAdvancedSearch.RowDefinitions.Add(BuildRow(50));
             var searchButton = new Button() { Content = "Search", Height = 30, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
             searchButton.Click += Search_Click;
@@ -95,6 +142,30 @@ namespace Sidekick.Windows.AdvancedSearch
             gridAdvancedSearch.Children.Add(searchButton);
             gridAdvancedSearch.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             gridAdvancedSearch.UpdateLayout();
+        }
+
+        // TODO Find a better way to access this
+        private Brush GetRarityColor(string rarity)
+        {
+            if (rarity == Legacy.LanguageProvider.Language.RarityNormal)
+            {
+                return new SolidColorBrush(Color.FromRgb(200, 200, 200));
+            }
+            if (rarity == Legacy.LanguageProvider.Language.RarityMagic)
+            {
+                return new SolidColorBrush(Color.FromRgb(136, 136, 255));
+            }
+            if (rarity == Legacy.LanguageProvider.Language.RarityRare)
+            {
+                return new SolidColorBrush(Color.FromRgb(255, 255, 119));
+            }
+            if (rarity == Legacy.LanguageProvider.Language.RarityUnique)
+            {
+                return new SolidColorBrush(Color.FromRgb(175, 96, 37));
+            }
+
+            // Gem, Currency, Divination Card, Quest Item, Prophecy, Relic, etc.
+            return new SolidColorBrush(Color.FromRgb(170, 158, 130));
         }
 
         private void Search_Click(object sender, EventArgs e)
@@ -113,6 +184,26 @@ namespace Sidekick.Windows.AdvancedSearch
 
             ((IAttributeItem)CurrentItem).AttributeDictionary = choosenAttributesDict;
             Controller.CheckItemPrice(CurrentItem);
+        }
+
+        private void DisableTextBoxes(object sender, EventArgs e)
+        {
+            var checkbox = sender as CheckBox;
+            var gridRow = Grid.GetRow(checkbox);
+            EnableDisableTextBoxes(gridRow, false);
+        }
+
+        private void EnableTextBoxes(object sender, EventArgs e)
+        {
+            var checkbox = sender as CheckBox;
+            var gridRow = Grid.GetRow(checkbox);
+            EnableDisableTextBoxes(gridRow, true);
+        }
+
+        private void EnableDisableTextBoxes(int row, bool toggle)
+        {
+            RowElementsDictionary[row].minVal.IsEnabled = toggle;
+            RowElementsDictionary[row].maxVal.IsEnabled = toggle;
         }
 
         private Business.Apis.Poe.Models.Attribute GetAttribute(string text)
@@ -163,7 +254,7 @@ namespace Sidekick.Windows.AdvancedSearch
             return new TextBlock()
             {
                 Text = text,
-                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
             };
         }

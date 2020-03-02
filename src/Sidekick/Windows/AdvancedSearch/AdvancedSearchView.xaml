@@ -20,7 +20,7 @@
 
     <Grid x:Name="gridAdvancedSearch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="columnAttribute" Width="2*"/>
+            <ColumnDefinition x:Name="columnAttribute" Width="2*" MinWidth="200"/>
             <ColumnDefinition x:Name="columnminValue" Width="100"/>
             <ColumnDefinition x:Name="columnMaxValue" Width="100"/>
             <ColumnDefinition x:Name="columnEnabled" Width="50"/>

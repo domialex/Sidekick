@@ -132,7 +132,7 @@ namespace Sidekick.Business.Parsers
                     {
                         Name = lines[1]
                     };
-                }
+                } 
                 else if (rarity == languageProvider.Language.RarityUnique)
                 {
                     item = new EquippableItem
