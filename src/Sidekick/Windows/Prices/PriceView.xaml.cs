@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -28,13 +29,29 @@ namespace Sidekick.Windows.Prices
             Loaded += OverlayWindow_Loaded;
 
             Show();
+
+            viewModel.OnError += ViewModel_OnError;
+            if (viewModel.IsError)
+            {
+                ViewModel_OnError();
+            }
+        }
+
+        private void ViewModel_OnError()
+        {
+            Dispatcher.InvokeAsync(async () =>
+            {
+                await Task.Delay(1500);
+                viewModel.OnError -= ViewModel_OnError;
+                Close();
+            });
         }
 
         private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
             scrollViewer?.ScrollToTop();
-            scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged; ;
+            scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -65,5 +82,6 @@ namespace Sidekick.Windows.Prices
             nativeBrowser.Open(e.Uri);
             e.Handled = true;
         }
+
     }
 }

@@ -14,7 +14,6 @@ using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Localization.Prices;
-using Sidekick.UI.Helpers;
 using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
@@ -58,8 +57,14 @@ namespace Sidekick.UI.Prices
 
         private QueryResult<SearchResult> QueryResult { get; set; }
 
-        public bool IsFetching { get; private set; }
+        public Uri Uri => QueryResult?.Uri;
 
+        public event Action OnError;
+
+        public bool IsError { get; private set; }
+        public bool IsNotError => !IsError;
+
+        public bool IsFetching { get; private set; }
         public bool IsFetched => !IsFetching;
 
         private async Task Initialize()
@@ -69,6 +74,8 @@ namespace Sidekick.UI.Prices
 
             if (Item == null)
             {
+                IsError = true;
+                OnError?.Invoke();
                 return;
             }
 

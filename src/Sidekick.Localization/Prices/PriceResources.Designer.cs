@@ -142,6 +142,15 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to find prices for this item..
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Name.
         /// </summary>
         public static string OverlayAccountName {

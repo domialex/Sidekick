@@ -28,9 +28,10 @@
             Content="{Binding Path=Item.Name}"
             FontSize="16"
             FontWeight="Bold"
-            Foreground="{Binding ItemColor}" />
+            Foreground="{Binding ItemColor}"
+            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
 
-        <GroupBox Padding="0">
+        <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
             <ListView
                 Name="ItemList"
                 Height="260"
@@ -89,31 +90,43 @@
             </ListView>
         </GroupBox>
 
-        <ProgressBar
-            Height="16"
-            IsIndeterminate="True"
-            Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
+        <StackPanel Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+            <ProgressBar
+                Height="16"
+                IsIndeterminate="True"
+                Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
 
-        <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+            <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="{Binding PredictionText}"
-                Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="{Binding PoeNinjaText}"
-                Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{Binding PredictionText}"
+                    Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{Binding PoeNinjaText}"
+                    Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
 
-            <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                <Hyperlink NavigateUri="{Binding QueryResult.Uri}" RequestNavigate="OpenLink">
-                    <TextBlock Text="{Binding CountString}" />
-                </Hyperlink>
-            </TextBlock>
-        </Grid>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center">
+                    <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
+                        <TextBlock Text="{Binding CountString}" />
+                    </Hyperlink>
+                </TextBlock>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
+            <GroupBox>
+                <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
+            </GroupBox>
+            <ProgressBar
+                Width="250"
+                Height="16"
+                IsIndeterminate="True" />
+        </StackPanel>
     </StackPanel>
 </base:BaseWindow>
