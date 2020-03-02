@@ -47,20 +47,12 @@ namespace Sidekick.Business.Apis.PoeDb
 
         private Uri CreateUri(Parsers.Models.Item item)
         {
-            string subUrl;
-
-            if (item.Rarity == Parsers.Models.Rarity.Unique)
+            var subUrl = item.Rarity switch
             {
-                subUrl = SubUrlUnique;
-            }
-            else if (item.Rarity == Parsers.Models.Rarity.Gem)
-            {
-                subUrl = SubUrlGem;
-            }
-            else
-            {
-                subUrl = SubUrlItem;
-            }
+                Parsers.Models.Rarity.Unique => SubUrlUnique,
+                Parsers.Models.Rarity.Gem => SubUrlGem,
+                _ => SubUrlItem
+            };
 
             var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
