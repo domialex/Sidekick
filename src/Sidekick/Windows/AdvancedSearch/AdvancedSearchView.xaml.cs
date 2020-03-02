@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Sidekick.Business.Filters;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Windows.AdvancedSearch.ViewModels;
 using Sidekick.Windows.PriceCheck;
@@ -30,13 +31,13 @@ namespace Sidekick.Windows.AdvancedSearch
 
         public Item CurrentItem;
         private AdvancedSearchController Controller;
-        private Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)> RowElementsDictionary;
+        private Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)> RowElementsDictionary;
 
         public AdvancedSearchView(AdvancedSearchController controller)
         {
             InitializeComponent();
             Controller = controller;
-            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)>();
+            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)>();
             ClearGrid();
             Hide();
         }
@@ -60,14 +61,14 @@ namespace Sidekick.Windows.AdvancedSearch
             var attributeItem = (IAttributeItem)item;
             CurrentItem = item;
             int rowCounter = 0;
-            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBlock minVal, TextBlock maxVal, CheckBox isChecked)>();
+            RowElementsDictionary = new Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)>();
 
             foreach(var pair in attributeItem.AttributeDictionary)
             {
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var attributeBlock = BuildTextBlock(pair.Key.Text);
-                var minBlock = BuildTextBlock(pair.Value.Min == null ? "" : pair.Value.Min.ToString());
-                var maxBlock = BuildTextBlock(pair.Value.Max == null ? "" : pair.Value.Max.ToString());
+                var minBlock = BuildTextBox(pair.Value.Min == null ? "" : pair.Value.Min.ToString());
+                var maxBlock = BuildTextBox(pair.Value.Max == null ? "" : pair.Value.Max.ToString());
                 var enabledCheckBox = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, IsChecked = true };
                 Grid.SetColumn(attributeBlock, AttributeColumnIndex);
                 Grid.SetRow(attributeBlock, rowCounter);
@@ -85,8 +86,8 @@ namespace Sidekick.Windows.AdvancedSearch
                 rowCounter++;
             }
 
-            gridAdvancedSearch.RowDefinitions.Add(BuildRow());
-            var searchButton = new Button() { Content = "Search" };
+            gridAdvancedSearch.RowDefinitions.Add(BuildRow(50));
+            var searchButton = new Button() { Content = "Search", Height = 30, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
             searchButton.Click += Search_Click;
 
             Grid.SetColumn(searchButton, MinValueColumnIndex);
@@ -104,8 +105,9 @@ namespace Sidekick.Windows.AdvancedSearch
             {
                 if(pair.Value.isChecked.IsChecked == true)
                 {
-                    var value = GetAttribute(pair.Value.attrName.Text);
-                    choosenAttributesDict.Add(value.attribute, value.value);
+                    var attr = GetAttribute(pair.Value.attrName.Text);
+                    var value = GetValue(pair.Key);
+                    choosenAttributesDict.Add(attr, value);
                 }
             }
 
@@ -113,21 +115,46 @@ namespace Sidekick.Windows.AdvancedSearch
             Controller.CheckItemPrice(CurrentItem);
         }
 
-        private (Business.Apis.Poe.Models.Attribute attribute, Business.Filters.FilterValue value) GetAttribute(string text)
+        private Business.Apis.Poe.Models.Attribute GetAttribute(string text)
         {
             var attr = ((IAttributeItem)CurrentItem).AttributeDictionary;
-            var entry = attr.Where(c => c.Key.Text == text).FirstOrDefault();
+            var entry = attr.Where(c => c.Key.Text == text).FirstOrDefault().Key;
 
-            return (entry.Key, entry.Value);
+            return entry;
         }
 
-        private RowDefinition BuildRow()
+        private FilterValue GetValue(int row)
         {
+            var minValStr = RowElementsDictionary[row].minVal.Text;
+            var maxValStr = RowElementsDictionary[row].maxVal.Text;
+            int? minVal = null;
+            int? maxVal = null;
+
+            if(int.TryParse(minValStr, out var val))
+            {
+                minVal = val;
+            }
+
+            if(int.TryParse(maxValStr, out val))
+            {
+                maxVal = val;
+            }
+
+            return new FilterValue() { Min = minVal, Max = maxVal };
+        }
+
+        private RowDefinition BuildRow(int? height = null)
+        {
+            if(height == null)
+            {
+                height = 30;
+            }
+
             return new RowDefinition()
             {
-                Height = new GridLength(30, GridUnitType.Pixel),
-                MinHeight = 30,
-                MaxHeight = 30,
+                Height = new GridLength(height.Value, GridUnitType.Pixel),
+                MinHeight = height.Value,
+                MaxHeight = height.Value,
             };
         }
 
@@ -138,6 +165,18 @@ namespace Sidekick.Windows.AdvancedSearch
                 Text = text,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
+            };
+        }
+
+        private TextBox BuildTextBox(string value)
+        {
+            return new TextBox()
+            {
+                Text = value,
+                Height = 30,
+                Width = 60,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
             };
         }
 

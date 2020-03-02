@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sidekick.Windows.AdvancedSearch"
         mc:Ignorable="d"
-        Title="AdvancedSearchView" Height="582" Width="800" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="AdvancedSearchView" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,9 +18,9 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window"/>
     </Window.Style>
 
-    <Grid x:Name="gridAdvancedSearch" Height="561">
+    <Grid x:Name="gridAdvancedSearch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="columnAttribute"/>
+            <ColumnDefinition x:Name="columnAttribute" Width="2*"/>
             <ColumnDefinition x:Name="columnminValue" Width="100"/>
             <ColumnDefinition x:Name="columnMaxValue" Width="100"/>
             <ColumnDefinition x:Name="columnEnabled" Width="50"/>
