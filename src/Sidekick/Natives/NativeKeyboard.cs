@@ -147,12 +147,15 @@ namespace Sidekick.Natives
 
         public bool IsKeyPressed(string key)
         {
-            return key switch
+            switch (key)
             {
-                "Ctrl" => Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
-                                       || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
-                                       || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL),
-                _ => throw new Exception("Unrecognized key."),
+                case "Ctrl":
+                    return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
+                               || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
+                               || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
+                default:
+                    logger.Log("NativeKeyboard.IsKeyPressed - Unrecognized key - " + key);
+                    return false;
             };
         }
     }

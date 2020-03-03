@@ -1,13 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
-using Sidekick.Helpers.Input;
+using Sidekick.Handlers;
 using Sidekick.Natives;
 using Sidekick.Windows;
 using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.Windows.Prices;
 using Sidekick.Windows.Settings;
 using Sidekick.Windows.TrayIcon;
 
@@ -22,6 +22,7 @@ namespace Sidekick
 
             services.AddScoped<ApplicationLogsView>();
             services.AddScoped<LeagueView>();
+            services.AddScoped<PriceView>();
             services.AddScoped<SettingsView>();
             services.AddScoped<SplashScreen>();
 
@@ -31,8 +32,6 @@ namespace Sidekick
             services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
-            services.AddSingleton<OverlayController>();
-            services.AddSingleton<OverlayWindow>();
             services.AddSingleton<AdvancedSearchController>();
 
             return services;

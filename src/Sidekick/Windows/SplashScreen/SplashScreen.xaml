@@ -3,9 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Sidekick"
-    Width="400"
-    Height="150"
-    Padding="10"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />
@@ -15,7 +12,7 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <Grid Margin="{StaticResource Spacer}">
+    <Grid Width="360" Margin="{StaticResource Spacer}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="20" />

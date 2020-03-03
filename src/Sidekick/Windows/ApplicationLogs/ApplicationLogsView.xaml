@@ -20,7 +20,10 @@
         <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
             <Button Click="Button_Click" Content="{x:Static r:ApplicationLogResources.Close}" />
         </WrapPanel>
-        <ScrollViewer Name="logsScrollViewer" Margin="{StaticResource SpacerBottom}">
+        <ScrollViewer
+            Name="logsScrollViewer"
+            Height="300"
+            Margin="{StaticResource SpacerBottom}">
             <TextBox
                 Name="logsTextBox"
                 IsReadOnly="True"

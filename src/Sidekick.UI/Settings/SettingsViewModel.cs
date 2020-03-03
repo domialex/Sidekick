@@ -11,12 +11,12 @@ namespace Sidekick.UI.Settings
 {
     public class SettingsViewModel : ISettingsViewModel, IDisposable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,

@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using PropertyChanged;
 using Sidekick.UI.Leagues.Betrayal;
 using Sidekick.UI.Leagues.Blight;
 using Sidekick.UI.Leagues.Delve;
@@ -7,10 +8,9 @@ using Sidekick.UI.Leagues.Metamorph;
 
 namespace Sidekick.UI.Leagues
 {
+    [AddINotifyPropertyChangedInterface]
     public class LeagueViewModel : ILeagueViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public LeagueViewModel()
         {
             Betrayal = new BetrayalLeague();

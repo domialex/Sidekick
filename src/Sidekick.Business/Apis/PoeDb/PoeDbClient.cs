@@ -47,23 +47,15 @@ namespace Sidekick.Business.Apis.PoeDb
 
         private Uri CreateUri(Parsers.Models.Item item)
         {
-            string subUrl;
+            var subUrl = item.Rarity switch
+            {
+                Parsers.Models.Rarity.Unique => SubUrlUnique,
+                Parsers.Models.Rarity.Gem => SubUrlGem,
+                _ => SubUrlItem
+            };
 
-            if (item.Rarity == languageProvider.Language.RarityUnique)
-            {
-                subUrl = SubUrlUnique;
-            }
-            else if (item.Rarity == languageProvider.Language.RarityGem)
-            {
-                subUrl = SubUrlGem;
-            }
-            else
-            {
-                subUrl = SubUrlItem;
-            }
-
-            var searchLink = item.Rarity == languageProvider.Language.RarityUnique ? item.Name : item.Type;
-            string wikiLink = subUrl + searchLink.Replace(" ", "+");
+            var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
+            var wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri + wikiLink);
         }
     }

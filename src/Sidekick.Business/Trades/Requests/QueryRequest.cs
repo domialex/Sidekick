@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Sidekick.Business.Filters;
-using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 
@@ -9,17 +8,17 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
-#warning TODO Zalhera: Add Attribute Filters
-        public QueryRequest(Item item, ILanguage language)
+        #warning TODO Zalhera: Add Attribute Filters
+        public QueryRequest(Item item)
         {
             Query.Status.Option = StatusType.Online;
-            Query.Filters.TradeFilters.Filters.SaleType = new FilterOption {Option = "priced"};
+            Query.Filters.TradeFilters.Filters.SaleType = new FilterOption { Option = "priced" };
 
             var itemType = item.GetType();
 
             if (itemType == typeof(EquippableItem))
             {
-                if (((EquippableItem)item).Rarity == language.RarityUnique)
+                if (((EquippableItem)item).Rarity == Rarity.Unique)
                 {
                     Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()
@@ -171,7 +170,7 @@ namespace Sidekick.Business.Trades.Requests
             }
             else if (itemType == typeof(MapItem))
             {
-                if (((MapItem)item).Rarity == language.RarityUnique)
+                if (((MapItem)item).Rarity == Rarity.Unique)
                 {
                     Query.Name = item.Name;
                     Query.Filters.TypeFilter.Filters.Rarity = new FilterOption()

@@ -8,8 +8,9 @@ using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
 using Sidekick.Windows.Leagues;
+using Sidekick.Windows.Prices;
 
-namespace Sidekick.Helpers.Input
+namespace Sidekick.Handlers
 {
     public class EventsHandler : IDisposable
     {
@@ -54,7 +55,8 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty -= TriggerLeaveParty;
             events.OnOpenSearch -= TriggerOpenSearch;
             events.OnWhisperReply -= TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview -= TriggerLeagueOverview;
+            events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
+            events.OnPriceCheck -= Events_OnPriceCheck;
         }
 
         private void Initialize()
@@ -65,11 +67,21 @@ namespace Sidekick.Helpers.Input
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += TriggerLeagueOverview;
+            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
+            events.OnPriceCheck += Events_OnPriceCheck;
+        }
+
+        private async Task<bool> Events_OnPriceCheck()
+        {
+            viewLocator.CloseAll();
+            await clipboard.Copy();
+            viewLocator.Open<PriceView>();
+            return true;
         }
 
         private Task<bool> TriggerLeagueOverview()
         {
+            viewLocator.CloseAll();
             viewLocator.Open<LeagueView>();
             return Task.FromResult(true);
         }
