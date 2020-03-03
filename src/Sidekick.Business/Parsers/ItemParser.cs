@@ -12,7 +12,6 @@ using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Core.Loggers;
-using Sidekick.Business.Apis.Poe.Models;
 using Attribute = Sidekick.Business.Apis.Poe.Models.Attribute;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
@@ -58,7 +57,7 @@ namespace Sidekick.Business.Parsers
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public async Task<Item> ParseItem(string itemText, bool parseAttributes)
+        public async Task<Item> ParseItem(string itemText, bool parseAttributes = false)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
@@ -76,7 +75,7 @@ namespace Sidekick.Business.Parsers
                 Item item;
                 if (itemProperties.IsMap)
                 {
-                    item = GetMapItem(itemProperties, lines, rarity);
+                    item = GetMapItem(itemProperties, lines, rarity, parseAttributes);
                 }
                 else if (itemProperties.IsOrgan)
                 {
@@ -89,8 +88,8 @@ namespace Sidekick.Business.Parsers
                 {
                     item = rarity switch
                     {
-                        Rarity.Unique => GetUniqueItem(itemProperties, lines),
-                        Rarity.Rare => GetRareItem(itemProperties, lines),
+                        Rarity.Unique => GetUniqueItem(itemProperties, lines, parseAttributes),
+                        Rarity.Rare => GetRareItem(itemProperties, lines, parseAttributes),
                         Rarity.Magic => throw new Exception("Magic items are not yet supported."),
                         Rarity.Normal => GetNormalItem(itemProperties, lines),
                         Rarity.Currency => GetCurrencyItem(lines[1]),
@@ -217,7 +216,7 @@ namespace Sidekick.Business.Parsers
             }
         }
 
-        private Item GetRareItem(ItemProperties itemProperties, string[] lines)
+        private Item GetRareItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
             Item item = new EquippableItem()
             {
@@ -225,6 +224,12 @@ namespace Sidekick.Business.Parsers
                 Type = itemProperties.IsIdentified ? lines[2] : lines[1],
                 ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
             };
+
+            if (parseAttributes)
+            {
+                ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+            }
+
             var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
             if (links >= 5)
@@ -248,13 +253,19 @@ namespace Sidekick.Business.Parsers
             return item;
         }
 
-        private Item GetUniqueItem(ItemProperties itemProperties, string[] lines)
+        private Item GetUniqueItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
             var item = new EquippableItem
             {
                 Name = lines[1],
                 Type = itemProperties.IsIdentified ? lines[2] : lines[1]
             };
+
+            if (parseAttributes)
+            {
+                ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+            }
+
             var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
             if (links >= 5)
@@ -269,7 +280,7 @@ namespace Sidekick.Business.Parsers
             return item;
         }
 
-        private Item GetMapItem(ItemProperties itemProperties, string[] lines, Rarity rarity)
+        private Item GetMapItem(ItemProperties itemProperties, string[] lines, Rarity rarity, bool parseAttributes = false)
         {
             var item = new MapItem()
             {
@@ -279,6 +290,11 @@ namespace Sidekick.Business.Parsers
                 MapTier = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionMapTier)).FirstOrDefault()),
                 Rarity = rarity,
             };
+
+            if (parseAttributes)
+            {
+                ((MapItem)item).AttributeDictionary = GetItemAttributes(lines);
+            }
 
             if (rarity == Rarity.Normal)
             {
@@ -425,9 +441,9 @@ namespace Sidekick.Business.Parsers
 
             string numberStr = new string(input.Where(c => char.IsDigit(c)).ToArray());
 
-            if(allowNegative)
+            if (allowNegative)
             {
-                if(input.StartsWith("-"))
+                if (input.StartsWith("-"))
                 {
                     return "-" + numberStr;
                 }
@@ -438,11 +454,11 @@ namespace Sidekick.Business.Parsers
 
         private (int? min, int? max) GetNumberRange(string input)
         {
-            if(!input.Contains(languageProvider.Language.KeywordRange))
+            if (!input.Contains(languageProvider.Language.KeywordRange))
             {
                 var numberStr = GetNumberFromString(input, true);
 
-                if(!int.TryParse(numberStr, out var value))
+                if (!int.TryParse(numberStr, out var value))
                 {
                     return (null, null);
                 }
@@ -458,12 +474,12 @@ namespace Sidekick.Business.Parsers
             int? value1 = null;
             int? value2 = null;
 
-            if(int.TryParse(subStr1, out var result))
+            if (int.TryParse(subStr1, out var result))
             {
                 value1 = result;
             }
 
-            if(int.TryParse(subStr2, out result))
+            if (int.TryParse(subStr2, out result))
             {
                 value2 = result;
             }
@@ -553,14 +569,14 @@ namespace Sidekick.Business.Parsers
         {
             var result = new Dictionary<Attribute, FilterValue>();
 
-            foreach(var line in input)
+            foreach (var line in input)
             {
                 string formattedLine = line;
                 string formattedValue = line;
 
-                foreach(var regex in AttributeRegexes)
+                foreach (var regex in AttributeRegexes)
                 {
-                    if(regex.IsMatch(formattedLine))
+                    if (regex.IsMatch(formattedLine))
                     {
                         var match = regex.Match(formattedLine);
                         formattedValue = match.Value;
@@ -572,22 +588,22 @@ namespace Sidekick.Business.Parsers
                 List<Attribute> attributesToSearch;
 
 #warning TODO Find a better way for special case
-                if(formattedLine.StartsWith("#% increased Energy Shield"))
+                if (formattedLine.StartsWith("#% increased Energy Shield"))
                 {
                     formattedLine = formattedLine + " (Local)";
                 }
 
-                if(formattedLine.Contains(languageProvider.Language.CategoryNameCrafted))
+                if (formattedLine.Contains(languageProvider.Language.CategoryNameCrafted))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameCrafted, "").Trim();
                     attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryCrafted).SelectMany(c => c.Entries).ToList();
                 }
-                else if(formattedLine.Contains(languageProvider.Language.CategoryNameFractured))
+                else if (formattedLine.Contains(languageProvider.Language.CategoryNameFractured))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameFractured, "").Trim();
                     attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryFractured).SelectMany(c => c.Entries).ToList();
                 }
-                else if(formattedLine.Contains(languageProvider.Language.CategoryNameImplicit))
+                else if (formattedLine.Contains(languageProvider.Language.CategoryNameImplicit))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameImplicit, "").Trim();
                     attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryImplicit).SelectMany(c => c.Entries).ToList();
@@ -602,9 +618,9 @@ namespace Sidekick.Business.Parsers
 
                 var attribute = attributesToSearch.Where(c => c.Text == formattedLine).FirstOrDefault();
 
-                if(attribute != null)
+                if (attribute != null)
                 {
-                    var attrValues = GetNumberRange(formattedValue);   
+                    var attrValues = GetNumberRange(formattedValue);
                     result.Add(attribute, new FilterValue() { Min = attrValues.min, Max = attrValues.max });
                 }
             }

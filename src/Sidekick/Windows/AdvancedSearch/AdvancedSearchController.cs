@@ -1,18 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
-using Sidekick.Windows.PriceCheck;
-using Microsoft.Extensions.DependencyInjection;
-using System.Windows.Input;
 using Sidekick.Core.Settings;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows;
+using Sidekick.UI.Views;
+using Sidekick.Windows.Prices;
 using Point = System.Windows.Point;
 using Size = System.Windows.Size;
 
@@ -26,11 +23,12 @@ namespace Sidekick.Windows.AdvancedSearch
         private readonly ITradeClient tradeClient;
         private readonly INativeProcess nativeProcess;
         private readonly INativeCursor nativeCursor;
-        private readonly OverlayController overlayController;
+        private readonly IViewLocator viewLocator;
         private readonly AdvancedSearchView view;
         private readonly SidekickSettings settings;
 
-        public AdvancedSearchController(INativeClipboard clipboard, IKeybindEvents events, ILogger logger, IItemParser itemParser, ITradeClient tradeClient, IServiceProvider serviceProvider, INativeProcess nativeProcess, SidekickSettings settings, INativeCursor nativeCursor)
+        public AdvancedSearchController(INativeClipboard clipboard, IKeybindEvents events, ILogger logger, IItemParser itemParser, ITradeClient tradeClient, IServiceProvider serviceProvider, INativeProcess nativeProcess, SidekickSettings settings, INativeCursor nativeCursor,
+            IViewLocator viewLocator)
         {
             this.clipboard = clipboard;
             this.logger = logger;
@@ -39,7 +37,7 @@ namespace Sidekick.Windows.AdvancedSearch
             this.nativeProcess = nativeProcess;
             this.settings = settings;
             this.nativeCursor = nativeCursor;
-            overlayController = serviceProvider.GetService<OverlayController>();
+            this.viewLocator = viewLocator;
             events.OnCloseWindow += OnCloseWindow;
             events.OnAdvancedSearch += OnAdvancedSearch;
             view = new AdvancedSearchView(this);
@@ -51,7 +49,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private Task<bool> OnCloseWindow()
         {
-            if(IsDisplayed)
+            if (IsDisplayed)
             {
                 Hide();
                 return Task.FromResult(true);
@@ -63,20 +61,23 @@ namespace Sidekick.Windows.AdvancedSearch
         public async Task<bool> CheckItemPrice(Business.Parsers.Models.Item item)
         {
             view.HideWindowAndClearData();
-            return await overlayController.PriceCheckItem(item);
+
+            await clipboard.SetText(item.ItemText);
+            viewLocator.Open<PriceView>();
+            return true;
         }
 
         private async Task<bool> OnAdvancedSearch()
         {
-            logger.Log("Hotkey for advanced serach triggered");
+            logger.Log("Hotkey for advanced search triggered");
 
             var text = await clipboard.Copy();
 
-            if(!string.IsNullOrWhiteSpace(text))
+            if (!string.IsNullOrWhiteSpace(text))
             {
                 var item = await itemParser.ParseItem(text, true);
 
-                if(item != null)
+                if (item != null)
                 {
                     view.PopulateGrid(item);
                     Open();
@@ -114,7 +115,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private void Window_OnHandleMouseDrag(object sender, MouseButtonEventArgs e)
         {
-            if(e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left)
             {
                 view.DragMove();
             }

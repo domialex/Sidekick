@@ -2,20 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Windows.AdvancedSearch.ViewModels;
-using Sidekick.Windows.PriceCheck;
+using Sidekick.UI.Items;
 
 namespace Sidekick.Windows.AdvancedSearch
 {
@@ -52,7 +44,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         public void PopulateGrid(Item item)
         {
-            if((item as IAttributeItem) == null)
+            if ((item as IAttributeItem) == null)
             {
                 return;
             }
@@ -67,7 +59,7 @@ namespace Sidekick.Windows.AdvancedSearch
             gridAdvancedSearch.RowDefinitions.Add(BuildRow());
             var itemNameBlock = BuildTextBlock(item.Name);
             var itemTypeBlock = BuildTextBlock(item.Type);
-            itemNameBlock.Foreground = GetRarityColor(item.Rarity);
+            itemNameBlock.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom(item.GetColor());
             itemTypeBlock.Margin = new Thickness(150, 0, 0, 0);
             gridAdvancedSearch.Children.Add(itemNameBlock);
             gridAdvancedSearch.Children.Add(itemTypeBlock);
@@ -104,14 +96,14 @@ namespace Sidekick.Windows.AdvancedSearch
             }
 
             // Links + Sockets + Item Level + Influence
-            if((item.GetType() == typeof(EquippableItem)))
+            if ((item.GetType() == typeof(EquippableItem)))
             {
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var equippableItem = (EquippableItem)item;
                 var socketCheckbox = new CheckBox() { Content = "Max Sockets" };        // TODO Best way to find max possible Sockets
-                var linksCheckbox = new CheckBox() { Content = "Max Links", Margin = new Thickness(90, 0,0,0) };           // TODO Find Max Links
-                var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(180,0,0,0) };
-                var itemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(200,0,0,0), Width = 30 };
+                var linksCheckbox = new CheckBox() { Content = "Max Links", Margin = new Thickness(90, 0, 0, 0) };           // TODO Find Max Links
+                var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(180, 0, 0, 0) };
+                var itemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(200, 0, 0, 0), Width = 30 };
                 var influenceCheckBox = new CheckBox() { Content = equippableItem.Influence.ToString(), Margin = new Thickness(360, 0, 0, 0) };
 
                 gridAdvancedSearch.Children.Add(socketCheckbox);
@@ -144,37 +136,13 @@ namespace Sidekick.Windows.AdvancedSearch
             gridAdvancedSearch.UpdateLayout();
         }
 
-        // TODO Find a better way to access this
-        private Brush GetRarityColor(string rarity)
-        {
-            if (rarity == Legacy.LanguageProvider.Language.RarityNormal)
-            {
-                return new SolidColorBrush(Color.FromRgb(200, 200, 200));
-            }
-            if (rarity == Legacy.LanguageProvider.Language.RarityMagic)
-            {
-                return new SolidColorBrush(Color.FromRgb(136, 136, 255));
-            }
-            if (rarity == Legacy.LanguageProvider.Language.RarityRare)
-            {
-                return new SolidColorBrush(Color.FromRgb(255, 255, 119));
-            }
-            if (rarity == Legacy.LanguageProvider.Language.RarityUnique)
-            {
-                return new SolidColorBrush(Color.FromRgb(175, 96, 37));
-            }
-
-            // Gem, Currency, Divination Card, Quest Item, Prophecy, Relic, etc.
-            return new SolidColorBrush(Color.FromRgb(170, 158, 130));
-        }
-
         private void Search_Click(object sender, EventArgs e)
         {
             var choosenAttributesDict = new Dictionary<Business.Apis.Poe.Models.Attribute, Business.Filters.FilterValue>();
 
-            foreach(var pair in RowElementsDictionary)
+            foreach (var pair in RowElementsDictionary)
             {
-                if(pair.Value.isChecked.IsChecked == true)
+                if (pair.Value.isChecked.IsChecked == true)
                 {
                     var attr = GetAttribute(pair.Value.attrName.Text);
                     var value = GetValue(pair.Key);
@@ -221,12 +189,12 @@ namespace Sidekick.Windows.AdvancedSearch
             int? minVal = null;
             int? maxVal = null;
 
-            if(int.TryParse(minValStr, out var val))
+            if (int.TryParse(minValStr, out var val))
             {
                 minVal = val;
             }
 
-            if(int.TryParse(maxValStr, out val))
+            if (int.TryParse(maxValStr, out val))
             {
                 maxVal = val;
             }
@@ -236,7 +204,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private RowDefinition BuildRow(int? height = null)
         {
-            if(height == null)
+            if (height == null)
             {
                 height = 30;
             }
@@ -279,7 +247,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         public void ShowWindow()
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 Dispatcher.Invoke(new ShowWindowCallback(ShowWindow));
             }
@@ -292,7 +260,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         public void HideWindowAndClearData()
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 Dispatcher.Invoke(new HideWindowAndClearDataCallback(HideWindowAndClearData));
             }
@@ -306,7 +274,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         public void SetWindowPosition(int x, int y)
         {
-            if(!Dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
                 Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
             }

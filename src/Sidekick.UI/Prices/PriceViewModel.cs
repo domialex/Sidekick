@@ -67,7 +67,7 @@ namespace Sidekick.UI.Prices
 
         private async Task Initialize()
         {
-            Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText);
+            Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText, false);
             Results = null;
 
             if (Item == null)

@@ -79,7 +79,7 @@ namespace Sidekick.Handlers
             return true;
         }
 
-        private Task<bool> TriggerLeagueOverview()
+        private Task<bool> Events_OnOpenLeagueOverview()
         {
             viewLocator.CloseAll();
             viewLocator.Open<LeagueView>();
