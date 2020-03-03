@@ -73,6 +73,7 @@ namespace Sidekick.Handlers
 
         private async Task<bool> Events_OnPriceCheck()
         {
+            viewLocator.CloseAll();
             await clipboard.Copy();
             viewLocator.Open<PriceView>();
             return true;
@@ -80,6 +81,7 @@ namespace Sidekick.Handlers
 
         private Task<bool> Events_OnOpenLeagueOverview()
         {
+            viewLocator.CloseAll();
             viewLocator.Open<LeagueView>();
             return Task.FromResult(true);
         }
