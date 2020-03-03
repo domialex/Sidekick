@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Age_Day" xml:space="preserve">
+    <value>{0} day</value>
+  </data>
+  <data name="Age_Days" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="Age_Hour" xml:space="preserve">
+    <value>{0} hour</value>
+  </data>
+  <data name="Age_Hours" xml:space="preserve">
+    <value>{0} hours</value>
+  </data>
+  <data name="Age_Minute" xml:space="preserve">
+    <value>{0} minute</value>
+  </data>
+  <data name="Age_Minutes" xml:space="preserve">
+    <value>{0} minutes</value>
+  </data>
+  <data name="Age_Now" xml:space="preserve">
+    <value>now</value>
+  </data>
+  <data name="Age_Seconds" xml:space="preserve">
+    <value>{0} seconds</value>
+  </data>
+  <data name="CountString" xml:space="preserve">
+    <value>Showing {0} out of {1} items</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Unable to find prices for this item.</value>
+  </data>
   <data name="OverlayAccountName" xml:space="preserve">
     <value>Account Name</value>
   </data>
@@ -131,5 +161,11 @@
   </data>
   <data name="OverlayPrice" xml:space="preserve">
     <value>Price</value>
+  </data>
+  <data name="PoeNinjaString" xml:space="preserve">
+    <value>Poe.Ninja: {0}c - Last updated: {1}</value>
+  </data>
+  <data name="PredictionString" xml:space="preserve">
+    <value>Prediction: {0} - Confidence: {1}%</value>
   </data>
 </root>

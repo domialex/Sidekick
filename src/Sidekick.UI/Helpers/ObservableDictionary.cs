@@ -2,21 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using PropertyChanged;
 
 namespace Sidekick.UI.Helpers
 {
     [Serializable]
     public class ObservableDictionary<TKey, TValue> : ObservableCollection<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IEnumerable<ObservableKeyValuePair<TKey, TValue>>
     {
+        [SuppressPropertyChangedWarnings]
         public TValue this[TKey key]
         {
             get
             {
-                TValue result;
-                if (!TryGetValue(key, out result))
-                    return default; //throw new ArgumentException("Key not found", "key");
+                if (TryGetValue(key, out var result))
+                    return result;
 
-                return result;
+                return default; //throw new ArgumentException("Key not found", "key");
             }
             set
             {
@@ -110,7 +111,7 @@ namespace Sidekick.UI.Helpers
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            value = default(TValue);
+            value = default;
             var pair = GetPairByKey(key);
             if (pair != null)
             {
@@ -122,7 +123,7 @@ namespace Sidekick.UI.Helpers
 
         public bool TryGetKey(TValue value, out TKey key)
         {
-            key = default(TKey);
+            key = default;
             var pair = GetPairByValue(value);
             if (pair != null)
             {

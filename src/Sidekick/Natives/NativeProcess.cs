@@ -144,11 +144,11 @@ namespace Sidekick.Natives
             }
         }
 
-        private async Task WaitForPathOfExileFocus(int timeout = 200)
+        private async Task WaitForPathOfExileFocus()
         {
             while (IsPathOfExileInFocus == false)
             {
-                await Task.Delay(timeout);
+                await Task.Delay(1000);
             }
         }
 

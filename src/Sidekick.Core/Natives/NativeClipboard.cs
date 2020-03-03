@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Core.Natives
@@ -8,14 +7,14 @@ namespace Sidekick.Core.Natives
     {
         private readonly SidekickSettings settings;
         private readonly INativeKeyboard keyboard;
-        private readonly ILogger logger;
 
-        public NativeClipboard(SidekickSettings settings, INativeKeyboard keyboard, ILogger logger)
+        public NativeClipboard(SidekickSettings settings, INativeKeyboard keyboard)
         {
             this.settings = settings;
             this.keyboard = keyboard;
-            this.logger = logger;
         }
+
+        public string LastCopiedText { get; private set; }
 
         public async Task<string> Copy()
         {
@@ -30,23 +29,17 @@ namespace Sidekick.Core.Natives
 
             keyboard.Copy();
 
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             // Retrieve clipboard.
-            var text = await GetText();
+            LastCopiedText = await GetText();
 
             if (settings.RetainClipboard)
             {
-                await SetText(clipboardText);
+                await TextCopy.Clipboard.SetTextAsync(clipboardText);
             }
 
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                logger.Log("No text detected on the clipboard.");
-                return null;
-            }
-
-            return text;
+            return LastCopiedText;
         }
 
         public async Task<string> GetText()
@@ -60,6 +53,7 @@ namespace Sidekick.Core.Natives
             {
                 await TextCopy.Clipboard.SetTextAsync(text);
             }
+            LastCopiedText = text;
         }
     }
 }

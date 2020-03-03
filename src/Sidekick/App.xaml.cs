@@ -12,10 +12,9 @@ using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
-using Sidekick.Helpers.Input;
+using Sidekick.Handlers;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
-using Sidekick.Windows.PriceCheck;
 using Sidekick.Windows.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -51,7 +50,6 @@ namespace Sidekick
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
 
-            Legacy.Initialize(serviceProvider);
             viewLocator = serviceProvider.GetService<IViewLocator>();
             viewLocator.Open<Windows.SplashScreen>();
 
@@ -72,7 +70,6 @@ namespace Sidekick
             InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
 
             serviceProvider.GetRequiredService<EventsHandler>();
-            serviceProvider.GetRequiredService<OverlayController>();
         }
 
         private void InitTrayIcon(SidekickSettings settings)
