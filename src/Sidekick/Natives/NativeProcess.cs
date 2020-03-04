@@ -10,9 +10,9 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Natives
@@ -140,7 +140,7 @@ namespace Sidekick.Natives
             }
             else
             {
-                logger.Log("Permission Sufficient.");
+                logger.LogInformation("Permission Sufficient.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Sidekick.Natives
         private void RestartAsAdmin()
         {
             var message = "This application must be run as administrator.";
-            logger.Log(message, LogState.Error);
+            logger.LogError(message);
 
             if (MessageBox.Show(message + "\nClick Yes will restart as administrator automatically.", "Sidekick", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -225,7 +225,7 @@ namespace Sidekick.Natives
             }
             catch (Exception e)
             {
-                logger.Log(e.Message, LogState.Error);
+                logger.LogError(e, e.Message);
                 RestartAsAdmin();
             }
 

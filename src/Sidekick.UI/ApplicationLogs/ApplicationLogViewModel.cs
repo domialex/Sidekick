@@ -7,11 +7,11 @@ namespace Sidekick.UI.ApplicationLogs
 {
     public class ApplicationLogViewModel : IApplicationLogViewModel, IDisposable
     {
-        private readonly ILogger logger;
+        private readonly ISidekickLogger logger;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ApplicationLogViewModel(ILogger logger)
+        public ApplicationLogViewModel(ISidekickLogger logger)
         {
             this.logger = logger;
             Logs = new ObservableCollection<Log>(logger.Logs);

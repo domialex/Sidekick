@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
 using Sidekick.Windows.Leagues;
@@ -112,7 +112,7 @@ namespace Sidekick.Handlers
 
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
                 var searchText = item.Name;
-                logger.Log(item.Name);
+                logger.LogInformation(item.Name);
                 await clipboard.SetText(searchText);
 
                 keyboard.SendCommand(KeyboardCommandEnum.FindItems);

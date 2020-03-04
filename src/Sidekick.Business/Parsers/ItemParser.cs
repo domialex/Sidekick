@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
@@ -9,7 +10,6 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Parsers
 {
@@ -97,8 +97,7 @@ namespace Sidekick.Business.Parsers
             }
             catch (Exception e)
             {
-                logger.Log("Could not parse item.");
-                logger.LogException(e);
+                logger.LogError(e, "Could not parse item.");
                 return null;
             }
         }

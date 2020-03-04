@@ -1,6 +1,6 @@
 using System;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb
@@ -38,7 +38,7 @@ namespace Sidekick.Business.Apis.PoeDb
 
             if (string.IsNullOrEmpty(item.Name))
             {
-                logger.Log("Failed to open PoeDb for item", LogState.Error);
+                logger.LogError("Failed to open PoeDb for item");
                 return;
             }
 
