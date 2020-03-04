@@ -43,7 +43,7 @@ namespace Sidekick.Windows.AdvancedSearch
             view = new AdvancedSearchView(this);
         }
 
-        public bool IsDisplayed => view.Visibility == System.Windows.Visibility.Visible;
+        public bool IsDisplayed => view.Visibility == Visibility.Visible;
         public void Show() => view.ShowWindow();
         public void Hide() => view.HideWindowAndClearData();
 

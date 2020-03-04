@@ -31,6 +31,13 @@ namespace Sidekick.Business.Languages
         string DescriptionMonsterPackSize { get; }
         string DescriptionExperience { get; }
         string DescriptionOrgan { get; }
+        string DescriptionPhysicalDamage { get; }
+        string DescriptionElementalDamage { get; }
+        string DescriptionAttacksPerSecond { get; }
+        string DescriptionCriticalStrikeChance { get; }
+        string DescriptionEnergyShield { get; }
+        string DescriptionArmour { get; }
+        string DescriptionEvasion { get; }
 
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }

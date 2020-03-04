@@ -84,5 +84,19 @@ namespace Sidekick.Business.Languages.Implementations
         public string AttributeRangeRegexPattern => throw new NotImplementedException();
 
         public string KeywordRange => throw new NotImplementedException();
+
+        public string DescriptionPhysicalDamage => throw new NotImplementedException();
+
+        public string DescriptionElementalDamage => throw new NotImplementedException();
+
+        public string DescriptionAttacksPerSecond => throw new NotImplementedException();
+
+        public string DescriptionCriticalStrikeChance => throw new NotImplementedException();
+
+        public string DescriptionEnergyShield => throw new NotImplementedException();
+
+        public string DescriptionArmour => throw new NotImplementedException();
+
+        public string DescriptionEvasion => throw new NotImplementedException();
     }
 }

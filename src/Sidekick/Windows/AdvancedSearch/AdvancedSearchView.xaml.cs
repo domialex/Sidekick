@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Parsers.Types;
 using Sidekick.UI.Items;
 
 namespace Sidekick.Windows.AdvancedSearch
@@ -25,6 +26,10 @@ namespace Sidekick.Windows.AdvancedSearch
         private AdvancedSearchController Controller;
         private Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)> RowElementsDictionary;
 
+        private TextBox ItemLevelTextBox;
+        private CheckBox InfluenceCheckBox;
+        private CheckBox CorruptedCheckBox;
+
         public AdvancedSearchView(AdvancedSearchController controller)
         {
             InitializeComponent();
@@ -40,6 +45,8 @@ namespace Sidekick.Windows.AdvancedSearch
             gridAdvancedSearch.RowDefinitions.Clear();
             RowElementsDictionary.Clear();
             CurrentItem = null;
+            ItemLevelTextBox = null;
+            InfluenceCheckBox = null;
         }
 
         public void PopulateGrid(Item item)
@@ -75,8 +82,10 @@ namespace Sidekick.Windows.AdvancedSearch
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var attributeBlock = BuildTextBlock(pair.Key.Text);
                 var minBlock = BuildTextBox(pair.Value.Min == null ? "" : pair.Value.Min.ToString());
+                minBlock.IsEnabled = false;
                 var maxBlock = BuildTextBox(pair.Value.Max == null ? "" : pair.Value.Max.ToString());
-                var enabledCheckBox = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, IsChecked = true };
+                maxBlock.IsEnabled = false;
+                var enabledCheckBox = new CheckBox() { HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, IsChecked = false };
                 enabledCheckBox.Checked += EnableTextBoxes;
                 enabledCheckBox.Unchecked += DisableTextBoxes;
                 Grid.SetColumn(attributeBlock, AttributeColumnIndex);
@@ -95,33 +104,49 @@ namespace Sidekick.Windows.AdvancedSearch
                 rowCounter++;
             }
 
-            // Links + Sockets + Item Level + Influence
-            if ((item.GetType() == typeof(EquippableItem)))
+            // Links + Sockets + Item Level + Influence + Corruption
+            if (item.GetType().IsSubclassOf(typeof(EquippableItem)))
             {
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var equippableItem = (EquippableItem)item;
-                var socketCheckbox = new CheckBox() { Content = "Max Sockets" };        // TODO Best way to find max possible Sockets
-                var linksCheckbox = new CheckBox() { Content = "Max Links", Margin = new Thickness(90, 0, 0, 0) };           // TODO Find Max Links
-                var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(180, 0, 0, 0) };
-                var itemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(200, 0, 0, 0), Width = 30 };
-                var influenceCheckBox = new CheckBox() { Content = equippableItem.Influence.ToString(), Margin = new Thickness(360, 0, 0, 0) };
+                var socketCheckbox = new CheckBox() { Content = $"Max Sockets ({equippableItem.MaxSockets})" };        // TODO Best way to find max possible Sockets
+                var linksCheckbox = new CheckBox() { Content = $"Max Links ({equippableItem.MaxSockets})", Margin = new Thickness(110, 0, 0, 0) };           // TODO Find Max Links
+                ItemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(300, 0, 0, 0), Width = 35, Height = 25, IsEnabled = false, MaxLength = 3 };
+                var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(210, 0, 0, 0) };
+                itemLevelCheckBox.Checked += (s, args) => { ItemLevelTextBox.IsEnabled = true; };
+                itemLevelCheckBox.Unchecked += (s, args) => { ItemLevelTextBox.IsEnabled = false; };
+
+                if (equippableItem.Influence != InfluenceType.None)
+                {
+                    InfluenceCheckBox = new CheckBox() { Content = equippableItem.Influence.ToString() };
+                    gridAdvancedSearch.Children.Add(InfluenceCheckBox);
+                    Grid.SetRow(InfluenceCheckBox, rowCounter);
+                    Grid.SetColumn(InfluenceCheckBox, 2);
+                }
+
+                if(equippableItem.IsCorrupted)
+                {
+                    // TODO If corrupted show checkbox
+                }
 
                 gridAdvancedSearch.Children.Add(socketCheckbox);
                 gridAdvancedSearch.Children.Add(linksCheckbox);
                 gridAdvancedSearch.Children.Add(itemLevelCheckBox);
-                gridAdvancedSearch.Children.Add(itemLevelTextBox);
-                gridAdvancedSearch.Children.Add(influenceCheckBox);
+                gridAdvancedSearch.Children.Add(ItemLevelTextBox);
+
                 Grid.SetRow(socketCheckbox, rowCounter);
                 Grid.SetColumn(socketCheckbox, 0);
                 Grid.SetRow(linksCheckbox, rowCounter);
                 Grid.SetColumn(linksCheckbox, 0);
                 Grid.SetRow(itemLevelCheckBox, rowCounter);
                 Grid.SetColumn(itemLevelCheckBox, 0);
-                Grid.SetRow(itemLevelTextBox, rowCounter);
-                Grid.SetColumn(itemLevelTextBox, 0);
-                Grid.SetRow(influenceCheckBox, rowCounter);
-                Grid.SetColumn(influenceCheckBox, 0);
+                Grid.SetRow(ItemLevelTextBox, rowCounter);
+                Grid.SetColumn(ItemLevelTextBox, 0);
                 rowCounter++;
+            }
+            else if(item.GetType() == typeof(MapItem))
+            {
+                // TODO
             }
 
             // Search Button
@@ -133,12 +158,14 @@ namespace Sidekick.Windows.AdvancedSearch
             Grid.SetRow(searchButton, rowCounter);
             gridAdvancedSearch.Children.Add(searchButton);
             gridAdvancedSearch.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            gridAdvancedSearch.MinHeight += 10;
+            gridAdvancedSearch.MinWidth += 10;
             gridAdvancedSearch.UpdateLayout();
         }
 
         private void Search_Click(object sender, EventArgs e)
         {
-            var choosenAttributesDict = new Dictionary<Business.Apis.Poe.Models.Attribute, Business.Filters.FilterValue>();
+            var choosenAttributesDict = new Dictionary<Business.Apis.Poe.Models.Attribute, FilterValue>();
 
             foreach (var pair in RowElementsDictionary)
             {
@@ -151,6 +178,31 @@ namespace Sidekick.Windows.AdvancedSearch
             }
 
             ((IAttributeItem)CurrentItem).AttributeDictionary = choosenAttributesDict;
+
+            if(ItemLevelTextBox != null && ItemLevelTextBox.IsEnabled)
+            {
+                if(int.TryParse(ItemLevelTextBox.Text, out _))
+                {
+                    ((EquippableItem)CurrentItem).ItemLevel = ItemLevelTextBox.Text;
+                }
+                else
+                {
+                    ((EquippableItem)CurrentItem).ItemLevel = "0";
+                }
+            }
+
+            if(InfluenceCheckBox != null && InfluenceCheckBox.IsChecked == true)
+            {
+                if(Enum.TryParse<InfluenceType>(InfluenceCheckBox.Content.ToString(), out var influence))
+                {
+                    ((EquippableItem)CurrentItem).Influence = influence;
+                }
+                else
+                {
+                    ((EquippableItem)CurrentItem).Influence = InfluenceType.None;
+                }
+            }
+
             Controller.CheckItemPrice(CurrentItem);
         }
 

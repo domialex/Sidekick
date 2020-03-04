@@ -8,7 +8,6 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
-        #warning TODO Zalhera: Add Attribute Filters
         public QueryRequest(Item item)
         {
             Query.Status.Option = StatusType.Online;

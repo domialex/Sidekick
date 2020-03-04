@@ -73,6 +73,7 @@ namespace Sidekick.Business.Parsers
                 var rarity = GetRarity(rarityString);
 
                 Item item;
+
                 if (itemProperties.IsMap)
                 {
                     item = GetMapItem(itemProperties, lines, rarity, parseAttributes);
@@ -218,23 +219,21 @@ namespace Sidekick.Business.Parsers
 
         private Item GetRareItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
-            Item item = new EquippableItem()
-            {
-                Name = lines[1],
-                Type = itemProperties.IsIdentified ? lines[2] : lines[1],
-                ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault()),
-            };
+            var item = GetEquippableItem(lines);
+            item.Name = lines[1];
+            item.Type = itemProperties.IsIdentified ? lines[2] : lines[1];
+            item.ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault());
 
             if (parseAttributes)
             {
-                ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+                item.AttributeDictionary = GetItemAttributes(lines);
             }
 
             var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
 
             if (links >= 5)
             {
-                ((EquippableItem)item).Links = new SocketFilterOption()
+                item.Links = new SocketFilterOption()
                 {
                     Min = links,
                     Max = links,
@@ -243,11 +242,40 @@ namespace Sidekick.Business.Parsers
 
             if (itemProperties.HasNote)
             {
-                ((EquippableItem)item).Influence = GetInfluenceType(lines[lines.Length - 3]);
+                item.Influence = GetInfluenceType(lines[lines.Length - 3]);
             }
             else
             {
-                ((EquippableItem)item).Influence = GetInfluenceType(lines.LastOrDefault());
+                item.Influence = GetInfluenceType(lines.LastOrDefault());
+            }
+
+            return item;
+        }
+
+        private EquippableItem GetEquippableItem(string[] lines)
+        {
+            EquippableItem item;
+
+            // Weapon
+            if(lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage) || c.StartsWith(languageProvider.Language.DescriptionElementalDamage)))
+            {
+                // TODO Make Available in Query Parameters
+                item = new WeaponItem()
+                {
+                    AttacksPerSecond = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionAttacksPerSecond)).FirstOrDefault()),
+                    CriticalStrikeChance = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionCriticalStrikeChance)).FirstOrDefault()),
+                    ElementalDps = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionElementalDamage)).FirstOrDefault(), allowRange: true),
+                    PhysicalDps = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage)).FirstOrDefault(), allowRange: true),
+                };
+            }
+            else        // Armour or Jewellery
+            {
+                item = new ArmourItem()
+                {
+                    Armour = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionArmour)).FirstOrDefault()),
+                    EnergyShield = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionEnergyShield)).FirstOrDefault()),
+                    Evasion = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionEvasion)).FirstOrDefault())
+                };
             }
 
             return item;
@@ -255,15 +283,14 @@ namespace Sidekick.Business.Parsers
 
         private Item GetUniqueItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
-            var item = new EquippableItem
-            {
-                Name = lines[1],
-                Type = itemProperties.IsIdentified ? lines[2] : lines[1]
-            };
+            var item = GetEquippableItem(lines);
+
+            item.Name = lines[1];
+            item.Type = itemProperties.IsIdentified ? lines[2] : lines[1];
 
             if (parseAttributes)
             {
-                ((EquippableItem)item).AttributeDictionary = GetItemAttributes(lines);
+                item.AttributeDictionary = GetItemAttributes(lines);
             }
 
             var links = GetLinkCount(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionSockets)).FirstOrDefault());
@@ -293,7 +320,7 @@ namespace Sidekick.Business.Parsers
 
             if (parseAttributes)
             {
-                ((MapItem)item).AttributeDictionary = GetItemAttributes(lines);
+                item.AttributeDictionary = GetItemAttributes(lines);
             }
 
             if (rarity == Rarity.Normal)
@@ -432,14 +459,24 @@ namespace Sidekick.Business.Parsers
             return output;
         }
 
-        private string GetNumberFromString(string input, bool allowNegative = false)
+        private string GetNumberFromString(string input, bool allowNegative = false, bool allowRange = false)
         {
             if (string.IsNullOrEmpty(input))     // Default return 0
             {
                 return "0";
             }
 
-            string numberStr = new string(input.Where(c => char.IsDigit(c)).ToArray());
+            string numberStr;
+
+            if (allowRange)
+            {
+                numberStr = new string(input.Where(c => char.IsDigit(c) || c == '.' || c == '-').ToArray());
+            }
+            else
+            {
+                // Also parse double values
+                numberStr = new string(input.Where(c => char.IsDigit(c) || c == '.').ToArray());
+            }
 
             if (allowNegative)
             {

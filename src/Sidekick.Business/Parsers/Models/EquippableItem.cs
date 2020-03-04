@@ -10,6 +10,7 @@ namespace Sidekick.Business.Parsers.Models
         public string Quality { get; set; }
         public string ItemLevel { get; set; }
         public InfluenceType Influence { get; set; }
+        public int MaxSockets { get; set; }
         public SocketFilterOption Sockets { get; set; }
         public SocketFilterOption Links { get; set; }
         public Dictionary<Attribute, FilterValue> AttributeDictionary { get; set; }
