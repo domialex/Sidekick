@@ -49,54 +49,30 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "Phiole";
         public string KeywordEssence => "Essenz";
 
-        public string AttributeCategoryCrafted => throw new NotImplementedException();
-
-        public string PercentagAddedRegexPattern => throw new NotImplementedException();
-
-        public string PercentageIncreasedOrDecreasedRegexPattern => throw new NotImplementedException();
-
-        public string AttributeIncreasedRegexPattern => throw new NotImplementedException();
-
-        public string CategoryNameCrafted => throw new NotImplementedException();
-
-        public string AttributeCategoryImplicit => throw new NotImplementedException();
-
-        public string CategoryNameImplicit => throw new NotImplementedException();
-
-        public string AttributeCategoryFractured => throw new NotImplementedException();
-
-        public string CategoryNameFractured => throw new NotImplementedException();
-
-        public string AttributeCategoryEnchant => throw new NotImplementedException();
-
-        public string CategoryNameEnchant => throw new NotImplementedException();
-
-        public string AttributeCategoryVeiled => throw new NotImplementedException();
-
-        public string CategoryNameVeiled => throw new NotImplementedException();
-
-        public string AttributeCategoryDelve => throw new NotImplementedException();
-
-        public string CategoryNameDelve => throw new NotImplementedException();
-
-        public string AttributeCategoryExplicit => throw new NotImplementedException();
-
-        public string AttributeRangeRegexPattern => throw new NotImplementedException();
-
-        public string KeywordRange => throw new NotImplementedException();
-
-        public string DescriptionPhysicalDamage => throw new NotImplementedException();
-
-        public string DescriptionElementalDamage => throw new NotImplementedException();
-
-        public string DescriptionAttacksPerSecond => throw new NotImplementedException();
-
-        public string DescriptionCriticalStrikeChance => throw new NotImplementedException();
-
-        public string DescriptionEnergyShield => throw new NotImplementedException();
-
-        public string DescriptionArmour => throw new NotImplementedException();
-
-        public string DescriptionEvasion => throw new NotImplementedException();
+        public string AttributeCategoryCrafted => "Angefertigt";
+        public string PercentagAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
+        public string PercentageIncreasedOrDecreasedRegexPattern => "[-+]?[\\d{1,3}]+%";
+        public string AttributeIncreasedRegexPattern => "[+]?[\\d{1,3}]+[\\s]";
+        public string CategoryNameCrafted => "(crafted)";
+        public string AttributeCategoryImplicit => "Implizit";
+        public string CategoryNameImplicit => "(implicit)";
+        public string AttributeCategoryFractured => "Brüchig";
+        public string CategoryNameFractured => "(fractured)";
+        public string AttributeCategoryEnchant => "Verzauberung";
+        public string CategoryNameEnchant => "(enchant)";
+        public string AttributeCategoryVeiled => "Verhüllt";
+        public string CategoryNameVeiled => "(veiled)";
+        public string AttributeCategoryDelve => "Delve";
+        public string CategoryNameDelve => "(delve)";
+        public string AttributeCategoryExplicit => "Explizit";
+        public string AttributeRangeRegexPattern => "[\\d{1,3}]+[\\s]+[\\bto\\b]+[\\s]+[\\d{1,3}]+[\\s]";
+        public string KeywordRange => "bis";
+        public string DescriptionPhysicalDamage => "Physischer Schaden: ";
+        public string DescriptionElementalDamage => "Elementarschaden: ";
+        public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde: ";
+        public string DescriptionCriticalStrikeChance => "Kritische Trefferchance: ";
+        public string DescriptionEnergyShield => "Energieschild: ";
+        public string DescriptionArmour => "Rüstung: ";
+        public string DescriptionEvasion => "Ausweichwert: ";
     }
 }
