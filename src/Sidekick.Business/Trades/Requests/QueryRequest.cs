@@ -45,14 +45,14 @@ namespace Sidekick.Business.Trades.Requests
                             Min = 86
                         };
                     }
-                    else
-                    {
-                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
-                        {
-                            Min = result,
-                            Max = result,
-                        };
-                    }
+                    //else
+                    //{
+                    //    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                    //    {
+                    //        Min = result,
+                    //        Max = result,
+                    //    };
+                    //}
 
                     switch (((EquippableItem)item).Influence)
                     {
@@ -117,6 +117,48 @@ namespace Sidekick.Business.Trades.Requests
                     }
 
                     Query.Stats = new List<Stat>() { new Stat() { Type = StatType.And, Filters = statFilters } };
+                }
+
+                // TODO Block Chance
+                if(itemType == typeof(ArmourItem))
+                {
+                    if(int.TryParse(((ArmourItem)item).Armour, out var armor))
+                    {
+                        Query.Filters.ArmourFilter.Filters.Armor = new FilterValue() { Min = armor };
+                    }
+
+                    if(int.TryParse(((ArmourItem)item).EnergyShield, out var es))
+                    {
+                        Query.Filters.ArmourFilter.Filters.EnergyShield = new FilterValue() { Min = es };
+                    }
+
+                    if(int.TryParse(((ArmourItem)item).Evasion, out var evasion))
+                    {
+                        Query.Filters.ArmourFilter.Filters.Evasion = new FilterValue() { Min = evasion };
+                    }
+                }
+                else if(itemType == typeof(WeaponItem))
+                {
+                    var physDamage = ParseRange(((WeaponItem)item).PhysicalDamage);
+                    var elementalDamage = ParseRange(((WeaponItem)item).ElementalDamage);
+
+                    if(!double.TryParse(((WeaponItem)item).AttacksPerSecond, out var attackSpeed))
+                    {
+                        attackSpeed = 0;
+                    }
+
+                    var pdps = CalculateDps(physDamage.min, physDamage.max, attackSpeed);
+                    var edps = CalculateDps(elementalDamage.min, elementalDamage.max, attackSpeed);
+
+                    if(!double.TryParse(((WeaponItem)item).CriticalStrikeChance, out var critChance))
+                    {
+                        critChance = 0;
+                    }
+
+                    Query.Filters.WeaponFilters.Filters.APS = new FilterValue() { Min = attackSpeed };
+                    Query.Filters.WeaponFilters.Filters.Crit = new FilterValue() { Min = critChance };
+                    Query.Filters.WeaponFilters.Filters.EDPS = new FilterValue() { Min = edps };
+                    Query.Filters.WeaponFilters.Filters.PDPS = new FilterValue() { Min = pdps };
                 }
             }
             else if (itemType == typeof(OrganItem))
@@ -231,5 +273,32 @@ namespace Sidekick.Business.Trades.Requests
 
         public Query Query { get; set; } = new Query();
         public Dictionary<string, SortType> Sort { get; set; } = new Dictionary<string, SortType> { { "price", SortType.Asc } };
+
+        private (double min, double max) ParseRange(string input)
+        {
+            int index = input.IndexOf("-");
+
+            if(index < 0)
+            {
+                return (0, 0);
+            }
+
+            if(!double.TryParse(input.Substring(0, index), out var min))
+            {
+                min = 0;
+            }
+
+            if(!double.TryParse(input.Substring(index+1, input.Length - index - 1), out var max))
+            {
+                max = 0;
+            }
+
+            return (min, max);
+        }
+
+        private double CalculateDps(double min, double max, double attackSpeed)
+        {
+            return Math.Round(((min + max) / 2) * attackSpeed, MidpointRounding.ToEven);
+        }
     }
 }

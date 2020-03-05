@@ -166,11 +166,11 @@ namespace Sidekick.Business.Parsers
             };
         }
 
-        private Item GetNormalItem(ItemProperties itemProperties, string[] lines)
+        private Item GetNormalItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
             if (lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel))) // Equippable Item
             {
-                var item = GetEquippableItem(lines);
+                var item = parseAttributes ? GetEquippableItem(lines) : new EquippableItem();
                 item.Type = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim();
                 item.Name = lines[1].Replace(languageProvider.Language.PrefixSuperior, string.Empty).Trim();
 
@@ -216,7 +216,7 @@ namespace Sidekick.Business.Parsers
 
         private Item GetRareItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
-            var item = GetEquippableItem(lines);
+            var item = parseAttributes ? GetEquippableItem(lines) :  new EquippableItem();
             item.Name = lines[1];
             item.Type = itemProperties.IsIdentified ? lines[2] : lines[1];
 
@@ -260,8 +260,8 @@ namespace Sidekick.Business.Parsers
                 {
                     AttacksPerSecond = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionAttacksPerSecond)).FirstOrDefault()),
                     CriticalStrikeChance = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionCriticalStrikeChance)).FirstOrDefault()),
-                    ElementalDps = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionElementalDamage)).FirstOrDefault(), allowRange: true),
-                    PhysicalDps = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage)).FirstOrDefault(), allowRange: true),
+                    ElementalDamage = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionElementalDamage)).FirstOrDefault(), allowRange: true),
+                    PhysicalDamage = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage)).FirstOrDefault(), allowRange: true),
                 };
             }
             else        // Armour or Jewellery
@@ -304,7 +304,7 @@ namespace Sidekick.Business.Parsers
 
         private Item GetUniqueItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
-            var item = GetEquippableItem(lines);
+            var item = parseAttributes ? GetEquippableItem(lines) : new EquippableItem();
 
             item.Name = lines[1];
             item.Type = itemProperties.IsIdentified ? lines[2] : lines[1];
