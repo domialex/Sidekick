@@ -1,6 +1,6 @@
 using System;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeWiki
@@ -41,7 +41,7 @@ namespace Sidekick.Business.Apis.PoeWiki
             // Does not work for unique items that are not identified.
             if (string.IsNullOrEmpty(item.Name))
             {
-                logger.Log("Failed to open the wiki for the specified item.", LogState.Error);
+                logger.LogError("Failed to open the wiki for the specified item.");
                 return;
             }
 

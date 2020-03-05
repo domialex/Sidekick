@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
@@ -130,7 +130,7 @@ namespace Sidekick.Natives
         {
             if (input == keybind)
             {
-                logger.Log($"Keybind Triggered - {name}");
+                logger.LogInformation($"Keybind Triggered - {name}");
                 if (func != null)
                 {
                     returnTask = func.Invoke();

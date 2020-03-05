@@ -4,8 +4,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Natives.Helpers;
@@ -125,7 +125,7 @@ namespace Sidekick.Natives
                     // This operation is only valid if the user has added their character name to the settings file.
                     if (string.IsNullOrEmpty(configuration.Character_Name))
                     {
-                        logger.Log(@"This command requires a ""CharacterName"" to be specified in the settings menu.", LogState.Warning);
+                        logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
                         return;
                     }
                     SendKeys.SendWait($"{{Enter}}/kick {configuration.Character_Name}{{Enter}}");
@@ -154,7 +154,7 @@ namespace Sidekick.Natives
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
                 default:
-                    logger.Log("NativeKeyboard.IsKeyPressed - Unrecognized key - " + key);
+                    logger.LogWarning("NativeKeyboard.IsKeyPressed - Unrecognized key - " + key);
                     return false;
             };
         }
