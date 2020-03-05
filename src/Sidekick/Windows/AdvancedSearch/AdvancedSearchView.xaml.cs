@@ -28,6 +28,8 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private TextBox ItemLevelTextBox;
         private CheckBox InfluenceCheckBox;
+        private CheckBox SocketCheckBox;
+        private CheckBox LinkCheckBox;
         private CheckBox CorruptedCheckBox;
 
         public AdvancedSearchView(AdvancedSearchController controller)
@@ -47,6 +49,8 @@ namespace Sidekick.Windows.AdvancedSearch
             CurrentItem = null;
             ItemLevelTextBox = null;
             InfluenceCheckBox = null;
+            SocketCheckBox = null;
+            LinkCheckBox = null;
         }
 
         public void PopulateGrid(Item item)
@@ -109,8 +113,8 @@ namespace Sidekick.Windows.AdvancedSearch
             {
                 gridAdvancedSearch.RowDefinitions.Add(BuildRow());
                 var equippableItem = (EquippableItem)item;
-                var socketCheckbox = new CheckBox() { Content = $"Max Sockets ({equippableItem.MaxSockets})" };        // TODO Best way to find max possible Sockets
-                var linksCheckbox = new CheckBox() { Content = $"Max Links ({equippableItem.MaxSockets})", Margin = new Thickness(110, 0, 0, 0) };           // TODO Find Max Links
+                SocketCheckBox = new CheckBox() { Content = $"Max Sockets ({equippableItem.MaxSockets})" };
+                LinkCheckBox = new CheckBox() { Content = $"Max Links ({equippableItem.MaxSockets})", Margin = new Thickness(110, 0, 0, 0) };
                 ItemLevelTextBox = new TextBox() { Text = equippableItem.ItemLevel?.ToString(), Margin = new Thickness(300, 0, 0, 0), Width = 35, Height = 25, IsEnabled = false, MaxLength = 3 };
                 var itemLevelCheckBox = new CheckBox() { Content = "Minimum ILvl", Margin = new Thickness(210, 0, 0, 0) };
                 itemLevelCheckBox.Checked += (s, args) => { ItemLevelTextBox.IsEnabled = true; };
@@ -129,15 +133,15 @@ namespace Sidekick.Windows.AdvancedSearch
                     // TODO If corrupted show checkbox
                 }
 
-                gridAdvancedSearch.Children.Add(socketCheckbox);
-                gridAdvancedSearch.Children.Add(linksCheckbox);
+                gridAdvancedSearch.Children.Add(SocketCheckBox);
+                gridAdvancedSearch.Children.Add(LinkCheckBox);
                 gridAdvancedSearch.Children.Add(itemLevelCheckBox);
                 gridAdvancedSearch.Children.Add(ItemLevelTextBox);
 
-                Grid.SetRow(socketCheckbox, rowCounter);
-                Grid.SetColumn(socketCheckbox, 0);
-                Grid.SetRow(linksCheckbox, rowCounter);
-                Grid.SetColumn(linksCheckbox, 0);
+                Grid.SetRow(SocketCheckBox, rowCounter);
+                Grid.SetColumn(SocketCheckBox, 0);
+                Grid.SetRow(LinkCheckBox, rowCounter);
+                Grid.SetColumn(LinkCheckBox, 0);
                 Grid.SetRow(itemLevelCheckBox, rowCounter);
                 Grid.SetColumn(itemLevelCheckBox, 0);
                 Grid.SetRow(ItemLevelTextBox, rowCounter);
@@ -201,6 +205,17 @@ namespace Sidekick.Windows.AdvancedSearch
                 {
                     ((EquippableItem)CurrentItem).Influence = InfluenceType.None;
                 }
+            }
+
+            // TODO Better socket search (Custom Colors, Links, etc.)
+            if(SocketCheckBox != null && SocketCheckBox.IsChecked == true)
+            {
+                ((EquippableItem)CurrentItem).Sockets = new SocketFilterOption() { Min = ((EquippableItem)CurrentItem).MaxSockets };
+            }
+
+            if(LinkCheckBox != null && LinkCheckBox.IsChecked == true)
+            {
+                ((EquippableItem)CurrentItem).Links = new SocketFilterOption() { Min = ((EquippableItem)CurrentItem).MaxSockets };
             }
 
             Controller.CheckItemPrice(CurrentItem);
