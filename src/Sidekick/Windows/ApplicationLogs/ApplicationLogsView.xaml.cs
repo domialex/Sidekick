@@ -8,6 +8,7 @@ namespace Sidekick.Windows.ApplicationLogs
     public partial class ApplicationLogsView : BaseWindow, IDisposable
     {
         private readonly IApplicationLogViewModel viewModel;
+        private bool isDisposed;
 
         public ApplicationLogsView(
             IApplicationLogViewModel viewModel,
@@ -47,8 +48,24 @@ namespace Sidekick.Windows.ApplicationLogs
 
         public void Dispose()
         {
-            viewModel.Logs.CollectionChanged -= LogsChanged;
-            viewModel.PropertyChanged -= LogsChanged;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                viewModel.Logs.CollectionChanged -= LogsChanged;
+                viewModel.PropertyChanged -= LogsChanged;
+            }
+
+            isDisposed = true;
         }
     }
 }

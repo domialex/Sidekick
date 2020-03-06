@@ -72,7 +72,7 @@ namespace Sidekick.Core.Initialization
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
-            disposableServices = disposableServices ?? GetDisposableServices();
+            disposableServices ??= GetDisposableServices();
 
             ResetCount = disposableServices.Count;
             BeforeInitCount = beforeInitServices.Count;
@@ -95,9 +95,9 @@ namespace Sidekick.Core.Initialization
         private List<IDisposable> GetDisposableServices()
         {
             var services = new List<IDisposable>();
-            services.AddRange(beforeInitServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
-            services.AddRange(initServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
-            services.AddRange(afterInitServices.Where(x => x is IDisposable).Select(x => (IDisposable)x));
+            services.AddRange(beforeInitServices.OfType<IDisposable>());
+            services.AddRange(initServices.OfType<IDisposable>());
+            services.AddRange(afterInitServices.OfType<IDisposable>());
             return services.Distinct().ToList();
         }
 

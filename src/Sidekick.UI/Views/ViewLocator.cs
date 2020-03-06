@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +10,7 @@ namespace Sidekick.UI.Views
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
+        private bool isDisposed;
 
         public ViewLocator(IServiceProvider serviceProvider)
         {
@@ -56,13 +56,29 @@ namespace Sidekick.UI.Views
 
         public void Dispose()
         {
-            if (Views != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
             {
-                foreach (var view in Views)
+                return;
+            }
+
+            if (disposing)
+            {
+                if (Views != null)
                 {
-                    view.Dispose();
+                    foreach (var view in Views)
+                    {
+                        view.Dispose();
+                    }
                 }
             }
+
+            isDisposed = true;
         }
     }
 }

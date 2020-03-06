@@ -10,6 +10,7 @@ namespace Sidekick.UI.Splash
     public class SplashViewModel : IDisposable, ISplashViewModel
     {
         private readonly IInitializer initializer;
+        private bool isDisposed;
 
         public SplashViewModel(IInitializer initializer)
         {
@@ -53,7 +54,23 @@ namespace Sidekick.UI.Splash
 
         public void Dispose()
         {
-            initializer.OnProgress -= Initializer_OnProgress;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                initializer.OnProgress -= Initializer_OnProgress;
+            }
+
+            isDisposed = true;
         }
     }
 }
