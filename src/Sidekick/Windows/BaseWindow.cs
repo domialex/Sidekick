@@ -38,7 +38,11 @@ namespace Sidekick.Windows
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch (InvalidOperationException) { }
         }
 
         public new void Show()
