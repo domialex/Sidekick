@@ -1,12 +1,10 @@
 using System;
 using System.Windows;
-using System.Windows.Input;
 using Sidekick.UI.Settings;
-using Sidekick.UI.Views;
 
 namespace Sidekick.Windows.Settings
 {
-    public partial class SettingsView : BaseWindow, ISidekickView
+    public partial class SettingsView : BaseWindow
     {
         private readonly ISettingsViewModel viewModel;
 
@@ -21,11 +19,6 @@ namespace Sidekick.Windows.Settings
             DataContext = viewModel;
 
             Show();
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
         }
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)

@@ -5,15 +5,13 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Prices;
-using Sidekick.UI.Views;
 
 namespace Sidekick.Windows.Prices
 {
-    public partial class PriceView : BaseWindow, ISidekickView
+    public partial class PriceView : BaseWindow
     {
         private readonly IPriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
-        private readonly INativeCursor cursor;
 
         public PriceView(
             IServiceProvider serviceProvider,
@@ -24,7 +22,6 @@ namespace Sidekick.Windows.Prices
         {
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
-            this.cursor = cursor;
             InitializeComponent();
             DataContext = viewModel;
 
@@ -63,7 +60,6 @@ namespace Sidekick.Windows.Prices
                 if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.8d)
                 {
                     viewModel.LoadMoreData();
-                    return;
                 }
             }
         }
@@ -80,6 +76,5 @@ namespace Sidekick.Windows.Prices
             nativeBrowser.Open(e.Uri);
             e.Handled = true;
         }
-
     }
 }
