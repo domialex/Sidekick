@@ -8,6 +8,7 @@ namespace Sidekick.Core.Loggers
     public class Logger : ILogger, ISidekickLogger, IDisposable
     {
         private readonly IInitializer initializer;
+        private bool isDisposed;
 
         public Logger(IInitializer initializer)
         {
@@ -72,7 +73,23 @@ namespace Sidekick.Core.Loggers
 
         public void Dispose()
         {
-            initializer.OnProgress -= Initializer_OnProgress;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                initializer.OnProgress -= Initializer_OnProgress;
+            }
+
+            isDisposed = true;
         }
     }
 }

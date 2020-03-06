@@ -23,6 +23,7 @@ namespace Sidekick.Handlers
         private readonly ITradeClient tradeClient;
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
+        private bool isDisposed;
 
         public EventsHandler(
             IKeybindEvents events,
@@ -49,14 +50,30 @@ namespace Sidekick.Handlers
 
         public void Dispose()
         {
-            events.OnItemWiki -= TriggerItemWiki;
-            events.OnHideout -= TriggerHideout;
-            events.OnFindItems -= TriggerFindItem;
-            events.OnLeaveParty -= TriggerLeaveParty;
-            events.OnOpenSearch -= TriggerOpenSearch;
-            events.OnWhisperReply -= TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
-            events.OnPriceCheck -= Events_OnPriceCheck;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if(disposing)
+            {
+                events.OnItemWiki -= TriggerItemWiki;
+                events.OnHideout -= TriggerHideout;
+                events.OnFindItems -= TriggerFindItem;
+                events.OnLeaveParty -= TriggerLeaveParty;
+                events.OnOpenSearch -= TriggerOpenSearch;
+                events.OnWhisperReply -= TriggerReplyToLatestWhisper;
+                events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
+                events.OnPriceCheck -= Events_OnPriceCheck;
+            }
+
+            isDisposed = true;
         }
 
         private void Initialize()

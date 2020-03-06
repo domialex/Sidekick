@@ -40,6 +40,7 @@ namespace Sidekick.Natives
         public event Func<int, int, Task> OnMouseClick;
 
         private IKeyboardMouseEvents hook = null;
+        private bool isDisposed;
 
         public Task OnAfterInit()
         {
@@ -158,12 +159,28 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
-            if (hook != null) // Hook will be null if auto update was successful
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
             {
-                hook.MouseWheelExt -= Hook_MouseWheelExt;
-                hook.Dispose();
+                return;
             }
+
+            if (disposing)
+            {
+                nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+                if (hook != null) // Hook will be null if auto update was successful
+                {
+                    hook.MouseWheelExt -= Hook_MouseWheelExt;
+                    hook.Dispose();
+                }
+            }
+
+            isDisposed = true;
         }
     }
 }

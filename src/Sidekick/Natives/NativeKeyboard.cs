@@ -43,6 +43,7 @@ namespace Sidekick.Natives
         public event Func<string, bool> OnKeyDown;
 
         private IKeyboardMouseEvents hook = null;
+        private bool isDisposed;
 
         public Task OnAfterInit()
         {
@@ -92,11 +93,27 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            if (hook != null) // Hook will be null if auto update was successful
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
             {
-                hook.KeyDown -= Hook_KeyDown;
-                hook.Dispose();
+                return;
             }
+
+            if (disposing)
+            {
+                if (hook != null) // Hook will be null if auto update was successful
+                {
+                    hook.KeyDown -= Hook_KeyDown;
+                    hook.Dispose();
+                }
+            }
+
+            isDisposed = true;
         }
 
         public void Copy()
