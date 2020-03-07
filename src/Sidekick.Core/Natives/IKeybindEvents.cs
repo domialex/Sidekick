@@ -8,6 +8,7 @@ namespace Sidekick.Core.Natives
         bool Enabled { get; set; }
 
         event Func<Task<bool>> OnCloseWindow;
+        event Func<Task<bool>> OnExit;
         event Func<Task<bool>> OnPriceCheck;
         event Func<Task<bool>> OnHideout;
         event Func<Task<bool>> OnItemWiki;

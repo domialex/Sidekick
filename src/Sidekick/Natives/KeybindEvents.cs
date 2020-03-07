@@ -29,6 +29,7 @@ namespace Sidekick.Natives
         public bool Enabled { get; set; }
 
         public event Func<Task<bool>> OnCloseWindow;
+        public event Func<Task<bool>> OnExit;
         public event Func<Task<bool>> OnPriceCheck;
         public event Func<Task<bool>> OnHideout;
         public event Func<Task<bool>> OnItemWiki;
@@ -84,11 +85,11 @@ namespace Sidekick.Natives
                 {
                     if (e.Delta > 0)
                     {
-                        nativeKeyboard.SendCommand(KeyboardCommandEnum.Stash_Left);
+                        nativeKeyboard.SendInput("Left");
                     }
                     else
                     {
-                        nativeKeyboard.SendCommand(KeyboardCommandEnum.Stash_Right);
+                        nativeKeyboard.SendInput("Right");
                     }
                 }
             });
@@ -108,6 +109,7 @@ namespace Sidekick.Natives
                 Task<bool> task = null;
 
                 ExecuteKeybind("Close Window", configuration.Key_CloseWindow, input, OnCloseWindow, ref task);
+                ExecuteKeybind("Exit", configuration.Key_Exit, input, OnExit, ref task);
                 ExecuteKeybind("Check Prices", configuration.Key_CheckPrices, input, OnPriceCheck, ref task);
                 ExecuteKeybind("Open Wiki", configuration.Key_OpenWiki, input, OnItemWiki, ref task);
                 ExecuteKeybind("Go to Hideout", configuration.Key_GoToHideout, input, OnHideout, ref task);

@@ -41,6 +41,8 @@ namespace Sidekick.Core.Settings
 
         public string Key_ReplyToLatestWhisper { get; set; }
 
+        public string Key_Exit { get; set; }
+
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);

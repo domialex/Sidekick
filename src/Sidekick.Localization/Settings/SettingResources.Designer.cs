@@ -115,6 +115,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit to character selection.
+        /// </summary>
+        public static string Key_Exit {
+            get {
+                return ResourceManager.GetString("Key_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find Items.
         /// </summary>
         public static string Key_FindItems {
