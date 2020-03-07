@@ -2,10 +2,12 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
+using Sidekick.Business.Chat;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.UI.Views;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Prices;
@@ -23,6 +25,8 @@ namespace Sidekick.Handlers
         private readonly ITradeClient tradeClient;
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
+        private readonly IChatService chatService;
+        private readonly SidekickSettings settings;
         private bool isDisposed;
 
         public EventsHandler(
@@ -34,7 +38,9 @@ namespace Sidekick.Handlers
             ILogger logger,
             ITradeClient tradeClient,
             IWikiProvider wikiProvider,
-            IViewLocator viewLocator)
+            IViewLocator viewLocator,
+            IChatService chatService,
+            SidekickSettings settings)
         {
             this.events = events;
             this.whisperService = whisperService;
@@ -45,6 +51,8 @@ namespace Sidekick.Handlers
             this.tradeClient = tradeClient;
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
+            this.chatService = chatService;
+            this.settings = settings;
             Initialize();
         }
 
@@ -61,31 +69,45 @@ namespace Sidekick.Handlers
                 return;
             }
 
-            if(disposing)
+            if (disposing)
             {
                 events.OnItemWiki -= TriggerItemWiki;
-                events.OnHideout -= TriggerHideout;
                 events.OnFindItems -= TriggerFindItem;
                 events.OnLeaveParty -= TriggerLeaveParty;
                 events.OnOpenSearch -= TriggerOpenSearch;
                 events.OnWhisperReply -= TriggerReplyToLatestWhisper;
                 events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
                 events.OnPriceCheck -= Events_OnPriceCheck;
+                events.OnHideout -= Events_OnHideout;
+                events.OnExit -= Events_OnExit;
             }
 
             isDisposed = true;
         }
 
+        private async Task<bool> Events_OnHideout()
+        {
+            await chatService.Write("/hideout");
+            return true;
+        }
+
         private void Initialize()
         {
             events.OnItemWiki += TriggerItemWiki;
-            events.OnHideout += TriggerHideout;
             events.OnFindItems += TriggerFindItem;
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
             events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
             events.OnPriceCheck += Events_OnPriceCheck;
+            events.OnHideout += Events_OnHideout;
+            events.OnExit += Events_OnExit;
+        }
+
+        private async Task<bool> Events_OnExit()
+        {
+            await chatService.Write("/exit");
+            return true;
         }
 
         private async Task<bool> Events_OnPriceCheck()
@@ -111,10 +133,16 @@ namespace Sidekick.Handlers
         /// <summary>
         /// Kick yourself from the current party
         /// </summary>
-        private Task<bool> TriggerLeaveParty()
+        private async Task<bool> TriggerLeaveParty()
         {
-            keyboard.SendCommand(KeyboardCommandEnum.LeaveParty);
-            return Task.FromResult(true);
+            // This operation is only valid if the user has added their character name to the settings file.
+            if (string.IsNullOrEmpty(settings.Character_Name))
+            {
+                logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
+                return false;
+            }
+            await chatService.Write($"/kick {settings.Character_Name}");
+            return true;
         }
 
         /// <summary>
@@ -132,7 +160,10 @@ namespace Sidekick.Handlers
                 logger.LogInformation(item.Name);
                 await clipboard.SetText(searchText);
 
-                keyboard.SendCommand(KeyboardCommandEnum.FindItems);
+                keyboard.SendInput("Ctrl+F");
+                keyboard.SendInput("Ctrl+A");
+                keyboard.Paste();
+                keyboard.SendInput("Enter");
                 await Task.Delay(250);
                 await clipboard.SetText(clipboardContents);
 
@@ -153,15 +184,6 @@ namespace Sidekick.Handlers
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Triggers the goto hideout command and restores the chat to your previous entry
-        /// </summary>
-        private Task<bool> TriggerHideout()
-        {
-            keyboard.SendCommand(KeyboardCommandEnum.GoToHideout);
-            return Task.FromResult(true);
         }
 
         private async Task<bool> TriggerOpenSearch()

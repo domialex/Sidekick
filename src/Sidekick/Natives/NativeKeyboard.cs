@@ -121,44 +121,23 @@ namespace Sidekick.Natives
             SendKeys.SendWait("^{c}");
         }
 
-        public void SendCommand(KeyboardCommandEnum command)
+        public void Paste()
         {
-            switch (command)
-            {
-                case KeyboardCommandEnum.FindItems:
-                    SendKeys.SendWait("^{f}^{a}^{v}{Enter}");
-                    break;
-                case KeyboardCommandEnum.Stash_Left:
-                    SendKeys.SendWait("{Left}");
-                    break;
-                case KeyboardCommandEnum.Stash_Right:
-                    SendKeys.SendWait("{Right}");
-                    break;
-                case KeyboardCommandEnum.GoToHideout:
-
-                    SendKeys.SendWait("{Enter}/hideout{Enter}{Enter}{Up}{Up}{Esc}");
-                    break;
-                case KeyboardCommandEnum.LeaveParty:
-                    // This operation is only valid if the user has added their character name to the settings file.
-                    if (string.IsNullOrEmpty(configuration.Character_Name))
-                    {
-                        logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
-                        return;
-                    }
-                    SendKeys.SendWait($"{{Enter}}/kick {configuration.Character_Name}{{Enter}}");
-                    break;
-                case KeyboardCommandEnum.ReplyToLatestWhisper:
-                    SendKeys.SendWait("{Enter}^{a}^{v}");
-                    break;
-            }
+            SendKeys.SendWait("^{v}");
         }
 
         public void SendInput(string input)
         {
             var sendKeyStr = input
                 .Replace("Ctrl+", "^")
-                .Replace("Space", " ");
-            sendKeyStr = Regex.Replace(sendKeyStr, "([a-zA-Z])", "{$1}");
+                .Replace("Space", " ")
+                .Replace("Enter", "{Enter}")
+                .Replace("Up", "{Up}")
+                .Replace("Down", "{Down}")
+                .Replace("Right", "{Right}")
+                .Replace("Left", "{Left}")
+                .Replace("Esc", "{Esc}");
+            sendKeyStr = Regex.Replace(sendKeyStr, "([a-zA-Z]+(?![^{]*\\}))", "{$1}");
             SendKeys.SendWait(sendKeyStr);
         }
 
