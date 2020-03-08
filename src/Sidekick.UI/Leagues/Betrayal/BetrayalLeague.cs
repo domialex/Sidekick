@@ -11,10 +11,10 @@ namespace Sidekick.UI.Leagues.Betrayal
 
             Agents.Add(new BetrayalAgent(BetrayalResources.AislingName, "Aisling.png", RewardValue.Low)
             {
-                Transportation = new BetrayalReward(BetrayalResources.AislingTransportaion, RewardValue.NoValue),
+                Transportation = new BetrayalReward(BetrayalResources.AislingTransportation, RewardValue.NoValue),
                 Fortification = new BetrayalReward(BetrayalResources.AislingFortification, RewardValue.NoValue),
                 Research = new BetrayalReward(BetrayalResources.AislingResearch, RewardValue.Low, BetrayalResources.AislingResearchTooltip),
-                Intervention = new BetrayalReward(BetrayalResources.AislingIntervention, RewardValue.NoValue)
+                Intervention = new BetrayalReward(BetrayalResources.AislingIntervention, RewardValue.Low)
             });
 
             Agents.Add(new BetrayalAgent(BetrayalResources.CameriaName, "Cameria.png", RewardValue.High)
