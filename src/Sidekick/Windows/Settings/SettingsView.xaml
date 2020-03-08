@@ -94,6 +94,7 @@
                                 <CheckBox Content="{loc:Loc Other_RetainClipboard}" IsChecked="{Binding Path=Settings.RetainClipboard}" />
                                 <CheckBox Content="{loc:Loc Other_CloseWithMouseClick}" IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}" />
                                 <CheckBox Content="{loc:Loc Other_TabScroll}" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
+                                <CheckBox Content="{loc:Loc Other_PricePrediction}" IsChecked="{Binding Path=Settings.EnablePricePrediction}" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

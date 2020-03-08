@@ -223,6 +223,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable price prediction.
+        /// </summary>
+        public static string Other_PricePrediction {
+            get {
+                return ResourceManager.GetString("Other_PricePrediction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retain Clipboard Data.
         /// </summary>
         public static string Other_RetainClipboard {

@@ -15,6 +15,7 @@ namespace Sidekick.Core.Settings
                 RetainClipboard = true,
                 CloseOverlayWithMouse = true,
                 EnableCtrlScroll = true,
+                EnablePricePrediction = true,
                 Key_CloseWindow = "Space",
                 Key_CheckPrices = "Ctrl+D",
                 Key_Exit = "Ctrl+Shift+X",
