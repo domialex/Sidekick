@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Sidekick.Converters"
     xmlns:loc="clr-namespace:Sidekick.Windows"
+    xmlns:local="clr-namespace:Sidekick.Windows.Prices"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}">
     <UserControl.Resources>
@@ -56,15 +57,29 @@
                         Padding="0,0,0,5"
                         BorderBrush="GhostWhite"
                         BorderThickness="0,0,0,1"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.Properties, Converter={StaticResource NullableToVisibility}}">
+                        <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.Properties}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <local:ItemProperty Property="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+
+                    <Border
+                        Margin="0,0,0,5"
+                        Padding="0,0,0,5"
+                        BorderBrush="GhostWhite"
+                        BorderThickness="0,0,0,1"
                         Visibility="{Binding ViewModel.PreviewItem.Item.Item.ExplicitMods, Converter={StaticResource NullableToVisibility}}">
                         <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.ExplicitMods}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock
-                                            Margin="0,0,0,3"
-                                            Text="{Binding}"
-                                            TextWrapping="WrapWithOverflow" />
+                                        <local:ItemMod Text="{Binding}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -81,10 +96,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock
-                                            Margin="0,0,0,3"
-                                            Text="{Binding}"
-                                            TextWrapping="WrapWithOverflow" />
+                                        <local:ItemMod Text="{Binding}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -101,10 +113,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock
-                                            Margin="0,0,0,3"
-                                            Text="{Binding}"
-                                            TextWrapping="WrapWithOverflow" />
+                                        <local:ItemMod Text="{Binding}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
