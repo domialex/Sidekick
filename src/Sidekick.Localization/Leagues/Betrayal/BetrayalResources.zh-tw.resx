@@ -117,17 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AislingTransportaion" xml:space="preserve">
+  <data name="_AislingTransportation" xml:space="preserve">
     <value>隱匿武器</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
-  <data name="AislingFortification" xml:space="preserve">
+  <data name="_AislingFortification" xml:space="preserve">
     <value>二詞 隱匿護甲</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="AislingResearch" xml:space="preserve">
     <value>增加 隱匿詞綴</value>
   </data>
-  <data name="AislingIntervention" xml:space="preserve">
+  <data name="_AislingIntervention" xml:space="preserve">
     <value>二詞 隱匿飾品</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
     <value>聯盟限定 傳奇</value>

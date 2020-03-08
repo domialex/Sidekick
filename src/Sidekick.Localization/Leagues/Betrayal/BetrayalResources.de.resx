@@ -117,14 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AislingFortification" xml:space="preserve">
-    <value>Verschleierte Rüstungen</value>
-  </data>
-  <data name="AislingIntervention" xml:space="preserve">
-    <value>Verschleierter
-Schmuck
-</value>
-  </data>
   <data name="AislingResearch" xml:space="preserve">
     <value>Hinzufügen verschleierter Modifikationen</value>
   </data>
@@ -132,9 +124,6 @@ Schmuck
     <value>Level1: 1 Modifikation
 Level2: Geringe Chance für 2 Modifikationen
 Level3: 2 Modifikationen</value>
-  </data>
-  <data name="AislingTransportaion" xml:space="preserve">
-    <value>Verschleierte Waffen</value>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
     <value>Sphären des Vorboten</value>
@@ -430,5 +419,17 @@ Level3: 1-3 Weiße Sockel</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
     <value>Qualitäts Edelsteine</value>
+  </data>
+  <data name="_AislingFortification" xml:space="preserve">
+    <value>Verschleierte Rüstungen</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
+  </data>
+  <data name="_AislingIntervention" xml:space="preserve">
+    <value>Verschleierter Schmuck</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
+  </data>
+  <data name="_AislingTransportation" xml:space="preserve">
+    <value>Verschleierte Waffen</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
 </root>
