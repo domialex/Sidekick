@@ -1,6 +1,6 @@
 namespace Sidekick.Core.Settings
 {
-    internal static class DefaultSettings
+    public static class DefaultSettings
     {
         public static SidekickSettings CreateDefault()
         {
