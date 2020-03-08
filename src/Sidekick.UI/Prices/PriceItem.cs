@@ -23,7 +23,7 @@ namespace Sidekick.UI.Prices
                 }
                 Currency = result.Listing.Price.Currency;
             }
-            ItemLevel = result.Item.Ilvl.ToString();
+            ItemLevel = result.Item.ItemLevel.ToString();
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
         }
