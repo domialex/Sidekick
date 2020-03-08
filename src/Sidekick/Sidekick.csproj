@@ -120,7 +120,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Windows\Prices\ItemProperty.xaml.cs">
+    <Compile Update="Windows\Prices\ItemLineContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\Prices\ItemMod.xaml.cs">
@@ -162,7 +162,7 @@
     <Page Update="Styles\Variables\Spacers.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\Prices\ItemProperty.xaml">
+    <Page Update="Windows\Prices\ItemLineContent.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Prices\ItemMod.xaml">

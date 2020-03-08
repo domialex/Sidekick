@@ -6,23 +6,30 @@ using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Trades.Results
 {
-    public class Property
+    public class LineContent
     {
         public string Name { get; set; }
 
         [JsonPropertyName("values")]
-        public List<List<object>> __Values { get; set; }
+        public List<List<JsonElement>> __Values { get; set; }
 
         public int DisplayMode { get; set; }
 
-        public int Type { get; set; }
+        [JsonPropertyName("type")]
+        public int Order { get; set; }
 
+        private List<LineContentValue> values = null;
         [JsonIgnore]
-        public List<PropertyValue> Values
+        public List<LineContentValue> Values
         {
             get
             {
-                var result = new List<PropertyValue>();
+                if (values != null)
+                {
+                    return values;
+                }
+
+                var result = new List<LineContentValue>();
                 foreach (var value in __Values)
                 {
                     if (value.Count != 2)
@@ -33,13 +40,17 @@ namespace Sidekick.Business.Trades.Results
                     var stringValue = (JsonElement)value[0];
                     var type = (JsonElement)value[1];
 
-                    result.Add(new PropertyValue()
+                    result.Add(new LineContentValue()
                     {
                         Value = stringValue.GetString(),
-                        Type = (PropertyType)type.GetInt32()
+                        Type = (LineContentType)type.GetInt32()
                     });
                 }
                 return result;
+            }
+            set
+            {
+                values = value;
             }
         }
 

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
@@ -26,6 +28,30 @@ namespace Sidekick.UI.Prices
             ItemLevel = result.Item.ItemLevel.ToString();
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
+
+            if (Item.Item.Requirements == null)
+            {
+                Item.Item.Requirements = new List<LineContent>();
+            }
+            foreach (var requirement in Item.Item.Requirements)
+            {
+                requirement.Name = $"{PriceResources.Requires} {requirement.Name}";
+            }
+            Item.Item.Requirements.Add(new LineContent()
+            {
+                DisplayMode = 0,
+                Name = PriceResources.ItemLevel,
+                Values = new List<LineContentValue>
+                {
+                    new LineContentValue()
+                    {
+                        Type = LineContentType.Simple,
+                        Value = Item.Item.ItemLevel.ToString(),
+                    }
+                },
+                Order = -1,
+            });
+            Item.Item.Requirements = Item.Item.Requirements.OrderBy(x => x.Order).ToList();
         }
 
         public SearchResult Item { get; set; }
@@ -43,6 +69,8 @@ namespace Sidekick.UI.Prices
         public string ItemLevel { get; set; }
 
         public string Age { get; set; }
+
+        public List<LineContent> Requirements { get; set; }
 
         private string GetHumanReadableTimeSpan(DateTimeOffset time)
         {

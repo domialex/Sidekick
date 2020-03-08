@@ -55,7 +55,7 @@ namespace Sidekick.Windows.Prices
                 if (range != null)
                 {
                     range.ApplyPropertyValue(
-                       TextElement.ForegroundProperty, Brushes.LightGreen);
+                       TextElement.ForegroundProperty, Brushes.LightBlue);
                     range.ApplyPropertyValue(
                        TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
                 }

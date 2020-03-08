@@ -27,13 +27,12 @@ namespace Sidekick.Business.Trades.Results
         public int ItemLevel { get; set; }
 
         public string Note { get; set; }
-        public List<Property> Properties { get; set; }
-        public List<Requirement> Requirements { get; set; }
+        public List<LineContent> Properties { get; set; }
+        public List<LineContent> Requirements { get; set; }
         public List<string> ImplicitMods { get; set; }
+        public List<string> CraftedMods { get; set; }
         public List<string> ExplicitMods { get; set; }
         public List<string> UtilityMods { get; set; }
-        public string DescrText { get; set; }
-        public List<string> FlavourText { get; set; }
 
         [JsonPropertyName("frameType")]
         public Rarity Rarity { get; set; }

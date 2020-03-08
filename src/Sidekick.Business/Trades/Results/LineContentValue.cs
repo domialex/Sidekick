@@ -1,8 +1,8 @@
 namespace Sidekick.Business.Trades.Results
 {
-    public class PropertyValue
+    public class LineContentValue
     {
         public string Value { get; set; }
-        public PropertyType Type { get; set; }
+        public LineContentType Type { get; set; }
     }
 }

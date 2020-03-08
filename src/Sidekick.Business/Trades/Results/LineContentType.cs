@@ -1,6 +1,6 @@
 namespace Sidekick.Business.Trades.Results
 {
-    public enum PropertyType
+    public enum LineContentType
     {
         Simple = 0,
         Augmented = 1,

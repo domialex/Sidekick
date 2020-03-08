@@ -22,7 +22,9 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <StackPanel Orientation="Horizontal">
+    <DockPanel>
+        <local:ItemPreview DockPanel.Dock="Right" ViewModel="{Binding}" />
+
         <StackPanel Margin="{StaticResource Spacer}">
             <Label
                 Margin="{StaticResource SpacerBottom}"
@@ -132,7 +134,5 @@
                     IsIndeterminate="True" />
             </StackPanel>
         </StackPanel>
-
-        <local:ItemPreview ViewModel="{Binding}" />
-    </StackPanel>
+    </DockPanel>
 </base:BaseWindow>

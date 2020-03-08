@@ -13,14 +13,14 @@ namespace Sidekick.Windows.Prices
     /// Interaction logic for Agent.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class ItemProperty : UserControl
+    public partial class ItemLineContent : UserControl
     {
         private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
 
         [DependencyProperty(OnPropertyChanged = nameof(OnPropertyChanged))]
-        public Property Property { get; set; }
+        public LineContent Property { get; set; }
 
-        public ItemProperty()
+        public ItemLineContent()
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace Sidekick.Windows.Prices
         DependencyObject dependencyObject,
         DependencyPropertyChangedEventArgs eventArgs)
         {
-            var itemProperty = (ItemProperty)dependencyObject;
+            var itemProperty = (ItemLineContent)dependencyObject;
 
             itemProperty.RichText.Document.Blocks.Clear();
             itemProperty.RichText.Document.Blocks.Add(new Paragraph(new Run(itemProperty.Property.Parsed)));
@@ -57,27 +57,27 @@ namespace Sidekick.Windows.Prices
 
                     switch (value.Type)
                     {
-                        case PropertyType.Simple:
+                        case LineContentType.Simple:
                             range.ApplyPropertyValue(
                                TextElement.ForegroundProperty, Brushes.White);
                             break;
-                        case PropertyType.Augmented:
+                        case LineContentType.Augmented:
                             range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.LightGreen);
+                               TextElement.ForegroundProperty, Brushes.LightBlue);
                             break;
-                        case PropertyType.Cold:
+                        case LineContentType.Cold:
                             range.ApplyPropertyValue(
                                TextElement.ForegroundProperty, Brushes.LightSkyBlue);
                             break;
-                        case PropertyType.Fire:
+                        case LineContentType.Fire:
                             range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.Red);
+                               TextElement.ForegroundProperty, Brushes.DeepPink);
                             break;
-                        case PropertyType.Lightning:
+                        case LineContentType.Lightning:
                             range.ApplyPropertyValue(
                                TextElement.ForegroundProperty, Brushes.LightYellow);
                             break;
-                        case PropertyType.Chaos:
+                        case LineContentType.Chaos:
                             range.ApplyPropertyValue(
                                TextElement.ForegroundProperty, Brushes.Purple);
                             break;
