@@ -76,5 +76,11 @@ namespace Sidekick.Windows.Prices
             nativeBrowser.Open(e.Uri);
             e.Handled = true;
         }
+
+        private void ItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.Preview((PriceItem)ItemList.SelectedItem);
+            EnsureBounds();
+        }
     }
 }

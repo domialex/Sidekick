@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja;
@@ -22,6 +23,7 @@ namespace Sidekick.UI.Prices
     [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
     {
+        private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticItemCategoryService staticItemCategoryService;
@@ -32,6 +34,7 @@ namespace Sidekick.UI.Prices
         private readonly SidekickSettings settings;
 
         public PriceViewModel(
+            ILogger logger,
             ITradeClient tradeClient,
             IPoeNinjaCache poeNinjaCache,
             IStaticItemCategoryService staticItemCategoryService,
@@ -41,6 +44,7 @@ namespace Sidekick.UI.Prices
             IItemParser itemParser,
             SidekickSettings settings)
         {
+            this.logger = logger;
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
             this.staticItemCategoryService = staticItemCategoryService;
@@ -180,6 +184,15 @@ namespace Sidekick.UI.Prices
         private void UpdateCountString()
         {
             CountString = string.Format(PriceResources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
+        }
+
+        public bool HasPreviewItem { get; private set; }
+        public PriceItem PreviewItem { get; private set; }
+        public void Preview(PriceItem selectedItem)
+        {
+            PreviewItem = selectedItem;
+            HasPreviewItem = PreviewItem != null;
+            logger.LogInformation(selectedItem.AccountName);
         }
     }
 }

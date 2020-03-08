@@ -120,6 +120,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Windows\Prices\ItemPreview.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Styles\Controls\Button.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -148,6 +154,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Variables\Spacers.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\Prices\ItemPreview.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

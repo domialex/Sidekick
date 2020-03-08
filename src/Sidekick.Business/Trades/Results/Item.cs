@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using Sidekick.Business.Parsers.Models;
 
 namespace Sidekick.Business.Trades.Results
 {
@@ -21,7 +23,10 @@ namespace Sidekick.Business.Trades.Results
         public List<string> ExplicitMods { get; set; }
         public string DescrText { get; set; }
         public List<string> FlavourText { get; set; }
-        public int FrameType { get; set; }
+
+        [JsonPropertyName("frameType")]
+        public Rarity Rarity { get; set; }
+
         public bool Corrupted { get; set; }
         public Extended Extended { get; set; }
     }

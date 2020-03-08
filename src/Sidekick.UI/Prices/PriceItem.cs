@@ -1,6 +1,7 @@
 using System;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Localization.Prices;
+using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
 {
@@ -28,6 +29,8 @@ namespace Sidekick.UI.Prices
         }
 
         public SearchResult Item { get; set; }
+
+        public string Color => Item?.Item.Rarity.GetColor();
 
         public string AccountName { get; set; }
 
