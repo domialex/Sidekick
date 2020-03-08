@@ -13,6 +13,8 @@ namespace Sidekick.Core.Settings
 
         public string LeagueId { get; set; }
 
+        public int League_SelectedTabIndex { get; set; }
+
         public WikiSetting Wiki_Preferred { get; set; }
 
         public string Character_Name { get; set; }

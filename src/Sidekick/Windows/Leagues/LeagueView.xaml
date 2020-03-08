@@ -8,10 +8,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:delve="clr-namespace:Sidekick.Windows.Leagues.Delve"
     xmlns:incursion="clr-namespace:Sidekick.Windows.Leagues.Incursion"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metamorph="clr-namespace:Sidekick.Windows.Leagues.Metamorph"
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
-    xmlns:loc="clr-namespace:Sidekick.Windows"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
@@ -23,7 +23,7 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <TabControl>
+    <TabControl SelectedIndex="{Binding SelectedTabIndex}">
         <TabItem Header="{loc:Loc LeagueNameBetrayal}">
             <betrayal:League Model="{Binding Betrayal}" />
         </TabItem>

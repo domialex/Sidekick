@@ -13,5 +13,6 @@ namespace Sidekick.UI.Leagues
         DelveLeague Delve { get; }
         IncursionLeague Incursion { get; }
         MetamorphLeague Metamorph { get; }
+        int SelectedTabIndex { get; set; }
     }
 }
