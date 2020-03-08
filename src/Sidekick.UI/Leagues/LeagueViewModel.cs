@@ -1,5 +1,5 @@
-using System.ComponentModel;
 using PropertyChanged;
+using Sidekick.Core.Settings;
 using Sidekick.UI.Leagues.Betrayal;
 using Sidekick.UI.Leagues.Blight;
 using Sidekick.UI.Leagues.Delve;
@@ -11,8 +11,13 @@ namespace Sidekick.UI.Leagues
     [AddINotifyPropertyChangedInterface]
     public class LeagueViewModel : ILeagueViewModel
     {
-        public LeagueViewModel()
+        private readonly SidekickSettings settings;
+
+        public LeagueViewModel(
+            SidekickSettings settings)
         {
+            this.settings = settings;
+
             Betrayal = new BetrayalLeague();
             Blight = new BlightLeague();
             Delve = new DelveLeague();
@@ -25,5 +30,18 @@ namespace Sidekick.UI.Leagues
         public DelveLeague Delve { get; private set; }
         public IncursionLeague Incursion { get; private set; }
         public MetamorphLeague Metamorph { get; private set; }
+
+        public int SelectedTabIndex
+        {
+            get
+            {
+                return settings.League_SelectedTabIndex;
+            }
+            set
+            {
+                settings.League_SelectedTabIndex = value;
+                settings.Save();
+            }
+        }
     }
 }
