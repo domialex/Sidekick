@@ -171,6 +171,9 @@
   <data name="Other_CloseWithMouseClick" xml:space="preserve">
     <value>Close Overlay with Mouse Click</value>
   </data>
+  <data name="Other_PricePrediction" xml:space="preserve">
+    <value>Enable price prediction</value>
+  </data>
   <data name="Other_RetainClipboard" xml:space="preserve">
     <value>Retain Clipboard Data</value>
   </data>

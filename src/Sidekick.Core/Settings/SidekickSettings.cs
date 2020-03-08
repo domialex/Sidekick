@@ -25,6 +25,8 @@ namespace Sidekick.Core.Settings
 
         public bool EnableCtrlScroll { get; set; }
 
+        public bool EnablePricePrediction { get; set; }
+
         public string Key_CloseWindow { get; set; }
 
         public string Key_CheckPrices { get; set; }

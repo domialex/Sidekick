@@ -13,6 +13,7 @@ using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
 
@@ -28,6 +29,7 @@ namespace Sidekick.UI.Prices
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
         private readonly IItemParser itemParser;
+        private readonly SidekickSettings settings;
 
         public PriceViewModel(
             ITradeClient tradeClient,
@@ -36,7 +38,8 @@ namespace Sidekick.UI.Prices
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
-            IItemParser itemParser)
+            IItemParser itemParser,
+            SidekickSettings settings)
         {
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
@@ -45,7 +48,7 @@ namespace Sidekick.UI.Prices
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeClipboard = nativeClipboard;
             this.itemParser = itemParser;
-
+            this.settings = settings;
             Task.Run(Initialize);
         }
 
@@ -86,7 +89,11 @@ namespace Sidekick.UI.Prices
 
             UpdateCountString();
             GetPoeNinjaPrice();
-            _ = GetPredictionPrice();
+
+            if (settings.EnablePricePrediction)
+            {
+                _ = GetPredictionPrice();
+            }
         }
 
         public async Task LoadMoreData()
