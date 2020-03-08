@@ -17,8 +17,6 @@ namespace Sidekick.Business.Tests
             this.Register<ITokenizer>(this.Create<ItemNameTokenizer>);
             this.Register<ILanguageProvider>(this.Create<LanguageProvider>);
             this.Register(DefaultSettings.CreateDefault);
-
-            this.Freeze<ILogger>();
         }
     }
 }
