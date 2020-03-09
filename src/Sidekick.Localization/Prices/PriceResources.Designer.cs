@@ -133,6 +133,15 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Corrupted.
+        /// </summary>
+        public static string Corrupted {
+            get {
+                return ResourceManager.GetString("Corrupted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Showing {0} out of {1} items.
         /// </summary>
         public static string CountString {
@@ -147,6 +156,15 @@ namespace Sidekick.Localization.Prices {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Level.
+        /// </summary>
+        public static string ItemLevel {
+            get {
+                return ResourceManager.GetString("ItemLevel", resourceCulture);
             }
         }
         
@@ -210,6 +228,24 @@ namespace Sidekick.Localization.Prices {
         public static string PredictionString {
             get {
                 return ResourceManager.GetString("PredictionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requires.
+        /// </summary>
+        public static string Requires {
+            get {
+                return ResourceManager.GetString("Requires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unidentified.
+        /// </summary>
+        public static string Unidentified {
+            get {
+                return ResourceManager.GetString("Unidentified", resourceCulture);
             }
         }
     }

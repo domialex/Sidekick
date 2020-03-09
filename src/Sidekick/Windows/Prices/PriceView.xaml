@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Windows"
     xmlns:loc="clr-namespace:Sidekick.Windows"
+    xmlns:local="clr-namespace:Sidekick.Windows.Prices"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}">
     <Window.Resources>
@@ -21,112 +22,117 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <StackPanel Margin="{StaticResource Spacer}">
-        <Label
-            Margin="{StaticResource SpacerBottom}"
-            VerticalAlignment="Center"
-            Content="{Binding Path=Item.Name}"
-            FontSize="16"
-            FontWeight="Bold"
-            Foreground="{Binding ItemColor}"
-            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
+    <DockPanel>
+        <local:ItemPreview DockPanel.Dock="Right" ViewModel="{Binding}" />
 
-        <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
-            <ListView
-                Name="ItemList"
-                Height="260"
-                ItemsSource="{Binding Path=Results}"
-                ScrollViewer.CanContentScroll="False">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=AccountName}">
-                            <GridViewColumnHeader
-                                Content="{loc:Loc OverlayAccountName}"
-                                Foreground="White"
-                                IsEnabled="False" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=CharacterName}">
-                            <GridViewColumnHeader
-                                Content="{loc:Loc OverlayCharacter}"
-                                Foreground="White"
-                                IsEnabled="False" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="80">
-                            <GridViewColumnHeader
-                                Content="{loc:Loc OverlayPrice}"
-                                Foreground="White"
-                                IsEnabled="False" />
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Amount}" />
-                                        <TextBlock Text=" " />
-                                        <Image
-                                            Height="20"
-                                            VerticalAlignment="Center"
-                                            ToolTip="{Binding Currency}">
-                                            <Image.Source>
-                                                <BitmapImage DecodePixelWidth="20" UriSource="{Binding CurrencyUrl}" />
-                                            </Image.Source>
-                                        </Image>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=ItemLevel}">
-                            <GridViewColumnHeader
-                                Content="{loc:Loc OverlayItemLevel}"
-                                Foreground="White"
-                                IsEnabled="False" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=Age}">
-                            <GridViewColumnHeader
-                                Content="{loc:Loc OverlayAge}"
-                                Foreground="White"
-                                IsEnabled="False" />
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </GroupBox>
+        <StackPanel Margin="{StaticResource Spacer}">
+            <Label
+                Margin="{StaticResource SpacerBottom}"
+                VerticalAlignment="Center"
+                Content="{Binding Path=Item.Name}"
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="{Binding ItemColor}"
+                Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
 
-        <StackPanel Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
-            <ProgressBar
-                Height="16"
-                IsIndeterminate="True"
-                Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
-
-            <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Text="{Binding PredictionText}"
-                    Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Text="{Binding PoeNinjaText}"
-                    Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
-
-                <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                    <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
-                        <TextBlock Text="{Binding CountString}" />
-                    </Hyperlink>
-                </TextBlock>
-            </Grid>
-        </StackPanel>
-
-        <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
-            <GroupBox>
-                <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
+            <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+                <ListView
+                    Name="ItemList"
+                    Height="260"
+                    ItemsSource="{Binding Path=Results}"
+                    ScrollViewer.CanContentScroll="False"
+                    SelectionChanged="ItemList_SelectionChanged">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=AccountName}">
+                                <GridViewColumnHeader
+                                    Content="{loc:Loc OverlayAccountName}"
+                                    Foreground="White"
+                                    IsEnabled="False" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=CharacterName}">
+                                <GridViewColumnHeader
+                                    Content="{loc:Loc OverlayCharacter}"
+                                    Foreground="White"
+                                    IsEnabled="False" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="80">
+                                <GridViewColumnHeader
+                                    Content="{loc:Loc OverlayPrice}"
+                                    Foreground="White"
+                                    IsEnabled="False" />
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Amount}" />
+                                            <TextBlock Text=" " />
+                                            <Image
+                                                Height="20"
+                                                VerticalAlignment="Center"
+                                                ToolTip="{Binding Currency}">
+                                                <Image.Source>
+                                                    <BitmapImage DecodePixelWidth="20" UriSource="{Binding CurrencyUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=ItemLevel}">
+                                <GridViewColumnHeader
+                                    Content="{loc:Loc OverlayItemLevel}"
+                                    Foreground="White"
+                                    IsEnabled="False" />
+                            </GridViewColumn>
+                            <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=Age}">
+                                <GridViewColumnHeader
+                                    Content="{loc:Loc OverlayAge}"
+                                    Foreground="White"
+                                    IsEnabled="False" />
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </GroupBox>
-            <ProgressBar
-                Width="250"
-                Height="16"
-                IsIndeterminate="True" />
+
+            <StackPanel Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+                <ProgressBar
+                    Height="16"
+                    IsIndeterminate="True"
+                    Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
+
+                <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{Binding PredictionText}"
+                        Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{Binding PoeNinjaText}"
+                        Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
+
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center">
+                        <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
+                            <TextBlock Text="{Binding CountString}" />
+                        </Hyperlink>
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
+                <GroupBox>
+                    <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
+                </GroupBox>
+                <ProgressBar
+                    Width="250"
+                    Height="16"
+                    IsIndeterminate="True" />
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </DockPanel>
 </base:BaseWindow>
