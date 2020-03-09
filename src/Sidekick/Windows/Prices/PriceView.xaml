@@ -44,13 +44,13 @@
                     SelectionChanged="ItemList_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=AccountName}">
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=Item.Listing.Account.Name}">
                                 <GridViewColumnHeader
                                     Content="{loc:Loc OverlayAccountName}"
                                     Foreground="White"
                                     IsEnabled="False" />
                             </GridViewColumn>
-                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=CharacterName}">
+                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=Item.Listing.Account.LastCharacterName}">
                                 <GridViewColumnHeader
                                     Content="{loc:Loc OverlayCharacter}"
                                     Foreground="White"
@@ -69,7 +69,7 @@
                                             <Image
                                                 Height="20"
                                                 VerticalAlignment="Center"
-                                                ToolTip="{Binding Currency}">
+                                                ToolTip="{Binding Item.Listing.Price.Currency}">
                                                 <Image.Source>
                                                     <BitmapImage DecodePixelWidth="20" UriSource="{Binding CurrencyUrl}" />
                                                 </Image.Source>
@@ -78,7 +78,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=ItemLevel}">
+                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=Item.Item.ItemLevel}">
                                 <GridViewColumnHeader
                                     Content="{loc:Loc OverlayItemLevel}"
                                     Foreground="White"

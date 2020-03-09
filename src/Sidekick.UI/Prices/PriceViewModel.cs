@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja;
@@ -11,6 +10,7 @@ using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers;
+using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
@@ -23,7 +23,6 @@ namespace Sidekick.UI.Prices
     [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
     {
-        private readonly ILogger logger;
         private readonly ITradeClient tradeClient;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticItemCategoryService staticItemCategoryService;
@@ -34,7 +33,6 @@ namespace Sidekick.UI.Prices
         private readonly SidekickSettings settings;
 
         public PriceViewModel(
-            ILogger logger,
             ITradeClient tradeClient,
             IPoeNinjaCache poeNinjaCache,
             IStaticItemCategoryService staticItemCategoryService,
@@ -44,7 +42,6 @@ namespace Sidekick.UI.Prices
             IItemParser itemParser,
             SidekickSettings settings)
         {
-            this.logger = logger;
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
             this.staticItemCategoryService = staticItemCategoryService;
@@ -72,6 +69,8 @@ namespace Sidekick.UI.Prices
         public bool IsFetching { get; private set; }
         public bool IsFetched => !IsFetching;
 
+        public bool IsCurrency { get; private set; }
+
         private async Task Initialize()
         {
             Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText);
@@ -89,6 +88,7 @@ namespace Sidekick.UI.Prices
             if (QueryResult.Result.Any())
             {
                 Append(QueryResult.Result);
+                IsCurrency = Results.FirstOrDefault()?.Item?.Item?.Rarity == Rarity.Currency;
             }
 
             UpdateCountString();
@@ -192,7 +192,6 @@ namespace Sidekick.UI.Prices
         {
             PreviewItem = selectedItem;
             HasPreviewItem = PreviewItem != null;
-            logger.LogInformation(selectedItem.AccountName);
         }
     }
 }

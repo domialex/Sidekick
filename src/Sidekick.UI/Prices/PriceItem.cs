@@ -11,8 +11,6 @@ namespace Sidekick.UI.Prices
     {
         public PriceItem(SearchResult result)
         {
-            AccountName = result.Listing.Account.Name;
-            CharacterName = result.Listing.Account.LastCharacterName;
             if (result.Listing.Price != null)
             {
                 if (result.Listing.Price.Amount % 1 == 0)
@@ -23,9 +21,7 @@ namespace Sidekick.UI.Prices
                 {
                     Amount = result.Listing.Price.Amount.ToString("N1");
                 }
-                Currency = result.Listing.Price.Currency;
             }
-            ItemLevel = result.Item.ItemLevel.ToString();
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
 
@@ -58,19 +54,9 @@ namespace Sidekick.UI.Prices
 
         public string Color => Item?.Item.Rarity.GetColor();
 
-        public string AccountName { get; set; }
-
-        public string CharacterName { get; set; }
-
         public string Amount { get; set; }
-        public string Currency { get; set; }
         public string CurrencyUrl { get; set; }
-
-        public string ItemLevel { get; set; }
-
         public string Age { get; set; }
-
-        public List<LineContent> Requirements { get; set; }
 
         private string GetHumanReadableTimeSpan(DateTimeOffset time)
         {
