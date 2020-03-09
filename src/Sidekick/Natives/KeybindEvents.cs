@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Stashes;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -14,16 +15,19 @@ namespace Sidekick.Natives
         private readonly INativeProcess nativeProcess;
         private readonly SidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
+        private readonly IStashService stashService;
 
         public KeybindEvents(ILogger logger,
             INativeProcess nativeProcess,
             SidekickSettings configuration,
-            INativeKeyboard nativeKeyboard)
+            INativeKeyboard nativeKeyboard,
+            IStashService stashService)
         {
             this.logger = logger;
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
+            this.stashService = stashService;
         }
 
         public bool Enabled { get; set; }
@@ -36,6 +40,8 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnFindItems;
         public event Func<Task<bool>> OnLeaveParty;
         public event Func<Task<bool>> OnOpenSearch;
+        public event Func<Task<bool>> OnTabLeft;
+        public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
         public event Func<int, int, Task> OnMouseClick;
@@ -85,11 +91,11 @@ namespace Sidekick.Natives
                 {
                     if (e.Delta > 0)
                     {
-                        nativeKeyboard.SendInput("Left");
+                        stashService.ScrollLeft();
                     }
                     else
                     {
-                        nativeKeyboard.SendInput("Right");
+                        stashService.ScrollRight();
                     }
                 }
             });
@@ -100,11 +106,6 @@ namespace Sidekick.Natives
             if (Enabled && (nativeProcess.IsPathOfExileInFocus || nativeProcess.IsSidekickInFocus))
             {
                 Enabled = false;
-                Task.Run(async () =>
-                {
-                    await Task.Delay(500);
-                    Enabled = true;
-                });
 
                 Task<bool> task = null;
 
@@ -117,11 +118,26 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Leave Party", configuration.Key_LeaveParty, input, OnLeaveParty, ref task);
                 ExecuteKeybind("Open Search", configuration.Key_OpenSearch, input, OnOpenSearch, ref task);
                 ExecuteKeybind("Open League Overview", configuration.Key_OpenLeagueOverview, input, OnOpenLeagueOverview, ref task);
+                ExecuteKeybind("Scroll Tab Left", configuration.Key_Stash_Left, input, OnTabLeft, ref task);
+                ExecuteKeybind("Scroll Tab Right", configuration.Key_Stash_Right, input, OnTabRight, ref task);
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
 
                 // We need to make sure some key combinations make it into the game if the keybind returns false
                 SendInputIf("Ctrl+F", input, task);
                 SendInputIf("Space", input, task);
+
+                if (task == null)
+                {
+                    Enabled = true;
+                }
+                else
+                {
+                    Task.Run(async () =>
+                    {
+                        await task;
+                        Enabled = true;
+                    });
+                }
 
                 return task != null;
             }

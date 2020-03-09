@@ -115,7 +115,7 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exit to character selection.
+        ///   Looks up a localized string similar to Exit to Character Selection.
         /// </summary>
         public static string Key_Exit {
             get {
@@ -178,11 +178,29 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reply to latest whisper.
+        ///   Looks up a localized string similar to Reply to Latest Whisper.
         /// </summary>
         public static string Key_ReplyToLatestWhisper {
             get {
                 return ResourceManager.GetString("Key_ReplyToLatestWhisper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Left.
+        /// </summary>
+        public static string Key_Stash_Left {
+            get {
+                return ResourceManager.GetString("Key_Stash_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Right.
+        /// </summary>
+        public static string Key_Stash_Right {
+            get {
+                return ResourceManager.GetString("Key_Stash_Right", resourceCulture);
             }
         }
         
@@ -223,7 +241,7 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable price prediction.
+        ///   Looks up a localized string similar to Enable Price Prediction.
         /// </summary>
         public static string Other_PricePrediction {
             get {

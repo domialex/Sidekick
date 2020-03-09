@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
 using Sidekick.Natives.Helpers;
 using WindowsHook;
 
@@ -29,13 +28,10 @@ namespace Sidekick.Natives
         };
 
         private readonly ILogger logger;
-        private readonly SidekickSettings configuration;
 
-        public NativeKeyboard(ILogger logger,
-            SidekickSettings configuration)
+        public NativeKeyboard(ILogger logger)
         {
             this.logger = logger;
-            this.configuration = configuration;
         }
 
         public bool Enabled { get; set; }

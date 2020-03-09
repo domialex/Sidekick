@@ -47,6 +47,10 @@ namespace Sidekick.Core.Settings
 
         public string Key_Exit { get; set; }
 
+        public string Key_Stash_Left { get; set; }
+
+        public string Key_Stash_Right { get; set; }
+
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);
