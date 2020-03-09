@@ -136,7 +136,7 @@
     <value>Close Window</value>
   </data>
   <data name="Key_Exit" xml:space="preserve">
-    <value>Exit to character selection</value>
+    <value>Exit to Character Selection</value>
   </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>Find Items</value>
@@ -157,7 +157,13 @@
     <value>Open Wiki</value>
   </data>
   <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
-    <value>Reply to latest whisper</value>
+    <value>Reply to Latest Whisper</value>
+  </data>
+  <data name="Key_Stash_Left" xml:space="preserve">
+    <value>Tab Scroll Left</value>
+  </data>
+  <data name="Key_Stash_Right" xml:space="preserve">
+    <value>Tab Scroll Right</value>
   </data>
   <data name="Language_Title" xml:space="preserve">
     <value>Language Settings</value>
@@ -172,7 +178,7 @@
     <value>Close Overlay with Mouse Click</value>
   </data>
   <data name="Other_PricePrediction" xml:space="preserve">
-    <value>Enable price prediction</value>
+    <value>Enable Price Prediction</value>
   </data>
   <data name="Other_RetainClipboard" xml:space="preserve">
     <value>Retain Clipboard Data</value>

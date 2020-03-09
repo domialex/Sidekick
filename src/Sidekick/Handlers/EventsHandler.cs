@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Parsers;
+using Sidekick.Business.Stashes;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
@@ -26,6 +27,7 @@ namespace Sidekick.Handlers
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
         private readonly IChatService chatService;
+        private readonly IStashService stashService;
         private readonly SidekickSettings settings;
         private bool isDisposed;
 
@@ -40,6 +42,7 @@ namespace Sidekick.Handlers
             IWikiProvider wikiProvider,
             IViewLocator viewLocator,
             IChatService chatService,
+            IStashService stashService,
             SidekickSettings settings)
         {
             this.events = events;
@@ -52,6 +55,7 @@ namespace Sidekick.Handlers
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
             this.chatService = chatService;
+            this.stashService = stashService;
             this.settings = settings;
             Initialize();
         }
@@ -80,6 +84,8 @@ namespace Sidekick.Handlers
                 events.OnPriceCheck -= Events_OnPriceCheck;
                 events.OnHideout -= Events_OnHideout;
                 events.OnExit -= Events_OnExit;
+                events.OnTabLeft -= Events_OnTabLeft;
+                events.OnTabRight -= Events_OnTabRight;
             }
 
             isDisposed = true;
@@ -102,6 +108,20 @@ namespace Sidekick.Handlers
             events.OnPriceCheck += Events_OnPriceCheck;
             events.OnHideout += Events_OnHideout;
             events.OnExit += Events_OnExit;
+            events.OnTabLeft += Events_OnTabLeft;
+            events.OnTabRight += Events_OnTabRight;
+        }
+
+        private Task<bool> Events_OnTabRight()
+        {
+            stashService.ScrollRight();
+            return Task.FromResult(true);
+        }
+
+        private Task<bool> Events_OnTabLeft()
+        {
+            stashService.ScrollLeft();
+            return Task.FromResult(true);
         }
 
         private async Task<bool> Events_OnExit()

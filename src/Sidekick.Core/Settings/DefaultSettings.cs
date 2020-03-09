@@ -26,6 +26,8 @@ namespace Sidekick.Core.Settings
                 Key_OpenLeagueOverview = "F6",
                 Key_OpenWiki = "Alt+W",
                 Key_ReplyToLatestWhisper = "Ctrl+Shift+R",
+                Key_Stash_Left = string.Empty,
+                Key_Stash_Right = string.Empty,
             };
         }
 
