@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Initializer\InitializerResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InitializerResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Leagues\Betrayal\BetrayalResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -72,6 +77,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Initializer\InitializerResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InitializerResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.zh-tw.resx">
       <Generator></Generator>
     </EmbeddedResource>

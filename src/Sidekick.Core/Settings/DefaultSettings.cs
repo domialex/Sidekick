@@ -10,6 +10,7 @@ namespace Sidekick.Core.Settings
                 Language_Parser = "English",
                 LeagueId = string.Empty,
                 League_SelectedTabIndex = 0,
+                LeaguesHash = string.Empty,
                 Character_Name = string.Empty,
                 Wiki_Preferred = WikiSetting.PoeWiki,
                 RetainClipboard = true,
