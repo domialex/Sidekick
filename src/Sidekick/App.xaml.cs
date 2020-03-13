@@ -70,6 +70,7 @@ namespace Sidekick
             };
 
             var initializer = serviceProvider.GetService<IInitializer>();
+
             initializer.OnProgress += (a) =>
             {
                 if (!viewLocator.IsOpened<Windows.SplashScreen>())
@@ -77,6 +78,13 @@ namespace Sidekick
                     viewLocator.Open<Windows.SplashScreen>();
                 }
             };
+
+            initializer.OnError += (error) =>
+            {
+                AdonisUI.Controls.MessageBox.Show(InitializerResources.ErrorDuringInit, buttons: AdonisUI.Controls.MessageBoxButton.OK);
+                base.Shutdown(1);
+            };
+
             await initializer.Initialize();
 
             InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
@@ -136,9 +144,9 @@ namespace Sidekick
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon.Dispose();
+            trayIcon?.Dispose();
             // Disposing the service provider also disposes registered all IDisposable services
-            serviceProvider.Dispose();
+            serviceProvider?.Dispose();
             base.OnExit(e);
         }
 
