@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Trades;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.UI.Views;
@@ -69,7 +69,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private async Task<bool> OnAdvancedSearch()
         {
-            logger.Log("Hotkey for advanced search triggered");
+            logger.LogInformation("Hotkey for advanced search triggered");
 
             var text = await clipboard.Copy();
 
