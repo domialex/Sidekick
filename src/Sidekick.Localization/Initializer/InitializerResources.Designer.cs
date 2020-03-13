@@ -61,6 +61,15 @@ namespace Sidekick.Localization.Initializer {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A fatal error occured during initialization! This might be because the Path of Exile API service is down. Please try again later..
+        /// </summary>
+        public static string ErrorDuringInit {
+            get {
+                return ResourceManager.GetString("ErrorDuringInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please make sure you have the desired league selected in the settings..
         /// </summary>
         public static string Warn_NewLeagues {

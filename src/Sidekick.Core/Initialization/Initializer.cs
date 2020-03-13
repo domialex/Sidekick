@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Sidekick.Core.Loggers;
 
 namespace Sidekick.Core.Initialization
 {
@@ -14,13 +16,28 @@ namespace Sidekick.Core.Initialization
         private List<IOnBeforeInit> beforeInitServices;
         private List<IOnInit> initServices;
         private List<IOnAfterInit> afterInitServices;
-
+        private readonly ILogger<Initializer> logger;
         private readonly IServiceProvider serviceProvider;
 
-        public Initializer(IServiceProvider serviceProvider)
+        public Initializer(ILogger<Initializer> logger,
+            IServiceProvider serviceProvider)
         {
+            this.logger = logger;
             this.serviceProvider = serviceProvider;
         }
+
+        #region Error handling
+        public event Action<ErrorEventArgs> OnError;
+
+        public void HandleError(Exception exception, string serviceName)
+        {
+            OnError?.Invoke(new ErrorEventArgs
+            {
+                ServiceName = serviceName,
+                Message = exception.Message
+            });
+        }
+        #endregion
 
         #region Progress
         private int ResetCount { get; set; }
@@ -116,10 +133,21 @@ namespace Sidekick.Core.Initialization
         {
             foreach (var s in beforeInitServices)
             {
-                ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - Start Before Init");
-                await s.OnBeforeInit();
-                BeforeInitCompleted++;
-                ReportProgress(ProgressTypeEnum.BeforeInit, s.GetType().Name, "Initializer - End Before Init");
+                var serviceName = s.GetType().Name;
+                ReportProgress(ProgressTypeEnum.BeforeInit, serviceName, "Initializer - Start Before Init");
+
+                try
+                {
+                    await s.OnBeforeInit();
+                    BeforeInitCompleted++;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Fatal error during OnBeforeInit");
+                    HandleError(ex, serviceName);
+                }
+
+                ReportProgress(ProgressTypeEnum.BeforeInit, serviceName, "Initializer - End Before Init");
             }
         }
 
@@ -127,10 +155,21 @@ namespace Sidekick.Core.Initialization
         {
             foreach (var s in initServices)
             {
-                ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - Start Init");
-                await s.OnInit();
-                InitCompleted++;
-                ReportProgress(ProgressTypeEnum.Init, s.GetType().Name, "Initializer - End Init");
+                var serviceName = s.GetType().Name;
+                ReportProgress(ProgressTypeEnum.Init, serviceName, "Initializer - Start Init");
+
+                try
+                {
+                    await s.OnInit();
+                    InitCompleted++;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Fatal error during OnInit");
+                    HandleError(ex, serviceName);
+                }
+
+                ReportProgress(ProgressTypeEnum.Init, serviceName, "Initializer - End Init");
             }
         }
 
@@ -138,10 +177,21 @@ namespace Sidekick.Core.Initialization
         {
             foreach (var s in afterInitServices)
             {
-                ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - Start After Init");
-                await s.OnAfterInit();
-                AfterInitCompleted++;
-                ReportProgress(ProgressTypeEnum.AfterInit, s.GetType().Name, "Initializer - End After Init");
+                var serviceName = s.GetType().Name;
+                ReportProgress(ProgressTypeEnum.AfterInit, serviceName, "Initializer - Start After Init");
+
+                try
+                {
+                    await s.OnAfterInit();
+                    AfterInitCompleted++;
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Fatal error during OnAfterInit");
+                    HandleError(ex, serviceName);
+                }
+
+                ReportProgress(ProgressTypeEnum.AfterInit, serviceName, "Initializer - End After Init");
             }
         }
     }
