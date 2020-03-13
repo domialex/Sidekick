@@ -4,11 +4,11 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
+using Sidekick.Core.Natives;
 using Sidekick.Core.Update.Github_API;
 
 
@@ -18,9 +18,11 @@ namespace Sidekick.Core.Update
     {
         private readonly HttpClient _httpClient;
         private readonly IInitializer initializer;
+        private readonly INativeProcess nativeProcess;
 
         public UpdateManager(IHttpClientFactory httpClientFactory,
-            IInitializer initializer)
+            IInitializer initializer,
+            INativeProcess nativeProcess)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");
@@ -28,6 +30,7 @@ namespace Sidekick.Core.Update
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             this.initializer = initializer;
+            this.nativeProcess = nativeProcess;
         }
 
         public string InstallDirectory => Path.GetDirectoryName(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).Location);
@@ -161,8 +164,29 @@ namespace Sidekick.Core.Update
             if (LatestRelease != null)
             {
                 if (File.Exists(ZipPath)) File.Delete(ZipPath);
+
+                var downloadUrl = LatestRelease.Assets[0].DownloadUrl;
+                if (nativeProcess.Is64bitProcess)
+                {
+                    var release = LatestRelease.Assets.ToList()
+                        .FirstOrDefault(x => x.Name.ToLowerInvariant().Contains("x64"));
+                    if (release != null)
+                    {
+                        downloadUrl = release.DownloadUrl;
+                    }
+                }
+                else
+                {
+                    var release = LatestRelease.Assets.ToList()
+                        .FirstOrDefault(x => x.Name.ToLowerInvariant().Contains("x86"));
+                    if (release != null)
+                    {
+                        downloadUrl = release.DownloadUrl;
+                    }
+                }
+
                 //download zip file and save to disk
-                using (Stream contentStream = await (await _httpClient.GetAsync(LatestRelease.Assets[0].DownloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (Stream contentStream = await (await _httpClient.GetAsync(downloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     await contentStream.CopyToAsync(stream);
                 }
