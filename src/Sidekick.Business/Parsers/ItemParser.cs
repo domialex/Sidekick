@@ -12,7 +12,6 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Core.Loggers;
 using Attribute = Sidekick.Business.Apis.Poe.Models.Attribute;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
@@ -216,7 +215,7 @@ namespace Sidekick.Business.Parsers
 
         private Item GetRareItem(ItemProperties itemProperties, string[] lines, bool parseAttributes = false)
         {
-            var item = parseAttributes ? GetEquippableItem(lines) :  new EquippableItem();
+            var item = parseAttributes ? GetEquippableItem(lines) : new EquippableItem();
             item.Name = lines[1];
             item.Type = itemProperties.IsIdentified ? lines[2] : lines[1];
 
@@ -253,7 +252,7 @@ namespace Sidekick.Business.Parsers
             EquippableItem item;
 
             // Weapon
-            if(lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage) || c.StartsWith(languageProvider.Language.DescriptionElementalDamage)))
+            if (lines.Any(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage) || c.StartsWith(languageProvider.Language.DescriptionElementalDamage)))
             {
                 // TODO Make Available in Query Parameters
                 item = new WeaponItem()
@@ -272,25 +271,25 @@ namespace Sidekick.Business.Parsers
                     EnergyShield = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionEnergyShield)).FirstOrDefault()),
                     Evasion = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionEvasion)).FirstOrDefault())
                 };
-            }    
+            }
 
             item.ItemLevel = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionItemLevel)).FirstOrDefault());
 
             // TODO Special check for 1 handed weapon or shield
 
-            if(int.Parse(item.ItemLevel) >= 50)
+            if (int.Parse(item.ItemLevel) >= 50)
             {
                 item.MaxSockets = 6;
             }
-            else if(int.Parse(item.ItemLevel) >= 35)
+            else if (int.Parse(item.ItemLevel) >= 35)
             {
                 item.MaxSockets = 5;
             }
-            else if(int.Parse(item.ItemLevel) >= 25)
+            else if (int.Parse(item.ItemLevel) >= 25)
             {
                 item.MaxSockets = 4;
             }
-            else if(int.Parse(item.ItemLevel) >= 1)
+            else if (int.Parse(item.ItemLevel) >= 1)
             {
                 item.MaxSockets = 3;
             }
