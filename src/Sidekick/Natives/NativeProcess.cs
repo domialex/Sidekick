@@ -1,19 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sidekick.Natives
 {
@@ -34,11 +34,44 @@ namespace Sidekick.Natives
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWow64Process(
+            [In] IntPtr hProcess,
+            [Out] out bool wow64Process
+        );
+        #endregion
+
+        #region 64-bit process
+        private static bool is64BitProcess = (IntPtr.Size == 8);
+        private static bool is64BitOperatingSystem = is64BitProcess || InternalCheckIsWow64();
+
+        private static bool InternalCheckIsWow64()
+        {
+            if ((Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1) ||
+                Environment.OSVersion.Version.Major >= 6)
+            {
+                using (Process p = Process.GetCurrentProcess())
+                {
+                    bool retVal;
+                    if (!IsWow64Process(p.Handle, out retVal))
+                    {
+                        return false;
+                    }
+                    return retVal;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
         private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
-
 
         private readonly string clientLogFileName = "Client.txt";
         private readonly string clientLogFolderName = "logs";
@@ -123,6 +156,8 @@ namespace Sidekick.Natives
                 }
             }
         }
+
+        public bool Is64bitProcess => InternalCheckIsWow64();
 
         private int GetActiveWindowWidth()
         {

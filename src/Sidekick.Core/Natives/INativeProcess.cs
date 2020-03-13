@@ -11,5 +11,6 @@ namespace Sidekick.Core.Natives
         Task CheckPermission();
         float ActiveWindowDpi { get; }
         string ClientLogPath { get; }
+        bool Is64bitProcess { get; }
     }
 }
