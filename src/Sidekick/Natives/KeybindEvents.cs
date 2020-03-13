@@ -1,7 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Sidekick.Business.Stashes;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
@@ -14,33 +15,40 @@ namespace Sidekick.Natives
         private readonly INativeProcess nativeProcess;
         private readonly SidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
+        private readonly IStashService stashService;
 
         public KeybindEvents(ILogger logger,
             INativeProcess nativeProcess,
             SidekickSettings configuration,
-            INativeKeyboard nativeKeyboard)
+            INativeKeyboard nativeKeyboard,
+            IStashService stashService)
         {
             this.logger = logger;
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
+            this.stashService = stashService;
         }
 
         public bool Enabled { get; set; }
 
         public event Func<Task<bool>> OnCloseWindow;
+        public event Func<Task<bool>> OnExit;
         public event Func<Task<bool>> OnPriceCheck;
         public event Func<Task<bool>> OnHideout;
         public event Func<Task<bool>> OnItemWiki;
         public event Func<Task<bool>> OnFindItems;
         public event Func<Task<bool>> OnLeaveParty;
         public event Func<Task<bool>> OnOpenSearch;
+        public event Func<Task<bool>> OnTabLeft;
+        public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
         public event Func<int, int, Task> OnMouseClick;
         public event Func<Task<bool>> OnAdvancedSearch;
 
         private IKeyboardMouseEvents hook = null;
+        private bool isDisposed;
 
         public Task OnAfterInit()
         {
@@ -84,11 +92,11 @@ namespace Sidekick.Natives
                 {
                     if (e.Delta > 0)
                     {
-                        nativeKeyboard.SendCommand(KeyboardCommandEnum.Stash_Left);
+                        stashService.ScrollLeft();
                     }
                     else
                     {
-                        nativeKeyboard.SendCommand(KeyboardCommandEnum.Stash_Right);
+                        stashService.ScrollRight();
                     }
                 }
             });
@@ -99,15 +107,11 @@ namespace Sidekick.Natives
             if (Enabled && (nativeProcess.IsPathOfExileInFocus || nativeProcess.IsSidekickInFocus))
             {
                 Enabled = false;
-                Task.Run(async () =>
-                {
-                    await Task.Delay(500);
-                    Enabled = true;
-                });
 
                 Task<bool> task = null;
 
                 ExecuteKeybind("Close Window", configuration.Key_CloseWindow, input, OnCloseWindow, ref task);
+                ExecuteKeybind("Exit", configuration.Key_Exit, input, OnExit, ref task);
                 ExecuteKeybind("Check Prices", configuration.Key_CheckPrices, input, OnPriceCheck, ref task);
                 ExecuteKeybind("Open Wiki", configuration.Key_OpenWiki, input, OnItemWiki, ref task);
                 ExecuteKeybind("Go to Hideout", configuration.Key_GoToHideout, input, OnHideout, ref task);
@@ -115,6 +119,8 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Leave Party", configuration.Key_LeaveParty, input, OnLeaveParty, ref task);
                 ExecuteKeybind("Open Search", configuration.Key_OpenSearch, input, OnOpenSearch, ref task);
                 ExecuteKeybind("Open League Overview", configuration.Key_OpenLeagueOverview, input, OnOpenLeagueOverview, ref task);
+                ExecuteKeybind("Scroll Tab Left", configuration.Key_Stash_Left, input, OnTabLeft, ref task);
+                ExecuteKeybind("Scroll Tab Right", configuration.Key_Stash_Right, input, OnTabRight, ref task);
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
                 ExecuteKeybind("Advanced Search", configuration.Key_AdvancedSearch, input, OnAdvancedSearch, ref task);
                 
@@ -122,6 +128,19 @@ namespace Sidekick.Natives
                 // We need to make sure some key combinations make it into the game if the keybind returns false
                 SendInputIf("Ctrl+F", input, task);
                 SendInputIf("Space", input, task);
+
+                if (task == null)
+                {
+                    Enabled = true;
+                }
+                else
+                {
+                    Task.Run(async () =>
+                    {
+                        await task;
+                        Enabled = true;
+                    });
+                }
 
                 return task != null;
             }
@@ -133,7 +152,7 @@ namespace Sidekick.Natives
         {
             if (input == keybind)
             {
-                logger.Log($"Keybind Triggered - {name}");
+                logger.LogInformation($"Keybind Triggered - {name}");
                 if (func != null)
                 {
                     returnTask = func.Invoke();
@@ -161,12 +180,28 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
-            if (hook != null) // Hook will be null if auto update was successful
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
             {
-                hook.MouseWheelExt -= Hook_MouseWheelExt;
-                hook.Dispose();
+                return;
             }
+
+            if (disposing)
+            {
+                nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+                if (hook != null) // Hook will be null if auto update was successful
+                {
+                    hook.MouseWheelExt -= Hook_MouseWheelExt;
+                    hook.Dispose();
+                }
+            }
+
+            isDisposed = true;
         }
     }
 }

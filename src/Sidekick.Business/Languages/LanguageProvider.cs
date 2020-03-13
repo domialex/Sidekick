@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Languages
@@ -67,13 +67,13 @@ namespace Sidekick.Business.Languages
 
             if (language == null)
             {
-                logger.Log($"Couldn't find language {language.Name}.");
+                logger.LogInformation($"Couldn't find language {language.Name}.");
                 return false;
             }
 
             if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
             {
-                logger.Log($"Changed language support to {language.Name}.");
+                logger.LogInformation($"Changed language support to {language.Name}.");
                 Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
 
                 settings.Language_Parser = name;

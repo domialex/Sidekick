@@ -13,6 +13,10 @@ namespace Sidekick.Core.Settings
 
         public string LeagueId { get; set; }
 
+        public string LeaguesHash { get; set; }
+
+        public int League_SelectedTabIndex { get; set; }
+
         public WikiSetting Wiki_Preferred { get; set; }
 
         public string Character_Name { get; set; }
@@ -22,6 +26,8 @@ namespace Sidekick.Core.Settings
         public bool CloseOverlayWithMouse { get; set; }
 
         public bool EnableCtrlScroll { get; set; }
+
+        public bool EnablePricePrediction { get; set; }
 
         public string Key_CloseWindow { get; set; }
 
@@ -43,68 +49,60 @@ namespace Sidekick.Core.Settings
 
         public string Key_AdvancedSearch { get; set; }
 
+        public string Key_Exit { get; set; }
+
+        public string Key_Stash_Left { get; set; }
+
+        public string Key_Stash_Right { get; set; }
+
         public void Save()
         {
             var json = JsonSerializer.Serialize(this);
             var defaults = JsonSerializer.Serialize(DefaultSettings.Settings);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
 
-            // Backup old settings
-            if (File.Exists(filePath))
+            using var fileStream = File.Create(filePath);
+            using var writer = new Utf8JsonWriter(fileStream, options: new JsonWriterOptions
             {
-                File.Copy(filePath, filePath.Replace(".json", "_old.json"), true);
+                Indented = true
+            });
+            using var document = JsonDocument.Parse(json, new JsonDocumentOptions
+            {
+                CommentHandling = JsonCommentHandling.Skip
+            });
+            using var defaultsDocument = JsonDocument.Parse(defaults, new JsonDocumentOptions
+            {
+                CommentHandling = JsonCommentHandling.Skip
+            });
+
+            var root = document.RootElement;
+            var defaultsRoot = defaultsDocument.RootElement;
+
+            if (root.ValueKind == JsonValueKind.Object)
+            {
+                writer.WriteStartObject();
+            }
+            else
+            {
+                return;
             }
 
-            // TODO: Refactor this to use the new using syntax in Csharp 8
-            using (var fileStream = File.Create(filePath))
+            foreach (var property in root.EnumerateObject())
             {
-                using (var writer = new Utf8JsonWriter(fileStream, options: new JsonWriterOptions
+                if (defaultsRoot.GetProperty(property.Name).ToString() == property.Value.ToString())
                 {
-                    Indented = true
-                }))
-                {
-                    using (var document = JsonDocument.Parse(json, new JsonDocumentOptions
-                    {
-                        CommentHandling = JsonCommentHandling.Skip
-                    }))
-                    {
-                        using (var defaultsDocument = JsonDocument.Parse(defaults, new JsonDocumentOptions
-                        {
-                            CommentHandling = JsonCommentHandling.Skip
-                        }))
-                        {
-                            var root = document.RootElement;
-                            var defaultsRoot = defaultsDocument.RootElement;
-
-                            if (root.ValueKind == JsonValueKind.Object)
-                            {
-                                writer.WriteStartObject();
-                            }
-                            else
-                            {
-                                return;
-                            }
-
-                            foreach (var property in root.EnumerateObject())
-                            {
-                                if (defaultsRoot.GetProperty(property.Name).ToString() == property.Value.ToString())
-                                {
-                                    continue;
-                                }
-
-                                property.WriteTo(writer);
-                            }
-
-                            writer.WriteEndObject();
-                            writer.Flush();
-                        }
-                    }
-
-                    if (writer.BytesCommitted == 0)
-                    {
-                        File.Delete(filePath);
-                    }
+                    continue;
                 }
+
+                property.WriteTo(writer);
+            }
+
+            writer.WriteEndObject();
+            writer.Flush();
+
+            if (writer.BytesCommitted == 0)
+            {
+                File.Delete(filePath);
             }
         }
     }

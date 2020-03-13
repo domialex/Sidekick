@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Categories;
@@ -11,7 +12,6 @@ using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 
@@ -46,7 +46,7 @@ namespace Sidekick.Business.Trades
 
         private async Task<QueryResult<string>> Query(Parsers.Models.Item item)
         {
-            logger.Log("Querying Trade API.");
+            logger.LogInformation("Querying Trade API.");
             QueryResult<string> result = null;
 
             try
@@ -83,13 +83,12 @@ namespace Sidekick.Business.Trades
                 }
                 else
                 {
-                    logger.Log("Querying failed.");
+                    logger.LogError("Querying failed.");
                 }
             }
             catch (Exception e)
             {
-                logger.Log("Querying error.");
-                logger.LogException(e);
+                logger.LogError(e, "Querying error.");
                 return null;
             }
 
@@ -139,7 +138,7 @@ namespace Sidekick.Business.Trades
 
         public async Task<QueryResult<SearchResult>> GetListings(QueryResult<string> queryResult, int page = 0)
         {
-            logger.Log($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
+            logger.LogInformation($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
             QueryResult<SearchResult> result = null;
 
             try

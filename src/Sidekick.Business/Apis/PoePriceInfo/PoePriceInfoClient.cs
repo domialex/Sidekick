@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Settings;
-using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.PoePriceInfo.Models
 {
@@ -44,7 +44,7 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
             }
             catch
             {
-                logger.Log("Error getting price prediction from poeprices.info", LogState.Error);
+                logger.LogError("Error getting price prediction from poeprices.info");
             }
 
             return null;

@@ -27,5 +27,9 @@ namespace Sidekick.UI.Prices
         ObservableCollection<PriceItem> Results { get; }
 
         Task LoadMoreData();
+
+        bool HasPreviewItem { get; }
+        PriceItem PreviewItem { get; }
+        void Preview(PriceItem selectedItem);
     }
 }

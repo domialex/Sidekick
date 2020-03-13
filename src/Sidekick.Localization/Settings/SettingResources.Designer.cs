@@ -115,6 +115,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit to Character Selection.
+        /// </summary>
+        public static string Key_Exit {
+            get {
+                return ResourceManager.GetString("Key_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find Items.
         /// </summary>
         public static string Key_FindItems {
@@ -169,11 +178,29 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reply to latest whisper.
+        ///   Looks up a localized string similar to Reply to Latest Whisper.
         /// </summary>
         public static string Key_ReplyToLatestWhisper {
             get {
                 return ResourceManager.GetString("Key_ReplyToLatestWhisper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Left.
+        /// </summary>
+        public static string Key_Stash_Left {
+            get {
+                return ResourceManager.GetString("Key_Stash_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Right.
+        /// </summary>
+        public static string Key_Stash_Right {
+            get {
+                return ResourceManager.GetString("Key_Stash_Right", resourceCulture);
             }
         }
         
@@ -210,6 +237,15 @@ namespace Sidekick.Localization.Settings {
         public static string Other_CloseWithMouseClick {
             get {
                 return ResourceManager.GetString("Other_CloseWithMouseClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Price Prediction.
+        /// </summary>
+        public static string Other_PricePrediction {
+            get {
+                return ResourceManager.GetString("Other_PricePrediction", resourceCulture);
             }
         }
         

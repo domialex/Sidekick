@@ -7,11 +7,12 @@ namespace Sidekick.UI.ApplicationLogs
 {
     public class ApplicationLogViewModel : IApplicationLogViewModel, IDisposable
     {
-        private readonly ILogger logger;
+        private readonly ISidekickLogger logger;
+        private bool isDisposed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ApplicationLogViewModel(ILogger logger)
+        public ApplicationLogViewModel(ISidekickLogger logger)
         {
             this.logger = logger;
             Logs = new ObservableCollection<Log>(logger.Logs);
@@ -35,7 +36,23 @@ namespace Sidekick.UI.ApplicationLogs
 
         public void Dispose()
         {
-            logger.MessageLogged -= Logger_MessageLogged;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                logger.MessageLogged -= Logger_MessageLogged;
+            }
+
+            isDisposed = true;
         }
     }
 }

@@ -2,14 +2,14 @@ namespace Sidekick.Business.Parsers.Models
 {
     public enum Rarity
     {
-        Unknown, // Gem, Currency, Divination Card, Quest Item, Prophecy, Relic, etc.
-        Currency,
-        Gem,
-        DivinationCard,
+        Normal = 0,
+        Magic = 1,
+        Rare = 2,
+        Unique = 3,
+        Gem = 4,
+        Currency = 5,
+        DivinationCard = 6,
 
-        Normal,
-        Magic,
-        Rare,
-        Unique,
+        Unknown = 99,
     }
 }

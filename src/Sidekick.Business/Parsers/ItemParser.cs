@@ -118,8 +118,7 @@ namespace Sidekick.Business.Parsers
             }
             catch (Exception e)
             {
-                logger.Log("Could not parse item.");
-                logger.LogException(e);
+                logger.LogError(e, "Could not parse item.");
                 return null;
             }
         }

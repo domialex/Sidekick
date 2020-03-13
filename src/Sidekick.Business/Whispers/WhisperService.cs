@@ -2,6 +2,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Sidekick.Business.Chat;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Whispers
@@ -9,14 +10,14 @@ namespace Sidekick.Business.Whispers
     public class WhisperService : IWhisperService
     {
         private readonly INativeProcess pathOfExileProcess;
-        private readonly INativeClipboard clipboard;
-        private readonly INativeKeyboard keyboard;
+        private readonly IChatService chatService;
 
-        public WhisperService(INativeProcess pathOfExileProcess, INativeClipboard clipboard, INativeKeyboard keyboard)
+        public WhisperService(
+            INativeProcess pathOfExileProcess,
+            IChatService chatService)
         {
             this.pathOfExileProcess = pathOfExileProcess;
-            this.clipboard = clipboard;
-            this.keyboard = keyboard;
+            this.chatService = chatService;
         }
 
         public Task<bool> ReplyToLatestWhisper()
@@ -24,9 +25,7 @@ namespace Sidekick.Business.Whispers
             var characterName = GetLatestWhisperCharacterName();
             if (!string.IsNullOrEmpty(characterName))
             {
-                clipboard.SetText(string.Empty);
-                clipboard.SetText($"@{characterName} ");
-                keyboard.SendCommand(KeyboardCommandEnum.ReplyToLatestWhisper);
+                chatService.StartWriting($"@{characterName} ");
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

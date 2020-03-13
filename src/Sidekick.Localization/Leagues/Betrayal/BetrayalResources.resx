@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AislingTransportaion" xml:space="preserve">
-    <value>Veiled Weapons</value>
+  <data name="AislingTransportation" xml:space="preserve">
+    <value>Veiled Weapons + Jewellery</value>
   </data>
   <data name="AislingFortification" xml:space="preserve">
-    <value>Veiled Armor</value>
+    <value>Veiled Armor + Jewellery</value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
     <value>Add Veiled Mod(s)</value>
   </data>
   <data name="AislingIntervention" xml:space="preserve">
-    <value>Veiled Jewellery</value>
+    <value>Metamorph scarabs</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
     <value>Timeworn Relics</value>

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe;
@@ -7,7 +6,7 @@ using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Categories
 {
-    public class AttributeCategoryService : IAttributeCategoryService, IOnInit, IDisposable
+    public class AttributeCategoryService : IAttributeCategoryService, IOnInit
     {
         private readonly IPoeApiClient poeApiClient;
 
@@ -22,11 +21,6 @@ namespace Sidekick.Business.Categories
         {
             Categories = null;
             Categories = await poeApiClient.Fetch<AttributeCategory>();
-        }
-
-        public void Dispose()
-        {
-            Categories = null;
         }
     }
 }

@@ -8,7 +8,7 @@ using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Categories
 {
-    public class StaticItemCategoryService : IStaticItemCategoryService, IOnInit, IDisposable
+    public class StaticItemCategoryService : IStaticItemCategoryService, IOnInit
     {
         private readonly IPoeApiClient poeApiClient;
 
@@ -27,11 +27,6 @@ namespace Sidekick.Business.Categories
             Categories = await poeApiClient.Fetch<StaticItemCategory>();
             Lookup = ToLookup();
             CurrencyUrls = GetCurrencyUrls();
-        }
-
-        public void Dispose()
-        {
-            Categories = null;
         }
 
         private Dictionary<string, string> ToLookup()

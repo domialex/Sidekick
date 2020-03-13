@@ -15,6 +15,7 @@ namespace Sidekick.UI.Settings
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
+        private bool isDisposed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -121,7 +122,23 @@ namespace Sidekick.UI.Settings
 
         public void Dispose()
         {
-            nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+            }
+
+            isDisposed = true;
         }
     }
 }

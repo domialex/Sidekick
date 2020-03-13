@@ -4,10 +4,10 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 
 namespace Sidekick.Business.Apis.Poe
 {
@@ -70,7 +70,7 @@ namespace Sidekick.Business.Apis.Poe
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            logger.Log($"Fetching {name} started.");
+            logger.LogInformation($"Fetching {name} started.");
             QueryResult<TReturn> result = null;
             var success = false;
 
@@ -83,18 +83,18 @@ namespace Sidekick.Business.Apis.Poe
 
                     result = await JsonSerializer.DeserializeAsync<QueryResult<TReturn>>(content, Options);
 
-                    logger.Log($"{result.Result.Count} {name} fetched.");
+                    logger.LogInformation($"{result.Result.Count} {name} fetched.");
                     success = true;
                 }
                 catch
                 {
-                    logger.Log($"Could not fetch {name}.");
-                    logger.Log("Retrying every minute.");
+                    logger.LogInformation($"Could not fetch {name}.");
+                    logger.LogInformation("Retrying every minute.");
                     await Task.Delay(TimeSpan.FromMinutes(1));
                 }
             }
 
-            logger.Log($"Fetching {name} finished.");
+            logger.LogInformation($"Fetching {name} finished.");
             return result.Result;
         }
     }

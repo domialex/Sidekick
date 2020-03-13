@@ -8,7 +8,7 @@ using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Maps
 {
-    public class MapService : IMapService, IOnAfterInit, IDisposable
+    public class MapService : IMapService, IOnAfterInit
     {
         private readonly IStaticItemCategoryService staticItemCategoryService;
 
@@ -29,11 +29,6 @@ namespace Sidekick.Business.Maps
                 .ToList());
 
             return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            MapNames = null;
         }
     }
 }

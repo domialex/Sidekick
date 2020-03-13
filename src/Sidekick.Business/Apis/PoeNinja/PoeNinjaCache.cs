@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
@@ -55,7 +55,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         /// <param name="league">The league.</param>
         public async Task OnAfterInit()
         {
-            logger.Log($"Fetching PoeNinja cache.");
+            logger.LogInformation($"Fetching PoeNinja cache.");
 
             var itemsTasks = Enum.GetValues(typeof(ItemType))
                                  .Cast<ItemType>()
@@ -73,7 +73,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             LastRefreshTimestamp = DateTime.Now;
 
-            logger.Log($"PoeNinja cache fetched.");
+            logger.LogInformation($"PoeNinja cache fetched.");
         }
     }
 }

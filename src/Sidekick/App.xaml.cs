@@ -8,11 +8,13 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
 using Sidekick.Handlers;
+using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Tray;
 using Sidekick.UI.Views;
 using Sidekick.Windows.AdvancedSearch;
@@ -36,6 +38,7 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
+        private ILeagueService leagueService;
         private IViewLocator viewLocator;
 
         private TaskbarIcon trayIcon;
@@ -50,6 +53,7 @@ namespace Sidekick
             serviceProvider = Sidekick.Startup.InitializeServices(this);
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
+            leagueService = serviceProvider.GetRequiredService<ILeagueService>();
 
             viewLocator = serviceProvider.GetService<IViewLocator>();
             viewLocator.Open<Windows.SplashScreen>();
@@ -57,6 +61,14 @@ namespace Sidekick
             await RunAutoUpdate();
 
             EnsureSingleInstance();
+
+            leagueService.OnNewLeagues += () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    AdonisUI.Controls.MessageBox.Show(InitializerResources.Warn_NewLeagues, buttons: AdonisUI.Controls.MessageBoxButton.OK);
+                });
+            };
 
             var initializer = serviceProvider.GetService<IInitializer>();
             initializer.OnProgress += (a) =>
@@ -91,14 +103,14 @@ namespace Sidekick
             var updateManagerService = serviceProvider.GetService<IUpdateManager>();
             if (await updateManagerService.NewVersionAvailable())
             {
-                if (MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (AdonisUI.Controls.MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", AdonisUI.Controls.MessageBoxButton.YesNo) == AdonisUI.Controls.MessageBoxResult.Yes)
                 {
                     try
                     {
                         if (await updateManagerService.UpdateSidekick())
                         {
                             nativeProcess.Mutex = null;
-                            MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", MessageBoxButton.OK);
+                            AdonisUI.Controls.MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", AdonisUI.Controls.MessageBoxButton.OK);
 
                             var startInfo = new ProcessStartInfo
                             {
@@ -109,14 +121,14 @@ namespace Sidekick
                         }
                         else
                         {
-                            MessageBox.Show("Update failed!");
+                            AdonisUI.Controls.MessageBox.Show("Update failed!");
                         }
 
                         Current.Shutdown();
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("Update failed! Please update manually.");
+                        MessageBox.Show("Update failed! Please update manually from https://github.com/domialex/Sidekick/releases.");
                         nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
                     }
                 }

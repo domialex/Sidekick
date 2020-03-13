@@ -10,9 +10,11 @@ using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers;
+using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
 
@@ -28,6 +30,7 @@ namespace Sidekick.UI.Prices
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
         private readonly IItemParser itemParser;
+        private readonly SidekickSettings settings;
 
         public PriceViewModel(
             ITradeClient tradeClient,
@@ -36,7 +39,8 @@ namespace Sidekick.UI.Prices
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
-            IItemParser itemParser)
+            IItemParser itemParser,
+            SidekickSettings settings)
         {
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
@@ -45,7 +49,7 @@ namespace Sidekick.UI.Prices
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeClipboard = nativeClipboard;
             this.itemParser = itemParser;
-
+            this.settings = settings;
             Task.Run(Initialize);
         }
 
@@ -65,6 +69,8 @@ namespace Sidekick.UI.Prices
         public bool IsFetching { get; private set; }
         public bool IsFetched => !IsFetching;
 
+        public bool IsCurrency { get; private set; }
+
         private async Task Initialize()
         {
             Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText, false);
@@ -82,11 +88,16 @@ namespace Sidekick.UI.Prices
             if (QueryResult.Result.Any())
             {
                 Append(QueryResult.Result);
+                IsCurrency = Results.FirstOrDefault()?.Item?.Item?.Rarity == Rarity.Currency;
             }
 
             UpdateCountString();
             GetPoeNinjaPrice();
-            _ = GetPredictionPrice();
+
+            if (settings.EnablePricePrediction)
+            {
+                _ = GetPredictionPrice();
+            }
         }
 
         public async Task LoadMoreData()
@@ -173,6 +184,14 @@ namespace Sidekick.UI.Prices
         private void UpdateCountString()
         {
             CountString = string.Format(PriceResources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
+        }
+
+        public bool HasPreviewItem { get; private set; }
+        public PriceItem PreviewItem { get; private set; }
+        public void Preview(PriceItem selectedItem)
+        {
+            PreviewItem = selectedItem;
+            HasPreviewItem = PreviewItem != null;
         }
     }
 }

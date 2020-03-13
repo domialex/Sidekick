@@ -141,11 +141,17 @@
   <data name="Age_Seconds" xml:space="preserve">
     <value>{0} seconds</value>
   </data>
+  <data name="Corrupted" xml:space="preserve">
+    <value>Corrupted</value>
+  </data>
   <data name="CountString" xml:space="preserve">
     <value>Showing {0} out of {1} items</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Unable to find prices for this item.</value>
+  </data>
+  <data name="ItemLevel" xml:space="preserve">
+    <value>Item Level</value>
   </data>
   <data name="OverlayAccountName" xml:space="preserve">
     <value>Account Name</value>
@@ -167,5 +173,11 @@
   </data>
   <data name="PredictionString" xml:space="preserve">
     <value>Prediction: {0} - Confidence: {1}%</value>
+  </data>
+  <data name="Requires" xml:space="preserve">
+    <value>Requires</value>
+  </data>
+  <data name="Unidentified" xml:space="preserve">
+    <value>Unidentified</value>
   </data>
 </root>

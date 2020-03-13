@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:UC="clr-namespace:Sidekick.Windows.Settings.UserControls"
     xmlns:base="clr-namespace:Sidekick.Windows"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
     xmlns:loc="clr-namespace:Sidekick.Windows"
-    loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
     Title="Settings - Sidekick"
     Width="680"
     Height="400"
+    loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     MouseLeftButtonDown="Window_MouseLeftButtonDown"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -20,7 +20,10 @@
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
-    <DockPanel Margin="{StaticResource Spacer}" >
+    <DockPanel
+        Width="600"
+        Height="400"
+        Margin="{StaticResource Spacer}">
         <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
             <Button Click="DiscardChanges_Click" Content="{loc:Loc Cancel}" />
             <Button
@@ -68,7 +71,7 @@
                                 <TextBox
                                     Grid.Row="1"
                                     Grid.Column="1"
-                                    Text="{loc:Loc Character_Name}" />
+                                    Text="{Binding Path=Settings.Character_Name}" />
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="{loc:Loc Wiki_Title}">
@@ -90,7 +93,8 @@
                             <StackPanel>
                                 <CheckBox Content="{loc:Loc Other_RetainClipboard}" IsChecked="{Binding Path=Settings.RetainClipboard}" />
                                 <CheckBox Content="{loc:Loc Other_CloseWithMouseClick}" IsChecked="{Binding Path=Settings.CloseOverlayWithMouse}" />
-                                <CheckBox Content="{loc:Loc SettingResources.Other_TabScroll}" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
+                                <CheckBox Content="{loc:Loc Other_TabScroll}" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
+                                <CheckBox Content="{loc:Loc Other_PricePrediction}" IsChecked="{Binding Path=Settings.EnablePricePrediction}" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
