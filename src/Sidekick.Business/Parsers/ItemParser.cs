@@ -42,11 +42,11 @@ namespace Sidekick.Business.Parsers
             attributeCategories = attributeService;
             itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
 
-            AttributeRegexes = new[] { new Regex(languageProvider.Language.PercentagAddedRegexPattern), new Regex(languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern),
+            AttributeRegexes = new[] { new Regex(languageProvider.Language.PercentageAddedRegexPattern), new Regex(languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern),
                                        new Regex(languageProvider.Language.AttributeIncreasedRegexPattern), new Regex(languageProvider.Language.AttributeRangeRegexPattern) };
             RegexReplacementDictionary = new Dictionary<string, string>()
             {
-                { languageProvider.Language.PercentagAddedRegexPattern, "#%" },
+                { languageProvider.Language.PercentageAddedRegexPattern, "#%" },
                 { languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern, "#%" },
                 { languageProvider.Language.AttributeIncreasedRegexPattern, "# " },
                 { languageProvider.Language.AttributeRangeRegexPattern, "# to # " },

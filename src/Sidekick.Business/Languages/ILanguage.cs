@@ -75,7 +75,7 @@ namespace Sidekick.Business.Languages
         string AttributeCategoryDelve { get; }
         string CategoryNameDelve { get; }
         string AttributeCategoryExplicit { get; }
-        string PercentagAddedRegexPattern { get; }
+        string PercentageAddedRegexPattern { get; }
         string PercentageIncreasedOrDecreasedRegexPattern { get; }
         string AttributeIncreasedRegexPattern { get; }
         string AttributeRangeRegexPattern { get; }

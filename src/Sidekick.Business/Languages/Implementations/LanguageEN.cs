@@ -56,7 +56,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Essence";
 
-        public string PercentagAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
+        public string PercentageAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
         public string PercentageIncreasedOrDecreasedRegexPattern => "[-+]?[\\d{1,3}]+%";
         public string AttributeIncreasedRegexPattern => "[+]?[\\d{1,3}]+[\\s]";
         public string AttributeRangeRegexPattern => "[\\d{1,3}]+[\\s]+[\\bto\\b]+[\\s]+[\\d{1,3}]+[\\s]";

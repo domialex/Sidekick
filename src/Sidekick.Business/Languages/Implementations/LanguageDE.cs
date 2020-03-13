@@ -50,7 +50,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordEssence => "Essenz";
 
         public string AttributeCategoryCrafted => "Angefertigt";
-        public string PercentagAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
+        public string PercentageAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
         public string PercentageIncreasedOrDecreasedRegexPattern => "[-+]?[\\d{1,3}]+%";
         public string AttributeIncreasedRegexPattern => "[+]?[\\d{1,3}]+[\\s]";
         public string CategoryNameCrafted => "(crafted)";

@@ -53,7 +53,7 @@ namespace Sidekick.Business.Languages.Implementations
 
         public Regex PercentagAddedRegex => throw new NotImplementedException();
 
-        public string PercentagAddedRegexPattern => throw new NotImplementedException();
+        public string PercentageAddedRegexPattern => throw new NotImplementedException();
 
         public string PercentageIncreasedOrDecreasedRegexPattern => throw new NotImplementedException();
 
