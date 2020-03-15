@@ -2,7 +2,10 @@
     x:Class="Sidekick.Windows.SplashScreen"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:loc="clr-namespace:Sidekick.Windows"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Initializer;assembly=Sidekick.Localization"
     Title="Sidekick"
+    loc:Translation.ResourceManager="{x:Static resx:InitializerResources.ResourceManager}"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />
@@ -12,18 +15,7 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <Grid Width="360" Margin="{StaticResource Spacer}">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="20" />
-            <RowDefinition Height="15" />
-            <RowDefinition Height="20" />
-            <RowDefinition Height="10" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
+    <StackPanel Width="360" Margin="{StaticResource Spacer}">
         <WrapPanel HorizontalAlignment="Center">
             <Image
                 Width="50"
@@ -32,10 +24,21 @@
             <Label Content="Sidekick" FontSize="{StaticResource FontSizeDisplay}" />
         </WrapPanel>
 
-        <Label Grid.Row="1" Content="{Binding Title, FallbackValue=Loading}" />
-        <ProgressBar Grid.Row="2" Value="{Binding Percentage, FallbackValue=0}" />
+        <Label Content="{Binding Title, FallbackValue=Loading}" />
+        <ProgressBar Height="14" Value="{Binding Percentage, FallbackValue=0}" />
 
-        <Label Grid.Row="3" Content="{Binding StepTitle, FallbackValue=Loading}" />
-        <ProgressBar Grid.Row="4" Value="{Binding StepPercentage, FallbackValue=0}" />
-    </Grid>
+        <Label Content="{Binding StepTitle, FallbackValue=Loading}" />
+        <ProgressBar Height="8" Value="{Binding StepPercentage, FallbackValue=0}" />
+
+        <StackPanel
+            Margin="{StaticResource SpacerTop}"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Margin="{StaticResource SpacerRight}"
+                Click="Logs_Click"
+                Content="{loc:Loc Logs}" />
+            <Button Click="Close_Click" Content="{loc:Loc Exit}" />
+        </StackPanel>
+    </StackPanel>
 </Window>

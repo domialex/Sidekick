@@ -87,12 +87,12 @@ namespace Sidekick.Business.Apis.Poe
                     logger.LogInformation($"{result.Result.Count} {name} fetched.");
                     success = true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.LogInformation($"Could not fetch {name}.");
 
                     retryAttempts--;
-                    if(retryAttempts <= 0)
+                    if (retryAttempts <= 0)
                     {
                         throw;
                     }
