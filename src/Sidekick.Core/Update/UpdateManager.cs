@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -35,9 +34,7 @@ namespace Sidekick.Core.Update
 
         public string InstallDirectory => Path.GetDirectoryName(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).Location);
 
-        private string TempDirectory => Path.Combine(InstallDirectory, "UpdateBackup");
-
-        private string ZipPath => Path.Combine(InstallDirectory, "update.zip");
+        public string UpdateFullPath => Path.Combine(InstallDirectory, "Sidekick_Update.exe");
 
         private GithubRelease LatestRelease { get; set; }
 
@@ -75,14 +72,10 @@ namespace Sidekick.Core.Update
         {
             if (await DownloadNewestRelease())
             {
-                if (BackupFiles())
-                {
-                    ApplyUpdate();
-                    return true;
-                }
+                initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Applying update...");
+                return true;
             }
 
-            RollbackUpdate();
             return false;
         }
 
@@ -131,30 +124,6 @@ namespace Sidekick.Core.Update
         }
 
         /// <summary>
-        /// Extracts the files from the downloaded zip and deletes the zip file
-        /// </summary>
-        private void ApplyUpdate()
-        {
-            initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Applying update...");
-            ZipFile.ExtractToDirectory(ZipPath, InstallDirectory);
-            File.Delete(ZipPath);
-        }
-        /// <summary>
-        /// Restores the backuped files
-        /// </summary>
-        private void RollbackUpdate()
-        {
-            try
-            {
-                foreach (var file in Directory.EnumerateFiles(TempDirectory))
-                {
-                    var fileName = Path.GetFileName(file);
-                    File.Move(file, Path.Combine(InstallDirectory, fileName));
-                }
-            }
-            catch { }
-        }
-        /// <summary>
         /// Downloads the latest release from github
         /// </summary>
         /// <returns></returns>
@@ -163,78 +132,23 @@ namespace Sidekick.Core.Update
             initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Downloading latest release from GitHub...");
             if (LatestRelease != null)
             {
-                if (File.Exists(ZipPath)) File.Delete(ZipPath);
+                var downloadUrl = LatestRelease.Assets
+                    .ToList()
+                    .FirstOrDefault(x => x.DownloadUrl.EndsWith(".exe"))?
+                    .DownloadUrl;
 
-                var downloadUrl = LatestRelease.Assets[0].DownloadUrl;
-                if (nativeProcess.Is64bitProcess)
+                if (File.Exists(UpdateFullPath) || string.IsNullOrEmpty(downloadUrl))
                 {
-                    var release = LatestRelease.Assets.ToList()
-                        .FirstOrDefault(x => x.Name.ToLowerInvariant().Contains("x64"));
-                    if (release != null)
-                    {
-                        downloadUrl = release.DownloadUrl;
-                    }
-                }
-                else
-                {
-                    var release = LatestRelease.Assets.ToList()
-                        .FirstOrDefault(x => x.Name.ToLowerInvariant().Contains("x86"));
-                    if (release != null)
-                    {
-                        downloadUrl = release.DownloadUrl;
-                    }
+                    return false;
                 }
 
-                //download zip file and save to disk
-                using (Stream contentStream = await (await _httpClient.GetAsync(downloadUrl)).Content.ReadAsStreamAsync(), stream = new FileStream(ZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                {
-                    await contentStream.CopyToAsync(stream);
-                }
+                var response = await _httpClient.GetAsync(downloadUrl);
+                var responseStream = await response.Content.ReadAsStreamAsync();
+                using var stream = new FileStream(UpdateFullPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                await responseStream.CopyToAsync(stream);
             }
 
             return true;
-        }
-        /// <summary>
-        /// Backups the files of the current installation
-        /// </summary>
-        /// <returns></returns>
-        private bool BackupFiles()
-        {
-            try
-            {
-                initializer.ReportProgress(ProgressTypeEnum.Other, nameof(UpdateManager), "Backuping current version...");
-                if (Directory.Exists(TempDirectory))
-                {
-                    Directory.Delete(TempDirectory, true);
-                    Directory.CreateDirectory(TempDirectory);
-                }
-                else
-                {
-                    Directory.CreateDirectory(TempDirectory);
-                }
-
-                // Backup resource folders etc.
-                foreach (var directory in Directory.EnumerateDirectories(InstallDirectory))
-                {
-                    if (directory != TempDirectory)
-                    {
-                        Directory.Move(directory, Path.Combine(TempDirectory, new DirectoryInfo(directory).Name));
-                    }
-                }
-
-                // Backup install files
-                foreach (var file in Directory.EnumerateFiles(InstallDirectory))
-                {
-                    //keep settings and already downloaded file 
-                    if (!file.EndsWith(".zip") && !file.EndsWith(".json"))
-                    {
-                        var fileName = Path.GetFileName(file);
-                        File.Move(file, Path.Combine(TempDirectory, fileName));
-                    }
-                }
-                return true;
-            }
-            catch { return false; }
         }
     }
 }

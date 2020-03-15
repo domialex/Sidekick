@@ -13,6 +13,5 @@ namespace Sidekick.Core.Natives
         float ActiveWindowDpi { get; }
         Rectangle GetScreenDimensions();
         string ClientLogPath { get; }
-        bool Is64bitProcess { get; }
     }
 }
