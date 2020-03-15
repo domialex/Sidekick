@@ -44,7 +44,6 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
-        public event Func<int, int, Task> OnMouseClick;
         public event Func<Task<bool>> OnAdvancedSearch;
 
         private IKeyboardMouseEvents hook = null;
@@ -55,51 +54,34 @@ namespace Sidekick.Natives
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
             hook = Hook.GlobalEvents();
 
-#if !DEBUG
             hook.MouseWheelExt += Hook_MouseWheelExt;
-            hook.MouseUp += Hook_MouseUp;
-#endif
 
             Enabled = true;
 
             return Task.CompletedTask;
         }
 
-        private void Hook_MouseUp(object sender, MouseEventArgs e)
-        {
-            Task.Run(async () =>
-            {
-                if (!Enabled || !configuration.CloseOverlayWithMouse)
-                {
-                    return;
-                }
-
-                if (OnMouseClick != null) await OnMouseClick.Invoke(e.X, e.Y);
-            });
-        }
-
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
-            Task.Run(() =>
+            if (!configuration.EnableCtrlScroll || !nativeProcess.IsPathOfExileInFocus)
             {
-                if (!configuration.EnableCtrlScroll || !nativeProcess.IsPathOfExileInFocus)
+                return;
+            }
+
+            // Ctrl + Scroll wheel to move between stash tabs.
+            if (nativeKeyboard.IsKeyPressed("Ctrl"))
+            {
+                if (e.Delta > 0)
                 {
-                    return;
+                    stashService.ScrollLeft();
+                }
+                else
+                {
+                    stashService.ScrollRight();
                 }
 
-                // Ctrl + Scroll wheel to move between stash tabs.
-                if (nativeKeyboard.IsKeyPressed("Ctrl"))
-                {
-                    if (e.Delta > 0)
-                    {
-                        stashService.ScrollLeft();
-                    }
-                    else
-                    {
-                        stashService.ScrollRight();
-                    }
-                }
-            });
+                e.Handled = true;
+            }
         }
 
         private bool NativeKeyboard_OnKeyDown(string input)

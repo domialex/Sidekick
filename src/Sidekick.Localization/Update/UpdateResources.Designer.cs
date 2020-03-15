@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sidekick.Localization.Initializer {
+namespace Sidekick.Localization.Update {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sidekick.Localization.Initializer {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class InitializerResources {
+    public class UpdateResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal InitializerResources() {
+        internal UpdateResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sidekick.Localization.Initializer {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sidekick.Localization.Initializer.InitializerResources", typeof(InitializerResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sidekick.Localization.Update.UpdateResources", typeof(UpdateResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,38 @@ namespace Sidekick.Localization.Initializer {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A fatal error occured during initialization! This might be because the Path of Exile API service is down. Please try again later..
+        ///   Looks up a localized string similar to Sidekick Update.
         /// </summary>
-        public static string ErrorDuringInit {
+        public static string Title {
             get {
-                return ResourceManager.GetString("ErrorDuringInit", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exit.
+        ///   Looks up a localized string similar to There is a new version of Sidekick available. Do you want to download it?.
         /// </summary>
-        public static string Exit {
+        public static string UpdateAvailable {
             get {
-                return ResourceManager.GetString("Exit", resourceCulture);
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logs.
+        ///   Looks up a localized string similar to Update finished! The application will now restart..
         /// </summary>
-        public static string Logs {
+        public static string UpdateCompleted {
             get {
-                return ResourceManager.GetString("Logs", resourceCulture);
+                return ResourceManager.GetString("UpdateCompleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please make sure you have the desired league selected in the settings..
+        ///   Looks up a localized string similar to Update failed! Please update manually from https://github.com/domialex/Sidekick/releases..
         /// </summary>
-        public static string Warn_NewLeagues {
+        public static string UpdateFailed {
             get {
-                return ResourceManager.GetString("Warn_NewLeagues", resourceCulture);
+                return ResourceManager.GetString("UpdateFailed", resourceCulture);
             }
         }
     }

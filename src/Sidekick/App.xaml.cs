@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +14,7 @@ using Sidekick.Core.Update;
 using Sidekick.Handlers;
 using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Tray;
+using Sidekick.Localization.Update;
 using Sidekick.UI.Views;
 using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.TrayIcon;
@@ -33,6 +32,8 @@ namespace Sidekick
     /// </summary>
     public partial class App : Application
     {
+        public static App Instance { get; private set; }
+
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
@@ -45,6 +46,8 @@ namespace Sidekick
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            Instance = this;
+
             base.OnStartup(e);
 
             ToolTipService.ShowDurationProperty.OverrideMetadata(
@@ -71,6 +74,7 @@ namespace Sidekick
             };
 
             var initializer = serviceProvider.GetService<IInitializer>();
+
             initializer.OnProgress += (a) =>
             {
                 if (!viewLocator.IsOpened<Windows.SplashScreen>())
@@ -78,6 +82,13 @@ namespace Sidekick
                     viewLocator.Open<Windows.SplashScreen>();
                 }
             };
+
+            initializer.OnError += (error) =>
+            {
+                AdonisUI.Controls.MessageBox.Show(InitializerResources.ErrorDuringInit, buttons: AdonisUI.Controls.MessageBoxButton.OK);
+                base.Shutdown(1);
+            };
+
             await initializer.Initialize();
 
             InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
@@ -103,43 +114,47 @@ namespace Sidekick
             var updateManagerService = serviceProvider.GetService<IUpdateManager>();
             if (await updateManagerService.NewVersionAvailable())
             {
-                if (AdonisUI.Controls.MessageBox.Show("There is a new version of Sidekick available. Download and install?", "Sidekick Update", AdonisUI.Controls.MessageBoxButton.YesNo) == AdonisUI.Controls.MessageBoxResult.Yes)
+                if (AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateAvailable, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.YesNo) == AdonisUI.Controls.MessageBoxResult.Yes)
                 {
-                    try
-                    {
-                        if (await updateManagerService.UpdateSidekick())
-                        {
-                            nativeProcess.Mutex = null;
-                            AdonisUI.Controls.MessageBox.Show("Update finished! Restarting Sidekick!", "Sidekick Update", AdonisUI.Controls.MessageBoxButton.OK);
+                    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                    Current.Shutdown();
 
-                            var startInfo = new ProcessStartInfo
-                            {
-                                FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
-                                UseShellExecute = false,
-                            };
-                            Process.Start(startInfo);
-                        }
-                        else
-                        {
-                            AdonisUI.Controls.MessageBox.Show("Update failed!");
-                        }
+                    //try
+                    //{
+                    //    if (await updateManagerService.UpdateSidekick())
+                    //    {
+                    //        nativeProcess.Mutex = null;
+                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateCompleted, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.OK);
 
-                        Current.Shutdown();
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Update failed! Please update manually from https://github.com/domialex/Sidekick/releases.");
-                        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    }
+                    //        var startInfo = new ProcessStartInfo
+                    //        {
+                    //            FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
+                    //            UseShellExecute = false,
+                    //        };
+                    //        Process.Start(startInfo);
+                    //    }
+                    //    else
+                    //    {
+                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
+                    //        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                    //    }
+
+                    //    Current.Shutdown();
+                    //}
+                    //catch (Exception)
+                    //{
+                    //    MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
+                    //    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
+                    //}
                 }
             }
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon.Dispose();
+            trayIcon?.Dispose();
             // Disposing the service provider also disposes registered all IDisposable services
-            serviceProvider.Dispose();
+            serviceProvider?.Dispose();
             base.OnExit(e);
         }
 

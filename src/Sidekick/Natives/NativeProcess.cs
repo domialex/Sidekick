@@ -42,7 +42,6 @@ namespace Sidekick.Natives
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
         private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
 
-
         private readonly string clientLogFileName = "Client.txt";
         private readonly string clientLogFolderName = "logs";
 

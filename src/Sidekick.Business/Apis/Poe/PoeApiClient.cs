@@ -73,6 +73,7 @@ namespace Sidekick.Business.Apis.Poe
             logger.LogInformation($"Fetching {name} started.");
             QueryResult<TReturn> result = null;
             var success = false;
+            var retryAttempts = 1;
 
             while (!success)
             {
@@ -86,11 +87,20 @@ namespace Sidekick.Business.Apis.Poe
                     logger.LogInformation($"{result.Result.Count} {name} fetched.");
                     success = true;
                 }
-                catch
+                catch (Exception ex)
                 {
                     logger.LogInformation($"Could not fetch {name}.");
-                    logger.LogInformation("Retrying every minute.");
-                    await Task.Delay(TimeSpan.FromMinutes(1));
+
+                    retryAttempts--;
+                    if (retryAttempts <= 0)
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        logger.LogInformation("Retrying in 10 seconds.");
+                        await Task.Delay(TimeSpan.FromSeconds(10));
+                    }
                 }
             }
 
