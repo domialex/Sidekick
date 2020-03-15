@@ -12,7 +12,8 @@ namespace Sidekick.Windows.Leagues
     public partial class LeagueView : BaseWindow
     {
         public LeagueView(ILeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            : base(serviceProvider,
+                  closeOnBlur: true)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;
@@ -20,6 +21,7 @@ namespace Sidekick.Windows.Leagues
 
             SetWindowPositionPercent(25, 0);
             Show();
+            Activate();
         }
 
         public ILeagueViewModel ViewModel { get; set; }

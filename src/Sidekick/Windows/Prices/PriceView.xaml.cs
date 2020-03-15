@@ -18,7 +18,8 @@ namespace Sidekick.Windows.Prices
             IPriceViewModel viewModel,
             INativeBrowser nativeBrowser,
             INativeCursor cursor)
-            : base(serviceProvider)
+            : base(serviceProvider,
+                  closeOnBlur: true)
         {
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
@@ -28,6 +29,7 @@ namespace Sidekick.Windows.Prices
             Loaded += OverlayWindow_Loaded;
 
             Show();
+            Activate();
 
             var position = cursor.GetCursorPosition();
             SetWindowPositionFromBottomRight(position.X - 10, position.Y - 10);
