@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.UI.Views;
 using MyCursor = System.Windows.Forms.Cursor;
 
@@ -13,20 +14,26 @@ namespace Sidekick.Windows
     public abstract class BaseWindow : Window, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
+        private readonly SidekickSettings settings;
+        private readonly bool closeOnBlur;
 
-        public BaseWindow(IServiceProvider serviceProvider)
+        public BaseWindow(IServiceProvider serviceProvider, bool closeOnBlur = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
+            settings = serviceProvider.GetService<SidekickSettings>();
 
+            Deactivated += BaseWindow_Deactivated;
             MouseLeftButtonDown += Window_MouseLeftButtonDown;
             SizeChanged += EnsureBounds;
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
             keybindEvents.OnCloseWindow += KeybindEvents_OnCloseWindow;
+            this.closeOnBlur = closeOnBlur;
         }
 
         private Task<bool> KeybindEvents_OnCloseWindow()
         {
+            Deactivated -= BaseWindow_Deactivated;
             keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
             MouseLeftButtonDown -= Window_MouseLeftButtonDown;
             IsVisibleChanged -= EnsureBounds;
@@ -34,6 +41,14 @@ namespace Sidekick.Windows
             Loaded -= EnsureBounds;
             Close();
             return Task.FromResult(true);
+        }
+
+        private void BaseWindow_Deactivated(object sender, EventArgs e)
+        {
+            if (settings.CloseOverlayWithMouse && closeOnBlur)
+            {
+                KeybindEvents_OnCloseWindow();
+            }
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
