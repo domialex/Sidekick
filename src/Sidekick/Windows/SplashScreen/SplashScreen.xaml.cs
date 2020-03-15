@@ -1,6 +1,7 @@
 using System.Windows;
 using Sidekick.UI.Splash;
 using Sidekick.UI.Views;
+using Sidekick.Windows.ApplicationLogs;
 
 namespace Sidekick.Windows
 {
@@ -10,8 +11,9 @@ namespace Sidekick.Windows
     public partial class SplashScreen : Window, ISidekickView
     {
         private readonly ISplashViewModel viewModel;
+        private readonly IViewLocator viewLocator;
 
-        public SplashScreen(ISplashViewModel viewModel)
+        public SplashScreen(ISplashViewModel viewModel, IViewLocator viewLocator)
         {
             InitializeComponent();
             DataContext = viewModel;
@@ -19,12 +21,23 @@ namespace Sidekick.Windows
             viewModel.Initialized += SplashViewModel_Initialized;
             Show();
             this.viewModel = viewModel;
+            this.viewLocator = viewLocator;
         }
 
         private void SplashViewModel_Initialized()
         {
             viewModel.Initialized -= SplashViewModel_Initialized;
             Dispatcher.Invoke(Close);
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            App.Instance.Shutdown();
+        }
+
+        private void Logs_Click(object sender, RoutedEventArgs e)
+        {
+            viewLocator.Open<ApplicationLogsView>();
         }
     }
 }

@@ -32,6 +32,8 @@ namespace Sidekick
     /// </summary>
     public partial class App : Application
     {
+        public static App Instance { get; private set; }
+
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
@@ -44,6 +46,8 @@ namespace Sidekick
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            Instance = this;
+
             base.OnStartup(e);
 
             ToolTipService.ShowDurationProperty.OverrideMetadata(

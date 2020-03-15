@@ -120,6 +120,12 @@
   <data name="ErrorDuringInit" xml:space="preserve">
     <value>A fatal error occured during initialization! This might be because the Path of Exile API service is down. Please try again later.</value>
   </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>Logs</value>
+  </data>
   <data name="Warn_NewLeagues" xml:space="preserve">
     <value>Please make sure you have the desired league selected in the settings.</value>
   </data>
