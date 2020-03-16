@@ -7,5 +7,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public int Armor { get; set; } = 0;
         public int EnergyShield { get; set; } = 0;
         public int Evasion { get; set; } = 0;
+        public int Quality { get; set; } = 0;
+        public int Level { get; set; } = 0;
     }
 }
