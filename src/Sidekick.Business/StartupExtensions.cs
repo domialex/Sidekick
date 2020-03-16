@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe;
-using Sidekick.Business.Apis.Poe.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
@@ -50,7 +50,7 @@ namespace Sidekick.Business
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
             services.AddInitializableService<IStatsDataService, StatsDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();
-            services.AddInitializableService<ILeagueService, LeagueService>();
+            services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IMapService, MapService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             services.AddInitializableService<IStaticDataService, StaticDataService>();

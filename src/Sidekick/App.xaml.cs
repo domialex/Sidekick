@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Apis.Poe.Leagues;
+using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -39,7 +39,7 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
-        private ILeagueService leagueService;
+        private ILeagueDataService leagueDataService;
         private IViewLocator viewLocator;
 
         private TaskbarIcon trayIcon;
@@ -56,7 +56,7 @@ namespace Sidekick
             serviceProvider = Sidekick.Startup.InitializeServices(this);
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
-            leagueService = serviceProvider.GetRequiredService<ILeagueService>();
+            leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
 
             viewLocator = serviceProvider.GetService<IViewLocator>();
             viewLocator.Open<Windows.SplashScreen>();
@@ -65,7 +65,7 @@ namespace Sidekick
 
             EnsureSingleInstance();
 
-            leagueService.OnNewLeagues += () =>
+            leagueDataService.OnNewLeagues += () =>
             {
                 Dispatcher.Invoke(() =>
                 {

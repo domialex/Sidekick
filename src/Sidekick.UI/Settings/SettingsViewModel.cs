@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using Sidekick.Business.Apis.Poe.Leagues;
+using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;
@@ -22,7 +22,7 @@ namespace Sidekick.UI.Settings
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
-            ILeagueService leagueService,
+            ILeagueDataService leagueDataService,
             IKeybindEvents keybindEvents)
         {
             this.uiLanguageProvider = uiLanguageProvider;
@@ -42,7 +42,7 @@ namespace Sidekick.UI.Settings
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
-            leagueService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;

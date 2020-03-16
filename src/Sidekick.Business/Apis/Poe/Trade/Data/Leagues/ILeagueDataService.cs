@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Models;
 
-namespace Sidekick.Business.Apis.Poe.Leagues
+namespace Sidekick.Business.Apis.Poe.Trade.Leagues
 {
-    public interface ILeagueService
+    public interface ILeagueDataService
     {
         List<League> Leagues { get; }
 

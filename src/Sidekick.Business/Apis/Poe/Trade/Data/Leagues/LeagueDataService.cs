@@ -5,21 +5,19 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
-namespace Sidekick.Business.Apis.Poe.Leagues
+namespace Sidekick.Business.Apis.Poe.Trade.Leagues
 {
-    public class LeagueService : ILeagueService, IOnInit
+    public class LeagueDataService : ILeagueDataService, IOnInit
     {
         private readonly IPoeApiClient poeApiClient;
         private readonly SidekickSettings settings;
 
         public List<League> Leagues { get; private set; }
 
-        public LeagueService(IPoeApiClient poeApiClient,
+        public LeagueDataService(IPoeApiClient poeApiClient,
             SidekickSettings settings)
         {
             this.poeApiClient = poeApiClient;
