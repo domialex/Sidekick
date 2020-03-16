@@ -3,12 +3,12 @@ using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
-using Sidekick.Business.Categories;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
@@ -48,7 +48,7 @@ namespace Sidekick.Business
             services.AddSingleton<IWikiProvider, WikiProviderFactory>();
 
             services.AddInitializableService<IPoeApiClient, PoeApiClient>();
-            services.AddInitializableService<IStatsDataService, StatsDataService>();
+            services.AddInitializableService<IStatDataService, StatDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IMapService, MapService>();

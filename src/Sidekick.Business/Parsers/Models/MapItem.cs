@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Filters;
 
 namespace Sidekick.Business.Parsers.Models
@@ -11,6 +11,6 @@ namespace Sidekick.Business.Parsers.Models
         public string ItemRarity { get; set; }
         public string MonsterPackSize { get; set; }
         public string IsBlight { get; set; }
-        public Dictionary<Attribute, FilterValue> AttributeDictionary { get; set; }
+        public Dictionary<StatData, FilterValue> AttributeDictionary { get; set; }
     }
 }

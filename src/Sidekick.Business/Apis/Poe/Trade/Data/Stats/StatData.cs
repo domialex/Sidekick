@@ -1,6 +1,6 @@
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
-    public class Attribute
+    public class StatData
     {
         public string Id { get; set; }
         public string Text { get; set; }

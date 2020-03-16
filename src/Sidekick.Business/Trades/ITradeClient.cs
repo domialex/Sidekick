@@ -1,6 +1,6 @@
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Trades.Results;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.Business.Trades
 {

@@ -5,9 +5,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Languages;
 
@@ -60,7 +60,7 @@ namespace Sidekick.Business.Apis.Poe
                     name = "static items";
                     path = "data/static/";
                     break;
-                case nameof(AttributeCategory):
+                case nameof(StatDataCategory):
                     name = "attributes";
                     path = "data/stats/";
                     break;

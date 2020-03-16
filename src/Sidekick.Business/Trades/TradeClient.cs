@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;

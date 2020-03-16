@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Categories;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
@@ -12,7 +12,6 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
-using Attribute = Sidekick.Business.Apis.Poe.Models.Attribute;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
 namespace Sidekick.Business.Parsers
@@ -25,7 +24,7 @@ namespace Sidekick.Business.Parsers
         private readonly ILogger logger;
         private readonly IMapService mapService;
         private readonly ITokenizer itemNameTokenizer;
-        private readonly IStatsDataService attributeCategories;
+        private readonly IStatDataService statsDataService;
 
         private readonly Regex[] AttributeRegexes;
         private readonly Dictionary<string, string> RegexReplacementDictionary;
@@ -34,12 +33,12 @@ namespace Sidekick.Business.Parsers
             ILogger logger,
             IEnumerable<ITokenizer> tokenizers,
             IMapService mapService,
-            IStatsDataService attributeService)
+            IStatDataService statsDataService)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
             this.mapService = mapService;
-            attributeCategories = attributeService;
+            this.statsDataService = statsDataService;
             itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
 
             AttributeRegexes = new[] { new Regex(languageProvider.Language.PercentageAddedRegexPattern), new Regex(languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern),
@@ -622,9 +621,9 @@ namespace Sidekick.Business.Parsers
             return InfluenceType.None;
         }
 
-        private Dictionary<Attribute, FilterValue> GetItemAttributes(IEnumerable<string> input)
+        private Dictionary<StatData, FilterValue> GetItemAttributes(IEnumerable<string> input)
         {
-            var result = new Dictionary<Attribute, FilterValue>();
+            var result = new Dictionary<StatData, FilterValue>();
 
             foreach (var line in input)
             {
@@ -642,7 +641,7 @@ namespace Sidekick.Business.Parsers
                     }
                 }
 
-                List<Attribute> attributesToSearch;
+                List<StatData> attributesToSearch;
 
 #warning TODO Find a better way for special case
                 if (formattedLine.StartsWith("#% increased Energy Shield"))
@@ -653,21 +652,21 @@ namespace Sidekick.Business.Parsers
                 if (formattedLine.Contains(languageProvider.Language.CategoryNameCrafted))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameCrafted, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryCrafted).SelectMany(c => c.Entries).ToList();
+                    attributesToSearch = statsDataService.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryCrafted).SelectMany(c => c.Entries).ToList();
                 }
                 else if (formattedLine.Contains(languageProvider.Language.CategoryNameFractured))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameFractured, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryFractured).SelectMany(c => c.Entries).ToList();
+                    attributesToSearch = statsDataService.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryFractured).SelectMany(c => c.Entries).ToList();
                 }
                 else if (formattedLine.Contains(languageProvider.Language.CategoryNameImplicit))
                 {
                     formattedLine = formattedLine.Replace(languageProvider.Language.CategoryNameImplicit, "").Trim();
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryImplicit).SelectMany(c => c.Entries).ToList();
+                    attributesToSearch = statsDataService.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryImplicit).SelectMany(c => c.Entries).ToList();
                 }
                 else
                 {
-                    attributesToSearch = attributeCategories.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryExplicit ||
+                    attributesToSearch = statsDataService.Categories.Where(c => c.Label == languageProvider.Language.AttributeCategoryExplicit ||
                                                                                    c.Label == languageProvider.Language.AttributeCategoryDelve ||
                                                                                    c.Label == languageProvider.Language.AttributeCategoryEnchant ||
                                                                                    c.Label == languageProvider.Language.AttributeCategoryVeiled).SelectMany(c => c.Entries).ToList();

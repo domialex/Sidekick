@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;

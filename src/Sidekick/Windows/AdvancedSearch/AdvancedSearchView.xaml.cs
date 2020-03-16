@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
@@ -128,7 +129,7 @@ namespace Sidekick.Windows.AdvancedSearch
                     Grid.SetColumn(InfluenceCheckBox, 2);
                 }
 
-                if(equippableItem.IsCorrupted)
+                if (equippableItem.IsCorrupted)
                 {
                     // TODO If corrupted show checkbox
                 }
@@ -148,7 +149,7 @@ namespace Sidekick.Windows.AdvancedSearch
                 Grid.SetColumn(ItemLevelTextBox, 0);
                 rowCounter++;
             }
-            else if(item.GetType() == typeof(MapItem))
+            else if (item.GetType() == typeof(MapItem))
             {
                 // TODO
             }
@@ -169,7 +170,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private void Search_Click(object sender, EventArgs e)
         {
-            var choosenAttributesDict = new Dictionary<Business.Apis.Poe.Models.Attribute, FilterValue>();
+            var choosenAttributesDict = new Dictionary<StatData, FilterValue>();
 
             foreach (var pair in RowElementsDictionary)
             {
@@ -183,9 +184,9 @@ namespace Sidekick.Windows.AdvancedSearch
 
             ((IAttributeItem)CurrentItem).AttributeDictionary = choosenAttributesDict;
 
-            if(ItemLevelTextBox != null && ItemLevelTextBox.IsEnabled)
+            if (ItemLevelTextBox != null && ItemLevelTextBox.IsEnabled)
             {
-                if(int.TryParse(ItemLevelTextBox.Text, out _))
+                if (int.TryParse(ItemLevelTextBox.Text, out _))
                 {
                     ((EquippableItem)CurrentItem).ItemLevel = ItemLevelTextBox.Text;
                 }
@@ -195,9 +196,9 @@ namespace Sidekick.Windows.AdvancedSearch
                 }
             }
 
-            if(InfluenceCheckBox != null && InfluenceCheckBox.IsChecked == true)
+            if (InfluenceCheckBox != null && InfluenceCheckBox.IsChecked == true)
             {
-                if(Enum.TryParse<InfluenceType>(InfluenceCheckBox.Content.ToString(), out var influence))
+                if (Enum.TryParse<InfluenceType>(InfluenceCheckBox.Content.ToString(), out var influence))
                 {
                     ((EquippableItem)CurrentItem).Influence = influence;
                 }
@@ -208,12 +209,12 @@ namespace Sidekick.Windows.AdvancedSearch
             }
 
             // TODO Better socket search (Custom Colors, Links, etc.)
-            if(SocketCheckBox != null && SocketCheckBox.IsChecked == true)
+            if (SocketCheckBox != null && SocketCheckBox.IsChecked == true)
             {
                 ((EquippableItem)CurrentItem).Sockets = new SocketFilterOption() { Min = ((EquippableItem)CurrentItem).MaxSockets };
             }
 
-            if(LinkCheckBox != null && LinkCheckBox.IsChecked == true)
+            if (LinkCheckBox != null && LinkCheckBox.IsChecked == true)
             {
                 ((EquippableItem)CurrentItem).Links = new SocketFilterOption() { Min = ((EquippableItem)CurrentItem).MaxSockets };
             }
@@ -241,7 +242,7 @@ namespace Sidekick.Windows.AdvancedSearch
             RowElementsDictionary[row].maxVal.IsEnabled = toggle;
         }
 
-        private Business.Apis.Poe.Models.Attribute GetAttribute(string text)
+        private StatData GetAttribute(string text)
         {
             var attr = ((IAttributeItem)CurrentItem).AttributeDictionary;
             var entry = attr.Where(c => c.Key.Text == text).FirstOrDefault().Key;

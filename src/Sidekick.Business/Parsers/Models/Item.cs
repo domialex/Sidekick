@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Filters;
-
 namespace Sidekick.Business.Parsers.Models
 {
     public abstract class Item

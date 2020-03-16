@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe
 {
     public class FetchResult<T>
     {
