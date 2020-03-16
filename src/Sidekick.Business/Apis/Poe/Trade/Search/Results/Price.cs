@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Trades.Results
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
     public class Price
     {

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 

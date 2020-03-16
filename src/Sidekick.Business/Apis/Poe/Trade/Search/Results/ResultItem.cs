@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Sidekick.Business.Apis.Poe.Models;
 
-namespace Sidekick.Business.Trades.Results
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
     public class ResultItem : Item
     {

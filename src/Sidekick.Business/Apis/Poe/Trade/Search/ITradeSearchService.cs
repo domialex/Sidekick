@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Trade;
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search
 {

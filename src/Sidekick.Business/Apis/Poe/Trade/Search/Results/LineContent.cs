@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace Sidekick.Business.Trades.Results
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
     public class LineContent
     {

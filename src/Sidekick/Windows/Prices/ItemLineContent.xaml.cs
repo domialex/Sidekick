@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Windows.Prices.Helpers;
 
 namespace Sidekick.Windows.Prices

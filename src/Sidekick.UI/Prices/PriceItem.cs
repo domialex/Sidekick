@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
 
