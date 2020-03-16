@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Business.Leagues;
+using Sidekick.Business.Apis.Poe.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;

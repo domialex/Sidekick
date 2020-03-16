@@ -6,11 +6,11 @@ using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Categories
 {
-    public class AttributeCategoryService : IAttributeCategoryService, IOnInit
+    public class StatsDataService : IStatsDataService, IOnInit
     {
         private readonly IPoeApiClient poeApiClient;
 
-        public AttributeCategoryService(IPoeApiClient poeApiClient)
+        public StatsDataService(IPoeApiClient poeApiClient)
         {
             this.poeApiClient = poeApiClient;
         }

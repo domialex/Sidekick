@@ -6,12 +6,12 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe
 {
-    public class PoeApiClient : IPoeApiClient, IOnBeforeInit
+    public class PoeApiClient : IPoeApiClient
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
@@ -23,12 +23,7 @@ namespace Sidekick.Business.Apis.Poe
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
-            this.client = httpClientFactory.CreateClient();
-        }
-
-        public Task OnBeforeInit()
-        {
-            return Task.CompletedTask;
+            client = httpClientFactory.CreateClient();
         }
 
         public JsonSerializerOptions Options
@@ -48,7 +43,7 @@ namespace Sidekick.Business.Apis.Poe
         public async Task<List<TReturn>> Fetch<TReturn>()
         {
             string path;
-            string name = string.Empty;
+            string name;
             switch (typeof(TReturn).Name)
             {
                 case nameof(ItemCategory):
@@ -70,42 +65,23 @@ namespace Sidekick.Business.Apis.Poe
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            logger.LogInformation($"Fetching {name} started.");
-            QueryResult<TReturn> result = null;
-            var success = false;
-            var retryAttempts = 1;
-
-            while (!success)
+            try
             {
-                try
-                {
-                    var response = await client.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + path);
-                    var content = await response.Content.ReadAsStreamAsync();
+                logger.LogInformation($"Fetching {name} started.");
 
-                    result = await JsonSerializer.DeserializeAsync<QueryResult<TReturn>>(content, Options);
+                var response = await client.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + path);
+                var content = await response.Content.ReadAsStreamAsync();
+                var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
 
-                    logger.LogInformation($"{result.Result.Count} {name} fetched.");
-                    success = true;
-                }
-                catch (Exception ex)
-                {
-                    logger.LogInformation($"Could not fetch {name}.");
-
-                    retryAttempts--;
-                    if (retryAttempts <= 0)
-                    {
-                        throw;
-                    }
-                    else
-                    {
-                        logger.LogInformation("Retrying in 10 seconds.");
-                        await Task.Delay(TimeSpan.FromSeconds(10));
-                    }
-                }
+                logger.LogInformation($"{result.Result.Count} {name} fetched.");
+                return result.Result;
+            }
+            catch (Exception)
+            {
+                logger.LogInformation($"Could not fetch {name}.");
+                throw;
             }
 
-            logger.LogInformation($"Fetching {name} finished.");
-            return result.Result;
         }
     }
 }

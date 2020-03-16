@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
     /// <summary>
     /// Uniques

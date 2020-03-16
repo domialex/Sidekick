@@ -10,7 +10,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
-namespace Sidekick.Business.Leagues
+namespace Sidekick.Business.Apis.Poe.Leagues
 {
     public class LeagueService : ILeagueService, IOnInit
     {

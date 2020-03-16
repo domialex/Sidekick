@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sidekick.Business.Apis.Poe.Models
 {
-    public class QueryResult<T>
+    public class FetchResult<T>
     {
         public List<T> Result { get; set; }
 

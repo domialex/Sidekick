@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using Sidekick.Business.Leagues;
+using Sidekick.Business.Apis.Poe.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization;

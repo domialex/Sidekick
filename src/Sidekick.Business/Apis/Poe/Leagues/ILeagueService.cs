@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sidekick.Business.Apis.Poe.Models;
 
-namespace Sidekick.Business.Leagues
+namespace Sidekick.Business.Apis.Poe.Leagues
 {
     public interface ILeagueService
     {

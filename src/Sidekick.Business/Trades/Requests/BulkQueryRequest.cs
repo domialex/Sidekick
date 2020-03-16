@@ -9,7 +9,7 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class BulkQueryRequest
     {
-        public BulkQueryRequest(Item item, ILanguage language, IStaticItemCategoryService staticItemCategoryService)
+        public BulkQueryRequest(Item item, ILanguage language, IStaticDataService staticItemCategoryService)
         {
             Exchange.Status.Option = StatusType.Online;
 

@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
     public class ItemFlags
     {

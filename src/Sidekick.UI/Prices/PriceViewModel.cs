@@ -25,7 +25,7 @@ namespace Sidekick.UI.Prices
     {
         private readonly ITradeClient tradeClient;
         private readonly IPoeNinjaCache poeNinjaCache;
-        private readonly IStaticItemCategoryService staticItemCategoryService;
+        private readonly IStaticDataService staticItemCategoryService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
@@ -35,7 +35,7 @@ namespace Sidekick.UI.Prices
         public PriceViewModel(
             ITradeClient tradeClient,
             IPoeNinjaCache poeNinjaCache,
-            IStaticItemCategoryService staticItemCategoryService,
+            IStaticDataService staticItemCategoryService,
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
@@ -59,7 +59,7 @@ namespace Sidekick.UI.Prices
 
         public ObservableCollection<PriceItem> Results { get; private set; }
 
-        private QueryResult<SearchResult> QueryResult { get; set; }
+        private FetchResult<SearchResult> QueryResult { get; set; }
 
         public Uri Uri => QueryResult?.Uri;
 

@@ -8,11 +8,11 @@ using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Categories
 {
-    public class StaticItemCategoryService : IStaticItemCategoryService, IOnInit
+    public class StaticDataService : IStaticDataService, IOnInit
     {
         private readonly IPoeApiClient poeApiClient;
 
-        public StaticItemCategoryService(IPoeApiClient poeApiClient)
+        public StaticDataService(IPoeApiClient poeApiClient)
         {
             this.poeApiClient = poeApiClient;
         }

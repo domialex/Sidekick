@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sidekick.Business.Categories
 {
-    public interface IStaticItemCategoryService
+    public interface IStaticDataService
     {
         List<StaticItemCategory> Categories { get; }
         Dictionary<string, string> Lookup { get; }

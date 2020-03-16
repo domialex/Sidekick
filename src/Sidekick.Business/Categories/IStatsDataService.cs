@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Sidekick.Business.Categories
 {
-    public interface IItemCategoryService
+    public interface IStatsDataService
     {
-        List<ItemCategory> Categories { get; }
+        List<AttributeCategory> Categories { get; }
     }
 }

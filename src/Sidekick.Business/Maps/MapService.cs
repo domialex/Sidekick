@@ -10,9 +10,9 @@ namespace Sidekick.Business.Maps
 {
     public class MapService : IMapService, IOnAfterInit
     {
-        private readonly IStaticItemCategoryService staticItemCategoryService;
+        private readonly IStaticDataService staticItemCategoryService;
 
-        public MapService(IStaticItemCategoryService staticItemCategoryService)
+        public MapService(IStaticDataService staticItemCategoryService)
         {
             this.staticItemCategoryService = staticItemCategoryService;
         }

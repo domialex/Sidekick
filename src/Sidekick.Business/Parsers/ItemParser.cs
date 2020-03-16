@@ -25,7 +25,7 @@ namespace Sidekick.Business.Parsers
         private readonly ILogger logger;
         private readonly IMapService mapService;
         private readonly ITokenizer itemNameTokenizer;
-        private readonly IAttributeCategoryService attributeCategories;
+        private readonly IStatsDataService attributeCategories;
 
         private readonly Regex[] AttributeRegexes;
         private readonly Dictionary<string, string> RegexReplacementDictionary;
@@ -34,7 +34,7 @@ namespace Sidekick.Business.Parsers
             ILogger logger,
             IEnumerable<ITokenizer> tokenizers,
             IMapService mapService,
-            IAttributeCategoryService attributeService)
+            IStatsDataService attributeService)
         {
             this.languageProvider = languageProvider;
             this.logger = logger;
