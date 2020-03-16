@@ -18,8 +18,6 @@ using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Parties;
 using Sidekick.Business.Stashes;
-using Sidekick.Business.Tokenizers;
-using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Business.Whispers;
 using Sidekick.Core;
 
@@ -40,7 +38,6 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<IStashService, StashService>();
-            services.AddSingleton<ITokenizer, ItemNameTokenizer>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
             services.AddSingleton<IWhisperService, WhisperService>();
 

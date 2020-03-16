@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Tokenizers.ItemName
 {
-    public class ItemNameTokenizer : ITokenizer
+    public class ItemNameTokenizer
     {
         private Dictionary<ItemNameTokenType, string> _tokenDefs;
 
@@ -16,7 +17,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
             _tokenDefs.Add(ItemNameTokenType.If, "<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}");
         }
 
-        public IEnumerable<IToken> Tokenize(string input)
+        private IEnumerable<ItemNameToken> GetTokens(string input)
         {
             var tokens = new List<ItemNameToken>();
 
@@ -67,6 +68,35 @@ namespace Sidekick.Business.Tokenizers.ItemName
             }
 
             return new ItemNameTokenMatch() { IsMatch = false };
+        }
+
+        public string CleanString(string input)
+        {
+            var langs = new List<string>();
+            var tokens = GetTokens(input);
+            var output = new StringBuilder();
+
+            foreach (var token in tokens)
+            {
+                if (token.TokenType == ItemNameTokenType.Set)
+                {
+                    langs.Add(token.Match.Match.Groups["LANG"].Value);
+                }
+                else if (token.TokenType == ItemNameTokenType.Name)
+                {
+                    output.Append(token.Match.Match.Value);
+                }
+                else if (token.TokenType == ItemNameTokenType.If)
+                {
+                    var lang = token.Match.Match.Groups["LANG"].Value;
+                    if (langs.Contains(lang))
+                    {
+                        output.Append(token.Match.Match.Groups["NAME"].Value);
+                    }
+                }
+            }
+
+            return output.ToString();
         }
     }
 }

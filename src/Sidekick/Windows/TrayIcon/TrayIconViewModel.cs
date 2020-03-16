@@ -41,31 +41,21 @@ namespace Sidekick.Windows.TrayIcon
 
         private async Task DebugPriceCheck()
         {
-            await parserService.ParseItem(@"Rarity: Unique
-Blood of the Karui
-Sanctified Life Flask
---------
-Quality: +20% (augmented)
-Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
-Consumes 15 of 30 Charges on use
-Currently has 30 Charges
+            await parserService.ParseItem(@"Rarity: Rare
+Kraken Spear
+Broadhead Arrow Quiver
 --------
 Requirements:
-Level: 50
+Level: 57
 --------
-Item Level: 75
+Item Level: 77
 --------
-100% increased Life Recovered
-15% increased Recovery rate
-Recover Full Life at the end of the Flask Effect
+Adds 6 to 12 Physical Damage to Bow Attacks (implicit)
 --------
-""Kaom fought and killed for his people.
-Kaom bled for his people.
-And so the people gave, the people bled,
-So their King might go on.""
-- Lavianga, Advisor to Kaom
---------
-Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
++10% to Global Critical Strike Multiplier
++78 to maximum Life
++15% to Fire Resistance
++45% to Cold Resistance
 ");
 
             await nativeClipboard.SetText(@"Rarity: Unique

@@ -1,14 +1,6 @@
 namespace Sidekick.Business.Tokenizers.ItemName
 {
-    public enum ItemNameTokenType
-    {
-        Set,
-        If,
-        Name,
-        EndOfItem
-    }
-
-    public class ItemNameToken : IToken
+    public class ItemNameToken
     {
         public ItemNameToken(ItemNameTokenType tokenType, ItemNameTokenMatch value)
         {

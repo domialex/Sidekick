@@ -8,7 +8,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Tokenizers.ItemName;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Parser
@@ -16,7 +16,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
     public class ParserService : IOnAfterInit, IParserService
     {
         private readonly string[] BLOCK_SEPARATOR = new string[] { "--------" };
-        private readonly string[] NEWLINE_SEPARATOR = new string[] { Environment.NewLine };
+        private readonly string[] NEWLINE_SEPARATOR = new string[] { "\r", "\n" };
 
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
@@ -55,13 +55,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public async Task<ResultItem> ParseItem(string itemText)
+        public async Task<Item> ParseItem(string itemText)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
             try
             {
-                var item = new ResultItem();
+                var item = new Item();
 
                 var blocks = itemText
                     .Split(BLOCK_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
@@ -79,12 +79,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
 
         #region Item Header (Rarity, Name, Type)
-        private void ParseHeader(ref ResultItem item, ref List<string> blocks)
+        private void ParseHeader(ref Item item, ref List<string> blocks)
         {
-            var headerBlock = blocks[0];
+            var headerBlock = new ItemNameTokenizer().CleanString(blocks[0]);
 
             var lines = headerBlock
                 .Split(NEWLINE_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
+                .Where(x => !string.IsNullOrEmpty(x))
                 .ToList();
 
             item.Rarity = GetRarity(lines[0]);
@@ -93,6 +94,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
+
+            if (string.IsNullOrWhiteSpace(item.Name))
+            {
+                item.Name = lines[1];
+            }
 
             blocks.Remove(headerBlock);
         }

@@ -11,7 +11,6 @@ using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
-using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
@@ -24,7 +23,7 @@ namespace Sidekick.Business.Parsers
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger logger;
         private readonly IMapService mapService;
-        private readonly ITokenizer itemNameTokenizer;
+        private readonly ItemNameTokenizer itemNameTokenizer;
         private readonly IStatDataService statsDataService;
 
         private readonly Regex[] AttributeRegexes;
@@ -32,7 +31,6 @@ namespace Sidekick.Business.Parsers
 
         public ItemParser(ILanguageProvider languageProvider,
             ILogger logger,
-            IEnumerable<ITokenizer> tokenizers,
             IMapService mapService,
             IStatDataService statsDataService)
         {
@@ -40,7 +38,7 @@ namespace Sidekick.Business.Parsers
             this.logger = logger;
             this.mapService = mapService;
             this.statsDataService = statsDataService;
-            itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
+            itemNameTokenizer = new ItemNameTokenizer();
 
             AttributeRegexes = new[] { new Regex(languageProvider.Language.PercentageAddedRegexPattern), new Regex(languageProvider.Language.PercentageIncreasedOrDecreasedRegexPattern),
                                        new Regex(languageProvider.Language.AttributeIncreasedRegexPattern), new Regex(languageProvider.Language.AttributeRangeRegexPattern) };
@@ -102,12 +100,12 @@ namespace Sidekick.Business.Parsers
 
                 if (!string.IsNullOrWhiteSpace(item.Name))
                 {
-                    item.Name = ParseName(item.Name);
+                    item.Name = itemNameTokenizer.CleanString(item.Name);
                 }
 
                 if (!string.IsNullOrWhiteSpace(item.Type))
                 {
-                    item.Type = ParseName(item.Type);
+                    item.Type = itemNameTokenizer.CleanString(item.Type);
                 }
 
                 item.Rarity = rarity;
@@ -449,33 +447,6 @@ namespace Sidekick.Business.Parsers
             }
 
             return properties;
-        }
-
-        private string ParseName(string name)
-        {
-            var langs = new List<string>();
-            var tokens = itemNameTokenizer.Tokenize(name);
-            var output = "";
-
-            foreach (var token in tokens.Select(x => x as ItemNameToken))
-            {
-                if (token.TokenType == ItemNameTokenType.Set)
-                {
-                    langs.Add(token.Match.Match.Groups["LANG"].Value);
-                }
-                else if (token.TokenType == ItemNameTokenType.Name)
-                {
-                    output += token.Match.Match.Value;
-                }
-                else if (token.TokenType == ItemNameTokenType.If)
-                {
-                    var lang = token.Match.Match.Groups["LANG"].Value;
-                    if (langs.Contains(lang))
-                        output += token.Match.Match.Groups["NAME"].Value;
-                }
-            }
-
-            return output;
         }
 
         private string GetNumberFromString(string input, bool allowNegative = false, bool allowRange = false)
