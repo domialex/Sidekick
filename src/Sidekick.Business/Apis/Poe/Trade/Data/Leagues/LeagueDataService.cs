@@ -12,15 +12,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
 {
     public class LeagueDataService : ILeagueDataService, IOnInit
     {
-        private readonly IPoeApiClient poeApiClient;
+        private readonly IPoeTradeClient poeTradeClient;
         private readonly SidekickSettings settings;
 
         public List<League> Leagues { get; private set; }
 
-        public LeagueDataService(IPoeApiClient poeApiClient,
+        public LeagueDataService(IPoeTradeClient poeTradeClient,
             SidekickSettings settings)
         {
-            this.poeApiClient = poeApiClient;
+            this.poeTradeClient = poeTradeClient;
             this.settings = settings;
         }
 
@@ -29,7 +29,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
         public async Task OnInit()
         {
             Leagues = null;
-            Leagues = await poeApiClient.Fetch<League>();
+            Leagues = await poeTradeClient.Fetch<League>();
 
             var newLeagues = false;
 

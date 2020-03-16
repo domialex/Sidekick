@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.Business.Trades

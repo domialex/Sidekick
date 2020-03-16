@@ -7,9 +7,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
     public class StaticDataService : IStaticDataService, IOnInit
     {
-        private readonly IPoeApiClient poeApiClient;
+        private readonly IPoeTradeClient poeApiClient;
 
-        public StaticDataService(IPoeApiClient poeApiClient)
+        public StaticDataService(IPoeTradeClient poeApiClient)
         {
             this.poeApiClient = poeApiClient;
         }

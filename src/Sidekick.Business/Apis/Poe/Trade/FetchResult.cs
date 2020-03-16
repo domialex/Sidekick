@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Apis.Poe
+namespace Sidekick.Business.Apis.Poe.Trade
 {
     public class FetchResult<T>
     {

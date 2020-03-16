@@ -8,9 +8,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
     public class StatDataService : IStatDataService, IOnInit
     {
-        private readonly IPoeApiClient poeApiClient;
+        private readonly IPoeTradeClient poeApiClient;
 
-        public StatDataService(IPoeApiClient poeApiClient)
+        public StatDataService(IPoeTradeClient poeApiClient)
         {
             this.poeApiClient = poeApiClient;
         }

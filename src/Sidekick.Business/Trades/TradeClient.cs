@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
@@ -23,7 +23,7 @@ namespace Sidekick.Business.Trades
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IStaticDataService staticDataService;
         private readonly SidekickSettings configuration;
-        private readonly IPoeApiClient poeApiClient;
+        private readonly IPoeTradeClient poeTradeClient;
         private readonly INativeBrowser nativeBrowser;
 
         public TradeClient(ILogger logger,
@@ -31,7 +31,7 @@ namespace Sidekick.Business.Trades
             IHttpClientProvider httpClientProvider,
             IStaticDataService staticDataService,
             SidekickSettings configuration,
-            IPoeApiClient poeApiClient,
+            IPoeTradeClient poeTradeClient,
             INativeBrowser nativeBrowser)
         {
             this.logger = logger;
@@ -39,7 +39,7 @@ namespace Sidekick.Business.Trades
             this.httpClientProvider = httpClientProvider;
             this.staticDataService = staticDataService;
             this.configuration = configuration;
-            this.poeApiClient = poeApiClient;
+            this.poeTradeClient = poeTradeClient;
             this.nativeBrowser = nativeBrowser;
         }
 
@@ -59,13 +59,13 @@ namespace Sidekick.Business.Trades
                 if (IsBulk(item.Type))
                 {
                     path = $"exchange/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticDataService), poeApiClient.Options);
+                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticDataService), poeTradeClient.Options);
                     baseUri = languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId;
                 }
                 else
                 {
                     path = $"search/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new QueryRequest(item), poeApiClient.Options);
+                    json = JsonSerializer.Serialize(new QueryRequest(item), poeTradeClient.Options);
                     baseUri = languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId;
                 }
 
@@ -76,7 +76,7 @@ namespace Sidekick.Business.Trades
                 {
                     var test = await response.Content.ReadAsStringAsync();
                     var content = await response.Content.ReadAsStreamAsync();
-                    result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeApiClient.Options);
+                    result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
 
                     result.Uri = new Uri($"{baseUri}/{result.Id}");
                 }

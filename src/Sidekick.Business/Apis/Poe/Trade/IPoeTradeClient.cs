@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Sidekick.Business.Apis.Poe
+namespace Sidekick.Business.Apis.Poe.Trade
 {
-    public interface IPoeApiClient
+    public interface IPoeTradeClient
     {
         Task<List<TReturn>> Fetch<TReturn>();
 

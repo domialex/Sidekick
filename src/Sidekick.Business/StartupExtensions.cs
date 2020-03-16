@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis;
-using Sidekick.Business.Apis.Poe;
+using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
@@ -47,7 +47,7 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<IWikiProvider, WikiProviderFactory>();
 
-            services.AddInitializableService<IPoeApiClient, PoeApiClient>();
+            services.AddInitializableService<IPoeTradeClient, PoeTradeClient>();
             services.AddInitializableService<IStatDataService, StatDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();

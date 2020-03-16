@@ -8,9 +8,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
     public class ItemDataService : IItemDataService, IOnInit
     {
-        private readonly IPoeApiClient poeApiClient;
+        private readonly IPoeTradeClient poeApiClient;
 
-        public ItemDataService(IPoeApiClient poeApiClient)
+        public ItemDataService(IPoeTradeClient poeApiClient)
         {
             this.poeApiClient = poeApiClient;
         }

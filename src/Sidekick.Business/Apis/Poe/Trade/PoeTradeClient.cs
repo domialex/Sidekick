@@ -11,15 +11,15 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Languages;
 
-namespace Sidekick.Business.Apis.Poe
+namespace Sidekick.Business.Apis.Poe.Trade
 {
-    public class PoeApiClient : IPoeApiClient
+    public class PoeTradeClient : IPoeTradeClient
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly HttpClient client;
 
-        public PoeApiClient(ILogger logger,
+        public PoeTradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
