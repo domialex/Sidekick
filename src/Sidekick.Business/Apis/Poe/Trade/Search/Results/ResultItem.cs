@@ -18,21 +18,20 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         public string League { get; set; }
 
-        [JsonPropertyName("ilvl")]
-        public int ItemLevel { get; set; }
-
         public string Note { get; set; }
-        public List<LineContent> Properties { get; set; }
+
         public List<LineContent> Requirements { get; set; }
+
+        public List<LineContent> Properties { get; set; }
+
         public List<string> ImplicitMods { get; set; }
+
         public List<string> CraftedMods { get; set; }
+
         public List<string> ExplicitMods { get; set; }
+
         public List<string> UtilityMods { get; set; }
 
-        [JsonPropertyName("frameType")]
-        public Rarity Rarity { get; set; }
-
-        public bool Corrupted { get; set; }
         public Extended Extended { get; set; }
     }
 }

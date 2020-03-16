@@ -37,6 +37,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
 
+        private Regex ArmorPattern { get; set; }
+        private Regex EnergyShieldPattern { get; set; }
+        private Regex EvasionPattern { get; set; }
+
         public Task OnAfterInit()
         {
             RarityPatterns = new Dictionary<Rarity, Regex>();
@@ -48,6 +52,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
             RarityPatterns.Add(Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)));
             RarityPatterns.Add(Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)));
 
+            ArmorPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
+            EnergyShieldPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
+            EvasionPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+
             return Task.CompletedTask;
         }
 
@@ -55,19 +63,20 @@ namespace Sidekick.Business.Apis.Poe.Parser
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public async Task<Item> ParseItem(string itemText)
+        public async Task<ParsedItem> ParseItem(string itemText)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
             try
             {
-                var item = new Item();
+                var item = new ParsedItem();
 
                 var blocks = itemText
                     .Split(BLOCK_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
                     .ToList();
 
                 ParseHeader(ref item, ref blocks);
+                ParseProperties(ref item, ref blocks);
 
                 return item;
             }
@@ -79,7 +88,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
 
         #region Item Header (Rarity, Name, Type)
-        private void ParseHeader(ref Item item, ref List<string> blocks)
+        private void ParseHeader(ref ParsedItem item, ref List<string> blocks)
         {
             var headerBlock = new ItemNameTokenizer().CleanString(blocks[0]);
 
@@ -100,7 +109,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 item.Name = lines[1];
             }
 
-            blocks.Remove(headerBlock);
+            blocks.RemoveAt(0);
         }
 
         private Rarity GetRarity(string rarityString)
@@ -113,6 +122,39 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 }
             }
             throw new Exception("Can't parse rarity.");
+        }
+        #endregion
+
+        #region Item Properties (Armour, Evasion, Energy Shield)
+        private void ParseProperties(ref ParsedItem item, ref List<string> blocks)
+        {
+            var block = blocks[0];
+
+            item.Armor = GetInt(ArmorPattern, block);
+            item.EnergyShield = GetInt(EnergyShieldPattern, block);
+            item.Evasion = GetInt(EvasionPattern, block);
+
+            if (item.Armor + item.EnergyShield + item.Evasion > 0)
+            {
+                blocks.RemoveAt(0);
+            }
+        }
+        #endregion
+
+        #region Helpers
+        private int GetInt(Regex regex, string input)
+        {
+            var match = regex.Match(input);
+
+            if (match.Success)
+            {
+                if (int.TryParse(match.Groups[1].Value, out var result))
+                {
+                    return result;
+                }
+            }
+
+            return 0;
         }
         #endregion
     }

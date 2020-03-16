@@ -5,8 +5,6 @@ namespace Sidekick.Business.Apis.Poe.Models
 {
     public class Item
     {
-        public string Icon { get; set; }
-
         public List<Socket> Sockets { get; set; }
 
         public string Name { get; set; }

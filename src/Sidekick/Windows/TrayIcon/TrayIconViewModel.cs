@@ -42,20 +42,28 @@ namespace Sidekick.Windows.TrayIcon
         private async Task DebugPriceCheck()
         {
             await parserService.ParseItem(@"Rarity: Rare
-Kraken Spear
-Broadhead Arrow Quiver
+Blood Shelter
+Nightmare Bascinet
+--------
+Armour: 162
+Evasion Rating: 233
 --------
 Requirements:
-Level: 57
+Level: 67
+Str: 62
+Dex: 85
 --------
-Item Level: 77
+Sockets: G W 
 --------
-Adds 6 to 12 Physical Damage to Bow Attacks (implicit)
+Item Level: 69
 --------
-+10% to Global Critical Strike Multiplier
++1 to Level of Socketed Minion Gems
++30 to Strength
 +78 to maximum Life
-+15% to Fire Resistance
-+45% to Cold Resistance
++35% to Cold Resistance
++17% to Chaos Resistance
+--------
+Corrupted
 ");
 
             await nativeClipboard.SetText(@"Rarity: Unique
