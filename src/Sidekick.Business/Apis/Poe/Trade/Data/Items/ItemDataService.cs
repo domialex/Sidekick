@@ -15,16 +15,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             this.poeApiClient = poeApiClient;
         }
 
-        public List<ItemCategory> Categories { get; private set; }
-
         private List<(Regex Regex, Item Item)> Patterns { get; set; }
 
         public async Task OnInit()
         {
-            Categories = null;
-            Categories = await poeApiClient.Fetch<ItemCategory>();
+            var categories = await poeApiClient.Fetch<ItemCategory>();
 
-            Patterns = Categories
+            Patterns = categories
                 .SelectMany(x => x.Entries)
                 .Select(x => (
                     new Regex(Regex.Escape(x.Name ?? x.Text)),
