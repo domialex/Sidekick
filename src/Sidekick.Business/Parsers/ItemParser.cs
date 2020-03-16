@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Filters;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
 using Sidekick.Business.Parsers.Models;

@@ -2,10 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
+using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Stashes;
-using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -23,7 +23,7 @@ namespace Sidekick.Handlers
         private readonly INativeKeyboard keyboard;
         private readonly IItemParser itemParser;
         private readonly ILogger logger;
-        private readonly ITradeClient tradeClient;
+        private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
         private readonly IChatService chatService;
@@ -38,7 +38,7 @@ namespace Sidekick.Handlers
             INativeKeyboard keyboard,
             IItemParser itemParser,
             ILogger logger,
-            ITradeClient tradeClient,
+            ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
             IViewLocator viewLocator,
             IChatService chatService,
@@ -51,7 +51,7 @@ namespace Sidekick.Handlers
             this.keyboard = keyboard;
             this.itemParser = itemParser;
             this.logger = logger;
-            this.tradeClient = tradeClient;
+            this.tradeSearchService = tradeSearchService;
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
             this.chatService = chatService;
@@ -212,7 +212,7 @@ namespace Sidekick.Handlers
 
             if (item != null)
             {
-                await tradeClient.OpenWebpage(item);
+                await tradeSearchService.OpenWebpage(item);
                 return true;
             }
 

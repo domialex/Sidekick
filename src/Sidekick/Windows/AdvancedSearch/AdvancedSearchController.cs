@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Parsers;
-using Sidekick.Business.Trades;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.UI.Views;
@@ -20,20 +20,20 @@ namespace Sidekick.Windows.AdvancedSearch
         private readonly INativeClipboard clipboard;
         private readonly ILogger logger;
         private readonly IItemParser itemParser;
-        private readonly ITradeClient tradeClient;
+        private readonly ITradeSearchService tradeSearchService;
         private readonly INativeProcess nativeProcess;
         private readonly INativeCursor nativeCursor;
         private readonly IViewLocator viewLocator;
         private readonly AdvancedSearchView view;
         private readonly SidekickSettings settings;
 
-        public AdvancedSearchController(INativeClipboard clipboard, IKeybindEvents events, ILogger logger, IItemParser itemParser, ITradeClient tradeClient, IServiceProvider serviceProvider, INativeProcess nativeProcess, SidekickSettings settings, INativeCursor nativeCursor,
+        public AdvancedSearchController(INativeClipboard clipboard, IKeybindEvents events, ILogger logger, IItemParser itemParser, ITradeSearchService tradeSearchService, IServiceProvider serviceProvider, INativeProcess nativeProcess, SidekickSettings settings, INativeCursor nativeCursor,
             IViewLocator viewLocator)
         {
             this.clipboard = clipboard;
             this.logger = logger;
             this.itemParser = itemParser;
-            this.tradeClient = tradeClient;
+            this.tradeSearchService = tradeSearchService;
             this.nativeProcess = nativeProcess;
             this.settings = settings;
             this.nativeCursor = nativeCursor;

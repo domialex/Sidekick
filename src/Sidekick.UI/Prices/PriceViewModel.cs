@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Trades;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -23,7 +23,7 @@ namespace Sidekick.UI.Prices
     [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
     {
-        private readonly ITradeClient tradeClient;
+        private readonly ITradeSearchService tradeSearchService;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticDataService staticDataService;
         private readonly ILanguageProvider languageProvider;
@@ -33,7 +33,7 @@ namespace Sidekick.UI.Prices
         private readonly SidekickSettings settings;
 
         public PriceViewModel(
-            ITradeClient tradeClient,
+            ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
             IStaticDataService staticDataService,
             ILanguageProvider languageProvider,
@@ -42,7 +42,7 @@ namespace Sidekick.UI.Prices
             IItemParser itemParser,
             SidekickSettings settings)
         {
-            this.tradeClient = tradeClient;
+            this.tradeSearchService = tradeSearchService;
             this.poeNinjaCache = poeNinjaCache;
             this.staticDataService = staticDataService;
             this.languageProvider = languageProvider;
@@ -83,7 +83,7 @@ namespace Sidekick.UI.Prices
             }
 
             IsFetching = true;
-            QueryResult = await tradeClient.GetListings(Item);
+            QueryResult = await tradeSearchService.GetListings(Item);
             IsFetching = false;
             if (QueryResult.Result.Any())
             {
@@ -109,7 +109,7 @@ namespace Sidekick.UI.Prices
 
             var page = (int)Math.Ceiling(Results.Count / 10d);
             IsFetching = true;
-            QueryResult = await tradeClient.GetListingsForSubsequentPages(Item, page);
+            QueryResult = await tradeSearchService.GetListingsForSubsequentPages(Item, page);
             IsFetching = false;
             if (QueryResult.Result.Any())
             {

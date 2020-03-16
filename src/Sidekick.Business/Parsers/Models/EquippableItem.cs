@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Filters;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Parsers.Types;
 
 namespace Sidekick.Business.Parsers.Models
