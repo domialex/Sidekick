@@ -71,7 +71,7 @@
                                                 VerticalAlignment="Center"
                                                 ToolTip="{Binding Item.Listing.Price.Currency}">
                                                 <Image.Source>
-                                                    <BitmapImage DecodePixelWidth="20" UriSource="{Binding CurrencyUrl}" />
+                                                    <BitmapImage DecodePixelWidth="20" UriSource="{Binding ImageUrl}" />
                                                 </Image.Source>
                                             </Image>
                                         </StackPanel>

@@ -16,14 +16,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 
         public List<StaticItemCategory> Categories { get; private set; }
         public Dictionary<string, string> Lookup { get; private set; }
-        public Dictionary<string, string> CurrencyUrls { get; private set; }
+        private Dictionary<string, string> ImageUrls { get; set; }
 
         public async Task OnInit()
         {
             Categories = null;
             Categories = await poeApiClient.Fetch<StaticItemCategory>();
             Lookup = ToLookup();
-            CurrencyUrls = GetCurrencyUrls();
+            FillImages();
         }
 
         private Dictionary<string, string> ToLookup()
@@ -31,17 +31,27 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
             return Categories.Where(x => !x.Id.StartsWith("Maps")).SelectMany(x => x.Entries).ToDictionary(key => key.Text, value => value.Id);
         }
 
-        private Dictionary<string, string> GetCurrencyUrls()
+        private void FillImages()
         {
-            var currencies = Categories.FirstOrDefault(c => c.Id == "Currency");
+            ImageUrls = new Dictionary<string, string>();
 
-            // TODO: Handle this better?
-            if (currencies == null)
+            foreach (var category in Categories)
             {
-                return new Dictionary<string, string>();
+                foreach (var entry in category.Entries)
+                {
+                    ImageUrls.Add(entry.Id, entry.Image);
+                }
+            }
+        }
+
+        public string GetImage(string id)
+        {
+            if (ImageUrls.TryGetValue(id, out var result))
+            {
+                return result;
             }
 
-            return currencies.Entries.ToDictionary(key => key.Id, value => value.Image.Substring(1));
+            return null;
         }
     }
 }

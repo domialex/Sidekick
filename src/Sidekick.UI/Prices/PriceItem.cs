@@ -55,7 +55,7 @@ namespace Sidekick.UI.Prices
         public string Color => Item?.Item.Rarity.GetColor();
 
         public string Amount { get; set; }
-        public string CurrencyUrl { get; set; }
+        public string ImageUrl { get; set; }
         public string Age { get; set; }
 
         private string GetHumanReadableTimeSpan(DateTimeOffset time)

@@ -125,11 +125,12 @@ namespace Sidekick.UI.Prices
 
             foreach (var result in results)
             {
-                staticDataService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
-
                 items.Add(new PriceItem(result)
                 {
-                    CurrencyUrl = $"{languageProvider.Language.PoeCdnBaseUrl}{url}"
+                    ImageUrl = new Uri(
+                        languageProvider.Language.PoeCdnBaseUrl,
+                        staticDataService.GetImage(result.Listing.Price.Currency)
+                    ).AbsoluteUri,
                 });
             }
 

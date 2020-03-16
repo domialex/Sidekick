@@ -6,6 +6,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
     {
         List<StaticItemCategory> Categories { get; }
         Dictionary<string, string> Lookup { get; }
-        Dictionary<string, string> CurrencyUrls { get; }
+        string GetImage(string id);
     }
 }
