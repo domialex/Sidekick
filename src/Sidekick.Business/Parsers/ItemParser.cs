@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Languages;
@@ -12,7 +13,6 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Business.Trades.Results;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
 namespace Sidekick.Business.Parsers
@@ -621,9 +621,9 @@ namespace Sidekick.Business.Parsers
             return InfluenceType.None;
         }
 
-        private Dictionary<StatData, FilterValue> GetItemAttributes(IEnumerable<string> input)
+        private Dictionary<StatData, SearchFilterValue> GetItemAttributes(IEnumerable<string> input)
         {
-            var result = new Dictionary<StatData, FilterValue>();
+            var result = new Dictionary<StatData, SearchFilterValue>();
 
             foreach (var line in input)
             {
@@ -677,7 +677,7 @@ namespace Sidekick.Business.Parsers
                 if (attribute != null)
                 {
                     var attrValues = GetNumberRange(formattedValue);
-                    result.Add(attribute, new FilterValue() { Min = attrValues.min, Max = attrValues.max });
+                    result.Add(attribute, new SearchFilterValue() { Min = attrValues.min, Max = attrValues.max });
                 }
             }
 

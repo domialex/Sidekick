@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb

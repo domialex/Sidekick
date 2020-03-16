@@ -4,51 +4,51 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
 {
     public class MiscFilter
     {
-        public FilterValue Quality { get; set; }
+        public SearchFilterValue Quality { get; set; }
 
         [JsonPropertyName("gem_level")]
-        public FilterValue GemLevel { get; set; }
+        public SearchFilterValue GemLevel { get; set; }
 
         [JsonPropertyName("ilvl")]
-        public FilterValue ItemLevel { get; set; }
+        public SearchFilterValue ItemLevel { get; set; }
 
         [JsonPropertyName("talisman_art")]
-        public FilterOption TalismanArt { get; set; }
+        public SearchFilterOption TalismanArt { get; set; }
 
         [JsonPropertyName("alternate_art")]
-        public FilterOption AlternateArt { get; set; }
+        public SearchFilterOption AlternateArt { get; set; }
 
-        public FilterOption Identified { get; set; }
+        public SearchFilterOption Identified { get; set; }
 
-        public FilterOption Corrupted { get; set; }
+        public SearchFilterOption Corrupted { get; set; }
 
-        public FilterOption Crafted { get; set; }
+        public SearchFilterOption Crafted { get; set; }
 
-        public FilterOption Enchanted { get; set; }
+        public SearchFilterOption Enchanted { get; set; }
 
-        public FilterOption Veiled { get; set; }
+        public SearchFilterOption Veiled { get; set; }
 
-        public FilterOption Mirrored { get; set; }
+        public SearchFilterOption Mirrored { get; set; }
 
         [JsonPropertyName("elder_item")]
-        public FilterOption ElderItem { get; set; }
+        public SearchFilterOption ElderItem { get; set; }
 
         [JsonPropertyName("hunter_item")]
-        public FilterOption HunterItem { get; set; }
+        public SearchFilterOption HunterItem { get; set; }
 
         [JsonPropertyName("shaper_item")]
-        public FilterOption ShaperItem { get; set; }
+        public SearchFilterOption ShaperItem { get; set; }
 
         [JsonPropertyName("warlord_item")]
-        public FilterOption WarlordItem { get; set; }
+        public SearchFilterOption WarlordItem { get; set; }
 
         [JsonPropertyName("crusader_item")]
-        public FilterOption CrusaderItem { get; set; }
+        public SearchFilterOption CrusaderItem { get; set; }
 
         [JsonPropertyName("redeemer_item")]
-        public FilterOption RedeemerItem { get; set; }
+        public SearchFilterOption RedeemerItem { get; set; }
 
         [JsonPropertyName("synthesised_item")]
-        public FilterOption SynthesisedItem { get; set; }
+        public SearchFilterOption SynthesisedItem { get; set; }
     }
 }

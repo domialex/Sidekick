@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Business.Trades.Results
 {
-    public class Item
+    public class ResultItem : Item
     {
         public bool Verified { get; set; }
 
@@ -17,11 +17,6 @@ namespace Sidekick.Business.Trades.Results
         public string Icon { get; set; }
 
         public string League { get; set; }
-
-        public List<Socket> Sockets { get; set; }
-        public string Name { get; set; }
-        public string TypeLine { get; set; }
-        public bool Identified { get; set; }
 
         [JsonPropertyName("ilvl")]
         public int ItemLevel { get; set; }

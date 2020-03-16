@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
@@ -59,7 +60,7 @@ namespace Sidekick.UI.Prices
 
         public ObservableCollection<PriceItem> Results { get; private set; }
 
-        private FetchResult<SearchResult> QueryResult { get; set; }
+        private FetchResult<Result> QueryResult { get; set; }
 
         public Uri Uri => QueryResult?.Uri;
 
@@ -119,7 +120,7 @@ namespace Sidekick.UI.Prices
             UpdateCountString();
         }
 
-        private void Append(List<SearchResult> results)
+        private void Append(List<Result> results)
         {
             var items = new List<PriceItem>();
 

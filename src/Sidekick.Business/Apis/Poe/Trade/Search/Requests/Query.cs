@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 
-namespace Sidekick.Business.Trades.Requests
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class Query
     {
@@ -10,6 +10,6 @@ namespace Sidekick.Business.Trades.Requests
         public string Type { get; set; }
         public string Term { get; set; }
         public List<StatFilterGroup> Stats { get; set; } = new List<StatFilterGroup>();
-        public Filters Filters { get; set; } = new Filters();
+        public SearchFilters Filters { get; set; } = new SearchFilters();
     }
 }

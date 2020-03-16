@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
-using Sidekick.Business.Trades.Results;
 
-namespace Sidekick.Business.Trades.Requests
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class QueryRequest
     {
         public QueryRequest(Parsers.Models.Item item)
         {
             Query.Status.Option = StatusType.Online;
-            Query.Filters.TradeFilters.Filters.SaleType = new FilterOption { Option = "priced" };
+            Query.Filters.TradeFilters.Filters.SaleType = new SearchFilterOption { Option = "priced" };
 
             var itemType = item.GetType();
 
@@ -21,7 +21,7 @@ namespace Sidekick.Business.Trades.Requests
                 if (((EquippableItem)item).Rarity == Rarity.Unique)
                 {
                     Query.Name = item.Name;
-                    Query.Filters.TypeFilters.Filters.Rarity = new FilterOption()
+                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "Unique",
                     };
@@ -29,7 +29,7 @@ namespace Sidekick.Business.Trades.Requests
                 else
                 {
                     Query.Type = item.Type;
-                    Query.Filters.TypeFilters.Filters.Rarity = new FilterOption()
+                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "nonunique",
                     };
@@ -41,7 +41,7 @@ namespace Sidekick.Business.Trades.Requests
 
                     if (result >= 86)
                     {
-                        Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
+                        Query.Filters.MiscFilters.Filters.ItemLevel = new SearchFilterValue()
                         {
                             Min = 86
                         };
@@ -60,37 +60,37 @@ namespace Sidekick.Business.Trades.Requests
                         case InfluenceType.None:
                             break;
                         case InfluenceType.Shaper:
-                            Query.Filters.MiscFilters.Filters.ShaperItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.ShaperItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
                             break;
                         case InfluenceType.Crusader:
-                            Query.Filters.MiscFilters.Filters.CrusaderItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.CrusaderItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
                             break;
                         case InfluenceType.Elder:
-                            Query.Filters.MiscFilters.Filters.ElderItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.ElderItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
                             break;
                         case InfluenceType.Hunter:
-                            Query.Filters.MiscFilters.Filters.HunterItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.HunterItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
                             break;
                         case InfluenceType.Redeemer:
-                            Query.Filters.MiscFilters.Filters.RedeemerItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.RedeemerItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
                             break;
                         case InfluenceType.Warlord:
-                            Query.Filters.MiscFilters.Filters.WarlordItem = new FilterOption()
+                            Query.Filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption()
                             {
                                 Option = "true"
                             };
@@ -125,17 +125,17 @@ namespace Sidekick.Business.Trades.Requests
                 {
                     if (int.TryParse(((ArmourItem)item).Armour, out var armor))
                     {
-                        Query.Filters.ArmourFilters.Filters.Armor = new FilterValue() { Min = armor };
+                        Query.Filters.ArmourFilters.Filters.Armor = new SearchFilterValue() { Min = armor };
                     }
 
                     if (int.TryParse(((ArmourItem)item).EnergyShield, out var es))
                     {
-                        Query.Filters.ArmourFilters.Filters.EnergyShield = new FilterValue() { Min = es };
+                        Query.Filters.ArmourFilters.Filters.EnergyShield = new SearchFilterValue() { Min = es };
                     }
 
                     if (int.TryParse(((ArmourItem)item).Evasion, out var evasion))
                     {
-                        Query.Filters.ArmourFilters.Filters.Evasion = new FilterValue() { Min = evasion };
+                        Query.Filters.ArmourFilters.Filters.Evasion = new SearchFilterValue() { Min = evasion };
                     }
                 }
                 else if (itemType == typeof(WeaponItem))
@@ -156,16 +156,16 @@ namespace Sidekick.Business.Trades.Requests
                         critChance = 0;
                     }
 
-                    Query.Filters.WeaponFilters.Filters.APS = new FilterValue() { Min = attackSpeed };
-                    Query.Filters.WeaponFilters.Filters.Crit = new FilterValue() { Min = critChance };
-                    Query.Filters.WeaponFilters.Filters.EDPS = new FilterValue() { Min = edps };
-                    Query.Filters.WeaponFilters.Filters.PDPS = new FilterValue() { Min = pdps };
+                    Query.Filters.WeaponFilters.Filters.APS = new SearchFilterValue() { Min = attackSpeed };
+                    Query.Filters.WeaponFilters.Filters.Crit = new SearchFilterValue() { Min = critChance };
+                    Query.Filters.WeaponFilters.Filters.EDPS = new SearchFilterValue() { Min = edps };
+                    Query.Filters.WeaponFilters.Filters.PDPS = new SearchFilterValue() { Min = pdps };
                 }
             }
             else if (itemType == typeof(OrganItem))
             {
                 Query.Term = item.Name;
-                Query.Filters.TypeFilters.Filters.Category = new FilterOption()
+                Query.Filters.TypeFilters.Filters.Category = new SearchFilterOption()
                 {
                     Option = "monster.sample"
                 };
@@ -184,7 +184,7 @@ namespace Sidekick.Business.Trades.Requests
                 }
 
                 Query.Filters.MiscFilters = new MiscFilterGroup();
-                Query.Filters.MiscFilters.Filters.GemLevel = new FilterValue()
+                Query.Filters.MiscFilters.Filters.GemLevel = new SearchFilterValue()
                 {
                     Min = result,
                     Max = result,
@@ -195,13 +195,13 @@ namespace Sidekick.Business.Trades.Requests
                     throw new Exception("Unable to parse Gem Quality");
                 }
 
-                Query.Filters.MiscFilters.Filters.Quality = new FilterValue()
+                Query.Filters.MiscFilters.Filters.Quality = new SearchFilterValue()
                 {
                     Min = result,
                     Max = result,
                 };
 
-                Query.Filters.MiscFilters.Filters.Corrupted = new FilterOption()
+                Query.Filters.MiscFilters.Filters.Corrupted = new SearchFilterOption()
                 {
                     Option = item.IsCorrupted ? "true" : "false"
                 };
@@ -215,7 +215,7 @@ namespace Sidekick.Business.Trades.Requests
                 if (((MapItem)item).Rarity == Rarity.Unique)
                 {
                     Query.Name = item.Name;
-                    Query.Filters.TypeFilters.Filters.Rarity = new FilterOption()
+                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "Unique",
                     };
@@ -223,7 +223,7 @@ namespace Sidekick.Business.Trades.Requests
                 else
                 {
                     Query.Type = item.Type;
-                    Query.Filters.TypeFilters.Filters.Rarity = new FilterOption()
+                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "nonunique",
                     };
@@ -234,13 +234,13 @@ namespace Sidekick.Business.Trades.Requests
                     throw new Exception("Unable to parse Map Tier");
                 }
 
-                Query.Filters.MapFilters.Filters.MapTier = new FilterValue()       // Search correct map tier
+                Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()       // Search correct map tier
                 {
                     Min = result,
                     Max = result,
                 };
 
-                Query.Filters.MapFilters.Filters.Blighted = new FilterOption()
+                Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption()
                 {
                     Option = ((MapItem)item).IsBlight,
                 };

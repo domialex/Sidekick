@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class Exchange
     {

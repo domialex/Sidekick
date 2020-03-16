@@ -5,15 +5,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
     public class ArmorFilter
     {
         [JsonPropertyName("ar")]
-        public FilterValue Armor { get; set; }
+        public SearchFilterValue Armor { get; set; }
 
         [JsonPropertyName("es")]
-        public FilterValue EnergyShield { get; set; }
+        public SearchFilterValue EnergyShield { get; set; }
 
         [JsonPropertyName("ev")]
-        public FilterValue Evasion { get; set; }
+        public SearchFilterValue Evasion { get; set; }
 
         [JsonPropertyName("block")]
-        public FilterValue Block { get; set; }
+        public SearchFilterValue Block { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.UI.Items
 {

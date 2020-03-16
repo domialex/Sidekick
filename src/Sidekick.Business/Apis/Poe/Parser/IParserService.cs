@@ -5,6 +5,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
 {
     public interface IParserService
     {
-        Task<Item> ParseItem(string itemText);
+        Task<ResultItem> ParseItem(string itemText);
     }
 }

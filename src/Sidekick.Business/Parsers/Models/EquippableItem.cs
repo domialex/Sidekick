@@ -13,6 +13,6 @@ namespace Sidekick.Business.Parsers.Models
         public int MaxSockets { get; set; }
         public SocketFilterOption Sockets { get; set; }
         public SocketFilterOption Links { get; set; }
-        public Dictionary<StatData, FilterValue> AttributeDictionary { get; set; }
+        public Dictionary<StatData, SearchFilterValue> AttributeDictionary { get; set; }
     }
 }

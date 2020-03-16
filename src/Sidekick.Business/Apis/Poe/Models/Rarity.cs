@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Trades.Results
+namespace Sidekick.Business.Apis.Poe.Models
 {
     public enum Rarity
     {

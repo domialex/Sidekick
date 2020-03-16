@@ -1,6 +1,6 @@
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
 {
-    public class FilterOption
+    public class SearchFilterOption
     {
         public string Option { get; set; }
     }

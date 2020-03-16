@@ -6,9 +6,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Trades.Requests;
 using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -94,7 +94,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         }
 
-        public async Task<FetchResult<SearchResult>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
+        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
         {
             var queryResult = await Query(item);
 
@@ -102,7 +102,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             {
                 var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 1).Select(x => GetListings(queryResult, x)));
 
-                return new FetchResult<SearchResult>()
+                return new FetchResult<Result>()
                 {
                     Id = queryResult.Id,
                     Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
@@ -114,7 +114,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<SearchResult>> GetListings(Parsers.Models.Item item)
+        public async Task<FetchResult<Result>> GetListings(Parsers.Models.Item item)
         {
             var queryResult = await Query(item);
 
@@ -122,7 +122,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             {
                 var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
 
-                return new FetchResult<SearchResult>()
+                return new FetchResult<Result>()
                 {
                     Id = queryResult.Id,
                     Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
@@ -134,10 +134,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<SearchResult>> GetListings(FetchResult<string> queryResult, int page = 0)
+        public async Task<FetchResult<Result>> GetListings(FetchResult<string> queryResult, int page = 0)
         {
             logger.LogInformation($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
-            FetchResult<SearchResult> result = null;
+            FetchResult<Result> result = null;
 
             try
             {
@@ -145,7 +145,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    result = await JsonSerializer.DeserializeAsync<FetchResult<SearchResult>>(content, new JsonSerializerOptions()
+                    result = await JsonSerializer.DeserializeAsync<FetchResult<Result>>(content, new JsonSerializerOptions()
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });

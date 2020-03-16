@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
@@ -54,13 +55,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
         /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
         /// There is no recurring logic here so every case has to be handled manually.
         /// </summary>
-        public async Task<Item> ParseItem(string itemText)
+        public async Task<ResultItem> ParseItem(string itemText)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
             try
             {
-                var item = new Item();
+                var item = new ResultItem();
 
                 var blocks = itemText
                     .Split(BLOCK_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
@@ -78,7 +79,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
 
         #region Item Header (Rarity, Name, Type)
-        private void ParseHeader(ref Item item, ref List<string> blocks)
+        private void ParseHeader(ref ResultItem item, ref List<string> blocks)
         {
             var headerBlock = blocks[0];
 

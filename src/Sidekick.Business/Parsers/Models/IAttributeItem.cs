@@ -6,6 +6,6 @@ namespace Sidekick.Business.Parsers.Models
 {
     public interface IAttributeItem
     {
-        Dictionary<StatData, FilterValue> AttributeDictionary { get; set; }
+        Dictionary<StatData, SearchFilterValue> AttributeDictionary { get; set; }
     }
 }

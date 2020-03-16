@@ -9,7 +9,7 @@ namespace Sidekick.UI.Prices
 {
     public partial class PriceItem
     {
-        public PriceItem(SearchResult result)
+        public PriceItem(Result result)
         {
             if (result.Listing.Price != null)
             {
@@ -50,7 +50,7 @@ namespace Sidekick.UI.Prices
             Item.Item.Requirements = Item.Item.Requirements.OrderBy(x => x.Order).ToList();
         }
 
-        public SearchResult Item { get; set; }
+        public Result Item { get; set; }
 
         public string Color => Item?.Item.Rarity.GetColor();
 

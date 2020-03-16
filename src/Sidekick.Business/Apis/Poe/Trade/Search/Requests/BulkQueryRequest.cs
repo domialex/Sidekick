@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
-using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 
-namespace Sidekick.Business.Trades.Requests
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class BulkQueryRequest
     {

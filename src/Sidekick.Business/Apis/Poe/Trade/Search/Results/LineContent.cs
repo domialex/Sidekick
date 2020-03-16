@@ -19,6 +19,7 @@ namespace Sidekick.Business.Trades.Results
         public int Order { get; set; }
 
         private List<LineContentValue> values = null;
+
         [JsonIgnore]
         public List<LineContentValue> Values
         {
@@ -37,13 +38,10 @@ namespace Sidekick.Business.Trades.Results
                         continue;
                     }
 
-                    var stringValue = (JsonElement)value[0];
-                    var type = (JsonElement)value[1];
-
                     result.Add(new LineContentValue()
                     {
-                        Value = stringValue.GetString(),
-                        Type = (LineContentType)type.GetInt32()
+                        Value = value[0].GetString(),
+                        Type = (LineContentType)value[1].GetInt32()
                     });
                 }
                 return result;

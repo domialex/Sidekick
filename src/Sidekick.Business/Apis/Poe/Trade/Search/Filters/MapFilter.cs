@@ -5,24 +5,24 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
     public class MapFilter
     {
         [JsonPropertyName("map_iiq")]
-        public FilterValue MapIiq { get; set; }
+        public SearchFilterValue MapIiq { get; set; }
 
         [JsonPropertyName("map_iir")]
-        public FilterValue MapIir { get; set; }
+        public SearchFilterValue MapIir { get; set; }
 
         [JsonPropertyName("map_tier")]
-        public FilterValue MapTier { get; set; }
+        public SearchFilterValue MapTier { get; set; }
 
         [JsonPropertyName("map_packsize")]
-        public FilterValue MapPacksize { get; set; }
+        public SearchFilterValue MapPacksize { get; set; }
 
         [JsonPropertyName("map_blighted")]
-        public FilterOption Blighted { get; set; }
+        public SearchFilterOption Blighted { get; set; }
 
         [JsonPropertyName("map_elder")]
-        public FilterOption Elder { get; set; }
+        public SearchFilterOption Elder { get; set; }
 
         [JsonPropertyName("map_shaped")]
-        public FilterOption Shaped { get; set; }
+        public SearchFilterOption Shaped { get; set; }
     }
 }

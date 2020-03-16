@@ -170,7 +170,7 @@ namespace Sidekick.Windows.AdvancedSearch
 
         private void Search_Click(object sender, EventArgs e)
         {
-            var choosenAttributesDict = new Dictionary<StatData, FilterValue>();
+            var choosenAttributesDict = new Dictionary<StatData, SearchFilterValue>();
 
             foreach (var pair in RowElementsDictionary)
             {
@@ -250,7 +250,7 @@ namespace Sidekick.Windows.AdvancedSearch
             return entry;
         }
 
-        private FilterValue GetValue(int row)
+        private SearchFilterValue GetValue(int row)
         {
             var minValStr = RowElementsDictionary[row].minVal.Text;
             var maxValStr = RowElementsDictionary[row].maxVal.Text;
@@ -267,7 +267,7 @@ namespace Sidekick.Windows.AdvancedSearch
                 maxVal = val;
             }
 
-            return new FilterValue() { Min = minVal, Max = maxVal };
+            return new SearchFilterValue() { Min = minVal, Max = maxVal };
         }
 
         private RowDefinition BuildRow(int? height = null)
