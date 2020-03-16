@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages
 {
@@ -38,6 +37,7 @@ namespace Sidekick.Business.Languages
         string DescriptionEnergyShield { get; }
         string DescriptionArmour { get; }
         string DescriptionEvasion { get; }
+        string DescriptionLevel { get; }
 
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }

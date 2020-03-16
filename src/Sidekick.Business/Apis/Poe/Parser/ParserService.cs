@@ -125,11 +125,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
         #endregion
 
-        #region Properties (Armour, Evasion, Energy Shield, Quality)
+        #region Properties (Armour, Evasion, Energy Shield, Quality, Level)
         private Regex ArmorPattern { get; set; }
         private Regex EnergyShieldPattern { get; set; }
         private Regex EvasionPattern { get; set; }
         private Regex QualityPattern { get; set; }
+        private Regex LevelPattern { get; set; }
 
         private void InitProperties()
         {
@@ -137,6 +138,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             EnergyShieldPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
             EvasionPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
             QualityPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
+            LevelPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
         }
 
         private void ParseProperties(ref ParsedItem item, ref List<string> blocks)
@@ -147,8 +149,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.EnergyShield = GetInt(EnergyShieldPattern, block);
             item.Evasion = GetInt(EvasionPattern, block);
             item.Quality = GetInt(QualityPattern, block);
+            item.Level = GetInt(LevelPattern, block);
 
-            if (item.Armor + item.EnergyShield + item.Evasion > 0)
+            if (item.Armor + item.EnergyShield + item.Evasion + item.Quality + item.Level > 0)
             {
                 blocks.RemoveAt(0);
             }

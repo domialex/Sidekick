@@ -49,56 +49,58 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "之罈";
         public string KeywordEssence => "精髓";
 
-        public string AttributeCategoryCrafted => throw new NotImplementedException();
+        public string AttributeCategoryCrafted => "__TranslationRequired__";
 
-        public Regex PercentagAddedRegex => throw new NotImplementedException();
+        public Regex PercentagAddedRegex => throw new NotSupportedException();
 
-        public string PercentageAddedRegexPattern => throw new NotImplementedException();
+        public string PercentageAddedRegexPattern => "__TranslationRequired__";
 
-        public string PercentageIncreasedOrDecreasedRegexPattern => throw new NotImplementedException();
+        public string PercentageIncreasedOrDecreasedRegexPattern => "__TranslationRequired__";
 
-        public string AttributeIncreasedRegexPattern => throw new NotImplementedException();
+        public string AttributeIncreasedRegexPattern => "__TranslationRequired__";
 
-        public string CategoryNameCrafted => throw new NotImplementedException();
+        public string CategoryNameCrafted => "__TranslationRequired__";
 
-        public string AttributeCategoryImplicit => throw new NotImplementedException();
+        public string AttributeCategoryImplicit => "__TranslationRequired__";
 
-        public string CategoryNameImplicit => throw new NotImplementedException();
+        public string CategoryNameImplicit => "__TranslationRequired__";
 
-        public string AttributeCategoryFractured => throw new NotImplementedException();
+        public string AttributeCategoryFractured => "__TranslationRequired__";
 
-        public string CategoryNameFractured => throw new NotImplementedException();
+        public string CategoryNameFractured => "__TranslationRequired__";
 
-        public string AttributeCategoryEnchant => throw new NotImplementedException();
+        public string AttributeCategoryEnchant => "__TranslationRequired__";
 
-        public string CategoryNameEnchant => throw new NotImplementedException();
+        public string CategoryNameEnchant => "__TranslationRequired__";
 
-        public string AttributeCategoryVeiled => throw new NotImplementedException();
+        public string AttributeCategoryVeiled => "__TranslationRequired__";
 
-        public string CategoryNameVeiled => throw new NotImplementedException();
+        public string CategoryNameVeiled => "__TranslationRequired__";
 
-        public string AttributeCategoryDelve => throw new NotImplementedException();
+        public string AttributeCategoryDelve => "__TranslationRequired__";
 
-        public string CategoryNameDelve => throw new NotImplementedException();
+        public string CategoryNameDelve => "__TranslationRequired__";
 
-        public string AttributeCategoryExplicit => throw new NotImplementedException();
+        public string AttributeCategoryExplicit => "__TranslationRequired__";
 
-        public string AttributeRangeRegexPattern => throw new NotImplementedException();
+        public string AttributeRangeRegexPattern => "__TranslationRequired__";
 
-        public string KeywordRange => throw new NotImplementedException();
+        public string KeywordRange => "__TranslationRequired__";
 
-        public string DescriptionPhysicalDamage => throw new NotImplementedException();
+        public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
-        public string DescriptionElementalDamage => throw new NotImplementedException();
+        public string DescriptionElementalDamage => "__TranslationRequired__";
 
-        public string DescriptionAttacksPerSecond => throw new NotImplementedException();
+        public string DescriptionAttacksPerSecond => "__TranslationRequired__";
 
-        public string DescriptionCriticalStrikeChance => throw new NotImplementedException();
+        public string DescriptionCriticalStrikeChance => "__TranslationRequired__";
 
-        public string DescriptionEnergyShield => throw new NotImplementedException();
+        public string DescriptionEnergyShield => "__TranslationRequired__";
 
-        public string DescriptionArmour => throw new NotImplementedException();
+        public string DescriptionArmour => "__TranslationRequired__";
 
-        public string DescriptionEvasion => throw new NotImplementedException();
+        public string DescriptionEvasion => "__TranslationRequired__";
+
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }

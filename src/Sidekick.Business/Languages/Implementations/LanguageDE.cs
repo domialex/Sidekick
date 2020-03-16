@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -74,5 +73,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionEnergyShield => "Energieschild: ";
         public string DescriptionArmour => "Rüstung: ";
         public string DescriptionEvasion => "Ausweichwert: ";
+
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }

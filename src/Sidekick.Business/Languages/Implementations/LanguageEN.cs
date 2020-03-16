@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -20,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "Divination Card";
         public string DescriptionUnidentified => "Unidentified";
         public string DescriptionQuality => "Quality: ";
+        public string DescriptionLevel => "Level: ";
         public string DescriptionCorrupted => "Corrupted";
         public string DescriptionRarity => "Rarity: ";
         public string DescriptionSockets => "Sockets: ";

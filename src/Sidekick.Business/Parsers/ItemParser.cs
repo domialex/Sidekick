@@ -94,7 +94,7 @@ namespace Sidekick.Business.Parsers
                         Rarity.Currency => GetCurrencyItem(lines[1]),
                         Rarity.Gem => GetGemItem(itemProperties, lines),
                         Rarity.DivinationCard => GetDivinationCardItem(lines[1]),
-                        _ => throw new NotImplementedException()
+                        _ => throw new NotSupportedException()
                     };
                 }
 
