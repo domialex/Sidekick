@@ -27,7 +27,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             Patterns = Categories
                 .SelectMany(x => x.Entries)
                 .Select(x => (
-                    new Regex(Regex.Escape(x.Text).Replace("#", "[\\d,\\.]+")),
+                    new Regex(Regex.Escape(x.Text).Replace("\\#", "([\\d,\\.]+)")),
                     x
                 ))
                 .ToList();

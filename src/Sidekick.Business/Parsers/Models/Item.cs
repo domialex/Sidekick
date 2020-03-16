@@ -1,3 +1,5 @@
+using Sidekick.Business.Trades.Results;
+
 namespace Sidekick.Business.Parsers.Models
 {
     public abstract class Item

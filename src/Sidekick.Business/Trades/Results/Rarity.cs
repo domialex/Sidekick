@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Parsers.Models
+namespace Sidekick.Business.Trades.Results
 {
     public enum Rarity
     {

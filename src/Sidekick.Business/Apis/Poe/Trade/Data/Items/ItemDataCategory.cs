@@ -14,9 +14,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     /// Itemised Monsters
     /// Watchstones
     /// </summary>
-    public class ItemCategory
+    public class ItemDataCategory
     {
         public string Label { get; set; }
-        public List<Item> Entries { get; set; }
+        public List<ItemData> Entries { get; set; }
     }
 }

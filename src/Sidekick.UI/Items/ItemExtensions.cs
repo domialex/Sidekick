@@ -1,10 +1,10 @@
-using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.UI.Items
 {
     public static class ItemExtensions
     {
-        public static string GetColor(this Item item)
+        public static string GetColor(this Business.Parsers.Models.Item item)
         {
             return item?.Rarity switch
             {

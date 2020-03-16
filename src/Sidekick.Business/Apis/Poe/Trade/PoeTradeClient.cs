@@ -48,7 +48,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             string name;
             switch (typeof(TReturn).Name)
             {
-                case nameof(ItemCategory):
+                case nameof(ItemDataCategory):
                     name = "items";
                     path = "data/items/";
                     break;

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
+using Sidekick.Business.Trades.Results;
 
 namespace Sidekick.Business.Trades.Requests
 {
     public class QueryRequest
     {
-        public QueryRequest(Item item)
+        public QueryRequest(Parsers.Models.Item item)
         {
             Query.Status.Option = StatusType.Online;
             Query.Filters.TradeFilters.Filters.SaleType = new FilterOption { Option = "priced" };
@@ -102,47 +103,47 @@ namespace Sidekick.Business.Trades.Requests
                     Query.Filters.SocketFilter.Filters.Links = ((EquippableItem)item).Links;
                 }
 
-                if(((EquippableItem)item).AttributeDictionary != null)
+                if (((EquippableItem)item).AttributeDictionary != null)
                 {
                     var statFilters = new List<StatFilter>();
 
-                    foreach(var pair in ((EquippableItem)item).AttributeDictionary)
+                    foreach (var pair in ((EquippableItem)item).AttributeDictionary)
                     {
                         statFilters.Add(new StatFilter()
                         {
                             Disabled = false,
                             Id = pair.Key.Id,
                             Value = pair.Value,
-                        });                        
+                        });
                     }
 
                     Query.Stats = new List<Stat>() { new Stat() { Type = StatType.And, Filters = statFilters } };
                 }
 
                 // TODO Block Chance
-                if(itemType == typeof(ArmourItem))
+                if (itemType == typeof(ArmourItem))
                 {
-                    if(int.TryParse(((ArmourItem)item).Armour, out var armor))
+                    if (int.TryParse(((ArmourItem)item).Armour, out var armor))
                     {
                         Query.Filters.ArmourFilter.Filters.Armor = new FilterValue() { Min = armor };
                     }
 
-                    if(int.TryParse(((ArmourItem)item).EnergyShield, out var es))
+                    if (int.TryParse(((ArmourItem)item).EnergyShield, out var es))
                     {
                         Query.Filters.ArmourFilter.Filters.EnergyShield = new FilterValue() { Min = es };
                     }
 
-                    if(int.TryParse(((ArmourItem)item).Evasion, out var evasion))
+                    if (int.TryParse(((ArmourItem)item).Evasion, out var evasion))
                     {
                         Query.Filters.ArmourFilter.Filters.Evasion = new FilterValue() { Min = evasion };
                     }
                 }
-                else if(itemType == typeof(WeaponItem))
+                else if (itemType == typeof(WeaponItem))
                 {
                     var physDamage = ParseRange(((WeaponItem)item).PhysicalDamage);
                     var elementalDamage = ParseRange(((WeaponItem)item).ElementalDamage);
 
-                    if(!double.TryParse(((WeaponItem)item).AttacksPerSecond, out var attackSpeed))
+                    if (!double.TryParse(((WeaponItem)item).AttacksPerSecond, out var attackSpeed))
                     {
                         attackSpeed = 0;
                     }
@@ -150,7 +151,7 @@ namespace Sidekick.Business.Trades.Requests
                     var pdps = CalculateDps(physDamage.min, physDamage.max, attackSpeed);
                     var edps = CalculateDps(elementalDamage.min, elementalDamage.max, attackSpeed);
 
-                    if(!double.TryParse(((WeaponItem)item).CriticalStrikeChance, out var critChance))
+                    if (!double.TryParse(((WeaponItem)item).CriticalStrikeChance, out var critChance))
                     {
                         critChance = 0;
                     }
@@ -244,7 +245,7 @@ namespace Sidekick.Business.Trades.Requests
                     Option = ((MapItem)item).IsBlight,
                 };
 
-                if(((MapItem)item).AttributeDictionary != null)
+                if (((MapItem)item).AttributeDictionary != null)
                 {
                     var statFilters = new List<StatFilter>();
 
@@ -278,17 +279,17 @@ namespace Sidekick.Business.Trades.Requests
         {
             int index = input.IndexOf("-");
 
-            if(index < 0)
+            if (index < 0)
             {
                 return (0, 0);
             }
 
-            if(!double.TryParse(input.Substring(0, index), out var min))
+            if (!double.TryParse(input.Substring(0, index), out var min))
             {
                 min = 0;
             }
 
-            if(!double.TryParse(input.Substring(index+1, input.Length - index - 1), out var max))
+            if (!double.TryParse(input.Substring(index + 1, input.Length - index - 1), out var max))
             {
                 max = 0;
             }

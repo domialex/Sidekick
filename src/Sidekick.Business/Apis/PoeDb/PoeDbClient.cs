@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb
@@ -49,12 +50,12 @@ namespace Sidekick.Business.Apis.PoeDb
         {
             var subUrl = item.Rarity switch
             {
-                Parsers.Models.Rarity.Unique => SubUrlUnique,
-                Parsers.Models.Rarity.Gem => SubUrlGem,
+                Rarity.Unique => SubUrlUnique,
+                Rarity.Gem => SubUrlGem,
                 _ => SubUrlItem
             };
 
-            var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
+            var searchLink = item.Rarity == Rarity.Unique ? item.Name : item.Type;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri + wikiLink);
         }

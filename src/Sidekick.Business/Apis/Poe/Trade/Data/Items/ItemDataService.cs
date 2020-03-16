@@ -15,37 +15,49 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             this.poeApiClient = poeApiClient;
         }
 
-        private List<(Regex Regex, Item Item)> Patterns { get; set; }
+        private List<(Regex Regex, ItemData Item)> NamePatterns { get; set; }
+
+        private List<(Regex Regex, ItemData Item)> TypePatterns { get; set; }
 
         public async Task OnInit()
         {
-            var categories = await poeApiClient.Fetch<ItemCategory>();
+            var categories = await poeApiClient.Fetch<ItemDataCategory>();
 
-            Patterns = categories
-                .SelectMany(x => x.Entries)
+            var patterns = categories.SelectMany(x => x.Entries);
+
+            TypePatterns = patterns
+                .Where(x => string.IsNullOrEmpty(x.Name))
                 .Select(x => (
-                    new Regex(Regex.Escape(x.Name ?? x.Text)),
-                    x
+                    Regex: new Regex(Regex.Escape(x.Type)),
+                    Item: x
+                ))
+                .ToList();
+
+            NamePatterns = patterns
+                .Where(x => !string.IsNullOrEmpty(x.Name))
+                .Select(x => (
+                    Regex: new Regex(Regex.Escape(x.Name)),
+                    Item: x
                 ))
                 .ToList();
         }
 
-        public Item GetItem(string name)
+        public ItemData GetItem(string text)
         {
-            var result = Patterns
-                .Where(x => x.Regex.IsMatch(name))
-                .Select(x => x.Item);
+            var result = NamePatterns
+                .Where(x => x.Regex.IsMatch(text));
 
-            if (result.Count() <= 1)
-            {
-                return result.FirstOrDefault();
-            }
-            else
+            if (result.Count() != 0)
             {
                 return result
-                    .Where(x => new Regex(Regex.Escape(x.Text)).IsMatch(name))
+                    .Select(x => x.Item)
                     .FirstOrDefault();
             }
+
+            return TypePatterns
+                .Where(x => x.Regex.IsMatch(text))
+                .Select(x => x.Item)
+                .FirstOrDefault();
         }
     }
 }

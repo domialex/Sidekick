@@ -12,6 +12,7 @@ using Sidekick.Business.Parsers.Models;
 using Sidekick.Business.Parsers.Types;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;
+using Sidekick.Business.Trades.Results;
 using Item = Sidekick.Business.Parsers.Models.Item;
 
 namespace Sidekick.Business.Parsers
@@ -375,37 +376,36 @@ namespace Sidekick.Business.Parsers
 
         private Rarity GetRarity(string rarityString)
         {
-            var rarity = Rarity.Unknown;
             if (rarityString == languageProvider.Language.RarityNormal)
             {
-                rarity = Rarity.Normal;
+                return Rarity.Normal;
             }
             else if (rarityString == languageProvider.Language.RarityMagic)
             {
-                rarity = Rarity.Magic;
+                return Rarity.Magic;
             }
             else if (rarityString == languageProvider.Language.RarityRare)
             {
-                rarity = Rarity.Rare;
+                return Rarity.Rare;
             }
             else if (rarityString == languageProvider.Language.RarityUnique)
             {
-                rarity = Rarity.Unique;
+                return Rarity.Unique;
             }
             else if (rarityString == languageProvider.Language.RarityCurrency)
             {
-                rarity = Rarity.Currency;
+                return Rarity.Currency;
             }
             else if (rarityString == languageProvider.Language.RarityGem)
             {
-                rarity = Rarity.Gem;
+                return Rarity.Gem;
             }
             else if (rarityString == languageProvider.Language.RarityDivinationCard)
             {
-                rarity = Rarity.DivinationCard;
+                return Rarity.DivinationCard;
             }
 
-            return rarity;
+            return Rarity.Unknown;
         }
 
         private ItemProperties GetItemProperties(string[] lines)
