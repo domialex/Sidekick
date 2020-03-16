@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Categories;
+using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Trades.Requests;
@@ -22,7 +22,7 @@ namespace Sidekick.Business.Trades
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
-        private readonly IStaticDataService staticItemCategoryService;
+        private readonly IStaticDataService staticDataService;
         private readonly SidekickSettings configuration;
         private readonly IPoeApiClient poeApiClient;
         private readonly INativeBrowser nativeBrowser;
@@ -30,7 +30,7 @@ namespace Sidekick.Business.Trades
         public TradeClient(ILogger logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
-            IStaticDataService staticItemCategoryService,
+            IStaticDataService staticDataService,
             SidekickSettings configuration,
             IPoeApiClient poeApiClient,
             INativeBrowser nativeBrowser)
@@ -38,7 +38,7 @@ namespace Sidekick.Business.Trades
             this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
-            this.staticItemCategoryService = staticItemCategoryService;
+            this.staticDataService = staticDataService;
             this.configuration = configuration;
             this.poeApiClient = poeApiClient;
             this.nativeBrowser = nativeBrowser;
@@ -60,7 +60,7 @@ namespace Sidekick.Business.Trades
                 if (IsBulk(item.Type))
                 {
                     path = $"exchange/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticItemCategoryService), poeApiClient.Options);
+                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticDataService), poeApiClient.Options);
                     baseUri = languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId;
                 }
                 else
@@ -169,7 +169,7 @@ namespace Sidekick.Business.Trades
 
         private bool IsBulk(string type)
         {
-            return staticItemCategoryService.Lookup.ContainsKey(type);
+            return staticDataService.Lookup.ContainsKey(type);
         }
     }
 }

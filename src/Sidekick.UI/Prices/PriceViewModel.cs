@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
-using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers;
 using Sidekick.Business.Parsers.Models;
@@ -25,7 +25,7 @@ namespace Sidekick.UI.Prices
     {
         private readonly ITradeClient tradeClient;
         private readonly IPoeNinjaCache poeNinjaCache;
-        private readonly IStaticDataService staticItemCategoryService;
+        private readonly IStaticDataService staticDataService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
@@ -35,7 +35,7 @@ namespace Sidekick.UI.Prices
         public PriceViewModel(
             ITradeClient tradeClient,
             IPoeNinjaCache poeNinjaCache,
-            IStaticDataService staticItemCategoryService,
+            IStaticDataService staticDataService,
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
@@ -44,7 +44,7 @@ namespace Sidekick.UI.Prices
         {
             this.tradeClient = tradeClient;
             this.poeNinjaCache = poeNinjaCache;
-            this.staticItemCategoryService = staticItemCategoryService;
+            this.staticDataService = staticDataService;
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeClipboard = nativeClipboard;
@@ -125,7 +125,7 @@ namespace Sidekick.UI.Prices
 
             foreach (var result in results)
             {
-                staticItemCategoryService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
+                staticDataService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
 
                 items.Add(new PriceItem(result)
                 {

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Business.Categories;
+using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parsers.Models;
@@ -9,11 +9,11 @@ namespace Sidekick.Business.Trades.Requests
 {
     public class BulkQueryRequest
     {
-        public BulkQueryRequest(Item item, ILanguage language, IStaticDataService staticItemCategoryService)
+        public BulkQueryRequest(Item item, ILanguage language, IStaticDataService staticDataService)
         {
             Exchange.Status.Option = StatusType.Online;
 
-            Exchange.Want.Add(staticItemCategoryService.Lookup[item.Type]);
+            Exchange.Want.Add(staticDataService.Lookup[item.Type]);
             Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
         }
 

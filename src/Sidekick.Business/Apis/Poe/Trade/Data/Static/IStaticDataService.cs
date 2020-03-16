@@ -1,7 +1,6 @@
-using Sidekick.Business.Apis.Poe.Models;
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Categories
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
     public interface IStaticDataService
     {

@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
 
-namespace Sidekick.Business.Categories
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
     public class StaticDataService : IStaticDataService, IOnInit
     {
@@ -39,7 +36,7 @@ namespace Sidekick.Business.Categories
             var currencies = Categories.FirstOrDefault(c => c.Id == "Currency");
 
             // TODO: Handle this better?
-            if(currencies == null)
+            if (currencies == null)
             {
                 return new Dictionary<string, string>();
             }

@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
     public class StaticItem
     {
