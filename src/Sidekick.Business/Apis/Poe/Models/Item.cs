@@ -5,8 +5,6 @@ namespace Sidekick.Business.Apis.Poe.Models
 {
     public class Item
     {
-        public List<Socket> Sockets { get; set; }
-
         public string Name { get; set; }
 
         public string TypeLine { get; set; }
@@ -20,5 +18,7 @@ namespace Sidekick.Business.Apis.Poe.Models
         public Rarity Rarity { get; set; }
 
         public bool Corrupted { get; set; }
+
+        public List<Socket> Sockets { get; set; } = new List<Socket>();
     }
 }

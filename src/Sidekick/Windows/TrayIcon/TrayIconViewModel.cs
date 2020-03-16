@@ -42,6 +42,32 @@ namespace Sidekick.Windows.TrayIcon
         private async Task DebugPriceCheck()
         {
             await parserService.ParseItem(@"Rarity: Rare
+Vengeance Crest
+Eternal Burgonet
+--------
+Quality: +20% (augmented)
+Armour: 470 (augmented)
+--------
+Requirements:
+Level: 69
+Str: 138
+--------
+Sockets: R-R-G R 
+--------
+Item Level: 72
+--------
+Explosive Arrow deals 25% increased Damage (enchant)
+--------
++19 to Armour
++77 to maximum Life
++16% to Fire Resistance
++19% to Chaos Resistance
++26% to Cold Resistance (crafted)
+--------
+Note: ~price 1 chaos
+");
+
+            await parserService.ParseItem(@"Rarity: Rare
 Blood Shelter
 Nightmare Bascinet
 --------

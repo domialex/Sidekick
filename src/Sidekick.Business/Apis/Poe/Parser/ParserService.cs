@@ -35,26 +35,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.itemDataService = itemDataService;
         }
 
-        private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
-
-        private Regex ArmorPattern { get; set; }
-        private Regex EnergyShieldPattern { get; set; }
-        private Regex EvasionPattern { get; set; }
-
         public Task OnAfterInit()
         {
-            RarityPatterns = new Dictionary<Rarity, Regex>();
-            RarityPatterns.Add(Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)));
-            RarityPatterns.Add(Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)));
-            RarityPatterns.Add(Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)));
-            RarityPatterns.Add(Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)));
-            RarityPatterns.Add(Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)));
-            RarityPatterns.Add(Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)));
-            RarityPatterns.Add(Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)));
-
-            ArmorPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
-            EnergyShieldPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
-            EvasionPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+            InitHeader();
+            InitProperties();
+            InitSockets();
 
             return Task.CompletedTask;
         }
@@ -77,6 +62,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 ParseHeader(ref item, ref blocks);
                 ParseProperties(ref item, ref blocks);
+                ParseSockets(ref item, ref itemText);
 
                 return item;
             }
@@ -87,7 +73,21 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        #region Item Header (Rarity, Name, Type)
+        #region Header (Rarity, Name, Type)
+        private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
+
+        private void InitHeader()
+        {
+            RarityPatterns = new Dictionary<Rarity, Regex>();
+            RarityPatterns.Add(Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)));
+            RarityPatterns.Add(Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)));
+            RarityPatterns.Add(Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)));
+            RarityPatterns.Add(Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)));
+            RarityPatterns.Add(Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)));
+            RarityPatterns.Add(Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)));
+            RarityPatterns.Add(Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)));
+        }
+
         private void ParseHeader(ref ParsedItem item, ref List<string> blocks)
         {
             var headerBlock = new ItemNameTokenizer().CleanString(blocks[0]);
@@ -125,7 +125,20 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
         #endregion
 
-        #region Item Properties (Armour, Evasion, Energy Shield)
+        #region Properties (Armour, Evasion, Energy Shield, Quality)
+        private Regex ArmorPattern { get; set; }
+        private Regex EnergyShieldPattern { get; set; }
+        private Regex EvasionPattern { get; set; }
+        private Regex QualityPattern { get; set; }
+
+        private void InitProperties()
+        {
+            ArmorPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
+            EnergyShieldPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
+            EvasionPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+            QualityPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
+        }
+
         private void ParseProperties(ref ParsedItem item, ref List<string> blocks)
         {
             var block = blocks[0];
@@ -133,6 +146,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Armor = GetInt(ArmorPattern, block);
             item.EnergyShield = GetInt(EnergyShieldPattern, block);
             item.Evasion = GetInt(EvasionPattern, block);
+            item.Quality = GetInt(QualityPattern, block);
 
             if (item.Armor + item.EnergyShield + item.Evasion > 0)
             {
@@ -141,16 +155,57 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
         #endregion
 
+        #region Sockets
+        private Regex SocketPattern { get; set; }
+
+        private void InitSockets()
+        {
+            // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
+            SocketPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionSockets)}[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
+        }
+
+        private void ParseSockets(ref ParsedItem item, ref string input)
+        {
+            var result = SocketPattern.Match(input);
+            if (result.Success)
+            {
+                var groups = result.Groups
+                    .Where(x => !string.IsNullOrEmpty(x.Value))
+                    .Select(x => x.Value)
+                    .ToList();
+                for (var index = 1; index < groups.Count; index++)
+                {
+                    var groupValue = groups[index].Replace("-", "").Trim();
+                    while (groupValue.Length > 0)
+                    {
+                        switch (groupValue[0])
+                        {
+                            case 'B': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Blue }); break;
+                            case 'G': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Green }); break;
+                            case 'R': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Red }); break;
+                            case 'W': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.White }); break;
+                            case 'A': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Abyss }); break;
+                        }
+                        groupValue = groupValue.Substring(1);
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region Helpers
         private int GetInt(Regex regex, string input)
         {
-            var match = regex.Match(input);
-
-            if (match.Success)
+            if (regex != null)
             {
-                if (int.TryParse(match.Groups[1].Value, out var result))
+                var match = regex.Match(input);
+
+                if (match.Success)
                 {
-                    return result;
+                    if (int.TryParse(match.Groups[1].Value, out var result))
+                    {
+                        return result;
+                    }
                 }
             }
 
