@@ -48,10 +48,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Tries to parse an item based on the text that Path of Exile gives on a Ctrl+C action.
-        /// There is no recurring logic here so every case has to be handled manually.
-        /// </summary>
         public async Task<ParsedItem> ParseItem(string itemText)
         {
             await languageProvider.FindAndSetLanguage(itemText);
@@ -78,6 +74,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         #region Header (Rarity, Name, Type)
         private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
+        private Regex ItemLevelPattern { get; set; }
         private Regex UnidentifiedPattern { get; set; }
         private Regex CorruptedPattern { get; set; }
 
@@ -94,6 +91,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 { Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)) }
             };
 
+            ItemLevelPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemLevel)}[^\\r\\n\\d]*(\\d+)");
             UnidentifiedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionUnidentified)}");
             CorruptedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCorrupted)}");
         }
@@ -115,6 +113,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 item.Name = lines[1];
             }
 
+            item.ItemLevel = GetInt(ItemLevelPattern, input);
             item.Identified = !UnidentifiedPattern.IsMatch(input);
             item.Corrupted = CorruptedPattern.IsMatch(input);
         }

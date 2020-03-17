@@ -24,17 +24,47 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             Categories = null;
             Categories = await poeApiClient.Fetch<StatDataCategory>();
 
-            Patterns = Categories
-                .SelectMany(x => x.Entries)
-                .Select(x => (
-                    new Regex($"[\\r\\n]+{Regex.Escape(x.Text).Replace("\\#", "([-+\\d,\\.]+)")}"),
-                    x
-                ))
-                .ToList();
+            Patterns = new List<(Regex Regex, StatData Data)>();
+            foreach (var category in Categories)
+            {
+                var first = category.Entries.FirstOrDefault();
+                if (first == null)
+                {
+                    continue;
+                }
+
+                var suffix = string.Empty;
+                switch (first.Id.Split('.').First())
+                {
+                    default: continue;
+                    case "delve":
+                    case "monster":
+                    case "explicit": suffix = "\\ *[\\r\\n]+"; break;
+                    case "implicit": suffix = "\\ *\\(implicit\\)"; break;
+                    case "enchant": suffix = "\\ *\\(enchant\\)"; break;
+                    case "crafted": suffix = "\\ *\\(crafted\\)"; break;
+                    case "veiled": suffix = "\\ *\\(veiled\\)"; break;
+                }
+
+                foreach (var entry in category.Entries)
+                {
+                    Patterns.Add((new Regex($"[\\r\\n]+{Regex.Escape(entry.Text).Replace("\\#", "([-+\\d,\\.]+)")}{suffix}"), entry));
+                }
+            }
+        }
+
+        private void InitPatterns(ref List<StatData> data, string suffix)
+        {
+
         }
 
         public List<StatData> GetStats(string text)
         {
+            if (!text.EndsWith("\\r\\n"))
+            {
+                text += "\\r\\n";
+            }
+
             return Patterns
                 .Where(x => x.Regex.IsMatch(text))
                 .Select(x => x.Data)
