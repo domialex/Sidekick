@@ -9,5 +9,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public int Evasion { get; set; } = 0;
         public int Quality { get; set; } = 0;
         public int Level { get; set; } = 0;
+        public int MapTier { get; set; } = 0;
+        public int ItemQuantity { get; set; } = 0;
+        public int ItemRarity { get; set; } = 0;
+        public int MonsterPackSize { get; set; } = 0;
+        public string ElementalDamage { get; set; } = null;
+        public double CriticalStrikeChance { get; set; } = 0;
+        public double AttacksPerSecond { get; set; } = 0;
+        public string PhysicalDamage { get; set; } = null;
     }
 }

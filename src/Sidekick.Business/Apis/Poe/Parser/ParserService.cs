@@ -98,10 +98,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private void ParseHeader(ref ParsedItem item, ref string input)
         {
             var lines = NewlinePattern.Split(input);
+            var blocks = SeparatorPattern.Split(input);
 
             item.Rarity = GetRarity(lines[0]);
 
-            var dataItem = itemDataService.GetItem(input);
+            var dataItem = itemDataService.GetItem(blocks[0]);
 
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
@@ -134,6 +135,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private Regex EvasionPattern { get; set; }
         private Regex QualityPattern { get; set; }
         private Regex LevelPattern { get; set; }
+        private Regex MapTierPattern { get; set; }
+        private Regex ItemQuantityPattern { get; set; }
+        private Regex ItemRarityPattern { get; set; }
+        private Regex MonsterPackSizePattern { get; set; }
+        private Regex AttacksPerSecondPattern { get; set; }
+        private Regex CriticalStrikeChancePattern { get; set; }
+        private Regex ElementalDamagePattern { get; set; }
+        private Regex PhysicalDamagePattern { get; set; }
 
         private void InitProperties()
         {
@@ -142,6 +151,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
             EvasionPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
             QualityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
             LevelPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
+            MapTierPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
+            ItemQuantityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemQuantity)}[^\\r\\n\\d]*(\\d+)");
+            ItemRarityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemRarity)}[^\\r\\n\\d]*(\\d+)");
+            MonsterPackSizePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
+            AttacksPerSecondPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionAttacksPerSecond)}[^\\r\\n\\d]*([\\d,\\.]+)");
+            CriticalStrikeChancePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
+            ElementalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}([^\\r\\n]*)");
+            PhysicalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}([^\\r\\n]*)");
         }
 
         private void ParseProperties(ref ParsedItem item, ref string input)
@@ -153,6 +170,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Evasion = GetInt(EvasionPattern, blocks[1]);
             item.Quality = GetInt(QualityPattern, blocks[1]);
             item.Level = GetInt(LevelPattern, blocks[1]);
+            item.MapTier = GetInt(MapTierPattern, blocks[1]);
+            item.ItemQuantity = GetInt(ItemQuantityPattern, blocks[1]);
+            item.ItemRarity = GetInt(ItemRarityPattern, blocks[1]);
+            item.MonsterPackSize = GetInt(MonsterPackSizePattern, blocks[1]);
+            item.AttacksPerSecond = GetDouble(AttacksPerSecondPattern, blocks[1]);
+            item.CriticalStrikeChance = GetDouble(CriticalStrikeChancePattern, blocks[1]);
+            item.ElementalDamage = GetString(ElementalDamagePattern, blocks[1]);
+            item.PhysicalDamage = GetString(PhysicalDamagePattern, blocks[1]);
         }
         #endregion
 
@@ -207,6 +232,39 @@ namespace Sidekick.Business.Apis.Poe.Parser
                     {
                         return result;
                     }
+                }
+            }
+
+            return 0;
+        }
+
+        private double GetDouble(Regex regex, string input)
+        {
+            if (regex != null)
+            {
+                var match = regex.Match(input);
+
+                if (match.Success)
+                {
+                    if (double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        private string GetString(Regex regex, string input)
+        {
+            if (regex != null)
+            {
+                var match = regex.Match(input);
+
+                if (match.Success)
+                {
+                    return match.Groups[1].Value;
                 }
             }
 

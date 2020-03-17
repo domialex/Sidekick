@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Parsers;
@@ -29,6 +30,7 @@ namespace Sidekick.Handlers
         private readonly IChatService chatService;
         private readonly IStashService stashService;
         private readonly SidekickSettings settings;
+        private readonly IParserService parserService;
         private bool isDisposed;
 
         public EventsHandler(
@@ -43,7 +45,8 @@ namespace Sidekick.Handlers
             IViewLocator viewLocator,
             IChatService chatService,
             IStashService stashService,
-            SidekickSettings settings)
+            SidekickSettings settings,
+            IParserService parserService)
         {
             this.events = events;
             this.whisperService = whisperService;
@@ -57,6 +60,7 @@ namespace Sidekick.Handlers
             this.chatService = chatService;
             this.stashService = stashService;
             this.settings = settings;
+            this.parserService = parserService;
             Initialize();
         }
 
@@ -134,6 +138,9 @@ namespace Sidekick.Handlers
         {
             viewLocator.CloseAll();
             await clipboard.Copy();
+
+            await parserService.ParseItem(clipboard.LastCopiedText);
+
             viewLocator.Open<PriceView>();
             return true;
         }
