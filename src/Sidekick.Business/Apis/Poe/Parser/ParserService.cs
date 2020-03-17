@@ -256,7 +256,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         #region Modifiers
         private void ParseMods(ref ParsedItem item, ref string input)
         {
-            var mods = statsDataService.GetStats(input);
+            item.Extended.Mods = statsDataService.GetMods(input);
         }
         #endregion
 
