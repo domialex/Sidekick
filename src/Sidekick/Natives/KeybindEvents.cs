@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Stashes;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
@@ -23,7 +23,7 @@ namespace Sidekick.Natives
             INativeKeyboard nativeKeyboard,
             IStashService stashService)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
@@ -131,7 +131,7 @@ namespace Sidekick.Natives
         {
             if (input == keybind)
             {
-                logger.LogInformation($"Keybind Triggered - {name}");
+                logger.Information("Keybind Triggered - {keybindName}", name);
                 if (func != null)
                 {
                     returnTask = func.Invoke();

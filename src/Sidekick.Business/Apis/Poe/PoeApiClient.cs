@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
@@ -21,7 +21,7 @@ namespace Sidekick.Business.Apis.Poe
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.client = httpClientFactory.CreateClient();
         }
@@ -70,7 +70,7 @@ namespace Sidekick.Business.Apis.Poe
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            logger.LogInformation($"Fetching {name} started.");
+            logger.Information("Fetching {apiCategory} started.", name);
             QueryResult<TReturn> result = null;
             var success = false;
             var retryAttempts = 1;
@@ -84,12 +84,12 @@ namespace Sidekick.Business.Apis.Poe
 
                     result = await JsonSerializer.DeserializeAsync<QueryResult<TReturn>>(content, Options);
 
-                    logger.LogInformation($"{result.Result.Count} {name} fetched.");
+                    logger.Information($"{result.Result.Count} {name} fetched.");
                     success = true;
                 }
                 catch (Exception ex)
                 {
-                    logger.LogInformation($"Could not fetch {name}.");
+                    logger.Information($"Could not fetch {name}.");
 
                     retryAttempts--;
                     if (retryAttempts <= 0)
@@ -98,13 +98,13 @@ namespace Sidekick.Business.Apis.Poe
                     }
                     else
                     {
-                        logger.LogInformation("Retrying in 10 seconds.");
+                        logger.Information("Retrying in 10 seconds.");
                         await Task.Delay(TimeSpan.FromSeconds(10));
                     }
                 }
             }
 
-            logger.LogInformation($"Fetching {name} finished.");
+            logger.Information("Fetching {apiCategory} finished.", name);
             return result.Result;
         }
     }

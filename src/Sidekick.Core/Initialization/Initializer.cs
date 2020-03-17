@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Sidekick.Core.Loggers;
+using Serilog;
 
 namespace Sidekick.Core.Initialization
 {
@@ -16,13 +15,13 @@ namespace Sidekick.Core.Initialization
         private List<IOnBeforeInit> beforeInitServices;
         private List<IOnInit> initServices;
         private List<IOnAfterInit> afterInitServices;
-        private readonly ILogger<Initializer> logger;
+        private readonly ILogger logger;
         private readonly IServiceProvider serviceProvider;
 
-        public Initializer(ILogger<Initializer> logger,
+        public Initializer(ILogger logger,
             IServiceProvider serviceProvider)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.serviceProvider = serviceProvider;
         }
 
@@ -79,6 +78,8 @@ namespace Sidekick.Core.Initialization
                 TotalPercentage = TotalPercentage,
                 Type = progressType,
             });
+
+            logger.Debug("{totalPercentage}% - {message} {serviceName}", TotalPercentage, message, serviceName);
         }
 
         #endregion
@@ -143,7 +144,7 @@ namespace Sidekick.Core.Initialization
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Fatal error during OnBeforeInit");
+                    logger.Error(ex, "Fatal error during OnBeforeInit");
                     HandleError(ex, serviceName);
                 }
 
@@ -165,7 +166,7 @@ namespace Sidekick.Core.Initialization
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Fatal error during OnInit");
+                    logger.Error(ex, "Fatal error during OnInit");
                     HandleError(ex, serviceName);
                 }
 
@@ -187,7 +188,7 @@ namespace Sidekick.Core.Initialization
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Fatal error during OnAfterInit");
+                    logger.Error(ex, "Fatal error during OnAfterInit");
                     HandleError(ex, serviceName);
                 }
 

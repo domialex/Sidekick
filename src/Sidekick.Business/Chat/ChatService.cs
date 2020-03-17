@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 
@@ -18,7 +18,7 @@ namespace Sidekick.Business.Chat
             INativeClipboard clipboard,
             SidekickSettings settings)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.keyboard = keyboard;
             this.clipboard = clipboard;
             this.settings = settings;
@@ -47,7 +47,7 @@ namespace Sidekick.Business.Chat
                 await clipboard.SetText(clipboardValue);
             }
 
-            logger.LogInformation($"ChatService - Wrote '{text}' in the chat");
+            logger.Information("ChatService - Wrote '{text}' in the chat", text);
         }
 
         public async Task StartWriting(string text)
@@ -68,7 +68,7 @@ namespace Sidekick.Business.Chat
                 await clipboard.SetText(clipboardValue);
             }
 
-            logger.LogInformation($"ChatService - Started writing '{text}' in the chat");
+            logger.Information("ChatService - Started writing '{text}' in the chat", text);
         }
     }
 }

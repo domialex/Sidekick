@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Initialization;
@@ -34,7 +34,7 @@ namespace Sidekick.Business.Apis.PoeNinja
                              SidekickSettings configuration)
         {
             this.client = client;
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
         }
         public PoeNinjaItem GetItem(Item item)
@@ -45,17 +45,14 @@ namespace Sidekick.Business.Apis.PoeNinja
             //    throw new Exception("Cache not yet initialized. Call Refresh() before trying to get an item.");
             //}
             return Items.FirstOrDefault(x => x.Name == item.Name);
-
         }
-
 
         /// <summary>
         /// Refreshes the cache with the specified league.
         /// </summary>
-        /// <param name="league">The league.</param>
         public async Task OnAfterInit()
         {
-            logger.LogInformation($"Fetching PoeNinja cache.");
+            logger.Information($"Populating PoeNinja cache.");
 
             var itemsTasks = Enum.GetValues(typeof(ItemType))
                                  .Cast<ItemType>()
@@ -73,7 +70,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             LastRefreshTimestamp = DateTime.Now;
 
-            logger.LogInformation($"PoeNinja cache fetched.");
+            logger.Information($"PoeNinja cache populated.");
         }
     }
 }

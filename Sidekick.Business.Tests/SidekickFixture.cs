@@ -1,6 +1,6 @@
 using AutoFixture;
 using AutoFixture.AutoMoq;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Tokenizers;
 using Sidekick.Business.Tokenizers.ItemName;

@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Natives
@@ -11,12 +11,12 @@ namespace Sidekick.Natives
 
         public NativeBrowser(ILogger logger)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
         }
 
         public void Open(Uri uri)
         {
-            logger.LogInformation($"Opening in browser: {uri.AbsoluteUri}");
+            logger.Information("Opening in browser: {uri}", uri.AbsoluteUri);
             var psi = new ProcessStartInfo
             {
                 FileName = uri.AbsoluteUri,

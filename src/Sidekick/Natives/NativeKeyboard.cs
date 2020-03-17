@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Natives.Helpers;
@@ -31,7 +31,7 @@ namespace Sidekick.Natives
 
         public NativeKeyboard(ILogger logger)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
         }
 
         public bool Enabled { get; set; }
@@ -146,7 +146,7 @@ namespace Sidekick.Natives
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
                 default:
-                    logger.LogWarning("NativeKeyboard.IsKeyPressed - Unrecognized key - " + key);
+                    logger.Warning("NativeKeyboard.IsKeyPressed - Unrecognized key - {key}", key);
                     return false;
             };
         }
