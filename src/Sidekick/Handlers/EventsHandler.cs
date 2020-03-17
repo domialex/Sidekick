@@ -5,7 +5,6 @@ using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
-using Sidekick.Business.Parsers;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
@@ -22,7 +21,6 @@ namespace Sidekick.Handlers
         private readonly IWhisperService whisperService;
         private readonly INativeClipboard clipboard;
         private readonly INativeKeyboard keyboard;
-        private readonly IItemParser itemParser;
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
@@ -38,7 +36,6 @@ namespace Sidekick.Handlers
             IWhisperService whisperService,
             INativeClipboard clipboard,
             INativeKeyboard keyboard,
-            IItemParser itemParser,
             ILogger logger,
             ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
@@ -52,7 +49,6 @@ namespace Sidekick.Handlers
             this.whisperService = whisperService;
             this.clipboard = clipboard;
             this.keyboard = keyboard;
-            this.itemParser = itemParser;
             this.logger = logger;
             this.tradeSearchService = tradeSearchService;
             this.wikiProvider = wikiProvider;
@@ -226,13 +222,13 @@ namespace Sidekick.Handlers
             return false;
         }
 
-        private async Task<Business.Parsers.Models.Item> TriggerCopyAction()
+        private async Task<ParsedItem> TriggerCopyAction()
         {
             var text = await clipboard.Copy();
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                return await itemParser.ParseItem(text, false);
+                return await parserService.ParseItem(text);
             }
 
             return null;

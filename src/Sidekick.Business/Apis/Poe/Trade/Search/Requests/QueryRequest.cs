@@ -1,108 +1,88 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
-using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Parsers.Types;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class QueryRequest
     {
-        public QueryRequest(Parsers.Models.Item item)
+        public QueryRequest(ParsedItem item)
         {
             Query.Status.Option = StatusType.Online;
             Query.Filters.TradeFilters.Filters.SaleType = new SearchFilterOption { Option = "priced" };
 
-            var itemType = item.GetType();
-
-            if (itemType == typeof(EquippableItem))
+            // Auto Search 5+ Links
+            var highestCount = item.Sockets
+                .GroupBy(x => x.Group)
+                .Select(x => x.Count())
+                .OrderByDescending(x => x)
+                .FirstOrDefault();
+            if (highestCount >= 5)
             {
-                if (((EquippableItem)item).Rarity == Rarity.Unique)
+                Query.Filters.SocketFilters.Filters.Links = new SocketFilterOption()
                 {
-                    Query.Name = item.Name;
-                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                    Min = highestCount,
+                };
+            }
+
+            if (item.Rarity == Rarity.Unique)
+            {
+                Query.Name = item.Name;
+                Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                {
+                    Option = "Unique",
+                };
+            }
+            else
+            {
+                Query.Type = item.TypeLine;
+                Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                {
+                    Option = "nonunique",
+                };
+
+                if (item.ItemLevel >= 86)
+                {
+                    Query.Filters.MiscFilters.Filters.ItemLevel = new SearchFilterValue()
                     {
-                        Option = "Unique",
+                        Min = 86
                     };
                 }
-                else
+
+                if (item.Influences.Crusader)
                 {
-                    Query.Type = item.Type;
-                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
-                    {
-                        Option = "nonunique",
-                    };
-
-                    if (!int.TryParse(((EquippableItem)item).ItemLevel, out var result))
-                    {
-                        throw new Exception("Couldn't parse Item Level");
-                    }
-
-                    if (result >= 86)
-                    {
-                        Query.Filters.MiscFilters.Filters.ItemLevel = new SearchFilterValue()
-                        {
-                            Min = 86
-                        };
-                    }
-                    //else
-                    //{
-                    //    Query.Filters.MiscFilters.Filters.ItemLevel = new FilterValue()
-                    //    {
-                    //        Min = result,
-                    //        Max = result,
-                    //    };
-                    //}
-
-                    switch (((EquippableItem)item).Influence)
-                    {
-                        case InfluenceType.None:
-                            break;
-                        case InfluenceType.Shaper:
-                            Query.Filters.MiscFilters.Filters.ShaperItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                        case InfluenceType.Crusader:
-                            Query.Filters.MiscFilters.Filters.CrusaderItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                        case InfluenceType.Elder:
-                            Query.Filters.MiscFilters.Filters.ElderItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                        case InfluenceType.Hunter:
-                            Query.Filters.MiscFilters.Filters.HunterItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                        case InfluenceType.Redeemer:
-                            Query.Filters.MiscFilters.Filters.RedeemerItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                        case InfluenceType.Warlord:
-                            Query.Filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption()
-                            {
-                                Option = "true"
-                            };
-                            break;
-                    }
+                    Query.Filters.MiscFilters.Filters.CrusaderItem = new SearchFilterOption("true");
                 }
 
-                if (((EquippableItem)item).Links != null)        // Auto Search 5+ Links
+                if (item.Influences.Elder)
                 {
-                    Query.Filters.SocketFilters.Filters.Links = ((EquippableItem)item).Links;
+                    Query.Filters.MiscFilters.Filters.ElderItem = new SearchFilterOption("true");
                 }
 
+                if (item.Influences.Hunter)
+                {
+                    Query.Filters.MiscFilters.Filters.HunterItem = new SearchFilterOption("true");
+                }
+
+                if (item.Influences.Redeemer)
+                {
+                    Query.Filters.MiscFilters.Filters.RedeemerItem = new SearchFilterOption("true");
+                }
+
+                if (item.Influences.Shaper)
+                {
+                    Query.Filters.MiscFilters.Filters.ShaperItem = new SearchFilterOption("true");
+                }
+
+                if (item.Influences.Warlord)
+                {
+                    Query.Filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption("true");
+                }
+
+                /*
                 if (((EquippableItem)item).AttributeDictionary != null)
                 {
                     var statFilters = new List<StatFilter>();
@@ -119,157 +99,119 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 
                     Query.Stats = new List<StatFilterGroup>() { new StatFilterGroup() { Type = StatType.And, Filters = statFilters } };
                 }
+                */
 
                 // TODO Block Chance
-                if (itemType == typeof(ArmourItem))
+                if (item.Armor > 0)
                 {
-                    if (int.TryParse(((ArmourItem)item).Armour, out var armor))
-                    {
-                        Query.Filters.ArmourFilters.Filters.Armor = new SearchFilterValue() { Min = armor };
-                    }
-
-                    if (int.TryParse(((ArmourItem)item).EnergyShield, out var es))
-                    {
-                        Query.Filters.ArmourFilters.Filters.EnergyShield = new SearchFilterValue() { Min = es };
-                    }
-
-                    if (int.TryParse(((ArmourItem)item).Evasion, out var evasion))
-                    {
-                        Query.Filters.ArmourFilters.Filters.Evasion = new SearchFilterValue() { Min = evasion };
-                    }
+                    Query.Filters.ArmourFilters.Filters.Armor = new SearchFilterValue() { Min = item.Armor - 20 };
                 }
-                else if (itemType == typeof(WeaponItem))
+                if (item.EnergyShield > 0)
                 {
-                    var physDamage = ParseRange(((WeaponItem)item).PhysicalDamage);
-                    var elementalDamage = ParseRange(((WeaponItem)item).ElementalDamage);
-
-                    if (!double.TryParse(((WeaponItem)item).AttacksPerSecond, out var attackSpeed))
-                    {
-                        attackSpeed = 0;
-                    }
-
-                    var pdps = CalculateDps(physDamage.min, physDamage.max, attackSpeed);
-                    var edps = CalculateDps(elementalDamage.min, elementalDamage.max, attackSpeed);
-
-                    if (!double.TryParse(((WeaponItem)item).CriticalStrikeChance, out var critChance))
-                    {
-                        critChance = 0;
-                    }
-
-                    Query.Filters.WeaponFilters.Filters.APS = new SearchFilterValue() { Min = attackSpeed };
-                    Query.Filters.WeaponFilters.Filters.Crit = new SearchFilterValue() { Min = critChance };
-                    Query.Filters.WeaponFilters.Filters.EDPS = new SearchFilterValue() { Min = edps };
-                    Query.Filters.WeaponFilters.Filters.PDPS = new SearchFilterValue() { Min = pdps };
+                    Query.Filters.ArmourFilters.Filters.EnergyShield = new SearchFilterValue() { Min = item.EnergyShield - 20 };
                 }
-            }
-            else if (itemType == typeof(OrganItem))
-            {
-                Query.Term = item.Name;
-                Query.Filters.TypeFilters.Filters.Category = new SearchFilterOption()
+                if (item.Evasion > 0)
                 {
-                    Option = "monster.sample"
-                };
-            }
-            else if (itemType == typeof(CurrencyItem))
-            {
-                Query.Type = item.Name;
-            }
-            else if (itemType == typeof(GemItem))
-            {
-                Query.Type = item.Type;
-
-                if (!int.TryParse(((GemItem)item).Level, out var result))
-                {
-                    throw new Exception("Unable to parse Gem Level");
+                    Query.Filters.ArmourFilters.Filters.Evasion = new SearchFilterValue() { Min = item.Evasion - 20 };
                 }
 
-                Query.Filters.MiscFilters = new MiscFilterGroup();
-                Query.Filters.MiscFilters.Filters.GemLevel = new SearchFilterValue()
+                if (!string.IsNullOrEmpty(item.PhysicalDamage) || !string.IsNullOrEmpty(item.ElementalDamage))
                 {
-                    Min = result,
-                    Max = result,
-                };
+                    var (physMin, physMax) = ParseRange(item.PhysicalDamage);
+                    var (elMin, elMax) = ParseRange(item.ElementalDamage);
 
-                if (!int.TryParse(((GemItem)item).Quality, out result))
-                {
-                    throw new Exception("Unable to parse Gem Quality");
+                    Query.Filters.WeaponFilters.Filters.APS = new SearchFilterValue() { Min = item.AttacksPerSecond };
+                    Query.Filters.WeaponFilters.Filters.Crit = new SearchFilterValue() { Min = item.CriticalStrikeChance };
+                    Query.Filters.WeaponFilters.Filters.EDPS = new SearchFilterValue() { Min = CalculateDps(elMin, elMax, item.AttacksPerSecond) };
+                    Query.Filters.WeaponFilters.Filters.PDPS = new SearchFilterValue() { Min = CalculateDps(physMin, physMax, item.AttacksPerSecond) };
                 }
 
-                Query.Filters.MiscFilters.Filters.Quality = new SearchFilterValue()
+                if (item.Level > 0)
                 {
-                    Min = result,
-                    Max = result,
-                };
-
-                Query.Filters.MiscFilters.Filters.Corrupted = new SearchFilterOption()
-                {
-                    Option = item.IsCorrupted ? "true" : "false"
-                };
-            }
-            else if (itemType == typeof(FragmentItem))
-            {
-                Query.Type = item.Type;
-            }
-            else if (itemType == typeof(MapItem))
-            {
-                if (((MapItem)item).Rarity == Rarity.Unique)
-                {
-                    Query.Name = item.Name;
-                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                    Query.Filters.MiscFilters.Filters.GemLevel = new SearchFilterValue()
                     {
-                        Option = "Unique",
-                    };
-                }
-                else
-                {
-                    Query.Type = item.Type;
-                    Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
-                    {
-                        Option = "nonunique",
+                        Min = item.Level,
                     };
                 }
 
-                if (!int.TryParse(((MapItem)item).MapTier, out var result))
+                if (item.Rarity == Rarity.Gem)
                 {
-                    throw new Exception("Unable to parse Map Tier");
-                }
-
-                Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()       // Search correct map tier
-                {
-                    Min = result,
-                    Max = result,
-                };
-
-                Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption()
-                {
-                    Option = ((MapItem)item).IsBlight,
-                };
-
-                if (((MapItem)item).AttributeDictionary != null)
-                {
-                    var statFilters = new List<StatFilter>();
-
-                    foreach (var pair in ((MapItem)item).AttributeDictionary)
+                    Query.Filters.MiscFilters.Filters.Quality = new SearchFilterValue()
                     {
-                        statFilters.Add(new StatFilter()
-                        {
-                            Disabled = false,
-                            Id = pair.Key.Id,
-                            Value = pair.Value,
-                        });
+                        Min = item.Quality,
+                    };
 
-                        Query.Stats = new List<StatFilterGroup>() { new StatFilterGroup() { Type = StatType.And, Filters = statFilters } };
+                    if (item.Corrupted)
+                    {
+                        Query.Filters.MiscFilters.Filters.Corrupted = new SearchFilterOption("true");
                     }
                 }
             }
-            else if (itemType == typeof(ProphecyItem))
-            {
-                Query.Name = item.Name;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            //else if (itemType == typeof(OrganItem))
+            //{
+            //    Query.Term = item.Name;
+            //    Query.Filters.TypeFilters.Filters.Category = new SearchFilterOption()
+            //    {
+            //        Option = "monster.sample"
+            //    };
+            //}
+            //else if (itemType == typeof(CurrencyItem))
+            //{
+            //    Query.Type = item.Name;
+            //}
+
+            //else if (itemType == typeof(MapItem))
+            //{
+            //    if (((MapItem)item).Rarity == Rarity.Unique)
+            //    {
+            //        Query.Name = item.Name;
+            //        Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+            //        {
+            //            Option = "Unique",
+            //        };
+            //    }
+            //    else
+            //    {
+            //        Query.Type = item.Type;
+            //        Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+            //        {
+            //            Option = "nonunique",
+            //        };
+            //    }
+
+            //    if (!int.TryParse(((MapItem)item).MapTier, out var result))
+            //    {
+            //        throw new Exception("Unable to parse Map Tier");
+            //    }
+
+            //    Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()       // Search correct map tier
+            //    {
+            //        Min = result,
+            //        Max = result,
+            //    };
+
+            //    Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption()
+            //    {
+            //        Option = ((MapItem)item).IsBlight,
+            //    };
+
+            //    if (((MapItem)item).AttributeDictionary != null)
+            //    {
+            //        var statFilters = new List<StatFilter>();
+
+            //        foreach (var pair in ((MapItem)item).AttributeDictionary)
+            //        {
+            //            statFilters.Add(new StatFilter()
+            //            {
+            //                Disabled = false,
+            //                Id = pair.Key.Id,
+            //                Value = pair.Value,
+            //            });
+
+            //            Query.Stats = new List<StatFilterGroup>() { new StatFilterGroup() { Type = StatType.And, Filters = statFilters } };
+            //        }
+            //    }
+            //}
         }
 
         public Query Query { get; set; } = new Query();
@@ -277,7 +219,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 
         private (double min, double max) ParseRange(string input)
         {
-            int index = input.IndexOf("-");
+            var index = input.IndexOf("-");
 
             if (index < 0)
             {

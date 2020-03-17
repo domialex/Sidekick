@@ -14,8 +14,6 @@ using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Maps;
-using Sidekick.Business.Parsers;
 using Sidekick.Business.Parties;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
@@ -32,7 +30,6 @@ namespace Sidekick.Business
 
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
-            services.AddSingleton<IItemParser, ItemParser>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<IPartyService, PartyService>();
             services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
@@ -49,7 +46,6 @@ namespace Sidekick.Business
             services.AddInitializableService<IStatDataService, StatDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();
-            services.AddInitializableService<IMapService, MapService>();
             services.AddInitializableService<IParserService, ParserService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             services.AddInitializableService<IStaticDataService, StaticDataService>();

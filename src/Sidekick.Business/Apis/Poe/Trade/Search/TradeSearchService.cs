@@ -5,6 +5,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
@@ -42,7 +44,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.nativeBrowser = nativeBrowser;
         }
 
-        private async Task<FetchResult<string>> Query(Parsers.Models.Item item)
+        private async Task<FetchResult<string>> Query(ParsedItem item)
         {
             logger.LogInformation("Querying Trade API.");
             FetchResult<string> result = null;
@@ -55,10 +57,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 var json = "";
                 string baseUri = null;
 
-                if (IsBulk(item.Type))
+                if (item.Rarity == Rarity.Currency)
                 {
                     path = $"exchange/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, languageProvider.Language, staticDataService), poeTradeClient.Options);
+                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
                     baseUri = languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId;
                 }
                 else
@@ -94,7 +96,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         }
 
-        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(Parsers.Models.Item item, int nextPageToFetch)
+        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(ParsedItem item, int nextPageToFetch)
         {
             var queryResult = await Query(item);
 
@@ -114,7 +116,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetListings(Parsers.Models.Item item)
+        public async Task<FetchResult<Result>> GetListings(ParsedItem item)
         {
             var queryResult = await Query(item);
 
@@ -159,15 +161,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return result;
         }
 
-        public async Task OpenWebpage(Parsers.Models.Item item)
+        public async Task OpenWebpage(ParsedItem item)
         {
             var queryResult = await Query(item);
             nativeBrowser.Open(queryResult.Uri);
-        }
-
-        private bool IsBulk(string type)
-        {
-            return staticDataService.Lookup.ContainsKey(type);
         }
     }
 }

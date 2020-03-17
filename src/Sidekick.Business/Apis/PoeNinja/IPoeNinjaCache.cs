@@ -1,6 +1,6 @@
 using System;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Parsers.Models;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -13,6 +13,6 @@ namespace Sidekick.Business.Apis.PoeNinja
     {
         DateTime? LastRefreshTimestamp { get; }
 
-        PoeNinjaItem GetItem(Item item);
+        PoeNinjaItem GetItem(ParsedItem item);
     }
 }

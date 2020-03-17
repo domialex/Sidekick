@@ -1,11 +1,11 @@
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeWiki;
-using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis
 {
-    public class WikiProviderFactory: IWikiProvider
+    public class WikiProviderFactory : IWikiProvider
     {
         private readonly SidekickSettings settings;
         private readonly IPoeWikiClient poeWikiClient;
@@ -18,7 +18,7 @@ namespace Sidekick.Business.Apis
             this.poeDbClient = poeDbClient;
         }
 
-        public void Open(Item item)
+        public void Open(ParsedItem item)
         {
             GetCurrentProvider().Open(item);
         }
@@ -26,7 +26,7 @@ namespace Sidekick.Business.Apis
         private IWikiProvider GetCurrentProvider()
         {
             return settings.Wiki_Preferred == WikiSetting.PoeDb
-                ? (IWikiProvider) poeDbClient
+                ? (IWikiProvider)poeDbClient
                 : poeWikiClient;
         }
     }

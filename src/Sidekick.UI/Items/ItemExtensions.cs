@@ -1,10 +1,11 @@
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 
 namespace Sidekick.UI.Items
 {
     public static class ItemExtensions
     {
-        public static string GetColor(this Business.Parsers.Models.Item item)
+        public static string GetColor(this ParsedItem item)
         {
             return item?.Rarity switch
             {

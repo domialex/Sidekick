@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
@@ -12,8 +13,6 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Parsers;
-using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
@@ -30,7 +29,7 @@ namespace Sidekick.UI.Prices
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
-        private readonly IItemParser itemParser;
+        private readonly IParserService parserService;
         private readonly SidekickSettings settings;
 
         public PriceViewModel(
@@ -40,7 +39,7 @@ namespace Sidekick.UI.Prices
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
-            IItemParser itemParser,
+            IParserService parserService,
             SidekickSettings settings)
         {
             this.tradeSearchService = tradeSearchService;
@@ -49,12 +48,12 @@ namespace Sidekick.UI.Prices
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeClipboard = nativeClipboard;
-            this.itemParser = itemParser;
+            this.parserService = parserService;
             this.settings = settings;
             Task.Run(Initialize);
         }
 
-        public Business.Parsers.Models.Item Item { get; private set; }
+        public ParsedItem Item { get; private set; }
 
         public string ItemColor => Item?.GetColor();
 
@@ -74,7 +73,7 @@ namespace Sidekick.UI.Prices
 
         private async Task Initialize()
         {
-            Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText, false);
+            Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
             Results = null;
 
             if (Item == null)

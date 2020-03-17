@@ -1,7 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Sidekick.Business.Parsers.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 
 namespace Sidekick.UI.Prices
 {
@@ -12,7 +12,7 @@ namespace Sidekick.UI.Prices
 
         bool IsFetching { get; }
         bool IsFetched { get; }
-        Item Item { get; }
+        ParsedItem Item { get; }
         string ItemColor { get; }
         string CountString { get; }
 

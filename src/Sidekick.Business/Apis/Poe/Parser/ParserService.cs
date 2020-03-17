@@ -108,11 +108,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
 
-            if (string.IsNullOrWhiteSpace(item.Name))
-            {
-                item.Name = lines[1];
-            }
-
             item.ItemLevel = GetInt(ItemLevelPattern, input);
             item.Identified = !UnidentifiedPattern.IsMatch(input);
             item.Corrupted = CorruptedPattern.IsMatch(input);

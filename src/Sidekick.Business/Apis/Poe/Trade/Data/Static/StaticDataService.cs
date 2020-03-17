@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 
@@ -14,32 +13,21 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
             this.poeApiClient = poeApiClient;
         }
 
-        public List<StaticItemCategory> Categories { get; private set; }
-        public Dictionary<string, string> Lookup { get; private set; }
         private Dictionary<string, string> ImageUrls { get; set; }
+        private Dictionary<string, string> Ids { get; set; }
 
         public async Task OnInit()
         {
-            Categories = null;
-            Categories = await poeApiClient.Fetch<StaticItemCategory>();
-            Lookup = ToLookup();
-            FillImages();
-        }
+            var categories = await poeApiClient.Fetch<StaticItemCategory>();
 
-        private Dictionary<string, string> ToLookup()
-        {
-            return Categories.Where(x => !x.Id.StartsWith("Maps")).SelectMany(x => x.Entries).ToDictionary(key => key.Text, value => value.Id);
-        }
-
-        private void FillImages()
-        {
             ImageUrls = new Dictionary<string, string>();
-
-            foreach (var category in Categories)
+            Ids = new Dictionary<string, string>();
+            foreach (var category in categories)
             {
                 foreach (var entry in category.Entries)
                 {
                     ImageUrls.Add(entry.Id, entry.Image);
+                    Ids.Add(entry.Text, entry.Id);
                 }
             }
         }
@@ -47,6 +35,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
         public string GetImage(string id)
         {
             if (ImageUrls.TryGetValue(id, out var result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        public string GetId(string text)
+        {
+            if (ImageUrls.TryGetValue(text, out var result))
             {
                 return result;
             }
