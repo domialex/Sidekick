@@ -33,6 +33,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     continue;
                 }
 
+                // The notes in parentheses are never translated by the game.
+                // We should be fine hardcoding them this way.
                 string suffix;
                 switch (first.Id.Split('.').First())
                 {
@@ -55,6 +57,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         public List<StatData> GetStats(string text)
         {
+            // Make sure the text ends with an empty line for our regexes to work correctly
             if (!text.EndsWith("\\r\\n"))
             {
                 text += "\\r\\n";
