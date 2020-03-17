@@ -33,7 +33,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     continue;
                 }
 
-                var suffix = string.Empty;
+                string suffix;
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
@@ -51,11 +51,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     Patterns.Add((new Regex($"[\\r\\n]+{Regex.Escape(entry.Text).Replace("\\#", "([-+\\d,\\.]+)")}{suffix}"), entry));
                 }
             }
-        }
-
-        private void InitPatterns(ref List<StatData> data, string suffix)
-        {
-
         }
 
         public List<StatData> GetStats(string text)
