@@ -19,6 +19,8 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         public bool Corrupted { get; set; }
 
+        public Influences Influences { get; set; } = new Influences();
+
         public List<Socket> Sockets { get; set; } = new List<Socket>();
     }
 }

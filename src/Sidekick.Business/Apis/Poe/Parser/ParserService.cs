@@ -43,6 +43,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             InitHeader();
             InitProperties();
             InitSockets();
+            InitInfluences();
 
             return Task.CompletedTask;
         }
@@ -63,6 +64,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 ParseHeader(ref item, ref itemText);
                 ParseProperties(ref item, ref itemText);
                 ParseSockets(ref item, ref itemText);
+                ParseInfluences(ref item, ref itemText);
 
                 return item;
             }
@@ -143,6 +145,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private Regex CriticalStrikeChancePattern { get; set; }
         private Regex ElementalDamagePattern { get; set; }
         private Regex PhysicalDamagePattern { get; set; }
+        private Regex BlightedPattern { get; set; }
 
         private void InitProperties()
         {
@@ -159,6 +162,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             CriticalStrikeChancePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
             ElementalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}([^\\r\\n]*)");
             PhysicalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}([^\\r\\n]*)");
+            BlightedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.PrefixBlighted)}");
         }
 
         private void ParseProperties(ref ParsedItem item, ref string input)
@@ -178,6 +182,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.CriticalStrikeChance = GetDouble(CriticalStrikeChancePattern, blocks[1]);
             item.ElementalDamage = GetString(ElementalDamagePattern, blocks[1]);
             item.PhysicalDamage = GetString(PhysicalDamagePattern, blocks[1]);
+            item.Blighted = BlightedPattern.IsMatch(blocks[0]);
         }
         #endregion
 
@@ -216,6 +221,35 @@ namespace Sidekick.Business.Apis.Poe.Parser
                     }
                 }
             }
+        }
+        #endregion
+
+        #region Influences
+        private Regex CrusaderPattern { get; set; }
+        private Regex ElderPattern { get; set; }
+        private Regex HunterPattern { get; set; }
+        private Regex RedeemerPattern { get; set; }
+        private Regex ShaperPattern { get; set; }
+        private Regex WarlordPattern { get; set; }
+
+        private void InitInfluences()
+        {
+            CrusaderPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceCrusader)}");
+            ElderPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceElder)}");
+            HunterPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceHunter)}");
+            RedeemerPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceRedeemer)}");
+            ShaperPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceShaper)}");
+            WarlordPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceWarlord)}");
+        }
+
+        private void ParseInfluences(ref ParsedItem item, ref string input)
+        {
+            item.Influences.Crusader = CrusaderPattern.IsMatch(input);
+            item.Influences.Elder = ElderPattern.IsMatch(input);
+            item.Influences.Hunter = HunterPattern.IsMatch(input);
+            item.Influences.Redeemer = RedeemerPattern.IsMatch(input);
+            item.Influences.Shaper = ShaperPattern.IsMatch(input);
+            item.Influences.Warlord = WarlordPattern.IsMatch(input);
         }
         #endregion
 
@@ -268,7 +302,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 }
             }
 
-            return 0;
+            return string.Empty;
         }
         #endregion
     }

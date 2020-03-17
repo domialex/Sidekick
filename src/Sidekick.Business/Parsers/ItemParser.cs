@@ -261,7 +261,7 @@ namespace Sidekick.Business.Parsers
                     PhysicalDamage = GetNumberFromString(lines.Where(c => c.StartsWith(languageProvider.Language.DescriptionPhysicalDamage)).FirstOrDefault(), allowRange: true),
                 };
             }
-            else        // Armour or Jewellery
+            else // Armour or Jewellery
             {
                 item = new ArmourItem()
                 {
