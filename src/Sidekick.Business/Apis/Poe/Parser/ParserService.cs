@@ -15,9 +15,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
 {
     public class ParserService : IOnAfterInit, IParserService
     {
-        private readonly string[] BLOCK_SEPARATOR = new string[] { "--------" };
-        private readonly string[] NEWLINE_SEPARATOR = new string[] { "\r", "\n" };
-
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IStatDataService statsDataService;
@@ -35,8 +32,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.itemDataService = itemDataService;
         }
 
+        private Regex NewlinePattern { get; set; }
+        private Regex SeparatorPattern { get; set; }
+
         public Task OnAfterInit()
         {
+            NewlinePattern = new Regex("[\\r\\n]+");
+            SeparatorPattern = new Regex("--------");
+
             InitHeader();
             InitProperties();
             InitSockets();
@@ -54,14 +57,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             try
             {
+                itemText = new ItemNameTokenizer().CleanString(itemText);
                 var item = new ParsedItem();
 
-                var blocks = itemText
-                    .Split(BLOCK_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
-                    .ToList();
-
-                ParseHeader(ref item, ref blocks);
-                ParseProperties(ref item, ref blocks);
+                ParseHeader(ref item, ref itemText);
+                ParseProperties(ref item, ref itemText);
                 ParseSockets(ref item, ref itemText);
 
                 return item;
@@ -75,31 +75,33 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         #region Header (Rarity, Name, Type)
         private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
+        private Regex UnidentifiedPattern { get; set; }
+        private Regex CorruptedPattern { get; set; }
 
         private void InitHeader()
         {
-            RarityPatterns = new Dictionary<Rarity, Regex>();
-            RarityPatterns.Add(Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)));
-            RarityPatterns.Add(Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)));
-            RarityPatterns.Add(Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)));
-            RarityPatterns.Add(Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)));
-            RarityPatterns.Add(Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)));
-            RarityPatterns.Add(Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)));
-            RarityPatterns.Add(Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)));
+            RarityPatterns = new Dictionary<Rarity, Regex>
+            {
+                { Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)) },
+                { Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)) },
+                { Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)) },
+                { Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)) },
+                { Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)) },
+                { Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)) },
+                { Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)) }
+            };
+
+            UnidentifiedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionUnidentified)}");
+            CorruptedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCorrupted)}");
         }
 
-        private void ParseHeader(ref ParsedItem item, ref List<string> blocks)
+        private void ParseHeader(ref ParsedItem item, ref string input)
         {
-            var headerBlock = new ItemNameTokenizer().CleanString(blocks[0]);
-
-            var lines = headerBlock
-                .Split(NEWLINE_SEPARATOR, StringSplitOptions.RemoveEmptyEntries)
-                .Where(x => !string.IsNullOrEmpty(x))
-                .ToList();
+            var lines = NewlinePattern.Split(input);
 
             item.Rarity = GetRarity(lines[0]);
 
-            var dataItem = itemDataService.GetItem(headerBlock);
+            var dataItem = itemDataService.GetItem(input);
 
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
@@ -109,7 +111,8 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 item.Name = lines[1];
             }
 
-            blocks.RemoveAt(0);
+            item.Identified = !UnidentifiedPattern.IsMatch(input);
+            item.Corrupted = CorruptedPattern.IsMatch(input);
         }
 
         private Rarity GetRarity(string rarityString)
@@ -134,27 +137,22 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private void InitProperties()
         {
-            ArmorPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
-            EnergyShieldPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
-            EvasionPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
-            QualityPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
-            LevelPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
+            ArmorPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
+            EnergyShieldPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
+            EvasionPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+            QualityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
+            LevelPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
         }
 
-        private void ParseProperties(ref ParsedItem item, ref List<string> blocks)
+        private void ParseProperties(ref ParsedItem item, ref string input)
         {
-            var block = blocks[0];
+            var blocks = SeparatorPattern.Split(input);
 
-            item.Armor = GetInt(ArmorPattern, block);
-            item.EnergyShield = GetInt(EnergyShieldPattern, block);
-            item.Evasion = GetInt(EvasionPattern, block);
-            item.Quality = GetInt(QualityPattern, block);
-            item.Level = GetInt(LevelPattern, block);
-
-            if (item.Armor + item.EnergyShield + item.Evasion + item.Quality + item.Level > 0)
-            {
-                blocks.RemoveAt(0);
-            }
+            item.Armor = GetInt(ArmorPattern, blocks[1]);
+            item.EnergyShield = GetInt(EnergyShieldPattern, blocks[1]);
+            item.Evasion = GetInt(EvasionPattern, blocks[1]);
+            item.Quality = GetInt(QualityPattern, blocks[1]);
+            item.Level = GetInt(LevelPattern, blocks[1]);
         }
         #endregion
 
