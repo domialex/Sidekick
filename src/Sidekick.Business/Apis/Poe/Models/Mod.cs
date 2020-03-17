@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
+namespace Sidekick.Business.Apis.Poe.Models
 {
     public class Mod
     {

@@ -22,5 +22,7 @@ namespace Sidekick.Business.Apis.Poe.Models
         public Influences Influences { get; set; } = new Influences();
 
         public List<Socket> Sockets { get; set; } = new List<Socket>();
+
+        public Extended Extended { get; set; } = new Extended();
     }
 }

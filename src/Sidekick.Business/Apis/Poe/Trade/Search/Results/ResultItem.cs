@@ -31,7 +31,5 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
         public List<string> ExplicitMods { get; set; }
 
         public List<string> UtilityMods { get; set; }
-
-        public Extended Extended { get; set; }
     }
 }

@@ -27,18 +27,18 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             Patterns = Categories
                 .SelectMany(x => x.Entries)
                 .Select(x => (
-                    new Regex($"[\\r\\n]+{Regex.Escape(x.Text).Replace("\\#", "([-\\d,\\.]+)")}"),
+                    new Regex($"[\\r\\n]+{Regex.Escape(x.Text).Replace("\\#", "([-+\\d,\\.]+)")}"),
                     x
                 ))
                 .ToList();
         }
 
-        public StatData GetStat(string text)
+        public List<StatData> GetStats(string text)
         {
             return Patterns
                 .Where(x => x.Regex.IsMatch(text))
                 .Select(x => x.Data)
-                .FirstOrDefault();
+                .ToList();
         }
     }
 }

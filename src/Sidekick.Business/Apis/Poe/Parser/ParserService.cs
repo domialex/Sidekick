@@ -65,6 +65,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 ParseProperties(ref item, ref itemText);
                 ParseSockets(ref item, ref itemText);
                 ParseInfluences(ref item, ref itemText);
+                ParseMods(ref item, ref itemText);
 
                 return item;
             }
@@ -250,6 +251,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Influences.Redeemer = RedeemerPattern.IsMatch(input);
             item.Influences.Shaper = ShaperPattern.IsMatch(input);
             item.Influences.Warlord = WarlordPattern.IsMatch(input);
+        }
+        #endregion
+
+        #region Modifiers
+        private void ParseMods(ref ParsedItem item, ref string input)
+        {
+            var mods = statsDataService.GetStats(input);
         }
         #endregion
 
