@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
 {

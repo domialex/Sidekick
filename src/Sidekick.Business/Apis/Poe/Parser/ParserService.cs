@@ -171,7 +171,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.EnergyShield = GetInt(EnergyShieldPattern, blocks[1]);
             item.Evasion = GetInt(EvasionPattern, blocks[1]);
             item.Quality = GetInt(QualityPattern, blocks[1]);
-            item.Level = GetInt(LevelPattern, blocks[1]);
             item.MapTier = GetInt(MapTierPattern, blocks[1]);
             item.ItemQuantity = GetInt(ItemQuantityPattern, blocks[1]);
             item.ItemRarity = GetInt(ItemRarityPattern, blocks[1]);
@@ -181,6 +180,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.ElementalDamage = GetString(ElementalDamagePattern, blocks[1]);
             item.PhysicalDamage = GetString(PhysicalDamagePattern, blocks[1]);
             item.Blighted = BlightedPattern.IsMatch(blocks[0]);
+
+            if (item.Rarity == Rarity.Gem)
+            {
+                item.Level = GetInt(LevelPattern, blocks[1]);
+            }
         }
         #endregion
 

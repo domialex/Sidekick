@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -8,6 +9,7 @@ using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
@@ -44,7 +46,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.nativeBrowser = nativeBrowser;
         }
 
-        private async Task<FetchResult<string>> Query(ParsedItem item)
+        private async Task<FetchResult<string>> Query(ParsedItem item, List<StatFilter> stats)
         {
             logger.Information("Querying Trade API.");
             FetchResult<string> result = null;
@@ -66,7 +68,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 else
                 {
                     path = $"search/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new QueryRequest(item), poeTradeClient.Options);
+                    json = JsonSerializer.Serialize(new QueryRequest(item, stats), poeTradeClient.Options);
                     baseUri = languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId;
                 }
 
@@ -97,9 +99,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         }
 
-        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(ParsedItem item, int nextPageToFetch)
+        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(ParsedItem item, int nextPageToFetch, List<StatFilter> stats = null)
         {
-            var queryResult = await Query(item);
+            var queryResult = await Query(item, stats);
 
             if (queryResult != null)
             {
@@ -117,9 +119,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetListings(ParsedItem item)
+        public async Task<FetchResult<Result>> GetListings(ParsedItem item, List<StatFilter> stats = null)
         {
-            var queryResult = await Query(item);
+            var queryResult = await Query(item, stats);
 
             if (queryResult != null)
             {
@@ -137,7 +139,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetListings(FetchResult<string> queryResult, int page = 0)
+        private async Task<FetchResult<Result>> GetListings(FetchResult<string> queryResult, int page = 0)
         {
             logger.Information($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
             FetchResult<Result> result = null;
@@ -165,7 +167,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         public async Task OpenWebpage(ParsedItem item)
         {
-            var queryResult = await Query(item);
+            var queryResult = await Query(item, null);
             nativeBrowser.Open(queryResult.Uri);
         }
     }

@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
 {
     public enum StatType
     {

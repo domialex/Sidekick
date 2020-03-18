@@ -31,5 +31,7 @@ namespace Sidekick.UI.Prices
         bool HasPreviewItem { get; }
         PriceItem PreviewItem { get; }
         void Preview(PriceItem selectedItem);
+
+        void UpdateQuery();
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using Bindables;
 using Sidekick.UI.Prices;
 
-namespace Sidekick.Windows.Prices.Filters
+namespace Sidekick.Windows.Prices
 {
     /// <summary>
     /// Interaction logic for Filters.xaml
@@ -17,6 +17,16 @@ namespace Sidekick.Windows.Prices.Filters
         {
             InitializeComponent();
             Container.DataContext = this;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ViewModel.UpdateQuery();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.UpdateQuery();
         }
     }
 }

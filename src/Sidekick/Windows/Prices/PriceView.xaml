@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Windows"
     xmlns:converters="clr-namespace:Sidekick.Converters"
-    xmlns:filters="clr-namespace:Sidekick.Windows.Prices.Filters"
     xmlns:loc="clr-namespace:Sidekick.Windows"
     xmlns:local="clr-namespace:Sidekick.Windows.Prices"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
@@ -29,7 +28,7 @@
     <DockPanel>
         <local:ItemPreview DockPanel.Dock="Right" ViewModel="{Binding}" />
 
-        <filters:Filters
+        <local:Filters
             DockPanel.Dock="Left"
             ViewModel="{Binding}"
             Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />

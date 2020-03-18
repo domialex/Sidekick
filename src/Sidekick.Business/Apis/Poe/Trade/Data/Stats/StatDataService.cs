@@ -36,6 +36,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             CraftedPatterns = new List<StatData>();
             VeiledPatterns = new List<StatData>();
 
+            var hashPattern = new Regex("\\\\#");
+            var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+
             foreach (var category in categories)
             {
                 var first = category.Entries.FirstOrDefault();
@@ -46,7 +49,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                 // The notes in parentheses are never translated by the game.
                 // We should be fine hardcoding them this way.
-                string suffix;
+                string suffix, pattern;
                 List<StatData> patterns;
                 switch (first.Id.Split('.').First())
                 {
@@ -63,7 +66,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 foreach (var entry in category.Entries)
                 {
                     entry.Category = category.Label;
-                    entry.Pattern = new Regex($"[\\r\\n]+{Regex.Escape(entry.Text).Replace("\\#", "([-+\\d,\\.]+)")}{suffix}");
+
+                    pattern = Regex.Escape(entry.Text);
+                    pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
+                    pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+
+                    entry.Pattern = new Regex($"[\\r\\n]+{pattern}{suffix}");
                     patterns.Add(entry);
                 }
             }

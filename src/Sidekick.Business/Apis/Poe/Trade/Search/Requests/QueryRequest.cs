@@ -9,7 +9,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class QueryRequest
     {
-        public QueryRequest(ParsedItem item)
+        public QueryRequest(ParsedItem item, List<StatFilter> stats)
         {
             Query.Status.Option = StatusType.Online;
             Query.Filters.TradeFilters.Filters.SaleType = new SearchFilterOption { Option = "priced" };
@@ -82,25 +82,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
                     Query.Filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption("true");
                 }
 
-                /*
-                if (((EquippableItem)item).AttributeDictionary != null)
-                {
-                    var statFilters = new List<StatFilter>();
-
-                    foreach (var pair in ((EquippableItem)item).AttributeDictionary)
-                    {
-                        statFilters.Add(new StatFilter()
-                        {
-                            Disabled = false,
-                            Id = pair.Key.Id,
-                            Value = pair.Value,
-                        });
-                    }
-
-                    Query.Stats = new List<StatFilterGroup>() { new StatFilterGroup() { Type = StatType.And, Filters = statFilters } };
-                }
-                */
-
                 if (item.Armor > 0)
                 {
                     Query.Filters.ArmourFilters.Filters.Armor = new SearchFilterValue() { Min = item.Armor - 20 };
@@ -146,19 +127,31 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
                     }
                 }
 
-                if (item.MapTier > 0)
-                {
-                    Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()
-                    {
-                        Min = item.MapTier,
-                        Max = item.MapTier,
-                    };
-                }
-
                 if (item.Blighted)
                 {
                     Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption("true");
                 }
+            }
+
+            if (item.MapTier > 0)
+            {
+                Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()
+                {
+                    Min = item.MapTier,
+                    Max = item.MapTier,
+                };
+            }
+
+            if (stats != null && stats.Count > 0)
+            {
+                Query.Stats = new List<StatFilterGroup>()
+                {
+                    new StatFilterGroup()
+                    {
+                        Type = StatType.And,
+                        Filters = stats
+                    }
+                };
             }
         }
 

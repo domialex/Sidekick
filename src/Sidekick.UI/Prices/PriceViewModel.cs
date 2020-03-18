@@ -10,6 +10,7 @@ using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
@@ -86,24 +87,16 @@ namespace Sidekick.UI.Prices
             InitializeMods(Item.Extended.Mods.Crafted);
             InitializeMods(Item.Extended.Mods.Enchant);
 
-            Results = null;
-
             if (Item == null)
             {
                 IsError = true;
                 return;
             }
 
-            IsFetching = true;
-            QueryResult = await tradeSearchService.GetListings(Item);
-            IsFetching = false;
-            if (QueryResult.Result.Any())
-            {
-                Append(QueryResult.Result);
-                IsCurrency = Results.FirstOrDefault()?.Item?.Item?.Rarity == Rarity.Currency;
-            }
+            IsCurrency = Item.Rarity == Rarity.Currency;
 
-            UpdateCountString();
+            UpdateQuery();
+
             GetPoeNinjaPrice();
 
             if (settings.EnablePricePrediction)
@@ -141,10 +134,33 @@ namespace Sidekick.UI.Prices
                     };
                 }
 
+                var min = magnitude.Magnitudes.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
+                if (min.HasValue)
+                {
+                    min = double.Parse(Math.Min(min.Value - 5, min.Value * 0.9).ToString("0.0"));
+                }
+                if (min < 0)
+                {
+                    min = 0;
+                }
+
+                var max = magnitude.Magnitudes.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
+                if (max.HasValue)
+                {
+                    max = double.Parse(Math.Min(max.Value + 5, max.Value * 1.1).ToString("0.0"));
+                }
+                if (max < 0)
+                {
+                    max = 0;
+                }
+
                 category.Modifiers.Add(new PriceModifier()
                 {
+                    Id = magnitude.Definition.Id,
                     Text = magnitude.Definition.Text,
                     Enabled = false,
+                    Min = min,
+                    Max = max,
                 });
             }
 
@@ -159,6 +175,42 @@ namespace Sidekick.UI.Prices
             }
         }
 
+        public void UpdateQuery()
+        {
+            Task.Run(async () =>
+            {
+                Results = null;
+
+                IsFetching = true;
+                QueryResult = await tradeSearchService.GetListings(Item, GetFilters());
+                IsFetching = false;
+                if (QueryResult.Result.Any())
+                {
+                    Append(QueryResult.Result);
+                }
+
+                UpdateCountString();
+            });
+        }
+
+        private List<StatFilter> GetFilters()
+        {
+            return Modifiers
+                .SelectMany(x => x.Modifiers)
+                .Where(x => x.Enabled)
+                .Select(x => new StatFilter()
+                {
+                    Disabled = !x.Enabled,
+                    Id = x.Id,
+                    Value = new SearchFilterValue()
+                    {
+                        Max = x.Max,
+                        Min = x.Min
+                    }
+                })
+                .ToList();
+        }
+
         public async Task LoadMoreData()
         {
             if (IsFetching || Results.Count >= 100)
@@ -168,7 +220,7 @@ namespace Sidekick.UI.Prices
 
             var page = (int)Math.Ceiling(Results.Count / 10d);
             IsFetching = true;
-            QueryResult = await tradeSearchService.GetListingsForSubsequentPages(Item, page);
+            QueryResult = await tradeSearchService.GetListingsForSubsequentPages(Item, page, GetFilters());
             IsFetching = false;
             if (QueryResult.Result.Any())
             {
