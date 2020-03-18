@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Core;
 
 namespace Sidekick.Localization
 {
@@ -9,7 +10,7 @@ namespace Sidekick.Localization
             // Http Services
             services.AddHttpClient();
 
-            services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
+            services.AddInitializableService<IUILanguageProvider, UILanguageProvider>();
 
             return services;
         }

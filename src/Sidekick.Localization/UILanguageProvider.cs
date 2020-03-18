@@ -2,13 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Localization
 {
-    public class UILanguageProvider : IUILanguageProvider
+    public class UILanguageProvider : IUILanguageProvider, IOnInit
     {
-        private static string[] SupportedLanguages = new[] { "en", "fr", "de", "zh-tw" };
+        private static readonly string[] SupportedLanguages = new[] { "en", "fr", "de", "zh-tw" };
+        private readonly SidekickSettings settings;
 
         public UILanguageProvider(SidekickSettings settings)
         {
@@ -16,6 +19,13 @@ namespace Sidekick.Localization
                 .Select(x => new CultureInfo(x))
                 .ToList();
 
+            this.settings = settings;
+        }
+
+        public List<CultureInfo> AvailableLanguages { get; private set; }
+
+        public Task OnInit()
+        {
             var current = AvailableLanguages.FirstOrDefault(x => x.Name == settings.Language_UI);
             if (current != null)
             {
@@ -25,9 +35,9 @@ namespace Sidekick.Localization
             {
                 SetLanguage(SupportedLanguages.FirstOrDefault());
             }
-        }
 
-        public List<CultureInfo> AvailableLanguages { get; private set; }
+            return Task.CompletedTask;
+        }
 
         public void SetLanguage(string name)
         {
