@@ -1,5 +1,6 @@
 using AutoFixture;
 using AutoFixture.AutoMoq;
+using Serilog;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 

@@ -1,6 +1,5 @@
 using System;
-using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Parser;
+using Serilog;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 
@@ -17,7 +16,7 @@ namespace Sidekick.Business.Apis.PoeWiki
             ILanguageProvider languageProvider,
             INativeBrowser nativeBrowser)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.nativeBrowser = nativeBrowser;
         }
@@ -42,7 +41,7 @@ namespace Sidekick.Business.Apis.PoeWiki
             // Does not work for unique items that are not identified.
             if (string.IsNullOrEmpty(item.Name))
             {
-                logger.LogError("Failed to open the wiki for the specified item.");
+                logger.Warning("Unable to open POE Wiki for specified item as it has no name! {@item}", item);
                 return;
             }
 

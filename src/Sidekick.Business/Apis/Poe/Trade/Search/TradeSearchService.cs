@@ -4,7 +4,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
@@ -35,7 +36,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             IPoeTradeClient poeTradeClient,
             INativeBrowser nativeBrowser)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
             this.staticDataService = staticDataService;
@@ -83,12 +84,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 }
                 else
                 {
-                    logger.LogError("Querying failed.");
+                    var responseMessage = await response?.Content?.ReadAsStringAsync();
+                    logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                logger.LogError(e, "Querying error.");
+                logger.Error(ex, "Exception thrown while querying trade api.");
                 return null;
             }
 
@@ -153,8 +155,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     });
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                logger.Error(ex, "Exception thrown when fetching trade API listings from Query {queryId} page {page}.", queryResult.Id, page + 1);
                 return null;
             }
 

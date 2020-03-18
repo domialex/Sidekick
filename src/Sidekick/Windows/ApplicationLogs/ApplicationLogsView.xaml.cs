@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Windows;
 using Sidekick.UI.ApplicationLogs;
 
@@ -36,7 +35,7 @@ namespace Sidekick.Windows.ApplicationLogs
         {
             if (logsTextBox != null)
             {
-                logsTextBox.Text = string.Join(Environment.NewLine, viewModel.Logs.Select(x => $"{x.Date.ToString()} - {x.Message}"));
+                logsTextBox.Text = string.Concat(viewModel.Logs);
                 logsScrollViewer.ScrollToEnd();
             }
         }

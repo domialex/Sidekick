@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
+using Serilog;
 using Sidekick.Business.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
@@ -23,7 +23,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             client = httpClientFactory.CreateClient();
         }

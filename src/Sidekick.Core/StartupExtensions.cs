@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Loggers;
+using Sidekick.Core.Logging;
 using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
 
@@ -31,10 +31,24 @@ namespace Sidekick.Core
 
         public static IServiceCollection AddSidekickCoreServices(this IServiceCollection services)
         {
+            var eventSink = new SidekickEventSink();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.File("sidekick.log",
+                    rollingInterval: RollingInterval.Day,
+                    retainedFileCountLimit: 10,
+                    fileSizeLimitBytes: 5242880,
+                    rollOnFileSizeLimit: true)
+                .WriteTo.Sink(eventSink)
+                .CreateLogger();
+
+            services.AddSingleton(eventSink);
+            services.AddSingleton(Log.Logger);
+
             services.AddSingleton<IInitializer, Initializer>();
-            services.AddSingleton<Logger>();
-            services.AddSingleton<ILogger, Logger>(x => x.GetRequiredService<Logger>());
-            services.AddSingleton<ISidekickLogger, Logger>(x => x.GetRequiredService<Logger>());
             services.AddSingleton<IUpdateManager, UpdateManager>();
             return services;
         }
