@@ -81,10 +81,10 @@ namespace Sidekick.UI.Prices
         {
             Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
 
-            //InitializeMods(Item.Extended.Mods.Explicit);
-            //InitializeMods(Item.Extended.Mods.Implicit);
-            //InitializeMods(Item.Extended.Mods.Crafted);
-            //InitializeMods(Item.Extended.Mods.Enchant);
+            InitializeMods(Item.Extended.Mods.Explicit);
+            InitializeMods(Item.Extended.Mods.Implicit);
+            InitializeMods(Item.Extended.Mods.Crafted);
+            InitializeMods(Item.Extended.Mods.Enchant);
 
             Results = null;
 
@@ -126,27 +126,31 @@ namespace Sidekick.UI.Prices
                 .GroupBy(x => x.Hash)
                 .Select(x => new
                 {
-                    Hash = x.First().Hash,
-                    Magnitude = x
-                });
+                    Definition = statDataService.GetById(x.First().Hash),
+                    Magnitudes = x
+                })
+                .ToList();
 
             foreach (var magnitude in magnitudes)
             {
-                var definition = statDataService.GetById(magnitude.Hash);
-
                 if (category == null)
                 {
                     category = new PriceModifierCategory()
                     {
-                        Label = definition.Category
+                        Label = magnitude.Definition.Category
                     };
                 }
 
                 category.Modifiers.Add(new PriceModifier()
                 {
-                    Text = definition.Text,
+                    Text = magnitude.Definition.Text,
                     Enabled = false,
                 });
+            }
+
+            if (Modifiers == null)
+            {
+                Modifiers = new ObservableCollection<PriceModifierCategory>();
             }
 
             if (category != null)

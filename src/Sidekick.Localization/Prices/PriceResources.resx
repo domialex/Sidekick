@@ -150,6 +150,9 @@
   <data name="Error" xml:space="preserve">
     <value>Unable to find prices for this item.</value>
   </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>

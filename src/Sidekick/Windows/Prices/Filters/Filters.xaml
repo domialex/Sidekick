@@ -25,129 +25,24 @@
     <StackPanel
         Name="Container"
         Width="250"
-        Margin="0"
-        Visibility="{Binding ViewModel.HasPreviewItem, Converter={StaticResource BooleanToVisibility}}">
-        <GroupBox Margin="0">
-            <GroupBox.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        Width="50"
-                        Height="50"
-                        Margin="0,0,5,0"
-                        Source="{Binding ViewModel.PreviewItem.Item.Item.Icon}" />
-                    <StackPanel Width="175" VerticalAlignment="Center">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.PreviewItem.Color}"
-                            Text="{Binding ViewModel.PreviewItem.Item.Item.Name}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.PreviewItem.Item.Item.Name, Converter={StaticResource StringToVisibility}}" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="13"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.PreviewItem.Color}"
-                            Text="{Binding ViewModel.PreviewItem.Item.Item.TypeLine}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.PreviewItem.Item.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox.Header>
-
-            <ScrollViewer Height="250">
-                <StackPanel>
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.Properties}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemLineContent Property="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Border
-                        Margin="0,2,0,5"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.Properties, Converter={StaticResource NullableToVisibility}}" />
-
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.Requirements}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemLineContent Property="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Border
-                        Margin="0,2,0,5"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.Requirements, Converter={StaticResource NullableToVisibility}}" />
-
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.ImplicitMods}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemMod Text="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Border
-                        Margin="0,2,0,5"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.ImplicitMods, Converter={StaticResource NullableToVisibility}}" />
-
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.ExplicitMods}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemMod Text="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.CraftedMods}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemMod Text="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Border
-                        Margin="0,2,0,5"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.ExplicitMods, Converter={StaticResource NullableToVisibility}}" />
-
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.UtilityMods}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ItemMod Text="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <Border
-                        Margin="0,2,0,5"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.UtilityMods, Converter={StaticResource NullableToVisibility}}" />
-
-                    <TextBlock
-                        Foreground="Red"
-                        Text="{loc:Loc Unidentified}"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.Identified, Converter={StaticResource ReverseBooleanToVisibility}}" />
-
-                    <TextBlock
-                        Foreground="Red"
-                        Text="{loc:Loc Corrupted}"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Item.Corrupted, Converter={StaticResource BooleanToVisibility}}" />
-
-                    <TextBlock Foreground="LightGray" Text="{Binding ViewModel.PreviewItem.Item.Item.Note}" />
-                </StackPanel>
+        Margin="0">
+        <GroupBox Margin="0" Header="{loc:Loc Filters}">
+            <ScrollViewer Height="280">
+                <ItemsControl ItemsSource="{Binding ViewModel.Modifiers}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox Header="{Binding Label}">
+                                <ItemsControl ItemsSource="{Binding Modifiers}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Text}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </GroupBox>
     </StackPanel>

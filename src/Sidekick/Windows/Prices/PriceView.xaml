@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Windows"
+    xmlns:converters="clr-namespace:Sidekick.Converters"
     xmlns:filters="clr-namespace:Sidekick.Windows.Prices.Filters"
     xmlns:loc="clr-namespace:Sidekick.Windows"
     xmlns:local="clr-namespace:Sidekick.Windows.Prices"
@@ -14,6 +15,8 @@
                 <ResourceDictionary Source="/Styles/Main.xaml" />
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+                    <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
+                    <converters:ReverseStringToVisibilityConverter x:Key="ReverseStringToVisibility" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -26,17 +29,29 @@
     <DockPanel>
         <local:ItemPreview DockPanel.Dock="Right" ViewModel="{Binding}" />
 
-        <filters:Filters DockPanel.Dock="Left" ViewModel="{Binding}" />
+        <filters:Filters
+            DockPanel.Dock="Left"
+            ViewModel="{Binding}"
+            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
 
-        <StackPanel Margin="{StaticResource Spacer}">
+        <StackPanel Margin="{StaticResource Spacer}" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
             <Label
                 Margin="{StaticResource SpacerBottom}"
                 VerticalAlignment="Center"
-                Content="{Binding Path=Item.Name}"
+                Content="{Binding Item.Name}"
                 FontSize="16"
                 FontWeight="Bold"
                 Foreground="{Binding ItemColor}"
-                Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
+                Visibility="{Binding Item.Name, Converter={StaticResource StringToVisibility}}" />
+
+            <Label
+                Margin="{StaticResource SpacerBottom}"
+                VerticalAlignment="Center"
+                Content="{Binding Item.TypeLine}"
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="{Binding ItemColor}"
+                Visibility="{Binding Item.Name, Converter={StaticResource ReverseStringToVisibility}}" />
 
             <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
                 <ListView
@@ -127,15 +142,17 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
-                <GroupBox>
-                    <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
-                </GroupBox>
-                <ProgressBar
-                    Width="250"
-                    Height="16"
-                    IsIndeterminate="True" />
-            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
+            <GroupBox>
+                <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
+            </GroupBox>
+            <ProgressBar
+                Width="250"
+                Height="16"
+                IsIndeterminate="True" />
         </StackPanel>
     </DockPanel>
 </base:BaseWindow>

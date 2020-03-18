@@ -101,11 +101,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                 for (var index = 1; index < result.Groups.Count; index++)
                 {
+                    double? value = null;
+                    if (double.TryParse(result.Groups[index].Value, out var parsedValue))
+                    {
+                        value = parsedValue;
+                    }
                     magnitudes.Add(new Magnitude()
                     {
                         Hash = x.Id,
-                        Max = null,
-                        Min = null,
+                        Max = value,
+                        Min = value,
                     });
                 }
 
