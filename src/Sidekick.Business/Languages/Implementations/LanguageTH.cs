@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -11,7 +10,6 @@ namespace Sidekick.Business.Languages.Implementations
         public Uri PoeTradeApiBaseUrl => new Uri("https://th.pathofexile.com/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
         public Uri PoeWebsite => new Uri("https://th.pathofexile.com/");
-        public string Rarity => "Seltenheit: ";
         public string RarityUnique => "Unique";
         public string RarityRare => "แรร์";
         public string RarityMagic => "เมจิก";
@@ -49,44 +47,6 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fossil";
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Essence";
-
-        public string AttributeCategoryCrafted => "__TranslationRequired__";
-
-        public Regex PercentagAddedRegex => throw new NotSupportedException();
-
-        public string PercentageAddedRegexPattern => "__TranslationRequired__";
-
-        public string PercentageIncreasedOrDecreasedRegexPattern => "__TranslationRequired__";
-
-        public string AttributeIncreasedRegexPattern => "__TranslationRequired__";
-
-        public string CategoryNameCrafted => "__TranslationRequired__";
-
-        public string AttributeCategoryImplicit => "__TranslationRequired__";
-
-        public string CategoryNameImplicit => "__TranslationRequired__";
-
-        public string AttributeCategoryFractured => "__TranslationRequired__";
-
-        public string CategoryNameFractured => "__TranslationRequired__";
-
-        public string AttributeCategoryEnchant => "__TranslationRequired__";
-
-        public string CategoryNameEnchant => "__TranslationRequired__";
-
-        public string AttributeCategoryVeiled => "__TranslationRequired__";
-
-        public string CategoryNameVeiled => "__TranslationRequired__";
-
-        public string AttributeCategoryDelve => "__TranslationRequired__";
-
-        public string CategoryNameDelve => "__TranslationRequired__";
-
-        public string AttributeCategoryExplicit => "__TranslationRequired__";
-
-        public string AttributeRangeRegexPattern => "__TranslationRequired__";
-
-        public string KeywordRange => "__TranslationRequired__";
 
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 

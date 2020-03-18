@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -48,44 +47,6 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fóssil";
         public string KeywordVial => "Recipiente";
         public string KeywordEssence => "Essência";
-
-        public string AttributeCategoryCrafted => "__TranslationRequired__";
-
-        public Regex PercentagAddedRegex => throw new NotSupportedException();
-
-        public string PercentageAddedRegexPattern => "__TranslationRequired__";
-
-        public string PercentageIncreasedOrDecreasedRegexPattern => "__TranslationRequired__";
-
-        public string AttributeIncreasedRegexPattern => "__TranslationRequired__";
-
-        public string CategoryNameCrafted => "__TranslationRequired__";
-
-        public string AttributeCategoryImplicit => "__TranslationRequired__";
-
-        public string CategoryNameImplicit => "__TranslationRequired__";
-
-        public string AttributeCategoryFractured => "__TranslationRequired__";
-
-        public string CategoryNameFractured => "__TranslationRequired__";
-
-        public string AttributeCategoryEnchant => "__TranslationRequired__";
-
-        public string CategoryNameEnchant => "__TranslationRequired__";
-
-        public string AttributeCategoryVeiled => "__TranslationRequired__";
-
-        public string CategoryNameVeiled => "__TranslationRequired__";
-
-        public string AttributeCategoryDelve => "__TranslationRequired__";
-
-        public string CategoryNameDelve => "__TranslationRequired__";
-
-        public string AttributeCategoryExplicit => "__TranslationRequired__";
-
-        public string AttributeRangeRegexPattern => "__TranslationRequired__";
-
-        public string KeywordRange => "__TranslationRequired__";
 
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 

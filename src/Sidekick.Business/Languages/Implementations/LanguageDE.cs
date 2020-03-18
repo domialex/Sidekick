@@ -48,24 +48,6 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "Phiole";
         public string KeywordEssence => "Essenz";
 
-        public string AttributeCategoryCrafted => "Angefertigt";
-        public string PercentageAddedRegexPattern => "^[+]+[\\d{1,2}]+%";
-        public string PercentageIncreasedOrDecreasedRegexPattern => "[-+]?[\\d{1,3}]+%";
-        public string AttributeIncreasedRegexPattern => "[+]?[\\d{1,3}]+[\\s]";
-        public string CategoryNameCrafted => "(crafted)";
-        public string AttributeCategoryImplicit => "Implizit";
-        public string CategoryNameImplicit => "(implicit)";
-        public string AttributeCategoryFractured => "Brüchig";
-        public string CategoryNameFractured => "(fractured)";
-        public string AttributeCategoryEnchant => "Verzauberung";
-        public string CategoryNameEnchant => "(enchant)";
-        public string AttributeCategoryVeiled => "Verhüllt";
-        public string CategoryNameVeiled => "(veiled)";
-        public string AttributeCategoryDelve => "Delve";
-        public string CategoryNameDelve => "(delve)";
-        public string AttributeCategoryExplicit => "Explizit";
-        public string AttributeRangeRegexPattern => "[\\d{1,3}]+[\\s]+[\\bto\\b]+[\\s]+[\\d{1,3}]+[\\s]";
-        public string KeywordRange => "bis";
         public string DescriptionPhysicalDamage => "Physischer Schaden: ";
         public string DescriptionElementalDamage => "Elementarschaden: ";
         public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde: ";
