@@ -1,4 +1,6 @@
-# Sidekick 0.5.0-beta
+# [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
+
+# Sidekick 0.5.2-beta
 A Path of Exile helper that shows item prices using the official Path of Exile Trade API.
 
 ## Description
@@ -7,7 +9,7 @@ If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), 
 Sidekick should be able to price check almost every item, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
 
 ## Missing from this version
-Unfortunetly, one of the most asked for feature was not ready in time. The advanced search and item filters were not ready. Development is under way, but there is still a lot of issues and work to be done before we release it.
+Unfortunately, one of the most asked for feature was not ready in time; The advanced search and item filters. Development is under way, but there is still a lot of issues and work to be done before we can release it.
 
 As soon as it is ready, we will make a new release, it shouldn't be long.
 
@@ -18,7 +20,7 @@ Yes, this is still a beta since some core features are missing. We are thinking 
 This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to [create an issue](https://github.com/domialex/Sidekick/issues).
 
 ## Installation
-1. Download Sidekick.exe file
+1. [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
 2. Run Sidekick.exe.
 
 ## Usage
