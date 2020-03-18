@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Context;
 using Sidekick.Business.Filters;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Maps;
@@ -28,7 +29,7 @@ namespace Sidekick.Business.Parsers
             IMapService mapService)
         {
             this.languageProvider = languageProvider;
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.mapService = mapService;
             itemNameTokenizer = tokenizers.OfType<ItemNameTokenizer>().First();
         }
@@ -95,9 +96,12 @@ namespace Sidekick.Business.Parsers
                 item.ItemText = itemText;
                 return item;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                logger.LogError(e, "Could not parse item.");
+                using (LogContext.PushProperty("rawItemText", itemText))
+                {
+                    logger.Error(ex, "Exception thrown when trying to parse item.");
+                }
                 return null;
             }
         }

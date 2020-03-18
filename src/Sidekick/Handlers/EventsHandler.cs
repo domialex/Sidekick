@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Parsers;
@@ -50,7 +50,7 @@ namespace Sidekick.Handlers
             this.clipboard = clipboard;
             this.keyboard = keyboard;
             this.itemParser = itemParser;
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.tradeClient = tradeClient;
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
@@ -158,7 +158,7 @@ namespace Sidekick.Handlers
             // This operation is only valid if the user has added their character name to the settings file.
             if (string.IsNullOrEmpty(settings.Character_Name))
             {
-                logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
+                logger.Warning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
                 return false;
             }
             await chatService.Write($"/kick {settings.Character_Name}");
@@ -176,9 +176,8 @@ namespace Sidekick.Handlers
                 var clipboardContents = await clipboard.GetText();
 
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
-                var searchText = item.Name;
-                logger.LogInformation(item.Name);
-                await clipboard.SetText(searchText);
+                logger.Information("Searching for {itemName}", item.Name);
+                await clipboard.SetText(item.Name);
 
                 keyboard.SendInput("Ctrl+F");
                 keyboard.SendInput("Ctrl+A");

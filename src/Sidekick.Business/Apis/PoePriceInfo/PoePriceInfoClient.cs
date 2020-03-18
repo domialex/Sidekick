@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis.PoePriceInfo.Models
@@ -19,7 +19,7 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
             IHttpClientFactory httpClientFactory,
             SidekickSettings configuration)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
 
             client = httpClientFactory.CreateClient();
@@ -39,12 +39,10 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
-
-
             }
-            catch
+            catch (Exception ex)
             {
-                logger.LogError("Error getting price prediction from poeprices.info");
+                logger.Error(ex, "Exception thrown while getting price prediction from poeprices.info");
             }
 
             return null;

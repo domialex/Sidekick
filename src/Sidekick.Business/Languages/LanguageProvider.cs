@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
@@ -19,7 +19,7 @@ namespace Sidekick.Business.Languages
             IInitializer initializeService,
             SidekickSettings settings)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.initializeService = initializeService;
             this.settings = settings;
 
@@ -48,12 +48,12 @@ namespace Sidekick.Business.Languages
         public ILanguage Language { get; private set; }
 
         /// <summary>
-        /// Every item should start with Rarity in the first line. 
+        /// Every item should start with Rarity in the first line.
         /// This will force the TradeClient to refetch the Public API's data if needed.
         /// </summary>
         public async Task FindAndSetLanguage(string itemDescription)
         {
-            var language = AvailableLanguages.FirstOrDefault(x => itemDescription.Contains(x.DescriptionRarity));
+            var language = AvailableLanguages.Find(x => itemDescription.Contains(x.DescriptionRarity));
 
             if (language != null && SetLanguage(language.Name))
             {
@@ -63,17 +63,17 @@ namespace Sidekick.Business.Languages
 
         private bool SetLanguage(string name)
         {
-            var language = AvailableLanguages.FirstOrDefault(x => x.Name == name);
+            var language = AvailableLanguages.Find(x => x.Name == name);
 
             if (language == null)
             {
-                logger.LogInformation($"Couldn't find language {language.Name}.");
+                logger.Information("Couldn't find language matching {language}.", name);
                 return false;
             }
 
             if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
             {
-                logger.LogInformation($"Changed language support to {language.Name}.");
+                logger.Information("Changed active language support to {language}.", language.Name);
                 Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
 
                 settings.Language_Parser = name;

@@ -1,5 +1,5 @@
 using System;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 
@@ -19,7 +19,7 @@ namespace Sidekick.Business.Apis.PoeDb
             ILanguageProvider languageProvider,
             INativeBrowser nativeBrowser)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.nativeBrowser = nativeBrowser;
         }
@@ -38,7 +38,7 @@ namespace Sidekick.Business.Apis.PoeDb
 
             if (string.IsNullOrEmpty(item.Name))
             {
-                logger.LogError("Failed to open PoeDb for item");
+                logger.Warning("Unable to open PoeDB for specified item as it has no name! {@item}", item);
                 return;
             }
 
