@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
@@ -26,7 +26,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             IStatDataService statsDataService,
             IItemDataService itemDataService)
         {
-            this.logger = logger;
+            this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
@@ -70,7 +70,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Could not parse item.");
+                logger.Error(e, "Could not parse item.");
                 return null;
             }
         }

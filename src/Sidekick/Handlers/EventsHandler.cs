@@ -51,9 +51,7 @@ namespace Sidekick.Handlers
             this.keyboard = keyboard;
             this.logger = logger.ForContext(GetType());
             this.tradeSearchService = tradeSearchService;
-            this.itemParser = itemParser;
             this.logger = logger.ForContext(GetType());
-            this.tradeClient = tradeClient;
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
             this.chatService = chatService;

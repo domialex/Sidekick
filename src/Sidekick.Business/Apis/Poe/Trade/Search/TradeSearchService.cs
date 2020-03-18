@@ -5,7 +5,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Serilog;
-using Sidekick.Business.Apis.Poe;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
@@ -47,7 +46,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         private async Task<FetchResult<string>> Query(ParsedItem item)
         {
-            logger.LogInformation("Querying Trade API.");
+            logger.Information("Querying Trade API.");
             FetchResult<string> result = null;
 
             try
@@ -140,7 +139,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 
         public async Task<FetchResult<Result>> GetListings(FetchResult<string> queryResult, int page = 0)
         {
-            logger.LogInformation($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
+            logger.Information($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
             FetchResult<Result> result = null;
 
             try
@@ -155,7 +154,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Exception thrown when fetching trade API listings from Query {queryId} page {page}.", queryResult.Id, page + 1);
                 return null;

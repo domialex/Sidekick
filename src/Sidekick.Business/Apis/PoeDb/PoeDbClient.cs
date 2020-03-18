@@ -1,5 +1,7 @@
 using System;
 using Serilog;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 

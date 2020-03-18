@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Serilog;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
-using Serilog;
 using Sidekick.Business.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
@@ -69,18 +69,18 @@ namespace Sidekick.Business.Apis.Poe.Trade
 
             try
             {
-                logger.LogInformation($"Fetching {name} started.");
+                logger.Information($"Fetching {name} started.");
 
                 var response = await client.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
 
-                logger.LogInformation($"{result.Result.Count} {name} fetched.");
+                logger.Information($"{result.Result.Count} {name} fetched.");
                 return result.Result;
             }
             catch (Exception)
             {
-                logger.LogInformation($"Could not fetch {name}.");
+                logger.Information($"Could not fetch {name}.");
                 throw;
             }
 
