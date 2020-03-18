@@ -37,9 +37,9 @@ namespace Sidekick.Core
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File("sidekick.log",
+                .WriteTo.File("Sidekick_Log.log",
                     rollingInterval: RollingInterval.Day,
-                    retainedFileCountLimit: 10,
+                    retainedFileCountLimit: 1,
                     fileSizeLimitBytes: 5242880,
                     rollOnFileSizeLimit: true)
                 .WriteTo.Sink(eventSink)
