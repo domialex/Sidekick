@@ -16,30 +16,27 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             this.poeApiClient = poeApiClient;
         }
 
-        public List<StatDataCategory> Categories { get; private set; }
+        private List<StatData> ExplicitPatterns { get; set; }
 
-        private List<(Regex Regex, StatData Data)> ExplicitPatterns { get; set; }
+        private List<StatData> ImplicitPatterns { get; set; }
 
-        private List<(Regex Regex, StatData Data)> ImplicitPatterns { get; set; }
+        private List<StatData> EnchantPatterns { get; set; }
 
-        private List<(Regex Regex, StatData Data)> EnchantPatterns { get; set; }
+        private List<StatData> CraftedPatterns { get; set; }
 
-        private List<(Regex Regex, StatData Data)> CraftedPatterns { get; set; }
-
-        private List<(Regex Regex, StatData Data)> VeiledPatterns { get; set; }
+        private List<StatData> VeiledPatterns { get; set; }
 
         public async Task OnInit()
         {
-            Categories = null;
-            Categories = await poeApiClient.Fetch<StatDataCategory>();
+            var categories = await poeApiClient.Fetch<StatDataCategory>();
 
-            ExplicitPatterns = new List<(Regex Regex, StatData Data)>();
-            ImplicitPatterns = new List<(Regex Regex, StatData Data)>();
-            EnchantPatterns = new List<(Regex Regex, StatData Data)>();
-            CraftedPatterns = new List<(Regex Regex, StatData Data)>();
-            VeiledPatterns = new List<(Regex Regex, StatData Data)>();
+            ExplicitPatterns = new List<StatData>();
+            ImplicitPatterns = new List<StatData>();
+            EnchantPatterns = new List<StatData>();
+            CraftedPatterns = new List<StatData>();
+            VeiledPatterns = new List<StatData>();
 
-            foreach (var category in Categories)
+            foreach (var category in categories)
             {
                 var first = category.Entries.FirstOrDefault();
                 if (first == null)
@@ -50,7 +47,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 // The notes in parentheses are never translated by the game.
                 // We should be fine hardcoding them this way.
                 string suffix;
-                List<(Regex Regex, StatData Data)> patterns;
+                List<StatData> patterns;
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
@@ -65,14 +62,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                 foreach (var entry in category.Entries)
                 {
-                    patterns.Add((new Regex($"[\\r\\n]+{Regex.Escape(entry.Text).Replace("\\#", "([-+\\d,\\.]+)")}{suffix}"), entry));
+                    entry.Category = category.Label;
+                    entry.Pattern = new Regex($"[\\r\\n]+{Regex.Escape(entry.Text).Replace("\\#", "([-+\\d,\\.]+)")}{suffix}");
+                    patterns.Add(entry);
                 }
             }
-
-            var test = ExplicitPatterns.Where(x => x.Data.Id.Contains("stat_3299347043")).FirstOrDefault();
         }
 
-        public Mods GetMods(string text)
+        public Mods ParseMods(string text)
         {
             var mods = new Mods();
 
@@ -91,22 +88,22 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             return mods;
         }
 
-        private void FillMods(List<Mod> mods, List<(Regex Regex, StatData Data)> patterns, string text)
+        private void FillMods(List<Mod> mods, List<StatData> patterns, string text)
         {
             var results = patterns
-                .Where(x => x.Regex.IsMatch(text))
+                .Where(x => x.Pattern.IsMatch(text))
                 .ToList();
 
             foreach (var x in results)
             {
-                var result = x.Regex.Match(text);
+                var result = x.Pattern.Match(text);
                 var magnitudes = new List<Magnitude>();
 
                 for (var index = 1; index < result.Groups.Count; index++)
                 {
                     magnitudes.Add(new Magnitude()
                     {
-                        Hash = x.Data.Id,
+                        Hash = x.Id,
                         Max = null,
                         Min = null,
                     });
@@ -117,6 +114,27 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     Magnitudes = magnitudes
                 });
             }
+        }
+
+        public StatData GetById(string id)
+        {
+            if (ImplicitPatterns.Any(x => x.Id == id))
+            {
+                return ImplicitPatterns.First(x => x.Id == id);
+            }
+            if (ExplicitPatterns.Any(x => x.Id == id))
+            {
+                return ExplicitPatterns.First(x => x.Id == id);
+            }
+            if (CraftedPatterns.Any(x => x.Id == id))
+            {
+                return CraftedPatterns.First(x => x.Id == id);
+            }
+            if (EnchantPatterns.Any(x => x.Id == id))
+            {
+                return EnchantPatterns.First(x => x.Id == id);
+            }
+            return null;
         }
     }
 }

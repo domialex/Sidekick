@@ -8,6 +8,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     public class StatDataCategory
     {
         public string Label { get; set; }
+
         public List<StatData> Entries { get; set; }
+
     }
 }

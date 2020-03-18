@@ -16,7 +16,6 @@ using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
 using Sidekick.UI.Views;
-using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -94,7 +93,6 @@ namespace Sidekick
             InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
 
             serviceProvider.GetRequiredService<EventsHandler>();
-            serviceProvider.GetRequiredService<AdvancedSearchController>();
         }
 
         private void InitTrayIcon(SidekickSettings settings)

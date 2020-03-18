@@ -18,6 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Windows\AdvancedSearch\**" />
+    <EmbeddedResource Remove="Windows\AdvancedSearch\**" />
+    <None Remove="Windows\AdvancedSearch\**" />
+    <Page Remove="Windows\AdvancedSearch\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Windows\Leagues\Betrayal\Images\Aisling.png" />
     <None Remove="Windows\Leagues\Betrayal\Images\Cameria.png" />
     <None Remove="Windows\Leagues\Betrayal\Images\Elreon.png" />

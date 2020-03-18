@@ -18,5 +18,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public double CriticalStrikeChance { get; set; } = 0;
         public double AttacksPerSecond { get; set; } = 0;
         public string PhysicalDamage { get; set; } = null;
+
+        public string ItemText { get; set; }
     }
 }

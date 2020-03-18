@@ -4,7 +4,6 @@ using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Natives;
 using Sidekick.Windows;
-using Sidekick.Windows.AdvancedSearch;
 using Sidekick.Windows.ApplicationLogs;
 using Sidekick.Windows.Leagues;
 using Sidekick.Windows.Prices;
@@ -32,7 +31,6 @@ namespace Sidekick
             services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
-            services.AddSingleton<AdvancedSearchController>();
 
             return services;
         }

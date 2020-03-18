@@ -55,7 +55,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
             try
             {
                 itemText = new ItemNameTokenizer().CleanString(itemText);
-                var item = new ParsedItem();
+                var item = new ParsedItem
+                {
+                    ItemText = itemText
+                };
 
                 ParseHeader(ref item, ref itemText);
                 ParseProperties(ref item, ref itemText);
@@ -251,7 +254,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         #region Modifiers
         private void ParseMods(ref ParsedItem item, ref string input)
         {
-            item.Extended.Mods = statsDataService.GetMods(input);
+            item.Extended.Mods = statsDataService.ParseMods(input);
         }
         #endregion
 

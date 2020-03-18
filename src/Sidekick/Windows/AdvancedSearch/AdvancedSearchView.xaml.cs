@@ -5,10 +5,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
-using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Parsers.Types;
 using Sidekick.UI.Items;
 
 namespace Sidekick.Windows.AdvancedSearch
@@ -23,7 +22,7 @@ namespace Sidekick.Windows.AdvancedSearch
         private const int MaxValueColumnIndex = 2;
         private const int EnabledColumnIndex = 3;
 
-        public Item CurrentItem;
+        public ParsedItem CurrentItem;
         private AdvancedSearchController Controller;
         private Dictionary<int, (TextBlock attrName, TextBox minVal, TextBox maxVal, CheckBox isChecked)> RowElementsDictionary;
 
@@ -42,19 +41,7 @@ namespace Sidekick.Windows.AdvancedSearch
             Hide();
         }
 
-        public void ClearGrid()
-        {
-            gridAdvancedSearch.Children.Clear();
-            gridAdvancedSearch.RowDefinitions.Clear();
-            RowElementsDictionary.Clear();
-            CurrentItem = null;
-            ItemLevelTextBox = null;
-            InfluenceCheckBox = null;
-            SocketCheckBox = null;
-            LinkCheckBox = null;
-        }
-
-        public void PopulateGrid(Item item)
+        public void PopulateGrid(ParsedItem item)
         {
             if ((item as IAttributeItem) == null)
             {
@@ -306,52 +293,5 @@ namespace Sidekick.Windows.AdvancedSearch
                 HorizontalAlignment = HorizontalAlignment.Center,
             };
         }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            Hide();
-            e.Cancel = true;
-        }
-
-        public void ShowWindow()
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new ShowWindowCallback(ShowWindow));
-            }
-            else
-            {
-                Visibility = Visibility.Visible;
-            }
-        }
-        delegate void ShowWindowCallback();
-
-        public void HideWindowAndClearData()
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new HideWindowAndClearDataCallback(HideWindowAndClearData));
-            }
-            else
-            {
-                ClearGrid();
-                Visibility = Visibility.Hidden;
-            }
-        }
-        delegate void HideWindowAndClearDataCallback();
-
-        public void SetWindowPosition(int x, int y)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(new SetWindowPositionCallback(SetWindowPosition), new object[] { x, y });
-            }
-            else
-            {
-                Left = x;
-                Top = y;
-            }
-        }
-        delegate void SetWindowPositionCallback(int x, int y);
     }
 }

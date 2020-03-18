@@ -8,6 +8,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Apis.PoeNinja;
@@ -31,6 +32,7 @@ namespace Sidekick.UI.Prices
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
         private readonly SidekickSettings settings;
+        private readonly IStatDataService statDataService;
 
         public PriceViewModel(
             ITradeSearchService tradeSearchService,
@@ -40,7 +42,8 @@ namespace Sidekick.UI.Prices
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
             IParserService parserService,
-            SidekickSettings settings)
+            SidekickSettings settings,
+            IStatDataService statDataService)
         {
             this.tradeSearchService = tradeSearchService;
             this.poeNinjaCache = poeNinjaCache;
@@ -50,6 +53,7 @@ namespace Sidekick.UI.Prices
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;
             this.settings = settings;
+            this.statDataService = statDataService;
             Task.Run(Initialize);
         }
 
@@ -71,9 +75,17 @@ namespace Sidekick.UI.Prices
 
         public bool IsCurrency { get; private set; }
 
+        public ObservableCollection<PriceModifierCategory> Modifiers { get; set; }
+
         private async Task Initialize()
         {
             Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
+
+            //InitializeMods(Item.Extended.Mods.Explicit);
+            //InitializeMods(Item.Extended.Mods.Implicit);
+            //InitializeMods(Item.Extended.Mods.Crafted);
+            //InitializeMods(Item.Extended.Mods.Enchant);
+
             Results = null;
 
             if (Item == null)
@@ -97,6 +109,49 @@ namespace Sidekick.UI.Prices
             if (settings.EnablePricePrediction)
             {
                 _ = GetPredictionPrice();
+            }
+        }
+
+        private void InitializeMods(List<Mod> mods)
+        {
+            if (mods.Count == 0)
+            {
+                return;
+            }
+
+            PriceModifierCategory category = null;
+
+            var magnitudes = mods
+                .SelectMany(x => x.Magnitudes)
+                .GroupBy(x => x.Hash)
+                .Select(x => new
+                {
+                    Hash = x.First().Hash,
+                    Magnitude = x
+                });
+
+            foreach (var magnitude in magnitudes)
+            {
+                var definition = statDataService.GetById(magnitude.Hash);
+
+                if (category == null)
+                {
+                    category = new PriceModifierCategory()
+                    {
+                        Label = definition.Category
+                    };
+                }
+
+                category.Modifiers.Add(new PriceModifier()
+                {
+                    Text = definition.Text,
+                    Enabled = false,
+                });
+            }
+
+            if (category != null)
+            {
+                Modifiers.Add(category);
             }
         }
 

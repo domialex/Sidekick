@@ -27,7 +27,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
                 foreach (var entry in category.Entries)
                 {
                     ImageUrls.Add(entry.Id, entry.Image);
-                    Ids.Add(entry.Text, entry.Id);
+                    if (!Ids.ContainsKey(entry.Text))
+                    {
+                        Ids.Add(entry.Text, entry.Id);
+                    }
                 }
             }
         }
