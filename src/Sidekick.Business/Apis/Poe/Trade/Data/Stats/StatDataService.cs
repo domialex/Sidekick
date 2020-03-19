@@ -105,11 +105,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         private void FillMods(List<Mod> mods, List<StatData> patterns, string text)
         {
-            var results = patterns
-                .Where(x => x.Pattern.IsMatch(text))
-                .ToList();
-
-            foreach (var x in results)
+            foreach (var x in patterns
+                .Where(x => x.Pattern.IsMatch(text)))
             {
                 var result = x.Pattern.Match(text);
                 var magnitudes = new List<Magnitude>();
@@ -148,22 +145,30 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         public StatData GetById(string id)
         {
-            if (ImplicitPatterns.Any(x => x.Id == id))
+            var result = ImplicitPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
             {
-                return ImplicitPatterns.First(x => x.Id == id);
+                return result;
             }
-            if (ExplicitPatterns.Any(x => x.Id == id))
+
+            result = ExplicitPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
             {
-                return ExplicitPatterns.First(x => x.Id == id);
+                return result;
             }
-            if (CraftedPatterns.Any(x => x.Id == id))
+
+            result = CraftedPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
             {
-                return CraftedPatterns.First(x => x.Id == id);
+                return result;
             }
-            if (EnchantPatterns.Any(x => x.Id == id))
+
+            result = EnchantPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
             {
-                return EnchantPatterns.First(x => x.Id == id);
+                return result;
             }
+
             return null;
         }
     }

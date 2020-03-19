@@ -27,14 +27,15 @@ namespace Sidekick.Business.Apis.Poe.Models
             }
             set
             {
-                switch (value)
+                __Color = value switch
                 {
-                    case SocketColor.Blue: __Color = "B"; break;
-                    case SocketColor.Green: __Color = "G"; break;
-                    case SocketColor.Red: __Color = "R"; break;
-                    case SocketColor.White: __Color = "W"; break;
-                    case SocketColor.Abyss: __Color = "A"; break;
-                }
+                    SocketColor.Blue => "B",
+                    SocketColor.Green => "G",
+                    SocketColor.Red => "R",
+                    SocketColor.White => "W",
+                    SocketColor.Abyss => "A",
+                    _ => throw new Exception("Invalid socket"),
+                };
             }
         }
     }
