@@ -32,8 +32,8 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.itemDataService = itemDataService;
         }
 
-        private Regex NewlinePattern { get; set; }
-        private Regex SeparatorPattern { get; set; }
+        private Regex NewlinePattern;
+        private Regex SeparatorPattern;
 
         public Task OnAfterInit()
         {
@@ -76,10 +76,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
         }
 
         #region Header (Rarity, Name, Type)
-        private Dictionary<Rarity, Regex> RarityPatterns { get; set; }
-        private Regex ItemLevelPattern { get; set; }
-        private Regex UnidentifiedPattern { get; set; }
-        private Regex CorruptedPattern { get; set; }
+        private Dictionary<Rarity, Regex> RarityPatterns;
+        private Regex ItemLevelPattern;
+        private Regex UnidentifiedPattern;
+        private Regex CorruptedPattern;
 
         private void InitHeader()
         {
@@ -130,20 +130,20 @@ namespace Sidekick.Business.Apis.Poe.Parser
         #endregion
 
         #region Properties (Armour, Evasion, Energy Shield, Quality, Level)
-        private Regex ArmorPattern { get; set; }
-        private Regex EnergyShieldPattern { get; set; }
-        private Regex EvasionPattern { get; set; }
-        private Regex QualityPattern { get; set; }
-        private Regex LevelPattern { get; set; }
-        private Regex MapTierPattern { get; set; }
-        private Regex ItemQuantityPattern { get; set; }
-        private Regex ItemRarityPattern { get; set; }
-        private Regex MonsterPackSizePattern { get; set; }
-        private Regex AttacksPerSecondPattern { get; set; }
-        private Regex CriticalStrikeChancePattern { get; set; }
-        private Regex ElementalDamagePattern { get; set; }
-        private Regex PhysicalDamagePattern { get; set; }
-        private Regex BlightedPattern { get; set; }
+        private Regex ArmorPattern;
+        private Regex EnergyShieldPattern;
+        private Regex EvasionPattern;
+        private Regex QualityPattern;
+        private Regex LevelPattern;
+        private Regex MapTierPattern;
+        private Regex ItemQuantityPattern;
+        private Regex ItemRarityPattern;
+        private Regex MonsterPackSizePattern;
+        private Regex AttacksPerSecondPattern;
+        private Regex CriticalStrikeChancePattern;
+        private Regex ElementalDamagePattern;
+        private Regex PhysicalDamagePattern;
+        private Regex BlightedPattern;
 
         private void InitProperties()
         {
@@ -189,7 +189,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         #endregion
 
         #region Sockets
-        private Regex SocketPattern { get; set; }
+        private Regex SocketPattern;
 
         private void InitSockets()
         {
@@ -227,12 +227,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
         #endregion
 
         #region Influences
-        private Regex CrusaderPattern { get; set; }
-        private Regex ElderPattern { get; set; }
-        private Regex HunterPattern { get; set; }
-        private Regex RedeemerPattern { get; set; }
-        private Regex ShaperPattern { get; set; }
-        private Regex WarlordPattern { get; set; }
+        private Regex CrusaderPattern;
+        private Regex ElderPattern;
+        private Regex HunterPattern;
+        private Regex RedeemerPattern;
+        private Regex ShaperPattern;
+        private Regex WarlordPattern;
 
         private void InitInfluences()
         {
