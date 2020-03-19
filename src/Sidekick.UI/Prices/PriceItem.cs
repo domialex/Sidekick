@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
@@ -57,6 +58,34 @@ namespace Sidekick.UI.Prices
         public string Amount { get; set; }
         public string ImageUrl { get; set; }
         public string Age { get; set; }
+
+        public List<List<string>> Sockets
+        {
+            get
+            {
+                var sockets = new List<List<string>>();
+
+                foreach (var socket in Item.Item.Sockets
+                    .OrderBy(x => x.Group)
+                    .GroupBy(x => x.Group)
+                    .ToList())
+                {
+                    sockets.Add(socket
+                        .Select(x => x.Color switch
+                        {
+                            SocketColor.Blue => "#2E86C1",
+                            SocketColor.Green => "#28B463",
+                            SocketColor.Red => "#C0392B",
+                            SocketColor.White => "#FBFCFC",
+                            SocketColor.Abyss => "#839192",
+                            _ => throw new Exception("Invalid socket"),
+                        })
+                        .ToList());
+                }
+
+                return sockets;
+            }
+        }
 
         private string GetHumanReadableTimeSpan(DateTimeOffset time)
         {
