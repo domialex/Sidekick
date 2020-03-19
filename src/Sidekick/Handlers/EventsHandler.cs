@@ -2,10 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis;
+using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
-using Sidekick.Business.Parsers;
 using Sidekick.Business.Stashes;
-using Sidekick.Business.Trades;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -21,14 +21,14 @@ namespace Sidekick.Handlers
         private readonly IWhisperService whisperService;
         private readonly INativeClipboard clipboard;
         private readonly INativeKeyboard keyboard;
-        private readonly IItemParser itemParser;
         private readonly ILogger logger;
-        private readonly ITradeClient tradeClient;
+        private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
         private readonly IChatService chatService;
         private readonly IStashService stashService;
         private readonly SidekickSettings settings;
+        private readonly IParserService parserService;
         private bool isDisposed;
 
         public EventsHandler(
@@ -36,27 +36,28 @@ namespace Sidekick.Handlers
             IWhisperService whisperService,
             INativeClipboard clipboard,
             INativeKeyboard keyboard,
-            IItemParser itemParser,
             ILogger logger,
-            ITradeClient tradeClient,
+            ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
             IViewLocator viewLocator,
             IChatService chatService,
             IStashService stashService,
-            SidekickSettings settings)
+            SidekickSettings settings,
+            IParserService parserService)
         {
             this.events = events;
             this.whisperService = whisperService;
             this.clipboard = clipboard;
             this.keyboard = keyboard;
-            this.itemParser = itemParser;
             this.logger = logger.ForContext(GetType());
-            this.tradeClient = tradeClient;
+            this.tradeSearchService = tradeSearchService;
+            this.logger = logger.ForContext(GetType());
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
             this.chatService = chatService;
             this.stashService = stashService;
             this.settings = settings;
+            this.parserService = parserService;
             Initialize();
         }
 
@@ -134,6 +135,9 @@ namespace Sidekick.Handlers
         {
             viewLocator.CloseAll();
             await clipboard.Copy();
+
+            await parserService.ParseItem(clipboard.LastCopiedText);
+
             viewLocator.Open<PriceView>();
             return true;
         }
@@ -208,21 +212,23 @@ namespace Sidekick.Handlers
         private async Task<bool> TriggerOpenSearch()
         {
             var item = await TriggerCopyAction();
+
             if (item != null)
             {
-                await tradeClient.OpenWebpage(item);
+                await tradeSearchService.OpenWebpage(item);
                 return true;
             }
 
             return false;
         }
 
-        private async Task<Business.Parsers.Models.Item> TriggerCopyAction()
+        private async Task<ParsedItem> TriggerCopyAction()
         {
             var text = await clipboard.Copy();
+
             if (!string.IsNullOrWhiteSpace(text))
             {
-                return await itemParser.ParseItem(text);
+                return await parserService.ParseItem(text);
             }
 
             return null;

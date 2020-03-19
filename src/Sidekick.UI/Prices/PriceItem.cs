@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Business.Trades.Results;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Localization.Prices;
 using Sidekick.UI.Items;
 
@@ -9,7 +9,7 @@ namespace Sidekick.UI.Prices
 {
     public partial class PriceItem
     {
-        public PriceItem(SearchResult result)
+        public PriceItem(Result result)
         {
             if (result.Listing.Price != null)
             {
@@ -50,12 +50,12 @@ namespace Sidekick.UI.Prices
             Item.Item.Requirements = Item.Item.Requirements.OrderBy(x => x.Order).ToList();
         }
 
-        public SearchResult Item { get; set; }
+        public Result Item { get; set; }
 
         public string Color => Item?.Item.Rarity.GetColor();
 
         public string Amount { get; set; }
-        public string CurrencyUrl { get; set; }
+        public string ImageUrl { get; set; }
         public string Age { get; set; }
 
         private string GetHumanReadableTimeSpan(DateTimeOffset time)

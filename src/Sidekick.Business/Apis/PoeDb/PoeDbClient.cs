@@ -1,5 +1,7 @@
 using System;
 using Serilog;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 
@@ -24,7 +26,7 @@ namespace Sidekick.Business.Apis.PoeDb
             this.nativeBrowser = nativeBrowser;
         }
 
-        public void Open(Parsers.Models.Item item)
+        public void Open(ParsedItem item)
         {
             if (item == null)
             {
@@ -45,16 +47,16 @@ namespace Sidekick.Business.Apis.PoeDb
             nativeBrowser.Open(CreateUri(item));
         }
 
-        private Uri CreateUri(Parsers.Models.Item item)
+        private Uri CreateUri(ParsedItem item)
         {
             var subUrl = item.Rarity switch
             {
-                Parsers.Models.Rarity.Unique => SubUrlUnique,
-                Parsers.Models.Rarity.Gem => SubUrlGem,
+                Rarity.Unique => SubUrlUnique,
+                Rarity.Gem => SubUrlGem,
                 _ => SubUrlItem
             };
 
-            var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
+            var searchLink = item.Name ?? item.TypeLine;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri + wikiLink);
         }

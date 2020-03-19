@@ -19,12 +19,20 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "Divination Card";
         public string DescriptionUnidentified => "Unidentified";
         public string DescriptionQuality => "Quality: ";
+        public string DescriptionLevel => "Level: ";
         public string DescriptionCorrupted => "Corrupted";
         public string DescriptionRarity => "Rarity: ";
         public string DescriptionSockets => "Sockets: ";
         public string DescriptionItemLevel => "Item Level: ";
         public string DescriptionExperience => "Experience: ";
         public string DescriptionOrgan => "Uses: ";
+        public string DescriptionPhysicalDamage => "Physical Damage: ";
+        public string DescriptionElementalDamage => "Elemental Damage: ";
+        public string DescriptionEnergyShield => "Energy Shield: ";
+        public string DescriptionArmour => "Armour: ";
+        public string DescriptionEvasion => "Evasion Rating: ";
+        public string DescriptionAttacksPerSecond => "Attacks per Second: ";
+        public string DescriptionCriticalStrikeChance => "Critical Strike Chance: ";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Shaper";
         public string InfluenceElder => "Elder";
@@ -47,5 +55,6 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fossil";
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Essence";
+
     }
 }

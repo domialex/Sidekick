@@ -47,5 +47,15 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fossil";
         public string KeywordVial => "Phiole";
         public string KeywordEssence => "Essenz";
+
+        public string DescriptionPhysicalDamage => "Physischer Schaden: ";
+        public string DescriptionElementalDamage => "Elementarschaden: ";
+        public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde: ";
+        public string DescriptionCriticalStrikeChance => "Kritische Trefferchance: ";
+        public string DescriptionEnergyShield => "Energieschild: ";
+        public string DescriptionArmour => "Rüstung: ";
+        public string DescriptionEvasion => "Ausweichwert: ";
+
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }

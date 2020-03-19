@@ -1,5 +1,6 @@
 using System;
 using Serilog;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 
@@ -24,7 +25,7 @@ namespace Sidekick.Business.Apis.PoeWiki
         /// <summary>
         /// Attempts to generate and open the wiki link for the given item
         /// </summary>
-        public void Open(Parsers.Models.Item item)
+        public void Open(ParsedItem item)
         {
             if (item == null)
             {
@@ -52,10 +53,10 @@ namespace Sidekick.Business.Apis.PoeWiki
         /// Creates and returns a URI link for the given item in a format matching that of the poe gamepedia website
         /// Only works with items that are not rare or magic
         /// </summary>
-        private Uri CreateItemWikiLink(Parsers.Models.Item item)
+        private Uri CreateItemWikiLink(ParsedItem item)
         {
             // determine search link, so wiki can be opened for any item
-            var searchLink = item.Rarity == Parsers.Models.Rarity.Unique ? item.Name : item.Type;
+            var searchLink = item.Name ?? item.TypeLine;
             // replace space encodes with '_' to match the link layout of the poe wiki and then url encode it
             var itemLink = System.Net.WebUtility.UrlEncode(searchLink.Replace(" ", "_"));
             return new Uri(WIKI_BASE_URI + itemLink);

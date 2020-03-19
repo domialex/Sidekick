@@ -51,7 +51,7 @@
                 </StackPanel>
             </GroupBox.Header>
 
-            <ScrollViewer Height="250">
+            <ScrollViewer Height="247">
                 <StackPanel>
                     <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.Properties}">
                         <ItemsControl.ItemTemplate>

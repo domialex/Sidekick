@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Parsers.Models;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
@@ -37,7 +37,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
         }
-        public PoeNinjaItem GetItem(Item item)
+        public PoeNinjaItem GetItem(ParsedItem item)
         {
             // TODO: Ensure cached items are from the currently selected league (league change needs a few sec to update)
             //if(!IsInitialized)

@@ -19,5 +19,6 @@ namespace Sidekick.Core.Natives
         event Func<Task<bool>> OnTabRight;
         event Func<Task<bool>> OnOpenLeagueOverview;
         event Func<Task<bool>> OnWhisperReply;
+        event Func<Task<bool>> OnAdvancedSearch;
     }
 }

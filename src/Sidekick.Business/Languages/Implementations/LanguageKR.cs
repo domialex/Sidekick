@@ -47,5 +47,21 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "화석";
         public string KeywordVial => "시약";
         public string KeywordEssence => "에센스";
+
+        public string DescriptionPhysicalDamage => "__TranslationRequired__";
+
+        public string DescriptionElementalDamage => "__TranslationRequired__";
+
+        public string DescriptionAttacksPerSecond => "__TranslationRequired__";
+
+        public string DescriptionCriticalStrikeChance => "__TranslationRequired__";
+
+        public string DescriptionEnergyShield => "__TranslationRequired__";
+
+        public string DescriptionArmour => "__TranslationRequired__";
+
+        public string DescriptionEvasion => "__TranslationRequired__";
+
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }

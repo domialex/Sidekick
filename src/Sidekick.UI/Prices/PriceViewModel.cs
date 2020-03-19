@@ -5,14 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Trade;
+using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
+using Sidekick.Business.Apis.Poe.Trade.Search;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
+using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
-using Sidekick.Business.Categories;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Parsers;
-using Sidekick.Business.Parsers.Models;
-using Sidekick.Business.Trades;
-using Sidekick.Business.Trades.Results;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
@@ -23,43 +25,46 @@ namespace Sidekick.UI.Prices
     [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
     {
-        private readonly ITradeClient tradeClient;
+        private readonly ITradeSearchService tradeSearchService;
         private readonly IPoeNinjaCache poeNinjaCache;
-        private readonly IStaticItemCategoryService staticItemCategoryService;
+        private readonly IStaticDataService staticDataService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
-        private readonly IItemParser itemParser;
+        private readonly IParserService parserService;
         private readonly SidekickSettings settings;
+        private readonly IStatDataService statDataService;
 
         public PriceViewModel(
-            ITradeClient tradeClient,
+            ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
-            IStaticItemCategoryService staticItemCategoryService,
+            IStaticDataService staticDataService,
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
-            IItemParser itemParser,
-            SidekickSettings settings)
+            IParserService parserService,
+            SidekickSettings settings,
+            IStatDataService statDataService)
         {
-            this.tradeClient = tradeClient;
+            this.tradeSearchService = tradeSearchService;
             this.poeNinjaCache = poeNinjaCache;
-            this.staticItemCategoryService = staticItemCategoryService;
+            this.staticDataService = staticDataService;
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
             this.nativeClipboard = nativeClipboard;
-            this.itemParser = itemParser;
+            this.parserService = parserService;
             this.settings = settings;
+            this.statDataService = statDataService;
             Task.Run(Initialize);
         }
 
-        public Business.Parsers.Models.Item Item { get; private set; }
+        public ParsedItem Item { get; private set; }
 
         public string ItemColor => Item?.GetColor();
 
         public ObservableCollection<PriceItem> Results { get; private set; }
 
-        private QueryResult<SearchResult> QueryResult { get; set; }
+        private FetchResult<Result> QueryResult { get; set; }
 
         public Uri Uri => QueryResult?.Uri;
 
@@ -71,10 +76,16 @@ namespace Sidekick.UI.Prices
 
         public bool IsCurrency { get; private set; }
 
+        public ObservableCollection<PriceFilterCategory> Filters { get; set; }
+
         private async Task Initialize()
         {
-            Item = await itemParser.ParseItem(nativeClipboard.LastCopiedText);
-            Results = null;
+            Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
+
+            InitializeMods(Item.Extended.Mods.Explicit);
+            InitializeMods(Item.Extended.Mods.Implicit);
+            InitializeMods(Item.Extended.Mods.Crafted);
+            InitializeMods(Item.Extended.Mods.Enchant);
 
             if (Item == null)
             {
@@ -82,22 +93,127 @@ namespace Sidekick.UI.Prices
                 return;
             }
 
-            IsFetching = true;
-            QueryResult = await tradeClient.GetListings(Item);
-            IsFetching = false;
-            if (QueryResult.Result.Any())
-            {
-                Append(QueryResult.Result);
-                IsCurrency = Results.FirstOrDefault()?.Item?.Item?.Rarity == Rarity.Currency;
-            }
+            IsCurrency = Item.Rarity == Rarity.Currency;
 
-            UpdateCountString();
+            UpdateQuery();
+
             GetPoeNinjaPrice();
 
             if (settings.EnablePricePrediction)
             {
                 _ = GetPredictionPrice();
             }
+        }
+
+        private void InitializeMods(List<Mod> mods)
+        {
+            if (mods.Count == 0)
+            {
+                return;
+            }
+
+            PriceFilterCategory category = null;
+
+            var magnitudes = mods
+                .SelectMany(x => x.Magnitudes)
+                .GroupBy(x => x.Hash)
+                .Select(x => new
+                {
+                    Definition = statDataService.GetById(x.First().Hash),
+                    Magnitudes = x
+                })
+                .ToList();
+
+            foreach (var magnitude in magnitudes)
+            {
+                if (category == null)
+                {
+                    category = new PriceFilterCategory()
+                    {
+                        Label = magnitude.Definition.Category
+                    };
+                }
+
+                var min = magnitude.Magnitudes.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
+                if (min.HasValue)
+                {
+                    min = (int)Math.Min(min.Value - 5, min.Value * 0.9);
+                }
+                if (min < 0)
+                {
+                    min = 0;
+                }
+
+                var max = magnitude.Magnitudes.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
+                if (max.HasValue)
+                {
+                    max = (int)Math.Max(max.Value + 5, max.Value * 1.1);
+                }
+                if (max < 0)
+                {
+                    max = 0;
+                }
+
+                category.Filters.Add(new PriceFilter()
+                {
+                    Id = magnitude.Definition.Id,
+                    Text = magnitude.Definition.Text,
+                    Enabled = false,
+                    Min = min,
+                    Max = max,
+                    HasRange = min.HasValue || max.HasValue
+                });
+            }
+
+            if (Filters == null)
+            {
+                Filters = new ObservableCollection<PriceFilterCategory>();
+            }
+
+            if (category != null)
+            {
+                Filters.Add(category);
+            }
+        }
+
+        public void UpdateQuery()
+        {
+            Task.Run(async () =>
+            {
+                Results = null;
+
+                IsFetching = true;
+                QueryResult = await tradeSearchService.GetListings(Item, GetFilters());
+                IsFetching = false;
+                if (QueryResult == null)
+                {
+                    IsError = true;
+                }
+                else if (QueryResult.Result.Any())
+                {
+                    Append(QueryResult.Result);
+                }
+
+                UpdateCountString();
+            });
+        }
+
+        private List<StatFilter> GetFilters()
+        {
+            return Filters?
+                .SelectMany(x => x.Filters)
+                .Where(x => x.Enabled)
+                .Select(x => new StatFilter()
+                {
+                    Disabled = !x.Enabled,
+                    Id = x.Id,
+                    Value = new SearchFilterValue()
+                    {
+                        Max = x.Max,
+                        Min = x.Min
+                    }
+                })
+                .ToList();
         }
 
         public async Task LoadMoreData()
@@ -109,7 +225,7 @@ namespace Sidekick.UI.Prices
 
             var page = (int)Math.Ceiling(Results.Count / 10d);
             IsFetching = true;
-            QueryResult = await tradeClient.GetListingsForSubsequentPages(Item, page);
+            QueryResult = await tradeSearchService.GetListingsForSubsequentPages(Item, page, GetFilters());
             IsFetching = false;
             if (QueryResult.Result.Any())
             {
@@ -119,17 +235,18 @@ namespace Sidekick.UI.Prices
             UpdateCountString();
         }
 
-        private void Append(List<SearchResult> results)
+        private void Append(List<Result> results)
         {
             var items = new List<PriceItem>();
 
             foreach (var result in results)
             {
-                staticItemCategoryService.CurrencyUrls.TryGetValue(result.Listing.Price.Currency, out var url);
-
                 items.Add(new PriceItem(result)
                 {
-                    CurrencyUrl = $"{languageProvider.Language.PoeCdnBaseUrl}{url}"
+                    ImageUrl = new Uri(
+                        languageProvider.Language.PoeCdnBaseUrl,
+                        staticDataService.GetImage(result.Listing.Price.Currency)
+                    ).AbsoluteUri,
                 });
             }
 

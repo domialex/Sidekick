@@ -10,7 +10,6 @@ namespace Sidekick.Business.Languages.Implementations
         public Uri PoeTradeApiBaseUrl => new Uri("https://th.pathofexile.com/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
         public Uri PoeWebsite => new Uri("https://th.pathofexile.com/");
-        public string Rarity => "Seltenheit: ";
         public string RarityUnique => "Unique";
         public string RarityRare => "แรร์";
         public string RarityMagic => "เมจิก";
@@ -48,5 +47,21 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fossil";
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Essence";
+
+        public string DescriptionPhysicalDamage => "__TranslationRequired__";
+
+        public string DescriptionElementalDamage => "__TranslationRequired__";
+
+        public string DescriptionAttacksPerSecond => "__TranslationRequired__";
+
+        public string DescriptionCriticalStrikeChance => "__TranslationRequired__";
+
+        public string DescriptionEnergyShield => "__TranslationRequired__";
+
+        public string DescriptionArmour => "__TranslationRequired__";
+
+        public string DescriptionEvasion => "__TranslationRequired__";
+
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }

@@ -47,5 +47,20 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordFossil => "Fósil";
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Esencia";
+
+        public string DescriptionPhysicalDamage => "__TranslationRequired__";
+
+        public string DescriptionElementalDamage => "__TranslationRequired__";
+
+        public string DescriptionAttacksPerSecond => "__TranslationRequired__";
+
+        public string DescriptionCriticalStrikeChance => "__TranslationRequired__";
+
+        public string DescriptionEnergyShield => "__TranslationRequired__";
+
+        public string DescriptionArmour => "__TranslationRequired__";
+
+        public string DescriptionEvasion => "__TranslationRequired__";
+        public string DescriptionLevel => "__TranslationRequired__";
     }
 }
