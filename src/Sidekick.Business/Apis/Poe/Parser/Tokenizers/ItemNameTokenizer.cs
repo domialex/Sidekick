@@ -6,15 +6,16 @@ namespace Sidekick.Business.Tokenizers.ItemName
 {
     public class ItemNameTokenizer
     {
-        private Dictionary<ItemNameTokenType, string> _tokenDefs;
+        private Dictionary<ItemNameTokenType, Regex> _tokenDefs;
 
         public ItemNameTokenizer()
         {
-            _tokenDefs = new Dictionary<ItemNameTokenType, string>();
-
-            _tokenDefs.Add(ItemNameTokenType.Set, "<<set:(?<LANG>\\w{1,2})>>");
-            _tokenDefs.Add(ItemNameTokenType.Name, "^((?!<).)+");
-            _tokenDefs.Add(ItemNameTokenType.If, "<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}");
+            _tokenDefs = new Dictionary<ItemNameTokenType, Regex>
+            {
+                { ItemNameTokenType.Set, new Regex("<<set:(?<LANG>\\w{1,2})>>") },
+                { ItemNameTokenType.Name, new Regex("^((?!<).)+") },
+                { ItemNameTokenType.If, new Regex("<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}") }
+            };
         }
 
         private IEnumerable<ItemNameToken> GetTokens(string input)
@@ -50,7 +51,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
         {
             foreach (var def in _tokenDefs)
             {
-                var match = Regex.Match(input, def.Value);
+                var match = def.Value.Match(input);
                 if (match.Success)
                 {
                     if (match.Length != input.Length)
@@ -84,7 +85,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
                 }
                 else if (token.TokenType == ItemNameTokenType.Name)
                 {
-                    output.Append(token.Match.Match.Value);
+                    output.Append($"{token.Match.Match.Value}\n");
                 }
                 else if (token.TokenType == ItemNameTokenType.If)
                 {

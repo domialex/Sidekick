@@ -26,6 +26,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         private List<StatData> VeiledPatterns { get; set; }
 
+        private Regex NewLinePattern { get; set; }
+
         public async Task OnInit()
         {
             var categories = await poeApiClient.Fetch<StatDataCategory>();
@@ -35,6 +37,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             EnchantPatterns = new List<StatData>();
             CraftedPatterns = new List<StatData>();
             VeiledPatterns = new List<StatData>();
+
+            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
@@ -56,7 +60,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     default: continue;
                     case "delve":
                     case "monster":
-                    case "explicit": suffix = "\\ *[\\r\\n]+"; patterns = ExplicitPatterns; break;
+                    case "explicit": suffix = "\\ *\\n+"; patterns = ExplicitPatterns; break;
                     case "implicit": suffix = "\\ *\\(implicit\\)"; patterns = ImplicitPatterns; break;
                     case "enchant": suffix = "\\ *\\(enchant\\)"; patterns = EnchantPatterns; break;
                     case "crafted": suffix = "\\ *\\(crafted\\)"; patterns = CraftedPatterns; break;
@@ -70,8 +74,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     pattern = Regex.Escape(entry.Text);
                     pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
                     pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    pattern = NewLinePattern.Replace(pattern, "\\n");
 
-                    entry.Pattern = new Regex($"[\\r\\n]+{pattern}{suffix}");
+                    entry.Pattern = new Regex($"\\n+{pattern}{suffix}");
                     patterns.Add(entry);
                 }
             }
@@ -79,12 +84,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         public Mods ParseMods(string text)
         {
+            text = NewLinePattern.Replace(text, "\n");
+
             var mods = new Mods();
 
             // Make sure the text ends with an empty line for our regexes to work correctly
-            if (!text.EndsWith("\\r\\n"))
+            if (!text.EndsWith("\n"))
             {
-                text += "\\r\\n";
+                text += "\n";
             }
 
             FillMods(mods.Explicit, ExplicitPatterns, text);
@@ -107,18 +114,28 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 var result = x.Pattern.Match(text);
                 var magnitudes = new List<Magnitude>();
 
-                for (var index = 1; index < result.Groups.Count; index++)
+                if (result.Groups.Count > 1)
                 {
-                    double? value = null;
-                    if (double.TryParse(result.Groups[index].Value, out var parsedValue))
+                    for (var index = 1; index < result.Groups.Count; index++)
                     {
-                        value = parsedValue;
+                        double? value = null;
+                        if (double.TryParse(result.Groups[index].Value, out var parsedValue))
+                        {
+                            value = parsedValue;
+                        }
+                        magnitudes.Add(new Magnitude()
+                        {
+                            Hash = x.Id,
+                            Max = value,
+                            Min = value,
+                        });
                     }
+                }
+                else
+                {
                     magnitudes.Add(new Magnitude()
                     {
-                        Hash = x.Id,
-                        Max = value,
-                        Min = value,
+                        Hash = x.Id
                     });
                 }
 

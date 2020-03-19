@@ -137,7 +137,7 @@ namespace Sidekick.UI.Prices
                 var min = magnitude.Magnitudes.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
                 if (min.HasValue)
                 {
-                    min = double.Parse(Math.Min(min.Value - 5, min.Value * 0.9).ToString("0.0"));
+                    min = (int)Math.Min(min.Value - 5, min.Value * 0.9);
                 }
                 if (min < 0)
                 {
@@ -147,7 +147,7 @@ namespace Sidekick.UI.Prices
                 var max = magnitude.Magnitudes.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
                 if (max.HasValue)
                 {
-                    max = double.Parse(Math.Min(max.Value + 5, max.Value * 1.1).ToString("0.0"));
+                    max = (int)Math.Min(max.Value + 5, max.Value * 1.1);
                 }
                 if (max < 0)
                 {
@@ -161,6 +161,7 @@ namespace Sidekick.UI.Prices
                     Enabled = false,
                     Min = min,
                     Max = max,
+                    HasRange = min.HasValue || max.HasValue
                 });
             }
 
