@@ -76,7 +76,7 @@ namespace Sidekick.UI.Prices
 
         public bool IsCurrency { get; private set; }
 
-        public ObservableCollection<PriceModifierCategory> Modifiers { get; set; }
+        public ObservableCollection<PriceFilterCategory> Filters { get; set; }
 
         private async Task Initialize()
         {
@@ -112,7 +112,7 @@ namespace Sidekick.UI.Prices
                 return;
             }
 
-            PriceModifierCategory category = null;
+            PriceFilterCategory category = null;
 
             var magnitudes = mods
                 .SelectMany(x => x.Magnitudes)
@@ -128,7 +128,7 @@ namespace Sidekick.UI.Prices
             {
                 if (category == null)
                 {
-                    category = new PriceModifierCategory()
+                    category = new PriceFilterCategory()
                     {
                         Label = magnitude.Definition.Category
                     };
@@ -154,7 +154,7 @@ namespace Sidekick.UI.Prices
                     max = 0;
                 }
 
-                category.Modifiers.Add(new PriceModifier()
+                category.Filters.Add(new PriceFilter()
                 {
                     Id = magnitude.Definition.Id,
                     Text = magnitude.Definition.Text,
@@ -164,14 +164,14 @@ namespace Sidekick.UI.Prices
                 });
             }
 
-            if (Modifiers == null)
+            if (Filters == null)
             {
-                Modifiers = new ObservableCollection<PriceModifierCategory>();
+                Filters = new ObservableCollection<PriceFilterCategory>();
             }
 
             if (category != null)
             {
-                Modifiers.Add(category);
+                Filters.Add(category);
             }
         }
 
@@ -199,8 +199,8 @@ namespace Sidekick.UI.Prices
 
         private List<StatFilter> GetFilters()
         {
-            return Modifiers?
-                .SelectMany(x => x.Modifiers)
+            return Filters?
+                .SelectMany(x => x.Filters)
                 .Where(x => x.Enabled)
                 .Select(x => new StatFilter()
                 {

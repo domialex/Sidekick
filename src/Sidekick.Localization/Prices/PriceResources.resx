@@ -153,6 +153,12 @@
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Filters_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Filters_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>

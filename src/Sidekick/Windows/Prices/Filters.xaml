@@ -26,17 +26,17 @@
         Name="Container"
         Width="250"
         Margin="0"
-        Visibility="{Binding ViewModel.Modifiers, Converter={StaticResource NullableToVisibility}}">
+        Visibility="{Binding ViewModel.Filters, Converter={StaticResource NullableToVisibility}}">
         <GroupBox Margin="0" Padding="0">
             <GroupBox.Header>
                 <TextBlock Margin="8" Text="{loc:Loc Filters}" />
             </GroupBox.Header>
             <ScrollViewer Height="296">
-                <ItemsControl ItemsSource="{Binding ViewModel.Modifiers}">
+                <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <GroupBox Header="{Binding Label}">
-                                <ItemsControl ItemsSource="{Binding Modifiers}">
+                                <ItemsControl ItemsSource="{Binding Filters}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel>
@@ -58,7 +58,7 @@
                                                         Margin="0,0,4,0"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Center"
-                                                        Text="Min" />
+                                                        Text="{loc:Loc Filters_Min}" />
                                                     <TextBox
                                                         Grid.Column="1"
                                                         Height="25"
@@ -70,7 +70,7 @@
                                                         Margin="0,0,4,0"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Center"
-                                                        Text="Max" />
+                                                        Text="{loc:Loc Filters_Max}" />
                                                     <TextBox
                                                         Grid.Column="3"
                                                         Height="25"

@@ -4,10 +4,10 @@ using PropertyChanged;
 namespace Sidekick.UI.Prices
 {
     [AddINotifyPropertyChangedInterface]
-    public class PriceModifierCategory
+    public class PriceFilterCategory
     {
         public string Label { get; set; }
 
-        public ObservableCollection<PriceModifier> Modifiers { get; set; } = new ObservableCollection<PriceModifier>();
+        public ObservableCollection<PriceFilter> Filters { get; set; } = new ObservableCollection<PriceFilter>();
     }
 }
