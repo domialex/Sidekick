@@ -147,7 +147,7 @@ namespace Sidekick.UI.Prices
                 var max = magnitude.Magnitudes.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
                 if (max.HasValue)
                 {
-                    max = (int)Math.Min(max.Value + 5, max.Value * 1.1);
+                    max = (int)Math.Max(max.Value + 5, max.Value * 1.1);
                 }
                 if (max < 0)
                 {
