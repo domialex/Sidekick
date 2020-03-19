@@ -25,7 +25,8 @@
     <StackPanel
         Name="Container"
         Width="250"
-        Margin="0">
+        Margin="0"
+        Visibility="{Binding ViewModel.Modifiers, Converter={StaticResource NullableToVisibility}}">
         <GroupBox Margin="0" Padding="0">
             <GroupBox.Header>
                 <TextBlock Margin="8" Text="{loc:Loc Filters}" />

@@ -184,7 +184,11 @@ namespace Sidekick.UI.Prices
                 IsFetching = true;
                 QueryResult = await tradeSearchService.GetListings(Item, GetFilters());
                 IsFetching = false;
-                if (QueryResult.Result.Any())
+                if (QueryResult == null)
+                {
+                    IsError = true;
+                }
+                else if (QueryResult.Result.Any())
                 {
                     Append(QueryResult.Result);
                 }
@@ -195,7 +199,7 @@ namespace Sidekick.UI.Prices
 
         private List<StatFilter> GetFilters()
         {
-            return Modifiers
+            return Modifiers?
                 .SelectMany(x => x.Modifiers)
                 .Where(x => x.Enabled)
                 .Select(x => new StatFilter()
