@@ -85,6 +85,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
 
+            if (string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.TypeLine))
+            {
+                throw new NotSupportedException("Item not found.");
+            }
+
             item.ItemLevel = GetInt(patterns.ItemLevel, input);
             item.Identified = !patterns.Unidentified.IsMatch(input);
             item.Corrupted = patterns.Corrupted.IsMatch(input);

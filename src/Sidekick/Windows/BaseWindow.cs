@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -31,23 +32,33 @@ namespace Sidekick.Windows
             this.closeOnBlur = closeOnBlur;
         }
 
-        private Task<bool> KeybindEvents_OnCloseWindow()
+        private bool IsClosing = false;
+        protected override void OnClosing(CancelEventArgs e)
         {
+            if (IsClosing) return;
+
+            IsClosing = true;
             Deactivated -= BaseWindow_Deactivated;
             keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
             MouseLeftButtonDown -= Window_MouseLeftButtonDown;
             IsVisibleChanged -= EnsureBounds;
             SizeChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
+
+            base.OnClosing(e);
+        }
+
+        private Task<bool> KeybindEvents_OnCloseWindow()
+        {
             Close();
             return Task.FromResult(true);
         }
 
         private void BaseWindow_Deactivated(object sender, EventArgs e)
         {
-            if (settings.CloseOverlayWithMouse && closeOnBlur)
+            if (settings.CloseOverlayWithMouse && closeOnBlur && !IsClosing)
             {
-                KeybindEvents_OnCloseWindow();
+                Close();
             }
         }
 

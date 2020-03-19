@@ -49,7 +49,7 @@ namespace Sidekick.Core.Natives
 
         public async Task SetText(string text)
         {
-            if (!string.IsNullOrWhiteSpace(text))
+            if (text != null)
             {
                 await TextCopy.Clipboard.SetTextAsync(text);
             }
