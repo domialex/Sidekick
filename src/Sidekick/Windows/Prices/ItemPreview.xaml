@@ -47,6 +47,39 @@
                             Text="{Binding ViewModel.PreviewItem.Item.Item.TypeLine}"
                             TextWrapping="WrapWithOverflow"
                             Visibility="{Binding ViewModel.PreviewItem.Item.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
+                        <ItemsControl ItemsSource="{Binding ViewModel.PreviewItem.Sockets}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        Margin="0,4,8,0"
+                                        Padding="2,2,0,2"
+                                        BorderBrush="Gray"
+                                        BorderThickness="1">
+                                        <ItemsControl ItemsSource="{Binding}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Ellipse
+                                                        Width="10"
+                                                        Height="10"
+                                                        Margin="0,0,2,0"
+                                                        Fill="{Binding}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
                 </StackPanel>
             </GroupBox.Header>
