@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
@@ -19,17 +19,20 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private readonly ILanguageProvider languageProvider;
         private readonly IStatDataService statsDataService;
         private readonly IItemDataService itemDataService;
+        private readonly IParserPatterns patterns;
 
         public ParserService(
             ILogger logger,
             ILanguageProvider languageProvider,
             IStatDataService statsDataService,
-            IItemDataService itemDataService)
+            IItemDataService itemDataService,
+            IParserPatterns patterns)
         {
             this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
+            this.patterns = patterns;
         }
 
         private Regex NewlinePattern;
@@ -39,11 +42,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
         {
             NewlinePattern = new Regex("[\\r\\n]+");
             SeparatorPattern = new Regex("--------");
-
-            InitHeader();
-            InitProperties();
-            InitSockets();
-            InitInfluences();
 
             return Task.CompletedTask;
         }
@@ -75,30 +73,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        #region Header (Rarity, Name, Type)
-        private Dictionary<Rarity, Regex> RarityPatterns;
-        private Regex ItemLevelPattern;
-        private Regex UnidentifiedPattern;
-        private Regex CorruptedPattern;
-
-        private void InitHeader()
-        {
-            RarityPatterns = new Dictionary<Rarity, Regex>
-            {
-                { Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)) },
-                { Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)) },
-                { Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)) },
-                { Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)) },
-                { Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)) },
-                { Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)) },
-                { Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)) }
-            };
-
-            ItemLevelPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemLevel)}[^\\r\\n\\d]*(\\d+)");
-            UnidentifiedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionUnidentified)}");
-            CorruptedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCorrupted)}");
-        }
-
         private void ParseHeader(ref ParsedItem item, ref string input)
         {
             var lines = NewlinePattern.Split(input);
@@ -111,14 +85,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
 
-            item.ItemLevel = GetInt(ItemLevelPattern, input);
-            item.Identified = !UnidentifiedPattern.IsMatch(input);
-            item.Corrupted = CorruptedPattern.IsMatch(input);
+            item.ItemLevel = GetInt(patterns.ItemLevel, input);
+            item.Identified = !patterns.Unidentified.IsMatch(input);
+            item.Corrupted = patterns.Corrupted.IsMatch(input);
         }
 
         private Rarity GetRarity(string rarityString)
         {
-            foreach (var pattern in RarityPatterns)
+            foreach (var pattern in patterns.Rarity)
             {
                 if (pattern.Value.IsMatch(rarityString))
                 {
@@ -127,79 +101,34 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
             throw new Exception("Can't parse rarity.");
         }
-        #endregion
-
-        #region Properties (Armour, Evasion, Energy Shield, Quality, Level)
-        private Regex ArmorPattern;
-        private Regex EnergyShieldPattern;
-        private Regex EvasionPattern;
-        private Regex QualityPattern;
-        private Regex LevelPattern;
-        private Regex MapTierPattern;
-        private Regex ItemQuantityPattern;
-        private Regex ItemRarityPattern;
-        private Regex MonsterPackSizePattern;
-        private Regex AttacksPerSecondPattern;
-        private Regex CriticalStrikeChancePattern;
-        private Regex ElementalDamagePattern;
-        private Regex PhysicalDamagePattern;
-        private Regex BlightedPattern;
-
-        private void InitProperties()
-        {
-            ArmorPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
-            EnergyShieldPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
-            EvasionPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
-            QualityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
-            LevelPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
-            MapTierPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
-            ItemQuantityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemQuantity)}[^\\r\\n\\d]*(\\d+)");
-            ItemRarityPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemRarity)}[^\\r\\n\\d]*(\\d+)");
-            MonsterPackSizePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
-            AttacksPerSecondPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionAttacksPerSecond)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            CriticalStrikeChancePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            ElementalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}([^\\r\\n]*)");
-            PhysicalDamagePattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}([^\\r\\n]*)");
-            BlightedPattern = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.PrefixBlighted)}");
-        }
 
         private void ParseProperties(ref ParsedItem item, ref string input)
         {
             var blocks = SeparatorPattern.Split(input);
 
-            item.Armor = GetInt(ArmorPattern, blocks[1]);
-            item.EnergyShield = GetInt(EnergyShieldPattern, blocks[1]);
-            item.Evasion = GetInt(EvasionPattern, blocks[1]);
-            item.Quality = GetInt(QualityPattern, blocks[1]);
-            item.MapTier = GetInt(MapTierPattern, blocks[1]);
-            item.ItemQuantity = GetInt(ItemQuantityPattern, blocks[1]);
-            item.ItemRarity = GetInt(ItemRarityPattern, blocks[1]);
-            item.MonsterPackSize = GetInt(MonsterPackSizePattern, blocks[1]);
-            item.AttacksPerSecond = GetDouble(AttacksPerSecondPattern, blocks[1]);
-            item.CriticalStrikeChance = GetDouble(CriticalStrikeChancePattern, blocks[1]);
-            item.ElementalDamage = GetString(ElementalDamagePattern, blocks[1]);
-            item.PhysicalDamage = GetString(PhysicalDamagePattern, blocks[1]);
-            item.Blighted = BlightedPattern.IsMatch(blocks[0]);
+            item.Armor = GetInt(patterns.Armor, blocks[1]);
+            item.EnergyShield = GetInt(patterns.EnergyShield, blocks[1]);
+            item.Evasion = GetInt(patterns.Evasion, blocks[1]);
+            item.Quality = GetInt(patterns.Quality, blocks[1]);
+            item.MapTier = GetInt(patterns.MapTier, blocks[1]);
+            item.ItemQuantity = GetInt(patterns.ItemQuantity, blocks[1]);
+            item.ItemRarity = GetInt(patterns.ItemRarity, blocks[1]);
+            item.MonsterPackSize = GetInt(patterns.MonsterPackSize, blocks[1]);
+            item.AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, blocks[1]);
+            item.CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, blocks[1]);
+            item.ElementalDamage = GetString(patterns.ElementalDamage, blocks[1]);
+            item.PhysicalDamage = GetString(patterns.PhysicalDamage, blocks[1]);
+            item.Blighted = patterns.Blighted.IsMatch(blocks[0]);
 
             if (item.Rarity == Rarity.Gem)
             {
-                item.Level = GetInt(LevelPattern, blocks[1]);
+                item.Level = GetInt(patterns.Level, blocks[1]);
             }
-        }
-        #endregion
-
-        #region Sockets
-        private Regex SocketPattern;
-
-        private void InitSockets()
-        {
-            // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
-            SocketPattern = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionSockets)}[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
         }
 
         private void ParseSockets(ref ParsedItem item, ref string input)
         {
-            var result = SocketPattern.Match(input);
+            var result = patterns.Socket.Match(input);
             if (result.Success)
             {
                 var groups = result.Groups
@@ -224,43 +153,21 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 }
             }
         }
-        #endregion
-
-        #region Influences
-        private Regex CrusaderPattern;
-        private Regex ElderPattern;
-        private Regex HunterPattern;
-        private Regex RedeemerPattern;
-        private Regex ShaperPattern;
-        private Regex WarlordPattern;
-
-        private void InitInfluences()
-        {
-            CrusaderPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceCrusader)}");
-            ElderPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceElder)}");
-            HunterPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceHunter)}");
-            RedeemerPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceRedeemer)}");
-            ShaperPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceShaper)}");
-            WarlordPattern = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceWarlord)}");
-        }
 
         private void ParseInfluences(ref ParsedItem item, ref string input)
         {
-            item.Influences.Crusader = CrusaderPattern.IsMatch(input);
-            item.Influences.Elder = ElderPattern.IsMatch(input);
-            item.Influences.Hunter = HunterPattern.IsMatch(input);
-            item.Influences.Redeemer = RedeemerPattern.IsMatch(input);
-            item.Influences.Shaper = ShaperPattern.IsMatch(input);
-            item.Influences.Warlord = WarlordPattern.IsMatch(input);
+            item.Influences.Crusader = patterns.Crusader.IsMatch(input);
+            item.Influences.Elder = patterns.Elder.IsMatch(input);
+            item.Influences.Hunter = patterns.Hunter.IsMatch(input);
+            item.Influences.Redeemer = patterns.Redeemer.IsMatch(input);
+            item.Influences.Shaper = patterns.Shaper.IsMatch(input);
+            item.Influences.Warlord = patterns.Warlord.IsMatch(input);
         }
-        #endregion
 
-        #region Modifiers
         private void ParseMods(ref ParsedItem item, ref string input)
         {
             item.Extended.Mods = statsDataService.ParseMods(input);
         }
-        #endregion
 
         #region Helpers
         private int GetInt(Regex regex, string input)
