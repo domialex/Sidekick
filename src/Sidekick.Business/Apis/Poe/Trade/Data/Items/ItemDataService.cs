@@ -51,12 +51,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             {
                 return result
                     .Select(x => x.Item)
+                    .OrderByDescending(x => x.Name.Length)
                     .FirstOrDefault();
             }
 
             return TypePatterns
                 .Where(x => x.Regex.IsMatch(text))
                 .Select(x => x.Item)
+                .OrderByDescending(x => x.Type.Length)
                 .FirstOrDefault();
         }
     }
