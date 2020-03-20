@@ -49,8 +49,10 @@ namespace Sidekick
 
             base.OnStartup(e);
 
-            ToolTipService.ShowDurationProperty.OverrideMetadata(
-            typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
+            AttachErrorHandlers();
+
+            // Tooltip opened indefinitly until mouse is moved.
+            ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
@@ -163,6 +165,31 @@ namespace Sidekick
             {
                 Current.Shutdown();
             }
+        }
+
+        private void AttachErrorHandlers()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                var exception = (Exception)e.ExceptionObject;
+                LogException(exception);
+            };
+
+            DispatcherUnhandledException += (s, e) =>
+            {
+                LogException(e.Exception);
+                e.Handled = true;
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                LogException(e.Exception);
+                e.SetObserved();
+            };
+        }
+
+        private void LogException(Exception exception)
+        {
         }
     }
 }
