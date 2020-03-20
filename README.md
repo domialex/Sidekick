@@ -4,7 +4,7 @@ A Path of Exile helper that shows item prices using the official Path of Exile T
 ## DO NOT PLAY HARDCORE
 Related issues #295 
 
-Sidekick currently can crash and lag out your whole system. We are working on a fix. But for the time being, We encourage you to not play hardcore with Sidekick. Use another tool.
+Sidekick currently can crash and lag out your whole system for 2-3 seconds. We are working on a fix. But for the time being, We encourage you to not play hardcore with Sidekick. Use another tool.
 
 Sorry for the inconvenience.
 
