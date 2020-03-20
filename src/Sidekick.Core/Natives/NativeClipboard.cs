@@ -36,6 +36,7 @@ namespace Sidekick.Core.Natives
 
             if (settings.RetainClipboard)
             {
+                await Task.Delay(100);
                 await TextCopy.Clipboard.SetTextAsync(clipboardText);
             }
 

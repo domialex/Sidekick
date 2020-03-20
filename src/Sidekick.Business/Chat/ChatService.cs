@@ -35,6 +35,7 @@ namespace Sidekick.Business.Chat
             await clipboard.SetText(text);
 
             keyboard.SendInput("Enter");
+            keyboard.SendInput("Ctrl+A");
             keyboard.Paste();
             keyboard.SendInput("Enter");
             keyboard.SendInput("Enter");
@@ -44,6 +45,7 @@ namespace Sidekick.Business.Chat
 
             if (settings.RetainClipboard)
             {
+                await Task.Delay(100);
                 await clipboard.SetText(clipboardValue);
             }
 
@@ -61,10 +63,12 @@ namespace Sidekick.Business.Chat
             await clipboard.SetText(text);
 
             keyboard.SendInput("Enter");
+            keyboard.SendInput("Ctrl+A");
             keyboard.Paste();
 
             if (settings.RetainClipboard)
             {
+                await Task.Delay(100);
                 await clipboard.SetText(clipboardValue);
             }
 
