@@ -7,6 +7,7 @@
     Title="Logs - Sidekick"
     Height="360"
     MinWidth="720"
+    MaxWidth="720"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />

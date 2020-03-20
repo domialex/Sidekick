@@ -36,6 +36,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
                     Option = "Unique",
                 };
             }
+            else if (item.Rarity == Rarity.Prophecy)
+            {
+                Query.Name = item.Name;
+            }
             else
             {
                 Query.Type = item.TypeLine;

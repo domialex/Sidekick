@@ -79,8 +79,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
             var blocks = SeparatorPattern.Split(input);
 
             item.Rarity = GetRarity(lines[0]);
-
             var dataItem = itemDataService.GetItem(blocks[0]);
+
+            if (dataItem.Flags.Prophecy)
+            {
+                item.Rarity = Rarity.Prophecy;
+            }
 
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
