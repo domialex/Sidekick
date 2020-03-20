@@ -1,10 +1,12 @@
 # [![](https://i.imgur.com/1B5jR3D.png)](#) Sidekick [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square)](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
 A Path of Exile helper that shows item prices using the official Path of Exile Trade API.
 
-## DO NOT PLAY HARDCORE
-Related issues #295 
+## Hardcore players watch out
+Related issues: #295 
 
-Sidekick currently can crash and lag out your whole system for 2-3 seconds. We are working on a fix. But for the time being, We encourage you to not play hardcore with Sidekick. Use another tool.
+Sidekick currently can crash in some rare cases and lag out your mouse for 2-3 seconds.
+
+We are working on a fix, for the time being don't price check during fights ;).
 
 Sorry for the inconvenience.
 
