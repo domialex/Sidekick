@@ -5,8 +5,8 @@
     xmlns:base="clr-namespace:Sidekick.Windows"
     xmlns:r="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
     Title="Logs - Sidekick"
-    Width="720"
     Height="360"
+    MinWidth="720"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />
@@ -23,7 +23,8 @@
         <ScrollViewer
             Name="logsScrollViewer"
             Height="300"
-            Margin="{StaticResource SpacerBottom}">
+            Margin="{StaticResource SpacerBottom}"
+            HorizontalScrollBarVisibility="Auto">
             <TextBox
                 Name="logsTextBox"
                 IsReadOnly="True"
