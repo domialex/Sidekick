@@ -1,6 +1,6 @@
 # [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
 
-# Sidekick 0.5.2-beta
+# Sidekick v0.6.0-beta
 A Path of Exile helper that shows item prices using the official Path of Exile Trade API.
 
 ## Description
