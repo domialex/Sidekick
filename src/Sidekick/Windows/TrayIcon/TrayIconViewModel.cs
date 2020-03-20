@@ -98,31 +98,15 @@ Note: ~price 1 chaos
 
         public ICommand DebugPriceCheckCommand3 => new RelayCommand(async _ =>
         {
-            await nativeClipboard.SetText(@"Rarity: Unique
-Blood of the Karui
-Sanctified Life Flask
+            await nativeClipboard.SetText(@"Rarity: Currency
+Divine Orb
 --------
-Quality: +20% (augmented)
-Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
-Consumes 15 of 30 Charges on use
-Currently has 30 Charges
+Stack Size: 2/10
 --------
-Requirements:
-Level: 50
+Randomises the numeric values of the random modifiers on an item
 --------
-Item Level: 75
---------
-100% increased Life Recovered
-15% increased Recovery rate
-Recover Full Life at the end of the Flask Effect
---------
-""Kaom fought and killed for his people.
-Kaom bled for his people.
-And so the people gave, the people bled,
-So their King might go on.""
-- Lavianga, Advisor to Kaom
---------
-Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
+Right click this item then left click a magic, rare or unique item to apply it.
+Shift click to unstack.
 ");
 
             viewLocator.Open<PriceView>();
