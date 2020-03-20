@@ -9,6 +9,7 @@ namespace Sidekick.Business.Apis.Poe.Models
         Gem = 4,
         Currency = 5,
         DivinationCard = 6,
+        Prophecy = 8,
 
         Unknown = 99,
     }
