@@ -159,6 +159,9 @@
   <data name="Filters_Min" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="Filters_Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>

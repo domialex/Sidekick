@@ -55,6 +55,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionEnergyShield => "Energieschild: ";
         public string DescriptionArmour => "Rüstung: ";
         public string DescriptionEvasion => "Ausweichwert: ";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
     }

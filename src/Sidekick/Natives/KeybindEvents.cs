@@ -54,7 +54,9 @@ namespace Sidekick.Natives
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
             hook = Hook.GlobalEvents();
 
+#if !DEBUG
             hook.MouseWheelExt += Hook_MouseWheelExt;
+#endif
 
             Enabled = true;
 
@@ -105,7 +107,7 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Scroll Tab Right", configuration.Key_Stash_Right, input, OnTabRight, ref task);
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
                 ExecuteKeybind("Advanced Search", configuration.Key_AdvancedSearch, input, OnAdvancedSearch, ref task);
-                
+
 
                 // We need to make sure some key combinations make it into the game if the keybind returns false
                 SendInputIf("Ctrl+F", input, task);

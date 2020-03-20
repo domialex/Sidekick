@@ -55,6 +55,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         public Regex Armor { get; private set; }
         public Regex EnergyShield { get; private set; }
         public Regex Evasion { get; private set; }
+        public Regex ChanceToBlock { get; private set; }
         public Regex Quality { get; private set; }
         public Regex Level { get; private set; }
         public Regex MapTier { get; private set; }
@@ -72,6 +73,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Armor = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
             EnergyShield = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
             Evasion = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+            ChanceToBlock = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionChanceToBlock)}[^\\r\\n\\d]*(\\d+)");
             Quality = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
             Level = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
             MapTier = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");

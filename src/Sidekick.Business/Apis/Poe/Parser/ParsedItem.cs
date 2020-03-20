@@ -7,6 +7,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public int Armor { get; set; }
         public int EnergyShield { get; set; }
         public int Evasion { get; set; }
+        public int ChanceToBlock { get; set; }
         public int Quality { get; set; }
         public int Level { get; set; }
         public int MapTier { get; set; }

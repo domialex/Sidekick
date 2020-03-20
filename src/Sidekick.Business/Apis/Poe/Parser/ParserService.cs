@@ -114,6 +114,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Armor = GetInt(patterns.Armor, blocks[1]);
             item.EnergyShield = GetInt(patterns.EnergyShield, blocks[1]);
             item.Evasion = GetInt(patterns.Evasion, blocks[1]);
+            item.ChanceToBlock = GetInt(patterns.ChanceToBlock, blocks[1]);
             item.Quality = GetInt(patterns.Quality, blocks[1]);
             item.MapTier = GetInt(patterns.MapTier, blocks[1]);
             item.ItemQuantity = GetInt(patterns.ItemQuantity, blocks[1]);

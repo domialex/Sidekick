@@ -5,6 +5,8 @@ namespace Sidekick.UI.Prices
     [AddINotifyPropertyChangedInterface]
     public class PriceFilter
     {
+        public string Type { get; set; }
+
         public bool Enabled { get; set; }
 
         public string Id { get; set; }

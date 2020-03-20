@@ -82,10 +82,7 @@ namespace Sidekick.UI.Prices
         {
             Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
 
-            InitializeMods(Item.Extended.Mods.Explicit);
-            InitializeMods(Item.Extended.Mods.Implicit);
-            InitializeMods(Item.Extended.Mods.Crafted);
-            InitializeMods(Item.Extended.Mods.Enchant);
+            InitializeFilters();
 
             if (Item == null)
             {
@@ -103,6 +100,29 @@ namespace Sidekick.UI.Prices
             {
                 _ = GetPredictionPrice();
             }
+        }
+
+        private void InitializeFilters()
+        {
+            Filters = new ObservableCollection<PriceFilterCategory>();
+
+            var propertyCategory = new PriceFilterCategory()
+            {
+                Label = PriceResources.Filters_Properties
+            };
+            InitializeFilter(propertyCategory, nameof(ArmorFilter), nameof(ArmorFilter.Armor), languageProvider.Language.DescriptionArmour, Item.Armor);
+            InitializeFilter(propertyCategory, nameof(ArmorFilter), nameof(ArmorFilter.EnergyShield), languageProvider.Language.DescriptionEnergyShield, Item.EnergyShield);
+            InitializeFilter(propertyCategory, nameof(ArmorFilter), nameof(ArmorFilter.Evasion), languageProvider.Language.DescriptionEvasion, Item.Evasion);
+            InitializeFilter(propertyCategory, nameof(ArmorFilter), nameof(ArmorFilter.Block), languageProvider.Language.DescriptionChanceToBlock, Item.ChanceToBlock);
+            if (propertyCategory.Filters.Any())
+            {
+                Filters.Add(propertyCategory);
+            }
+
+            InitializeMods(Item.Extended.Mods.Explicit);
+            InitializeMods(Item.Extended.Mods.Implicit);
+            InitializeMods(Item.Extended.Mods.Crafted);
+            InitializeMods(Item.Extended.Mods.Enchant);
         }
 
         private void InitializeMods(List<Mod> mods)
@@ -134,46 +154,87 @@ namespace Sidekick.UI.Prices
                     };
                 }
 
-                var min = magnitude.Magnitudes.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
-                if (min.HasValue)
-                {
-                    min = (int)Math.Min(min.Value - 5, min.Value * 0.9);
-                }
-                if (min < 0)
-                {
-                    min = 0;
-                }
-
-                var max = magnitude.Magnitudes.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
-                if (max.HasValue)
-                {
-                    max = (int)Math.Max(max.Value + 5, max.Value * 1.1);
-                }
-                if (max < 0)
-                {
-                    max = 0;
-                }
-
-                category.Filters.Add(new PriceFilter()
-                {
-                    Id = magnitude.Definition.Id,
-                    Text = magnitude.Definition.Text,
-                    Enabled = false,
-                    Min = min,
-                    Max = max,
-                    HasRange = min.HasValue || max.HasValue
-                });
-            }
-
-            if (Filters == null)
-            {
-                Filters = new ObservableCollection<PriceFilterCategory>();
+                InitializeFilter(category, nameof(StatFilter), magnitude.Definition.Id, magnitude.Definition.Text, magnitude.Magnitudes);
             }
 
             if (category != null)
             {
                 Filters.Add(category);
             }
+        }
+
+        private void InitializeFilter<T>(PriceFilterCategory category, string type, string id, string label, T value)
+        {
+            double? min = null, max = null;
+
+            if (value is int intValue)
+            {
+                if (intValue == 0)
+                {
+                    return;
+                }
+                min = intValue;
+                max = intValue;
+            }
+            else if (value is double doubleValue)
+            {
+                if (doubleValue > 0)
+                {
+                    return;
+                }
+                min = doubleValue;
+                max = doubleValue;
+            }
+            else if (value is string stringValue)
+            {
+                if (string.IsNullOrEmpty(stringValue) || !stringValue.Contains('-'))
+                {
+                    return;
+                }
+                var split = stringValue.Split('-');
+                if (split.Length >= 1 && int.TryParse(split[0], out var minValue))
+                {
+                    min = minValue;
+                }
+                if (split.Length >= 1 && int.TryParse(split[1], out var maxValue))
+                {
+                    min = maxValue;
+                }
+            }
+            else if (value is IGrouping<string, Magnitude> groupValue)
+            {
+                min = groupValue.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
+                max = groupValue.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
+            }
+
+            if (min.HasValue)
+            {
+                min = (int)Math.Min(min.Value - 5, min.Value * 0.9);
+            }
+            if (min < 0)
+            {
+                min = 0;
+            }
+
+            if (max.HasValue)
+            {
+                max = (int)Math.Max(max.Value + 5, max.Value * 1.1);
+            }
+            if (max < 0)
+            {
+                max = 0;
+            }
+
+            category.Filters.Add(new PriceFilter()
+            {
+                Enabled = false,
+                Type = type,
+                Id = id,
+                Text = label,
+                Min = min,
+                Max = max,
+                HasRange = min.HasValue || max.HasValue
+            });
         }
 
         public void UpdateQuery()

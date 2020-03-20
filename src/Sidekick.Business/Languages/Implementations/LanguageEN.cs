@@ -31,6 +31,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionEnergyShield => "Energy Shield: ";
         public string DescriptionArmour => "Armour: ";
         public string DescriptionEvasion => "Evasion Rating: ";
+        public string DescriptionChanceToBlock => "Chance to Block: ";
         public string DescriptionAttacksPerSecond => "Attacks per Second: ";
         public string DescriptionCriticalStrikeChance => "Critical Strike Chance: ";
         public string PrefixSuperior => "Superior";

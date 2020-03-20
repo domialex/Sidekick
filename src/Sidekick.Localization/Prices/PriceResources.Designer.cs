@@ -187,6 +187,15 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string Filters_Properties {
+            get {
+                return ResourceManager.GetString("Filters_Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Level.
         /// </summary>
         public static string ItemLevel {

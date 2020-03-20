@@ -61,6 +61,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionArmour => "__TranslationRequired__";
 
         public string DescriptionEvasion => "__TranslationRequired__";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
         public string DescriptionLevel => "__TranslationRequired__";
     }
 }
