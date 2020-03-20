@@ -1,6 +1,15 @@
 # [![](https://i.imgur.com/1B5jR3D.png)](#) Sidekick [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square)](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
 A Path of Exile helper that shows item prices using the official Path of Exile Trade API.
 
+## Hardcore players watch out
+Related issues: #295 
+
+Sidekick currently can crash in some rare cases and lag out your mouse for 2-3 seconds.
+
+We are working on a fix, for the time being don't price check during fights ;).
+
+Sorry for the inconvenience.
+
 ## Description
 If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
 
