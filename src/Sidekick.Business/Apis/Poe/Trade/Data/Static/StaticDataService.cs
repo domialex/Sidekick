@@ -47,7 +47,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 
         public string GetId(string text)
         {
-            if (ImageUrls.TryGetValue(text, out var result))
+            if (Ids.TryGetValue(text, out var result))
             {
                 return result;
             }
