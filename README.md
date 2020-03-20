@@ -6,17 +6,6 @@ If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), 
 
 Sidekick should be able to price check almost every item, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
 
-## Missing from this version
-Unfortunately, one of the most asked for feature was not ready in time; The advanced search and item filters. Development is under way, but there is still a lot of issues and work to be done before we can release it.
-
-As soon as it is ready, we will make a new release, it shouldn't be long.
-
-## Beta?
-Yes, this is still a beta since some core features are missing. We are thinking of removing the beta label once the advanced search / item filters are completed.
-
-## Warning
-This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to [create an issue](https://github.com/domialex/Sidekick/issues).
-
 ## Installation
 1. [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
 2. Run Sidekick.exe.
@@ -27,6 +16,12 @@ This is a **BETA**, it will probably break in some cases, if it does, don't hesi
 3. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for best results.
 4. In **Path of Exile**, hover an item and press **Ctrl+D** (default binding).
 5. To close the overlay, press **Space** (default binding).
+
+## Beta?
+Yes, this is still a beta since some core features are missing. We are thinking of removing the beta label once the advanced search / item filters are completed.
+
+## Warning
+This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to [create an issue](https://github.com/domialex/Sidekick/issues).
 
 ## Features
 ### Check Prices
