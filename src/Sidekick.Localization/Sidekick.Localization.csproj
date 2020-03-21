@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Application\ApplicationResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ApplicationResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Initializer\InitializerResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -82,6 +87,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Application\ApplicationResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Initializer\InitializerResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InitializerResources.Designer.cs</LastGenOutput>
