@@ -18,15 +18,5 @@ namespace Sidekick.Windows.Prices
             InitializeComponent();
             Container.DataContext = this;
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ViewModel.UpdateQuery();
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.UpdateQuery();
-        }
     }
 }

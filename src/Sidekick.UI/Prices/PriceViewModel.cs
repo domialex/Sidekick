@@ -90,7 +90,7 @@ namespace Sidekick.UI.Prices
 
             IsCurrency = Item.Rarity == Rarity.Currency;
 
-            UpdateQuery();
+            await UpdateQuery();
 
             GetPoeNinjaPrice();
 
@@ -228,7 +228,8 @@ namespace Sidekick.UI.Prices
                 max = 0;
             }
 
-            category.Filters.Add(new PriceFilter()
+
+            var priceFilter = new PriceFilter()
             {
                 Enabled = false,
                 Type = type,
@@ -237,38 +238,39 @@ namespace Sidekick.UI.Prices
                 Min = min,
                 Max = max,
                 HasRange = min.HasValue || max.HasValue
-            });
+            };
+
+            priceFilter.PropertyChanged += async (object sender, System.ComponentModel.PropertyChangedEventArgs e) => { await UpdateQuery(); };
+
+            category.Filters.Add(priceFilter);
         }
 
         private FetchResult<string> QueryResult { get; set; }
 
-        public void UpdateQuery()
+        public async Task UpdateQuery()
         {
-            Task.Run(async () =>
+            Results = null;
+
+            IsFetching = true;
+            if (Item.Rarity == Rarity.Currency)
             {
-                Results = null;
+                QueryResult = await tradeSearchService.SearchBulk(Item);
+            }
+            else
+            {
+                QueryResult = await tradeSearchService.Search(Item, GetFilters(), GetStats());
+            }
+            IsFetching = false;
+            if (QueryResult == null)
+            {
+                IsError = true;
+            }
+            else if (QueryResult.Result.Any())
+            {
+                await LoadMoreData();
+            }
 
-                IsFetching = true;
-                if (Item.Rarity == Rarity.Currency)
-                {
-                    QueryResult = await tradeSearchService.SearchBulk(Item);
-                }
-                else
-                {
-                    QueryResult = await tradeSearchService.Search(Item, GetFilters(), GetStats());
-                }
-                IsFetching = false;
-                if (QueryResult == null)
-                {
-                    IsError = true;
-                }
-                else if (QueryResult.Result.Any())
-                {
-                    await LoadMoreData();
-                }
-
-                UpdateCountString();
-            });
+            UpdateCountString();
         }
 
         private List<StatFilter> GetStats()

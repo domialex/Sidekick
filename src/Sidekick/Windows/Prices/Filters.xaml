@@ -41,11 +41,9 @@
                                         <DataTemplate>
                                             <StackPanel>
                                                 <CheckBox
-                                                    Checked="CheckBox_Checked"
                                                     Content="{Binding Text}"
                                                     IsChecked="{Binding Enabled}"
-                                                    ToolTip="{Binding Text}"
-                                                    Unchecked="CheckBox_Checked" />
+                                                    ToolTip="{Binding Text}" />
                                                 <StackPanel Visibility="{Binding HasRange, Converter={StaticResource BooleanToVisibility}}">
                                                     <Grid Margin="20,0,0,0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibility}}">
                                                         <Grid.ColumnDefinitions>
@@ -64,8 +62,7 @@
                                                             Grid.Column="1"
                                                             Height="25"
                                                             MinHeight="0"
-                                                            Text="{Binding Min}"
-                                                            TextChanged="TextBox_TextChanged" />
+                                                            Text="{Binding Min}" />
                                                         <TextBlock
                                                             Grid.Column="2"
                                                             Margin="0,0,4,0"
@@ -76,8 +73,7 @@
                                                             Grid.Column="3"
                                                             Height="25"
                                                             MinHeight="0"
-                                                            Text="{Binding Max}"
-                                                            TextChanged="TextBox_TextChanged" />
+                                                            Text="{Binding Max}" />
                                                     </Grid>
                                                 </StackPanel>
                                             </StackPanel>

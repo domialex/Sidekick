@@ -1,9 +1,8 @@
-using PropertyChanged;
+using System.ComponentModel;
 
 namespace Sidekick.UI.Prices
 {
-    [AddINotifyPropertyChangedInterface]
-    public class PriceFilter
+    public class PriceFilter : INotifyPropertyChanged
     {
         public string Type { get; set; }
 
@@ -18,5 +17,8 @@ namespace Sidekick.UI.Prices
         public double? Min { get; set; }
 
         public double? Max { get; set; }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
