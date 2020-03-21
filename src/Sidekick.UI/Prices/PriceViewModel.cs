@@ -174,8 +174,17 @@ namespace Sidekick.UI.Prices
         private void InitializeFilter<T>(PriceFilterCategory category, string type, string id, string label, T value)
         {
             double? min = null, max = null;
+            var enabled = false;
 
-            if (value is int intValue)
+            if (value is bool boolValue)
+            {
+                if (!boolValue)
+                {
+                    return;
+                }
+                enabled = true;
+            }
+            else if (value is int intValue)
             {
                 if (intValue == 0)
                 {
@@ -236,7 +245,7 @@ namespace Sidekick.UI.Prices
 
             var priceFilter = new PriceFilter()
             {
-                Enabled = value is bool,
+                Enabled = enabled,
                 Type = type,
                 Id = id,
                 Text = label,
