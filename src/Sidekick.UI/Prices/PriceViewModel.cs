@@ -12,7 +12,6 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
-using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Languages;
@@ -405,10 +404,6 @@ namespace Sidekick.UI.Prices
             }
 
             UpdateCountString();
-        }
-
-        private void Append(List<Result> results)
-        {
         }
 
         public bool IsPredicted => !string.IsNullOrEmpty(PredictionText);
