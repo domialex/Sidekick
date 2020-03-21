@@ -129,7 +129,8 @@ namespace Sidekick.UI.Prices
                 enabled: Item.ItemLevel >= 86,
                 min: Item.ItemLevel >= 86 ? (double?)Item.ItemLevel : null);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
-                alwaysIncluded: true);
+                alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
+                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), languageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
                 enabled: Item.Influences.Crusader);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), languageProvider.Language.InfluenceElder, Item.Influences.Elder,

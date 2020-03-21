@@ -167,12 +167,15 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private void ParseInfluences(ref ParsedItem item, ref string input)
         {
-            item.Influences.Crusader = patterns.Crusader.IsMatch(input);
-            item.Influences.Elder = patterns.Elder.IsMatch(input);
-            item.Influences.Hunter = patterns.Hunter.IsMatch(input);
-            item.Influences.Redeemer = patterns.Redeemer.IsMatch(input);
-            item.Influences.Shaper = patterns.Shaper.IsMatch(input);
-            item.Influences.Warlord = patterns.Warlord.IsMatch(input);
+            var blocks = SeparatorPattern.Split(input);
+            var strippedInput = string.Concat(blocks.Skip(1).ToList());
+
+            item.Influences.Crusader = patterns.Crusader.IsMatch(strippedInput);
+            item.Influences.Elder = patterns.Elder.IsMatch(strippedInput);
+            item.Influences.Hunter = patterns.Hunter.IsMatch(strippedInput);
+            item.Influences.Redeemer = patterns.Redeemer.IsMatch(strippedInput);
+            item.Influences.Shaper = patterns.Shaper.IsMatch(strippedInput);
+            item.Influences.Warlord = patterns.Warlord.IsMatch(strippedInput);
         }
 
         private void ParseMods(ref ParsedItem item, ref string input)
