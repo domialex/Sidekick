@@ -54,7 +54,7 @@ namespace Sidekick
 
             AttachErrorHandlers();
 
-            // Tooltip opened indefinitly until mouse is moved.
+            // Tooltip opened indefinitely until mouse is moved.
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
