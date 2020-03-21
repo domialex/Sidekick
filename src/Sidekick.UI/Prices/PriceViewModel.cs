@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using PropertyChanged;
@@ -242,7 +243,6 @@ namespace Sidekick.UI.Prices
                 max = 0;
             }
 
-
             var priceFilter = new PriceFilter()
             {
                 Enabled = enabled,
@@ -254,7 +254,7 @@ namespace Sidekick.UI.Prices
                 HasRange = min.HasValue || max.HasValue
             };
 
-            priceFilter.PropertyChanged += async (object sender, System.ComponentModel.PropertyChangedEventArgs e) => { await UpdateQuery(); };
+            priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
 
             category.Filters.Add(priceFilter);
         }
