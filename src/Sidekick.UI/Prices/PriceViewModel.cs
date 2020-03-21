@@ -236,7 +236,7 @@ namespace Sidekick.UI.Prices
 
             var priceFilter = new PriceFilter()
             {
-                Enabled = false,
+                Enabled = value is bool,
                 Type = type,
                 Id = id,
                 Text = label,

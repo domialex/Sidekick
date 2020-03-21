@@ -127,11 +127,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     };
                 }
 
-                if (item.Blighted)
-                {
-                    request.Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption("true");
-                }
-
                 if (item.MapTier > 0)
                 {
                     request.Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()
