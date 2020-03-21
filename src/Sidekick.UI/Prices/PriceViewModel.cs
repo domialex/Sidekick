@@ -112,6 +112,11 @@ namespace Sidekick.UI.Prices
             InitializeFilter(propertyCategory, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.EnergyShield), languageProvider.Language.DescriptionEnergyShield, Item.EnergyShield);
             InitializeFilter(propertyCategory, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), languageProvider.Language.DescriptionEvasion, Item.Evasion);
             InitializeFilter(propertyCategory, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Block), languageProvider.Language.DescriptionChanceToBlock, Item.ChanceToBlock);
+
+            InitializeFilter(propertyCategory, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemQuantity), languageProvider.Language.DescriptionItemQuantity, Item.ItemQuantity);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemRarity), languageProvider.Language.DescriptionItemRarity, Item.ItemRarity);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), languageProvider.Language.DescriptionEvasion, Item.MonsterPackSize);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), languageProvider.Language.PrefixBlighted, Item.Blighted);
             if (propertyCategory.Filters.Any())
             {
                 Filters.Add(propertyCategory);
@@ -323,10 +328,14 @@ namespace Sidekick.UI.Prices
 
                 if (property.PropertyType == typeof(SearchFilterOption))
                 {
-                    property.SetValue(filtersObject, new SearchFilterOption("true"));
+                    property.SetValue(filtersObject, new SearchFilterOption(filter.Enabled ? "true" : "false"));
                 }
                 else if (property.PropertyType == typeof(SearchFilterValue))
                 {
+                    if (!filter.Enabled)
+                    {
+                        continue;
+                    }
                     var valueObject = new SearchFilterValue
                     {
                         Max = filter.Max,
