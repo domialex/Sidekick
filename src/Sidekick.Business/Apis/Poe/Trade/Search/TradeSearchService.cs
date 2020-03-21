@@ -46,42 +46,23 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.nativeBrowser = nativeBrowser;
         }
 
-        private async Task<FetchResult<string>> Query(ParsedItem item, List<StatFilter> stats)
+        public async Task<FetchResult<string>> SearchBulk(ParsedItem item)
         {
-            logger.Information("Querying Trade API.");
-            FetchResult<string> result = null;
-
             try
             {
-                // TODO: More complex logic for determining bulk vs regular search
-                // Maybe also add Fragments to bulk search
-                var path = "";
-                var json = "";
-                string baseUri = null;
+                logger.Information("Querying Exchange API.");
 
-                if (item.Rarity == Rarity.Currency)
-                {
-                    path = $"exchange/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
-                    baseUri = languageProvider.Language.PoeTradeExchangeBaseUrl + configuration.LeagueId;
-                }
-                else
-                {
-                    path = $"search/{configuration.LeagueId}";
-                    json = JsonSerializer.Serialize(new QueryRequest(item, stats), poeTradeClient.Options);
-                    baseUri = languageProvider.Language.PoeTradeSearchBaseUrl + configuration.LeagueId;
-                }
-
+                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}exchange/{configuration.LeagueId}";
+                var json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await httpClientProvider.HttpClient.PostAsync(languageProvider.Language.PoeTradeApiBaseUrl + path, body);
+                var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var test = await response.Content.ReadAsStringAsync();
                     var content = await response.Content.ReadAsStreamAsync();
-                    result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-
-                    result.Uri = new Uri($"{baseUri}/{result.Id}");
+                    var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
+                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{configuration.LeagueId}/{result.Id}");
+                    return result;
                 }
                 else
                 {
@@ -92,65 +73,123 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             catch (Exception ex)
             {
                 logger.Error(ex, "Exception thrown while querying trade api.");
-                return null;
-            }
-
-            return result;
-
-        }
-
-        public async Task<FetchResult<Result>> GetListingsForSubsequentPages(ParsedItem item, int nextPageToFetch, List<StatFilter> stats = null)
-        {
-            var queryResult = await Query(item, stats);
-
-            if (queryResult != null)
-            {
-                var result = await Task.WhenAll(Enumerable.Range(nextPageToFetch, 1).Select(x => GetListings(queryResult, x)));
-
-                return new FetchResult<Result>()
-                {
-                    Id = queryResult.Id,
-                    Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
-                    Total = queryResult.Total,
-                    Uri = queryResult.Uri
-                };
             }
 
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetListings(ParsedItem item, List<StatFilter> stats = null)
+        public async Task<FetchResult<string>> Search(ParsedItem item, SearchFilters filters = null, List<StatFilter> stats = null)
         {
-            var queryResult = await Query(item, stats);
-
-            if (queryResult != null)
-            {
-                var result = await Task.WhenAll(Enumerable.Range(0, 2).Select(x => GetListings(queryResult, x)));
-
-                return new FetchResult<Result>()
-                {
-                    Id = queryResult.Id,
-                    Result = result.Where(x => x != null).SelectMany(x => x.Result).ToList(),
-                    Total = queryResult.Total,
-                    Uri = queryResult.Uri
-                };
-            }
-
-            return null;
-        }
-
-        private async Task<FetchResult<Result>> GetListings(FetchResult<string> queryResult, int page = 0)
-        {
-            logger.Information($"Fetching Trade API Listings from Query {queryResult.Id} page {page + 1}.");
-            FetchResult<Result> result = null;
-
             try
             {
-                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", queryResult.Result.Skip(page * 10).Take(10)) + "?query=" + queryResult.Id);
+                logger.Information("Querying Trade API.");
+
+                if (filters == null)
+                {
+                    filters = new SearchFilters();
+                }
+
+                var request = new QueryRequest();
+                request.Query.Filters = filters;
+
+                // Auto Search 5+ Links
+                var highestCount = item.Sockets
+                    .GroupBy(x => x.Group)
+                    .Select(x => x.Count())
+                    .OrderByDescending(x => x)
+                    .FirstOrDefault();
+                if (highestCount >= 5)
+                {
+                    request.Query.Filters.SocketFilters.Filters.Links = new SocketFilterOption()
+                    {
+                        Min = highestCount,
+                    };
+                }
+
+                if (item.Rarity == Rarity.Unique)
+                {
+                    request.Query.Name = item.Name;
+                    request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                    {
+                        Option = "Unique",
+                    };
+                }
+                else if (item.Rarity == Rarity.Prophecy)
+                {
+                    request.Query.Name = item.Name;
+                }
+                else
+                {
+                    request.Query.Type = item.TypeLine;
+                    request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
+                    {
+                        Option = "nonunique",
+                    };
+                }
+
+                if (item.Blighted)
+                {
+                    request.Query.Filters.MapFilters.Filters.Blighted = new SearchFilterOption("true");
+                }
+
+                if (item.MapTier > 0)
+                {
+                    request.Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()
+                    {
+                        Min = item.MapTier,
+                        Max = item.MapTier,
+                    };
+                }
+
+                if (stats != null && stats.Count > 0)
+                {
+                    request.Query.Stats = new List<StatFilterGroup>()
+                    {
+                        new StatFilterGroup()
+                        {
+                            Type = StatType.And,
+                            Filters = stats
+                        }
+                    };
+                }
+
+                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}search/{configuration.LeagueId}";
+                var json = JsonSerializer.Serialize(request, poeTradeClient.Options);
+                var body = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    result = await JsonSerializer.DeserializeAsync<FetchResult<Result>>(content, new JsonSerializerOptions()
+                    var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
+                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{configuration.LeagueId}/{result.Id}");
+                    return result;
+                }
+                else
+                {
+                    var responseMessage = await response?.Content?.ReadAsStringAsync();
+                    logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Exception thrown while querying trade api.");
+            }
+
+            return null;
+        }
+
+        public async Task<FetchResult<Result>> GetResults(string queryId, List<string> ids)
+        {
+            try
+            {
+                logger.Information($"Fetching Trade API Listings from Query {queryId}.");
+
+                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStreamAsync();
+                    return await JsonSerializer.DeserializeAsync<FetchResult<Result>>(content, new JsonSerializerOptions()
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });
@@ -158,17 +197,22 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Exception thrown when fetching trade API listings from Query {queryId} page {page}.", queryResult.Id, page + 1);
-                return null;
+                logger.Error(ex, $"Exception thrown when fetching trade API listings from Query {queryId}.");
             }
 
-            return result;
+            return null;
         }
 
         public async Task OpenWebpage(ParsedItem item)
         {
-            var queryResult = await Query(item, null);
-            nativeBrowser.Open(queryResult.Uri);
+            if (item.Rarity == Rarity.Currency)
+            {
+                nativeBrowser.Open((await SearchBulk(item)).Uri);
+            }
+            else
+            {
+                nativeBrowser.Open((await Search(item)).Uri);
+            }
         }
     }
 }

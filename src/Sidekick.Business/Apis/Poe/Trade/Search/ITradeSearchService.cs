@@ -8,8 +8,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
 {
     public interface ITradeSearchService
     {
-        Task<FetchResult<Result>> GetListings(ParsedItem item, List<StatFilter> stats = null);
-        Task<FetchResult<Result>> GetListingsForSubsequentPages(ParsedItem item, int nextPageToFetch, List<StatFilter> stats = null);
+        Task<FetchResult<string>> SearchBulk(ParsedItem item);
+        Task<FetchResult<string>> Search(ParsedItem item, SearchFilters filters = null, List<StatFilter> stats = null);
+        Task<FetchResult<Result>> GetResults(string queryId, List<string> ids);
         Task OpenWebpage(ParsedItem item);
     }
 }
