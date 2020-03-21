@@ -213,28 +213,12 @@ namespace Sidekick.UI.Prices
             }
             else if (value is double doubleValue)
             {
-                if (doubleValue > 0)
+                if (doubleValue == 0)
                 {
                     return;
                 }
                 min = doubleValue;
                 max = doubleValue;
-            }
-            else if (value is string stringValue)
-            {
-                if (string.IsNullOrEmpty(stringValue) || !stringValue.Contains('-'))
-                {
-                    return;
-                }
-                var split = stringValue.Split('-');
-                if (split.Length >= 1 && int.TryParse(split[0], out var minValue))
-                {
-                    min = minValue;
-                }
-                if (split.Length >= 1 && int.TryParse(split[1], out var maxValue))
-                {
-                    max = maxValue;
-                }
             }
             else if (value is IGrouping<string, Magnitude> groupValue)
             {
