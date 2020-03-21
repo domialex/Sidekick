@@ -322,7 +322,6 @@ namespace Sidekick.UI.Prices
         {
             var filters = Filters
                 .SelectMany(x => x.Filters);
-            // .Where(x => x.Enabled);
             var searchFilters = new SearchFilters();
 
             foreach (var filter in filters)
