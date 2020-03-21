@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Input;
 using Sidekick.Core.Natives;
 using Sidekick.UI.Views;
@@ -31,6 +32,8 @@ namespace Sidekick.Windows.TrayIcon
         public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
 
         public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open<LeagueView>());
+
+        public ICommand DebugCrashCommand => new RelayCommand(_ => throw new Exception("Crash requested via tray icon"));
 
         #region Debug Price Check
         public ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
