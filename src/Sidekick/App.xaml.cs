@@ -6,12 +6,14 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Core.Update;
 using Sidekick.Handlers;
+using Sidekick.Localization.Application;
 using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
@@ -36,6 +38,7 @@ namespace Sidekick
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
+        private ILogger logger;
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
         private ILeagueDataService leagueDataService;
@@ -49,10 +52,15 @@ namespace Sidekick
 
             base.OnStartup(e);
 
-            ToolTipService.ShowDurationProperty.OverrideMetadata(
-            typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));       // Tooltip opened indefinitly until mouse is moved
+            AttachErrorHandlers();
+
+            // Tooltip opened indefinitly until mouse is moved.
+            ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
+
+            logger = serviceProvider.GetRequiredService<ILogger>();
+
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
             leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
@@ -163,6 +171,34 @@ namespace Sidekick
             {
                 Current.Shutdown();
             }
+        }
+
+        private void AttachErrorHandlers()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                var exception = (Exception)e.ExceptionObject;
+                LogUnhandledException(exception);
+            };
+
+            DispatcherUnhandledException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception);
+                e.Handled = true;
+            };
+
+            TaskScheduler.UnobservedTaskException += (s, e) =>
+            {
+                LogUnhandledException(e.Exception);
+                e.SetObserved();
+            };
+        }
+
+        private void LogUnhandledException(Exception ex)
+        {
+            logger.Fatal(ex, "Unhandled exception in application root");
+            AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
+            base.Shutdown(1);
         }
     }
 }

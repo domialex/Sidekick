@@ -21,6 +21,7 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Blood of the Karui" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
+                <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />
                 <Separator />
             </mc:Choice>
         </mc:AlternateContent>
