@@ -126,8 +126,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.MonsterPackSize = GetInt(patterns.MonsterPackSize, blocks[1]);
             item.AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, blocks[1]);
             item.CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, blocks[1]);
-            item.ElementalDamage = GetString(patterns.ElementalDamage, blocks[1]);
-            item.PhysicalDamage = GetString(patterns.PhysicalDamage, blocks[1]);
+            item.Extended.ElementalDps = GetDps(patterns.ElementalDamage, blocks[1], item.AttacksPerSecond);
+            item.Extended.PhysicalDps = GetDps(patterns.PhysicalDamage, blocks[1], item.AttacksPerSecond);
+            item.Extended.DamagePerSecond = item.Extended.ElementalDps + item.Extended.PhysicalDps;
             item.Blighted = patterns.Blighted.IsMatch(blocks[0]);
 
             if (item.Rarity == Rarity.Gem)
@@ -216,7 +217,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             return 0;
         }
 
-        private string GetString(Regex regex, string input)
+        private double GetDps(Regex regex, string input, double attacksPerSecond)
         {
             if (regex != null)
             {
@@ -224,11 +225,16 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 if (match.Success)
                 {
-                    return match.Groups[1].Value;
+                    var split = match.Groups[1].Value.Split('-');
+
+                    if (int.TryParse(split[0], out var minValue) && int.TryParse(split[1], out var maxValue))
+                    {
+                        return ((minValue + maxValue) / 2) * attacksPerSecond;
+                    }
                 }
             }
 
-            return string.Empty;
+            return 0;
         }
         #endregion
     }

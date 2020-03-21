@@ -82,8 +82,8 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             MonsterPackSize = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
             AttacksPerSecond = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionAttacksPerSecond)}[^\\r\\n\\d]*([\\d,\\.]+)");
             CriticalStrikeChance = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            ElementalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}([^\\r\\n]*)");
-            PhysicalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}([^\\r\\n]*)");
+            ElementalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
+            PhysicalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
             Blighted = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.PrefixBlighted)}");
         }
         #endregion

@@ -129,6 +129,12 @@ namespace Sidekick.UI.Prices
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), languageProvider.Language.InfluenceShaper, Item.Influences.Shaper);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), languageProvider.Language.InfluenceWarlord, Item.Influences.Warlord);
 
+            InitializeFilter(propertyCategory, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.PhysicalDps), PriceResources.Filters_PDps, Item.Extended.PhysicalDps);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.ElementalDps), PriceResources.Filters_EDps, Item.Extended.ElementalDps);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.DamagePerSecond), PriceResources.Filters_Dps, Item.Extended.DamagePerSecond);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.AttacksPerSecond), languageProvider.Language.DescriptionAttacksPerSecond, Item.AttacksPerSecond);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.CriticalStrikeChance), languageProvider.Language.DescriptionCriticalStrikeChance, Item.CriticalStrikeChance);
+
             if (propertyCategory.Filters.Any())
             {
                 Filters.Add(propertyCategory);
@@ -227,7 +233,7 @@ namespace Sidekick.UI.Prices
                 }
                 if (split.Length >= 1 && int.TryParse(split[1], out var maxValue))
                 {
-                    min = maxValue;
+                    max = maxValue;
                 }
             }
             else if (value is IGrouping<string, Magnitude> groupValue)
