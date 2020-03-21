@@ -191,7 +191,7 @@ namespace Sidekick.UI.Prices
 
         private void InitializeFilter<T>(PriceFilterCategory category, string type, string id, string label, T value)
         {
-            double? min = null, max = null;
+            double? min = null;
             var enabled = false;
 
             if (value is bool boolValue)
@@ -209,7 +209,6 @@ namespace Sidekick.UI.Prices
                     return;
                 }
                 min = intValue;
-                max = intValue;
             }
             else if (value is double doubleValue)
             {
@@ -218,12 +217,10 @@ namespace Sidekick.UI.Prices
                     return;
                 }
                 min = doubleValue;
-                max = doubleValue;
             }
             else if (value is IGrouping<string, Magnitude> groupValue)
             {
                 min = groupValue.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
-                max = groupValue.Select(x => x.Max).OrderByDescending(x => x).FirstOrDefault();
             }
 
             if (min.HasValue)
@@ -235,15 +232,6 @@ namespace Sidekick.UI.Prices
                 min = 0;
             }
 
-            if (max.HasValue)
-            {
-                max = (int)Math.Max(max.Value + 5, max.Value * 1.1);
-            }
-            if (max < 0)
-            {
-                max = 0;
-            }
-
             var priceFilter = new PriceFilter()
             {
                 Enabled = enabled,
@@ -251,8 +239,8 @@ namespace Sidekick.UI.Prices
                 Id = id,
                 Text = label,
                 Min = min,
-                Max = max,
-                HasRange = min.HasValue || max.HasValue
+                Max = null,
+                HasRange = min.HasValue
             };
 
             priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
