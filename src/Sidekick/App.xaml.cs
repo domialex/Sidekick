@@ -197,12 +197,15 @@ namespace Sidekick
         private void LogUnhandledException(Exception ex)
         {
             logger.Fatal(ex, "Unhandled exception in application root");
-            try
+            Dispatcher.Invoke(() =>
             {
-                AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
-            }
-            catch (Exception) { }
-            base.Shutdown(1);
+                try
+                {
+                    AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
+                }
+                catch (Exception) { }
+                Shutdown(1);
+            });
         }
     }
 }

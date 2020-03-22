@@ -18,7 +18,7 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand1}" Header="Unique Flask - Blood of the Karui" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand2}" Header="Rare Helmet - Vengeance Crest" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand3}" Header="Currency - Divine Orb" />
-                    <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Blood of the Karui" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Prophecy - The Four Feral Exiles" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
                 <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />

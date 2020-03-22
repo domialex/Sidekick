@@ -80,8 +80,6 @@ namespace Sidekick.UI.Prices
         {
             Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
 
-            InitializeFilters();
-
             if (Item == null)
             {
                 IsError = true;
@@ -89,6 +87,8 @@ namespace Sidekick.UI.Prices
             }
 
             IsCurrency = Item.Rarity == Rarity.Currency;
+
+            InitializeFilters();
 
             await UpdateQuery();
 
@@ -312,8 +312,14 @@ namespace Sidekick.UI.Prices
 
         private SearchFilters GetFilters()
         {
-            var filters = Filters
+            var filters = Filters?
                 .SelectMany(x => x.Filters);
+
+            if (filters == null)
+            {
+                return null;
+            }
+
             var searchFilters = new SearchFilters();
 
             foreach (var filter in filters)

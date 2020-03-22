@@ -117,31 +117,14 @@ Shift click to unstack.
 
         public ICommand DebugPriceCheckCommand4 => new RelayCommand(async _ =>
         {
-            await nativeClipboard.SetText(@"Rarity: Unique
-Blood of the Karui
-Sanctified Life Flask
+            await nativeClipboard.SetText(@"Rarity: Normal
+The Four Feral Exiles
 --------
-Quality: +20% (augmented)
-Recovers 3504 (augmented) Life over 2.60 (augmented) Seconds
-Consumes 15 of 30 Charges on use
-Currently has 30 Charges
+In a faraway dream, four souls far from home prepare to fight to the death.
 --------
-Requirements:
-Level: 50
+You will enter a map that holds four additional Rogue Exiles.
 --------
-Item Level: 75
---------
-100% increased Life Recovered
-15% increased Recovery rate
-Recover Full Life at the end of the Flask Effect
---------
-""Kaom fought and killed for his people.
-Kaom bled for his people.
-And so the people gave, the people bled,
-So their King might go on.""
-- Lavianga, Advisor to Kaom
---------
-Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
+Right-click to add this prophecy to your character.
 ");
 
             viewLocator.Open<PriceView>();
