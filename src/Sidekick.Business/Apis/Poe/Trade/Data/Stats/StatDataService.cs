@@ -168,6 +168,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     var mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
                     if (mod != null)
                     {
+                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Magnitudes[0].Hash == definition.Id);
                         if (pseudoMod == null)
                         {
                             pseudoMod = new Mod()
@@ -177,8 +178,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                                     new Magnitude()
                                     {
                                         Hash = definition.Id,
-                                        Min = mod.Min,
-                                        Max = mod.Max,
+                                        Min = mod.Min * modifier.Multiplier,
+                                        Max = mod.Max * modifier.Multiplier,
                                     }
                                 }
                             };
