@@ -180,108 +180,108 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 new PseudoPatternGroup("pseudo.pseudo_total_all_attributes", new Regex("Passive"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to all Attributes$")),
                 }),
-                // +# total maximum Life
-                new PseudoPatternGroup("pseudo.pseudo_total_life", null, new List<PseudoPattern>(){ }),
-                // +# total maximum Mana
-                new PseudoPatternGroup("pseudo.pseudo_total_mana", null, new List<PseudoPattern>(){ }),
-                // +# total maximum Energy Shield
-                new PseudoPatternGroup("pseudo.pseudo_total_energy_shield", null, new List<PseudoPattern>(){ }),
-                // #% total increased maximum Energy Shield
-                new PseudoPatternGroup("pseudo.pseudo_increased_energy_shield", null, new List<PseudoPattern>(){ }),
-                // +#% total Attack Speed
-                new PseudoPatternGroup("pseudo.pseudo_total_attack_speed", null, new List<PseudoPattern>(){ }),
-                // +#% total Cast Speed
-                new PseudoPatternGroup("pseudo.pseudo_total_cast_speed", null, new List<PseudoPattern>(){ }),
-                // #% increased Movement Speed
-                new PseudoPatternGroup("pseudo.pseudo_increased_movement_speed", null, new List<PseudoPattern>(){ }),
-                // #% total increased Physical Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_physical_damage", null, new List<PseudoPattern>(){ }),
-                // +#% Global Critical Strike Chance
-                new PseudoPatternGroup("pseudo.pseudo_global_critical_strike_chance", null, new List<PseudoPattern>(){ }),
-                // +#% total Critical Strike Chance for Spells
-                new PseudoPatternGroup("pseudo.pseudo_critical_strike_chance_for_spells", null, new List<PseudoPattern>(){ }),
-                // +#% Global Critical Strike Multiplier
-                new PseudoPatternGroup("pseudo.pseudo_global_critical_strike_multiplier", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Physical Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Lightning Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Cold Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Fire Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Elemental Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Chaos Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Damage
-                new PseudoPatternGroup("pseudo.pseudo_adds_damage", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Physical Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Lightning Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Cold Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Fire Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Elemental Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Chaos Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Damage to Attacks
-                new PseudoPatternGroup("pseudo.pseudo_adds_damage_to_attacks", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Physical Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Lightning Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Cold Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Fire Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Elemental Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Chaos Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // Adds # to # Damage to Spells
-                new PseudoPatternGroup("pseudo.pseudo_adds_damage_to_spells", null, new List<PseudoPattern>(){ }),
-                // #% increased Elemental Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_elemental_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Lightning Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_lightning_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Cold Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_cold_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Fire Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_fire_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Spell Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_spell_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Lightning Spell Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_lightning_spell_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Cold Spell Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_cold_spell_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Fire Spell Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_fire_spell_damage", null, new List<PseudoPattern>(){ }),
-                // #% increased Lightning Damage with Attack Skills
-                new PseudoPatternGroup("pseudo.pseudo_increased_lightning_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
-                // #% increased Cold Damage with Attack Skills
-                new PseudoPatternGroup("pseudo.pseudo_increased_cold_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
-                // #% increased Fire Damage with Attack Skills
-                new PseudoPatternGroup("pseudo.pseudo_increased_fire_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
-                // #% increased Elemental Damage with Attack Skills
-                new PseudoPatternGroup("pseudo.pseudo_increased_elemental_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
-                // #% increased Rarity of Items found
-                new PseudoPatternGroup("pseudo.pseudo_increased_rarity", null, new List<PseudoPattern>(){ }),
-                // #% increased Burning Damage
-                new PseudoPatternGroup("pseudo.pseudo_increased_burning_damage", null, new List<PseudoPattern>(){ }),
-                // # Life Regenerated per Second
-                new PseudoPatternGroup("pseudo.pseudo_total_life_regen", null, new List<PseudoPattern>(){ }),
-                // #% of Life Regenerated per Second
-                new PseudoPatternGroup("pseudo.pseudo_percent_life_regen", null, new List<PseudoPattern>(){ }),
-                // #% of Physical Attack Damage Leeched as Life
-                new PseudoPatternGroup("pseudo.pseudo_physical_attack_damage_leeched_as_life", null, new List<PseudoPattern>(){ }),
-                // #% of Physical Attack Damage Leeched as Mana
-                new PseudoPatternGroup("pseudo.pseudo_physical_attack_damage_leeched_as_mana", null, new List<PseudoPattern>(){ }),
-                // #% increased Mana Regeneration Rate
-                new PseudoPatternGroup("pseudo.pseudo_increased_mana_regen", null, new List<PseudoPattern>(){ }),
+                //// +# total maximum Life
+                //new PseudoPatternGroup("pseudo.pseudo_total_life", null, new List<PseudoPattern>(){ }),
+                //// +# total maximum Mana
+                //new PseudoPatternGroup("pseudo.pseudo_total_mana", null, new List<PseudoPattern>(){ }),
+                //// +# total maximum Energy Shield
+                //new PseudoPatternGroup("pseudo.pseudo_total_energy_shield", null, new List<PseudoPattern>(){ }),
+                //// #% total increased maximum Energy Shield
+                //new PseudoPatternGroup("pseudo.pseudo_increased_energy_shield", null, new List<PseudoPattern>(){ }),
+                //// +#% total Attack Speed
+                //new PseudoPatternGroup("pseudo.pseudo_total_attack_speed", null, new List<PseudoPattern>(){ }),
+                //// +#% total Cast Speed
+                //new PseudoPatternGroup("pseudo.pseudo_total_cast_speed", null, new List<PseudoPattern>(){ }),
+                //// #% increased Movement Speed
+                //new PseudoPatternGroup("pseudo.pseudo_increased_movement_speed", null, new List<PseudoPattern>(){ }),
+                //// #% total increased Physical Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_physical_damage", null, new List<PseudoPattern>(){ }),
+                //// +#% Global Critical Strike Chance
+                //new PseudoPatternGroup("pseudo.pseudo_global_critical_strike_chance", null, new List<PseudoPattern>(){ }),
+                //// +#% total Critical Strike Chance for Spells
+                //new PseudoPatternGroup("pseudo.pseudo_critical_strike_chance_for_spells", null, new List<PseudoPattern>(){ }),
+                //// +#% Global Critical Strike Multiplier
+                //new PseudoPatternGroup("pseudo.pseudo_global_critical_strike_multiplier", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Physical Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Lightning Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Cold Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Fire Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Elemental Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Chaos Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Damage
+                //new PseudoPatternGroup("pseudo.pseudo_adds_damage", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Physical Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Lightning Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Cold Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Fire Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Elemental Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Chaos Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Damage to Attacks
+                //new PseudoPatternGroup("pseudo.pseudo_adds_damage_to_attacks", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Physical Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_physical_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Lightning Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_lightning_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Cold Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_cold_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Fire Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_fire_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Elemental Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_elemental_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Chaos Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_chaos_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// Adds # to # Damage to Spells
+                //new PseudoPatternGroup("pseudo.pseudo_adds_damage_to_spells", null, new List<PseudoPattern>(){ }),
+                //// #% increased Elemental Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_elemental_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Lightning Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_lightning_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Cold Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_cold_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Fire Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_fire_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Spell Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_spell_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Lightning Spell Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_lightning_spell_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Cold Spell Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_cold_spell_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Fire Spell Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_fire_spell_damage", null, new List<PseudoPattern>(){ }),
+                //// #% increased Lightning Damage with Attack Skills
+                //new PseudoPatternGroup("pseudo.pseudo_increased_lightning_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
+                //// #% increased Cold Damage with Attack Skills
+                //new PseudoPatternGroup("pseudo.pseudo_increased_cold_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
+                //// #% increased Fire Damage with Attack Skills
+                //new PseudoPatternGroup("pseudo.pseudo_increased_fire_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
+                //// #% increased Elemental Damage with Attack Skills
+                //new PseudoPatternGroup("pseudo.pseudo_increased_elemental_damage_with_attack_skills", null, new List<PseudoPattern>(){ }),
+                //// #% increased Rarity of Items found
+                //new PseudoPatternGroup("pseudo.pseudo_increased_rarity", null, new List<PseudoPattern>(){ }),
+                //// #% increased Burning Damage
+                //new PseudoPatternGroup("pseudo.pseudo_increased_burning_damage", null, new List<PseudoPattern>(){ }),
+                //// # Life Regenerated per Second
+                //new PseudoPatternGroup("pseudo.pseudo_total_life_regen", null, new List<PseudoPattern>(){ }),
+                //// #% of Life Regenerated per Second
+                //new PseudoPatternGroup("pseudo.pseudo_percent_life_regen", null, new List<PseudoPattern>(){ }),
+                //// #% of Physical Attack Damage Leeched as Life
+                //new PseudoPatternGroup("pseudo.pseudo_physical_attack_damage_leeched_as_life", null, new List<PseudoPattern>(){ }),
+                //// #% of Physical Attack Damage Leeched as Mana
+                //new PseudoPatternGroup("pseudo.pseudo_physical_attack_damage_leeched_as_mana", null, new List<PseudoPattern>(){ }),
+                //// #% increased Mana Regeneration Rate
+                //new PseudoPatternGroup("pseudo.pseudo_increased_mana_regen", null, new List<PseudoPattern>(){ }),
                 //// +# total to Level of Socketed Gems
                 //new PseudoPatternGroup("pseudo.pseudo_total_additional_gem_levels", null, new List<PseudoPattern>(){ }),
                 //// +# total to Level of Socketed Elemental Gems
