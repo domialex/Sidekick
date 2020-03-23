@@ -203,11 +203,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                     new PseudoPattern(new Regex("% increased maximum Energy Shield$")),
                 }),
                 //// +#% total Attack Speed
-                //new PseudoPatternGroup("pseudo.pseudo_total_attack_speed", null, new List<PseudoPattern>(){ }),
-                //// +#% total Cast Speed
-                //new PseudoPatternGroup("pseudo.pseudo_total_cast_speed", null, new List<PseudoPattern>(){ }),
-                //// #% increased Movement Speed
-                //new PseudoPatternGroup("pseudo.pseudo_increased_movement_speed", null, new List<PseudoPattern>(){ }),
+                new PseudoPatternGroup("pseudo.pseudo_total_attack_speed", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("^\\#% increased Attack Speed$")),
+                }),
+                // +#% total Cast Speed
+                new PseudoPatternGroup("pseudo.pseudo_total_cast_speed", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("^\\#% increased Cast Speed$")),
+                }),
+                // #% increased Movement Speed
+                new PseudoPatternGroup("pseudo.pseudo_increased_movement_speed", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("^\\#% increased Movement Speed$")),
+                }),
                 //// #% total increased Physical Damage
                 //new PseudoPatternGroup("pseudo.pseudo_increased_physical_damage", null, new List<PseudoPattern>(){ }),
                 //// +#% Global Critical Strike Chance
