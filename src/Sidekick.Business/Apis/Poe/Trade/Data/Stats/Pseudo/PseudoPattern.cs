@@ -15,6 +15,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 
         public int Multiplier { get; set; }
 
-        public Dictionary<string, string> Matches { get; set; } = new Dictionary<string, string>();
+        public List<PseudoPatternMatch> Matches { get; set; } = new List<PseudoPatternMatch>();
+
     }
 }
