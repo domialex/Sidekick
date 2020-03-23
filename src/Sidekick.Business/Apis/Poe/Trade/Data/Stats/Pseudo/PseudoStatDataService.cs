@@ -114,22 +114,22 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             var groups = new List<PseudoPatternGroup>() {
                 // +#% total to Cold Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_cold_resistance", new List<PseudoPattern>(){
-                    new PseudoPattern("(?<!(Minions|Enemies).*)to Cold Resistance$"),
+                    new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to Cold Resistance$"),
                     new PseudoPattern("(?=.*Cold.*)to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$"),
                 }),
                 // +#% total to Fire Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_fire_resistance", new List<PseudoPattern>(){
-                    new PseudoPattern("(?<!(Minions|Enemies).*)to Fire Resistance$"),
+                    new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to Fire Resistance$"),
                     new PseudoPattern("(?=.*Fire.*)to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$"),
                 }),
                 // +#% total to Lightning Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_lightning_resistance", new List<PseudoPattern>(){
-                    new PseudoPattern("(?<!(Minions|Enemies).*)to Lightning Resistance$"),
+                    new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to Lightning Resistance$"),
                     new PseudoPattern("(?=.*Lightning.*)to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$"),
                 }),
                 // +#% total Elemental Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_elemental_resistance", new List<PseudoPattern>(){
-                    new PseudoPattern("(?<!(Minions|Enemies).*)to (?:Fire|Cold|Lightning) Resistance$"),
+                    new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to (?:Fire|Cold|Lightning) Resistance$"),
                     new PseudoPattern("to (?:Fire|Cold|Lightning) and (?:Fire|Cold|Lightning) Resistances$", 2),
                     new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to all Elemental Resistances$", 3),
                 }),
@@ -140,7 +140,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 }),
                 // +#% total Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_resistance", new List<PseudoPattern>(){
-                    new PseudoPattern("(?<!(Minions|Enemies).*)to\\ (Fire|Cold|Lightning|Chaos)\\ Resistance"),
+                    new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to\\ (Fire|Cold|Lightning|Chaos)\\ Resistance"),
                     new PseudoPattern("to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$", 2),
                     new PseudoPattern("(?<!(Minions|Enemies|Totems).*)to all Elemental Resistances", 3),
                 }),
