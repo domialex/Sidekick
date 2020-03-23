@@ -77,7 +77,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                     {
                         PseudoDefinitionModifier modifier = null;
 
-                        foreach (var match in pattern.Matches.OrderBy(x => x.Type).ThenByDescending(x => x.Text.Length))
+                        foreach (var match in pattern.Matches.OrderBy(x => x.Type).ThenBy(x => x.Text.Length))
                         {
                             if (modifier != null)
                             {
@@ -182,17 +182,26 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 }),
                 // +# total maximum Life
                 new PseudoPatternGroup("pseudo.pseudo_total_life", new Regex("Zombies|Transformed"), new List<PseudoPattern>(){
-                    new PseudoPattern(new Regex("to maximum Life")),
+                    new PseudoPattern(new Regex("to maximum Life$")),
                     new PseudoPattern(new Regex("to Strength$"), 0.5),
                     new PseudoPattern(new Regex("(?=.*Strength)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 0.5),
                     new PseudoPattern(new Regex("to all Attributes$"), 0.5),
                 }),
-                //// +# total maximum Mana
-                //new PseudoPatternGroup("pseudo.pseudo_total_mana", null, new List<PseudoPattern>(){ }),
-                //// +# total maximum Energy Shield
-                //new PseudoPatternGroup("pseudo.pseudo_total_energy_shield", null, new List<PseudoPattern>(){ }),
-                //// #% total increased maximum Energy Shield
-                //new PseudoPatternGroup("pseudo.pseudo_increased_energy_shield", null, new List<PseudoPattern>(){ }),
+                // +# total maximum Mana
+                new PseudoPatternGroup("pseudo.pseudo_total_mana", new Regex("Transformed"), new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to maximum Mana$")),
+                    new PseudoPattern(new Regex("to Intelligence$"), 0.5),
+                    new PseudoPattern(new Regex("(?=.*Intelligence)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 0.5),
+                    new PseudoPattern(new Regex("to all Attributes$"), 0.5),
+                }),
+                // +# total maximum Energy Shield
+                new PseudoPatternGroup("pseudo.pseudo_total_energy_shield", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to maximum Energy Shield$")),
+                }),
+                // #% total increased maximum Energy Shield
+                new PseudoPatternGroup("pseudo.pseudo_increased_energy_shield", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("% increased maximum Energy Shield$")),
+                }),
                 //// +#% total Attack Speed
                 //new PseudoPatternGroup("pseudo.pseudo_total_attack_speed", null, new List<PseudoPattern>(){ }),
                 //// +#% total Cast Speed
