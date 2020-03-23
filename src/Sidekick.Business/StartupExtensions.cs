@@ -50,7 +50,7 @@ namespace Sidekick.Business
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IParserService, ParserService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
-            services.AddInitializableService<PseudoStatDataService, PseudoStatDataService>();
+            services.AddInitializableService<IPseudoStatDataService, PseudoStatDataService>();
             services.AddInitializableService<IParserPatterns, ParserPatterns>();
             services.AddInitializableService<IStaticDataService, StaticDataService>();
 

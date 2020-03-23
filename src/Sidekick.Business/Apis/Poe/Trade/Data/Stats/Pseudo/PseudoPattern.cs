@@ -5,9 +5,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 {
     public class PseudoPattern
     {
-        public PseudoPattern(string regex, int multiplier = 1)
+        public PseudoPattern(Regex regex, int multiplier = 1)
         {
-            Pattern = new Regex(regex);
+            Pattern = regex;
             Multiplier = multiplier;
         }
 

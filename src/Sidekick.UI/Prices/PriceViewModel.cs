@@ -157,6 +157,7 @@ namespace Sidekick.UI.Prices
                 Filters.Add(propertyCategory);
             }
 
+            InitializeMods(Item.Extended.Mods.Pseudo);
             InitializeMods(Item.Extended.Mods.Explicit);
             InitializeMods(Item.Extended.Mods.Implicit);
             InitializeMods(Item.Extended.Mods.Crafted);
