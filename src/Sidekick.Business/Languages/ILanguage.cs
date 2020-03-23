@@ -37,6 +37,7 @@ namespace Sidekick.Business.Languages
         string DescriptionEnergyShield { get; }
         string DescriptionArmour { get; }
         string DescriptionEvasion { get; }
+        string DescriptionChanceToBlock { get; }
         string DescriptionLevel { get; }
 
         string PrefixSuperior { get; }

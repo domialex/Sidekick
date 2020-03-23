@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Business.Languages.Implementations
 {
-    [Language("Russian", "Редкость: ")]
+    [Language("Russian", "Редкость")]
     public class LanguageRU : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://ru.pathofexile.com/trade/search/");
@@ -18,11 +18,11 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityGem => "Камень";
         public string RarityDivinationCard => "Гадальная карта";
         public string DescriptionUnidentified => "Неопознано";
-        public string DescriptionQuality => "Качество: ";
+        public string DescriptionQuality => "Качество";
         public string DescriptionCorrupted => "Осквернено";
-        public string DescriptionRarity => "Редкость: ";
-        public string DescriptionSockets => "Гнезда: ";
-        public string DescriptionItemLevel => "Уровень предмета: ";
+        public string DescriptionRarity => "Редкость";
+        public string DescriptionSockets => "Гнезда";
+        public string DescriptionItemLevel => "Уровень предмета";
         public string PrefixSuperior => "Рог";
         public string InfluenceShaper => "Создателя";
         public string InfluenceElder => "Древнего";
@@ -30,13 +30,13 @@ namespace Sidekick.Business.Languages.Implementations
         public string InfluenceHunter => "Охотника";
         public string InfluenceRedeemer => "Избавительницы";
         public string InfluenceWarlord => "Вождя";
-        public string DescriptionMapTier => "Уровень карты: ";
-        public string DescriptionItemQuantity => "Количество предметов: ";
-        public string DescriptionItemRarity => "Редкость предметов: ";
-        public string DescriptionMonsterPackSize => "Размер групп монстров: ";
+        public string DescriptionMapTier => "Уровень карты";
+        public string DescriptionItemQuantity => "Количество предметов";
+        public string DescriptionItemRarity => "Редкость предметов";
+        public string DescriptionMonsterPackSize => "Размер групп монстров";
         public string PrefixBlighted => "Заражённая";
-        public string DescriptionExperience => "Опыт: ";
-        public string DescriptionOrgan => "Использует: ";
+        public string DescriptionExperience => "Опыт";
+        public string DescriptionOrgan => "Использует";
         public string KeywordProphecy => "пророчество";
         public string KeywordVaal => "Ваал";
         public string KeywordCatalyst => "катализатор";
@@ -61,6 +61,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionArmour => "__TranslationRequired__";
 
         public string DescriptionEvasion => "__TranslationRequired__";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
     }

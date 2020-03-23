@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Business.Languages.Implementations
 {
-    [Language("German", "Seltenheit: ")]
+    [Language("German", "Seltenheit")]
     public class LanguageDE : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://de.pathofexile.com/trade/search/");
@@ -18,13 +18,13 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityGem => "Gemme";
         public string RarityDivinationCard => "Weissagungskarte";
         public string DescriptionUnidentified => "Nicht identifiziert";
-        public string DescriptionQuality => "Qualität: ";
+        public string DescriptionQuality => "Qualität";
         public string DescriptionCorrupted => "Verderbt";
-        public string DescriptionRarity => "Seltenheit: ";
-        public string DescriptionSockets => "Fassungen: ";
-        public string DescriptionItemLevel => "Gegenstandsstufe: ";
-        public string DescriptionExperience => "Erfahrung: ";
-        public string DescriptionOrgan => "Verwendet: ";
+        public string DescriptionRarity => "Seltenheit";
+        public string DescriptionSockets => "Fassungen";
+        public string DescriptionItemLevel => "Gegenstandsstufe";
+        public string DescriptionExperience => "Erfahrung";
+        public string DescriptionOrgan => "Verwendet";
         public string PrefixSuperior => "(hochwertig)";
         public string InfluenceShaper => "Schöpfer";
         public string InfluenceElder => "Ältesten";
@@ -32,10 +32,10 @@ namespace Sidekick.Business.Languages.Implementations
         public string InfluenceHunter => "Jägers";
         public string InfluenceRedeemer => "Erlöserin";
         public string InfluenceWarlord => "Kriegsherrn";
-        public string DescriptionMapTier => "Kartenlevel: ";
-        public string DescriptionItemQuantity => "Gegenstandsmenge: ";
-        public string DescriptionItemRarity => "Gegenstandsseltenheit: ";
-        public string DescriptionMonsterPackSize => "Monstergruppengröße: ";
+        public string DescriptionMapTier => "Kartenlevel";
+        public string DescriptionItemQuantity => "Gegenstandsmenge";
+        public string DescriptionItemRarity => "Gegenstandsseltenheit";
+        public string DescriptionMonsterPackSize => "Monstergruppengröße";
         public string PrefixBlighted => "Befallene";
         public string KeywordProphecy => "Prophezeiung";
         public string KeywordVaal => "Vaal";
@@ -48,13 +48,14 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "Phiole";
         public string KeywordEssence => "Essenz";
 
-        public string DescriptionPhysicalDamage => "Physischer Schaden: ";
-        public string DescriptionElementalDamage => "Elementarschaden: ";
-        public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde: ";
-        public string DescriptionCriticalStrikeChance => "Kritische Trefferchance: ";
-        public string DescriptionEnergyShield => "Energieschild: ";
-        public string DescriptionArmour => "Rüstung: ";
-        public string DescriptionEvasion => "Ausweichwert: ";
+        public string DescriptionPhysicalDamage => "Physischer Schaden";
+        public string DescriptionElementalDamage => "Elementarschaden";
+        public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde";
+        public string DescriptionCriticalStrikeChance => "Kritische Trefferchance";
+        public string DescriptionEnergyShield => "Energieschild";
+        public string DescriptionArmour => "Rüstung";
+        public string DescriptionEvasion => "Ausweichwert";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
     }

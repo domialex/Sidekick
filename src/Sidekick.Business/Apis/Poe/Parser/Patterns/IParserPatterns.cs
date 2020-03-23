@@ -9,6 +9,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         Regex Armor { get; }
         Regex AttacksPerSecond { get; }
         Regex Blighted { get; }
+        Regex ChanceToBlock { get; }
         Regex Corrupted { get; }
         Regex CriticalStrikeChance { get; }
         Regex Crusader { get; }

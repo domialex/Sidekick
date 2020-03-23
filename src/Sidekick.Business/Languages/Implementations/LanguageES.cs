@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Business.Languages.Implementations
 {
-    [Language("Spanish", "Rareza: ")]
+    [Language("Spanish", "Rareza")]
     public class LanguageES : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://es.pathofexile.com/trade/search/");
@@ -18,13 +18,13 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityGem => "Gema";
         public string RarityDivinationCard => "Carta de Adivinación";
         public string DescriptionUnidentified => "Sin identificar";
-        public string DescriptionQuality => "Calidad: ";
+        public string DescriptionQuality => "Calidad";
         public string DescriptionCorrupted => "Corrupto";
-        public string DescriptionRarity => "Rareza: ";
-        public string DescriptionSockets => "Engarces: ";
-        public string DescriptionItemLevel => "Nivel de Objeto: ";
-        public string DescriptionExperience => "Experiencia: ";
-        public string DescriptionOrgan => "Usa: ";
+        public string DescriptionRarity => "Rareza";
+        public string DescriptionSockets => "Engarces";
+        public string DescriptionItemLevel => "Nivel de Objeto";
+        public string DescriptionExperience => "Experiencia";
+        public string DescriptionOrgan => "Usa";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Creador";
         public string InfluenceElder => "Antiguo";
@@ -32,10 +32,10 @@ namespace Sidekick.Business.Languages.Implementations
         public string InfluenceHunter => "Cazador";
         public string InfluenceRedeemer => "Redentora";
         public string InfluenceWarlord => "Jefe de guerra";
-        public string DescriptionMapTier => "Grado del Mapa: ";
-        public string DescriptionItemQuantity => "Cantidad de Objetos: ";
-        public string DescriptionItemRarity => "Rareza de Objetos: ";
-        public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos: ";
+        public string DescriptionMapTier => "Grado del Mapa";
+        public string DescriptionItemQuantity => "Cantidad de Objetos";
+        public string DescriptionItemRarity => "Rareza de Objetos";
+        public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos";
         public string PrefixBlighted => "Infestado";
         public string KeywordProphecy => "profecía";
         public string KeywordVaal => "Vaal";
@@ -61,6 +61,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionArmour => "__TranslationRequired__";
 
         public string DescriptionEvasion => "__TranslationRequired__";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
         public string DescriptionLevel => "__TranslationRequired__";
     }
 }

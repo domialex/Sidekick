@@ -5,16 +5,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
     public class MapFilter
     {
         [JsonPropertyName("map_iiq")]
-        public SearchFilterValue MapIiq { get; set; }
+        public SearchFilterValue ItemQuantity { get; set; }
 
         [JsonPropertyName("map_iir")]
-        public SearchFilterValue MapIir { get; set; }
+        public SearchFilterValue ItemRarity { get; set; }
 
         [JsonPropertyName("map_tier")]
         public SearchFilterValue MapTier { get; set; }
 
         [JsonPropertyName("map_packsize")]
-        public SearchFilterValue MapPacksize { get; set; }
+        public SearchFilterValue MonsterPackSize { get; set; }
 
         [JsonPropertyName("map_blighted")]
         public SearchFilterOption Blighted { get; set; }

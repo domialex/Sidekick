@@ -12,6 +12,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Filters
         public SearchFilterValue Price { get; set; }
 
         [JsonPropertyName("sale_type")]
-        public SearchFilterOption SaleType { get; set; }
+        public SearchFilterOption SaleType { get; set; } = new SearchFilterOption("priced");
     }
 }

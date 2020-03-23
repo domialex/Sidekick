@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Business.Languages.Implementations
 {
-    [Language("Thai", "ความหายาก: ")]
+    [Language("Thai", "ความหายาก")]
     public class LanguageTH : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://th.pathofexile.com/trade/search/");
@@ -18,11 +18,11 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityGem => "เจ็ม";
         public string RarityDivinationCard => "ไพ่พยากรณ์";
         public string DescriptionUnidentified => "ยังไม่ได้ตรวจสอบ";
-        public string DescriptionQuality => "คุณภาพ: ";
+        public string DescriptionQuality => "คุณภาพ";
         public string DescriptionCorrupted => "คอร์รัปต์";
-        public string DescriptionRarity => "ความหายาก: ";
-        public string DescriptionSockets => "ซ็อกเก็ต: ";
-        public string DescriptionItemLevel => "เลเวลไอเทม: ";
+        public string DescriptionRarity => "ความหายาก";
+        public string DescriptionSockets => "ซ็อกเก็ต";
+        public string DescriptionItemLevel => "เลเวลไอเทม";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "เชปเปอร์";
         public string InfluenceElder => "เอลเดอร์";
@@ -30,13 +30,13 @@ namespace Sidekick.Business.Languages.Implementations
         public string InfluenceHunter => "ฮันเตอร์";
         public string InfluenceRedeemer => "รีดีมเมอร์";
         public string InfluenceWarlord => "วอร์หลอด";
-        public string DescriptionMapTier => "ระดับแผนที่: ";
-        public string DescriptionItemQuantity => "จำนวนไอเท็ม: ";
-        public string DescriptionItemRarity => "ระดับความหายากของไอเทม: ";
-        public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์: ";
+        public string DescriptionMapTier => "ระดับแผนที่";
+        public string DescriptionItemQuantity => "จำนวนไอเท็ม";
+        public string DescriptionItemRarity => "ระดับความหายากของไอเทม";
+        public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์";
         public string PrefixBlighted => "Blighted";
-        public string DescriptionExperience => "ประสบการณ์: ";
-        public string DescriptionOrgan => "ใช้: ";
+        public string DescriptionExperience => "ประสบการณ์";
+        public string DescriptionOrgan => "ใช้";
         public string KeywordProphecy => "(prophecy)";
         public string KeywordVaal => "วาล์";
         public string KeywordCatalyst => "Catalyst";
@@ -61,6 +61,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionArmour => "__TranslationRequired__";
 
         public string DescriptionEvasion => "__TranslationRequired__";
+        public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
     }

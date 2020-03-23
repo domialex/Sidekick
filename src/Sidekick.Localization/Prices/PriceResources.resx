@@ -153,11 +153,23 @@
   <data name="Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Filters_Dps" xml:space="preserve">
+    <value>Damage per second</value>
+  </data>
+  <data name="Filters_EDps" xml:space="preserve">
+    <value>Elemental DPS</value>
+  </data>
   <data name="Filters_Max" xml:space="preserve">
     <value>Max</value>
   </data>
   <data name="Filters_Min" xml:space="preserve">
     <value>Min</value>
+  </data>
+  <data name="Filters_PDps" xml:space="preserve">
+    <value>Physical DPS</value>
+  </data>
+  <data name="Filters_Properties" xml:space="preserve">
+    <value>Properties</value>
   </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>

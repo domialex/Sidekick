@@ -55,6 +55,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         public Regex Armor { get; private set; }
         public Regex EnergyShield { get; private set; }
         public Regex Evasion { get; private set; }
+        public Regex ChanceToBlock { get; private set; }
         public Regex Quality { get; private set; }
         public Regex Level { get; private set; }
         public Regex MapTier { get; private set; }
@@ -72,6 +73,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Armor = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
             EnergyShield = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
             Evasion = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
+            ChanceToBlock = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionChanceToBlock)}[^\\r\\n\\d]*(\\d+)");
             Quality = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
             Level = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
             MapTier = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
@@ -80,8 +82,8 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             MonsterPackSize = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
             AttacksPerSecond = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionAttacksPerSecond)}[^\\r\\n\\d]*([\\d,\\.]+)");
             CriticalStrikeChance = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            ElementalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}([^\\r\\n]*)");
-            PhysicalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}([^\\r\\n]*)");
+            ElementalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
+            PhysicalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
             Blighted = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.PrefixBlighted)}");
         }
         #endregion
