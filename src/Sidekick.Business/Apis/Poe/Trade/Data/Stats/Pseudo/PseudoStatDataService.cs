@@ -150,22 +150,38 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 }),
                 // +#% total Resistance
                 new PseudoPatternGroup("pseudo.pseudo_total_resistance", new Regex("Minions|Enemies|Totems"), new List<PseudoPattern>(){
-                    new PseudoPattern(new Regex("to (Fire|Cold|Lightning|Chaos) Resistance")),
+                    new PseudoPattern(new Regex("to (Fire|Cold|Lightning|Chaos) Resistance$")),
                     new PseudoPattern(new Regex("to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$"), 2),
-                    new PseudoPattern(new Regex("to all Elemental Resistances"), 3),
+                    new PseudoPattern(new Regex("to all Elemental Resistances$"), 3),
                 }),
                 //// # total Resistances
                 //new PseudoPatternGroup("pseudo.pseudo_count_resistances", null, new List<PseudoPattern>(){ }),
                 //// # total Elemental Resistances
                 //new PseudoPatternGroup("pseudo.pseudo_count_elemental_resistances", null, new List<PseudoPattern>(){ }),
                 // +# total to Strength
-                new PseudoPatternGroup("pseudo.pseudo_total_strength", null, new List<PseudoPattern>(){ }),
+                new PseudoPatternGroup("pseudo.pseudo_total_strength", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to Strength$")),
+                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("to all Attributes$")),
+                }),
                 // +# total to Dexterity
-                new PseudoPatternGroup("pseudo.pseudo_total_dexterity", null, new List<PseudoPattern>(){ }),
+                new PseudoPatternGroup("pseudo.pseudo_total_dexterity", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to Dexterity$")),
+                    new PseudoPattern(new Regex("(?=.*Dexterity$)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("to all Attributes$")),
+                }),
                 // +# total to Intelligence
-                new PseudoPatternGroup("pseudo.pseudo_total_intelligence", null, new List<PseudoPattern>(){ }),
+                new PseudoPatternGroup("pseudo.pseudo_total_intelligence", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to Intelligence$")),
+                    new PseudoPattern(new Regex("(?=.*Intelligence$)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("to all Attributes$")),
+                }),
                 // +# total to all Attributes
-                new PseudoPatternGroup("pseudo.pseudo_total_all_attributes", null, new List<PseudoPattern>(){ }),
+                new PseudoPatternGroup("pseudo.pseudo_total_all_attributes", null, new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to (Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 2),
+                    new PseudoPattern(new Regex("to all Attributes$"), 3),
+                }),
                 // +# total maximum Life
                 new PseudoPatternGroup("pseudo.pseudo_total_life", null, new List<PseudoPattern>(){ }),
                 // +# total maximum Mana
