@@ -160,12 +160,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         {
             var magnitudes = mods.SelectMany(x => x.Magnitudes);
             Mod pseudoMod;
+            Magnitude mod;
             foreach (var definition in pseudoStatDataService.Definitions)
             {
-                pseudoMod = null;
                 foreach (var modifier in definition.Modifiers)
                 {
-                    var mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
+                    mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
                     if (mod != null)
                     {
                         pseudoMod = pseudoMods.FirstOrDefault(x => x.Magnitudes[0].Hash == definition.Id);
@@ -178,28 +178,25 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                                     new Magnitude()
                                     {
                                         Hash = definition.Id,
-                                        Min = mod.Min * modifier.Multiplier,
-                                        Max = mod.Max * modifier.Multiplier,
+                                        Min = (int)(mod.Min * modifier.Multiplier),
+                                        Max = (int)(mod.Max * modifier.Multiplier),
                                     }
                                 }
                             };
+                            pseudoMods.Add(pseudoMod);
                         }
                         else
                         {
                             if (pseudoMod.Magnitudes[0].Min.HasValue)
                             {
-                                pseudoMod.Magnitudes[0].Min += mod.Min * modifier.Multiplier;
+                                pseudoMod.Magnitudes[0].Min += (int)(mod.Min * modifier.Multiplier);
                             }
                             if (pseudoMod.Magnitudes[0].Max.HasValue)
                             {
-                                pseudoMod.Magnitudes[0].Max += mod.Max * modifier.Multiplier;
+                                pseudoMod.Magnitudes[0].Max += (int)(mod.Max * modifier.Multiplier);
                             }
                         }
                     }
-                }
-                if (pseudoMod != null)
-                {
-                    pseudoMods.Add(pseudoMod);
                 }
             }
         }

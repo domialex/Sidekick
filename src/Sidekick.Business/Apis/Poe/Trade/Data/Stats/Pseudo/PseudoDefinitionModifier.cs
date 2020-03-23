@@ -4,7 +4,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 {
     public class PseudoDefinitionModifier
     {
-        public PseudoDefinitionModifier(string type, string text, int multiplier)
+        public PseudoDefinitionModifier(string type, string text, double multiplier)
         {
             Type = type;
             Text = text;
@@ -17,7 +17,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 
         public string Text { get; set; }
 
-        public int Multiplier { get; set; }
+        public double Multiplier { get; set; }
 
         public override string ToString()
         {

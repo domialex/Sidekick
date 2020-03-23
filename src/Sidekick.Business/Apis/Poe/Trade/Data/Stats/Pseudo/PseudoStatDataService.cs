@@ -180,8 +180,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 new PseudoPatternGroup("pseudo.pseudo_total_all_attributes", new Regex("Passive"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to all Attributes$")),
                 }),
-                //// +# total maximum Life
-                //new PseudoPatternGroup("pseudo.pseudo_total_life", null, new List<PseudoPattern>(){ }),
+                // +# total maximum Life
+                new PseudoPatternGroup("pseudo.pseudo_total_life", new Regex("Zombies|Transformed"), new List<PseudoPattern>(){
+                    new PseudoPattern(new Regex("to maximum Life")),
+                    new PseudoPattern(new Regex("to Strength$"), 0.5),
+                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 0.5),
+                    new PseudoPattern(new Regex("to all Attributes$"), 0.5),
+                }),
                 //// +# total maximum Mana
                 //new PseudoPatternGroup("pseudo.pseudo_total_mana", null, new List<PseudoPattern>(){ }),
                 //// +# total maximum Energy Shield
