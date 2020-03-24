@@ -271,29 +271,32 @@ namespace Sidekick.UI.Prices
         {
             Results = null;
 
-            var saveSettings = false;
-            foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
+            if (Filters != null)
             {
-                if (settings.Modifiers.Contains(filter.Id))
+                var saveSettings = false;
+                foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
                 {
-                    if (!filter.Enabled)
+                    if (settings.Modifiers.Contains(filter.Id))
                     {
-                        saveSettings = true;
-                        settings.Modifiers.Remove(filter.Id);
+                        if (!filter.Enabled)
+                        {
+                            saveSettings = true;
+                            settings.Modifiers.Remove(filter.Id);
+                        }
+                    }
+                    else
+                    {
+                        if (filter.Enabled)
+                        {
+                            saveSettings = true;
+                            settings.Modifiers.Add(filter.Id);
+                        }
                     }
                 }
-                else
+                if (saveSettings)
                 {
-                    if (filter.Enabled)
-                    {
-                        saveSettings = true;
-                        settings.Modifiers.Add(filter.Id);
-                    }
+                    settings.Save();
                 }
-            }
-            if (saveSettings)
-            {
-                settings.Save();
             }
 
             IsFetching = true;
