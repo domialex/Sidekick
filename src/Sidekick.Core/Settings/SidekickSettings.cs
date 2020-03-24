@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
@@ -28,6 +29,8 @@ namespace Sidekick.Core.Settings
         public bool EnableCtrlScroll { get; set; }
 
         public bool EnablePricePrediction { get; set; }
+
+        public List<string> Modifiers { get; set; }
 
         public string Key_CloseWindow { get; set; }
 

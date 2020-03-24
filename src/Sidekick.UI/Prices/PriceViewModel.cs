@@ -198,7 +198,9 @@ namespace Sidekick.UI.Prices
                     };
                 }
 
-                InitializeFilter(category, nameof(StatFilter), magnitude.Definition.Id, magnitude.Definition.Text, magnitude.Magnitudes);
+                InitializeFilter(category, nameof(StatFilter), magnitude.Definition.Id, magnitude.Definition.Text, magnitude.Magnitudes,
+                    enabled: settings.Modifiers.Contains(magnitude.Definition.Id)
+                );
             }
 
             if (category != null)
@@ -224,7 +226,7 @@ namespace Sidekick.UI.Prices
                 }
                 if (min == null)
                 {
-                    min = intValue;
+                    min = (int)Math.Min(intValue - delta, intValue * 0.9);
                 }
             }
             else if (value is double doubleValue)
@@ -235,17 +237,16 @@ namespace Sidekick.UI.Prices
                 }
                 if (min == null)
                 {
-                    min = doubleValue;
+                    min = (int)Math.Min(doubleValue - delta, doubleValue * 0.9);
                 }
             }
             else if (value is IGrouping<string, Magnitude> groupValue)
             {
                 min = groupValue.Select(x => x.Min).OrderBy(x => x).FirstOrDefault();
-            }
-
-            if (min.HasValue)
-            {
-                min = (int)Math.Min(min.Value - delta, min.Value * 0.9);
+                if (min.HasValue)
+                {
+                    min = (int)Math.Min(min.Value - delta, min.Value * 0.9);
+                }
             }
 
             var priceFilter = new PriceFilter()
@@ -269,6 +270,34 @@ namespace Sidekick.UI.Prices
         public async Task UpdateQuery()
         {
             Results = null;
+
+            if (Filters != null)
+            {
+                var saveSettings = false;
+                foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
+                {
+                    if (settings.Modifiers.Contains(filter.Id))
+                    {
+                        if (!filter.Enabled)
+                        {
+                            saveSettings = true;
+                            settings.Modifiers.Remove(filter.Id);
+                        }
+                    }
+                    else
+                    {
+                        if (filter.Enabled)
+                        {
+                            saveSettings = true;
+                            settings.Modifiers.Add(filter.Id);
+                        }
+                    }
+                }
+                if (saveSettings)
+                {
+                    settings.Save();
+                }
+            }
 
             IsFetching = true;
             if (Item.Rarity == Rarity.Currency)
