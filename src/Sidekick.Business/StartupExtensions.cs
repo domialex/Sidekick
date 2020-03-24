@@ -6,6 +6,7 @@ using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.PoeDb;
@@ -49,6 +50,7 @@ namespace Sidekick.Business
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IParserService, ParserService>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
+            services.AddInitializableService<IPseudoStatDataService, PseudoStatDataService>();
             services.AddInitializableService<IParserPatterns, ParserPatterns>();
             services.AddInitializableService<IStaticDataService, StaticDataService>();
 

@@ -126,8 +126,8 @@ namespace Sidekick.UI.Prices
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), languageProvider.Language.DescriptionLevel, Item.Level,
                 enabled: Item.Level >= 21);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
-                enabled: Item.ItemLevel >= 86,
-                min: Item.ItemLevel >= 86 ? (double?)Item.ItemLevel : null);
+                enabled: Item.ItemLevel >= 80,
+                min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
                 alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
                 enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted);
@@ -157,6 +157,7 @@ namespace Sidekick.UI.Prices
                 Filters.Add(propertyCategory);
             }
 
+            InitializeMods(Item.Extended.Mods.Pseudo);
             InitializeMods(Item.Extended.Mods.Explicit);
             InitializeMods(Item.Extended.Mods.Implicit);
             InitializeMods(Item.Extended.Mods.Crafted);

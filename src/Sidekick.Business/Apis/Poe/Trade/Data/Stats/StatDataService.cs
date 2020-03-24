@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
@@ -10,11 +11,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     public class StatDataService : IStatDataService, IOnInit
     {
         private readonly IPoeTradeClient poeApiClient;
+        private readonly IPseudoStatDataService pseudoStatDataService;
 
-        public StatDataService(IPoeTradeClient poeApiClient)
+        public StatDataService(IPoeTradeClient poeApiClient,
+            IPseudoStatDataService pseudoStatDataService)
         {
             this.poeApiClient = poeApiClient;
+            this.pseudoStatDataService = pseudoStatDataService;
         }
+
+        private List<StatData> PseudoPatterns { get; set; }
 
         private List<StatData> ExplicitPatterns { get; set; }
 
@@ -32,6 +38,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         {
             var categories = await poeApiClient.Fetch<StatDataCategory>();
 
+            PseudoPatterns = new List<StatData>();
             ExplicitPatterns = new List<StatData>();
             ImplicitPatterns = new List<StatData>();
             EnchantPatterns = new List<StatData>();
@@ -58,6 +65,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
+                    case "pseudo": suffix = "\\ *\\n+"; patterns = PseudoPatterns; break;
                     case "delve":
                     case "monster":
                     case "explicit": suffix = "\\ *\\n+"; patterns = ExplicitPatterns; break;
@@ -99,6 +107,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             FillMods(mods.Enchant, EnchantPatterns, text);
             FillMods(mods.Crafted, CraftedPatterns, text);
             // FillMods(mods.Veiled, VeiledPatterns, text);
+
+            FillPseudo(mods.Pseudo, mods.Explicit);
+            FillPseudo(mods.Pseudo, mods.Implicit);
+            FillPseudo(mods.Pseudo, mods.Enchant);
+            FillPseudo(mods.Pseudo, mods.Crafted);
 
             return mods;
         }
@@ -143,9 +156,60 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             }
         }
 
+        private void FillPseudo(List<Mod> pseudoMods, List<Mod> mods)
+        {
+            var magnitudes = mods.SelectMany(x => x.Magnitudes);
+            Mod pseudoMod;
+            Magnitude mod;
+            foreach (var definition in pseudoStatDataService.Definitions)
+            {
+                foreach (var modifier in definition.Modifiers)
+                {
+                    mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
+                    if (mod != null)
+                    {
+                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Magnitudes[0].Hash == definition.Id);
+                        if (pseudoMod == null)
+                        {
+                            pseudoMod = new Mod()
+                            {
+                                Magnitudes = new List<Magnitude>()
+                                {
+                                    new Magnitude()
+                                    {
+                                        Hash = definition.Id,
+                                        Min = (int)(mod.Min * modifier.Multiplier),
+                                        Max = (int)(mod.Max * modifier.Multiplier),
+                                    }
+                                }
+                            };
+                            pseudoMods.Add(pseudoMod);
+                        }
+                        else
+                        {
+                            if (pseudoMod.Magnitudes[0].Min.HasValue)
+                            {
+                                pseudoMod.Magnitudes[0].Min += (int)(mod.Min * modifier.Multiplier);
+                            }
+                            if (pseudoMod.Magnitudes[0].Max.HasValue)
+                            {
+                                pseudoMod.Magnitudes[0].Max += (int)(mod.Max * modifier.Multiplier);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public StatData GetById(string id)
         {
-            var result = ImplicitPatterns.FirstOrDefault(x => x.Id == id);
+            var result = PseudoPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                return result;
+            }
+
+            result = ImplicitPatterns.FirstOrDefault(x => x.Id == id);
             if (result != null)
             {
                 return result;
