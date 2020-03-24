@@ -117,23 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="_AislingTransportation" xml:space="preserve">
-    <value>隱匿武器</value>
-    <comment>Requires updated translation, Remove leading _ when done</comment>
+  <data name="AislingTransportation" xml:space="preserve">
+    <value>隱匿武器與飾品</value>
   </data>
-  <data name="_AislingFortification" xml:space="preserve">
-    <value>二詞 隱匿護甲</value>
-    <comment>Requires updated translation, Remove leading _ when done</comment>
+  <data name="AislingFortification" xml:space="preserve">
+    <value>隱匿護甲與飾品</value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
-    <value>增加 隱匿詞綴</value>
+    <value>增加隱匿詞綴</value>
   </data>
-  <data name="_AislingIntervention" xml:space="preserve">
-    <value>二詞 隱匿飾品</value>
-    <comment>Requires updated translation, Remove leading _ when done</comment>
+  <data name="AislingIntervention" xml:space="preserve">
+    <value>煉魔聖甲蟲</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
-    <value>聯盟限定 傳奇</value>
+    <value>聯盟限定傳奇</value>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
     <value>神諭石</value>
@@ -142,7 +139,7 @@
     <value>六分儀</value>
   </data>
   <data name="CameriaIntervention" xml:space="preserve">
-    <value>掘獄 聖甲蟲</value>
+    <value>掘獄聖甲蟲</value>
   </data>
   <data name="ElreonTransportation" xml:space="preserve">
     <value>傳奇武器</value>
@@ -154,31 +151,31 @@
     <value>傳奇飾品</value>
   </data>
   <data name="ElreonIntervention" xml:space="preserve">
-    <value>傳奇 聖甲蟲</value>
+    <value>傳奇聖甲蟲</value>
   </data>
   <data name="GraviciusTransportation" xml:space="preserve">
-    <value>完整 命運卡組</value>
+    <value>命運卡組</value>
   </data>
   <data name="GraviciusFortification" xml:space="preserve">
     <value>命運卡</value>
   </data>
   <data name="GraviciusResearch" xml:space="preserve">
-    <value>交換 命運卡</value>
+    <value>交換命運卡</value>
   </data>
   <data name="GraviciusIntervention" xml:space="preserve">
-    <value>命運卡 聖甲蟲</value>
+    <value>命運卡聖甲蟲</value>
   </data>
   <data name="GuffTransportation" xml:space="preserve">
     <value>混沌石 做裝</value>
   </data>
   <data name="GuffFortification" xml:space="preserve">
-    <value>精髓 做裝</value>
+    <value>精髓做裝</value>
   </data>
   <data name="GuffResearch" xml:space="preserve">
     <value>崇高石 做裝</value>
   </data>
   <data name="GuffIntervention" xml:space="preserve">
-    <value>改造石 做裝</value>
+    <value>改造石做裝</value>
   </data>
   <data name="HakuTransportation" xml:space="preserve">
     <value>稀有物品</value>
@@ -190,7 +187,7 @@
     <value>品質物品</value>
   </data>
   <data name="HakuIntervention" xml:space="preserve">
-    <value>伏擊 聖甲蟲</value>
+    <value>伏擊聖甲蟲</value>
   </data>
   <data name="HillockTransportation" xml:space="preserve">
     <value>武器品質</value>
@@ -214,7 +211,7 @@
     <value>升級 裂痕石</value>
   </data>
   <data name="ItThatFledIntervention" xml:space="preserve">
-    <value>裂痕 聖甲蟲</value>
+    <value>裂痕聖甲蟲</value>
   </data>
   <data name="JanusTransportation" xml:space="preserve">
     <value>品質通貨</value>
@@ -223,10 +220,10 @@
     <value>通貨碎片</value>
   </data>
   <data name="JanusResearch" xml:space="preserve">
-    <value>普蘭德斯 金幣</value>
+    <value>普蘭德斯金幣</value>
   </data>
   <data name="JanusIntervention" xml:space="preserve">
-    <value>普蘭德斯 聖甲蟲</value>
+    <value>普蘭德斯聖甲蟲</value>
   </data>
   <data name="JorginTransportation" xml:space="preserve">
     <value>稀有魔符</value>
@@ -238,7 +235,7 @@
     <value>項鍊轉化 為魔符</value>
   </data>
   <data name="JorginIntervention" xml:space="preserve">
-    <value>獸獵 聖甲蟲</value>
+    <value>獸獵聖甲蟲</value>
   </data>
   <data name="KorellTransportation" xml:space="preserve">
     <value>精髓</value>
@@ -250,7 +247,7 @@
     <value>化石</value>
   </data>
   <data name="KorellIntervention" xml:space="preserve">
-    <value>尊師 聖甲蟲</value>
+    <value>尊師聖甲蟲</value>
   </data>
   <data name="LeoTransportation" xml:space="preserve">
     <value>銀幣</value>
@@ -262,19 +259,19 @@
     <value>免費通貨</value>
   </data>
   <data name="LeoIntervention" xml:space="preserve">
-    <value>苦痛 聖甲蟲</value>
+    <value>苦痛聖甲蟲</value>
   </data>
   <data name="RikerTransportation" xml:space="preserve">
-    <value>選擇 通貨</value>
+    <value>選擇通貨</value>
   </data>
   <data name="RikerFortification" xml:space="preserve">
     <value>選擇傳奇</value>
   </data>
   <data name="RikerResearch" xml:space="preserve">
-    <value>選擇 隱匿裝備</value>
+    <value>選擇隱匿裝備</value>
   </data>
   <data name="RikerIntervention" xml:space="preserve">
-    <value>選擇 命運卡</value>
+    <value>選擇命運卡</value>
   </data>
   <data name="RinTransportation" xml:space="preserve">
     <value>普通地圖</value>
@@ -286,7 +283,7 @@
     <value>傳奇地圖</value>
   </data>
   <data name="RinIntervention" xml:space="preserve">
-    <value>輿圖 聖甲蟲</value>
+    <value>輿圖聖甲蟲</value>
   </data>
   <data name="ToraTransportation" xml:space="preserve">
     <value>選擇物品</value>
@@ -295,10 +292,10 @@
     <value>附魔物品</value>
   </data>
   <data name="ToraResearch" xml:space="preserve">
-    <value>技能 寶石經驗</value>
+    <value>技能寶石經驗</value>
   </data>
   <data name="ToraIntervention" xml:space="preserve">
-    <value>神諭 聖甲蟲</value>
+    <value>神諭聖甲蟲</value>
   </data>
   <data name="VaganTransportation" xml:space="preserve">
     <value>稀有武器</value>
@@ -313,7 +310,7 @@
     <value>稀有珠寶</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
-    <value>品質 技能寶石</value>
+    <value>品質技能寶石</value>
   </data>
   <data name="VoriciFortification" xml:space="preserve">
     <value>插槽通貨</value>
@@ -322,7 +319,7 @@
     <value>白色插槽</value>
   </data>
   <data name="VoriciIntervention" xml:space="preserve">
-    <value>塑者 聖甲蟲</value>
+    <value>塑者聖甲蟲</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
     <value>階級1: 一詞

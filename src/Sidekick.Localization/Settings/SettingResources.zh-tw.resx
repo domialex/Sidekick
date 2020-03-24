@@ -135,6 +135,9 @@
   <data name="Key_CloseWindow" xml:space="preserve">
     <value>關閉視窗</value>
   </data>
+  <data name="Key_Exit" xml:space="preserve">
+    <value>回到選擇角色介面</value>
+  </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>查詢物品</value>
   </data>
@@ -156,6 +159,12 @@
   <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
     <value>回復最近的密語</value>
   </data>
+  <data name="Key_Stash_Left" xml:space="preserve">
+    <value>倉庫頁向左瀏覽</value>
+  </data>
+  <data name="Key_Stash_Right" xml:space="preserve">
+    <value>倉庫頁向右瀏覽</value>
+  </data>
   <data name="Language_Title" xml:space="preserve">
     <value>語言設定</value>
   </data>
@@ -167,6 +176,9 @@
   </data>
   <data name="Other_CloseWithMouseClick" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
+  </data>
+  <data name="Other_PricePrediction" xml:space="preserve">
+    <value>啟用價錢預測</value>
   </data>
   <data name="Other_RetainClipboard" xml:space="preserve">
     <value>保留剪貼簿內容</value>
