@@ -136,8 +136,6 @@ namespace Sidekick.Handlers
             viewLocator.CloseAll();
             await clipboard.Copy();
 
-            await parserService.ParseItem(clipboard.LastCopiedText);
-
             viewLocator.Open<PriceView>();
             return true;
         }

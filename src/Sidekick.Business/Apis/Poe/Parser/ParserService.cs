@@ -76,10 +76,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private void ParseHeader(ref ParsedItem item, ref string input)
         {
             var lines = NewlinePattern.Split(input);
-            var blocks = SeparatorPattern.Split(input);
 
             item.Rarity = GetRarity(lines[0]);
-            var dataItem = itemDataService.GetItem(blocks[0]);
+            var dataItem = itemDataService.GetItem(input);
 
             if (dataItem.Flags.Prophecy)
             {

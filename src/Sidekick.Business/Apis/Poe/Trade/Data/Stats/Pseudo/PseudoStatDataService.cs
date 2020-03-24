@@ -161,19 +161,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 // +# total to Strength
                 new PseudoPatternGroup("pseudo.pseudo_total_strength", new Regex("Passive"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to Strength$")),
-                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strength|Dexterity|Intelligence) and (?:Strength|Dexterity|Intelligence)$")),
                     new PseudoPattern(new Regex("to all Attributes$")),
                 }),
                 // +# total to Dexterity
                 new PseudoPatternGroup("pseudo.pseudo_total_dexterity", new Regex("Passive"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to Dexterity$")),
-                    new PseudoPattern(new Regex("(?=.*Dexterity$)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("(?=.*Dexterity)to (?:Strength|Dexterity|Intelligence) and (?:Strength|Dexterity|Intelligence)$")),
                     new PseudoPattern(new Regex("to all Attributes$")),
                 }),
                 // +# total to Intelligence
                 new PseudoPatternGroup("pseudo.pseudo_total_intelligence", new Regex("Passive"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to Intelligence$")),
-                    new PseudoPattern(new Regex("(?=.*Intelligence$)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$")),
+                    new PseudoPattern(new Regex("(?=.*Intelligence)to (?:Strength|Dexterity|Intelligence) and (?:Strength|Dexterity|Intelligence)$")),
                     new PseudoPattern(new Regex("to all Attributes$")),
                 }),
                 // +# total to all Attributes
@@ -184,14 +184,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 new PseudoPatternGroup("pseudo.pseudo_total_life", new Regex("Zombies|Transformed"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to maximum Life$")),
                     new PseudoPattern(new Regex("to Strength$"), 0.5),
-                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 0.5),
+                    new PseudoPattern(new Regex("(?=.*Strength)to (?:Strength|Dexterity|Intelligence) and (?:Strength|Dexterity|Intelligence)$"), 0.5),
                     new PseudoPattern(new Regex("to all Attributes$"), 0.5),
                 }),
                 // +# total maximum Mana
                 new PseudoPatternGroup("pseudo.pseudo_total_mana", new Regex("Transformed"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to maximum Mana$")),
                     new PseudoPattern(new Regex("to Intelligence$"), 0.5),
-                    new PseudoPattern(new Regex("(?=.*Intelligence)to (?:Strenght|Dexterity|Intelligence) and (?:Strenght|Dexterity|Intelligence)$"), 0.5),
+                    new PseudoPattern(new Regex("(?=.*Intelligence)to (?:Strength|Dexterity|Intelligence) and (?:Strength|Dexterity|Intelligence)$"), 0.5),
                     new PseudoPattern(new Regex("to all Attributes$"), 0.5),
                 }),
                 // +# total maximum Energy Shield
