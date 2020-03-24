@@ -117,6 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Age_Day" xml:space="preserve">
+    <value>{0} 天</value>
+  </data>
+  <data name="Age_Days" xml:space="preserve">
+    <value>{0} 天</value>
+  </data>
+  <data name="Age_Hour" xml:space="preserve">
+    <value>{0} 小時</value>
+  </data>
+  <data name="Age_Hours" xml:space="preserve">
+    <value>{0} 小時</value>
+  </data>
+  <data name="Age_Minute" xml:space="preserve">
+    <value>{0} 分鐘</value>
+  </data>
+  <data name="Age_Minutes" xml:space="preserve">
+    <value>{0} 分鐘</value>
+  </data>
+  <data name="Age_Now" xml:space="preserve">
+    <value>現在</value>
+  </data>
+  <data name="Age_Seconds" xml:space="preserve">
+    <value>{0} 秒</value>
+  </data>
+  <data name="Corrupted" xml:space="preserve">
+    <value>已汙染</value>
+  </data>
+  <data name="CountString" xml:space="preserve">
+    <value>在 {1} 項結果中顯示了 {0} 物品</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>無法搜尋此物品的價格</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>篩選器</value>
+  </data>
+  <data name="Filters_Dps" xml:space="preserve">
+    <value>每秒造成傷害</value>
+  </data>
+  <data name="Filters_EDps" xml:space="preserve">
+    <value>每秒造成元素傷害</value>
+  </data>
+  <data name="Filters_Max" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="Filters_Min" xml:space="preserve">
+    <value>最小</value>
+  </data>
+  <data name="Filters_PDps" xml:space="preserve">
+    <value>每秒造成物理傷害</value>
+  </data>
+  <data name="Filters_Properties" xml:space="preserve">
+    <value>屬性</value>
+  </data>
+  <data name="ItemLevel" xml:space="preserve">
+    <value>物品等級</value>
+  </data>
   <data name="OverlayAccountName" xml:space="preserve">
     <value>帳號</value>
   </data>
@@ -131,5 +188,17 @@
   </data>
   <data name="OverlayPrice" xml:space="preserve">
     <value>價格</value>
+  </data>
+  <data name="PoeNinjaString" xml:space="preserve">
+    <value>Poe.Ninja: {0}c - 最後更新時間: {1}</value>
+  </data>
+  <data name="PredictionString" xml:space="preserve">
+    <value>預測價格: {0} - 信心指數: {1}%</value>
+  </data>
+  <data name="Requires" xml:space="preserve">
+    <value>需求</value>
+  </data>
+  <data name="Unidentified" xml:space="preserve">
+    <value>未鑑定</value>
   </data>
 </root>
