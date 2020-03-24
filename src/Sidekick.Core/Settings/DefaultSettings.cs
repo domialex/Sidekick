@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Sidekick.Core.Settings
 {
     public static class DefaultSettings
@@ -17,6 +19,7 @@ namespace Sidekick.Core.Settings
                 CloseOverlayWithMouse = true,
                 EnableCtrlScroll = true,
                 EnablePricePrediction = true,
+                Modifiers = new List<string>(),
                 Key_CloseWindow = "Space",
                 Key_CheckPrices = "Ctrl+D",
                 Key_Exit = "Ctrl+Shift+X",
