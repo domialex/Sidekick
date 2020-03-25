@@ -85,7 +85,12 @@ Quickly search from an item into various screens (stash, passive skill tree).
 Default binding: Alt+Q
 
 ## Development
-We accept most PR and ideas. If you want a feature included, create an issue and we will discuss it. We are also available on [Discord](https://discord.gg/H4bg4GQ)
+We accept most PR and ideas. If you want a feature included, create an issue and we will discuss it.
+
+We are also available on [Discord](https://discord.gg/H4bg4GQ).
+
+[![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
+
 
 ## Thanks
 - [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
