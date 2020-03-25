@@ -36,13 +36,13 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         {
             Rarity = new Dictionary<Rarity, Regex>
             {
-                { Models.Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal)) },
-                { Models.Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic)) },
-                { Models.Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare)) },
-                { Models.Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique)) },
-                { Models.Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency)) },
-                { Models.Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem)) },
-                { Models.Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard)) }
+                { Models.Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal) + "$") },
+                { Models.Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic) + "$") },
+                { Models.Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare) + "$") },
+                { Models.Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique) + "$") },
+                { Models.Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency) + "$") },
+                { Models.Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem) + "$") },
+                { Models.Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard) + "$") }
             };
 
             ItemLevel = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemLevel)}[^\\r\\n\\d]*(\\d+)");
