@@ -37,7 +37,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
             var leaguesHash = Encoding.UTF8.GetString(
                 algorithm.ComputeHash(
                     Encoding.UTF8.GetBytes(
-                        JsonSerializer.Serialize(Leagues)
+                        JsonSerializer.Serialize(Leagues.Select(x => x.Id).ToList())
                     )
                 )
             );
