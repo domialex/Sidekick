@@ -1,13 +1,13 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using Sidekick.UI.ApplicationLogs;
 
 namespace Sidekick.Windows.ApplicationLogs
 {
-    public partial class ApplicationLogsView : BaseWindow, IDisposable
+    public partial class ApplicationLogsView : BaseWindow
     {
         private readonly IApplicationLogViewModel viewModel;
-        private bool isDisposed;
 
         public ApplicationLogsView(
             IApplicationLogViewModel viewModel,
@@ -45,26 +45,15 @@ namespace Sidekick.Windows.ApplicationLogs
             Close();
         }
 
-        public void Dispose()
+        protected override void OnClosing(CancelEventArgs e)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (isDisposed)
+            if (IsClosing)
             {
                 return;
             }
-
-            if (disposing)
-            {
-                viewModel.Logs.CollectionChanged -= LogsChanged;
-                viewModel.PropertyChanged -= LogsChanged;
-            }
-
-            isDisposed = true;
+            viewModel.Logs.CollectionChanged -= LogsChanged;
+            viewModel.PropertyChanged -= LogsChanged;
+            base.OnClosing(e);
         }
     }
 }

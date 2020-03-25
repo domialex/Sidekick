@@ -32,7 +32,7 @@ namespace Sidekick.Windows
             this.closeOnBlur = closeOnBlur;
         }
 
-        private bool IsClosing = false;
+        protected bool IsClosing = false;
         protected override void OnClosing(CancelEventArgs e)
         {
             if (IsClosing) return;
