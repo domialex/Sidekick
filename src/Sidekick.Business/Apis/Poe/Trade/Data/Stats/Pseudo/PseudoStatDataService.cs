@@ -29,6 +29,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 
         public async Task OnInit()
         {
+            if (Definitions != null && Definitions.Count > 0)
+            {
+                return;
+            }
+
             try
             {
                 logger.Information($"Pseudo stat service initialization started.");
