@@ -1,7 +1,7 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Prices
 {
@@ -24,7 +24,7 @@ namespace Sidekick.UI.Prices
         bool IsPredicted { get; }
         string PredictionText { get; }
 
-        ObservableCollection<PriceItem> Results { get; }
+        AsyncObservableCollection<PriceItem> Results { get; }
 
         Task LoadMoreData();
 

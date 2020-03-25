@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
+using Sidekick.UI.Helpers;
 using Sidekick.UI.Items;
 
 namespace Sidekick.UI.Prices
@@ -62,7 +62,7 @@ namespace Sidekick.UI.Prices
 
         public string ItemColor => Item?.GetColor();
 
-        public ObservableCollection<PriceItem> Results { get; private set; }
+        public AsyncObservableCollection<PriceItem> Results { get; private set; }
 
         public Uri Uri => QueryResult?.Uri;
 
@@ -74,7 +74,7 @@ namespace Sidekick.UI.Prices
 
         public bool IsCurrency { get; private set; }
 
-        public ObservableCollection<PriceFilterCategory> Filters { get; set; }
+        public AsyncObservableCollection<PriceFilterCategory> Filters { get; set; }
 
         private async Task Initialize()
         {
@@ -102,7 +102,7 @@ namespace Sidekick.UI.Prices
 
         private void InitializeFilters()
         {
-            Filters = new ObservableCollection<PriceFilterCategory>();
+            Filters = new AsyncObservableCollection<PriceFilterCategory>();
 
             var propertyCategory = new PriceFilterCategory()
             {
@@ -425,7 +425,7 @@ namespace Sidekick.UI.Prices
 
                 if (Results == null)
                 {
-                    Results = new ObservableCollection<PriceItem>(items);
+                    Results = new AsyncObservableCollection<PriceItem>(items);
                 }
                 else
                 {
