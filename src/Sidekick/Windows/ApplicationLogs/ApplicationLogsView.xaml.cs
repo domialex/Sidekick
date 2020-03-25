@@ -28,7 +28,7 @@ namespace Sidekick.Windows.ApplicationLogs
 
         private void LogsChanged(object sender, EventArgs e)
         {
-            GenerateLogLines();
+            Dispatcher.Invoke(GenerateLogLines);
         }
 
         private void GenerateLogLines()

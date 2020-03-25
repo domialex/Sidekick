@@ -23,6 +23,10 @@ namespace Sidekick.Core.Natives
             if (settings.RetainClipboard)
             {
                 clipboardText = await GetText();
+                if (clipboardText == null)
+                {
+                    clipboardText = string.Empty;
+                }
             }
 
             await SetText(string.Empty);
@@ -50,10 +54,11 @@ namespace Sidekick.Core.Natives
 
         public async Task SetText(string text)
         {
-            if (text != null)
+            if (text == null)
             {
-                await TextCopy.Clipboard.SetTextAsync(text);
+                text = string.Empty;
             }
+            await TextCopy.Clipboard.SetTextAsync(text);
             LastCopiedText = text;
         }
     }
