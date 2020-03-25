@@ -22,7 +22,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
         public async Task OnInit()
         {
             var categories = await poeApiClient.Fetch<ItemDataCategory>();
-
             var patterns = categories.SelectMany(x => x.Entries);
 
             TypePatterns = patterns
@@ -50,15 +49,25 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             if (result.Count() != 0)
             {
                 return result
+                    .Select(x => new
+                    {
+                        x.Item,
+                        x.Regex.Match(text).Index,
+                    })
+                    .OrderBy(x => x.Index)
                     .Select(x => x.Item)
-                    .OrderByDescending(x => x.Name.Length)
                     .FirstOrDefault();
             }
 
             return TypePatterns
                 .Where(x => x.Regex.IsMatch(text))
+                .Select(x => new
+                {
+                    x.Item,
+                    x.Regex.Match(text).Index,
+                })
+                .OrderBy(x => x.Index)
                 .Select(x => x.Item)
-                .OrderByDescending(x => x.Type.Length)
                 .FirstOrDefault();
         }
     }
