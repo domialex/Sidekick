@@ -122,9 +122,10 @@ namespace Sidekick.UI.Prices
 
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Quality), languageProvider.Language.DescriptionQuality, Item.Quality,
                 enabled: Item.Rarity == Rarity.Gem && Item.Quality >= 20,
-                min: Item.Rarity == Rarity.Gem && Item.Quality > 20 ? (double?)Item.Quality : null);
-            InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), languageProvider.Language.DescriptionLevel, Item.Level,
-                enabled: Item.Level >= 21);
+                min: Item.Rarity == Rarity.Gem && Item.Quality >= 20 ? (double?)Item.Quality : null);
+            InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), languageProvider.Language.DescriptionLevel, Item.GemLevel,
+                enabled: Item.GemLevel >= 20,
+                min: Item.GemLevel >= 20 ? Item.GemLevel : (double?)null);
             InitializeFilter(propertyCategory, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
                 enabled: Item.ItemLevel >= 80,
                 min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
@@ -158,8 +159,8 @@ namespace Sidekick.UI.Prices
             }
 
             InitializeMods(Item.Extended.Mods.Pseudo);
-            InitializeMods(Item.Extended.Mods.Explicit);
             InitializeMods(Item.Extended.Mods.Implicit);
+            InitializeMods(Item.Extended.Mods.Explicit);
             InitializeMods(Item.Extended.Mods.Crafted);
             InitializeMods(Item.Extended.Mods.Enchant);
 

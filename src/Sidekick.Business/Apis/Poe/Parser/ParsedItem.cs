@@ -9,7 +9,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public int Evasion { get; set; }
         public int ChanceToBlock { get; set; }
         public int Quality { get; set; }
-        public int Level { get; set; }
+        public int GemLevel { get; set; }
         public int MapTier { get; set; }
         public int ItemQuantity { get; set; }
         public int ItemRarity { get; set; }

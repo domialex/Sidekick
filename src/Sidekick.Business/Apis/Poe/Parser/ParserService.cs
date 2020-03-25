@@ -132,7 +132,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             if (item.Rarity == Rarity.Gem)
             {
-                item.Level = GetInt(patterns.Level, blocks[1]);
+                item.GemLevel = GetInt(patterns.Level, blocks[1]);
             }
         }
 
