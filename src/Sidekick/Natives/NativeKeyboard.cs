@@ -8,11 +8,10 @@ using Serilog;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Natives.Helpers;
-using WindowsHook;
 
 namespace Sidekick.Natives
 {
-    public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable
+    public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable, IOnReset
     {
         private static readonly List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
             WindowsHook.Keys.ControlKey,
@@ -28,23 +27,23 @@ namespace Sidekick.Natives
         };
 
         private readonly ILogger logger;
+        private readonly HookProvider hookProvider;
 
-        public NativeKeyboard(ILogger logger)
+        public NativeKeyboard(ILogger logger, HookProvider hookProvider)
         {
             this.logger = logger.ForContext(GetType());
+            this.hookProvider = hookProvider;
         }
 
         public bool Enabled { get; set; }
 
         public event Func<string, bool> OnKeyDown;
 
-        private IKeyboardMouseEvents hook = null;
         private bool isDisposed;
 
         public Task OnAfterInit()
         {
-            hook = Hook.GlobalEvents();
-            hook.KeyDown += Hook_KeyDown;
+            hookProvider.Hook.KeyDown += Hook_KeyDown;
 
             return Task.CompletedTask;
         }
@@ -89,27 +88,22 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
             if (isDisposed)
             {
                 return;
             }
 
-            if (disposing)
-            {
-                if (hook != null) // Hook will be null if auto update was successful
-                {
-                    hook.KeyDown -= Hook_KeyDown;
-                    hook.Dispose();
-                }
-            }
-
+            OnReset();
             isDisposed = true;
+            GC.SuppressFinalize(this);
+        }
+
+        public void OnReset()
+        {
+            if (hookProvider.Hook != null) // Hook will be null if auto update was successful
+            {
+                hookProvider.Hook.KeyDown -= Hook_KeyDown;
+            }
         }
 
         public void Copy()

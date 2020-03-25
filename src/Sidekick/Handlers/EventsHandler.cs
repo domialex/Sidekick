@@ -7,6 +7,7 @@ using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.UI.Views;
@@ -15,7 +16,7 @@ using Sidekick.Windows.Prices;
 
 namespace Sidekick.Handlers
 {
-    public class EventsHandler : IDisposable
+    public class EventsHandler : IDisposable, IOnReset
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -63,33 +64,29 @@ namespace Sidekick.Handlers
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
             if (isDisposed)
             {
                 return;
             }
 
-            if (disposing)
-            {
-                events.OnItemWiki -= TriggerItemWiki;
-                events.OnFindItems -= TriggerFindItem;
-                events.OnLeaveParty -= TriggerLeaveParty;
-                events.OnOpenSearch -= TriggerOpenSearch;
-                events.OnWhisperReply -= TriggerReplyToLatestWhisper;
-                events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
-                events.OnPriceCheck -= Events_OnPriceCheck;
-                events.OnHideout -= Events_OnHideout;
-                events.OnExit -= Events_OnExit;
-                events.OnTabLeft -= Events_OnTabLeft;
-                events.OnTabRight -= Events_OnTabRight;
-            }
-
+            OnReset();
             isDisposed = true;
+            GC.SuppressFinalize(this);
+        }
+
+        public void OnReset()
+        {
+            events.OnItemWiki -= TriggerItemWiki;
+            events.OnFindItems -= TriggerFindItem;
+            events.OnLeaveParty -= TriggerLeaveParty;
+            events.OnOpenSearch -= TriggerOpenSearch;
+            events.OnWhisperReply -= TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
+            events.OnPriceCheck -= Events_OnPriceCheck;
+            events.OnHideout -= Events_OnHideout;
+            events.OnExit -= Events_OnExit;
+            events.OnTabLeft -= Events_OnTabLeft;
+            events.OnTabRight -= Events_OnTabRight;
         }
 
         private async Task<bool> Events_OnHideout()

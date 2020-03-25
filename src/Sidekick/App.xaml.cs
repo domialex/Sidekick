@@ -42,6 +42,7 @@ namespace Sidekick
         private INativeProcess nativeProcess;
         private INativeBrowser nativeBrowser;
         private ILeagueDataService leagueDataService;
+        private IInitializer initializer;
         private IViewLocator viewLocator;
 
         private TaskbarIcon trayIcon;
@@ -60,12 +61,11 @@ namespace Sidekick
             serviceProvider = Sidekick.Startup.InitializeServices(this);
 
             logger = serviceProvider.GetRequiredService<ILogger>();
-
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
             leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
-
-            viewLocator = serviceProvider.GetService<IViewLocator>();
+            initializer = serviceProvider.GetRequiredService<IInitializer>();
+            viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
             viewLocator.Open<Windows.SplashScreen>();
 
             await RunAutoUpdate();
@@ -80,13 +80,14 @@ namespace Sidekick
                 });
             };
 
-            var initializer = serviceProvider.GetService<IInitializer>();
-
             initializer.OnProgress += (a) =>
             {
                 if (!viewLocator.IsOpened<Windows.SplashScreen>())
                 {
-                    viewLocator.Open<Windows.SplashScreen>();
+                    Dispatcher.Invoke(() =>
+                    {
+                        viewLocator.Open<Windows.SplashScreen>();
+                    });
                 }
             };
 
@@ -159,7 +160,6 @@ namespace Sidekick
         protected override void OnExit(ExitEventArgs e)
         {
             trayIcon?.Dispose();
-            // Disposing the service provider also disposes registered all IDisposable services
             serviceProvider?.Dispose();
             base.OnExit(e);
         }

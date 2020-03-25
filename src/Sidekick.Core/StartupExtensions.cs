@@ -55,9 +55,10 @@ namespace Sidekick.Core
 
         private static readonly HashSet<Type> intializeTypes = new HashSet<Type>
         {
+            typeof(IOnReset),
             typeof(IOnBeforeInit),
             typeof(IOnInit),
-            typeof(IOnAfterInit)
+            typeof(IOnAfterInit),
         };
 
 

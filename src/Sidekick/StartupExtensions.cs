@@ -31,6 +31,7 @@ namespace Sidekick
             services.AddInitializableService<INativeCursor, NativeCursor>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
+            services.AddSingleton<HookProvider>();
 
             return services;
         }

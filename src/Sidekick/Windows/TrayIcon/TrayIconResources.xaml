@@ -19,6 +19,7 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand2}" Header="Rare Helmet - Vengeance Crest" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand3}" Header="Currency - Divine Orb" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Prophecy - The Four Feral Exiles" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand5}" Header="Gants Unique - Assaut de Farrul" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
                 <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />

@@ -129,6 +129,41 @@ Right-click to add this prophecy to your character.
 
             viewLocator.Open<PriceView>();
         });
+
+        public ICommand DebugPriceCheckCommand5 => new RelayCommand(async _ =>
+        {
+            await nativeClipboard.SetText(@"Rareté: Unique
+Assaut de Farrul
+Gantelets en écailles d'hydre
+--------
+Qualité: +20% (augmented)
+Armure: 254 (augmented)
+Score d'Évasion: 254 (augmented)
+--------
+Prérequis::
+Niveau: 70
+For: 111
+Dex: 151
+--------
+Châsses: G-R-R-G 
+--------
+Niveau de l'objet: 80
+--------
+120% d'Augmentation de l'Armure et de l'Évasion
++63 de Vie maximale
++488 à la Précision contre les Ennemis qui Saignent
+Vos Attaques infligent toujours le Saignement tant que vous avez Discrétion du Félin
+41% d'Augmentation des Dégâts au Toucher et avec les Altérations contre les Ennemis qui Saignent
+Vous avez Danse écarlate tant que vous avez Discrétion du Félin
+--------
+Une bête affamée ne gaspille jamais son énergie.
+Chaque coup, quelle que soit sa force, doit être porté en vue de la victoire.
+La Première des Plaines nous enseigne que même
+la plus grande des proies peut être éventuellement déchiquetée.
+");
+
+            viewLocator.Open<PriceView>();
+        });
         #endregion
     }
 }

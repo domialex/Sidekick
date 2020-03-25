@@ -11,7 +11,7 @@ namespace Sidekick.Core.Initialization
     {
         public bool IsReady { get; private set; }
 
-        private List<IDisposable> disposableServices;
+        private List<IOnReset> resetServices;
         private List<IOnBeforeInit> beforeInitServices;
         private List<IOnInit> initServices;
         private List<IOnAfterInit> afterInitServices;
@@ -90,15 +90,19 @@ namespace Sidekick.Core.Initialization
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
-            disposableServices ??= GetDisposableServices();
+            resetServices = GetImplementations(resetServices);
 
-            ResetCount = disposableServices.Count;
+            ResetCount = resetServices.Count;
             BeforeInitCount = beforeInitServices.Count;
             InitCount = initServices.Count;
             AfterInitCount = afterInitServices.Count;
 
-            IsReady = false;
-            OnDispose();
+            ResetCompleted = 0;
+            BeforeInitCompleted = 0;
+            InitCompleted = 0;
+            AfterInitCompleted = 0;
+
+            OnReset();
             await OnBeforeInit();
             await OnInit();
             await OnAfterInit();
@@ -110,23 +114,14 @@ namespace Sidekick.Core.Initialization
             return implementationList ?? serviceProvider.GetServices<T>().ToList();
         }
 
-        private List<IDisposable> GetDisposableServices()
+        private void OnReset()
         {
-            var services = new List<IDisposable>();
-            services.AddRange(beforeInitServices.OfType<IDisposable>());
-            services.AddRange(initServices.OfType<IDisposable>());
-            services.AddRange(afterInitServices.OfType<IDisposable>());
-            return services.Distinct().ToList();
-        }
-
-        private void OnDispose()
-        {
-            foreach (var s in disposableServices)
+            foreach (var s in resetServices)
             {
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Dispose");
-                s.Dispose();
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Reset");
+                s.OnReset();
                 ResetCompleted++;
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Dispose");
+                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Reset");
             }
         }
 

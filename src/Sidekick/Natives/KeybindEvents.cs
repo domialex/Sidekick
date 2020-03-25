@@ -9,25 +9,28 @@ using WindowsHook;
 
 namespace Sidekick.Natives
 {
-    public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable
+    public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable, IOnReset
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
         private readonly SidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IStashService stashService;
+        private readonly HookProvider hookProvider;
 
         public KeybindEvents(ILogger logger,
             INativeProcess nativeProcess,
             SidekickSettings configuration,
             INativeKeyboard nativeKeyboard,
-            IStashService stashService)
+            IStashService stashService,
+            HookProvider hookProvider)
         {
             this.logger = logger.ForContext(GetType());
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
             this.stashService = stashService;
+            this.hookProvider = hookProvider;
         }
 
         public bool Enabled { get; set; }
@@ -46,17 +49,12 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnWhisperReply;
         public event Func<Task<bool>> OnAdvancedSearch;
 
-        private IKeyboardMouseEvents hook = null;
         private bool isDisposed;
 
         public Task OnAfterInit()
         {
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
-            hook = Hook.GlobalEvents();
-
-#if !DEBUG
-            hook.MouseWheelExt += Hook_MouseWheelExt;
-#endif
+            hookProvider.Hook.MouseWheelExt += Hook_MouseWheelExt;
 
             Enabled = true;
 
@@ -164,28 +162,23 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
             if (isDisposed)
             {
                 return;
             }
 
-            if (disposing)
-            {
-                nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
-                if (hook != null) // Hook will be null if auto update was successful
-                {
-                    hook.MouseWheelExt -= Hook_MouseWheelExt;
-                    hook.Dispose();
-                }
-            }
-
+            OnReset();
             isDisposed = true;
+            GC.SuppressFinalize(this);
+        }
+
+        public void OnReset()
+        {
+            nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+            if (hookProvider.Hook != null) // Hook will be null if auto update was successful
+            {
+                hookProvider.Hook.MouseWheelExt -= Hook_MouseWheelExt;
+            }
         }
     }
 }
