@@ -27,7 +27,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             TypePatterns = patterns
                 .Where(x => string.IsNullOrEmpty(x.Name))
                 .Select(x => (
-                    Regex: new Regex(Regex.Escape(x.Type)),
+                    Regex: new Regex($"[\\ \\r\\n]{Regex.Escape(x.Type)}[\\ \\r\\n]"),
                     Item: x
                 ))
                 .ToList();
@@ -35,7 +35,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             NamePatterns = patterns
                 .Where(x => !string.IsNullOrEmpty(x.Name))
                 .Select(x => (
-                    Regex: new Regex(Regex.Escape(x.Name)),
+                    Regex: new Regex($"[\\ \\r\\n]{Regex.Escape(x.Name)}[\\ \\r\\n]"),
                     Item: x
                 ))
                 .ToList();
@@ -43,23 +43,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
         public ItemData GetItem(string text)
         {
-            var result = NamePatterns
-                .Where(x => x.Regex.IsMatch(text));
-
-            if (result.Count() != 0)
-            {
-                return result
-                    .Select(x => new
-                    {
-                        x.Item,
-                        x.Regex.Match(text).Index,
-                    })
-                    .OrderBy(x => x.Index)
-                    .Select(x => x.Item)
-                    .FirstOrDefault();
-            }
-
-            return TypePatterns
+            var items = NamePatterns
                 .Where(x => x.Regex.IsMatch(text))
                 .Select(x => new
                 {
@@ -67,8 +51,28 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                     x.Regex.Match(text).Index,
                 })
                 .OrderBy(x => x.Index)
+                .ThenBy(x => x.Item.Name.Length)
                 .Select(x => x.Item)
-                .FirstOrDefault();
+                .ToList();
+
+            if (items.Count != 0)
+            {
+                return items[0];
+            }
+
+            items = TypePatterns
+                .Where(x => x.Regex.IsMatch(text))
+                .Select(x => new
+                {
+                    x.Item,
+                    x.Regex.Match(text).Index,
+                })
+                .OrderBy(x => x.Index)
+                .ThenBy(x => x.Item.Type.Length)
+                .Select(x => x.Item)
+                .ToList();
+
+            return items.FirstOrDefault();
         }
     }
 }
