@@ -12,7 +12,7 @@ namespace Sidekick.Helpers
 
         public new void Add(T item)
         {
-            Application.Current.Dispatcher.InvokeAsync(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 base.Add(item);
             });
@@ -20,7 +20,7 @@ namespace Sidekick.Helpers
 
         public new void Remove(T item)
         {
-            Application.Current.Dispatcher.InvokeAsync(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 base.Remove(item);
             });
@@ -28,7 +28,7 @@ namespace Sidekick.Helpers
 
         public new void RemoveAt(int index)
         {
-            Application.Current.Dispatcher.InvokeAsync(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 base.RemoveAt(index);
             });
@@ -36,7 +36,7 @@ namespace Sidekick.Helpers
 
         public void AddRange(IEnumerable<T> items)
         {
-            Application.Current.Dispatcher.InvokeAsync(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 foreach (var item in items)
                 {

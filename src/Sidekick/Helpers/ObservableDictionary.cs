@@ -54,7 +54,7 @@ namespace Sidekick.Helpers
                 Add(item.Key, item.Value);
         }
 
-        public void AddRange(IEnumerable<ObservableKeyValuePair<TKey, TValue>> items)
+        public new void AddRange(IEnumerable<ObservableKeyValuePair<TKey, TValue>> items)
         {
             var arrayofItems = items.ToArray();
             if (arrayofItems.Any(i => ContainsKey(i.Key)))
