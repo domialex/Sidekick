@@ -3,12 +3,13 @@ using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Natives;
-using Sidekick.Windows;
-using Sidekick.Windows.ApplicationLogs;
-using Sidekick.Windows.Leagues;
-using Sidekick.Windows.Prices;
-using Sidekick.Windows.Settings;
-using Sidekick.Windows.TrayIcon;
+using Sidekick.Views;
+using Sidekick.Views.ApplicationLogs;
+using Sidekick.Views.Leagues;
+using Sidekick.Views.Prices;
+using Sidekick.Views.Settings;
+using Sidekick.Views.SplashScreen;
+using Sidekick.Views.TrayIcon;
 
 namespace Sidekick
 {
@@ -23,7 +24,13 @@ namespace Sidekick
             services.AddScoped<LeagueView>();
             services.AddScoped<PriceView>();
             services.AddScoped<SettingsView>();
-            services.AddScoped<SplashScreen>();
+            services.AddScoped<SplashScreenView>();
+
+            services.AddScoped<ApplicationLogViewModel>();
+            services.AddScoped<LeagueViewModel>();
+            services.AddScoped<PriceViewModel>();
+            services.AddScoped<SettingsViewModel>();
+            services.AddScoped<SplashViewModel>();
 
             services.AddInitializableService<IKeybindEvents, KeybindEvents>();
             services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
@@ -32,6 +39,8 @@ namespace Sidekick
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<EventsHandler>();
             services.AddSingleton<HookProvider>();
+
+            services.AddSingleton<IViewLocator, ViewLocator>();
 
             return services;
         }

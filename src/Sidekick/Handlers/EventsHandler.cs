@@ -10,9 +10,9 @@ using Sidekick.Business.Whispers;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.UI.Views;
-using Sidekick.Windows.Leagues;
-using Sidekick.Windows.Prices;
+using Sidekick.Views;
+using Sidekick.Views.Leagues;
+using Sidekick.Views.Prices;
 
 namespace Sidekick.Handlers
 {

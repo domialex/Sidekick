@@ -23,53 +23,49 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Windows\AdvancedSearch\**" />
-    <EmbeddedResource Remove="Windows\AdvancedSearch\**" />
-    <None Remove="Windows\AdvancedSearch\**" />
     <None Include="Resources\ExaltedOrb.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <Page Remove="Windows\AdvancedSearch\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Windows\Leagues\Betrayal\Images\Aisling.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Cameria.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Elreon.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Gravicius.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Guff.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Haku.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Hillock.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\It_That_Fled.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Janus.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Jorgin.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Korell.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Leo.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Riker.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Rin.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Tora.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Vagan.png" />
-    <None Remove="Windows\Leagues\Betrayal\Images\Vorici.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Amber_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Azure_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Black_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Clear_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Crimson_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Golden_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Opalescent_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Sepia_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Silver_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Teal_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
-    <None Remove="Windows\Leagues\Blight\Images\Violet_Oil.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
-    <None Remove="Windows\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Aisling.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Cameria.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Elreon.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Gravicius.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Guff.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Haku.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Hillock.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\It_That_Fled.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Janus.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Jorgin.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Korell.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Leo.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Riker.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Rin.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Tora.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Vagan.png" />
+    <None Remove="Views\Leagues\Betrayal\Images\Vorici.png" />
+    <None Remove="Views\Leagues\Blight\Images\Amber_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Azure_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Black_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Clear_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Crimson_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Golden_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Opalescent_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Sepia_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Silver_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Teal_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Verdant_Oil.png" />
+    <None Remove="Views\Leagues\Blight\Images\Violet_Oil.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
+    <None Remove="Views\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,58 +87,57 @@
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
-    <ProjectReference Include="..\Sidekick.UI\Sidekick.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\ExaltedOrb.ico" />
     <Resource Include="Resources\ExaltedOrb.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Aisling.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Cameria.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Elreon.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Gravicius.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Guff.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Haku.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Hillock.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\It_That_Fled.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Janus.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Jorgin.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Korell.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Leo.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Riker.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Rin.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Tora.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Vagan.png" />
-    <Resource Include="Windows\Leagues\Betrayal\Images\Vorici.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Amber_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Azure_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Black_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Clear_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Crimson_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Golden_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Opalescent_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Sepia_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Silver_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Teal_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Verdant_Oil.png" />
-    <Resource Include="Windows\Leagues\Blight\Images\Violet_Oil.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
-    <Resource Include="Windows\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Aisling.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Cameria.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Elreon.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Gravicius.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Guff.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Haku.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Hillock.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\It_That_Fled.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Janus.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Jorgin.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Korell.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Leo.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Riker.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Rin.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Tora.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Vagan.png" />
+    <Resource Include="Views\Leagues\Betrayal\Images\Vorici.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Amber_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Azure_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Black_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Clear_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Crimson_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Golden_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Opalescent_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Sepia_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Silver_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Teal_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Verdant_Oil.png" />
+    <Resource Include="Views\Leagues\Blight\Images\Violet_Oil.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
+    <Resource Include="Views\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Windows\Prices\ItemLineContent.xaml.cs">
+    <Compile Update="Views\Prices\ItemLineContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\Prices\ItemMod.xaml.cs">
+    <Compile Update="Views\Prices\ItemMod.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\Prices\ItemPreview.xaml.cs">
+    <Compile Update="Views\Prices\ItemPreview.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -178,13 +173,13 @@
     <Page Update="Styles\Variables\Spacers.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\Prices\ItemLineContent.xaml">
+    <Page Update="Views\Prices\ItemLineContent.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\Prices\ItemMod.xaml">
+    <Page Update="Views\Prices\ItemMod.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\Prices\ItemPreview.xaml">
+    <Page Update="Views\Prices\ItemPreview.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

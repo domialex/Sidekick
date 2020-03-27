@@ -17,8 +17,9 @@ using Sidekick.Localization.Application;
 using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
-using Sidekick.UI.Views;
-using Sidekick.Windows.TrayIcon;
+using Sidekick.Views;
+using Sidekick.Views.SplashScreen;
+using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
 // See: https://stackoverflow.com/a/19940157
@@ -67,7 +68,7 @@ namespace Sidekick
             initializer = serviceProvider.GetRequiredService<IInitializer>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
             settings = serviceProvider.GetRequiredService<SidekickSettings>();
-            viewLocator.Open<Windows.SplashScreen>();
+            viewLocator.Open<SplashScreenView>();
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
@@ -86,11 +87,11 @@ namespace Sidekick
 
             initializer.OnProgress += (a) =>
             {
-                if (!viewLocator.IsOpened<Windows.SplashScreen>())
+                if (!viewLocator.IsOpened<SplashScreenView>())
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        viewLocator.Open<Windows.SplashScreen>();
+                        viewLocator.Open<SplashScreenView>();
                     });
                 }
             };

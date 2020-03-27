@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business;
 using Sidekick.Core;
 using Sidekick.Localization;
-using Sidekick.UI;
 
 namespace Sidekick
 {
@@ -15,7 +14,6 @@ namespace Sidekick
               .AddSidekickCoreServices()
               .AddSidekickBusinessServices()
               .AddSidekickLocalization()
-              .AddSidekickUIServices()
               .AddSidekickUIWindows();
 
             services.AddSingleton(application);
