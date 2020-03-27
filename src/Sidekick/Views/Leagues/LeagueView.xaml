@@ -1,0 +1,43 @@
+<base:BaseWindow
+    x:Class="Sidekick.Views.Leagues.LeagueView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Views"
+    xmlns:betrayal="clr-namespace:Sidekick.Views.Leagues.Betrayal"
+    xmlns:blight="clr-namespace:Sidekick.Views.Leagues.Blight"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:delve="clr-namespace:Sidekick.Views.Leagues.Delve"
+    xmlns:incursion="clr-namespace:Sidekick.Views.Leagues.Incursion"
+    xmlns:loc="clr-namespace:Sidekick.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:metamorph="clr-namespace:Sidekick.Views.Leagues.Metamorph"
+    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
+    loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
+    SizeToContent="WidthAndHeight"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
+    </Window.Resources>
+
+    <Window.Style>
+        <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
+    </Window.Style>
+
+    <TabControl SelectedIndex="{Binding SelectedTabIndex}">
+        <TabItem Header="{loc:Loc LeagueNameBetrayal}">
+            <betrayal:League Model="{Binding Betrayal}" />
+        </TabItem>
+        <TabItem Header="{loc:Loc LeagueNameBlight}">
+            <blight:League Model="{Binding Blight}" />
+        </TabItem>
+        <TabItem Header="{loc:Loc LeagueNameDelve}">
+            <delve:League Model="{Binding Delve}" />
+        </TabItem>
+        <TabItem Header="{loc:Loc LeagueNameIncrusion}">
+            <incursion:League Model="{Binding Incursion}" />
+        </TabItem>
+        <TabItem Header="{loc:Loc LeagueNameMetamorph}">
+            <metamorph:League Model="{Binding Metamorph}" />
+        </TabItem>
+    </TabControl>
+</base:BaseWindow>

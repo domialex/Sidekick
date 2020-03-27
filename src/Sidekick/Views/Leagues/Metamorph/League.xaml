@@ -1,0 +1,35 @@
+<UserControl
+    x:Class="Sidekick.Views.Leagues.Metamorph.League"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:league="clr-namespace:Sidekick.Views.Leagues"
+    xmlns:local="clr-namespace:Sidekick.Views.Leagues.Metamorph"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
+    </UserControl.Resources>
+
+    <StackPanel Name="Container">
+        <ItemsControl ItemsSource="{Binding Path=Model.Catalysts}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="{StaticResource SpacerRight}">
+                        <local:Catalyst Model="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel MaxWidth="800" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <WrapPanel>
+            <league:Legend />
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

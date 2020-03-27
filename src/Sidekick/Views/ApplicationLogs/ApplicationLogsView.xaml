@@ -1,0 +1,36 @@
+<base:BaseWindow
+    x:Class="Sidekick.Views.ApplicationLogs.ApplicationLogsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Views"
+    xmlns:r="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
+    Title="Logs - Sidekick"
+    Height="360"
+    MinWidth="720"
+    MaxWidth="720"
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="/Styles/Main.xaml" />
+    </Window.Resources>
+
+    <Window.Style>
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
+    </Window.Style>
+
+    <DockPanel Margin="{StaticResource Spacer}">
+        <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+            <Button Click="Button_Click" Content="{x:Static r:ApplicationLogResources.Close}" />
+        </WrapPanel>
+        <ScrollViewer
+            Name="logsScrollViewer"
+            Height="300"
+            Margin="{StaticResource SpacerBottom}"
+            HorizontalScrollBarVisibility="Auto">
+            <TextBox
+                Name="logsTextBox"
+                IsReadOnly="True"
+                Style="{StaticResource TextArea}"
+                TextWrapping="NoWrap" />
+        </ScrollViewer>
+    </DockPanel>
+</base:BaseWindow>
