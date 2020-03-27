@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using Sidekick.Core.Logging;
+using Sidekick.Helpers;
 
 namespace Sidekick.Views.ApplicationLogs
 {
@@ -16,14 +17,12 @@ namespace Sidekick.Views.ApplicationLogs
         public ApplicationLogViewModel(SidekickEventSink eventSink)
         {
             this.eventSink = eventSink;
-            Logs = new ObservableCollection<string>(eventSink.Events);
+            Logs = new ObservableList<string>(eventSink.Events);
             eventSink.LogEventEmitted += EventSink_LogEventEmitted;
         }
 
         private void EventSink_LogEventEmitted(string logEvent)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
                 Logs.Add(logEvent);
 
                 // Limit the log size to show.
@@ -31,10 +30,9 @@ namespace Sidekick.Views.ApplicationLogs
                 {
                     Logs.RemoveAt(0);
                 }
-            });
         }
 
-        public ObservableCollection<string> Logs { get; private set; }
+        public ObservableList<string> Logs { get; private set; }
 
         public string Text { get; private set; }
 

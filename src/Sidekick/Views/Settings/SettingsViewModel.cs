@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -31,26 +30,23 @@ namespace Sidekick.Views.Settings
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Settings = new SidekickSettings();
-                AssignValues(sidekickSettings, Settings);
+            Settings = new SidekickSettings();
+            AssignValues(sidekickSettings, Settings);
 
-                Keybinds.Clear();
-                Settings.GetType()
-                    .GetProperties()
-                    .Where(x => x.Name.StartsWith("Key"))
-                    .ToList()
-                    .ForEach(x => Keybinds.Add(x.Name, x.GetValue(Settings).ToString()));
+            Keybinds.Clear();
+            Settings.GetType()
+                .GetProperties()
+                .Where(x => x.Name.StartsWith("Key"))
+                .ToList()
+                .ForEach(x => Keybinds.Add(x.Name, x.GetValue(Settings).ToString()));
 
-                WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
-                WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
+            WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
+            WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
-                leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
-                uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
 
-                nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
-            });
+            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
 
         public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();

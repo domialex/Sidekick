@@ -7,7 +7,7 @@ using PropertyChanged;
 namespace Sidekick.Helpers
 {
     [Serializable]
-    public class ObservableDictionary<TKey, TValue> : ObservableCollection<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IEnumerable<ObservableKeyValuePair<TKey, TValue>>
+    public class ObservableDictionary<TKey, TValue> : ObservableList<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IEnumerable<ObservableKeyValuePair<TKey, TValue>>
     {
         [SuppressPropertyChangedWarnings]
         public TValue this[TKey key]

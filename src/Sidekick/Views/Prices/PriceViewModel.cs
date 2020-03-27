@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
@@ -18,6 +16,7 @@ using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Extensions;
+using Sidekick.Helpers;
 using Sidekick.Localization.Prices;
 
 namespace Sidekick.Views.Prices
@@ -63,7 +62,7 @@ namespace Sidekick.Views.Prices
 
         public string ItemColor => Item?.GetColor();
 
-        public ObservableCollection<PriceItem> Results { get; private set; }
+        public ObservableList<PriceItem> Results { get; private set; }
 
         public Uri Uri => QueryResult?.Uri;
 
@@ -75,7 +74,7 @@ namespace Sidekick.Views.Prices
 
         public bool IsCurrency { get; private set; }
 
-        public ObservableCollection<PriceFilterCategory> Filters { get; set; }
+        public ObservableList<PriceFilterCategory> Filters { get; set; }
 
         private async Task Initialize()
         {
@@ -89,7 +88,7 @@ namespace Sidekick.Views.Prices
 
             IsCurrency = Item.Rarity == Rarity.Currency;
 
-            await Application.Current.Dispatcher.InvokeAsync(InitializeFilters);
+            InitializeFilters();
 
             await UpdateQuery();
 
@@ -103,7 +102,7 @@ namespace Sidekick.Views.Prices
 
         private void InitializeFilters()
         {
-            Filters = new ObservableCollection<PriceFilterCategory>();
+            Filters = new ObservableList<PriceFilterCategory>();
 
             var propertyCategory = new PriceFilterCategory()
             {
@@ -271,7 +270,7 @@ namespace Sidekick.Views.Prices
 
         public async Task UpdateQuery()
         {
-            Results = new ObservableCollection<PriceItem>();
+            Results = new ObservableList<PriceItem>();
 
             if (Filters != null)
             {
@@ -411,19 +410,13 @@ namespace Sidekick.Views.Prices
             IsFetching = false;
             if (getResult.Result.Any())
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Results.AddRange(getResult.Result.Select(result => new PriceItem(result)
                 {
-                    foreach (var result in getResult.Result)
-                    {
-                        Results.Add(new PriceItem(result)
-                        {
-                            ImageUrl = new Uri(
-                                languageProvider.Language.PoeCdnBaseUrl,
-                                staticDataService.GetImage(result.Listing.Price.Currency)
-                            ).AbsoluteUri,
-                        });
-                    }
-                });
+                    ImageUrl = new Uri(
+                        languageProvider.Language.PoeCdnBaseUrl,
+                        staticDataService.GetImage(result.Listing.Price.Currency)
+                    ).AbsoluteUri,
+                }));
             }
 
             UpdateCountString();
