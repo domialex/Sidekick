@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Delve;
 
-namespace Sidekick.UI.Leagues.Delve
+namespace Sidekick.Views.Leagues.Delve
 {
     public class DelveLeague
     {

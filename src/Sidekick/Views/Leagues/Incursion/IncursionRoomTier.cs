@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues.Incursion
+namespace Sidekick.Views.Leagues.Incursion
 {
     public class IncursionRoomTier
     {

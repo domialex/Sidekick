@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Blight;
 
-namespace Sidekick.UI.Leagues.Blight
+namespace Sidekick.Views.Leagues.Blight
 {
     public class BlightLeague
     {

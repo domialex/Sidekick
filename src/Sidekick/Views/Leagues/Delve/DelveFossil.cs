@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues.Delve
+namespace Sidekick.Views.Leagues.Delve
 {
     public class DelveFossil
     {

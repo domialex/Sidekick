@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Betrayal;
 
-namespace Sidekick.UI.Leagues.Betrayal
+namespace Sidekick.Views.Leagues.Betrayal
 {
     public class BetrayalLeague
     {

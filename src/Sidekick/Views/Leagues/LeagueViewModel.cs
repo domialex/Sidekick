@@ -1,12 +1,7 @@
 using PropertyChanged;
 using Sidekick.Core.Settings;
-using Sidekick.UI.Leagues.Betrayal;
-using Sidekick.UI.Leagues.Blight;
-using Sidekick.UI.Leagues.Delve;
-using Sidekick.UI.Leagues.Incursion;
-using Sidekick.UI.Leagues.Metamorph;
 
-namespace Sidekick.UI.Leagues
+namespace Sidekick.Views.Leagues
 {
     [AddINotifyPropertyChangedInterface]
     public class LeagueViewModel : ILeagueViewModel

@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues
+namespace Sidekick.Views.Leagues
 {
     public static class RewardValueExtensions
     {

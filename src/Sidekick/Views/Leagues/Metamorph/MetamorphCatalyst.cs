@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues.Metamorph
+namespace Sidekick.Views.Leagues.Metamorph
 {
     public class MetamorphCatalyst
     {

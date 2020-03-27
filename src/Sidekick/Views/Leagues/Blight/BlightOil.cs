@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues.Blight
+namespace Sidekick.Views.Leagues.Blight
 {
     public class BlightOil
     {

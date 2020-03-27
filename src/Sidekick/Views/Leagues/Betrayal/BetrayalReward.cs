@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Leagues.Betrayal
+namespace Sidekick.Views.Leagues.Betrayal
 {
     public class BetrayalReward
     {
