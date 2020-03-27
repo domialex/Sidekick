@@ -6,10 +6,15 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
-    <AssemblyVersion>0.7.1.0</AssemblyVersion>
-    <FileVersion>0.7.1.0</FileVersion>
-    <Version>0.7.1.0</Version>
+    <AssemblyVersion>0.7.2.0</AssemblyVersion>
+    <FileVersion>0.7.2.0</FileVersion>
+    <Version>0.7.2.0</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Description>A Path of Exile helper that shows item prices using the official Path of Exile Trade API.</Description>
+    <PackageProjectUrl>https://github.com/domialex/Sidekick</PackageProjectUrl>
+    <PackageIcon>ExaltedOrb.png</PackageIcon>
+    <PackageIconUrl />
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -18,10 +23,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\AdvancedSearch\**" />
-    <EmbeddedResource Remove="Views\AdvancedSearch\**" />
-    <None Remove="Views\AdvancedSearch\**" />
-    <Page Remove="Views\AdvancedSearch\**" />
+    <None Include="Resources\ExaltedOrb.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -74,7 +79,7 @@
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.10" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.200213001" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.2.6" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.7" />
     <PackageReference Include="System.Resources.Extensions" Version="4.7.0" />
     <PackageReference Include="WindowsHook" Version="1.0.1" />
   </ItemGroup>

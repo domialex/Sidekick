@@ -45,7 +45,7 @@ namespace Sidekick
         private ILeagueDataService leagueDataService;
         private IInitializer initializer;
         private IViewLocator viewLocator;
-
+        private SidekickSettings settings;
         private TaskbarIcon trayIcon;
 
         protected override async void OnStartup(StartupEventArgs e)
@@ -67,7 +67,11 @@ namespace Sidekick
             leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
             initializer = serviceProvider.GetRequiredService<IInitializer>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
+            settings = serviceProvider.GetRequiredService<SidekickSettings>();
             viewLocator.Open<SplashScreenView>();
+
+            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             await RunAutoUpdate();
 
@@ -100,21 +104,13 @@ namespace Sidekick
 
             await initializer.Initialize();
 
-            InitTrayIcon(serviceProvider.GetRequiredService<SidekickSettings>());
-
-            serviceProvider.GetRequiredService<EventsHandler>();
-        }
-
-        private void InitTrayIcon(SidekickSettings settings)
-        {
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
-
             trayIcon.ShowBalloonTip(
                     TrayResources.Notification_Title,
                     string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()),
                     trayIcon.Icon,
                     largeIcon: true);
+
+            serviceProvider.GetRequiredService<EventsHandler>();
         }
 
         private async Task RunAutoUpdate()

@@ -92,9 +92,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 throw new NotSupportedException("Item not found.");
             }
 
-            item.ItemLevel = GetInt(patterns.ItemLevel, input);
-            item.Identified = !patterns.Unidentified.IsMatch(input);
-            item.Corrupted = patterns.Corrupted.IsMatch(input);
+            if (item.Rarity != Rarity.DivinationCard)
+            {
+                item.ItemLevel = GetInt(patterns.ItemLevel, input);
+                item.Identified = !patterns.Unidentified.IsMatch(input);
+                item.Corrupted = patterns.Corrupted.IsMatch(input);
+            }
         }
 
         private Rarity GetRarity(string rarityString)
