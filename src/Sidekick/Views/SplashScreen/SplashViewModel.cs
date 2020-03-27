@@ -4,7 +4,7 @@ using PropertyChanged;
 using Sidekick.Core.Initialization;
 using Sidekick.Localization.Splash;
 
-namespace Sidekick.UI.Splash
+namespace Sidekick.Views.Splash
 {
     [AddINotifyPropertyChangedInterface]
     public class SplashViewModel : IDisposable, ISplashViewModel

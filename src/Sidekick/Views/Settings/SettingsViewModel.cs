@@ -4,10 +4,10 @@ using System.Linq;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Helpers;
 using Sidekick.Localization;
-using Sidekick.UI.Helpers;
 
-namespace Sidekick.UI.Settings
+namespace Sidekick.Views.Settings
 {
     public class SettingsViewModel : ISettingsViewModel, IDisposable
     {
