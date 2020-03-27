@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PropertyChanged;
 
-namespace Sidekick.UI.Helpers
+namespace Sidekick.Helpers
 {
     [Serializable]
     public class ObservableDictionary<TKey, TValue> : ObservableCollection<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IEnumerable<ObservableKeyValuePair<TKey, TValue>>
