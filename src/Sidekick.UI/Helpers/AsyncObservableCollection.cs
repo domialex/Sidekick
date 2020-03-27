@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading;
+using PropertyChanged;
 
 namespace Sidekick.UI.Helpers
 {
@@ -19,6 +20,7 @@ namespace Sidekick.UI.Helpers
         {
         }
 
+        [SuppressPropertyChangedWarnings]
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (SynchronizationContext.Current == _synchronizationContext)
