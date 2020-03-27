@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using PropertyChanged;
 
-namespace Sidekick.UI.Prices
+namespace Sidekick.Views.Prices
 {
     [AddINotifyPropertyChangedInterface]
     public class PriceFilterCategory

@@ -4,9 +4,8 @@ using System.Linq;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Localization.Prices;
-using Sidekick.UI.Items;
 
-namespace Sidekick.UI.Prices
+namespace Sidekick.Views.Prices
 {
     public partial class PriceItem
     {

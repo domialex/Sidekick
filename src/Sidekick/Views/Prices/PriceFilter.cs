@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Sidekick.UI.Prices
+namespace Sidekick.Views.Prices
 {
     public class PriceFilter : INotifyPropertyChanged
     {

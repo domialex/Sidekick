@@ -18,9 +18,8 @@ using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Localization.Prices;
-using Sidekick.UI.Items;
 
-namespace Sidekick.UI.Prices
+namespace Sidekick.Views.Prices
 {
     [AddINotifyPropertyChangedInterface]
     public class PriceViewModel : IPriceViewModel
