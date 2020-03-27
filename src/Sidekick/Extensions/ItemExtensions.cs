@@ -1,7 +1,7 @@
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 
-namespace Sidekick.UI.Items
+namespace Sidekick.Extensions
 {
     public static class ItemExtensions
     {
