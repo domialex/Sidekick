@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Input;
 using Sidekick.Core.Natives;
-using Sidekick.UI.Views;
 using Sidekick.Views.ApplicationLogs;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.Prices;

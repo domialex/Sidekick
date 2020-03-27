@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
-using Sidekick.UI.Leagues.Blight;
 
 namespace Sidekick.Views.Leagues.Blight
 {

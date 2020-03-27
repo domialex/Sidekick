@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Bindables;
 using Sidekick.Localization.Settings;
-using Sidekick.UI.Settings;
 
 namespace Sidekick.Views.Settings.UserControls
 {
@@ -17,7 +16,7 @@ namespace Sidekick.Views.Settings.UserControls
 
         public string Value { get; set; }
 
-        public ISettingsViewModel ViewModel { get; set; }
+        public SettingsViewModel ViewModel { get; set; }
 
         public string Label
         {

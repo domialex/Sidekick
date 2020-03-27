@@ -1,13 +1,12 @@
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
-using PropertyChanged;
 using Sidekick.Core.Initialization;
 using Sidekick.Localization.Splash;
 
 namespace Sidekick.Views.SplashScreen
 {
-    [AddINotifyPropertyChangedInterface]
-    public class SplashViewModel : IDisposable
+    public class SplashViewModel : IDisposable, INotifyPropertyChanged
     {
         private readonly IInitializer initializer;
         private bool isDisposed;
@@ -26,6 +25,7 @@ namespace Sidekick.Views.SplashScreen
         public string Title { get; set; }
 
         public event Action Initialized;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Initializer_OnProgress(ProgressEventArgs args)
         {

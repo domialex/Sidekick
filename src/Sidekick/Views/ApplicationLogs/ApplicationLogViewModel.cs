@@ -1,11 +1,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using Sidekick.Core.Logging;
 
 namespace Sidekick.Views.ApplicationLogs
 {
-    public class ApplicationLogViewModel : IApplicationLogViewModel, IDisposable
+    public class ApplicationLogViewModel : IDisposable, INotifyPropertyChanged
     {
         private readonly SidekickEventSink eventSink;
         private bool isDisposed;
@@ -21,13 +22,16 @@ namespace Sidekick.Views.ApplicationLogs
 
         private void EventSink_LogEventEmitted(string logEvent)
         {
-            Logs.Add(logEvent);
-
-            // Limit the log size to show.
-            for (var i = Logs.Count; i > 100; i--)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                Logs.RemoveAt(0);
-            }
+                Logs.Add(logEvent);
+
+                // Limit the log size to show.
+                for (var i = Logs.Count; i > 100; i--)
+                {
+                    Logs.RemoveAt(0);
+                }
+            });
         }
 
         public ObservableCollection<string> Logs { get; private set; }

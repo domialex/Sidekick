@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
-using Sidekick.UI.Leagues.Delve;
 
 namespace Sidekick.Views.Leagues.Delve
 {

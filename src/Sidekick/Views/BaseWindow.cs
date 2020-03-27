@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.UI.Views;
 using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views

@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
-using Sidekick.UI.Leagues.Incursion;
 
 namespace Sidekick.Views.Leagues.Incursion
 {

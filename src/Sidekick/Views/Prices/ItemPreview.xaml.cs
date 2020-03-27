@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
-using Sidekick.UI.Prices;
 
 namespace Sidekick.Views.Prices
 {
@@ -11,7 +10,7 @@ namespace Sidekick.Views.Prices
     [DependencyProperty]
     public partial class ItemPreview : UserControl
     {
-        public IPriceViewModel ViewModel { get; set; }
+        public PriceViewModel ViewModel { get; set; }
 
         public ItemPreview()
         {

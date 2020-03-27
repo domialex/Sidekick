@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -9,7 +10,7 @@ using Sidekick.Localization;
 
 namespace Sidekick.Views.Settings
 {
-    public class SettingsViewModel : ISettingsViewModel, IDisposable
+    public class SettingsViewModel : IDisposable
     {
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
@@ -29,23 +30,27 @@ namespace Sidekick.Views.Settings
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
-            Settings = new SidekickSettings();
-            AssignValues(sidekickSettings, Settings);
 
-            Keybinds.Clear();
-            Settings.GetType()
-                .GetProperties()
-                .Where(x => x.Name.StartsWith("Key"))
-                .ToList()
-                .ForEach(x => Keybinds.Add(x.Name, x.GetValue(Settings).ToString()));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Settings = new SidekickSettings();
+                AssignValues(sidekickSettings, Settings);
 
-            WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
-            WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
+                Keybinds.Clear();
+                Settings.GetType()
+                    .GetProperties()
+                    .Where(x => x.Name.StartsWith("Key"))
+                    .ToList()
+                    .ForEach(x => Keybinds.Add(x.Name, x.GetValue(Settings).ToString()));
 
-            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
-            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+                WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
+                WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
 
-            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+                leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+                uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+
+                nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+            });
         }
 
         public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();

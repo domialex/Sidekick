@@ -4,18 +4,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Sidekick.Core.Natives;
-using Sidekick.UI.Prices;
 
 namespace Sidekick.Views.Prices
 {
     public partial class PriceView : BaseWindow
     {
-        private readonly IPriceViewModel viewModel;
+        private readonly PriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
 
         public PriceView(
             IServiceProvider serviceProvider,
-            IPriceViewModel viewModel,
+            PriceViewModel viewModel,
             INativeBrowser nativeBrowser,
             INativeCursor cursor)
             : base(serviceProvider,

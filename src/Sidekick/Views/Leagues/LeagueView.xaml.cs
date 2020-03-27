@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using Bindables;
-using Sidekick.UI.Leagues;
 
 namespace Sidekick.Views.Leagues
 {
@@ -11,7 +10,7 @@ namespace Sidekick.Views.Leagues
     [DependencyProperty]
     public partial class LeagueView : BaseWindow
     {
-        public LeagueView(ILeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
+        public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
             : base(serviceProvider,
                   closeOnBlur: true)
         {
@@ -24,6 +23,6 @@ namespace Sidekick.Views.Leagues
             Activate();
         }
 
-        public ILeagueViewModel ViewModel { get; set; }
+        public LeagueViewModel ViewModel { get; set; }
     }
 }

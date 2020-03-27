@@ -1,12 +1,18 @@
-using PropertyChanged;
+using System.ComponentModel;
 using Sidekick.Core.Settings;
+using Sidekick.Views.Leagues.Betrayal;
+using Sidekick.Views.Leagues.Blight;
+using Sidekick.Views.Leagues.Delve;
+using Sidekick.Views.Leagues.Incursion;
+using Sidekick.Views.Leagues.Metamorph;
 
 namespace Sidekick.Views.Leagues
 {
-    [AddINotifyPropertyChangedInterface]
-    public class LeagueViewModel : ILeagueViewModel
+    public class LeagueViewModel : INotifyPropertyChanged
     {
         private readonly SidekickSettings settings;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public LeagueViewModel(
             SidekickSettings settings)
