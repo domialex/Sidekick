@@ -1,5 +1,5 @@
+using System.Collections.ObjectModel;
 using PropertyChanged;
-using Sidekick.UI.Helpers;
 
 namespace Sidekick.UI.Prices
 {
@@ -8,6 +8,6 @@ namespace Sidekick.UI.Prices
     {
         public string Label { get; set; }
 
-        public AsyncObservableCollection<PriceFilter> Filters { get; set; } = new AsyncObservableCollection<PriceFilter>();
+        public ObservableCollection<PriceFilter> Filters { get; set; } = new ObservableCollection<PriceFilter>();
     }
 }
