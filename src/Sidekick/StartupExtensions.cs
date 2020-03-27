@@ -8,32 +8,41 @@ using Sidekick.Views.ApplicationLogs;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.Prices;
 using Sidekick.Views.Settings;
+using Sidekick.Views.SplashScreen;
 using Sidekick.Views.TrayIcon;
 
 namespace Sidekick
 {
     public static class StartupExtensions
-  {
-    public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
     {
-      services.AddSingleton<INativeBrowser, NativeBrowser>();
-      services.AddSingleton<INativeClipboard, NativeClipboard>();
+        public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
+        {
+            services.AddSingleton<INativeBrowser, NativeBrowser>();
+            services.AddSingleton<INativeClipboard, NativeClipboard>();
 
-      services.AddScoped<ApplicationLogsView>();
-      services.AddScoped<LeagueView>();
-      services.AddScoped<PriceView>();
-      services.AddScoped<SettingsView>();
-      services.AddScoped<SplashScreen>();
+            services.AddScoped<ApplicationLogsView>();
+            services.AddScoped<LeagueView>();
+            services.AddScoped<PriceView>();
+            services.AddScoped<SettingsView>();
+            services.AddScoped<SplashScreenView>();
 
-      services.AddInitializableService<IKeybindEvents, KeybindEvents>();
-      services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
-      services.AddInitializableService<INativeProcess, NativeProcess>();
-      services.AddInitializableService<INativeCursor, NativeCursor>();
-      services.AddSingleton<TrayIconViewModel>();
-      services.AddSingleton<EventsHandler>();
-      services.AddSingleton<HookProvider>();
+            services.AddScoped<ApplicationLogViewModel>();
+            services.AddScoped<LeagueViewModel>();
+            services.AddScoped<PriceViewModel>();
+            services.AddScoped<SettingsViewModel>();
+            services.AddScoped<SplashViewModel>();
 
-      return services;
+            services.AddInitializableService<IKeybindEvents, KeybindEvents>();
+            services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
+            services.AddInitializableService<INativeProcess, NativeProcess>();
+            services.AddInitializableService<INativeCursor, NativeCursor>();
+            services.AddSingleton<TrayIconViewModel>();
+            services.AddSingleton<EventsHandler>();
+            services.AddSingleton<HookProvider>();
+
+            services.AddSingleton<IViewLocator, ViewLocator>();
+
+            return services;
+        }
     }
-  }
 }

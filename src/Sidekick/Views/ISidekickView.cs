@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.UI.Views
+namespace Sidekick.Views
 {
     public interface ISidekickView
     {

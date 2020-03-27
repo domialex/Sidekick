@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Sidekick.Core.Logging;
 
-namespace Sidekick.UI.ApplicationLogs
+namespace Sidekick.Views.ApplicationLogs
 {
     public class ApplicationLogViewModel : IApplicationLogViewModel, IDisposable
     {

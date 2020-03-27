@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Localization;
 
-namespace Sidekick.UI.Views
+namespace Sidekick.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {

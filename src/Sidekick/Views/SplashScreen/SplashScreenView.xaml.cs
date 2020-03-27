@@ -1,19 +1,17 @@
 using System.Windows;
-using Sidekick.UI.Splash;
-using Sidekick.UI.Views;
 using Sidekick.Views.ApplicationLogs;
 
-namespace Sidekick.Views
+namespace Sidekick.Views.SplashScreen
 {
     /// <summary>
     /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class SplashScreen : Window, ISidekickView
+    public partial class SplashScreenView : Window, ISidekickView
     {
-        private readonly ISplashViewModel viewModel;
+        private readonly SplashViewModel viewModel;
         private readonly IViewLocator viewLocator;
 
-        public SplashScreen(ISplashViewModel viewModel, IViewLocator viewLocator)
+        public SplashScreenView(SplashViewModel viewModel, IViewLocator viewLocator)
         {
             InitializeComponent();
             DataContext = viewModel;

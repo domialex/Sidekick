@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Sidekick.UI.Views
+namespace Sidekick.Views
 {
     public class ViewInstance : IDisposable
     {

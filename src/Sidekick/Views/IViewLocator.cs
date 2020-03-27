@@ -1,4 +1,4 @@
-namespace Sidekick.UI.Views
+namespace Sidekick.Views
 {
     public interface IViewLocator
     {

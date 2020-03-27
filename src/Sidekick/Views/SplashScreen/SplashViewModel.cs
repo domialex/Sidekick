@@ -4,10 +4,10 @@ using PropertyChanged;
 using Sidekick.Core.Initialization;
 using Sidekick.Localization.Splash;
 
-namespace Sidekick.Views.Splash
+namespace Sidekick.Views.SplashScreen
 {
     [AddINotifyPropertyChangedInterface]
-    public class SplashViewModel : IDisposable, ISplashViewModel
+    public class SplashViewModel : IDisposable
     {
         private readonly IInitializer initializer;
         private bool isDisposed;
