@@ -39,5 +39,6 @@
     <tb:TaskbarIcon
         x:Key="TrayIcon"
         ContextMenu="{StaticResource SysTrayMenu}"
+        DoubleClickCommand="{Binding ShowSettingsCommand}"
         IconSource="../../Resources/ExaltedOrb.ico" />
 </ResourceDictionary>
