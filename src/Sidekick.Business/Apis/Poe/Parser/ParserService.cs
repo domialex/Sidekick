@@ -77,6 +77,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
         {
             var dataItem = itemDataService.ParseItem(input);
 
+            if (dataItem == null)
+            {
+                throw new NotSupportedException("Item not found.");
+            }
+
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
             item.Rarity = dataItem.Rarity;
@@ -85,11 +90,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             {
                 var lines = NewlinePattern.Split(input);
                 item.Rarity = GetRarity(lines[0]);
-            }
-
-            if (string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.TypeLine))
-            {
-                throw new NotSupportedException("Item not found.");
             }
 
             if (item.Rarity != Rarity.DivinationCard)
