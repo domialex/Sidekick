@@ -14,5 +14,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         DateTime? LastRefreshTimestamp { get; }
 
         PoeNinjaItem GetItem(ParsedItem item);
+        PoeNinjaCurrency GetCurrency(ParsedItem item);
+        double? GetItemPrice(ParsedItem item);
     }
 }
