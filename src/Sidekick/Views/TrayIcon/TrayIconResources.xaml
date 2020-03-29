@@ -23,6 +23,7 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand6}" Header="Rare Gloves - Death Nails" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand7}" Header="Rare Jewel - Blight Cut" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand8}" Header="Gem - Vaal Double Strike" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand9}" Header="Divination Card- The Saint's Treasure" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
                 <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />

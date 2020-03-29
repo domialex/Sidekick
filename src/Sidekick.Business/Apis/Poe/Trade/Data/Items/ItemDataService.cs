@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
@@ -16,34 +17,30 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             this.poeApiClient = poeApiClient;
         }
 
-        private List<(Regex Regex, ItemData Item)> Patterns { get; set; }
-
-        private Regex NewlinePattern;
+        private Dictionary<string, List<ItemData>> Patterns { get; set; }
 
         public async Task OnInit()
         {
-            Patterns = new List<(Regex Regex, ItemData Item)>();
+            Patterns = new Dictionary<string, List<ItemData>>();
 
             var categories = await poeApiClient.Fetch<ItemDataCategory>();
 
-            FillPattern(null, categories[0].Entries); // Accessories
-            FillPattern(null, categories[1].Entries); // Armour
-            FillPattern(Rarity.DivinationCard, categories[2].Entries); // Cards
-            FillPattern(Rarity.Currency, categories[3].Entries); // Currency
-            FillPattern(null, categories[4].Entries); // Flasks
-            FillPattern(Rarity.Gem, categories[5].Entries); // Gems
-            FillPattern(null, categories[6].Entries); // Jewels
-            FillPattern(null, categories[7].Entries); // Maps
-            FillPattern(null, categories[8].Entries); // Weapons
-            FillPattern(null, categories[9].Entries); // Leaguestones
-            FillPattern(Rarity.Prophecy, categories[10].Entries); // Prophecies
-            FillPattern(null, categories[11].Entries); // Itemised Monsters
-            FillPattern(null, categories[12].Entries); // Watchstones
-
-            NewlinePattern = new Regex("[\\r\\n]+");
+            FillPattern(categories[0].Entries); // Accessories
+            FillPattern(categories[1].Entries); // Armour
+            FillPattern(categories[2].Entries, Rarity.DivinationCard); // Cards
+            FillPattern(categories[3].Entries, Rarity.Currency); // Currency
+            FillPattern(categories[4].Entries); // Flasks
+            FillPattern(categories[5].Entries, Rarity.Gem); // Gems
+            FillPattern(categories[6].Entries); // Jewels
+            FillPattern(categories[7].Entries); // Maps
+            FillPattern(categories[8].Entries); // Weapons
+            FillPattern(categories[9].Entries); // Leaguestones
+            FillPattern(categories[10].Entries, Rarity.Prophecy); // Prophecies
+            FillPattern(categories[11].Entries); // Itemised Monsters
+            FillPattern(categories[12].Entries); // Watchstones
         }
 
-        private void FillPattern(Rarity? rarity, List<ItemData> items)
+        private void FillPattern(List<ItemData> items, Rarity? rarity = null)
         {
             foreach (var item in items)
             {
@@ -61,64 +58,40 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                     item.Rarity = rarity.Value;
                 }
 
-                Regex regex;
-                if (string.IsNullOrEmpty(item.Name))
+                var key = item.Name ?? item.Type;
+
+                if (!Patterns.TryGetValue(key, out var itemData))
                 {
-                    if (item.Rarity == Rarity.DivinationCard || item.Rarity == Rarity.Gem)
-                    {
-                        regex = new Regex($"^{Regex.Escape(item.Type)}$");
-                    }
-                    else
-                    {
-                        regex = new Regex(Regex.Escape(item.Type));
-                    }
-                }
-                else
-                {
-                    regex = new Regex($"^{Regex.Escape(item.Name)}$");
+                    itemData = new List<ItemData>();
+                    Patterns.Add(key, itemData);
                 }
 
-                Patterns.Add((regex, item));
+                itemData.Add(item);
             }
         }
 
-        public ItemData ParseItem(string text)
+        public ItemData ParseItemData(ItemTextBlock itemText)
         {
-            var lines = NewlinePattern.Split(text);
             var results = new List<ItemData>();
 
-            if (lines.Length >= 2)
+            if (Patterns.TryGetValue(itemText.Header[1], out var itemData))
             {
-                results.AddRange(Patterns
-                    .Where(x => x.Regex.IsMatch(lines[1]))
-                    .Select(x => x.Item)
-                    .ToList());
+                results.AddRange(itemData);
+            }
+            else if (Patterns.TryGetValue(itemText.Header[2], out itemData))
+            {
+                results.AddRange(itemData);
             }
 
-            if (lines.Length >= 3)
+            if(results.Any(item => itemText.IsVaalGem(item.Rarity)) && Patterns.TryGetValue(itemText.VaalGemName, out itemData))
             {
-                results.AddRange(Patterns
-                    .Where(x => x.Regex.IsMatch(lines[2]))
-                    .Select(x => x.Item)
-                    .ToList());
-            }
-
-            // We need to check for vaal gems
-            if (results.Any(x => x.Rarity == Rarity.Gem))
-            {
-                foreach (var line in lines.Skip(3))
-                {
-                    results.AddRange(Patterns
-                        .Where(x => x.Regex.IsMatch(line))
-                        .Select(x => x.Item)
-                        .ToList());
-                }
+                results.Clear();
+                results.Add(itemData.First());
             }
 
             return results
                 .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
                 .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
-                .ThenByDescending(x => x.Rarity == Rarity.Gem ? x.Text.Length : 0)
                 .FirstOrDefault();
         }
     }

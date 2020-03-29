@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser.ItemParsers;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
@@ -20,7 +21,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private readonly IStatDataService statsDataService;
         private readonly IItemDataService itemDataService;
         private readonly IParserPatterns patterns;
-
+        private readonly ItemNameTokenizer itemNameTokenizer;
         public ParserService(
             ILogger logger,
             ILanguageProvider languageProvider,
@@ -33,16 +34,15 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
+            itemNameTokenizer = new ItemNameTokenizer();
         }
 
-        private Regex NewlinePattern;
-        private Regex SeparatorPattern;
+        private const string NEWLINE_PATTERN = "\r\n";
+        private const string SEPARATOR_PATTERN = "--------";
 
         public Task OnAfterInit()
         {
-            NewlinePattern = new Regex("[\\r\\n]+");
-            SeparatorPattern = new Regex("--------");
-
+            // Not needed?
             return Task.CompletedTask;
         }
 
@@ -52,11 +52,28 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             try
             {
-                itemText = new ItemNameTokenizer().CleanString(itemText);
+                itemText = itemNameTokenizer.CleanString(itemText);
+
                 var item = new ParsedItem
                 {
                     ItemText = itemText
                 };
+
+                var textBlocks = new ItemTextBlock(itemText
+                    .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries))
+                    .ToArray());
+
+                var dataItem = itemDataService.ParseItemData(textBlocks);
+
+                item.Name = dataItem.Name;
+                item.TypeLine = dataItem.Type;
+                item.Rarity = dataItem.Rarity;
+
+                if (item.Rarity == Rarity.Unknown)
+                {
+                    item.Rarity = GetRarity(textBlocks.Header[0]);
+                }
 
                 ParseHeader(ref item, ref itemText);
                 ParseProperties(ref item, ref itemText);
@@ -73,20 +90,45 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
+        public async Task<ParsedItem> NewParseItem(string itemText)
+        {
+            await languageProvider.FindAndSetLanguage(itemText);
+
+            try
+            {
+                itemText = itemNameTokenizer.CleanString(itemText);
+
+                var textBlocks = new ItemTextBlock(itemText
+                    .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries))
+                    .ToArray());
+
+                var itemData = itemDataService.ParseItemData(textBlocks);
+
+                if (itemData.Rarity == Rarity.Unknown)
+                {
+                    itemData.Rarity = GetRarity(textBlocks.Header[0]);
+                }
+
+                //var parser = GetParser(textBlocks, itemData);
+
+                //return parser.ParseItem();
+                return null;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Could not parse item.");
+                return null;
+            }
+        }
+
+        //private ItemParser GetParser(ItemTextBlock itemText, ItemData itemData)
+        //{
+
+        //}
+
         private void ParseHeader(ref ParsedItem item, ref string input)
         {
-            var dataItem = itemDataService.ParseItem(input);
-
-            item.Name = dataItem.Name;
-            item.TypeLine = dataItem.Type;
-            item.Rarity = dataItem.Rarity;
-
-            if (item.Rarity == Rarity.Unknown)
-            {
-                var lines = NewlinePattern.Split(input);
-                item.Rarity = GetRarity(lines[0]);
-            }
-
             if (string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.TypeLine))
             {
                 throw new NotSupportedException("Item not found.");
@@ -114,7 +156,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private void ParseProperties(ref ParsedItem item, ref string input)
         {
-            var blocks = SeparatorPattern.Split(input);
+            var blocks = input.Split(SEPARATOR_PATTERN);
 
             item.Armor = GetInt(patterns.Armor, blocks[1]);
             item.EnergyShield = GetInt(patterns.EnergyShield, blocks[1]);
@@ -168,7 +210,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private void ParseInfluences(ref ParsedItem item, ref string input)
         {
-            var blocks = SeparatorPattern.Split(input);
+            var blocks = input.Split(SEPARATOR_PATTERN);
             var strippedInput = string.Concat(blocks.Skip(1).ToList());
 
             item.Influences.Crusader = patterns.Crusader.IsMatch(strippedInput);

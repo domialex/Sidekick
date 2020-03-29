@@ -257,6 +257,19 @@ Note: ~price 2 chaos
             viewLocator.Open<PriceView>();
         });
 
+        public ICommand DebugPriceCheckCommand9 => new RelayCommand(async _ =>
+        {
+            await nativeClipboard.SetText(@"Rarity: Divination Card
+The Saint's Treasure
+--------
+Stack Size: 1/10
+--------
+2x Exalted ORb
+--------
+Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.");
+            viewLocator.Open<PriceView>();
+        });
+
         #endregion
     }
 }
