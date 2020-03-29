@@ -41,6 +41,20 @@ namespace Sidekick.Views.Prices
                     Close();
                 });
             }
+
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PriceViewModel.Results))
+            {
+                viewModel.Results.CollectionChanged += async (_, __) =>
+                {
+                    await Task.Delay(1000);
+                    CheckLoadNewData();
+                };
+            }
         }
 
         private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)
@@ -51,6 +65,11 @@ namespace Sidekick.Views.Prices
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            CheckLoadNewData();
+        }
+
+        private void CheckLoadNewData()
         {
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
 

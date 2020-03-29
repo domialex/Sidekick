@@ -317,6 +317,7 @@ namespace Sidekick.Views.Prices
             else if (QueryResult.Result.Any())
             {
                 await LoadMoreData();
+                await LoadMoreData();
             }
 
             UpdateCountString();

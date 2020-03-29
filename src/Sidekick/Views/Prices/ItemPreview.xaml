@@ -17,74 +17,40 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel
-        Name="Container"
-        Width="250"
-        Margin="0"
-        Visibility="{Binding ViewModel.HasPreviewItem, Converter={StaticResource BooleanToVisibility}}">
-        <GroupBox Margin="0">
+    <Grid Name="Container" Visibility="{Binding ViewModel.HasPreviewItem, Converter={StaticResource BooleanToVisibility}}">
+        <GroupBox Height="600" Margin="0">
             <GroupBox.Header>
-                <StackPanel Orientation="Horizontal">
-                    <Image
-                        Width="50"
-                        Height="50"
-                        Margin="0,0,5,0"
-                        Source="{Binding ViewModel.PreviewItem.Item.Item.Icon}" />
-                    <StackPanel Width="175" VerticalAlignment="Center">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.PreviewItem.Color}"
-                            Text="{Binding ViewModel.PreviewItem.Item.Item.Name}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.PreviewItem.Item.Item.Name, Converter={StaticResource StringToVisibility}}" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="13"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.PreviewItem.Color}"
-                            Text="{Binding ViewModel.PreviewItem.Item.Item.TypeLine}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.PreviewItem.Item.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
-                        <ItemsControl ItemsSource="{Binding ViewModel.PreviewItem.Sockets}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border
-                                        Margin="0,4,8,0"
-                                        Padding="2,2,0,2"
-                                        BorderBrush="Gray"
-                                        BorderThickness="1">
-                                        <ItemsControl ItemsSource="{Binding}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Horizontal" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Ellipse
-                                                        Width="10"
-                                                        Height="10"
-                                                        Margin="0,0,2,0"
-                                                        Fill="{Binding}" />
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                <Grid MinHeight="60">
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <Image
+                            Width="50"
+                            Height="50"
+                            Margin="0,0,5,0"
+                            Source="{Binding ViewModel.PreviewItem.Item.Item.Icon}" />
+                        <StackPanel Width="175" VerticalAlignment="Center">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{Binding ViewModel.PreviewItem.Color}"
+                                Text="{Binding ViewModel.PreviewItem.Item.Item.Name}"
+                                TextWrapping="WrapWithOverflow"
+                                Visibility="{Binding ViewModel.PreviewItem.Item.Item.Name, Converter={StaticResource StringToVisibility}}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                FontWeight="Bold"
+                                Foreground="{Binding ViewModel.PreviewItem.Color}"
+                                Text="{Binding ViewModel.PreviewItem.Item.Item.TypeLine}"
+                                TextWrapping="WrapWithOverflow"
+                                Visibility="{Binding ViewModel.PreviewItem.Item.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
+                            <local:Sockets Item="{Binding ViewModel.PreviewItem.Item.Item}" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </GroupBox.Header>
 
-            <ScrollViewer Height="247">
+            <ScrollViewer>
                 <StackPanel>
                     <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.Properties}">
                         <ItemsControl.ItemTemplate>
@@ -178,5 +144,5 @@
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
-    </StackPanel>
+    </Grid>
 </UserControl>

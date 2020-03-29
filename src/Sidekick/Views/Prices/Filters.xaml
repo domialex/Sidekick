@@ -14,6 +14,9 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Main.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <converters:IntToVisibilityConverter x:Key="IntToVisibility" />
             <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
@@ -23,16 +26,33 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel
-        Name="Container"
-        Width="250"
-        Margin="0"
-        Visibility="{Binding ViewModel.Filters, Converter={StaticResource NullableToVisibility}}">
-        <GroupBox Margin="0" Padding="0">
+    <StackPanel Name="Container">
+        <GroupBox Height="600" Margin="0">
             <GroupBox.Header>
-                <TextBlock Margin="8" Text="{loc:Loc Filters}" />
+                <Grid MinHeight="60">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{Binding ViewModel.ItemColor}"
+                            Text="{Binding ViewModel.Item.Name}"
+                            TextWrapping="WrapWithOverflow"
+                            Visibility="{Binding ViewModel.Item.Name, Converter={StaticResource StringToVisibility}}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="13"
+                            FontWeight="Bold"
+                            Foreground="{Binding ViewModel.ItemColor}"
+                            Text="{Binding ViewModel.Item.TypeLine}"
+                            TextWrapping="WrapWithOverflow"
+                            Visibility="{Binding ViewModel.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
+                        <local:Sockets Item="{Binding ViewModel.Item}" />
+                    </StackPanel>
+                </Grid>
             </GroupBox.Header>
-            <ScrollViewer Height="296">
+
+            <ScrollViewer>
                 <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
