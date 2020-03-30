@@ -150,9 +150,6 @@
   <data name="Error" xml:space="preserve">
     <value>Unable to find prices for this item.</value>
   </data>
-  <data name="Filters" xml:space="preserve">
-    <value>Filters</value>
-  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>Damage per second</value>
   </data>
@@ -167,9 +164,6 @@
   </data>
   <data name="Filters_PDps" xml:space="preserve">
     <value>Physical DPS</value>
-  </data>
-  <data name="Filters_Properties" xml:space="preserve">
-    <value>Properties</value>
   </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>

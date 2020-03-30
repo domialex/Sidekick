@@ -30,7 +30,7 @@
                         <StackPanel Width="175" VerticalAlignment="Center">
                             <TextBlock
                                 VerticalAlignment="Center"
-                                FontSize="16"
+                                FontSize="14"
                                 FontWeight="Bold"
                                 Foreground="{Binding ViewModel.PreviewItem.Color}"
                                 Text="{Binding ViewModel.PreviewItem.Item.Item.Name}"
@@ -38,7 +38,7 @@
                                 Visibility="{Binding ViewModel.PreviewItem.Item.Item.Name, Converter={StaticResource StringToVisibility}}" />
                             <TextBlock
                                 VerticalAlignment="Center"
-                                FontSize="13"
+                                FontSize="14"
                                 FontWeight="Bold"
                                 Foreground="{Binding ViewModel.PreviewItem.Color}"
                                 Text="{Binding ViewModel.PreviewItem.Item.Item.TypeLine}"

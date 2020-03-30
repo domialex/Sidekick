@@ -74,7 +74,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                         var format = Regex.Replace(Name, "%(\\d)", "{$1}");
                         return string.Format(format, Values.Select(x => x.Value).ToArray());
                     default:
-                        return Name;
+                        return $"{Name} {string.Join(", ", Values.Select(x => x.Value))}";
                 }
             }
         }

@@ -160,15 +160,6 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filters.
-        /// </summary>
-        public static string Filters {
-            get {
-                return ResourceManager.GetString("Filters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Damage per second.
         /// </summary>
         public static string Filters_Dps {
@@ -210,15 +201,6 @@ namespace Sidekick.Localization.Prices {
         public static string Filters_PDps {
             get {
                 return ResourceManager.GetString("Filters_PDps", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Properties.
-        /// </summary>
-        public static string Filters_Properties {
-            get {
-                return ResourceManager.GetString("Filters_Properties", resourceCulture);
             }
         }
         

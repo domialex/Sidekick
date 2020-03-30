@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Extensions;
 using Sidekick.Localization.Prices;
@@ -26,19 +25,38 @@ namespace Sidekick.Views.Prices
             Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
 
-            if (Item.Item.Requirements == null)
+            if (Item.Item.Requirements != null)
             {
-                Item.Item.Requirements = new List<LineContent>();
+                var requires = new LineContent()
+                {
+                    DisplayMode = -1,
+                    Name = PriceResources.Requires,
+                    Values = new List<LineContentValue>
+                    {
+                        new LineContentValue()
+                        {
+                            Type = LineContentType.Simple,
+                            Value = string.Join(", ", Item.Item.Requirements.Select(x => { if (x.DisplayMode == 0) x.DisplayMode = -1; return x.Parsed; })),
+                        }
+                    }
+                };
+
+                Item.Item.Requirements.Clear();
+                Item.Item.Requirements.Add(requires);
             }
-            foreach (var requirement in Item.Item.Requirements)
+
+            if (Item.Item.ItemLevel > 0)
             {
-                requirement.Name = $"{PriceResources.Requires} {requirement.Name}";
-            }
-            Item.Item.Requirements.Add(new LineContent()
-            {
-                DisplayMode = 0,
-                Name = PriceResources.ItemLevel,
-                Values = new List<LineContentValue>
+                if (Item.Item.Requirements == null)
+                {
+                    Item.Item.Requirements = new List<LineContent>();
+                }
+
+                Item.Item.Requirements.Add(new LineContent()
+                {
+                    DisplayMode = 0,
+                    Name = PriceResources.ItemLevel,
+                    Values = new List<LineContentValue>
                 {
                     new LineContentValue()
                     {
@@ -46,8 +64,10 @@ namespace Sidekick.Views.Prices
                         Value = Item.Item.ItemLevel.ToString(),
                     }
                 },
-                Order = -1,
-            });
+                    Order = -1,
+                });
+            }
+
             Item.Item.Requirements = Item.Item.Requirements.OrderBy(x => x.Order).ToList();
         }
 

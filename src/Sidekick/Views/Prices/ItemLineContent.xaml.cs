@@ -40,47 +40,55 @@ namespace Sidekick.Views.Prices
             // enumerate
             foreach (var value in itemProperty.Property.Values)
             {
-                var index = itemProperty.Property.Parsed.IndexOf(value.Value);
-                var start = trans.GetTextPointer(index, false);
-                var end = trans.GetTextPointer(index + value.Value.Length, false);
+                var matches = Highlight.Matches(value.Value);
+                var offset = itemProperty.Property.Parsed.IndexOf(value.Value);
 
-                if (start == null || end == null)
+                // enumerate
+                for (var i = 0; i < matches.Count; i++)
                 {
-                    continue;
-                }
+                    var info = matches[i];
+                    var start = trans.GetTextPointer(info.Index + offset, false);
+                    var end = trans.GetTextPointer(info.Index + info.Value.Length + offset, false);
 
-                var range = new TextRange(start, end);
-                if (range != null)
-                {
-                    range.ApplyPropertyValue(
-                       TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
-
-                    switch (value.Type)
+                    if (start == null || end == null)
                     {
-                        case LineContentType.Simple:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.White);
-                            break;
-                        case LineContentType.Augmented:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.LightBlue);
-                            break;
-                        case LineContentType.Cold:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                            break;
-                        case LineContentType.Fire:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.DeepPink);
-                            break;
-                        case LineContentType.Lightning:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.LightYellow);
-                            break;
-                        case LineContentType.Chaos:
-                            range.ApplyPropertyValue(
-                               TextElement.ForegroundProperty, Brushes.Purple);
-                            break;
+                        continue;
+                    }
+
+                    var range = new TextRange(start, end);
+
+                    if (range != null)
+                    {
+                        range.ApplyPropertyValue(
+                           TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
+
+                        switch (value.Type)
+                        {
+                            case LineContentType.Simple:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.White);
+                                break;
+                            case LineContentType.Augmented:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.LightBlue);
+                                break;
+                            case LineContentType.Cold:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.LightSkyBlue);
+                                break;
+                            case LineContentType.Fire:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.DeepPink);
+                                break;
+                            case LineContentType.Lightning:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.LightYellow);
+                                break;
+                            case LineContentType.Chaos:
+                                range.ApplyPropertyValue(
+                                   TextElement.ForegroundProperty, Brushes.Purple);
+                                break;
+                        }
                     }
                 }
             }

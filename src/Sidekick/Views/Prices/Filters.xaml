@@ -27,13 +27,13 @@
     </UserControl.Resources>
 
     <StackPanel Name="Container">
-        <GroupBox Height="600" Margin="0">
+        <GroupBox Height="500" Margin="0">
             <GroupBox.Header>
                 <Grid MinHeight="60">
                     <StackPanel VerticalAlignment="Center">
                         <TextBlock
                             VerticalAlignment="Center"
-                            FontSize="16"
+                            FontSize="14"
                             FontWeight="Bold"
                             Foreground="{Binding ViewModel.ItemColor}"
                             Text="{Binding ViewModel.Item.Name}"
@@ -41,7 +41,7 @@
                             Visibility="{Binding ViewModel.Item.Name, Converter={StaticResource StringToVisibility}}" />
                         <TextBlock
                             VerticalAlignment="Center"
-                            FontSize="13"
+                            FontSize="14"
                             FontWeight="Bold"
                             Foreground="{Binding ViewModel.ItemColor}"
                             Text="{Binding ViewModel.Item.TypeLine}"
@@ -56,52 +56,22 @@
                 <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <GroupBox Header="{Binding Label}">
+                            <StackPanel>
                                 <ItemsControl ItemsSource="{Binding Filters}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel>
-                                                <CheckBox
-                                                    Content="{Binding Text}"
-                                                    IsChecked="{Binding Enabled}"
-                                                    ToolTip="{Binding Text}" />
-                                                <StackPanel Visibility="{Binding HasRange, Converter={StaticResource BooleanToVisibility}}">
-                                                    <Grid Margin="20,0,0,0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibility}}">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="30" />
-                                                            <ColumnDefinition />
-                                                            <ColumnDefinition Width="35" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock
-                                                            Grid.Column="0"
-                                                            Margin="0,0,4,0"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Center"
-                                                            Text="{loc:Loc Filters_Min}" />
-                                                        <TextBox
-                                                            Grid.Column="1"
-                                                            Height="25"
-                                                            MinHeight="0"
-                                                            Text="{Binding Min, Converter={StaticResource StringToNullableDouble}}" />
-                                                        <TextBlock
-                                                            Grid.Column="2"
-                                                            Margin="0,0,4,0"
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Center"
-                                                            Text="{loc:Loc Filters_Max}" />
-                                                        <TextBox
-                                                            Grid.Column="3"
-                                                            Height="25"
-                                                            MinHeight="0"
-                                                            Text="{Binding Max, Converter={StaticResource StringToNullableDouble}}" />
-                                                    </Grid>
-                                                </StackPanel>
-                                            </StackPanel>
+                                            <local:Filter Item="{Binding}" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                            </GroupBox>
+
+                                <Border
+                                    Margin="0,2,0,5"
+                                    BorderBrush="Gray"
+                                    BorderThickness="0,0,0,1"
+                                    Visibility="{Binding ViewModel.PreviewItem.Item.Item.Properties, Converter={StaticResource NullableToVisibility}}" />
+
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
