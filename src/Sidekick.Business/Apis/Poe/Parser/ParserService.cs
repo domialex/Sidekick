@@ -82,13 +82,15 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 throw new NotSupportedException("Item not found.");
             }
 
+            var lines = NewlinePattern.Split(input);
+
             item.Name = dataItem.Name;
             item.TypeLine = dataItem.Type;
+            item.OriginalName = lines[1];
             item.Rarity = dataItem.Rarity;
 
             if (item.Rarity == Rarity.Unknown)
             {
-                var lines = NewlinePattern.Split(input);
                 item.Rarity = GetRarity(lines[0]);
             }
 

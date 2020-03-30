@@ -9,6 +9,9 @@ using Sidekick.Business.Http;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
+    /// <summary>
+    /// https://poe.ninja/swagger
+    /// </summary>
     public class PoeNinjaClient : IPoeNinjaClient
     {
         private readonly static Uri POE_NINJA_API_BASE_URL = new Uri("https://poe.ninja/api/data/");
