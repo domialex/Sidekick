@@ -483,13 +483,12 @@ namespace Sidekick.Views.Prices
         {
             PoeNinjaText = string.Empty;
 
-            var poeNinjaItem = poeNinjaCache.GetItem(Item);
-            if (poeNinjaItem != null)
+            var poeNinjaItemPriceInChaos = poeNinjaCache.GetItemPrice(Item);
+            if (poeNinjaItemPriceInChaos != null)
             {
-                PoeNinjaText = string.Format(
-                    PriceResources.PoeNinjaString,
-                    poeNinjaItem.ChaosValue,
-                    poeNinjaCache.LastRefreshTimestamp.Value.ToString("HH:mm"));
+                PoeNinjaText = string.Format(PriceResources.PoeNinjaString,
+                                             poeNinjaItemPriceInChaos,
+                                             poeNinjaCache.LastRefreshTimestamp.Value.ToString("t"));
             }
         }
 

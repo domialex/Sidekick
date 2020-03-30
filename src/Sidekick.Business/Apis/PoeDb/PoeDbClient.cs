@@ -7,6 +7,10 @@ using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb
 {
+    /// <summary>
+    /// https://poedb.tw/us/
+    /// Only in English.
+    /// </summary>
     public class PoeDbClient : IPoeDbClient
     {
         private const string PoeDbBaseUri = "https://poedb.tw/";
@@ -33,7 +37,7 @@ namespace Sidekick.Business.Apis.PoeDb
                 return;
             }
 
-            if (languageProvider.Current.Name != languageProvider.DefaultLanguage)        // Only English for now
+            if (languageProvider.Current.Name != languageProvider.DefaultLanguage)
             {
                 return;
             }
