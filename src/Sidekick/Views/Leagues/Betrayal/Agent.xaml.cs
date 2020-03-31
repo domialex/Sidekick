@@ -8,16 +8,16 @@ namespace Sidekick.Views.Leagues.Betrayal
     /// Interaction logic for Agent.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class Agent : UserControl
+  public partial class Agent : UserControl
+  {
+    public BetrayalAgent Model { get; set; }
+
+    public string Image => $"/Views/Leagues/Betrayal/Images/{Model.Image}";
+
+    public Agent()
     {
-        public BetrayalAgent Model { get; set; }
-
-        public string Image => $"/Windows/Leagues/Betrayal/Images/{Model.Image}";
-
-        public Agent()
-        {
-            InitializeComponent();
-            Container.DataContext = this;
-        }
+      InitializeComponent();
+      Container.DataContext = this;
     }
+  }
 }

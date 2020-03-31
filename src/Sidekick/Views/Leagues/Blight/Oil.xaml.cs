@@ -18,6 +18,6 @@ namespace Sidekick.Views.Leagues.Blight
 
         public BlightOil Model { get; set; }
 
-        public string Image => $"/Windows/Leagues/Blight/Images/{Model.Image}";
+        public string Image => $"/Views/Leagues/Blight/Images/{Model.Image}";
     }
 }

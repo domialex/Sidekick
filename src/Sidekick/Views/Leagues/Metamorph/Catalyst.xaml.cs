@@ -8,16 +8,16 @@ namespace Sidekick.Views.Leagues.Metamorph
     /// Interaction logic for Catalyst.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class Catalyst : UserControl
+  public partial class Catalyst : UserControl
+  {
+    public Catalyst()
     {
-        public Catalyst()
-        {
-            InitializeComponent();
-            Container.DataContext = this;
-        }
-
-        public MetamorphCatalyst Model { get; set; }
-
-        public string Image => $"/Windows/Leagues/Metamorph/Images/{Model.Image}";
+      InitializeComponent();
+      Container.DataContext = this;
     }
+
+    public MetamorphCatalyst Model { get; set; }
+
+    public string Image => $"/Views/Leagues/Metamorph/Images/{Model.Image}";
+  }
 }
