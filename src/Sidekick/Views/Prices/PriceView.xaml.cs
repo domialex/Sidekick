@@ -30,8 +30,14 @@ namespace Sidekick.Views.Prices
             Show();
             Activate();
 
-            var position = cursor.GetCursorPosition();
-            SetWindowPositionFromBottomRight(position.X - 10, position.Y - 10);
+            if (GetMouseXPercent() > 0.5)
+            {
+                SetWindowPositionPercent(0.65 - GetWidthPercent(), 0.5 - (GetHeightPercent() / 2));
+            }
+            else
+            {
+                SetWindowPositionPercent(0.35, 0.5 - (GetHeightPercent() / 2));
+            }
 
             if (viewModel.IsError)
             {

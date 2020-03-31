@@ -66,6 +66,12 @@
     <None Remove="Views\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
     <None Remove="Views\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
     <None Remove="Views\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
+    <None Remove="Views\Prices\Images\crusader-symbol.png" />
+    <None Remove="Views\Prices\Images\elder-symbol.png" />
+    <None Remove="Views\Prices\Images\hunter-symbol.png" />
+    <None Remove="Views\Prices\Images\redeemer-symbol.png" />
+    <None Remove="Views\Prices\Images\shaper-symbol.png" />
+    <None Remove="Views\Prices\Images\warlord-symbol.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -128,6 +134,12 @@
     <Resource Include="Views\Leagues\Metamorph\Images\Prismatic_Catalyst.png" />
     <Resource Include="Views\Leagues\Metamorph\Images\Tempering_Catalyst.png" />
     <Resource Include="Views\Leagues\Metamorph\Images\Turbulent_Catalyst.png" />
+    <Resource Include="Views\Prices\Images\crusader-symbol.png" />
+    <Resource Include="Views\Prices\Images\elder-symbol.png" />
+    <Resource Include="Views\Prices\Images\hunter-symbol.png" />
+    <Resource Include="Views\Prices\Images\redeemer-symbol.png" />
+    <Resource Include="Views\Prices\Images\shaper-symbol.png" />
+    <Resource Include="Views\Prices\Images\warlord-symbol.png" />
   </ItemGroup>
 
   <ItemGroup>
