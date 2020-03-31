@@ -8,7 +8,6 @@ namespace Sidekick.Business.Apis.Poe.Models
         public string Name { get; set; }
 
         public string TypeLine { get; set; }
-        public string OriginalName { get; set; }
 
         public bool Identified { get; set; }
 

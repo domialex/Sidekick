@@ -4,6 +4,8 @@ namespace Sidekick.Business.Apis.Poe.Parser
 {
     public class ParsedItem : Item
     {
+        public string OriginalName { get; set; }
+
         public int Armor { get; set; }
         public int EnergyShield { get; set; }
         public int Evasion { get; set; }
