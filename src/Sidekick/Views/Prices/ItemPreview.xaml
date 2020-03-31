@@ -110,6 +110,14 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
+                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Item.PseudoMods}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ItemMod Text="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
                     <Border
                         Margin="0,2,0,5"
                         BorderBrush="Gray"

@@ -10,7 +10,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
     {
         Task<FetchResult<string>> SearchBulk(ParsedItem item);
         Task<FetchResult<string>> Search(ParsedItem item, SearchFilters filters = null, List<StatFilter> stats = null);
-        Task<FetchResult<Result>> GetResults(string queryId, List<string> ids);
+        Task<FetchResult<Result>> GetResults(string queryId, List<string> ids, List<StatFilter> stats = null);
         Task OpenWebpage(ParsedItem item);
     }
 }

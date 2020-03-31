@@ -435,7 +435,7 @@ namespace Sidekick.Views.Prices
                 }
 
                 IsFetching = true;
-                var getResult = await tradeSearchService.GetResults(QueryResult.Id, ids);
+                var getResult = await tradeSearchService.GetResults(QueryResult.Id, ids, GetStats());
                 IsFetching = false;
                 if (getResult.Result.Any())
                 {

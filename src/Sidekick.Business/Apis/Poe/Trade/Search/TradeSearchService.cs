@@ -174,13 +174,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetResults(string queryId, List<string> ids)
+        public async Task<FetchResult<Result>> GetResults(string queryId, List<string> ids, List<StatFilter> stats = null)
         {
             try
             {
                 logger.Information($"Fetching Trade API Listings from Query {queryId}.");
 
-                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId);
+                var pseudo = string.Empty;
+                if (stats != null)
+                {
+                    pseudo = string.Join("", stats.Where(x => x.Id.StartsWith("pseudo.")).Select(x => $"&pseudos[]={x.Id}"));
+                }
+
+                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId + pseudo);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();

@@ -24,12 +24,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         public List<LineContent> Properties { get; set; }
 
+        [JsonPropertyName("implicitMods")]
         public List<string> ImplicitMods { get; set; }
 
+        [JsonPropertyName("craftedMods")]
         public List<string> CraftedMods { get; set; }
 
+        [JsonPropertyName("explicitMods")]
         public List<string> ExplicitMods { get; set; }
 
+        [JsonPropertyName("utilityMods")]
         public List<string> UtilityMods { get; set; }
+
+        [JsonPropertyName("pseudoMods")]
+        public List<string> PseudoMods { get; set; }
     }
 }
