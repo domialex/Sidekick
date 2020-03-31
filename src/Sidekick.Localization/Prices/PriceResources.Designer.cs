@@ -214,6 +214,60 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Armour at max Quality.
+        /// </summary>
+        public static string MaxQualityArmour {
+            get {
+                return ResourceManager.GetString("MaxQualityArmour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DPS at max Quality.
+        /// </summary>
+        public static string MaxQualityDps {
+            get {
+                return ResourceManager.GetString("MaxQualityDps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elemental DPS at max Quality.
+        /// </summary>
+        public static string MaxQualityEDps {
+            get {
+                return ResourceManager.GetString("MaxQualityEDps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Energy Shield at max Quality.
+        /// </summary>
+        public static string MaxQualityEneryShield {
+            get {
+                return ResourceManager.GetString("MaxQualityEneryShield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evasion at max Quality.
+        /// </summary>
+        public static string MaxQualityEvasion {
+            get {
+                return ResourceManager.GetString("MaxQualityEvasion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical DPS at max Quality.
+        /// </summary>
+        public static string MaxQualityPDps {
+            get {
+                return ResourceManager.GetString("MaxQualityPDps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account Name.
         /// </summary>
         public static string OverlayAccountName {

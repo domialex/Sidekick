@@ -168,6 +168,24 @@
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>
+  <data name="MaxQualityArmour" xml:space="preserve">
+    <value>Armour at max Quality</value>
+  </data>
+  <data name="MaxQualityDps" xml:space="preserve">
+    <value>DPS at max Quality</value>
+  </data>
+  <data name="MaxQualityEDps" xml:space="preserve">
+    <value>Elemental DPS at max Quality</value>
+  </data>
+  <data name="MaxQualityEneryShield" xml:space="preserve">
+    <value>Energy Shield at max Quality</value>
+  </data>
+  <data name="MaxQualityEvasion" xml:space="preserve">
+    <value>Evasion at max Quality</value>
+  </data>
+  <data name="MaxQualityPDps" xml:space="preserve">
+    <value>Physical DPS at max Quality</value>
+  </data>
   <data name="OverlayAccountName" xml:space="preserve">
     <value>Account Name</value>
   </data>
