@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Extensions;
 using Sidekick.Localization.Prices;
@@ -11,18 +12,6 @@ namespace Sidekick.Views.Prices
     {
         public PriceItem(Result result)
         {
-            if (result.Listing.Price != null)
-            {
-                if (result.Listing.Price.Amount % 1 == 0)
-                {
-                    Amount = result.Listing.Price.Amount.ToString("N0");
-                }
-                else
-                {
-                    Amount = result.Listing.Price.Amount.ToString("N1");
-                }
-            }
-            Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
 
             if (Item.Item.Requirements != null)
@@ -75,23 +64,39 @@ namespace Sidekick.Views.Prices
 
         public string Color => Item?.Item.Rarity.GetColor();
 
-        public string Amount { get; set; }
-        public string ImageUrl { get; set; }
-        public string Age { get; set; }
-
-        private string GetHumanReadableTimeSpan(DateTimeOffset time)
+        public string Amount
         {
-            var span = DateTimeOffset.Now - time;
+            get
+            {
+                if (Item.Listing.Price == null)
+                {
+                    return null;
+                }
 
-            if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
-            if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);
-            if (span.Hours > 1) return string.Format(PriceResources.Age_Hours, span.Hours);
-            if (span.Hours == 1) return string.Format(PriceResources.Age_Hour, span.Hours);
-            if (span.Minutes > 1) return string.Format(PriceResources.Age_Minutes, span.Minutes);
-            if (span.Minutes == 1) return string.Format(PriceResources.Age_Minute, span.Minutes);
-            if (span.Seconds > 10) return string.Format(PriceResources.Age_Seconds, span.Seconds);
+                if (Item.Listing.Price.Amount % 1 == 0)
+                {
+                    return Item.Listing.Price.Amount.ToString("N0");
+                }
+                return Item.Listing.Price.Amount.ToString("N2");
+            }
+        }
+        public string ImageUrl { get; set; }
+        public string Age
+        {
+            get
+            {
+                var span = DateTimeOffset.Now - Item.Listing.Indexed;
 
-            return PriceResources.Age_Now;
+                if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
+                if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);
+                if (span.Hours > 1) return string.Format(PriceResources.Age_Hours, span.Hours);
+                if (span.Hours == 1) return string.Format(PriceResources.Age_Hour, span.Hours);
+                if (span.Minutes > 1) return string.Format(PriceResources.Age_Minutes, span.Minutes);
+                if (span.Minutes == 1) return string.Format(PriceResources.Age_Minute, span.Minutes);
+                if (span.Seconds > 10) return string.Format(PriceResources.Age_Seconds, span.Seconds);
+
+                return PriceResources.Age_Now;
+            }
         }
     }
 }
