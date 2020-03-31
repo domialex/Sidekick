@@ -8,6 +8,8 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         public Mods Mods { get; set; }
 
+        public Hashes Hashes { get; set; }
+
         [JsonPropertyName("dps")]
         public double DamagePerSecond { get; set; }
 
@@ -16,5 +18,23 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         [JsonPropertyName("pdps")]
         public double PhysicalDps { get; set; }
+
+        [JsonPropertyName("ar")]
+        public int ArmourAtMax { get; set; }
+
+        [JsonPropertyName("ar_aug")]
+        public bool ArmourAugmented { get; set; }
+
+        [JsonPropertyName("ev")]
+        public int EvasionAtMax { get; set; }
+
+        [JsonPropertyName("ev_aug")]
+        public bool EvasionAugmented { get; set; }
+
+        [JsonPropertyName("es")]
+        public int EnergyShieldAtMax { get; set; }
+
+        [JsonPropertyName("es_aug")]
+        public bool EnergyShieldAugmented { get; set; }
     }
 }

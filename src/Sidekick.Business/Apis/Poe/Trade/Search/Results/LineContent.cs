@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
