@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Parser.ItemParsers;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
@@ -54,66 +53,24 @@ namespace Sidekick.Business.Apis.Poe.Parser
             {
                 itemText = itemNameTokenizer.CleanString(itemText);
 
-                var item = new ParsedItem
-                {
-                    ItemText = itemText
-                };
+                var wholeBlocks = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);
+                var splitBlocks = wholeBlocks.Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries));
 
-                var textBlocks = new ItemTextBlock(itemText
-                    .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries))
-                    .ToArray());
+                var itemTextBlock = new ItemTextBlock(splitBlocks.ToArray(), wholeBlocks);
 
-                var dataItem = itemDataService.ParseItemData(textBlocks);
-
-                item.Name = dataItem.Name;
-                item.TypeLine = dataItem.Type;
-                item.Rarity = dataItem.Rarity;
-
-                if (item.Rarity == Rarity.Unknown)
-                {
-                    item.Rarity = GetRarity(textBlocks.Header[0]);
-                }
-
-                ParseHeader(ref item, ref itemText);
-                ParseProperties(ref item, ref itemText);
-                ParseSockets(ref item, ref itemText);
-                ParseInfluences(ref item, ref itemText);
-                ParseMods(ref item, ref itemText);
-
-                return item;
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, "Could not parse item.");
-                return null;
-            }
-        }
-
-        public async Task<ParsedItem> NewParseItem(string itemText)
-        {
-            await languageProvider.FindAndSetLanguage(itemText);
-
-            try
-            {
-                itemText = itemNameTokenizer.CleanString(itemText);
-
-                var textBlocks = new ItemTextBlock(itemText
-                    .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries))
-                    .ToArray());
-
-                var itemData = itemDataService.ParseItemData(textBlocks);
+                var itemData = itemDataService.ParseItemData(itemTextBlock);
 
                 if (itemData.Rarity == Rarity.Unknown)
                 {
-                    itemData.Rarity = GetRarity(textBlocks.Header[0]);
+                    itemData.Rarity = GetRarity(itemTextBlock.Rarity);
                 }
 
-                //var parser = GetParser(textBlocks, itemData);
+                if (string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
+                {
+                    throw new NotSupportedException("Item not found.");
+                }
 
-                //return parser.ParseItem();
-                return null;
+                return ParseItemDetails(itemText, itemTextBlock, itemData);
             }
             catch (Exception e)
             {
@@ -122,73 +79,92 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        //private ItemParser GetParser(ItemTextBlock itemText, ItemData itemData)
-        //{
-
-        //}
-
-        private void ParseHeader(ref ParsedItem item, ref string input)
+        private ParsedItem ParseItemDetails(string itemText, ItemTextBlock itemTextBlock, ItemData itemData)
         {
-            if (string.IsNullOrEmpty(item.Name) && string.IsNullOrEmpty(item.TypeLine))
+            var item = new ParsedItem
             {
-                throw new NotSupportedException("Item not found.");
+                ItemText = itemText,
+                Name = itemData.Name,
+                TypeLine = itemData.Type,
+                Rarity = itemData.Rarity
+            };
+
+            switch (item.Rarity)
+            {
+                case Rarity.DivinationCard:
+                case Rarity.Currency:
+                case Rarity.Prophecy:
+                    break;
+
+                case Rarity.Gem:
+                    ParseGem(item, itemTextBlock);
+                    break;
+
+                case var _ when ItemIsMap(itemTextBlock):
+                    ParseMap(item, itemTextBlock);
+                    ParseInfluences(item, itemTextBlock);
+                    break;
+
+                default:
+                    ParseEquipmentProperties(item, itemTextBlock);
+                    ParseMods(item);
+                    ParseSockets(item);
+                    ParseInfluences(item, itemTextBlock);
+                    break;
             }
 
             if (item.Rarity != Rarity.DivinationCard)
             {
-                item.ItemLevel = GetInt(patterns.ItemLevel, input);
-                item.Identified = !patterns.Unidentified.IsMatch(input);
-                item.Corrupted = patterns.Corrupted.IsMatch(input);
+                item.ItemLevel = GetInt(patterns.ItemLevel, item.ItemText);
+                item.Identified = !patterns.Unidentified.IsMatch(item.ItemText);
+                item.Corrupted = patterns.Corrupted.IsMatch(item.ItemText);
             }
+
+            return item;
         }
 
-        private Rarity GetRarity(string rarityString)
+        private bool ItemIsMap(ItemTextBlock itemTextBlock)
         {
-            foreach (var pattern in patterns.Rarity)
-            {
-                if (pattern.Value.IsMatch(rarityString))
-                {
-                    return pattern.Key;
-                }
-            }
-            throw new Exception("Can't parse rarity.");
+            return itemTextBlock.TryGetMapTierLine(out var mapTierLine) && patterns.MapTier.IsMatch(mapTierLine);
         }
 
-        private void ParseProperties(ref ParsedItem item, ref string input)
+        private void ParseEquipmentProperties(ParsedItem item, ItemTextBlock itemTextBlock)
         {
-            var blocks = input.Split(SEPARATOR_PATTERN);
+            var propertyBlock = itemTextBlock.WholeBlocks[1];
 
-            item.Armor = GetInt(patterns.Armor, blocks[1]);
-            item.EnergyShield = GetInt(patterns.EnergyShield, blocks[1]);
-            item.Evasion = GetInt(patterns.Evasion, blocks[1]);
-            item.ChanceToBlock = GetInt(patterns.ChanceToBlock, blocks[1]);
-            item.Quality = GetInt(patterns.Quality, blocks[1]);
-            item.MapTier = GetInt(patterns.MapTier, blocks[1]);
-            item.ItemQuantity = GetInt(patterns.ItemQuantity, blocks[1]);
-            item.ItemRarity = GetInt(patterns.ItemRarity, blocks[1]);
-            item.MonsterPackSize = GetInt(patterns.MonsterPackSize, blocks[1]);
-            item.AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, blocks[1]);
-            item.CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, blocks[1]);
-            item.Extended.ElementalDps = GetDps(patterns.ElementalDamage, blocks[1], item.AttacksPerSecond);
-            item.Extended.PhysicalDps = GetDps(patterns.PhysicalDamage, blocks[1], item.AttacksPerSecond);
+            item.Armor = GetInt(patterns.Armor, propertyBlock);
+            item.EnergyShield = GetInt(patterns.EnergyShield, propertyBlock);
+            item.Evasion = GetInt(patterns.Evasion, propertyBlock);
+            item.ChanceToBlock = GetInt(patterns.ChanceToBlock, propertyBlock);
+            item.Quality = GetInt(patterns.Quality, propertyBlock);
+            item.AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, propertyBlock);
+            item.CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, propertyBlock);
+            item.Extended.ElementalDps = GetDps(patterns.ElementalDamage, propertyBlock, item.AttacksPerSecond);
+            item.Extended.PhysicalDps = GetDps(patterns.PhysicalDamage, propertyBlock, item.AttacksPerSecond);
             item.Extended.DamagePerSecond = item.Extended.ElementalDps + item.Extended.PhysicalDps;
-            item.Blighted = patterns.Blighted.IsMatch(blocks[0]);
-
-            if (item.Rarity == Rarity.Gem)
-            {
-                item.GemLevel = GetInt(patterns.Level, blocks[1]);
-            }
         }
 
-        private void ParseSockets(ref ParsedItem item, ref string input)
+        private void ParseMap(ParsedItem item, ItemTextBlock itemTextBlock)
         {
-            var result = patterns.Socket.Match(input);
+            var mapBlock = itemTextBlock.MapPropertiesBlock;
+
+            item.ItemQuantity = GetInt(patterns.ItemQuantity, mapBlock);
+            item.ItemRarity = GetInt(patterns.ItemRarity, mapBlock);
+            item.MonsterPackSize = GetInt(patterns.MonsterPackSize, mapBlock);
+            item.MapTier = GetInt(patterns.MapTier, mapBlock);
+            item.Blighted = patterns.Blighted.IsMatch(itemTextBlock.WholeBlocks[0]);
+        }
+
+        private void ParseSockets(ParsedItem item)
+        {
+            var result = patterns.Socket.Match(item.ItemText);
             if (result.Success)
             {
                 var groups = result.Groups
                     .Where(x => !string.IsNullOrEmpty(x.Value))
                     .Select(x => x.Value)
                     .ToList();
+
                 for (var index = 1; index < groups.Count; index++)
                 {
                     var groupValue = groups[index].Replace("-", "").Trim();
@@ -208,25 +184,42 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        private void ParseInfluences(ref ParsedItem item, ref string input)
+        private void ParseGem(ParsedItem item, ItemTextBlock itemTextBlock)
         {
-            var blocks = input.Split(SEPARATOR_PATTERN);
-            var strippedInput = string.Concat(blocks.Skip(1).ToList());
-
-            item.Influences.Crusader = patterns.Crusader.IsMatch(strippedInput);
-            item.Influences.Elder = patterns.Elder.IsMatch(strippedInput);
-            item.Influences.Hunter = patterns.Hunter.IsMatch(strippedInput);
-            item.Influences.Redeemer = patterns.Redeemer.IsMatch(strippedInput);
-            item.Influences.Shaper = patterns.Shaper.IsMatch(strippedInput);
-            item.Influences.Warlord = patterns.Warlord.IsMatch(strippedInput);
+            item.GemLevel = GetInt(patterns.Level, itemTextBlock.WholeBlocks[1]);
+            item.Quality = GetInt(patterns.Quality, itemTextBlock.WholeBlocks[1]);
         }
 
-        private void ParseMods(ref ParsedItem item, ref string input)
+        private void ParseInfluences(ParsedItem item, ItemTextBlock itemTextBlock)
         {
-            item.Extended.Mods = statsDataService.ParseMods(input);
+            var block = string.Concat(itemTextBlock.WholeBlocks.Skip(1));
+
+            item.Influences.Crusader = patterns.Crusader.IsMatch(block);
+            item.Influences.Elder = patterns.Elder.IsMatch(block);
+            item.Influences.Hunter = patterns.Hunter.IsMatch(block);
+            item.Influences.Redeemer = patterns.Redeemer.IsMatch(block);
+            item.Influences.Shaper = patterns.Shaper.IsMatch(block);
+            item.Influences.Warlord = patterns.Warlord.IsMatch(block);
+        }
+
+        private void ParseMods(ParsedItem item)
+        {
+            item.Extended.Mods = statsDataService.ParseMods(item.ItemText);
         }
 
         #region Helpers
+
+        private Rarity GetRarity(string rarityString)
+        {
+            foreach (var pattern in patterns.Rarity)
+            {
+                if (pattern.Value.IsMatch(rarityString))
+                {
+                    return pattern.Key;
+                }
+            }
+            throw new Exception("Can't parse rarity.");
+        }
         private int GetInt(Regex regex, string input)
         {
             if (regex != null)

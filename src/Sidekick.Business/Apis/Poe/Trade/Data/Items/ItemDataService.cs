@@ -78,13 +78,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             {
                 results.AddRange(itemData);
             }
-            else if (Patterns.TryGetValue(itemText.Header[2], out itemData))
+            else if (itemText.Header.Length > 2 && Patterns.TryGetValue(itemText.Header[2], out itemData))
             {
                 results.AddRange(itemData);
             }
 
-            if(results.Any(item => itemText.IsVaalGem(item.Rarity)) && Patterns.TryGetValue(itemText.VaalGemName, out itemData))
+            if(results.Any(item => item.Rarity == Rarity.Gem)
+                && itemText.TryGetVaalGemName(out var vaalGemName)
+                && Patterns.TryGetValue(vaalGemName, out itemData))
             {
+                // If we find a Vaal gem, we don't care about other matches
                 results.Clear();
                 results.Add(itemData.First());
             }

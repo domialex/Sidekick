@@ -6,7 +6,7 @@ namespace Sidekick.Business.Apis.Poe.Models
     {
         public string Text { get; set; }
 
-        public Mods Mods { get; set; }
+        public Mods Mods { get; set; } = new Mods();
 
         [JsonPropertyName("dps")]
         public double DamagePerSecond { get; set; }
