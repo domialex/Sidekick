@@ -57,5 +57,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string KeywordVial => "Vial";
         public string KeywordEssence => "Essence";
 
+        public string ModifierIncreased => "increased";
+        public string ModifierReduced => "reduced";
     }
 }

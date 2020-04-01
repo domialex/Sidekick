@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
@@ -12,12 +13,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly IPseudoStatDataService pseudoStatDataService;
+        private readonly ILanguageProvider languageProvider;
 
         public StatDataService(IPoeTradeClient poeApiClient,
-            IPseudoStatDataService pseudoStatDataService)
+            IPseudoStatDataService pseudoStatDataService,
+            ILanguageProvider languageProvider)
         {
             this.poeApiClient = poeApiClient;
             this.pseudoStatDataService = pseudoStatDataService;
+            this.languageProvider = languageProvider;
         }
 
         private List<StatData> PseudoPatterns { get; set; }
@@ -49,6 +53,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+            var increasedPattern = new Regex($"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
 
             foreach (var category in categories)
             {
@@ -82,6 +87,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     pattern = Regex.Escape(entry.Text);
                     pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
                     pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    pattern = increasedPattern.Replace(pattern, $"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
 
                     entry.Pattern = new Regex($"\\n+{pattern}{suffix}");

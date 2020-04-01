@@ -61,5 +61,8 @@ namespace Sidekick.Business.Languages
         string InfluenceHunter { get; }
         string InfluenceRedeemer { get; }
         string InfluenceWarlord { get; }
+
+        string ModifierIncreased { get; }
+        string ModifierReduced { get; }
     }
 }
