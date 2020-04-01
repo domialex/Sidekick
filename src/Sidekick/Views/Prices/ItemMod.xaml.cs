@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Views.Prices.Helpers;
 
 namespace Sidekick.Views.Prices
@@ -17,7 +18,7 @@ namespace Sidekick.Views.Prices
         private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
 
         [DependencyProperty(OnPropertyChanged = nameof(OnTextChanged))]
-        public string Text { get; set; }
+        public Modifier Modifier { get; set; }
 
         public ItemMod()
         {
@@ -31,9 +32,9 @@ namespace Sidekick.Views.Prices
             var itemMod = (ItemMod)dependencyObject;
 
             itemMod.RichText.Document.Blocks.Clear();
-            itemMod.RichText.Document.Blocks.Add(new Paragraph(new Run(itemMod.Text)));
+            itemMod.RichText.Document.Blocks.Add(new Paragraph(new Run(itemMod.Modifier.Text)));
 
-            var matches = Highlight.Matches(itemMod.Text);
+            var matches = Highlight.Matches(itemMod.Modifier.Text);
 
             // create textpointer translator
             var trans = new TextPointerTranslator(itemMod.RichText.Document);
