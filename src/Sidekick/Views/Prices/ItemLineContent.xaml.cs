@@ -27,8 +27,8 @@ namespace Sidekick.Views.Prices
         }
 
         public static void OnPropertyChanged(
-        DependencyObject dependencyObject,
-        DependencyPropertyChangedEventArgs eventArgs)
+            DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs eventArgs)
         {
             var itemProperty = (ItemLineContent)dependencyObject;
 

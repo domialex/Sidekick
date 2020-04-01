@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {
     public class BulkQueryRequest
     {
-        public BulkQueryRequest(ParsedItem item, IStaticDataService staticDataService)
+        public BulkQueryRequest(Item item, IStaticDataService staticDataService)
         {
             Exchange.Status.Option = StatusType.Online;
 
-            Exchange.Want.Add(staticDataService.GetId(item.Name ?? item.TypeLine));
+            Exchange.Want.Add(staticDataService.GetId(item.Name ?? item.Type));
             Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
         }
 

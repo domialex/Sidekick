@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
     public class Extended
     {

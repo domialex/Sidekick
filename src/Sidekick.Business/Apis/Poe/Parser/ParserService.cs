@@ -46,16 +46,16 @@ namespace Sidekick.Business.Apis.Poe.Parser
             return Task.CompletedTask;
         }
 
-        public async Task<ParsedItem> ParseItem(string itemText)
+        public async Task<Item> ParseItem(string itemText)
         {
             await languageProvider.FindAndSetLanguage(itemText);
 
             try
             {
                 itemText = new ItemNameTokenizer().CleanString(itemText);
-                var item = new ParsedItem
+                var item = new Item
                 {
-                    ItemText = itemText
+                    Text = itemText
                 };
 
                 ParseHeader(ref item, ref itemText);
@@ -73,7 +73,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        private void ParseHeader(ref ParsedItem item, ref string input)
+        private void ParseHeader(ref Item item, ref string input)
         {
             var dataItem = itemDataService.ParseItem(input);
 
@@ -82,12 +82,13 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 throw new NotSupportedException("Item not found.");
             }
 
-            var lines = NewlinePattern.Split(input);
-
             item.Name = dataItem.Name;
-            item.TypeLine = dataItem.Type;
-            item.OriginalName = lines[1];
+            item.Type = dataItem.Type;
             item.Rarity = dataItem.Rarity;
+
+            var lines = NewlinePattern.Split(input);
+            item.NameLine = SeparatorPattern.IsMatch(lines[1]) ? string.Empty : lines[1];
+            item.TypeLine = SeparatorPattern.IsMatch(lines[2]) ? string.Empty : lines[2];
 
             if (item.Rarity == Rarity.Unknown)
             {
@@ -96,7 +97,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             if (item.Rarity != Rarity.DivinationCard)
             {
-                item.ItemLevel = GetInt(patterns.ItemLevel, input);
+                item.ItemLevel = patterns.GetInt(patterns.ItemLevel, input);
                 item.Identified = !patterns.Unidentified.IsMatch(input);
                 item.Corrupted = patterns.Corrupted.IsMatch(input);
             }
@@ -114,33 +115,33 @@ namespace Sidekick.Business.Apis.Poe.Parser
             throw new Exception("Can't parse rarity.");
         }
 
-        private void ParseProperties(ref ParsedItem item, ref string input)
+        private void ParseProperties(ref Item item, ref string input)
         {
             var blocks = SeparatorPattern.Split(input);
 
-            item.Armor = GetInt(patterns.Armor, blocks[1]);
-            item.EnergyShield = GetInt(patterns.EnergyShield, blocks[1]);
-            item.Evasion = GetInt(patterns.Evasion, blocks[1]);
-            item.ChanceToBlock = GetInt(patterns.ChanceToBlock, blocks[1]);
-            item.Quality = GetInt(patterns.Quality, blocks[1]);
-            item.MapTier = GetInt(patterns.MapTier, blocks[1]);
-            item.ItemQuantity = GetInt(patterns.ItemQuantity, blocks[1]);
-            item.ItemRarity = GetInt(patterns.ItemRarity, blocks[1]);
-            item.MonsterPackSize = GetInt(patterns.MonsterPackSize, blocks[1]);
-            item.AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, blocks[1]);
-            item.CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, blocks[1]);
-            item.Extended.ElementalDps = GetDps(patterns.ElementalDamage, blocks[1], item.AttacksPerSecond);
-            item.Extended.PhysicalDps = GetDps(patterns.PhysicalDamage, blocks[1], item.AttacksPerSecond);
-            item.Extended.DamagePerSecond = item.Extended.ElementalDps + item.Extended.PhysicalDps;
-            item.Blighted = patterns.Blighted.IsMatch(blocks[0]);
+            item.Properties.Armor = patterns.GetInt(patterns.Armor, blocks[1]);
+            item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, blocks[1]);
+            item.Properties.Evasion = patterns.GetInt(patterns.Evasion, blocks[1]);
+            item.Properties.ChanceToBlock = patterns.GetInt(patterns.ChanceToBlock, blocks[1]);
+            item.Properties.Quality = patterns.GetInt(patterns.Quality, blocks[1]);
+            item.Properties.MapTier = patterns.GetInt(patterns.MapTier, blocks[1]);
+            item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, blocks[1]);
+            item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, blocks[1]);
+            item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, blocks[1]);
+            item.Properties.AttacksPerSecond = patterns.GetDouble(patterns.AttacksPerSecond, blocks[1]);
+            item.Properties.CriticalStrikeChance = patterns.GetDouble(patterns.CriticalStrikeChance, blocks[1]);
+            item.Properties.ElementalDps = patterns.GetDps(patterns.ElementalDamage, blocks[1], item.Properties.AttacksPerSecond);
+            item.Properties.PhysicalDps = patterns.GetDps(patterns.PhysicalDamage, blocks[1], item.Properties.AttacksPerSecond);
+            item.Properties.DamagePerSecond = item.Properties.ElementalDps + item.Properties.PhysicalDps;
+            item.Properties.Blighted = patterns.Blighted.IsMatch(blocks[0]);
 
             if (item.Rarity == Rarity.Gem)
             {
-                item.GemLevel = GetInt(patterns.Level, blocks[1]);
+                item.Properties.GemLevel = patterns.GetInt(patterns.Level, blocks[1]);
             }
         }
 
-        private void ParseSockets(ref ParsedItem item, ref string input)
+        private void ParseSockets(ref Item item, ref string input)
         {
             var result = patterns.Socket.Match(input);
             if (result.Success)
@@ -156,11 +157,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
                     {
                         switch (groupValue[0])
                         {
-                            case 'B': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Blue }); break;
-                            case 'G': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Green }); break;
-                            case 'R': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Red }); break;
-                            case 'W': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.White }); break;
-                            case 'A': item.Sockets.Add(new Socket() { Group = index - 1, Color = SocketColor.Abyss }); break;
+                            case 'B': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Blue }); break;
+                            case 'G': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Green }); break;
+                            case 'R': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Red }); break;
+                            case 'W': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.White }); break;
+                            case 'A': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Abyss }); break;
                         }
                         groupValue = groupValue.Substring(1);
                     }
@@ -168,7 +169,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        private void ParseInfluences(ref ParsedItem item, ref string input)
+        private void ParseInfluences(ref Item item, ref string input)
         {
             var blocks = SeparatorPattern.Split(input);
             var strippedInput = string.Concat(blocks.Skip(1).ToList());
@@ -181,67 +182,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Influences.Warlord = patterns.Warlord.IsMatch(strippedInput);
         }
 
-        private void ParseMods(ref ParsedItem item, ref string input)
+        private void ParseMods(ref Item item, ref string input)
         {
-            item.Extended.Mods = statsDataService.ParseMods(input);
+            item.Modifiers = statsDataService.ParseMods(input);
         }
 
-        #region Helpers
-        private int GetInt(Regex regex, string input)
-        {
-            if (regex != null)
-            {
-                var match = regex.Match(input);
-
-                if (match.Success)
-                {
-                    if (int.TryParse(match.Groups[1].Value, out var result))
-                    {
-                        return result;
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        private double GetDouble(Regex regex, string input)
-        {
-            if (regex != null)
-            {
-                var match = regex.Match(input);
-
-                if (match.Success)
-                {
-                    if (double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
-                    {
-                        return result;
-                    }
-                }
-            }
-
-            return 0;
-        }
-
-        private double GetDps(Regex regex, string input, double attacksPerSecond)
-        {
-            if (regex != null)
-            {
-                var match = regex.Match(input);
-
-                if (match.Success)
-                {
-                    var split = match.Groups[1].Value.Split('-');
-
-                    if (int.TryParse(split[0], out var minValue) && int.TryParse(split[1], out var maxValue))
-                    {
-                        return ((minValue + maxValue) / 2) * attacksPerSecond;
-                    }
-                }
-            }
-
-            return 0;
-        }
-        #endregion
     }
 }

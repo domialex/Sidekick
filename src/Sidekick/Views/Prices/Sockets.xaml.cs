@@ -41,13 +41,13 @@ namespace Sidekick.Views.Prices
                     .ToList())
                 {
                     sockets.Add(socket
-                        .Select(x => x.Color switch
+                        .Select(x => x.Colour switch
                         {
-                            SocketColor.Blue => "#2E86C1",
-                            SocketColor.Green => "#28B463",
-                            SocketColor.Red => "#C0392B",
-                            SocketColor.White => "#FBFCFC",
-                            SocketColor.Abyss => "#839192",
+                            SocketColour.Blue => "#2E86C1",
+                            SocketColour.Green => "#28B463",
+                            SocketColour.Red => "#C0392B",
+                            SocketColour.White => "#FBFCFC",
+                            SocketColour.Abyss => "#839192",
                             _ => throw new Exception("Invalid socket"),
                         })
                         .ToList());

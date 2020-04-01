@@ -1,11 +1,7 @@
-using Sidekick.Business.Apis.Poe.Models;
-
-namespace Sidekick.Business.Apis.Poe.Parser
+namespace Sidekick.Business.Apis.Poe.Models
 {
-    public class ParsedItem : Item
+    public class Properties
     {
-        public string OriginalName { get; set; }
-
         public int Armor { get; set; }
         public int EnergyShield { get; set; }
         public int Evasion { get; set; }
@@ -19,7 +15,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public bool Blighted { get; set; }
         public double CriticalStrikeChance { get; set; }
         public double AttacksPerSecond { get; set; }
+        public double DamagePerSecond { get; set; }
+        public double ElementalDps { get; set; }
+        public double PhysicalDps { get; set; }
 
-        public string ItemText { get; set; }
     }
 }

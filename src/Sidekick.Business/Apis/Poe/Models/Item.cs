@@ -7,6 +7,10 @@ namespace Sidekick.Business.Apis.Poe.Models
     {
         public string Name { get; set; }
 
+        public string NameLine { get; set; }
+
+        public string Type { get; set; }
+
         public string TypeLine { get; set; }
 
         public bool Identified { get; set; }
@@ -19,10 +23,14 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         public bool Corrupted { get; set; }
 
+        public Properties Properties { get; set; } = new Properties();
+
         public Influences Influences { get; set; } = new Influences();
 
         public List<Socket> Sockets { get; set; } = new List<Socket>();
 
-        public Extended Extended { get; set; } = new Extended();
+        public Modifiers Modifiers { get; set; } = new Modifiers();
+
+        public string Text { get; set; }
     }
 }

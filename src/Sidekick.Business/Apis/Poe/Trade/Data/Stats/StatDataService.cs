@@ -90,11 +90,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             }
         }
 
-        public Mods ParseMods(string text)
+        public Modifiers ParseMods(string text)
         {
             text = NewLinePattern.Replace(text, "\n");
 
-            var mods = new Mods();
+            var mods = new Modifiers();
 
             // Make sure the text ends with an empty line for our regexes to work correctly
             if (!text.EndsWith("\n"))
@@ -116,85 +116,58 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             return mods;
         }
 
-        private void FillMods(List<Mod> mods, List<StatData> patterns, string text)
+        private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             foreach (var x in patterns
                 .Where(x => x.Pattern.IsMatch(text)))
             {
                 var result = x.Pattern.Match(text);
-                var magnitudes = new List<Magnitude>();
+                var modifier = new Modifier()
+                {
+                    Id = x.Id,
+                    Text = x.Text,
+                };
 
                 if (result.Groups.Count > 1)
                 {
                     for (var index = 1; index < result.Groups.Count; index++)
                     {
-                        double? value = null;
                         if (double.TryParse(result.Groups[index].Value, out var parsedValue))
                         {
-                            value = parsedValue;
+                            modifier.Values.Add(parsedValue);
                         }
-                        magnitudes.Add(new Magnitude()
-                        {
-                            Hash = x.Id,
-                            Max = value,
-                            Min = value,
-                        });
                     }
                 }
-                else
-                {
-                    magnitudes.Add(new Magnitude()
-                    {
-                        Hash = x.Id
-                    });
-                }
 
-                mods.Add(new Mod()
-                {
-                    Magnitudes = magnitudes
-                });
+                mods.Add(modifier);
             }
         }
 
-        private void FillPseudo(List<Mod> pseudoMods, List<Mod> mods)
+        private void FillPseudo(List<Modifier> pseudoMods, List<Modifier> mods)
         {
-            var magnitudes = mods.SelectMany(x => x.Magnitudes);
-            Mod pseudoMod;
-            Magnitude mod;
-            foreach (var definition in pseudoStatDataService.Definitions)
+            Modifier pseudoMod;
+            Modifier mod;
+            foreach (var pseudoDefinition in pseudoStatDataService.Definitions)
             {
-                foreach (var modifier in definition.Modifiers)
+                foreach (var pseudoModifier in pseudoDefinition.Modifiers)
                 {
-                    mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
+                    mod = mods.FirstOrDefault(x => pseudoModifier.Ids.Any(id => id == x.Id));
                     if (mod != null)
                     {
-                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Magnitudes[0].Hash == definition.Id);
+                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Id == pseudoDefinition.Id);
                         if (pseudoMod == null)
                         {
-                            pseudoMod = new Mod()
+                            pseudoMod = new Modifier()
                             {
-                                Magnitudes = new List<Magnitude>()
-                                {
-                                    new Magnitude()
-                                    {
-                                        Hash = definition.Id,
-                                        Min = (int)(mod.Min * modifier.Multiplier),
-                                        Max = (int)(mod.Max * modifier.Multiplier),
-                                    }
-                                }
+                                Id = pseudoDefinition.Id,
+                                Text = pseudoDefinition.Text,
                             };
+                            pseudoMod.Values.Add((int)(mod.Values.FirstOrDefault() * pseudoModifier.Multiplier));
                             pseudoMods.Add(pseudoMod);
                         }
                         else
                         {
-                            if (pseudoMod.Magnitudes[0].Min.HasValue)
-                            {
-                                pseudoMod.Magnitudes[0].Min += (int)(mod.Min * modifier.Multiplier);
-                            }
-                            if (pseudoMod.Magnitudes[0].Max.HasValue)
-                            {
-                                pseudoMod.Magnitudes[0].Max += (int)(mod.Max * modifier.Multiplier);
-                            }
+                            pseudoMod.Values[0] += (int)(mod.Values.FirstOrDefault() * pseudoModifier.Multiplier);
                         }
                     }
                 }

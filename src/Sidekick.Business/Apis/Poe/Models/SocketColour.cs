@@ -1,6 +1,6 @@
 namespace Sidekick.Business.Apis.Poe.Models
 {
-    public enum SocketColor
+    public enum SocketColour
     {
         Blue,
         Green,

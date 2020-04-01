@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
@@ -12,7 +11,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
         public string Name { get; set; }
 
         [JsonPropertyName("values")]
-        public List<List<JsonElement>> __Values { get; set; }
+        public List<List<JsonElement>> ApiValues { get; set; }
 
         public int DisplayMode { get; set; }
 
@@ -32,7 +31,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                 }
 
                 var result = new List<LineContentValue>();
-                foreach (var value in __Values)
+                foreach (var value in ApiValues)
                 {
                     if (value.Count != 2)
                     {

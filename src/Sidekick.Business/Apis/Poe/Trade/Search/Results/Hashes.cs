@@ -2,39 +2,39 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
     public class Hashes
     {
         [JsonPropertyName("implicit")]
-        public List<List<JsonElement>> __Implicit { get; set; }
+        public List<List<JsonElement>> ApiImplicit { get; set; }
 
         [JsonIgnore]
-        public List<LineContentValue> Implicit => Parse(__Implicit);
+        public List<LineContentValue> Implicit => Parse(ApiImplicit);
 
         [JsonPropertyName("explicit")]
-        public List<List<JsonElement>> __Explicit { get; set; }
+        public List<List<JsonElement>> ApiExplicit { get; set; }
 
         [JsonIgnore]
-        public List<LineContentValue> Explicit => Parse(__Explicit);
+        public List<LineContentValue> Explicit => Parse(ApiExplicit);
 
         [JsonPropertyName("crafted")]
-        public List<List<JsonElement>> __Crafted { get; set; }
+        public List<List<JsonElement>> ApiCrafted { get; set; }
 
         [JsonIgnore]
-        public List<LineContentValue> Crafted => Parse(__Crafted);
+        public List<LineContentValue> Crafted => Parse(ApiCrafted);
 
         [JsonPropertyName("enchant")]
-        public List<List<JsonElement>> __Enchant { get; set; }
+        public List<List<JsonElement>> ApiEnchant { get; set; }
 
         [JsonIgnore]
-        public List<LineContentValue> Enchant => Parse(__Enchant);
+        public List<LineContentValue> Enchant => Parse(ApiEnchant);
 
         [JsonPropertyName("pseudo")]
-        public List<List<JsonElement>> __Pseudo { get; set; }
+        public List<List<JsonElement>> ApiPseudo { get; set; }
 
         [JsonIgnore]
-        public List<LineContentValue> Pseudo => Parse(__Pseudo);
+        public List<LineContentValue> Pseudo => Parse(ApiPseudo);
 
         private List<LineContentValue> Parse(List<List<JsonElement>> values)
         {

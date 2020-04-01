@@ -4,7 +4,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
     public interface IStatDataService
     {
-        Mods ParseMods(string text);
+        Modifiers ParseMods(string text);
         StatData GetById(string id);
     }
 }

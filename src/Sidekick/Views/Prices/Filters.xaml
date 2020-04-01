@@ -36,9 +36,9 @@
                             FontSize="14"
                             FontWeight="Bold"
                             Foreground="{Binding ViewModel.ItemColor}"
-                            Text="{Binding ViewModel.Item.Name}"
+                            Text="{Binding ViewModel.Item.NameLine}"
                             TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.Item.Name, Converter={StaticResource StringToVisibility}}" />
+                            Visibility="{Binding ViewModel.Item.NameLine, Converter={StaticResource StringToVisibility}}" />
                         <TextBlock
                             VerticalAlignment="Center"
                             FontSize="14"

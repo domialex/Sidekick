@@ -7,8 +7,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
@@ -28,6 +28,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         private readonly SidekickSettings configuration;
         private readonly IPoeTradeClient poeTradeClient;
         private readonly INativeBrowser nativeBrowser;
+        private readonly IStatDataService statDataService;
 
         public TradeSearchService(ILogger logger,
             ILanguageProvider languageProvider,
@@ -35,7 +36,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             IStaticDataService staticDataService,
             SidekickSettings configuration,
             IPoeTradeClient poeTradeClient,
-            INativeBrowser nativeBrowser)
+            INativeBrowser nativeBrowser,
+            IStatDataService statDataService)
         {
             this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
@@ -44,9 +46,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.configuration = configuration;
             this.poeTradeClient = poeTradeClient;
             this.nativeBrowser = nativeBrowser;
+            this.statDataService = statDataService;
         }
 
-        public async Task<FetchResult<string>> SearchBulk(ParsedItem item)
+        public async Task<FetchResult<string>> SearchBulk(Item item)
         {
             try
             {
@@ -78,7 +81,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<string>> Search(ParsedItem item, SearchFilters filters = null, List<StatFilter> stats = null)
+        public async Task<FetchResult<string>> Search(Item item, SearchFilters filters = null, List<StatFilter> stats = null)
         {
             try
             {
@@ -120,19 +123,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 }
                 else
                 {
-                    request.Query.Type = item.TypeLine;
+                    request.Query.Type = item.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "nonunique",
                     };
                 }
 
-                if (item.MapTier > 0)
+                if (item.Properties.MapTier > 0)
                 {
                     request.Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()
                     {
-                        Min = item.MapTier,
-                        Max = item.MapTier,
+                        Min = item.Properties.MapTier,
+                        Max = item.Properties.MapTier,
                     };
                 }
 
@@ -174,7 +177,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task<FetchResult<Result>> GetResults(string queryId, List<string> ids, List<StatFilter> stats = null)
+        public async Task<FetchResult<TradeItem>> GetResults(string queryId, List<string> ids, List<StatFilter> stats = null)
         {
             try
             {
@@ -190,10 +193,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    return await JsonSerializer.DeserializeAsync<FetchResult<Result>>(content, new JsonSerializerOptions()
+                    var result = await JsonSerializer.DeserializeAsync<FetchResult<Result>>(content, new JsonSerializerOptions()
                     {
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });
+                    return new FetchResult<TradeItem>()
+                    {
+                        Id = result.Id,
+                        Result = result.Result.Select(x => new TradeItem(x, statDataService)).ToList(),
+                        Total = result.Total,
+                        Uri = result.Uri,
+                    };
                 }
             }
             catch (Exception ex)
@@ -204,7 +214,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             return null;
         }
 
-        public async Task OpenWebpage(ParsedItem item)
+        public async Task OpenWebpage(Item item)
         {
             if (item.Rarity == Rarity.Currency)
             {

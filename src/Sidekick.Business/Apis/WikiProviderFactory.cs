@@ -1,4 +1,4 @@
-using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Core.Settings;
@@ -18,7 +18,7 @@ namespace Sidekick.Business.Apis
             this.poeDbClient = poeDbClient;
         }
 
-        public void Open(ParsedItem item)
+        public void Open(Item item)
         {
             GetCurrentProvider().Open(item);
         }

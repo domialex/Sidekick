@@ -4,8 +4,24 @@ using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 {
-    public class ResultItem : Item
+    public class ResultItem
     {
+        public string Name { get; set; }
+
+        public string TypeLine { get; set; }
+
+        public bool Identified { get; set; }
+
+        [JsonPropertyName("ilvl")]
+        public int ItemLevel { get; set; }
+
+        [JsonPropertyName("frameType")]
+        public Rarity Rarity { get; set; }
+
+        public bool Corrupted { get; set; }
+
+        public Influences Influences { get; set; } = new Influences();
+
         public bool Verified { get; set; }
 
         [JsonPropertyName("w")]
@@ -38,5 +54,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         [JsonPropertyName("pseudoMods")]
         public List<string> PseudoMods { get; set; }
+
+        [JsonPropertyName("enchantMods")]
+        public List<string> EnchantMods { get; set; }
+
+        public List<Socket> Sockets { get; set; } = new List<Socket>();
+
+        public Extended Extended { get; set; } = new Extended();
     }
 }

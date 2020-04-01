@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
-using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
@@ -41,25 +41,25 @@ namespace Sidekick.Business.Apis.PoeNinja
             this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
         }
-        public PoeNinjaItem GetItem(ParsedItem item)
+        public PoeNinjaItem GetItem(Item item)
         {
-            var nameToSearch = item.TypeLine.Contains(languageProvider.Language.KeywordVaal) ? item.TypeLine : item.OriginalName;
+            var nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
 
             var query = Items.Where(x => x.Name == nameToSearch && x.Corrupted == item.Corrupted);
 
-            if (item.MapTier > 0) query = query.Where(x => x.MapTier == item.MapTier);
+            if (item.Properties.MapTier > 0) query = query.Where(x => x.MapTier == item.Properties.MapTier);
 
-            if (item.GemLevel > 0) query = query.Where(x => x.GemLevel == item.GemLevel && x.GemQuality == item.Quality);
+            if (item.Properties.GemLevel > 0) query = query.Where(x => x.GemLevel == item.Properties.GemLevel && x.GemQuality == item.Properties.Quality);
 
             return query.FirstOrDefault();
         }
 
-        public PoeNinjaCurrency GetCurrency(ParsedItem item)
+        public PoeNinjaCurrency GetCurrency(Item item)
         {
-            return Currencies.FirstOrDefault(x => x.CurrencyTypeName == item.OriginalName);
+            return Currencies.FirstOrDefault(x => x.CurrencyTypeName == item.NameLine);
         }
 
-        public double? GetItemPrice(ParsedItem item)
+        public double? GetItemPrice(Item item)
         {
             return GetCurrency(item)?.Receive.Value ?? GetItem(item)?.ChaosValue;
         }
