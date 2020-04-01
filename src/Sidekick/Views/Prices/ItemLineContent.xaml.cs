@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Views.Prices.Helpers;
 
@@ -72,22 +71,6 @@ namespace Sidekick.Views.Prices
                             case LineContentType.Augmented:
                                 range.ApplyPropertyValue(
                                    TextElement.ForegroundProperty, Brushes.LightBlue);
-                                break;
-                            case LineContentType.Cold:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.LightSkyBlue);
-                                break;
-                            case LineContentType.Fire:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.DeepPink);
-                                break;
-                            case LineContentType.Lightning:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.LightYellow);
-                                break;
-                            case LineContentType.Chaos:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.Purple);
                                 break;
                         }
                     }
