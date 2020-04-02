@@ -70,14 +70,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
-                    case "pseudo": suffix = "\\ *(?:\\n+|$)"; patterns = PseudoPatterns; break;
+                    case "pseudo": suffix = "(?:\\n|(?<!\\n.*)$)"; patterns = PseudoPatterns; break;
                     case "delve":
                     case "monster":
-                    case "explicit": suffix = "\\ *(?:\\n+|$)"; patterns = ExplicitPatterns; break;
-                    case "implicit": suffix = "\\ *(?:\\(implicit\\)|$)"; patterns = ImplicitPatterns; break;
-                    case "enchant": suffix = "\\ *(?:\\(enchant\\)|$)"; patterns = EnchantPatterns; break;
-                    case "crafted": suffix = "\\ *(?:\\(crafted\\)|$)"; patterns = CraftedPatterns; break;
-                    case "veiled": suffix = "\\ *(?:\\(veiled\\)|$)"; patterns = VeiledPatterns; break;
+                    case "explicit": suffix = "(?:\\n|(?<!\\n.*)$)"; patterns = ExplicitPatterns; break;
+                    case "implicit": suffix = "(?:\\ \\(implicit\\)\\n|(?<!\\n.*)$)"; patterns = ImplicitPatterns; break;
+                    case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!\\n.*)$)"; patterns = EnchantPatterns; break;
+                    case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!\\n.*)$)"; patterns = CraftedPatterns; break;
+                    case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!\\n.*)$)"; patterns = VeiledPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
@@ -90,7 +90,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     pattern = increasedPattern.Replace(pattern, $"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
 
-                    entry.Pattern = new Regex($"(?:^|\\n+){pattern}{suffix}");
+                    entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
                     patterns.Add(entry);
                 }
             }
