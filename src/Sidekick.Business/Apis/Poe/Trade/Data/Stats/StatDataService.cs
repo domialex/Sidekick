@@ -119,6 +119,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             FillPseudo(mods.Pseudo, mods.Enchant);
             FillPseudo(mods.Pseudo, mods.Crafted);
 
+            mods.Pseudo.ForEach(x =>
+            {
+                x.Text = ParseHashPattern.Replace(x.Text, ((int)x.Values[0]).ToString(), 1);
+            });
+
             return mods;
         }
 
@@ -180,11 +185,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     }
                 }
             }
-
-            pseudoMods.ForEach(x =>
-            {
-                x.Text = ParseHashPattern.Replace(x.Text, ((int)x.Values[0]).ToString(), 1);
-            });
         }
 
         public StatData GetById(string id)
