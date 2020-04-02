@@ -74,7 +74,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                     continue;
                 }
 
-                var text = texts.FirstOrDefault(x => definition.Pattern.IsMatch($"\n{x}\n"));
+                var text = texts.FirstOrDefault(x => definition.Pattern.IsMatch(x));
                 var mod = mods.FirstOrDefault(x => x.Magnitudes.Any(y => y.Hash == definition.Id));
 
                 modifiers.Add(new Modifier()

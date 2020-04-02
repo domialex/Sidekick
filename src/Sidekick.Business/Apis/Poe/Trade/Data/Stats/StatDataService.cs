@@ -70,14 +70,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
-                    case "pseudo": suffix = "\\ *\\n+"; patterns = PseudoPatterns; break;
+                    case "pseudo": suffix = "\\ *(?:\\n+|$)"; patterns = PseudoPatterns; break;
                     case "delve":
                     case "monster":
-                    case "explicit": suffix = "\\ *\\n+"; patterns = ExplicitPatterns; break;
-                    case "implicit": suffix = "\\ *\\(implicit\\)"; patterns = ImplicitPatterns; break;
-                    case "enchant": suffix = "\\ *\\(enchant\\)"; patterns = EnchantPatterns; break;
-                    case "crafted": suffix = "\\ *\\(crafted\\)"; patterns = CraftedPatterns; break;
-                    case "veiled": suffix = "\\ *\\(veiled\\)"; patterns = VeiledPatterns; break;
+                    case "explicit": suffix = "\\ *(?:\\n+|$)"; patterns = ExplicitPatterns; break;
+                    case "implicit": suffix = "\\ *(?:\\(implicit\\)|$)"; patterns = ImplicitPatterns; break;
+                    case "enchant": suffix = "\\ *(?:\\(enchant\\)|$)"; patterns = EnchantPatterns; break;
+                    case "crafted": suffix = "\\ *(?:\\(crafted\\)|$)"; patterns = CraftedPatterns; break;
+                    case "veiled": suffix = "\\ *(?:\\(veiled\\)|$)"; patterns = VeiledPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
@@ -90,7 +90,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     pattern = increasedPattern.Replace(pattern, $"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
 
-                    entry.Pattern = new Regex($"\\n+{pattern}{suffix}");
+                    entry.Pattern = new Regex($"(?:^|\\n+){pattern}{suffix}");
                     patterns.Add(entry);
                 }
             }
@@ -122,6 +122,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             return mods;
         }
 
+        private Regex ParseHashPattern = new Regex("\\#");
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             foreach (var x in patterns
@@ -141,6 +142,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                         if (double.TryParse(result.Groups[index].Value, out var parsedValue))
                         {
                             modifier.Values.Add(parsedValue);
+                            modifier.Text = ParseHashPattern.Replace(modifier.Text, result.Groups[index].Value, 1);
                         }
                     }
                 }
@@ -178,6 +180,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     }
                 }
             }
+
+            pseudoMods.ForEach(x =>
+            {
+                x.Text = ParseHashPattern.Replace(x.Text, ((int)x.Values[0]).ToString(), 1);
+            });
         }
 
         public StatData GetById(string id)
