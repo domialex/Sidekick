@@ -427,6 +427,13 @@ namespace Sidekick.Views.Prices
                 IsFetching = true;
                 var getResult = await tradeSearchService.GetResults(QueryResult.Id, ids, GetStats());
                 IsFetching = false;
+
+                if (getResult == null)
+                {
+                    IsError = true;
+                    return;
+                }
+
                 if (getResult.Result.Any())
                 {
                     Results.AddRange(getResult.Result.Select(result => new PriceItem(result)

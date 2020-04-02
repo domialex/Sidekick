@@ -23,6 +23,7 @@ namespace Sidekick.Views.Prices
         public ItemMod()
         {
             InitializeComponent();
+            Container.DataContext = this;
         }
 
         public static void OnTextChanged(

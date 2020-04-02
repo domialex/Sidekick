@@ -31,36 +31,41 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
             ParseMods(statDataService,
                 Modifiers.Crafted,
                 result.Item.CraftedMods,
-                result.Item.Extended.Mods.Crafted,
-                result.Item.Extended.Hashes.Crafted);
+                result.Item.Extended.Mods?.Crafted,
+                result.Item.Extended.Hashes?.Crafted);
 
             ParseMods(statDataService,
                 Modifiers.Enchant,
                 result.Item.EnchantMods,
-                result.Item.Extended.Mods.Enchant,
-                result.Item.Extended.Hashes.Enchant);
+                result.Item.Extended.Mods?.Enchant,
+                result.Item.Extended.Hashes?.Enchant);
 
             ParseMods(statDataService,
                 Modifiers.Explicit,
                 result.Item.ExplicitMods,
-                result.Item.Extended.Mods.Explicit,
-                result.Item.Extended.Hashes.Explicit);
+                result.Item.Extended.Mods?.Explicit,
+                result.Item.Extended.Hashes?.Explicit);
 
             ParseMods(statDataService,
                 Modifiers.Implicit,
                 result.Item.ImplicitMods,
-                result.Item.Extended.Mods.Implicit,
-                result.Item.Extended.Hashes.Implicit);
+                result.Item.Extended.Mods?.Implicit,
+                result.Item.Extended.Hashes?.Implicit);
 
             ParseMods(statDataService,
                 Modifiers.Pseudo,
                 result.Item.PseudoMods,
-                result.Item.Extended.Mods.Pseudo,
-                result.Item.Extended.Hashes.Pseudo);
+                result.Item.Extended.Mods?.Pseudo,
+                result.Item.Extended.Hashes?.Pseudo);
         }
 
         private void ParseMods(IStatDataService statDataService, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
         {
+            if (mods == null || hashes == null)
+            {
+                return;
+            }
+
             for (var index = 0; index < hashes.Count; index++)
             {
                 var definition = statDataService.GetById(hashes[index].Value);
@@ -77,6 +82,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                     Id = definition.Id,
                     Text = text ?? definition.Text,
                     Tier = mod?.Tier,
+                    TierName = mod?.Name,
                 });
             }
         }
