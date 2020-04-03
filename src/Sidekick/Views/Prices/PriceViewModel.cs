@@ -171,10 +171,10 @@ namespace Sidekick.Views.Prices
             }
 
             InitializeMods(Item.Modifiers.Pseudo);
+            InitializeMods(Item.Modifiers.Enchant);
             InitializeMods(Item.Modifiers.Implicit);
             InitializeMods(Item.Modifiers.Explicit);
             InitializeMods(Item.Modifiers.Crafted);
-            InitializeMods(Item.Modifiers.Enchant);
 
             if (Filters.Count == 0)
             {
@@ -198,7 +198,9 @@ namespace Sidekick.Views.Prices
                     category = new PriceFilterCategory();
                 }
 
-                InitializeFilter(category, nameof(StatFilter), modifier.Id, modifier.Text, modifier.Values,
+                InitializeFilter(category, nameof(StatFilter), modifier.Id,
+                    !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
+                    modifier.Values,
                     enabled: settings.Modifiers.Contains(modifier.Id)
                 );
             }
