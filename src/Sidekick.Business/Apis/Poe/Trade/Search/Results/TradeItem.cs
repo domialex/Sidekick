@@ -61,7 +61,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         private void ParseMods(IStatDataService statDataService, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
         {
-            if (mods == null || hashes == null)
+            if (modifiers == null || mods == null || hashes == null)
             {
                 return;
             }
@@ -75,7 +75,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                 }
 
                 var text = texts.FirstOrDefault(x => definition.Pattern.IsMatch(x));
-                var mod = mods.FirstOrDefault(x => x.Magnitudes.Any(y => y.Hash == definition.Id));
+                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == definition.Id));
 
                 modifiers.Add(new Modifier()
                 {
