@@ -183,6 +183,9 @@
   <data name="Other_RetainClipboard" xml:space="preserve">
     <value>Retain Clipboard Data</value>
   </data>
+  <data name="Other_ShowSplashScreen" xml:space="preserve">
+    <value>Show the splash screen when starting</value>
+  </data>
   <data name="Other_TabScroll" xml:space="preserve">
     <value>Enable Tab Scrolling with Ctrl + Scroll</value>
   </data>
