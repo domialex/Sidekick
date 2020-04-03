@@ -70,15 +70,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             }
         }
 
-        public ItemData ParseItemData(ItemTextBlock itemText)
+        public ItemData ParseItemData(ItemSections itemText)
         {
             var results = new List<ItemData>();
 
-            if (Patterns.TryGetValue(itemText.Header[1], out var itemData))
+            if (Patterns.TryGetValue(itemText.HeaderSection[1], out var itemData))
             {
                 results.AddRange(itemData);
             }
-            else if (itemText.Header.Length > 2 && Patterns.TryGetValue(itemText.Header[2], out itemData))
+            else if (itemText.HeaderSection.Length > 2 && Patterns.TryGetValue(itemText.HeaderSection[2], out itemData))
             {
                 results.AddRange(itemData);
             }

@@ -76,7 +76,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             ChanceToBlock = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionChanceToBlock)}[^\\r\\n\\d]*(\\d+)");
             Quality = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
             Level = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
-            MapTier = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
+            MapTier = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
             ItemQuantity = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemQuantity)}[^\\r\\n\\d]*(\\d+)");
             ItemRarity = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemRarity)}[^\\r\\n\\d]*(\\d+)");
             MonsterPackSize = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
@@ -108,12 +108,12 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitInfluences()
         {
-            Crusader = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceCrusader)}");
-            Elder = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceElder)}");
-            Hunter = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceHunter)}");
-            Redeemer = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceRedeemer)}");
-            Shaper = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceShaper)}");
-            Warlord = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceWarlord)}");
+            Crusader = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceCrusader)}");
+            Elder = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceElder)}");
+            Hunter = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceHunter)}");
+            Redeemer = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceRedeemer)}");
+            Shaper = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceShaper)}");
+            Warlord = new Regex($"{Regex.Escape(languageProvider.Language.InfluenceWarlord)}");
         }
         #endregion
     }

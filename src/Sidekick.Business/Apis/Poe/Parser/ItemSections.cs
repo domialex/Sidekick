@@ -1,35 +1,37 @@
 namespace Sidekick.Business.Apis.Poe.Parser
 {
-    public readonly struct ItemTextBlock
+    public readonly struct ItemSections
     {
 
         /// <summary>
         /// Blocks containing arrays of individual lines. For accessing specific lines.
         /// </summary>
-        public string[][] SplitBlocks { get; }
+        public string[][] SplitSections { get; }
 
         /// <summary>
         /// Blocks with the contents as single string. For parsing the whole block.
         /// </summary>
-        public string[] WholeBlocks { get; }
+        public string[] WholeSections { get; }
 
-        public ItemTextBlock(string[][] splitBlocks, string[] wholeBlocks)
+        public ItemSections(string[][] splitSections, string[] wholeSections)
         {
-            SplitBlocks = splitBlocks;
-            WholeBlocks = wholeBlocks;
+            SplitSections = splitSections;
+            WholeSections = wholeSections;
         }
 
-        public string[] Header => SplitBlocks[0];
+        public string[] HeaderSection => SplitSections[0];
 
-        public string Rarity => Header[0];
+        public string Rarity => HeaderSection[0];
 
-        public string MapPropertiesBlock => WholeBlocks[1];
+        public string MapPropertiesSection => WholeSections[1];
+
+        public string MapInfluenceSection => WholeSections[3];
 
         public bool TryGetVaalGemName(out string gemName)
         {
-            if(SplitBlocks.Length > 7)
+            if(SplitSections.Length > 7)
             {
-                gemName = SplitBlocks[5][0];
+                gemName = SplitSections[5][0];
                 return true;
             }
 
@@ -39,16 +41,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         public bool TryGetMapTierLine(out string mapTierLine)
         {
-            if(SplitBlocks.Length > 1)
+            if(SplitSections.Length > 1)
             {
-                mapTierLine = SplitBlocks[1][0];
+                mapTierLine = SplitSections[1][0];
                 return true;
             }
 
             mapTierLine = null;
             return false;
         }
-
-        
     }
 }

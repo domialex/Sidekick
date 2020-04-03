@@ -4,6 +4,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
     public interface IItemDataService
     {
-        ItemData ParseItemData(ItemTextBlock itemText);
+        ItemData ParseItemData(ItemSections itemText);
     }
 }
