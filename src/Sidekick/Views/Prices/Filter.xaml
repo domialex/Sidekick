@@ -27,7 +27,7 @@
     </UserControl.Resources>
 
     <StackPanel Name="Container">
-        <CheckBox IsChecked="{Binding Item.Enabled}" ToolTip="{Binding Item.Text}">
+        <CheckBox IsChecked="{Binding Item.Enabled}">
             <RichTextBox
                 Name="RichText"
                 Margin="0"
@@ -36,6 +36,7 @@
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 Foreground="White"
+                IsHitTestVisible="False"
                 IsReadOnly="True" />
         </CheckBox>
         <StackPanel Visibility="{Binding Item.HasRange, Converter={StaticResource BooleanToVisibility}}">
