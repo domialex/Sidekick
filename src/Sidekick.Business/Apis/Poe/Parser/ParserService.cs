@@ -9,11 +9,10 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Parser
 {
-    public class ParserService : IOnAfterInit, IParserService
+    public class ParserService : IParserService
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
@@ -36,14 +35,8 @@ namespace Sidekick.Business.Apis.Poe.Parser
             itemNameTokenizer = new ItemNameTokenizer();
         }
 
-        private const string NEWLINE_PATTERN = "\r\n";
+        private readonly Regex newLinePattern = new Regex("[\\r\\n]+");
         private const string SEPARATOR_PATTERN = "--------";
-
-        public Task OnAfterInit()
-        {
-            // Not needed?
-            return Task.CompletedTask;
-        }
 
         public async Task<ParsedItem> ParseItem(string itemText)
         {
@@ -55,7 +48,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);
                 var splitSections = wholeSections
-                    .Select(block => block.Split(NEWLINE_PATTERN, StringSplitOptions.RemoveEmptyEntries))
+                    .Select(block => newLinePattern.Split(block))
                     .ToArray();
 
                 var itemSections = new ItemSections(splitSections, wholeSections);
