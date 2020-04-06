@@ -4,41 +4,42 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Views.Prices.Helpers;
 
 namespace Sidekick.Views.Prices
 {
     /// <summary>
-    /// Interaction logic for Agent.xaml
+    /// Interaction logic for Filter.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class ItemMod : UserControl
+    public partial class Filter : UserControl
     {
         private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
 
-        [DependencyProperty(OnPropertyChanged = nameof(OnTextChanged))]
-        public Modifier Modifier { get; set; }
+        [DependencyProperty(OnPropertyChanged = nameof(OnItemChanged))]
+        public PriceFilter Item { get; set; }
 
-        public ItemMod()
+        public Filter()
         {
             InitializeComponent();
             Container.DataContext = this;
         }
 
-        public static void OnTextChanged(
-        DependencyObject dependencyObject,
-        DependencyPropertyChangedEventArgs eventArgs)
+        public static void OnItemChanged(
+            DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs eventArgs)
         {
-            var itemMod = (ItemMod)dependencyObject;
+            var filter = (Filter)dependencyObject;
 
-            itemMod.RichText.Document.Blocks.Clear();
-            itemMod.RichText.Document.Blocks.Add(new Paragraph(new Run(itemMod.Modifier.Text)));
+            filter.RichText.Document.Blocks.Clear();
+            filter.RichText.Document.Blocks.Add(new Paragraph(new Run(filter.Item.Text)));
+            filter.RichText.Foreground = filter.Item.Type == nameof(StatFilter) ? Brushes.White : Brushes.LightGray;
 
-            var matches = Highlight.Matches(itemMod.Modifier.Text);
+            var matches = Highlight.Matches(filter.Item.Text);
 
             // create textpointer translator
-            var trans = new TextPointerTranslator(itemMod.RichText.Document);
+            var trans = new TextPointerTranslator(filter.RichText.Document);
 
             // enumerate
             for (var i = 0; i < matches.Count; i++)

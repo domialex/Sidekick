@@ -1,9 +1,9 @@
-using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Business.Apis
 {
     public interface IWikiProvider
     {
-        void Open(ParsedItem item);
+        void Open(Item item);
     }
 }

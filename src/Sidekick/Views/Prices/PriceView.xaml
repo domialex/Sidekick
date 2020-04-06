@@ -25,37 +25,31 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
-    <DockPanel>
-        <local:ItemPreview DockPanel.Dock="Right" ViewModel="{Binding}" />
+    <StackPanel>
+        <Grid
+            Width="900"
+            Height="500"
+            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="380" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
-        <local:Filters
-            DockPanel.Dock="Left"
-            ViewModel="{Binding}"
-            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}" />
+            <local:Filters
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                ViewModel="{Binding}" />
 
-        <StackPanel Margin="{StaticResource Spacer}" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
-            <Label
-                Margin="{StaticResource SpacerBottom}"
-                VerticalAlignment="Center"
-                Content="{Binding Item.Name}"
-                FontSize="16"
-                FontWeight="Bold"
-                Foreground="{Binding ItemColor}"
-                Visibility="{Binding Item.Name, Converter={StaticResource StringToVisibility}}" />
-
-            <Label
-                Margin="{StaticResource SpacerBottom}"
-                VerticalAlignment="Center"
-                Content="{Binding Item.TypeLine}"
-                FontSize="16"
-                FontWeight="Bold"
-                Foreground="{Binding ItemColor}"
-                Visibility="{Binding Item.Name, Converter={StaticResource ReverseStringToVisibility}}" />
-
-            <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+            <StackPanel Grid.Row="0" Grid.Column="1">
                 <ListView
                     Name="ItemList"
-                    Height="260"
+                    Height="450"
+                    Margin="0"
                     ItemsSource="{Binding Path=Results}"
                     ScrollViewer.CanContentScroll="False"
                     SelectionChanged="ItemList_SelectionChanged">
@@ -67,12 +61,12 @@
                                     Foreground="White"
                                     IsEnabled="False" />
                             </GridViewColumn>
-                            <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=Item.Listing.Account.LastCharacterName}">
-                                <GridViewColumnHeader
-                                    Content="{loc:Loc OverlayCharacter}"
-                                    Foreground="White"
-                                    IsEnabled="False" />
-                            </GridViewColumn>
+                            <!--<GridViewColumn DisplayMemberBinding="{Binding Path=Item.Listing.Account.LastCharacterName}">
+                            <GridViewColumnHeader
+                                Content="{loc:Loc OverlayCharacter}"
+                                Foreground="White"
+                                IsEnabled="False" />
+                        </GridViewColumn>-->
                             <GridViewColumn Width="80">
                                 <GridViewColumnHeader
                                     Content="{loc:Loc OverlayPrice}"
@@ -110,39 +104,36 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-            </GroupBox>
 
-            <StackPanel Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
-                <ProgressBar
-                    Height="16"
-                    IsIndeterminate="True"
-                    Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
 
-                <Grid Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Grid Height="50">
+                    <ProgressBar
+                        Height="16"
+                        Margin="{StaticResource SpacerX}"
+                        IsIndeterminate="True"
+                        Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
 
-                    <TextBlock
+                    <StackPanel
+                        Margin="{StaticResource SpacerX}"
                         VerticalAlignment="Center"
-                        Text="{Binding PredictionText}"
-                        Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{Binding PoeNinjaText}"
-                        Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
-
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                        <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
-                            <TextBlock Text="{Binding CountString}" />
-                        </Hyperlink>
-                    </TextBlock>
+                        Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
+                        <TextBlock>
+                            <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
+                                <TextBlock Text="{Binding CountString}" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock Text="{Binding PredictionText}" Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
+                        <TextBlock Text="{Binding PoeNinjaText}" Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
+                    </StackPanel>
                 </Grid>
             </StackPanel>
 
-
-        </StackPanel>
+            <local:ItemPreview
+                Grid.RowSpan="2"
+                Grid.Column="2"
+                Height="600"
+                ViewModel="{Binding}" />
+        </Grid>
 
         <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
             <GroupBox>
@@ -153,5 +144,5 @@
                 Height="16"
                 IsIndeterminate="True" />
         </StackPanel>
-    </DockPanel>
+    </StackPanel>
 </base:BaseWindow>

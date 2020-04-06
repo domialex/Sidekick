@@ -106,7 +106,6 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
                 ExecuteKeybind("Advanced Search", configuration.Key_AdvancedSearch, input, OnAdvancedSearch, ref task);
 
-
                 // We need to make sure some key combinations make it into the game if the keybind returns false
                 SendInputIf("Ctrl+F", input, task);
                 SendInputIf("Space", input, task);

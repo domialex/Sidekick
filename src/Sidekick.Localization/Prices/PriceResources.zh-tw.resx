@@ -150,9 +150,6 @@
   <data name="Error" xml:space="preserve">
     <value>無法搜尋此物品的價格</value>
   </data>
-  <data name="Filters" xml:space="preserve">
-    <value>篩選器</value>
-  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>每秒造成傷害</value>
   </data>
@@ -167,9 +164,6 @@
   </data>
   <data name="Filters_PDps" xml:space="preserve">
     <value>每秒造成物理傷害</value>
-  </data>
-  <data name="Filters_Properties" xml:space="preserve">
-    <value>屬性</value>
   </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>物品等級</value>

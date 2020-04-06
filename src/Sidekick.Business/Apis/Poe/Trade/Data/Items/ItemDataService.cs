@@ -115,11 +115,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                 }
             }
 
-            return results
-                .OrderBy(x => x.Rarity == Rarity.Unique || x.Rarity == Rarity.DivinationCard ? 0 : 1)
-                .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
-                .ThenByDescending(x => x.Rarity == Rarity.Gem ? x.Text.Length : 0)
-                .FirstOrDefault();
+            IEnumerable<ItemData> orderedResults = results;
+
+            if (orderedResults.All(x => x.Rarity == Rarity.Unknown))
+            {
+                orderedResults = results.OrderBy(x => x.Rarity == Rarity.Unique || x.Rarity == Rarity.DivinationCard ? 0 : 1);
+            }
+            else
+            {
+                orderedResults = results.OrderBy(x => x.Rarity == Rarity.Unique || x.Rarity == Rarity.DivinationCard ? 0 : 1)
+                    .ThenByDescending(x => x.Rarity == Rarity.Gem ? x.Text.Length : 0);
+            }
+
+            return orderedResults.FirstOrDefault();
         }
     }
 }
