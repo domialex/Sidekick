@@ -4,12 +4,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
     {
 
         /// <summary>
-        /// Blocks containing arrays of individual lines. For accessing specific lines.
+        /// Sections containing arrays of individual lines. For accessing specific lines.
         /// </summary>
         public string[][] SplitSections { get; }
 
         /// <summary>
-        /// Blocks with the contents as single string. For parsing the whole block.
+        /// Sections with the contents as single string. For parsing the whole section.
         /// </summary>
         public string[] WholeSections { get; }
 
