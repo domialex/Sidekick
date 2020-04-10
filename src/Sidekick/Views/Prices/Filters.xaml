@@ -30,24 +30,26 @@
         <GroupBox Height="500" Margin="0">
             <GroupBox.Header>
                 <Grid MinHeight="60">
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.ItemColor}"
-                            Text="{Binding ViewModel.Item.NameLine}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.Item.NameLine, Converter={StaticResource StringToVisibility}}" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            FontWeight="Bold"
-                            Foreground="{Binding ViewModel.ItemColor}"
-                            Text="{Binding ViewModel.Item.TypeLine}"
-                            TextWrapping="WrapWithOverflow"
-                            Visibility="{Binding ViewModel.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
-                        <local:Sockets Item="{Binding ViewModel.Item}" />
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <StackPanel Width="175" VerticalAlignment="Center">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="{Binding ViewModel.ItemColor}"
+                                Text="{Binding ViewModel.Item.NameLine}"
+                                TextWrapping="WrapWithOverflow"
+                                Visibility="{Binding ViewModel.Item.NameLine, Converter={StaticResource StringToVisibility}}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="{Binding ViewModel.ItemColor}"
+                                Text="{Binding ViewModel.Item.TypeLine}"
+                                TextWrapping="WrapWithOverflow"
+                                Visibility="{Binding ViewModel.Item.TypeLine, Converter={StaticResource StringToVisibility}}" />
+                            <local:Sockets Item="{Binding ViewModel.Item}" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </GroupBox.Header>
@@ -68,8 +70,7 @@
                                 <Border
                                     Margin="0,2,0,5"
                                     BorderBrush="Gray"
-                                    BorderThickness="0,0,0,1"
-                                    Visibility="{Binding ViewModel.PreviewItem.Item.Item.Properties, Converter={StaticResource NullableToVisibility}}" />
+                                    BorderThickness="0,0,0,1" />
 
                             </StackPanel>
                         </DataTemplate>
