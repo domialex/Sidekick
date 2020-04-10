@@ -259,6 +259,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show the splash screen when starting.
+        /// </summary>
+        public static string Other_ShowSplashScreen {
+            get {
+                return ResourceManager.GetString("Other_ShowSplashScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Tab Scrolling with Ctrl + Scroll.
         /// </summary>
         public static string Other_TabScroll {

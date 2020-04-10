@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Extensions;
 using Sidekick.Localization.Prices;
@@ -10,96 +9,96 @@ namespace Sidekick.Views.Prices
 {
     public partial class PriceItem
     {
-        public PriceItem(Result result)
+        public PriceItem(TradeItem result)
         {
-            if (result.Listing.Price != null)
-            {
-                if (result.Listing.Price.Amount % 1 == 0)
-                {
-                    Amount = result.Listing.Price.Amount.ToString("N0");
-                }
-                else
-                {
-                    Amount = result.Listing.Price.Amount.ToString("N1");
-                }
-            }
-            Age = GetHumanReadableTimeSpan(result.Listing.Indexed);
             Item = result;
 
-            if (Item.Item.Requirements == null)
+            if (Item.Requirements != null)
             {
-                Item.Item.Requirements = new List<LineContent>();
-            }
-            foreach (var requirement in Item.Item.Requirements)
-            {
-                requirement.Name = $"{PriceResources.Requires} {requirement.Name}";
-            }
-            Item.Item.Requirements.Add(new LineContent()
-            {
-                DisplayMode = 0,
-                Name = PriceResources.ItemLevel,
-                Values = new List<LineContentValue>
+                var requires = new LineContent()
                 {
-                    new LineContentValue()
+                    DisplayMode = -1,
+                    Name = PriceResources.Requires,
+                    Values = new List<LineContentValue>
                     {
-                        Type = LineContentType.Simple,
-                        Value = Item.Item.ItemLevel.ToString(),
+                        new LineContentValue()
+                        {
+                            Type = LineContentType.Simple,
+                            Value = string.Join(", ", Item.Requirements.Select(x => { if (x.DisplayMode == 0) x.DisplayMode = -1; return x.Parsed; })),
+                        }
                     }
-                },
-                Order = -1,
-            });
-            Item.Item.Requirements = Item.Item.Requirements.OrderBy(x => x.Order).ToList();
+                };
+
+                Item.Requirements.Clear();
+                Item.Requirements.Add(requires);
+            }
+
+            if (Item.ItemLevel > 0)
+            {
+                if (Item.Requirements == null)
+                {
+                    Item.Requirements = new List<LineContent>();
+                }
+
+                Item.Requirements.Add(new LineContent()
+                {
+                    DisplayMode = 0,
+                    Name = PriceResources.ItemLevel,
+                    Values = new List<LineContentValue>
+                    {
+                        new LineContentValue()
+                        {
+                            Type = LineContentType.Simple,
+                            Value = Item.ItemLevel.ToString(),
+                        }
+                    },
+                    Order = -1,
+                });
+            }
+
+            if (Item.Requirements != null)
+            {
+                Item.Requirements = Item.Requirements.OrderBy(x => x.Order).ToList();
+            }
         }
 
-        public Result Item { get; set; }
+        public TradeItem Item { get; set; }
 
-        public string Color => Item?.Item.Rarity.GetColor();
+        public string Color => Item?.Rarity.GetColor();
 
-        public string Amount { get; set; }
-        public string ImageUrl { get; set; }
-        public string Age { get; set; }
-
-        public List<List<string>> Sockets
+        public string Amount
         {
             get
             {
-                var sockets = new List<List<string>>();
-
-                foreach (var socket in Item.Item.Sockets
-                    .OrderBy(x => x.Group)
-                    .GroupBy(x => x.Group)
-                    .ToList())
+                if (Item.Listing.Price == null)
                 {
-                    sockets.Add(socket
-                        .Select(x => x.Color switch
-                        {
-                            SocketColor.Blue => "#2E86C1",
-                            SocketColor.Green => "#28B463",
-                            SocketColor.Red => "#C0392B",
-                            SocketColor.White => "#FBFCFC",
-                            SocketColor.Abyss => "#839192",
-                            _ => throw new Exception("Invalid socket"),
-                        })
-                        .ToList());
+                    return null;
                 }
 
-                return sockets;
+                if (Item.Listing.Price.Amount % 1 == 0)
+                {
+                    return Item.Listing.Price.Amount.ToString("N0");
+                }
+                return Item.Listing.Price.Amount.ToString("N2");
             }
         }
-
-        private string GetHumanReadableTimeSpan(DateTimeOffset time)
+        public string ImageUrl { get; set; }
+        public string Age
         {
-            var span = DateTimeOffset.Now - time;
+            get
+            {
+                var span = DateTimeOffset.Now - Item.Listing.Indexed;
 
-            if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
-            if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);
-            if (span.Hours > 1) return string.Format(PriceResources.Age_Hours, span.Hours);
-            if (span.Hours == 1) return string.Format(PriceResources.Age_Hour, span.Hours);
-            if (span.Minutes > 1) return string.Format(PriceResources.Age_Minutes, span.Minutes);
-            if (span.Minutes == 1) return string.Format(PriceResources.Age_Minute, span.Minutes);
-            if (span.Seconds > 10) return string.Format(PriceResources.Age_Seconds, span.Seconds);
+                if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
+                if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);
+                if (span.Hours > 1) return string.Format(PriceResources.Age_Hours, span.Hours);
+                if (span.Hours == 1) return string.Format(PriceResources.Age_Hour, span.Hours);
+                if (span.Minutes > 1) return string.Format(PriceResources.Age_Minutes, span.Minutes);
+                if (span.Minutes == 1) return string.Format(PriceResources.Age_Minute, span.Minutes);
+                if (span.Seconds > 10) return string.Format(PriceResources.Age_Seconds, span.Seconds);
 
-            return PriceResources.Age_Now;
+                return PriceResources.Age_Now;
+            }
         }
     }
 }

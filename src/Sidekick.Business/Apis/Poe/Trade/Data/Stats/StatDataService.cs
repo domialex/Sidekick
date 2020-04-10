@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
@@ -12,12 +13,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly IPseudoStatDataService pseudoStatDataService;
+        private readonly ILanguageProvider languageProvider;
 
         public StatDataService(IPoeTradeClient poeApiClient,
-            IPseudoStatDataService pseudoStatDataService)
+            IPseudoStatDataService pseudoStatDataService,
+            ILanguageProvider languageProvider)
         {
             this.poeApiClient = poeApiClient;
             this.pseudoStatDataService = pseudoStatDataService;
+            this.languageProvider = languageProvider;
         }
 
         private List<StatData> PseudoPatterns { get; set; }
@@ -49,6 +53,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+            var increasedPattern = new Regex($"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
 
             foreach (var category in categories)
             {
@@ -65,14 +70,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 switch (first.Id.Split('.').First())
                 {
                     default: continue;
-                    case "pseudo": suffix = "\\ *\\n+"; patterns = PseudoPatterns; break;
+                    case "pseudo": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = PseudoPatterns; break;
                     case "delve":
                     case "monster":
-                    case "explicit": suffix = "\\ *\\n+"; patterns = ExplicitPatterns; break;
-                    case "implicit": suffix = "\\ *\\(implicit\\)"; patterns = ImplicitPatterns; break;
-                    case "enchant": suffix = "\\ *\\(enchant\\)"; patterns = EnchantPatterns; break;
-                    case "crafted": suffix = "\\ *\\(crafted\\)"; patterns = CraftedPatterns; break;
-                    case "veiled": suffix = "\\ *\\(veiled\\)"; patterns = VeiledPatterns; break;
+                    case "explicit": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = ExplicitPatterns; break;
+                    case "implicit": suffix = "(?:\\ \\(implicit\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = ImplicitPatterns; break;
+                    case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = EnchantPatterns; break;
+                    case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = CraftedPatterns; break;
+                    case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = VeiledPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
@@ -82,19 +87,20 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     pattern = Regex.Escape(entry.Text);
                     pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
                     pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    pattern = increasedPattern.Replace(pattern, $"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
 
-                    entry.Pattern = new Regex($"\\n+{pattern}{suffix}");
+                    entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
                     patterns.Add(entry);
                 }
             }
         }
 
-        public Mods ParseMods(string text)
+        public Modifiers ParseMods(string text)
         {
             text = NewLinePattern.Replace(text, "\n");
 
-            var mods = new Mods();
+            var mods = new Modifiers();
 
             // Make sure the text ends with an empty line for our regexes to work correctly
             if (!text.EndsWith("\n"))
@@ -113,88 +119,69 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             FillPseudo(mods.Pseudo, mods.Enchant);
             FillPseudo(mods.Pseudo, mods.Crafted);
 
+            mods.Pseudo.ForEach(x =>
+            {
+                x.Text = ParseHashPattern.Replace(x.Text, ((int)x.Values[0]).ToString(), 1);
+            });
+
             return mods;
         }
 
-        private void FillMods(List<Mod> mods, List<StatData> patterns, string text)
+        private Regex ParseHashPattern = new Regex("\\#");
+        private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             foreach (var x in patterns
                 .Where(x => x.Pattern.IsMatch(text)))
             {
                 var result = x.Pattern.Match(text);
-                var magnitudes = new List<Magnitude>();
+                var modifier = new Modifier()
+                {
+                    Id = x.Id,
+                    Text = x.Text,
+                    Category = !x.Id.StartsWith("explicit") ? x.Category : null,
+                };
 
                 if (result.Groups.Count > 1)
                 {
                     for (var index = 1; index < result.Groups.Count; index++)
                     {
-                        double? value = null;
                         if (double.TryParse(result.Groups[index].Value, out var parsedValue))
                         {
-                            value = parsedValue;
+                            modifier.Values.Add(parsedValue);
+                            modifier.Text = ParseHashPattern.Replace(modifier.Text, result.Groups[index].Value, 1);
                         }
-                        magnitudes.Add(new Magnitude()
-                        {
-                            Hash = x.Id,
-                            Max = value,
-                            Min = value,
-                        });
                     }
                 }
-                else
-                {
-                    magnitudes.Add(new Magnitude()
-                    {
-                        Hash = x.Id
-                    });
-                }
 
-                mods.Add(new Mod()
-                {
-                    Magnitudes = magnitudes
-                });
+                mods.Add(modifier);
             }
         }
 
-        private void FillPseudo(List<Mod> pseudoMods, List<Mod> mods)
+        private void FillPseudo(List<Modifier> pseudoMods, List<Modifier> mods)
         {
-            var magnitudes = mods.SelectMany(x => x.Magnitudes);
-            Mod pseudoMod;
-            Magnitude mod;
-            foreach (var definition in pseudoStatDataService.Definitions)
+            Modifier pseudoMod;
+            Modifier mod;
+            foreach (var pseudoDefinition in pseudoStatDataService.Definitions)
             {
-                foreach (var modifier in definition.Modifiers)
+                foreach (var pseudoModifier in pseudoDefinition.Modifiers)
                 {
-                    mod = magnitudes.FirstOrDefault(x => modifier.Ids.Any(id => id == x.Hash));
+                    mod = mods.FirstOrDefault(x => pseudoModifier.Ids.Any(id => id == x.Id));
                     if (mod != null)
                     {
-                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Magnitudes[0].Hash == definition.Id);
+                        pseudoMod = pseudoMods.FirstOrDefault(x => x.Id == pseudoDefinition.Id);
                         if (pseudoMod == null)
                         {
-                            pseudoMod = new Mod()
+                            pseudoMod = new Modifier()
                             {
-                                Magnitudes = new List<Magnitude>()
-                                {
-                                    new Magnitude()
-                                    {
-                                        Hash = definition.Id,
-                                        Min = (int)(mod.Min * modifier.Multiplier),
-                                        Max = (int)(mod.Max * modifier.Multiplier),
-                                    }
-                                }
+                                Id = pseudoDefinition.Id,
+                                Text = pseudoDefinition.Text,
                             };
+                            pseudoMod.Values.Add((int)(mod.Values.FirstOrDefault() * pseudoModifier.Multiplier));
                             pseudoMods.Add(pseudoMod);
                         }
                         else
                         {
-                            if (pseudoMod.Magnitudes[0].Min.HasValue)
-                            {
-                                pseudoMod.Magnitudes[0].Min += (int)(mod.Min * modifier.Multiplier);
-                            }
-                            if (pseudoMod.Magnitudes[0].Max.HasValue)
-                            {
-                                pseudoMod.Magnitudes[0].Max += (int)(mod.Max * modifier.Multiplier);
-                            }
+                            pseudoMod.Values[0] += (int)(mod.Values.FirstOrDefault() * pseudoModifier.Multiplier);
                         }
                     }
                 }

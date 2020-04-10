@@ -76,17 +76,6 @@ namespace Sidekick.Views
             EnsureBounds();
         }
 
-        protected void SetWindowPositionFromBottomRight(double x, double y)
-        {
-            if (!Dispatcher.CheckAccess())
-            {
-                Dispatcher.Invoke(() => SetWindowPositionFromBottomRight(x, y));
-                return;
-            }
-
-            SetWindowPosition(x - Width, y - Height);
-        }
-
         protected void SetWindowPosition(double x, double y)
         {
             if (!Dispatcher.CheckAccess())
@@ -170,6 +159,17 @@ namespace Sidekick.Views
             return ActualWidth;
         }
 
+        protected double GetWidthPercent()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                return Dispatcher.Invoke(() => GetWidth());
+            }
+
+            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
+            return ActualWidth / screen.Width;
+        }
+
         protected double GetHeight()
         {
             if (!Dispatcher.CheckAccess())
@@ -178,6 +178,24 @@ namespace Sidekick.Views
             }
 
             return ActualHeight;
+        }
+
+        protected double GetHeightPercent()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                return Dispatcher.Invoke(() => GetWidth());
+            }
+
+            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
+            return ActualHeight / screen.Height;
+        }
+
+        protected double GetMouseXPercent()
+        {
+            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
+
+            return (double)(MyCursor.Position.X - screen.X) / screen.Width;
         }
     }
 }

@@ -68,7 +68,6 @@ namespace Sidekick
             initializer = serviceProvider.GetRequiredService<IInitializer>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
             settings = serviceProvider.GetRequiredService<SidekickSettings>();
-            viewLocator.Open<SplashScreenView>();
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
@@ -85,16 +84,19 @@ namespace Sidekick
                 });
             };
 
-            initializer.OnProgress += (a) =>
+            if (settings.ShowSplashScreen)
             {
-                if (!viewLocator.IsOpened<SplashScreenView>())
+                initializer.OnProgress += (a) =>
                 {
-                    Dispatcher.Invoke(() =>
+                    if (!viewLocator.IsOpened<SplashScreenView>())
                     {
-                        viewLocator.Open<SplashScreenView>();
-                    });
-                }
-            };
+                        Dispatcher.Invoke(() =>
+                        {
+                            viewLocator.Open<SplashScreenView>();
+                        });
+                    }
+                };
+            }
 
             initializer.OnError += (error) =>
             {

@@ -33,6 +33,7 @@ namespace Sidekick.Core.Settings
                 Key_AdvancedSearch = "Alt+D",
                 Key_Stash_Left = string.Empty,
                 Key_Stash_Right = string.Empty,
+                ShowSplashScreen = true
             };
         }
 

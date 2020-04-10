@@ -11,7 +11,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
         public string Name { get; set; }
 
         [JsonPropertyName("values")]
-        public List<List<JsonElement>> __Values { get; set; }
+        public List<List<JsonElement>> ApiValues { get; set; }
 
         public int DisplayMode { get; set; }
 
@@ -31,7 +31,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                 }
 
                 var result = new List<LineContentValue>();
-                foreach (var value in __Values)
+                foreach (var value in ApiValues)
                 {
                     if (value.Count != 2)
                     {
@@ -74,7 +74,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                         var format = Regex.Replace(Name, "%(\\d)", "{$1}");
                         return string.Format(format, Values.Select(x => x.Value).ToArray());
                     default:
-                        return Name;
+                        return $"{Name} {string.Join(", ", Values.Select(x => x.Value))}";
                 }
             }
         }

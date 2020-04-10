@@ -144,6 +144,9 @@
   <data name="Other_RetainClipboard" xml:space="preserve">
     <value>Garder les données du presse-papier</value>
   </data>
+  <data name="Other_ShowSplashScreen" xml:space="preserve">
+    <value>Afficher la fenêtre d'accueil au chargement</value>
+  </data>
   <data name="Other_TabScroll" xml:space="preserve">
     <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>
   </data>

@@ -264,9 +264,11 @@ The Saint's Treasure
 --------
 Stack Size: 1/10
 --------
-2x Exalted ORb
+2x Exalted Orb
 --------
-Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.");
+Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
+");
+
             viewLocator.Open<PriceView>();
         });
 

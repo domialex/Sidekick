@@ -217,7 +217,7 @@ namespace Sidekick.Handlers
             return false;
         }
 
-        private async Task<ParsedItem> TriggerCopyAction()
+        private async Task<Business.Apis.Poe.Models.Item> TriggerCopyAction()
         {
             var text = await clipboard.Copy();
 

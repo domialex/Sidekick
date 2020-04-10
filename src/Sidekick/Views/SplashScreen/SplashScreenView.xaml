@@ -6,6 +6,8 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.Initializer;assembly=Sidekick.Localization"
     Title="Sidekick"
     loc:Translation.ResourceManager="{x:Static resx:InitializerResources.ResourceManager}"
+    ShowInTaskbar="True"
+    Topmost="False"
     WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary Source="/Styles/Main.xaml" />

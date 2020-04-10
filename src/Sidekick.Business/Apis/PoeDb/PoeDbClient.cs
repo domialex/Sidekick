@@ -1,12 +1,15 @@
 using System;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 
 namespace Sidekick.Business.Apis.PoeDb
 {
+    /// <summary>
+    /// https://poedb.tw/us/
+    /// Only in English.
+    /// </summary>
     public class PoeDbClient : IPoeDbClient
     {
         private const string PoeDbBaseUri = "https://poedb.tw/";
@@ -26,14 +29,14 @@ namespace Sidekick.Business.Apis.PoeDb
             this.nativeBrowser = nativeBrowser;
         }
 
-        public void Open(ParsedItem item)
+        public void Open(Item item)
         {
             if (item == null)
             {
                 return;
             }
 
-            if (languageProvider.Current.Name != languageProvider.DefaultLanguage)        // Only English for now
+            if (languageProvider.Current.Name != languageProvider.DefaultLanguage)
             {
                 return;
             }
@@ -47,7 +50,7 @@ namespace Sidekick.Business.Apis.PoeDb
             nativeBrowser.Open(CreateUri(item));
         }
 
-        private Uri CreateUri(ParsedItem item)
+        private Uri CreateUri(Item item)
         {
             var subUrl = item.Rarity switch
             {
@@ -56,7 +59,7 @@ namespace Sidekick.Business.Apis.PoeDb
                 _ => SubUrlItem
             };
 
-            var searchLink = item.Name ?? item.TypeLine;
+            var searchLink = item.Name ?? item.Type;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
             return new Uri(PoeDbBaseUri + wikiLink);
         }

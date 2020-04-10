@@ -8,32 +8,32 @@ namespace Sidekick.Business.Apis.Poe.Models
         public int Group { get; set; }
 
         [JsonPropertyName("sColour")]
-        public string __Color { get; set; }
+        public string ColourString { get; set; }
 
         [JsonIgnore]
-        public SocketColor Color
+        public SocketColour Colour
         {
             get
             {
-                return __Color switch
+                return ColourString switch
                 {
-                    "B" => SocketColor.Blue,
-                    "G" => SocketColor.Green,
-                    "R" => SocketColor.Red,
-                    "W" => SocketColor.White,
-                    "A" => SocketColor.Abyss,
+                    "B" => SocketColour.Blue,
+                    "G" => SocketColour.Green,
+                    "R" => SocketColour.Red,
+                    "W" => SocketColour.White,
+                    "A" => SocketColour.Abyss,
                     _ => throw new Exception("Invalid socket"),
                 };
             }
             set
             {
-                __Color = value switch
+                ColourString = value switch
                 {
-                    SocketColor.Blue => "B",
-                    SocketColor.Green => "G",
-                    SocketColor.Red => "R",
-                    SocketColor.White => "W",
-                    SocketColor.Abyss => "A",
+                    SocketColour.Blue => "B",
+                    SocketColour.Green => "G",
+                    SocketColour.Red => "R",
+                    SocketColour.White => "W",
+                    SocketColour.Abyss => "A",
                     _ => throw new Exception("Invalid socket"),
                 };
             }

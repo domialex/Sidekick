@@ -1113,7 +1113,7 @@ namespace Sidekick.Localization.Leagues.Incursion {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 3: Topolante Mod.
+        ///   Looks up a localized string similar to Level 3: Topotante Mod.
         /// </summary>
         public static string TempestGeneratorContains {
             get {

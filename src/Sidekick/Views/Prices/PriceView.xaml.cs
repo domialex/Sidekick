@@ -30,8 +30,14 @@ namespace Sidekick.Views.Prices
             Show();
             Activate();
 
-            var position = cursor.GetCursorPosition();
-            SetWindowPositionFromBottomRight(position.X - 10, position.Y - 10);
+            if (GetMouseXPercent() > 0.5)
+            {
+                SetWindowPositionPercent(0.66 - GetWidthPercent(), 0.5 - (GetHeightPercent() / 2));
+            }
+            else
+            {
+                SetWindowPositionPercent(0.34, 0.5 - (GetHeightPercent() / 2));
+            }
 
             if (viewModel.IsError)
             {
@@ -40,6 +46,20 @@ namespace Sidekick.Views.Prices
                     await Task.Delay(1500);
                     Close();
                 });
+            }
+
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PriceViewModel.Results))
+            {
+                viewModel.Results.CollectionChanged += async (_, __) =>
+                {
+                    await Task.Delay(1000);
+                    CheckLoadNewData();
+                };
             }
         }
 
@@ -51,6 +71,11 @@ namespace Sidekick.Views.Prices
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            CheckLoadNewData();
+        }
+
+        private void CheckLoadNewData()
         {
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
 

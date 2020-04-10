@@ -70,7 +70,8 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitProperties()
         {
-            Armor = languageProvider.Language.DescriptionArmour.IntFromLineRegex();
+            Armor = languageProvider.Language.DescriptionArmour.ToRegex(prefix: "(?:^|[\\r\\n])", suffix: "[^\\r\\n\\d]*(\\d+)");
+
             EnergyShield = languageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
             Evasion = languageProvider.Language.DescriptionEvasion.IntFromLineRegex();
             ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
@@ -116,6 +117,64 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Redeemer = languageProvider.Language.InfluenceRedeemer.StartOfLineRegex();
             Shaper = languageProvider.Language.InfluenceShaper.StartOfLineRegex();
             Warlord = languageProvider.Language.InfluenceWarlord.StartOfLineRegex();
+        }
+        #endregion
+
+        #region Helpers
+        public int GetInt(Regex regex, string input)
+        {
+            if (regex != null)
+            {
+                var match = regex.Match(input);
+
+                if (match.Success)
+                {
+                    if (int.TryParse(match.Groups[1].Value, out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public double GetDouble(Regex regex, string input)
+        {
+            if (regex != null)
+            {
+                var match = regex.Match(input);
+
+                if (match.Success)
+                {
+                    if (double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public double GetDps(Regex regex, string input, double attacksPerSecond)
+        {
+            if (regex != null)
+            {
+                var match = regex.Match(input);
+
+                if (match.Success)
+                {
+                    var split = match.Groups[1].Value.Split('-');
+
+                    if (int.TryParse(split[0], out var minValue) && int.TryParse(split[1], out var maxValue))
+                    {
+                        return ((minValue + maxValue) / 2) * attacksPerSecond;
+                    }
+                }
+            }
+
+            return 0;
         }
         #endregion
     }

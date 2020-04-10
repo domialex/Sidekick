@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
-using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
@@ -14,15 +13,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
-        private readonly IParserPatterns parserPatterns;
         private Dictionary<string, List<ItemData>> nameAndTypePatterns;
         private string[] prefixes;
 
-        public ItemDataService(IPoeTradeClient poeApiClient, ILanguageProvider languageProvider, IParserPatterns parserPatterns)
+        public ItemDataService(IPoeTradeClient poeApiClient, ILanguageProvider languageProvider)
         {
             this.poeApiClient = poeApiClient;
             this.languageProvider = languageProvider;
-            this.parserPatterns = parserPatterns;
         }
 
         public async Task OnInit()

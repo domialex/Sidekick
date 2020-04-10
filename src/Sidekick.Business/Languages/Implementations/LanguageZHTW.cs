@@ -61,5 +61,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionItemQuantity => "物品數量";
         public string DescriptionItemRarity => "物品稀有度";
         public string DescriptionMonsterPackSize => "怪物群大小";
+
+        public string ModifierIncreased => "__TranslationRequired__";
+        public string ModifierReduced => "__TranslationRequired__";
     }
 }

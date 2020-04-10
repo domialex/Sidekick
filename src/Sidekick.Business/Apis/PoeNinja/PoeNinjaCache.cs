@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
-using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
@@ -20,6 +21,7 @@ namespace Sidekick.Business.Apis.PoeNinja
     {
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
+        private readonly ILanguageProvider languageProvider;
         private readonly SidekickSettings configuration;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
@@ -31,20 +33,35 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger logger,
+                             ILanguageProvider languageProvider,
                              SidekickSettings configuration)
         {
             this.client = client;
+            this.languageProvider = languageProvider;
             this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
         }
-        public PoeNinjaItem GetItem(ParsedItem item)
+        public PoeNinjaItem GetItem(Item item)
         {
-            // TODO: Ensure cached items are from the currently selected league (league change needs a few sec to update)
-            //if(!IsInitialized)
-            //{
-            //    throw new Exception("Cache not yet initialized. Call Refresh() before trying to get an item.");
-            //}
-            return Items.FirstOrDefault(x => x.Name == item.Name);
+            var nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
+
+            var query = Items.Where(x => x.Name == nameToSearch && x.Corrupted == item.Corrupted);
+
+            if (item.Properties.MapTier > 0) query = query.Where(x => x.MapTier == item.Properties.MapTier);
+
+            if (item.Properties.GemLevel > 0) query = query.Where(x => x.GemLevel == item.Properties.GemLevel && x.GemQuality == item.Properties.Quality);
+
+            return query.FirstOrDefault();
+        }
+
+        public PoeNinjaCurrency GetCurrency(Item item)
+        {
+            return Currencies.FirstOrDefault(x => x.CurrencyTypeName == item.NameLine);
+        }
+
+        public double? GetItemPrice(Item item)
+        {
+            return GetCurrency(item)?.Receive.Value ?? GetItem(item)?.ChaosValue;
         }
 
         /// <summary>

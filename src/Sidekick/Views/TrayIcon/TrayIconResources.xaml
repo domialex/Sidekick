@@ -18,12 +18,12 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand1}" Header="Unique Flask - Blood of the Karui" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand2}" Header="Rare Helmet - Vengeance Crest" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand3}" Header="Currency - Divine Orb" />
-                    <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Prophecy - The Four Feral Exiles" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand4}" Header="Divination - The Four Feral Exiles" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand5}" Header="Gants Unique - Assaut de Farrul" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand6}" Header="Rare Gloves - Death Nails" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand7}" Header="Rare Jewel - Blight Cut" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand8}" Header="Gem - Vaal Double Strike" />
-                    <MenuItem Command="{Binding DebugPriceCheckCommand9}" Header="Divination Card- The Saint's Treasure" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand9}" Header="Divination - The Saint's Treasure" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
                 <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />
@@ -40,5 +40,6 @@
     <tb:TaskbarIcon
         x:Key="TrayIcon"
         ContextMenu="{StaticResource SysTrayMenu}"
+        DoubleClickCommand="{Binding ShowSettingsCommand}"
         IconSource="../../Resources/ExaltedOrb.ico" />
 </ResourceDictionary>

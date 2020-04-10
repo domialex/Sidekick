@@ -30,6 +30,8 @@ namespace Sidekick.Core.Settings
 
         public bool EnablePricePrediction { get; set; }
 
+        public bool ShowSplashScreen { get; set; }
+
         public List<string> Modifiers { get; set; }
 
         public string Key_CloseWindow { get; set; }
