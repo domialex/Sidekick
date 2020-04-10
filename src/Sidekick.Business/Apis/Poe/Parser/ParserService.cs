@@ -20,6 +20,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private readonly IItemDataService itemDataService;
         private readonly IParserPatterns patterns;
         private readonly ItemNameTokenizer itemNameTokenizer;
+
+        private readonly Regex newLinePattern = new Regex("[\\r\\n]+");
+
+        private const string SEPARATOR_PATTERN = "--------";
+
         public ParserService(
             ILogger logger,
             ILanguageProvider languageProvider,
@@ -34,9 +39,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.patterns = patterns;
             itemNameTokenizer = new ItemNameTokenizer();
         }
-
-        private readonly Regex newLinePattern = new Regex("[\\r\\n]+");
-        private const string SEPARATOR_PATTERN = "--------";
 
         public async Task<ParsedItem> ParseItem(string itemText)
         {
@@ -84,18 +86,18 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 Rarity = itemData.Rarity
             };
 
-            switch (item.Rarity)
+            switch (itemData.Category)
             {
-                case Rarity.DivinationCard:
-                case Rarity.Currency:
-                case Rarity.Prophecy:
+                case Category.DivinationCard:
+                case Category.Currency:
+                case Category.Prophecy:
                     break;
 
-                case Rarity.Gem:
+                case Category.Gem:
                     ParseGem(item, itemSections);
                     break;
 
-                case var _ when ItemIsMap(itemSections):
+                case Category.Map:
                     ParseMap(item, itemSections);
                     ParseMods(item);
                     break;
@@ -109,11 +111,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
 
             return item;
-        }
-
-        private bool ItemIsMap(ItemSections itemTextBlock)
-        {
-            return itemTextBlock.TryGetMapTierLine(out var mapTierLine) && patterns.MapTier.IsMatch(mapTierLine);
         }
 
         private void ParseEquipmentProperties(ParsedItem item, ItemSections itemSections)
@@ -283,6 +280,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             return 0;
         }
+
         #endregion
     }
 }

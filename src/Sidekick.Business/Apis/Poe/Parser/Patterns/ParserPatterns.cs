@@ -36,18 +36,18 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         {
             Rarity = new Dictionary<Rarity, Regex>
             {
-                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.ToEndOfLineRegex() },
-                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.ToEndOfLineRegex() },
-                { Models.Rarity.Rare, languageProvider.Language.RarityRare.ToEndOfLineRegex() },
-                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.ToEndOfLineRegex() },
-                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.ToEndOfLineRegex() },
-                { Models.Rarity.Gem, languageProvider.Language.RarityGem.ToEndOfLineRegex() },
-                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.ToEndOfLineRegex() }
+                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
+                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
+                { Models.Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
+                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
+                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
+                { Models.Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
+                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
             };
 
-            ItemLevel = languageProvider.Language.DescriptionItemLevel.ToIntFromLineRegex();
-            Unidentified = languageProvider.Language.DescriptionUnidentified.ToCompiledRegex(prefix: "[\\r\\n]");
-            Corrupted = languageProvider.Language.DescriptionCorrupted.ToCompiledRegex(prefix: "[\\r\\n]");
+            ItemLevel = languageProvider.Language.DescriptionItemLevel.IntFromLineRegex();
+            Unidentified = languageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
+            Corrupted = languageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
         }
         #endregion
 
@@ -70,23 +70,23 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitProperties()
         {
-            Armor = languageProvider.Language.DescriptionArmour.ToIntFromLineRegex();
-            EnergyShield = languageProvider.Language.DescriptionEnergyShield.ToIntFromLineRegex();
-            Evasion = languageProvider.Language.DescriptionEvasion.ToIntFromLineRegex();
-            ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.ToIntFromLineRegex();
-            Level = languageProvider.Language.DescriptionLevel.ToIntFromLineRegex();
-            AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.ToDecimalFromLineRegex();
-            CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.ToDecimalFromLineRegex();
-            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.ToRangeFromLineRegex();
-            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.ToRangeFromLineRegex();
+            Armor = languageProvider.Language.DescriptionArmour.IntFromLineRegex();
+            EnergyShield = languageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
+            Evasion = languageProvider.Language.DescriptionEvasion.IntFromLineRegex();
+            ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
+            Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
+            AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
+            CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
+            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.RangeFromLineRegex();
+            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.RangeFromLineRegex();
 
-            Quality = languageProvider.Language.DescriptionQuality.ToIntFromLineRegex();
+            Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
 
-            MapTier = languageProvider.Language.DescriptionMapTier.ToIntFromLineRegex();
-            ItemQuantity = languageProvider.Language.DescriptionItemQuantity.ToIntFromLineRegex();
-            ItemRarity = languageProvider.Language.DescriptionItemRarity.ToIntFromLineRegex();
-            MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.ToIntFromLineRegex();
-            Blighted = languageProvider.Language.PrefixBlighted.ToCompiledRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
+            MapTier = languageProvider.Language.DescriptionMapTier.IntFromLineRegex();
+            ItemQuantity = languageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
+            ItemRarity = languageProvider.Language.DescriptionItemRarity.IntFromLineRegex();
+            MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
+            Blighted = languageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
         }
         #endregion
 
@@ -96,7 +96,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         private void InitSockets()
         {
             // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
-            Socket = languageProvider.Language.DescriptionSockets.ToCompiledRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
+            Socket = languageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
         }
         #endregion
 
@@ -110,12 +110,12 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitInfluences()
         {
-            Crusader = languageProvider.Language.InfluenceCrusader.ToStartOfLineRegex();
-            Elder = languageProvider.Language.InfluenceElder.ToStartOfLineRegex();
-            Hunter = languageProvider.Language.InfluenceHunter.ToStartOfLineRegex();
-            Redeemer = languageProvider.Language.InfluenceRedeemer.ToStartOfLineRegex();
-            Shaper = languageProvider.Language.InfluenceShaper.ToStartOfLineRegex();
-            Warlord = languageProvider.Language.InfluenceWarlord.ToStartOfLineRegex();
+            Crusader = languageProvider.Language.InfluenceCrusader.StartOfLineRegex();
+            Elder = languageProvider.Language.InfluenceElder.StartOfLineRegex();
+            Hunter = languageProvider.Language.InfluenceHunter.StartOfLineRegex();
+            Redeemer = languageProvider.Language.InfluenceRedeemer.StartOfLineRegex();
+            Shaper = languageProvider.Language.InfluenceShaper.StartOfLineRegex();
+            Warlord = languageProvider.Language.InfluenceWarlord.StartOfLineRegex();
         }
         #endregion
     }
