@@ -33,8 +33,7 @@ namespace Sidekick.Business
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<IPartyService, PartyService>();
-            services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
+            services.AddSingleton<IPartyService, PartyService>();            
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<IStashService, StashService>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
@@ -49,6 +48,7 @@ namespace Sidekick.Business
             services.AddInitializableService<IItemDataService, ItemDataService>();
             services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IParserService, ParserService>();
+            services.AddInitializableService<IPoeNinjaClient, PoeNinjaClient>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();
             services.AddInitializableService<IPseudoStatDataService, PseudoStatDataService>();
             services.AddInitializableService<IParserPatterns, ParserPatterns>();

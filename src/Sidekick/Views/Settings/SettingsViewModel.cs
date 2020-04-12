@@ -14,6 +14,7 @@ namespace Sidekick.Views.Settings
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
+        private readonly ILeagueDataService leagueDataService;
         private readonly IKeybindEvents keybindEvents;
         private bool isDisposed;
 
@@ -29,6 +30,7 @@ namespace Sidekick.Views.Settings
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
+            this.leagueDataService = leagueDataService;
 
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
@@ -42,8 +44,7 @@ namespace Sidekick.Views.Settings
 
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
-
-            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+            this.leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
@@ -76,9 +77,13 @@ namespace Sidekick.Views.Settings
                 keybindProperties.First(x => x.Name == keybind.Key).SetValue(Settings, keybind.Value);
             };
 
+            var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
+
             AssignValues(Settings, sidekickSettings);
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
             sidekickSettings.Save();
+
+            if (leagueHasChanged) leagueDataService.LeagueChanged();
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
@@ -86,7 +91,7 @@ namespace Sidekick.Views.Settings
             return Keybinds.ToCollection().Any(x => x.Value == keybind && x.Key != ignoreKey);
         }
 
-        private static void AssignValues(SidekickSettings src, SidekickSettings dest)
+        private void AssignValues(SidekickSettings src, SidekickSettings dest)
         {
             // iterates through src Settings (properties) and copies them to dest settings (properties)
             // If there ever comes a time, where some properties do not have to be copied, we can add attributes to exclude them
