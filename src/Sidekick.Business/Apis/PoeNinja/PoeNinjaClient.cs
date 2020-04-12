@@ -28,7 +28,7 @@ namespace Sidekick.Business.Apis.PoeNinja
              { "es", "es" }, // Spanish.
              { "fr", "fr" }, // French.
              { "kr", "ko" }, // Korean.
-             { "pt", "en" }, // Portuguese.
+             { "pt", "pt" }, // Portuguese.
              { "ru", "ru" }, // Russian.
              { "th", "th" }, // Thai.
         };
