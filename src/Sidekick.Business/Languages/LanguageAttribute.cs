@@ -4,14 +4,16 @@ namespace Sidekick.Business.Languages
 {
     public class LanguageAttribute : Attribute
     {
-        public LanguageAttribute(string name, string rarityDescription)
+        public LanguageAttribute(string name, string descriptionRarity, string languageCode)
         {
             Name = name;
-            DescriptionRarity = rarityDescription;
+            DescriptionRarity = descriptionRarity;
+            LanguageCode = languageCode;
         }
 
         public string Name { get; private set; }
         public string DescriptionRarity { get; private set; }
+        public string LanguageCode { get; private set; }
         public Type ImplementationType { get; set; }
     }
 }

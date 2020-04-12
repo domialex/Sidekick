@@ -151,7 +151,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     };
                 }
 
-                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}search/{configuration.LeagueId}";
+                var uri = new Uri($"{languageProvider.Language.PoeTradeApiBaseUrl}search/{configuration.LeagueId}");
                 var json = JsonSerializer.Serialize(request, poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
