@@ -22,6 +22,7 @@ namespace Sidekick.Views.SplashScreen
         public string StepTitle { get; set; }
 
         public int Percentage { get; set; }
+        public double ProgressValue => Percentage / 100.0;
         public string Title { get; set; }
 
         public event Action Initialized;
@@ -33,7 +34,7 @@ namespace Sidekick.Views.SplashScreen
             StepTitle = args.ServiceName;
             Percentage = args.TotalPercentage;
 
-            Title = SplashResources.ResourceManager.GetString($"Type_{args.Type.ToString()}");
+            Title = SplashResources.ResourceManager.GetString($"Type_{args.Type}");
             if (string.IsNullOrEmpty(Title))
             {
                 Title = args.Type.ToString();

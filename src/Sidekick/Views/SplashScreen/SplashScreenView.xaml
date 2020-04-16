@@ -17,6 +17,10 @@
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>
 
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding ProgressValue, FallbackValue=0}" />
+    </Window.TaskbarItemInfo>
+
     <StackPanel Width="360" Margin="{StaticResource Spacer}">
         <WrapPanel HorizontalAlignment="Center">
             <Image
