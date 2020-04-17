@@ -171,7 +171,7 @@ namespace Sidekick.Views.Prices
             }
 
             InitializeMods(Item.Modifiers.Pseudo);
-            InitializeMods(Item.Modifiers.Enchant);
+            InitializeMods(Item.Modifiers.Enchant, false);
             InitializeMods(Item.Modifiers.Implicit);
             InitializeMods(Item.Modifiers.Explicit);
             InitializeMods(Item.Modifiers.Crafted);
@@ -182,7 +182,7 @@ namespace Sidekick.Views.Prices
             }
         }
 
-        private void InitializeMods(List<Modifier> modifiers)
+        private void InitializeMods(List<Modifier> modifiers, bool normalizeValues = true)
         {
             if (modifiers.Count == 0)
             {
@@ -198,10 +198,13 @@ namespace Sidekick.Views.Prices
                     category = new PriceFilterCategory();
                 }
 
-                InitializeFilter(category, nameof(StatFilter), modifier.Id,
-                    !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
-                    modifier.Values,
-                    enabled: settings.Modifiers.Contains(modifier.Id)
+                InitializeFilter(category,
+                                 nameof(StatFilter),
+                                 modifier.Id,
+                                 !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
+                                 modifier.Values,
+                                 normalizeValues: normalizeValues,
+                                 enabled: settings.Modifiers.Contains(modifier.Id)
                 );
             }
 
@@ -212,7 +215,16 @@ namespace Sidekick.Views.Prices
         }
 
         private static readonly Regex LabelValues = new Regex("(\\#)");
-        private void InitializeFilter<T>(PriceFilterCategory category, string type, string id, string label, T value, double delta = 5, bool enabled = false, double? min = null, bool alwaysIncluded = false)
+        private void InitializeFilter<T>(PriceFilterCategory category,
+                                         string type,
+                                         string id,
+                                         string label,
+                                         T value,
+                                         double delta = 5,
+                                         bool enabled = false,
+                                         double? min = null,
+                                         bool alwaysIncluded = false,
+                                         bool normalizeValues = true)
         {
             if (value is bool boolValue)
             {
@@ -227,9 +239,9 @@ namespace Sidekick.Views.Prices
                 {
                     return;
                 }
-                if (min == null)
+                if (min == null && normalizeValues)
                 {
-                    min = (int)Math.Min(intValue - delta, intValue * 0.9);
+                    min = NormalizeValue(intValue, delta);
                 }
                 if (LabelValues.IsMatch(label))
                 {
@@ -246,9 +258,9 @@ namespace Sidekick.Views.Prices
                 {
                     return;
                 }
-                if (min == null)
+                if (min == null && normalizeValues)
                 {
-                    min = (int)Math.Min(doubleValue - delta, doubleValue * 0.9);
+                    min = NormalizeValue(doubleValue, delta);
                 }
                 if (LabelValues.IsMatch(label))
                 {
@@ -262,9 +274,9 @@ namespace Sidekick.Views.Prices
             else if (value is List<double> groupValue)
             {
                 min = groupValue.OrderBy(x => x).FirstOrDefault();
-                if (min.HasValue && min != 0)
+                if (normalizeValues)
                 {
-                    min = (int)Math.Min(min.Value - delta, min.Value * 0.9);
+                    min = NormalizeValue(min, delta);
                 }
             }
 
@@ -285,6 +297,19 @@ namespace Sidekick.Views.Prices
         }
 
         private FetchResult<string> QueryResult { get; set; }
+
+        /// <summary>
+        /// Smallest positive value between a -5 delta or 90%.
+        /// </summary>
+        private int? NormalizeValue(double? value, double delta)
+        {
+            if (value.HasValue)
+            {
+                return (int)Math.Max(Math.Min(value.Value - delta, value.Value * 0.9), 0);
+            }
+
+            return null;
+        }
 
         public async Task UpdateQuery()
         {
