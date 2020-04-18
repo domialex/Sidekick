@@ -505,7 +505,7 @@ namespace Sidekick.Views.Prices
             if (poeNinjaItemPriceInChaos != null)
             {
                 PoeNinjaText = string.Format(PriceResources.PoeNinjaString,
-                                             poeNinjaItemPriceInChaos,
+                                             poeNinjaItemPriceInChaos.Value.ToString("N3"),
                                              poeNinjaCache.LastRefreshTimestamp.Value.ToString("t"));
             }
         }
