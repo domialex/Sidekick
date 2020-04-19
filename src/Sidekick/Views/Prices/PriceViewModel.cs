@@ -344,7 +344,7 @@ namespace Sidekick.Views.Prices
             }
 
             IsFetching = true;
-            if (Item.Rarity == Rarity.Currency)
+            if (Item.Rarity == Rarity.Currency && staticDataService.GetId(Item) != null)
             {
                 QueryResult = await tradeSearchService.SearchBulk(Item);
             }
