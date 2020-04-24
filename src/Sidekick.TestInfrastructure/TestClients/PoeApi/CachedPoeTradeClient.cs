@@ -21,18 +21,14 @@ namespace Sidekick.TestInfrastructure.TestClients.PoeApi
 
         public async Task<List<TReturn>> Fetch<TReturn>()
         {
-            var fileName = Path.Combine(Assembly.GetExecutingAssembly().Location, "TestClients", "PoeApi", $"{typeof(TReturn).Name}.json");
+            var fileName = Path.Combine("TestData", $"{typeof(TReturn).Name}.json");
 
             if (File.Exists(fileName))
             {
                 return JsonSerializer.Deserialize<List<TReturn>>(File.ReadAllText(fileName), Options);
             }
 
-            var response = await innerClient.Fetch<TReturn>();
-
-            File.WriteAllText(fileName, JsonSerializer.Serialize(response));
-
-            return response;
+            throw new Exception($"File {fileName} must be collected before running tests. Please run Sidekick.TestDataCollector");
         }
     }
 }

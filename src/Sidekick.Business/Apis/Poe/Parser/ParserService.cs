@@ -9,17 +9,19 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Tokenizers.ItemName;
-using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Parser
 {
-    public class ParserService : IOnAfterInit, IParserService
+    public class ParserService : IParserService
     {
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
         private readonly IStatDataService statsDataService;
         private readonly IItemDataService itemDataService;
         private readonly IParserPatterns patterns;
+
+        private readonly Regex NewlinePattern;
+        private readonly Regex SeparatorPattern;
 
         public ParserService(
             ILogger logger,
@@ -33,17 +35,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
-        }
 
-        private Regex NewlinePattern;
-        private Regex SeparatorPattern;
-
-        public Task OnAfterInit()
-        {
             NewlinePattern = new Regex("[\\r\\n]+");
             SeparatorPattern = new Regex("--------");
-
-            return Task.CompletedTask;
         }
 
         public async Task<Item> ParseItem(string itemText)
