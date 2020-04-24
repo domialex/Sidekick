@@ -129,6 +129,9 @@ namespace Sidekick.Views.Prices
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), languageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), languageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
                 enabled: Item.Properties.Blighted);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), languageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
+                enabled: true,
+                min : Item.Properties.MapTier);
 
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.PhysicalDps), PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.ElementalDps), PriceResources.Filters_EDps, Item.Properties.ElementalDps);
@@ -146,7 +149,7 @@ namespace Sidekick.Views.Prices
             var propertyCategory2 = new PriceFilterCategory();
 
             InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
-                enabled: Item.ItemLevel >= 80,
+                enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0,
                 min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
 
             InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
