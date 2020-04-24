@@ -1,55 +1,51 @@
+using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions;
+using FluentAssertions.Execution;
+using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Parser;
 
 namespace Sidekick.Business.Tests.ItemParserTests
 {
     public class ParseMaps : TestContext<ParserService>
     {
-        //[OneTimeSetUp]
-        //public void Setup()
-        //{
-        //    GetMockFor<IMapService>()
-        //        .Setup(o => o.MapNames)
-        //        .Returns(new HashSet<string> { "Beach" });
-        //}
+        [Test]
+        public async Task ParseNormalMap()
+        {
+            var actual = await Subject.ParseItem(ExampleItems.NormalMap);
 
-        //[Test]
-        //public async Task ParseNormalMap()
-        //{
-        //    var actual = await Subject.ParseItem(ExampleItems.NormalMap) as MapItem;
+            using (new AssertionScope())
+            {
+                actual.Type.Should().Be("Beach Map");
+                actual.Properties.MapTier.Should().Be(1);
+            }
+        }
 
-        //    using (new AssertionScope())
-        //    {
-        //        actual.Name.Should().Be("Beach Map");
-        //        actual.MapTier.Should().Be("1");
-        //    }
-        //}
+        [Test]
+        public async Task ParseMagicMap()
+        {
+            var actual = await Subject.ParseItem(ExampleItems.MagicMap);
 
-        //[Test]
-        //public async Task ParseMagicMap()
-        //{
-        //    var actual = await Subject.ParseItem(ExampleItems.MagicMap) as MapItem;
+            using (new AssertionScope())
+            {
+                actual.Type.Should().Be("Beach Map");
+                actual.Properties.MapTier.Should().Be(1);
+            }
+        }
 
-        //    using(new AssertionScope())
-        //    {
-        //        // Probably incorrect behavior, right now it always appends blighted prefix for magic maps
-        //        actual.Name.Should().Be("Blighted Beach");
-        //        actual.Type.Should().Be("Beach");
-        //        actual.MapTier.Should().Be("1");
-        //    }
-        //}
+        [Test]
+        public async Task ParseUniqueMap()
+        {
+            var actual = await Subject.ParseItem(ExampleItems.UniqueMap);
 
-        //[Test]
-        //public async Task ParseUniqueMap()
-        //{
-        //    var actual = await Subject.ParseItem(ExampleItems.UniqueMap) as MapItem;
-
-        //    using (new AssertionScope())
-        //    {
-        //        actual.Name.Should().Be("Maelström of Chaos");
-        //        actual.MapTier.Should().Be("5");
-        //        actual.ItemQuantity.Should().Be("69");
-        //        actual.ItemRarity.Should().Be("356");
-        //    }
-        //}
+            using (new AssertionScope())
+            {
+                actual.Name.Should().Be("Maelström of Chaos");
+                actual.Properties.MapTier.Should().Be(5);
+                actual.Properties.Quality.Should().Be(10);
+                actual.Properties.ItemQuantity.Should().Be(69);
+                actual.Properties.ItemRarity.Should().Be(356);
+            }
+        }
     }
 }
