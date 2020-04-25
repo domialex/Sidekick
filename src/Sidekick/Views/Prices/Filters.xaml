@@ -27,11 +27,14 @@
     </UserControl.Resources>
 
     <StackPanel Name="Container">
-        <GroupBox Height="500" Margin="0">
+        <GroupBox
+            Height="500"
+            Margin="0"
+            Padding="0">
             <GroupBox.Header>
-                <Grid MinHeight="60">
+                <Grid MinHeight="60" Margin="{StaticResource Spacer}">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <StackPanel Width="175" VerticalAlignment="Center">
+                        <StackPanel Width="240" VerticalAlignment="Center">
                             <TextBlock
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -54,7 +57,7 @@
                 </Grid>
             </GroupBox.Header>
 
-            <ScrollViewer>
+            <ScrollViewer Padding="8,8,0,8">
                 <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
