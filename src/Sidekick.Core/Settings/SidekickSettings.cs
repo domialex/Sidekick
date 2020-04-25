@@ -52,8 +52,6 @@ namespace Sidekick.Core.Settings
 
         public string Key_ReplyToLatestWhisper { get; set; }
 
-        public string Key_AdvancedSearch { get; set; }
-
         public string Key_Exit { get; set; }
 
         public string Key_Stash_Left { get; set; }
