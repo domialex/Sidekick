@@ -26,6 +26,8 @@ namespace Sidekick.TestInfrastructure
             this.Register(GetInitializable<IParserPatterns, ParserPatterns>);
         }
 
+        // Simplified replacement for the initializer.
+        // Works for now but may need to be reworked when new types of tests are added
         private TInterface GetInitializable<TInterface, TImplementation>() where TImplementation : TInterface
         {
             var instance = this.Create<TImplementation>();

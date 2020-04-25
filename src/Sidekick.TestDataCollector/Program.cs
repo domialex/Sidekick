@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using System.IO;
 using System.Text.Json;
-using System.Reflection;
-using System;
 
 namespace Sidekick.TestDataCollector
 {
     class Program
     {
+        // Collects required data from live APIs and stores it for use in testing.
+        // Needs to be run when API data may have been update, like when new leagues are released.
+        // When tests are added which rely on data other than ItemDataCategory, this program will have to be updated.
         static async Task Main(string[] args)
         {
             var fixture = new SidekickFixture();

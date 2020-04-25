@@ -18,16 +18,16 @@ namespace Sidekick.TestInfrastructure.TestClients.PoeApi
 
         public JsonSerializerOptions Options => innerClient.Options;
 
-        public async Task<List<TReturn>> Fetch<TReturn>()
+        public Task<List<TReturn>> Fetch<TReturn>()
         {
             var fileName = Path.Combine("TestData", $"{typeof(TReturn).Name}.json");
 
             if (File.Exists(fileName))
             {
-                return JsonSerializer.Deserialize<List<TReturn>>(File.ReadAllText(fileName), Options);
+                return Task.FromResult(JsonSerializer.Deserialize<List<TReturn>>(File.ReadAllText(fileName), Options));
             }
 
-            throw new Exception($"File {fileName} must be collected before running tests. Please run Sidekick.TestDataCollector");
+            throw new Exception($"File {fileName} must be collected before running tests. Please run Sidekick.TestDataCollector.");
         }
     }
 }
