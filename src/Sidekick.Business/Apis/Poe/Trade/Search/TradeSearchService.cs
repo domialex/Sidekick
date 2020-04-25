@@ -64,7 +64,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var content = await response.Content.ReadAsStreamAsync();
                     var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{configuration.LeagueId}/{result.Id}");
+                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeExchangeBaseUrl}{configuration.LeagueId}/{result.Id}");
                     return result;
                 }
                 else
