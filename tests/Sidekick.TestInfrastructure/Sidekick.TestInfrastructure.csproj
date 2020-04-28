@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Business\Sidekick.Business.csproj" />
   </ItemGroup>
 
   <ItemGroup>
