@@ -4,6 +4,8 @@ using AutoFixture.AutoMoq;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
@@ -24,6 +26,8 @@ namespace Sidekick.TestInfrastructure
 
             this.Register(GetInitializable<IItemDataService, ItemDataService>);
             this.Register(GetInitializable<IParserPatterns, ParserPatterns>);
+            this.Register(GetInitializable<IPseudoStatDataService, PseudoStatDataService>);
+            this.Register(GetInitializable<IStatDataService, StatDataService>);
         }
 
         // Simplified replacement for the initializer.

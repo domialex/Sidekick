@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -25,16 +26,46 @@ namespace Sidekick.Business.Tests.ItemParserTests
         {
             var actual = await Subject.ParseItem(UniqueSixLink);
 
+            var expectedAffixes = new[]
+            {
+                "128% increased Evasion and Energy Shield (Local)",
+                "+55 to maximum Life",
+                "+12% to all Elemental Resistances",
+                "44% increased Area of Effect",
+                "47% increased Area Damage",
+                "Extra gore"
+            };
+
+            var expectedPseudoMods = new[]
+            {
+                "+12% total to all Elemental Resistances",
+                "+36% total Elemental Resistance",
+                "+36% total Resistance",
+                "+55 total maximum Life"
+            };
+
             using (new AssertionScope())
             {
                 actual.Name.Should().Be("Carcass Jack");
                 actual.Type.Should().Be("Varnished Coat");
+
+                actual.Properties.Quality.Should().Be(20);
+                actual.Properties.Evasion.Should().Be(960);
+                actual.Properties.EnergyShield.Should().Be(186);
+
+                actual.Modifiers.Explicit
+                    .Select(mod => mod.Text)
+                    .Should().Contain(expectedAffixes);
+
+                actual.Modifiers.Pseudo
+                    .Select(mod => mod.Text)
+                    .Should().Contain(expectedPseudoMods);
+
                 actual.Sockets
                     .Should().HaveCount(6)
                     .And.OnlyContain(socket => socket.Group == 0);
             }
         }
-
 
         #region ItemText
 
