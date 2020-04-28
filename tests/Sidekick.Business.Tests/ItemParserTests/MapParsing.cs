@@ -33,6 +33,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
+        public async Task ParseBlightedMap()
+        {
+            var actual = await Subject.ParseItem(BlightedMap);
+
+            using (new AssertionScope())
+            {
+                actual.Type.Should().Be("Ramparts Map");
+                actual.Properties.MapTier.Should().Be(2);
+                actual.Properties.Blighted.Should().BeTrue();
+            }
+        }
+
+        [Test]
         public async Task ParseUniqueMap()
         {
             var actual = await Subject.ParseItem(UniqueMap);
@@ -74,6 +87,22 @@ Item Level: 52
 Monsters reflect 13% of Elemental Damage
 --------
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.
+";
+
+        private const string BlightedMap = @"Rarity: Normal
+Blighted Ramparts Map
+--------
+Map Tier: 2
+Atlas Region: Glennach Cairns
+--------
+Item Level: 71
+--------
+Area is infested with Fungal Growths (implicit)
+Natural inhabitants of this area have been removed (implicit)
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.
+--------
+Note: ~price 33 chaos
 ";
 
         private const string UniqueMap = @"Rarity: Unique
