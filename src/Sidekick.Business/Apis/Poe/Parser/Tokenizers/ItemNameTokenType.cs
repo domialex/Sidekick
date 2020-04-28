@@ -5,6 +5,7 @@ namespace Sidekick.Business.Tokenizers.ItemName
         Set,
         If,
         Name,
+        MiscTags,
         EndOfItem
     }
 }
