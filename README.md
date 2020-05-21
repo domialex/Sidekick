@@ -11,11 +11,12 @@ Sidekick should be able to price check almost every item, the idea is to eventua
 2. Run Sidekick.exe.
 
 ## Usage
-1. Run **Sidekick.exe**.
-2. Select your league in the settings if needed.
-3. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for best results.
-4. In **Path of Exile**, hover an item and press **Ctrl+D** (default binding).
-5. To close the overlay, press **Space** (default binding).
+1. Add an exception for **Sidekick.exe** in your anti-virus, some people have reported that it can block Sidekick in some cases.
+2. Run **Sidekick.exe**.
+3. Select your league in the settings if needed.
+4. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for best results.
+5. In **Path of Exile**, hover an item and press **Ctrl+D** (default binding).
+6. To close the overlay, press **Space** (default binding).
 
 ## Beta?
 Yes, this is still a beta since some core features are missing. We are thinking of removing the beta label once the advanced search / item filters are completed.
