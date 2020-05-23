@@ -42,7 +42,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             }
         }
 
-        public async Task<List<TReturn>> Fetch<TReturn>()
+        public async Task<List<TReturn>> Fetch<TReturn>(bool useDefaultLanguage = false)
         {
             string path;
             string name;
@@ -71,7 +71,9 @@ namespace Sidekick.Business.Apis.Poe.Trade
             {
                 logger.Information($"Fetching {name} started.");
 
-                var response = await client.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + path);
+                var language = useDefaultLanguage ? languageProvider.DefaultLanguage : languageProvider.Language;
+
+                var response = await client.GetAsync(language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
 

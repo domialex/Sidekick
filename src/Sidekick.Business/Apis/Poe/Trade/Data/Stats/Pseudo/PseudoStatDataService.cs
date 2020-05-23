@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
@@ -34,7 +33,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             {
                 logger.Information($"Pseudo stat service initialization started.");
 
-                var result = await poeApiClient.Fetch<StatDataCategory>();
+                var result = await poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true);
 
                 logger.Information($"{result.Count} attributes fetched.");
 

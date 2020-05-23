@@ -4,7 +4,7 @@ namespace Sidekick.Business.Languages
 {
     public interface ILanguageProvider
     {
-        string DefaultLanguage { get; }
+        ILanguage DefaultLanguage { get; }
 
         bool IsEnglish { get; }
 

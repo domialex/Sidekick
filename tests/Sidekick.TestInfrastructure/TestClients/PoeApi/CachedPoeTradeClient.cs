@@ -18,7 +18,7 @@ namespace Sidekick.TestInfrastructure.TestClients.PoeApi
 
         public JsonSerializerOptions Options => innerClient.Options;
 
-        public Task<List<TReturn>> Fetch<TReturn>()
+        public Task<List<TReturn>> Fetch<TReturn>(bool useDefaultLanguge = false)
         {
             var fileName = Path.Combine("TestData", $"{typeof(TReturn).Name}.json");
 

@@ -15,6 +15,8 @@ namespace Sidekick.Business.Languages
         private readonly IInitializer initializeService;
         private readonly SidekickSettings settings;
 
+        private readonly string defaultLanguageName = "English";
+
         public LanguageProvider(ILogger logger,
             IInitializer initializeService,
             SidekickSettings settings)
@@ -33,15 +35,15 @@ namespace Sidekick.Business.Languages
 
             if (!SetLanguage(settings.Language_Parser))
             {
-                SetLanguage(DefaultLanguage);
+                SetLanguage(defaultLanguageName);
             }
         }
 
         private List<LanguageAttribute> AvailableLanguages { get; set; }
 
-        public string DefaultLanguage => "English";
+        public ILanguage DefaultLanguage => CreateLanguageInstance(AvailableLanguages.First(x => x.Name == defaultLanguageName).ImplementationType);
 
-        public bool IsEnglish => Current.Name == "English";
+        public bool IsEnglish => Current.Name == defaultLanguageName;
 
         public LanguageAttribute Current => AvailableLanguages.First(x => x.DescriptionRarity == Language.DescriptionRarity);
 
@@ -74,7 +76,7 @@ namespace Sidekick.Business.Languages
             if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
             {
                 logger.Information("Changed active language support to {language}.", language.Name);
-                Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
+                Language = CreateLanguageInstance(language.ImplementationType);
 
                 settings.Language_Parser = name;
                 settings.Save();
@@ -83,6 +85,11 @@ namespace Sidekick.Business.Languages
             }
 
             return false;
+        }
+
+        private ILanguage CreateLanguageInstance(Type type)
+        {
+            return (ILanguage)Activator.CreateInstance(type);
         }
     }
 }
