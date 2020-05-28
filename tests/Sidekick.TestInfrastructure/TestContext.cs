@@ -1,5 +1,6 @@
 using AutoFixture;
 using Moq;
+using Sidekick.TestInfrastructure;
 
 namespace Sidekick.Business.Tests
 {

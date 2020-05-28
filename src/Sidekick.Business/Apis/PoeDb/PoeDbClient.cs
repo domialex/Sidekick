@@ -36,7 +36,7 @@ namespace Sidekick.Business.Apis.PoeDb
                 return;
             }
 
-            if (languageProvider.Current.Name != languageProvider.DefaultLanguage)
+            if (!languageProvider.IsEnglish)
             {
                 return;
             }
