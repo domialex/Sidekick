@@ -139,8 +139,16 @@ namespace Sidekick.Handlers
 
         private Task<bool> Events_OnOpenLeagueOverview()
         {
-            viewLocator.CloseAll();
-            viewLocator.Open<LeagueView>();
+            if (viewLocator.IsOpened<LeagueView>())
+            {
+                viewLocator.CloseAll();
+            }
+            else
+            {
+                viewLocator.CloseAll();
+                viewLocator.Open<LeagueView>();
+            }
+
             return Task.FromResult(true);
         }
 

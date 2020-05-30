@@ -197,5 +197,16 @@ namespace Sidekick.Views
 
             return (double)(MyCursor.Position.X - screen.X) / screen.Width;
         }
+
+        protected void MoveX(double value)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => MoveX(value));
+                return;
+            }
+
+            Left += value;
+        }
     }
 }

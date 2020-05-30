@@ -5,6 +5,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 {
     public interface IPoeNinjaClient
     {
+        public bool IsSupportingCurrentLanguage { get; }
         Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType);
 
         Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency);

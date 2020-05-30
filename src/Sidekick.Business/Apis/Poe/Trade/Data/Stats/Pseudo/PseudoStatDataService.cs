@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
@@ -14,15 +12,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
     {
         private readonly ILogger logger;
         private readonly IPoeTradeClient poeApiClient;
-        private readonly HttpClient client;
 
         public PseudoStatDataService(ILogger logger,
-            IPoeTradeClient poeApiClient,
-            IHttpClientFactory httpClientFactory)
+            IPoeTradeClient poeApiClient)
         {
             this.logger = logger;
             this.poeApiClient = poeApiClient;
-            client = httpClientFactory.CreateClient();
         }
 
         public List<PseudoDefinition> Definitions { get; private set; } = new List<PseudoDefinition>();
@@ -38,15 +33,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             {
                 logger.Information($"Pseudo stat service initialization started.");
 
-                var response = await client.GetAsync("https://www.pathofexile.com/api/trade/data/stats/");
-                var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<FetchResult<StatDataCategory>>(content, poeApiClient.Options);
+                var result = await poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true);
 
-                logger.Information($"{result.Result.Count} attributes fetched.");
+                logger.Information($"{result.Count} attributes fetched.");
 
-                var groups = InitGroups(result.Result);
+                var groups = InitGroups(result);
 
-                foreach (var category in result.Result)
+                foreach (var category in result)
                 {
                     var first = category.Entries.FirstOrDefault();
                     if (first == null || first.Id.Split('.').First() == "pseudo")

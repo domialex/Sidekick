@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
@@ -54,5 +55,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 
             return null;
         }
+
+        public string GetId(Item item) => GetId(item.Name ?? item.Type);
     }
 }

@@ -7,7 +7,10 @@
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:local="clr-namespace:Sidekick.Views.Prices"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
+    Height="500"
+    MaxWidth="900"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,15 +29,12 @@
     </Window.Style>
 
     <StackPanel>
-        <Grid
-            Width="900"
-            Height="500"
-            Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
+        <Grid Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="260" />
                 <ColumnDefinition Width="380" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=Item.Item.ItemLevel}">
+                            <GridViewColumn Width="40" DisplayMemberBinding="{Binding Path=Item.ItemLevel}">
                                 <GridViewColumnHeader
                                     Content="{loc:Loc OverlayItemLevel}"
                                     Foreground="White"
@@ -131,7 +131,7 @@
             <local:ItemPreview
                 Grid.RowSpan="2"
                 Grid.Column="2"
-                Height="600"
+                Height="500"
                 ViewModel="{Binding}" />
         </Grid>
 

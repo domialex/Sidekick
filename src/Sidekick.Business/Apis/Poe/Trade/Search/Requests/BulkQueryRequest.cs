@@ -10,8 +10,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
         {
             Exchange.Status.Option = StatusType.Online;
 
-            Exchange.Want.Add(staticDataService.GetId(item.Name ?? item.Type));
-            Exchange.Have.Add("chaos"); // TODO: Add support for other currency types?
+            Exchange.Want.Add(staticDataService.GetId(item));
+            Exchange.Have.Add("chaos");
         }
 
         public Exchange Exchange { get; set; } = new Exchange();

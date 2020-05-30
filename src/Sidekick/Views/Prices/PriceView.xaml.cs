@@ -12,6 +12,8 @@ namespace Sidekick.Views.Prices
         private readonly PriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
 
+        private bool MoveWhenOpeningPreview = false;
+
         public PriceView(
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
@@ -32,6 +34,7 @@ namespace Sidekick.Views.Prices
 
             if (GetMouseXPercent() > 0.5)
             {
+                MoveWhenOpeningPreview = true;
                 SetWindowPositionPercent(0.66 - GetWidthPercent(), 0.5 - (GetHeightPercent() / 2));
             }
             else
@@ -105,6 +108,10 @@ namespace Sidekick.Views.Prices
 
         private void ItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (viewModel.PreviewItem == null && MoveWhenOpeningPreview)
+            {
+                MoveX(-260);
+            }
             viewModel.Preview((PriceItem)ItemList.SelectedItem);
             EnsureBounds();
         }

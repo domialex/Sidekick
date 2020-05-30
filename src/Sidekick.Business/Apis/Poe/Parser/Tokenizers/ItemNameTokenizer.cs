@@ -14,7 +14,8 @@ namespace Sidekick.Business.Tokenizers.ItemName
             {
                 { ItemNameTokenType.Set, new Regex("<<set:(?<LANG>\\w{1,2})>>") },
                 { ItemNameTokenType.Name, new Regex("^((?!<).)+") },
-                { ItemNameTokenType.If, new Regex("<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}") }
+                { ItemNameTokenType.If, new Regex("<(?:el)?if:(?<LANG>\\w{1,2})>{(?<NAME>\\s?((?!<).)+)}") },
+                { ItemNameTokenType.MiscTags, new Regex("^<.*>") }
             };
         }
 

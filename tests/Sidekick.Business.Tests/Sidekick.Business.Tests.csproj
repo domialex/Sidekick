@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\Sidekick.TestInfrastructure\Sidekick.TestInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>

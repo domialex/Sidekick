@@ -24,7 +24,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
             this.settings = settings;
         }
 
+        public event Action OnLeagueChange;
         public event Action OnNewLeagues;
+
+        public void LeagueChanged() => OnLeagueChange.Invoke();
 
         public async Task OnInit()
         {

@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Business.Languages.Implementations
 {
-    [Language("English", "Rarity")]
+    [Language("English", "Rarity", "en")]
     public class LanguageEN : ILanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://www.pathofexile.com/trade/search/");
