@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <converters:IntToVisibilityConverter x:Key="IntToVisibility" />
+            <converters:DoubleToVisibilityConverter x:Key="DoubleToVisibilityConverter" />
             <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
             <converters:NullableToVisibilityConverter x:Key="NullableToVisibility" />
             <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibility" />
@@ -52,7 +53,7 @@
 
             <ScrollViewer>
                 <StackPanel>
-                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Properties}">
+                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.PropertyTexts}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <local:ItemLineContent Property="{Binding}" />
@@ -60,11 +61,65 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.Armor, Converter={StaticResource IntToVisibility}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityArmour}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.Armor}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.Evasion, Converter={StaticResource IntToVisibility}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityEvasion}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.Evasion}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.EnergyShield, Converter={StaticResource IntToVisibility}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityEnergyShield}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.EnergyShield}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.DamagePerSecond, Converter={StaticResource DoubleToVisibilityConverter}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityDps}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.DamagePerSecond}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.PhysicalDps, Converter={StaticResource DoubleToVisibilityConverter}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityPDps}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.PhysicalDps}" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,0,3"
+                        Orientation="Horizontal"
+                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties.ElementalDps, Converter={StaticResource DoubleToVisibilityConverter}}">
+                        <TextBlock Foreground="LightGray" Text="{loc:Loc MaxQualityEDps}" />
+                        <TextBlock Foreground="LightGray" Text=": " />
+                        <TextBlock FontWeight="Bold" Text="{Binding ViewModel.PreviewItem.Item.Properties.ElementalDps}" />
+                    </StackPanel>
+
                     <Border
                         Margin="0,2,0,5"
                         BorderBrush="Gray"
                         BorderThickness="0,0,0,1"
-                        Visibility="{Binding ViewModel.PreviewItem.Item.Properties, Converter={StaticResource NullableToVisibility}}" />
+                        Visibility="{Binding ViewModel.PreviewItem.Item.PropertyTexts, Converter={StaticResource NullableToVisibility}}" />
 
                     <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Requirements}">
                         <ItemsControl.ItemTemplate>

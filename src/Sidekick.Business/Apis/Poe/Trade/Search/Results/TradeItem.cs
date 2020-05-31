@@ -25,8 +25,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
             Icon = result.Item.Icon;
             Note = result.Item.Note;
-            Properties = result.Item.Properties;
+            PropertyTexts = result.Item.Properties;
             Requirements = result.Item.Requirements;
+
+            Properties.Armor = result.Item.Extended.ArmourAtMax;
+            Properties.EnergyShield = result.Item.Extended.EnergyShieldAtMax;
+            Properties.Evasion = result.Item.Extended.EvasionAtMax;
+            Properties.DamagePerSecond = result.Item.Extended.DamagePerSecond;
+            Properties.ElementalDps = result.Item.Extended.ElementalDps;
+            Properties.PhysicalDps = result.Item.Extended.PhysicalDps;
 
             ParseMods(statDataService,
                 Modifiers.Crafted,
@@ -92,7 +99,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         public string Icon { get; set; }
         public string Note { get; set; }
-        public new List<LineContent> Properties { get; set; }
+        public List<LineContent> PropertyTexts { get; set; }
         public List<LineContent> Requirements { get; set; }
 
     }

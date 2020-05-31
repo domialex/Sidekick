@@ -243,9 +243,9 @@ namespace Sidekick.Localization.Prices {
         /// <summary>
         ///   Looks up a localized string similar to Energy Shield at max Quality.
         /// </summary>
-        public static string MaxQualityEneryShield {
+        public static string MaxQualityEnergyShield {
             get {
-                return ResourceManager.GetString("MaxQualityEneryShield", resourceCulture);
+                return ResourceManager.GetString("MaxQualityEnergyShield", resourceCulture);
             }
         }
         
