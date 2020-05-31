@@ -177,7 +177,7 @@
   <data name="MaxQualityEDps" xml:space="preserve">
     <value>Elemental DPS at max Quality</value>
   </data>
-  <data name="MaxQualityEneryShield" xml:space="preserve">
+  <data name="MaxQualityEnergyShield" xml:space="preserve">
     <value>Energy Shield at max Quality</value>
   </data>
   <data name="MaxQualityEvasion" xml:space="preserve">
