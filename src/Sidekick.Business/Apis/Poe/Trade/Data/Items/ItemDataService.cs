@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
@@ -13,7 +14,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
-        private Dictionary<string, List<ItemData>> nameAndTypePatterns;
+        private Dictionary<string, List<ItemData>> nameAndTypeDictionary;
+        private List<(Regex Regex, ItemData Item)> nameAndTypeRegex;
+
         private string[] prefixes;
 
         public ItemDataService(IPoeTradeClient poeApiClient, ILanguageProvider languageProvider)
@@ -24,7 +27,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
         public async Task OnInit()
         {
-            nameAndTypePatterns = new Dictionary<string, List<ItemData>>();
+            nameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
+            nameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
             var categories = await poeApiClient.Fetch<ItemDataCategory>();
 
@@ -35,7 +39,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             FillPattern(categories[4].Entries, Category.Flask);
             FillPattern(categories[5].Entries, Category.Gem);
             FillPattern(categories[6].Entries, Category.Jewel);
-            FillPattern(categories[7].Entries, Category.Map);
+            FillPattern(categories[7].Entries, Category.Map, useRegex: true);
             FillPattern(categories[8].Entries, Category.Weapon);
             FillPattern(categories[9].Entries, Category.Leaguestone);
             FillPattern(categories[10].Entries, Category.Prophecy);
@@ -54,7 +58,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             return Task.CompletedTask;
         }
 
-        private void FillPattern(List<ItemData> items, Category category)
+        private void FillPattern(List<ItemData> items, Category category, bool useRegex = false)
         {
             foreach (var item in items)
             {
@@ -63,13 +67,20 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
                 var key = item.Name ?? item.Type;
 
-                if (!nameAndTypePatterns.TryGetValue(key, out var itemData))
+                if(useRegex)
                 {
-                    itemData = new List<ItemData>();
-                    nameAndTypePatterns.Add(key, itemData);
+                    nameAndTypeRegex.Add((key.ToRegex(), item));
                 }
+                else
+                {
+                    if (!nameAndTypeDictionary.TryGetValue(key, out var itemData))
+                    {
+                        itemData = new List<ItemData>();
+                        nameAndTypeDictionary.Add(key, itemData);
+                    }
 
-                itemData.Add(item);
+                    itemData.Add(item);
+                }
             }
         }
 
@@ -97,18 +108,24 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
         {
             var results = new List<ItemData>();
 
-            if (nameAndTypePatterns.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
+            if (nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
             {
                 results.AddRange(itemData);
             }
-            else if (itemSections.HeaderSection.Length > 2 && nameAndTypePatterns.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[2]), out itemData))
+            else if (itemSections.HeaderSection.Length > 2 && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[2]), out itemData))
             {
                 results.AddRange(itemData);
+            }
+            else
+            {
+                results.AddRange(nameAndTypeRegex
+                    .Where(pattern => pattern.Regex.IsMatch(itemSections.WholeSections[0]))
+                    .Select(x => x.Item));
             }
 
             if(results.Any(item => item.Rarity == Rarity.Gem)
                 && itemSections.TryGetVaalGemName(out var vaalGemName)
-                && nameAndTypePatterns.TryGetValue(vaalGemName, out itemData))
+                && nameAndTypeDictionary.TryGetValue(vaalGemName, out itemData))
             {
                 // If we find a Vaal gem, we don't care about other matches
                 results.Clear();
@@ -128,7 +145,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                 line = line.Replace(prefix, "");
             }
 
-            return line;
+            return line.Trim();
         }
     }
 }

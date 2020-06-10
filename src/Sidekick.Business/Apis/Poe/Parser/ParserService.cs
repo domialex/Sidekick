@@ -85,8 +85,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
             {
                 Text = itemText,
                 Name = itemData.Name,
-                TypeLine = itemData.Type,
                 Type = itemData.Type,
+                NameLine = itemSections.NameLine,
+                TypeLine = itemSections.TypeLine,
                 Rarity = itemData.Rarity
             };
 
@@ -146,6 +147,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
             item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
             item.Properties.MapTier = patterns.GetInt(patterns.MapTier, mapBlock);
+            item.Properties.Quality = patterns.GetInt(patterns.Quality, mapBlock);
             item.Properties.Blighted = patterns.Blighted.IsMatch(itemSections.WholeSections[0]);
             item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
 

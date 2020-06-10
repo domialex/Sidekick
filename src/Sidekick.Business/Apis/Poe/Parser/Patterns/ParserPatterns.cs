@@ -111,12 +111,12 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitInfluences()
         {
-            Crusader = languageProvider.Language.InfluenceCrusader.StartOfLineRegex();
-            Elder = languageProvider.Language.InfluenceElder.StartOfLineRegex();
-            Hunter = languageProvider.Language.InfluenceHunter.StartOfLineRegex();
-            Redeemer = languageProvider.Language.InfluenceRedeemer.StartOfLineRegex();
-            Shaper = languageProvider.Language.InfluenceShaper.StartOfLineRegex();
-            Warlord = languageProvider.Language.InfluenceWarlord.StartOfLineRegex();
+            Crusader = languageProvider.Language.InfluenceCrusader.ToRegex(prefix: "[\\r\\n]+");
+            Elder = languageProvider.Language.InfluenceElder.ToRegex(prefix: "[\\r\\n]+");
+            Hunter = languageProvider.Language.InfluenceHunter.ToRegex(prefix: "[\\r\\n]+");
+            Redeemer = languageProvider.Language.InfluenceRedeemer.ToRegex(prefix: "[\\r\\n]+");
+            Shaper = languageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
+            Warlord = languageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
         }
         #endregion
 
