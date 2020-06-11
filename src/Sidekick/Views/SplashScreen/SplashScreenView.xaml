@@ -9,10 +9,6 @@
     ShowInTaskbar="True"
     Topmost="False"
     WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
-    </Window.Resources>
-
     <Window.Style>
         <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
     </Window.Style>

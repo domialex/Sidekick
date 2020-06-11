@@ -11,19 +11,19 @@ using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
 {
-    public abstract class BaseWindow : Window, ISidekickView
+    public abstract class BaseBorderlessWindow : Window, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
         private readonly SidekickSettings settings;
         private readonly bool closeOnBlur;
 
-        public BaseWindow(IServiceProvider serviceProvider, bool closeOnBlur = false)
+        public BaseBorderlessWindow(IServiceProvider serviceProvider, bool closeOnBlur = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
 
-            Deactivated += BaseWindow_Deactivated;
-            MouseLeftButtonDown += Window_MouseLeftButtonDown;
+            Deactivated += BaseBorderlessWindow_Deactivated;
+            MouseLeftButtonDown += BaseBorderlessWindow_MouseLeftButtonDown;
             SizeChanged += EnsureBounds;
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
@@ -37,9 +37,9 @@ namespace Sidekick.Views
             if (IsClosing) return;
 
             IsClosing = true;
-            Deactivated -= BaseWindow_Deactivated;
+            Deactivated -= BaseBorderlessWindow_Deactivated;
             keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
-            MouseLeftButtonDown -= Window_MouseLeftButtonDown;
+            MouseLeftButtonDown -= BaseBorderlessWindow_MouseLeftButtonDown;
             IsVisibleChanged -= EnsureBounds;
             SizeChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
@@ -53,7 +53,7 @@ namespace Sidekick.Views
             return Task.FromResult(true);
         }
 
-        private void BaseWindow_Deactivated(object sender, EventArgs e)
+        private void BaseBorderlessWindow_Deactivated(object sender, EventArgs e)
         {
             if (settings.CloseOverlayWithMouse && closeOnBlur && !IsClosing)
             {
@@ -61,7 +61,7 @@ namespace Sidekick.Views
             }
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BaseBorderlessWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {

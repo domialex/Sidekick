@@ -41,7 +41,7 @@ namespace Sidekick.Core.Natives
             if (settings.RetainClipboard)
             {
                 await Task.Delay(100);
-                await TextCopy.Clipboard.SetTextAsync(clipboardText);
+                await TextCopy.ClipboardService.SetTextAsync(clipboardText);
             }
 
             return LastCopiedText;
@@ -49,7 +49,7 @@ namespace Sidekick.Core.Natives
 
         public async Task<string> GetText()
         {
-            return await TextCopy.Clipboard.GetTextAsync();
+            return await TextCopy.ClipboardService.GetTextAsync();
         }
 
         public async Task SetText(string text)
@@ -58,7 +58,7 @@ namespace Sidekick.Core.Natives
             {
                 text = string.Empty;
             }
-            await TextCopy.Clipboard.SetTextAsync(text);
+            await TextCopy.ClipboardService.SetTextAsync(text);
             LastCopiedText = text;
         }
     }

@@ -1,17 +1,13 @@
 using System;
 using System.ComponentModel;
-using System.Windows;
 
 namespace Sidekick.Views.ApplicationLogs
 {
-    public partial class ApplicationLogsView : BaseWindow
+    public partial class ApplicationLogsView : BaseTitleWindow
     {
         private readonly ApplicationLogViewModel viewModel;
 
-        public ApplicationLogsView(
-            ApplicationLogViewModel viewModel,
-            IServiceProvider serviceProvider)
-            : base(serviceProvider)
+        public ApplicationLogsView(ApplicationLogViewModel viewModel)
         {
             this.viewModel = viewModel;
 
@@ -37,11 +33,6 @@ namespace Sidekick.Views.ApplicationLogs
                 logsTextBox.Text = string.Concat(viewModel.Logs);
                 logsScrollViewer.ScrollToEnd();
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         protected override void OnClosing(CancelEventArgs e)

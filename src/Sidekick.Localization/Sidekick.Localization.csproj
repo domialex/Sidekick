@@ -49,11 +49,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="ApplicationLogs\ApplicationLogResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ApplicationLogResources.resx</DependentUpon>
-    </Compile>
     <Compile Update="PriceCheck\PriceCheckResources.Designer.cs">
       <DependentUpon>PriceCheckResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -148,10 +143,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>MetamorphResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="ApplicationLogs\ApplicationLogResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ApplicationLogResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="PriceCheck\PriceCheckResources.resx">
       <LastGenOutput>PriceCheckResources.Designer.cs</LastGenOutput>

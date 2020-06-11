@@ -8,10 +8,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
-    </UserControl.Resources>
-
     <GroupBox
         Name="Container"
         Width="150"

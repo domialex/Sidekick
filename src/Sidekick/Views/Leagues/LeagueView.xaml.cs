@@ -8,7 +8,7 @@ namespace Sidekick.Views.Leagues
     /// Interaction logic for LeagueView.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class LeagueView : BaseWindow
+    public partial class LeagueView : BaseBorderlessWindow
     {
         public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
             : base(serviceProvider,

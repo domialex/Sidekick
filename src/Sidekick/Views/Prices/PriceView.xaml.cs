@@ -7,7 +7,7 @@ using Sidekick.Core.Natives;
 
 namespace Sidekick.Views.Prices
 {
-    public partial class PriceView : BaseWindow
+    public partial class PriceView : BaseBorderlessWindow
     {
         private readonly PriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
