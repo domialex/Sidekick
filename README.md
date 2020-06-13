@@ -8,7 +8,8 @@ Sidekick should be able to price check almost every item, the idea is to eventua
 
 ## Installation
 1. [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
-2. Run Sidekick.exe.
+2. Install **[.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-desktop-3.1.4-windows-x64-installer)** if needed
+3. Run Sidekick.exe
 
 ## Usage
 1. Add an exception for **Sidekick.exe** in your anti-virus, some people have reported that it can block Sidekick in some cases.
@@ -16,13 +17,6 @@ Sidekick should be able to price check almost every item, the idea is to eventua
 3. Select your league in the settings if needed.
 4. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for best results.
 5. In **Path of Exile**, hover an item and press **Ctrl+D** (default binding).
-6. To close the overlay, press **Space** (default binding).
-
-## Beta?
-Yes, this is still a beta since some core features are missing. We are thinking of removing the beta label once the advanced search / item filters are completed.
-
-## Warning
-This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to [create an issue](https://github.com/domialex/Sidekick/issues).
 
 ## Features
 ### Check Prices
