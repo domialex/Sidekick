@@ -34,6 +34,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
+        public async Task ParseShaperItemDivinationCard()
+        {
+            var actual = await Subject.ParseItem(ShaperItemDivinationCard);
+
+            using (new AssertionScope())
+            {
+                actual.Rarity.Should().Be(Rarity.DivinationCard);
+                actual.Type.Should().Be("The Lord of Celebration");
+                actual.Influences.Shaper.Should().BeFalse();
+            }
+        }
+
+        [Test]
         public async Task ParseCurrency()
         {
             var actual = await Subject.ParseItem(Currency);
@@ -78,6 +91,15 @@ Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
 ";
 
+        private const string ShaperItemDivinationCard = @"Rarity: Divination Card
+The Lord of Celebration
+--------
+Stack Size: 1/4
+--------
+Sceptre of Celebration
+Shaper Item
+--------
+Though they were a pack of elite combatants, the Emperor's royal guards were not ready to face one of his notorious parties.";
         #endregion
     }
 }
