@@ -144,6 +144,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
                 new PseudoPatternGroup("pseudo.pseudo_total_elemental_resistance", new Regex("Minions|Enemies|Totems"), new List<PseudoPattern>(){
                     new PseudoPattern(new Regex("to (?:Fire|Cold|Lightning) Resistance$")),
                     new PseudoPattern(new Regex("to (?:Fire|Cold|Lightning) and (?:Fire|Cold|Lightning) Resistances$"), 2),
+                    new PseudoPattern(new Regex("(?=.*Chaos)to (?:Fire|Cold|Lightning|Chaos) and (?:Fire|Cold|Lightning|Chaos) Resistances$")),
                     new PseudoPattern(new Regex("to all Elemental Resistances$"), 3),
                 }),
                 // +#% total Resistance
