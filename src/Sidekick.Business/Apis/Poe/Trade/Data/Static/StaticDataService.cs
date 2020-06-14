@@ -23,12 +23,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 
         public async Task OnInit()
         {
-            var categories = await cacheService.Get<List<StaticItemCategory>>("StaticDataService.OnInit");
-            if (categories == default)
-            {
-                categories = await poeApiClient.Fetch<StaticItemCategory>();
-                await cacheService.Save("StaticDataService.OnInit", categories);
-            }
+            var categories = await cacheService.GetOrCreate("StaticDataService.OnInit", () => poeApiClient.Fetch<StaticItemCategory>());
 
             ImageUrls = new Dictionary<string, string>();
             Ids = new Dictionary<string, string>();

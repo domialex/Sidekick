@@ -34,12 +34,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             nameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
             nameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
-            var categories = await cacheService.Get<List<ItemDataCategory>>("ItemDataService.OnInit");
-            if (categories == default)
-            {
-                categories = await poeApiClient.Fetch<ItemDataCategory>();
-                await cacheService.Save("ItemDataService.OnInit", categories);
-            }
+            var categories = await cacheService.GetOrCreate("ItemDataService.OnInit", () => poeApiClient.Fetch<ItemDataCategory>());
 
             FillPattern(categories[0].Entries, Category.Accessory);
             FillPattern(categories[1].Entries, Category.Armour);

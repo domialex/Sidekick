@@ -44,12 +44,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         public async Task OnInit()
         {
-            var categories = await cacheService.Get<List<StatDataCategory>>("StatDataService.OnInit");
-            if (categories == default)
-            {
-                categories = await poeApiClient.Fetch<StatDataCategory>();
-                await cacheService.Save("StatDataService.OnInit", categories);
-            }
+            var categories = await cacheService.GetOrCreate("StatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>());
 
             PseudoPatterns = new List<StatData>();
             ExplicitPatterns = new List<StatData>();

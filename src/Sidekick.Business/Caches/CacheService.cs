@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Sidekick.Business.Caches
         }
 
         public async Task<TModel> Get<TModel>(string key)
+            where TModel : class
         {
             using var dbContext = new SidekickContext(options);
 
@@ -30,7 +32,22 @@ namespace Sidekick.Business.Caches
             return JsonSerializer.Deserialize<TModel>(data);
         }
 
+        public async Task<TModel> GetOrCreate<TModel>(string key, Func<Task<TModel>> create)
+            where TModel : class
+        {
+            var result = await Get<TModel>(key);
+
+            if (result == default)
+            {
+                result = await create.Invoke();
+                await Save(key, result);
+            }
+
+            return result;
+        }
+
         public async Task Save<TModel>(string key, TModel data)
+            where TModel : class
         {
             using var dbContext = new SidekickContext(options);
 

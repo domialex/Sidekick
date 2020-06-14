@@ -37,12 +37,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             {
                 logger.Information($"Pseudo stat service initialization started.");
 
-                var result = await cacheService.Get<List<StatDataCategory>>("PseudoStatDataService.OnInit");
-                if (result == default)
-                {
-                    result = await poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true);
-                    await cacheService.Save("PseudoStatDataService.OnInit", result);
-                }
+                var result = await cacheService.GetOrCreate("PseudoStatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true));
 
                 logger.Information($"{result.Count} attributes fetched.");
 
