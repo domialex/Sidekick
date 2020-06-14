@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Serilog;
+using Sidekick.Business.Caches;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
@@ -12,12 +13,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
     {
         private readonly ILogger logger;
         private readonly IPoeTradeClient poeApiClient;
+        private readonly ICacheService cacheService;
 
         public PseudoStatDataService(ILogger logger,
-            IPoeTradeClient poeApiClient)
+            IPoeTradeClient poeApiClient,
+            ICacheService cacheService)
         {
             this.logger = logger;
             this.poeApiClient = poeApiClient;
+            this.cacheService = cacheService;
         }
 
         public List<PseudoDefinition> Definitions { get; private set; } = new List<PseudoDefinition>();
@@ -33,7 +37,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             {
                 logger.Information($"Pseudo stat service initialization started.");
 
-                var result = await poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true);
+                var result = await cacheService.Get<List<StatDataCategory>>("PseudoStatDataService.OnInit");
+                if (result == default)
+                {
+                    result = await poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true);
+                    await cacheService.Save("PseudoStatDataService.OnInit", result);
+                }
 
                 logger.Information($"{result.Count} attributes fetched.");
 

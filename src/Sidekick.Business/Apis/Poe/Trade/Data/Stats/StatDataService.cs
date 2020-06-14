@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
+using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
@@ -14,14 +15,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         private readonly IPoeTradeClient poeApiClient;
         private readonly IPseudoStatDataService pseudoStatDataService;
         private readonly ILanguageProvider languageProvider;
+        private readonly ICacheService cacheService;
 
         public StatDataService(IPoeTradeClient poeApiClient,
             IPseudoStatDataService pseudoStatDataService,
-            ILanguageProvider languageProvider)
+            ILanguageProvider languageProvider,
+            ICacheService cacheService)
         {
             this.poeApiClient = poeApiClient;
             this.pseudoStatDataService = pseudoStatDataService;
             this.languageProvider = languageProvider;
+            this.cacheService = cacheService;
         }
 
         private List<StatData> PseudoPatterns { get; set; }
@@ -40,7 +44,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         public async Task OnInit()
         {
-            var categories = await poeApiClient.Fetch<StatDataCategory>();
+            var categories = await cacheService.Get<List<StatDataCategory>>("StatDataService.OnInit");
+            if (categories == default)
+            {
+                categories = await poeApiClient.Fetch<StatDataCategory>();
+                await cacheService.Save("StatDataService.OnInit", categories);
+            }
 
             PseudoPatterns = new List<StatData>();
             ExplicitPatterns = new List<StatData>();
@@ -127,7 +136,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             return mods;
         }
 
-        private Regex ParseHashPattern = new Regex("\\#");
+        private readonly Regex ParseHashPattern = new Regex("\\#");
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             foreach (var x in patterns

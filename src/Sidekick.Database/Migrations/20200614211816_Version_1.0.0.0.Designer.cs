@@ -8,8 +8,8 @@ using Sidekick.Database;
 namespace Sidekick.Database.Migrations
 {
     [DbContext(typeof(SidekickContext))]
-    [Migration("20200614191846_v1.0.0.0")]
-    partial class v1000
+    [Migration("20200614211816_Version_1.0.0.0")]
+    partial class Version_1000
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,6 +17,19 @@ namespace Sidekick.Database.Migrations
             modelBuilder
                 .HasDefaultSchema("sidekick")
                 .HasAnnotation("ProductVersion", "3.1.5");
+
+            modelBuilder.Entity("Sidekick.Database.Caches.Cache", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Caches");
+                });
 
             modelBuilder.Entity("Sidekick.Database.Windows.Window", b =>
                 {

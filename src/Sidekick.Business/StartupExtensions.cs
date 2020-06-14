@@ -13,6 +13,7 @@ using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
+using Sidekick.Business.Caches;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
@@ -45,6 +46,7 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeWikiClient, PoeWikiClient>();
             services.AddSingleton<IWikiProvider, WikiProviderFactory>();
 
+            services.AddInitializableService<ICacheService, CacheService>();
             services.AddInitializableService<IPoeTradeClient, PoeTradeClient>();
             services.AddInitializableService<IStatDataService, StatDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();

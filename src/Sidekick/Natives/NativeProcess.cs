@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Serilog;
-using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
+using Sidekick.Extensions;
 
 namespace Sidekick.Natives
 {
@@ -133,7 +133,7 @@ namespace Sidekick.Natives
         {
             await WaitForPathOfExileFocus();
 
-            if (IsUserRunAsAdmin() ? false : IsPathOfExileRunAsAdmin())
+            if (!IsUserRunAsAdmin() && IsPathOfExileRunAsAdmin())
             {
                 RestartAsAdmin();
             }

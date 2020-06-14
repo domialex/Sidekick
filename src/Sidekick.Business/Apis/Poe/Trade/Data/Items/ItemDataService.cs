@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
@@ -14,15 +14,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
+        private readonly ICacheService cacheService;
         private Dictionary<string, List<ItemData>> nameAndTypeDictionary;
         private List<(Regex Regex, ItemData Item)> nameAndTypeRegex;
 
         private string[] prefixes;
 
-        public ItemDataService(IPoeTradeClient poeApiClient, ILanguageProvider languageProvider)
+        public ItemDataService(IPoeTradeClient poeApiClient,
+            ILanguageProvider languageProvider,
+            ICacheService cacheService)
         {
             this.poeApiClient = poeApiClient;
             this.languageProvider = languageProvider;
+            this.cacheService = cacheService;
         }
 
         public async Task OnInit()
@@ -30,7 +34,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             nameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
             nameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
-            var categories = await poeApiClient.Fetch<ItemDataCategory>();
+            var categories = await cacheService.Get<List<ItemDataCategory>>("ItemDataService.OnInit");
+            if (categories == default)
+            {
+                categories = await poeApiClient.Fetch<ItemDataCategory>();
+                await cacheService.Save("ItemDataService.OnInit", categories);
+            }
 
             FillPattern(categories[0].Entries, Category.Accessory);
             FillPattern(categories[1].Entries, Category.Armour);
@@ -67,7 +76,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
                 var key = item.Name ?? item.Type;
 
-                if(useRegex)
+                if (useRegex)
                 {
                     nameAndTypeRegex.Add((key.ToRegex(), item));
                 }
@@ -123,7 +132,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                     .Select(x => x.Item));
             }
 
-            if(results.Any(item => item.Rarity == Rarity.Gem)
+            if (results.Any(item => item.Rarity == Rarity.Gem)
                 && itemSections.TryGetVaalGemName(out var vaalGemName)
                 && nameAndTypeDictionary.TryGetValue(vaalGemName, out itemData))
             {

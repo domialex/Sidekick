@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Sidekick.Database.Caches;
 using Sidekick.Database.Windows;
 
 namespace Sidekick.Database
@@ -10,14 +11,14 @@ namespace Sidekick.Database
         {
         }
 
+        public DbSet<Cache> Caches { get; set; }
+
         public DbSet<Window> Windows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema("sidekick");
-
-            Window.OnModelCreating(modelBuilder);
         }
     }
 }
