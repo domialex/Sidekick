@@ -32,11 +32,15 @@ namespace Sidekick.Core.Settings
 
         public bool ShowSplashScreen { get; set; }
 
+        public string DangerousModsRegex { get; set; }
+
         public List<string> Modifiers { get; set; }
 
         public string Key_CloseWindow { get; set; }
 
         public string Key_CheckPrices { get; set; }
+
+        public string Key_MapInfo { get; set; }
 
         public string Key_GoToHideout { get; set; }
 

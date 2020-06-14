@@ -31,6 +31,8 @@ namespace Sidekick.Views
             this.closeOnBlur = closeOnBlur;
         }
 
+        // The keybind to close windows can interfere when trying to edit text fields.
+        public bool PreventCloseKeybind = false;
         protected bool IsClosing = false;
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -49,7 +51,10 @@ namespace Sidekick.Views
 
         private Task<bool> KeybindEvents_OnCloseWindow()
         {
-            Close();
+            if (!PreventCloseKeybind)
+            {
+                Close();
+            }
             return Task.FromResult(true);
         }
 

@@ -64,6 +64,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PriceResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="MapInfo\MapInfoResources.Designer.cs">
+      <DependentUpon>MapInfoResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Settings\SettingResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -160,6 +165,10 @@
     <EmbeddedResource Update="Prices\PriceResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PriceResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MapInfo\MapInfoResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapInfoResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Settings\SettingResources.fr.resx">
       <Generator></Generator>

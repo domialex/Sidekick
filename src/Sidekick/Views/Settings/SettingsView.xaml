@@ -96,6 +96,18 @@
                                 <CheckBox Content="{loc:Loc Other_TabScroll}" IsChecked="{Binding Path=Settings.EnableCtrlScroll}" />
                                 <CheckBox Content="{loc:Loc Other_PricePrediction}" IsChecked="{Binding Path=Settings.EnablePricePrediction}" />
                                 <CheckBox Content="{loc:Loc Other_ShowSplashScreen}" IsChecked="{Binding Path=Settings.ShowSplashScreen}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="{loc:Loc Other_DangerousModsRegex}" />
+                                    <TextBox
+                                        Grid.Column="1"
+                                        Text="{Binding Path=Settings.DangerousModsRegex}"
+                                        GotFocus="DangerousModsRegex_GotFocus"
+                                        LostFocus="DangerousModsRegex_LostFocus"/>
+                                </Grid>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

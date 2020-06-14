@@ -151,6 +151,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check Map Mods.
+        /// </summary>
+        public static string Key_MapInfo {
+            get {
+                return ResourceManager.GetString("Key_MapInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open League Overview.
         /// </summary>
         public static string Key_OpenLeagueOverview {
@@ -237,6 +246,15 @@ namespace Sidekick.Localization.Settings {
         public static string Other_CloseWithMouseClick {
             get {
                 return ResourceManager.GetString("Other_CloseWithMouseClick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dangerous Mods Regex.
+        /// </summary>
+        public static string Other_DangerousModsRegex {
+            get {
+                return ResourceManager.GetString("Other_DangerousModsRegex", resourceCulture);
             }
         }
         
