@@ -19,9 +19,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private readonly IStatDataService statsDataService;
         private readonly IItemDataService itemDataService;
         private readonly IParserPatterns patterns;
+        private readonly ItemNameTokenizer itemNameTokenizer;
 
-        private readonly Regex NewlinePattern;
-        private readonly Regex SeparatorPattern;
+        private readonly Regex newLinePattern = new Regex("[\\r\\n]+");
+
+        private const string SEPARATOR_PATTERN = "--------";
 
         public ParserService(
             ILogger logger,
@@ -35,9 +37,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
-
-            NewlinePattern = new Regex("[\\r\\n]+");
-            SeparatorPattern = new Regex("--------");
+            this.itemNameTokenizer = new ItemNameTokenizer();
         }
 
         public async Task<Item> ParseItem(string itemText)
@@ -46,19 +46,31 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
             try
             {
-                itemText = new ItemNameTokenizer().CleanString(itemText);
-                var item = new Item
+                itemText = itemNameTokenizer.CleanString(itemText);
+
+                var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);
+                var splitSections = wholeSections
+                    .Select(block => newLinePattern
+                        .Split(block)
+                        .Where(line => line != "")
+                        .ToArray())
+                    .ToArray();
+
+                var itemSections = new ItemSections(splitSections, wholeSections);
+
+                var itemData = itemDataService.ParseItemData(itemSections);
+
+                if (itemData.Rarity == Rarity.Unknown)
                 {
-                    Text = itemText
-                };
+                    itemData.Rarity = GetRarity(itemSections.Rarity);
+                }
 
-                ParseHeader(ref item, ref itemText);
-                ParseProperties(ref item, ref itemText);
-                ParseSockets(ref item, ref itemText);
-                ParseInfluences(ref item, ref itemText);
-                ParseMods(ref item, ref itemText);
+                if (string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
+                {
+                    throw new NotSupportedException("Item not found.");
+                }
 
-                return item;
+                return ParseItemDetails(itemText, itemSections, itemData);
             }
             catch (Exception e)
             {
@@ -67,83 +79,93 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        private void ParseHeader(ref Item item, ref string input)
+        private Item ParseItemDetails(string itemText, ItemSections itemSections, ItemData itemData)
         {
-            var dataItem = itemDataService.ParseItem(input);
-
-            if (dataItem == null)
+            var item = new Item
             {
-                throw new NotSupportedException("Item not found.");
+                Text = itemText,
+                Name = itemData.Name,
+                Type = itemData.Type,
+                NameLine = itemSections.NameLine,
+                TypeLine = itemSections.TypeLine,
+                Rarity = itemData.Rarity
+            };
+
+            switch (itemData.Category)
+            {
+                case Category.DivinationCard:
+                case Category.Currency:
+                case Category.Prophecy:
+                    break;
+
+                case Category.Gem:
+                    ParseGem(item, itemSections);
+                    break;
+
+                case Category.Map:
+                    ParseMap(item, itemSections);
+                    ParseMods(item);
+                    break;
+
+                default:
+                    ParseEquipmentProperties(item, itemSections);
+                    ParseMods(item);
+                    ParseSockets(item);
+                    ParseInfluences(item, itemSections);
+                    break;
             }
 
-            item.Name = dataItem.Name;
-            item.Type = dataItem.Type;
-            item.Rarity = dataItem.Rarity;
-
-            var lines = NewlinePattern.Split(input);
-            item.NameLine = SeparatorPattern.IsMatch(lines[1]) ? string.Empty : lines[1];
-            item.TypeLine = SeparatorPattern.IsMatch(lines[2]) ? string.Empty : lines[2];
-
-            if (item.Rarity == Rarity.Unknown)
-            {
-                item.Rarity = GetRarity(lines[0]);
-            }
-
-            if (item.Rarity != Rarity.DivinationCard)
-            {
-                item.ItemLevel = patterns.GetInt(patterns.ItemLevel, input);
-                item.Identified = !patterns.Unidentified.IsMatch(input);
-                item.Corrupted = patterns.Corrupted.IsMatch(input);
-            }
+            return item;
         }
 
-        private Rarity GetRarity(string rarityString)
+        private void ParseEquipmentProperties(Item item, ItemSections itemSections)
         {
-            foreach (var pattern in patterns.Rarity)
-            {
-                if (pattern.Value.IsMatch(rarityString))
-                {
-                    return pattern.Key;
-                }
-            }
-            throw new Exception("Can't parse rarity.");
-        }
+            var propertySection = itemSections.WholeSections[1];
 
-        private void ParseProperties(ref Item item, ref string input)
-        {
-            var blocks = SeparatorPattern.Split(input);
-
-            item.Properties.Armor = patterns.GetInt(patterns.Armor, blocks[1]);
-            item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, blocks[1]);
-            item.Properties.Evasion = patterns.GetInt(patterns.Evasion, blocks[1]);
-            item.Properties.ChanceToBlock = patterns.GetInt(patterns.ChanceToBlock, blocks[1]);
-            item.Properties.Quality = patterns.GetInt(patterns.Quality, blocks[1]);
-            item.Properties.MapTier = patterns.GetInt(patterns.MapTier, blocks[1]);
-            item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, blocks[1]);
-            item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, blocks[1]);
-            item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, blocks[1]);
-            item.Properties.AttacksPerSecond = patterns.GetDouble(patterns.AttacksPerSecond, blocks[1]);
-            item.Properties.CriticalStrikeChance = patterns.GetDouble(patterns.CriticalStrikeChance, blocks[1]);
-            item.Properties.ElementalDps = patterns.GetDps(patterns.ElementalDamage, blocks[1], item.Properties.AttacksPerSecond);
-            item.Properties.PhysicalDps = patterns.GetDps(patterns.PhysicalDamage, blocks[1], item.Properties.AttacksPerSecond);
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Text);
+            item.Identified = !ParseFromEnd(patterns.Unidentified, itemSections);
+            item.Properties.Armor = patterns.GetInt(patterns.Armor, propertySection);
+            item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, propertySection);
+            item.Properties.Evasion = patterns.GetInt(patterns.Evasion, propertySection);
+            item.Properties.ChanceToBlock = patterns.GetInt(patterns.ChanceToBlock, propertySection);
+            item.Properties.Quality = patterns.GetInt(patterns.Quality, propertySection);
+            item.Properties.AttacksPerSecond = patterns.GetDouble(patterns.AttacksPerSecond, propertySection);
+            item.Properties.CriticalStrikeChance = patterns.GetDouble(patterns.CriticalStrikeChance, propertySection);
+            item.Properties.ElementalDps = patterns.GetDps(patterns.ElementalDamage, propertySection, item.Properties.AttacksPerSecond);
+            item.Properties.PhysicalDps = patterns.GetDps(patterns.PhysicalDamage, propertySection, item.Properties.AttacksPerSecond);
             item.Properties.DamagePerSecond = item.Properties.ElementalDps + item.Properties.PhysicalDps;
-            item.Properties.Blighted = patterns.Blighted.IsMatch(blocks[0]);
-
-            if (item.Rarity == Rarity.Gem)
-            {
-                item.Properties.GemLevel = patterns.GetInt(patterns.Level, blocks[1]);
-            }
+            item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
         }
 
-        private void ParseSockets(ref Item item, ref string input)
+        private void ParseMap(Item item, ItemSections itemSections)
         {
-            var result = patterns.Socket.Match(input);
+            var mapBlock = itemSections.MapPropertiesSection;
+
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Text);
+            item.Identified = !patterns.Unidentified.IsMatch(item.Text);
+            item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, mapBlock);
+            item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
+            item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
+            item.Properties.MapTier = patterns.GetInt(patterns.MapTier, mapBlock);
+            item.Properties.Quality = patterns.GetInt(patterns.Quality, mapBlock);
+            item.Properties.Blighted = patterns.Blighted.IsMatch(itemSections.WholeSections[0]);
+            item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
+
+            // Needs to be implemented in query, I think
+            //item.Influences.Shaper = patterns.Shaper.IsMatch(itemSections.MapInfluenceSection);
+            //item.Influences.Elder = patterns.Elder.IsMatch(itemSections.MapInfluenceSection);
+        }
+
+        private void ParseSockets(Item item)
+        {
+            var result = patterns.Socket.Match(item.Text);
             if (result.Success)
             {
                 var groups = result.Groups
                     .Where(x => !string.IsNullOrEmpty(x.Value))
                     .Select(x => x.Value)
                     .ToList();
+
                 for (var index = 1; index < groups.Count; index++)
                 {
                     var groupValue = groups[index].Replace("-", "").Trim();
@@ -163,23 +185,49 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
         }
 
-        private void ParseInfluences(ref Item item, ref string input)
+        private void ParseGem(Item item, ItemSections itemSections)
         {
-            var blocks = SeparatorPattern.Split(input);
-            var strippedInput = string.Concat(blocks.Skip(1).ToList());
-
-            item.Influences.Crusader = patterns.Crusader.IsMatch(strippedInput);
-            item.Influences.Elder = patterns.Elder.IsMatch(strippedInput);
-            item.Influences.Hunter = patterns.Hunter.IsMatch(strippedInput);
-            item.Influences.Redeemer = patterns.Redeemer.IsMatch(strippedInput);
-            item.Influences.Shaper = patterns.Shaper.IsMatch(strippedInput);
-            item.Influences.Warlord = patterns.Warlord.IsMatch(strippedInput);
+            item.Properties.GemLevel = patterns.GetInt(patterns.Level, itemSections.WholeSections[1]);
+            item.Properties.Quality = patterns.GetInt(patterns.Quality, itemSections.WholeSections[1]);
+            item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
         }
 
-        private void ParseMods(ref Item item, ref string input)
+        private bool ParseFromEnd(Regex pattern, ItemSections itemSections)
         {
-            item.Modifiers = statsDataService.ParseMods(input);
+            // Section order at the end:
+            // Corruption
+            // Influence
+            // Note
+            return pattern.IsMatch(itemSections.WholeSections[^1])
+                || pattern.IsMatch(itemSections.WholeSections[^2])
+                || pattern.IsMatch(itemSections.WholeSections[^3]);
         }
 
+        private void ParseInfluences(Item item, ItemSections itemSections)
+        {
+            item.Influences.Crusader = ParseFromEnd(patterns.Crusader, itemSections);
+            item.Influences.Elder = ParseFromEnd(patterns.Elder, itemSections);
+            item.Influences.Hunter = ParseFromEnd(patterns.Hunter, itemSections);
+            item.Influences.Redeemer = ParseFromEnd(patterns.Redeemer, itemSections);
+            item.Influences.Shaper = ParseFromEnd(patterns.Shaper, itemSections);
+            item.Influences.Warlord = ParseFromEnd(patterns.Warlord, itemSections);
+        }
+
+        private void ParseMods(Item item)
+        {
+            item.Modifiers = statsDataService.ParseMods(item.Text);
+        }
+
+        private Rarity GetRarity(string rarityString)
+        {
+            foreach (var pattern in patterns.Rarity)
+            {
+                if (pattern.Value.IsMatch(rarityString))
+                {
+                    return pattern.Key;
+                }
+            }
+            throw new Exception("Can't parse rarity.");
+        }
     }
 }

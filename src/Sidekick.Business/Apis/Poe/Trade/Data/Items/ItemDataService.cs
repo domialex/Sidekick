@@ -1,133 +1,151 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
-    public class ItemDataService : IItemDataService, IOnInit
+    public class ItemDataService : IItemDataService, IOnInit, IOnAfterInit
     {
         private readonly IPoeTradeClient poeApiClient;
+        private readonly ILanguageProvider languageProvider;
+        private Dictionary<string, List<ItemData>> nameAndTypeDictionary;
+        private List<(Regex Regex, ItemData Item)> nameAndTypeRegex;
 
-        public ItemDataService(IPoeTradeClient poeApiClient)
+        private string[] prefixes;
+
+        public ItemDataService(IPoeTradeClient poeApiClient, ILanguageProvider languageProvider)
         {
             this.poeApiClient = poeApiClient;
+            this.languageProvider = languageProvider;
         }
-
-        private List<(Regex Regex, ItemData Item)> Patterns { get; set; }
-
-        private Regex NewlinePattern;
 
         public async Task OnInit()
         {
-            Patterns = new List<(Regex Regex, ItemData Item)>();
+            nameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
+            nameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
             var categories = await poeApiClient.Fetch<ItemDataCategory>();
 
-            FillPattern(null, categories[0].Entries); // Accessories
-            FillPattern(null, categories[1].Entries); // Armour
-            FillPattern(Rarity.DivinationCard, categories[2].Entries); // Cards
-            FillPattern(Rarity.Currency, categories[3].Entries); // Currency
-            FillPattern(null, categories[4].Entries); // Flasks
-            FillPattern(Rarity.Gem, categories[5].Entries); // Gems
-            FillPattern(null, categories[6].Entries); // Jewels
-            FillPattern(null, categories[7].Entries); // Maps
-            FillPattern(null, categories[8].Entries); // Weapons
-            FillPattern(null, categories[9].Entries); // Leaguestones
-            FillPattern(Rarity.Prophecy, categories[10].Entries); // Prophecies
-            FillPattern(null, categories[11].Entries); // Itemised Monsters
-            FillPattern(null, categories[12].Entries); // Watchstones
-
-            NewlinePattern = new Regex("[\\r\\n]+");
+            FillPattern(categories[0].Entries, Category.Accessory);
+            FillPattern(categories[1].Entries, Category.Armour);
+            FillPattern(categories[2].Entries, Category.DivinationCard);
+            FillPattern(categories[3].Entries, Category.Currency);
+            FillPattern(categories[4].Entries, Category.Flask);
+            FillPattern(categories[5].Entries, Category.Gem);
+            FillPattern(categories[6].Entries, Category.Jewel);
+            FillPattern(categories[7].Entries, Category.Map, useRegex: true);
+            FillPattern(categories[8].Entries, Category.Weapon);
+            FillPattern(categories[9].Entries, Category.Leaguestone);
+            FillPattern(categories[10].Entries, Category.Prophecy);
+            FillPattern(categories[11].Entries, Category.ItemisedMonster);
+            FillPattern(categories[12].Entries, Category.Watchstone);
         }
 
-        private void FillPattern(Rarity? rarity, List<ItemData> items)
+        public Task OnAfterInit()
+        {
+            prefixes = new[]
+            {
+                languageProvider.Language.PrefixSuperior,
+                languageProvider.Language.PrefixBlighted
+            };
+
+            return Task.CompletedTask;
+        }
+
+        private void FillPattern(List<ItemData> items, Category category, bool useRegex = false)
         {
             foreach (var item in items)
             {
-                item.Rarity = Rarity.Unknown;
-                if (item.Flags.Unique)
-                {
-                    item.Rarity = Rarity.Unique;
-                }
-                else if (item.Flags.Prophecy)
-                {
-                    item.Rarity = Rarity.Prophecy;
-                }
-                else if (rarity.HasValue)
-                {
-                    item.Rarity = rarity.Value;
-                }
+                item.Rarity = GetRarityForCategory(category, item);
+                item.Category = category;
 
-                Regex regex;
-                if (string.IsNullOrEmpty(item.Name))
+                var key = item.Name ?? item.Type;
+
+                if(useRegex)
                 {
-                    if (item.Rarity == Rarity.DivinationCard || item.Rarity == Rarity.Gem)
-                    {
-                        regex = new Regex($"^{Regex.Escape(item.Type)}$");
-                    }
-                    else
-                    {
-                        regex = new Regex(Regex.Escape(item.Type));
-                    }
+                    nameAndTypeRegex.Add((key.ToRegex(), item));
                 }
                 else
                 {
-                    regex = new Regex($"^{Regex.Escape(item.Name)}$");
-                }
+                    if (!nameAndTypeDictionary.TryGetValue(key, out var itemData))
+                    {
+                        itemData = new List<ItemData>();
+                        nameAndTypeDictionary.Add(key, itemData);
+                    }
 
-                Patterns.Add((regex, item));
+                    itemData.Add(item);
+                }
             }
         }
 
-        public ItemData ParseItem(string text)
+        private Rarity GetRarityForCategory(Category category, ItemData item)
         {
-            var lines = NewlinePattern.Split(text);
+            if (item.Flags.Unique)
+            {
+                return Rarity.Unique;
+            }
+            else if (item.Flags.Prophecy)
+            {
+                return Rarity.Prophecy;
+            }
+
+            return category switch
+            {
+                Category.DivinationCard => Rarity.DivinationCard,
+                Category.Gem => Rarity.Gem,
+                Category.Currency => Rarity.Currency,
+                _ => Rarity.Unknown
+            };
+        }
+
+        public ItemData ParseItemData(ItemSections itemSections)
+        {
             var results = new List<ItemData>();
 
-            if (lines.Length >= 2)
+            if (nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
             {
-                results.AddRange(Patterns
-                    .Where(x => x.Regex.IsMatch(lines[1]))
-                    .Select(x => x.Item)
-                    .ToList());
+                results.AddRange(itemData);
             }
-
-            if (lines.Length >= 3)
+            else if (itemSections.HeaderSection.Length > 2 && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[2]), out itemData))
             {
-                results.AddRange(Patterns
-                    .Where(x => x.Regex.IsMatch(lines[2]))
-                    .Select(x => x.Item)
-                    .ToList());
-            }
-
-            // We need to check for vaal gems
-            if (results.Any(x => x.Rarity == Rarity.Gem))
-            {
-                foreach (var line in lines.Skip(3))
-                {
-                    results.AddRange(Patterns
-                        .Where(x => x.Regex.IsMatch(line))
-                        .Select(x => x.Item)
-                        .ToList());
-                }
-            }
-
-            IEnumerable<ItemData> orderedResults = results;
-
-            if (orderedResults.All(x => x.Rarity == Rarity.Unknown))
-            {
-                orderedResults = results.OrderBy(x => x.Rarity == Rarity.Unique || x.Rarity == Rarity.DivinationCard ? 0 : 1);
+                results.AddRange(itemData);
             }
             else
             {
-                orderedResults = results.OrderBy(x => x.Rarity == Rarity.Unique || x.Rarity == Rarity.DivinationCard ? 0 : 1)
-                    .ThenByDescending(x => x.Rarity == Rarity.Gem ? x.Text.Length : 0);
+                results.AddRange(nameAndTypeRegex
+                    .Where(pattern => pattern.Regex.IsMatch(itemSections.WholeSections[0]))
+                    .Select(x => x.Item));
             }
 
-            return orderedResults.FirstOrDefault();
+            if(results.Any(item => item.Rarity == Rarity.Gem)
+                && itemSections.TryGetVaalGemName(out var vaalGemName)
+                && nameAndTypeDictionary.TryGetValue(vaalGemName, out itemData))
+            {
+                // If we find a Vaal gem, we don't care about other matches
+                results.Clear();
+                results.Add(itemData.First());
+            }
+
+            return results
+                .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
+                .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
+                .FirstOrDefault();
+        }
+
+        private string GetLineWithoutPrefixes(string line)
+        {
+            foreach (var prefix in prefixes)
+            {
+                line = line.Replace(prefix, "");
+            }
+
+            return line.Trim();
         }
     }
 }
