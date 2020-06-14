@@ -5,19 +5,21 @@
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Initializer;assembly=Sidekick.Localization"
     Title="Sidekick"
+    Width="360"
+    Height="160"
     loc:Translation.ResourceManager="{x:Static resx:InitializerResources.ResourceManager}"
-    ShowInTaskbar="True"
-    Topmost="False"
-    WindowStartupLocation="CenterScreen">
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
     <Window.Style>
-        <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding ProgressValue, FallbackValue=0}" />
     </Window.TaskbarItemInfo>
 
-    <StackPanel Width="360" Margin="{StaticResource Spacer}">
+    <StackPanel Width="340" Margin="{StaticResource Spacer}">
         <WrapPanel HorizontalAlignment="Center">
             <Image
                 Width="50"

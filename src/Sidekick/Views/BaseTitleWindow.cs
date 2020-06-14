@@ -53,16 +53,16 @@ namespace Sidekick.Views
                     Left = screenRect.X;
                 }
 
-                // Is off to the top
-                if (Top < screenRect.Y)
-                {
-                    Top = screenRect.Y;
-                }
-
                 // Is off to the bottom
                 if (Top + GetHeight() > screenRect.Y + screenRect.Height)
                 {
                     Top = screenRect.Y + screenRect.Height - GetHeight();
+                }
+
+                // Is off to the top
+                if (Top < screenRect.Y)
+                {
+                    Top = screenRect.Y;
                 }
             }
         }

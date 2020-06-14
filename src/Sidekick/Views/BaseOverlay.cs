@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Input;
+using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -11,19 +11,18 @@ using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
 {
-    public abstract class BaseBorderlessWindow : Window, ISidekickView
+    public abstract class BaseOverlay : AdonisWindow, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
         private readonly SidekickSettings settings;
         private readonly bool closeOnBlur;
 
-        public BaseBorderlessWindow(IServiceProvider serviceProvider, bool closeOnBlur = false)
+        public BaseOverlay(IServiceProvider serviceProvider, bool closeOnBlur = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
 
             Deactivated += BaseBorderlessWindow_Deactivated;
-            MouseLeftButtonDown += BaseBorderlessWindow_MouseLeftButtonDown;
             SizeChanged += EnsureBounds;
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
@@ -39,7 +38,6 @@ namespace Sidekick.Views
             IsClosing = true;
             Deactivated -= BaseBorderlessWindow_Deactivated;
             keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
-            MouseLeftButtonDown -= BaseBorderlessWindow_MouseLeftButtonDown;
             IsVisibleChanged -= EnsureBounds;
             SizeChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
@@ -59,15 +57,6 @@ namespace Sidekick.Views
             {
                 Close();
             }
-        }
-
-        private void BaseBorderlessWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                DragMove();
-            }
-            catch (InvalidOperationException) { }
         }
 
         public new void Show()

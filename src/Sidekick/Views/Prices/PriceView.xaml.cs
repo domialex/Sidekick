@@ -7,18 +7,17 @@ using Sidekick.Core.Natives;
 
 namespace Sidekick.Views.Prices
 {
-    public partial class PriceView : BaseBorderlessWindow
+    public partial class PriceView : BaseOverlay
     {
         private readonly PriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
 
-        private bool MoveWhenOpeningPreview = false;
+        private readonly bool MoveWhenOpeningPreview = false;
 
         public PriceView(
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
-            INativeBrowser nativeBrowser,
-            INativeCursor cursor)
+            INativeBrowser nativeBrowser)
             : base(serviceProvider,
                   closeOnBlur: true)
         {
@@ -58,6 +57,11 @@ namespace Sidekick.Views.Prices
         {
             if (e.PropertyName == nameof(PriceViewModel.Results))
             {
+                var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
+                scrollViewer?.ScrollToTop();
+
+                Title = viewModel.Item.NameLine ?? "";
+
                 viewModel.Results.CollectionChanged += async (_, __) =>
                 {
                     await Task.Delay(1000);
@@ -85,8 +89,8 @@ namespace Sidekick.Views.Prices
             // Load next results when scrollviewer is at the bottom
             if (scrollViewer?.ScrollableHeight > 0)
             {
-                // Query next page when reaching more than 80% of the scrollable content.
-                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.8d)
+                // Query next page when reaching more than 99% of the scrollable content.
+                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.99d)
                 {
                     viewModel.LoadMoreData();
                 }
@@ -110,10 +114,15 @@ namespace Sidekick.Views.Prices
         {
             if (viewModel.PreviewItem == null && MoveWhenOpeningPreview)
             {
-                MoveX(-260);
+                // MoveX(-260);
             }
             viewModel.Preview((PriceItem)ItemList.SelectedItem);
-            EnsureBounds();
+            // EnsureBounds();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.LoadMoreData();
         }
     }
 }

@@ -72,7 +72,6 @@ namespace Sidekick.Views.Prices
         public Uri Uri => QueryResult?.Uri;
 
         public bool IsError { get; private set; }
-        public bool IsNotError => !IsError;
 
         public bool IsFetching { get; private set; }
         public bool IsFetched => !IsFetching;
@@ -131,7 +130,7 @@ namespace Sidekick.Views.Prices
                 enabled: Item.Properties.Blighted);
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), languageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
                 enabled: true,
-                min : Item.Properties.MapTier);
+                min: Item.Properties.MapTier);
 
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.PhysicalDps), PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.ElementalDps), PriceResources.Filters_EDps, Item.Properties.ElementalDps);
@@ -446,10 +445,15 @@ namespace Sidekick.Views.Prices
 
         public async Task LoadMoreData()
         {
+            if (IsFetching)
+            {
+                return;
+            }
+
             try
             {
                 var ids = QueryResult.Result.Skip(Results?.Count ?? 0).Take(10).ToList();
-                if (IsFetching || ids.Count == 0)
+                if (ids.Count == 0)
                 {
                     return;
                 }
@@ -513,9 +517,11 @@ namespace Sidekick.Views.Prices
             }
         }
 
+        public bool FullyLoaded { get; private set; }
         public string CountString { get; private set; }
         private void UpdateCountString()
         {
+            FullyLoaded = (Results?.Count ?? 0) == (QueryResult?.Result?.Count ?? 0);
             CountString = string.Format(PriceResources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
         }
 

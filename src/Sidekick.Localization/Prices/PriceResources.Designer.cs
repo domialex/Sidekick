@@ -214,6 +214,15 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load More Data.
+        /// </summary>
+        public static string LoadMoreData {
+            get {
+                return ResourceManager.GetString("LoadMoreData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Armour at max Quality.
         /// </summary>
         public static string MaxQualityArmour {
