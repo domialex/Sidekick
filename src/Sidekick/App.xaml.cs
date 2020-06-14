@@ -15,6 +15,7 @@ using Sidekick.Core.Update;
 using Sidekick.Handlers;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Initializer;
+using Sidekick.Localization.Splash;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
 using Sidekick.Views;
@@ -168,6 +169,7 @@ namespace Sidekick
             nativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
             if (!instanceResult)
             {
+                AdonisUI.Controls.MessageBox.Show(SplashResources.AlreadyRunningText, SplashResources.AlreadyRunningTitle, AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
                 Current.Shutdown();
             }
         }
