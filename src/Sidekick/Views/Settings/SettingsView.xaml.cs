@@ -1,12 +1,14 @@
+using System;
 using System.Windows;
 
 namespace Sidekick.Views.Settings
 {
-    public partial class SettingsView : BaseTitleWindow
+    public partial class SettingsView : BaseWindow
     {
         private readonly SettingsViewModel viewModel;
 
-        public SettingsView(SettingsViewModel viewModel)
+        public SettingsView(IServiceProvider serviceProvider, SettingsViewModel viewModel)
+            : base(serviceProvider)
         {
             this.viewModel = viewModel;
 

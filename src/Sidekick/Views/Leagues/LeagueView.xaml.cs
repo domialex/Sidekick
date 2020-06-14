@@ -11,8 +11,7 @@ namespace Sidekick.Views.Leagues
     public partial class LeagueView : BaseOverlay
     {
         public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
-            : base(serviceProvider,
-                  closeOnBlur: true)
+            : base(serviceProvider)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;

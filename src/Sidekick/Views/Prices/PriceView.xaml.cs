@@ -18,8 +18,7 @@ namespace Sidekick.Views.Prices
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
             INativeBrowser nativeBrowser)
-            : base(serviceProvider,
-                  closeOnBlur: true)
+            : base(serviceProvider)
         {
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;

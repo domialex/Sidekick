@@ -54,13 +54,13 @@ namespace Sidekick.Views.Prices
             {
                 if (highlightMatches.ContainsKey(index))
                 {
-                    var value = highlightMatches[index];
+                    var (Value, Type) = highlightMatches[index];
                     var run = new Run(highlightMatches[index].Value)
                     {
                         Foreground = Brushes.LightBlue,
                         FontWeight = FontWeight.FromOpenTypeWeight(700),
                     };
-                    switch (value.Type)
+                    switch (Type)
                     {
                         case LineContentType.Simple:
                             run.Foreground = Brushes.White;

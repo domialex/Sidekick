@@ -12,8 +12,7 @@
     MinWidth="720"
     MinHeight="480"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}"
-    Topmost="True"
-    WindowStyle="None">
+    Topmost="True">
 
     <Window.Resources>
         <ResourceDictionary>

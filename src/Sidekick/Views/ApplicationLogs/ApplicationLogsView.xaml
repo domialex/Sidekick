@@ -1,4 +1,4 @@
-<base:BaseTitleWindow
+<base:BaseWindow
     x:Class="Sidekick.Views.ApplicationLogs.ApplicationLogsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -34,4 +34,4 @@
                 TextWrapping="NoWrap" />
         </ScrollViewer>
     </Grid>
-</base:BaseTitleWindow>
+</base:BaseWindow>

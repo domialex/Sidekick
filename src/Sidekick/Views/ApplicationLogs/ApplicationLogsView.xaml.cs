@@ -3,11 +3,12 @@ using System.ComponentModel;
 
 namespace Sidekick.Views.ApplicationLogs
 {
-    public partial class ApplicationLogsView : BaseTitleWindow
+    public partial class ApplicationLogsView : BaseWindow
     {
         private readonly ApplicationLogViewModel viewModel;
 
-        public ApplicationLogsView(ApplicationLogViewModel viewModel)
+        public ApplicationLogsView(IServiceProvider serviceProvider, ApplicationLogViewModel viewModel)
+            : base(serviceProvider)
         {
             this.viewModel = viewModel;
 

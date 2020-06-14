@@ -14,6 +14,7 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
     Title="{loc:Loc Title}"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
+    ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
     Topmost="True"
     mc:Ignorable="d">
