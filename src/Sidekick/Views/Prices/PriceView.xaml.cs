@@ -7,20 +7,16 @@ using Sidekick.Core.Natives;
 
 namespace Sidekick.Views.Prices
 {
-    public partial class PriceView : BaseWindow
+    public partial class PriceView : BaseOverlay
     {
         private readonly PriceViewModel viewModel;
         private readonly INativeBrowser nativeBrowser;
 
-        private bool MoveWhenOpeningPreview = false;
-
         public PriceView(
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
-            INativeBrowser nativeBrowser,
-            INativeCursor cursor)
-            : base(serviceProvider,
-                  closeOnBlur: true)
+            INativeBrowser nativeBrowser)
+            : base("price", serviceProvider)
         {
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
@@ -32,14 +28,14 @@ namespace Sidekick.Views.Prices
             Show();
             Activate();
 
+            SetTopPercent(0.5, LocationSource.Center);
             if (GetMouseXPercent() > 0.5)
             {
-                MoveWhenOpeningPreview = true;
-                SetWindowPositionPercent(0.66 - GetWidthPercent(), 0.5 - (GetHeightPercent() / 2));
+                SetLeftPercent(0.66, LocationSource.End);
             }
             else
             {
-                SetWindowPositionPercent(0.34, 0.5 - (GetHeightPercent() / 2));
+                SetLeftPercent(0.34, LocationSource.Begin);
             }
 
             if (viewModel.IsError)
@@ -58,6 +54,11 @@ namespace Sidekick.Views.Prices
         {
             if (e.PropertyName == nameof(PriceViewModel.Results))
             {
+                var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
+                scrollViewer?.ScrollToTop();
+
+                Title = viewModel.Item.NameLine ?? "";
+
                 viewModel.Results.CollectionChanged += async (_, __) =>
                 {
                     await Task.Delay(1000);
@@ -85,8 +86,8 @@ namespace Sidekick.Views.Prices
             // Load next results when scrollviewer is at the bottom
             if (scrollViewer?.ScrollableHeight > 0)
             {
-                // Query next page when reaching more than 80% of the scrollable content.
-                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.8d)
+                // Query next page when reaching more than 99% of the scrollable content.
+                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.99d)
                 {
                     viewModel.LoadMoreData();
                 }
@@ -108,12 +109,12 @@ namespace Sidekick.Views.Prices
 
         private void ItemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (viewModel.PreviewItem == null && MoveWhenOpeningPreview)
-            {
-                MoveX(-260);
-            }
             viewModel.Preview((PriceItem)ItemList.SelectedItem);
-            EnsureBounds();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.LoadMoreData();
         }
     }
 }

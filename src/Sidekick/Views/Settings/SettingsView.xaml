@@ -6,31 +6,25 @@
     xmlns:base="clr-namespace:Sidekick.Views"
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
-    Title="Settings - Sidekick"
-    Width="680"
-    Height="400"
+    Title="{loc:Loc Title}"
+    Width="720"
+    Height="640"
+    MinWidth="720"
+    MinHeight="640"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
-    MouseLeftButtonDown="Window_MouseLeftButtonDown"
     WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
-    </Window.Resources>
-
     <Window.Style>
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
-    <DockPanel
-        Width="600"
-        Height="400"
-        Margin="{StaticResource Spacer}">
-        <WrapPanel HorizontalAlignment="Right" DockPanel.Dock="Bottom">
-            <Button Click="DiscardChanges_Click" Content="{loc:Loc Cancel}" />
-            <Button
-                Margin="{StaticResource SpacerLeft}"
-                Click="SaveChanges_Click"
-                Content="{loc:Loc Ok}" />
-        </WrapPanel>
+    <Grid Margin="{StaticResource Spacer}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <TabControl Margin="{StaticResource SpacerBottom}" TabStripPlacement="Left">
             <TabItem Header="{loc:Loc Tab_General}">
                 <ScrollViewer>
@@ -116,5 +110,12 @@
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-    </DockPanel>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
+            <Button Click="DiscardChanges_Click" Content="{loc:Loc Cancel}" />
+            <Button
+                Margin="{StaticResource SpacerLeft}"
+                Click="SaveChanges_Click"
+                Content="{loc:Loc Ok}" />
+        </WrapPanel>
+    </Grid>
 </base:BaseWindow>

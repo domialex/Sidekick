@@ -198,6 +198,9 @@
   <data name="Tab_Keybindings" xml:space="preserve">
     <value>Keybindings</value>
   </data>
+  <data name="Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Wiki_Preferred" xml:space="preserve">
     <value>Preferred Wiki</value>
   </data>

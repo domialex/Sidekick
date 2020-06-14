@@ -5,18 +5,14 @@
     xmlns:converters="clr-namespace:Sidekick.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:loc="clr-namespace:Sidekick.Views"
-    xmlns:local="clr-namespace:Sidekick.Views.Prices"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="60"
+    d:DesignWidth="360"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Main.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <converters:IntToVisibilityConverter x:Key="IntToVisibility" />
             <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
@@ -26,26 +22,27 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel Name="Container">
+    <Grid Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
         <CheckBox IsChecked="{Binding Item.Enabled}">
-            <RichTextBox
-                Name="RichText"
-                Margin="0"
-                Padding="-5,0,-5,0"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                BorderThickness="0"
-                Foreground="White"
-                IsHitTestVisible="False"
-                IsReadOnly="True" />
+            <TextBlock
+                Name="TextBlock"
+                Margin="{StaticResource SpacerRight}"
+                TextWrapping="Wrap" />
         </CheckBox>
-        <StackPanel Visibility="{Binding Item.HasRange, Converter={StaticResource BooleanToVisibility}}">
+        <Grid Grid.Row="2" Visibility="{Binding Item.HasRange, Converter={StaticResource BooleanToVisibility}}">
             <Grid Margin="20,0,0,0" Visibility="{Binding Item.Enabled, Converter={StaticResource BooleanToVisibility}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="35" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="1*" MinWidth="50" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="1*" MinWidth="50" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
@@ -59,17 +56,17 @@
                     MinHeight="0"
                     Text="{Binding Item.Min, Converter={StaticResource StringToNullableDouble}}" />
                 <TextBlock
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Margin="0,0,4,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{loc:Loc Filters_Max}" />
                 <TextBox
-                    Grid.Column="3"
+                    Grid.Column="4"
                     Height="25"
                     MinHeight="0"
                     Text="{Binding Item.Max, Converter={StaticResource StringToNullableDouble}}" />
             </Grid>
-        </StackPanel>
-    </StackPanel>
+        </Grid>
+    </Grid>
 </UserControl>

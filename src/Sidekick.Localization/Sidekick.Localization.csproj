@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ApplicationLogs\ApplicationLogsResources.Designer.cs">
+      <DependentUpon>ApplicationLogsResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Application\ApplicationResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -49,11 +54,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="ApplicationLogs\ApplicationLogResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ApplicationLogResources.resx</DependentUpon>
-    </Compile>
     <Compile Update="PriceCheck\PriceCheckResources.Designer.cs">
       <DependentUpon>PriceCheckResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -87,6 +87,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="ApplicationLogs\ApplicationLogsResources.resx">
+      <LastGenOutput>ApplicationLogsResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Application\ApplicationResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
@@ -148,10 +152,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>MetamorphResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="ApplicationLogs\ApplicationLogResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ApplicationLogResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="PriceCheck\PriceCheckResources.resx">
       <LastGenOutput>PriceCheckResources.Designer.cs</LastGenOutput>

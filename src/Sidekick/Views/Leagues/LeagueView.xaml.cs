@@ -8,17 +8,17 @@ namespace Sidekick.Views.Leagues
     /// Interaction logic for LeagueView.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class LeagueView : BaseWindow
+    public partial class LeagueView : BaseOverlay
     {
         public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
-            : base(serviceProvider,
-                  closeOnBlur: true)
+            : base("league", serviceProvider)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;
             DataContext = ViewModel;
 
-            SetWindowPositionPercent(25, 0);
+            SetTopPercent(0, LocationSource.Begin);
+            SetLeftPercent(50, LocationSource.Center);
             Show();
             Activate();
         }

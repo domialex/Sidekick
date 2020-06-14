@@ -304,6 +304,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred Wiki.
         /// </summary>
         public static string Wiki_Preferred {

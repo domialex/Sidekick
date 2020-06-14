@@ -8,15 +8,11 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
-        <RichTextBox
-            Name="RichText"
+        <TextBlock
+            Name="TextBlock"
             Margin="0,0,0,3"
-            Padding="-5,0,-5,0"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            BorderThickness="0"
             Foreground="White"
-            IsReadOnly="True" />
+            TextWrapping="Wrap" />
         <TextBlock
             Grid.Column="1"
             Text="{Binding Modifier.Tier}"
