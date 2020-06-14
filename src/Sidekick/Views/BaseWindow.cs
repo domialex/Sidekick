@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Forms;
 using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Business.Windows;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
@@ -15,17 +16,22 @@ namespace Sidekick.Views
     {
         private readonly IKeybindEvents keybindEvents;
         private readonly SidekickSettings settings;
+        private readonly IWindowService windowService;
         private readonly bool closeOnBlur;
         private readonly bool closeOnKey;
+        private readonly string id;
 
-        public BaseWindow(IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        public BaseWindow(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
+            windowService = serviceProvider.GetService<IWindowService>();
 
-            SizeChanged += EnsureBounds;
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
+            Loaded += BaseWindow_Loaded;
+            SizeChanged += EnsureBounds;
+            SizeChanged += BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -39,6 +45,7 @@ namespace Sidekick.Views
 
             this.closeOnBlur = closeOnBlur;
             this.closeOnKey = closeOnKey;
+            this.id = id;
         }
 
         protected bool IsClosing = false;
@@ -48,8 +55,10 @@ namespace Sidekick.Views
 
             IsClosing = true;
             IsVisibleChanged -= EnsureBounds;
-            SizeChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
+            Loaded -= BaseWindow_Loaded;
+            SizeChanged -= EnsureBounds;
+            SizeChanged -= BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -62,6 +71,49 @@ namespace Sidekick.Views
             }
 
             base.OnClosing(e);
+        }
+
+        private void BaseWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                await windowService.SaveSize(id, GetWidth(), GetHeight());
+            });
+        }
+
+        private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                var window = await windowService.Get(id);
+                if (window != null)
+                {
+                    var previousWidth = GetWidth();
+                    var previousHeight = GetHeight();
+                    SetWidth(window.Width);
+                    SetHeight(window.Height);
+
+                    if (LeftLocationSource == LocationSource.Center)
+                    {
+                        MoveX((previousWidth - window.Width) / 2);
+                    }
+                    else if (LeftLocationSource == LocationSource.End)
+                    {
+                        MoveX(previousWidth - window.Width);
+                    }
+
+                    if (TopLocationSource == LocationSource.Center)
+                    {
+                        MoveY((previousHeight - window.Height) / 2);
+                    }
+                    else if (TopLocationSource == LocationSource.End)
+                    {
+                        MoveY(previousHeight - window.Height);
+                    }
+
+                    EnsureBounds();
+                }
+            });
         }
 
         private Task<bool> KeybindEvents_OnCloseWindow()
@@ -81,36 +133,61 @@ namespace Sidekick.Views
             EnsureBounds();
         }
 
-        protected void SetWindowPosition(double x, double y)
+        private LocationSource TopLocationSource = LocationSource.Begin;
+        protected void SetTopPercent(double y, LocationSource source = LocationSource.Begin)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(() => SetWindowPosition(x, y));
+                Dispatcher.Invoke(() => SetTopPercent(y));
                 return;
             }
 
+            if (y > 1) { y /= 100; }
+
+            if (source == LocationSource.Center)
+            {
+                y -= GetHeightPercent() / 2;
+            }
+            else if (source == LocationSource.End)
+            {
+                y -= GetHeightPercent();
+            }
+
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
-            SetWindowPositionPercent(x / screenRect.Width, y / screenRect.Height);
+
+            var desiredY = screenRect.Y + (screenRect.Height * y);
+
+            TopLocationSource = source;
+            Top = (int)desiredY;
+            EnsureBounds();
         }
 
-        protected void SetWindowPositionPercent(double x, double y)
+        private LocationSource LeftLocationSource = LocationSource.Begin;
+        protected void SetLeftPercent(double x, LocationSource source = LocationSource.Begin)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(() => SetWindowPositionPercent(x, y));
+                Dispatcher.Invoke(() => SetLeftPercent(x));
                 return;
             }
 
             if (x > 1) { x /= 100; }
-            if (y > 1) { y /= 100; }
+
+            if (source == LocationSource.Center)
+            {
+                x -= GetWidthPercent() / 2;
+            }
+            else if (source == LocationSource.End)
+            {
+                x -= GetWidthPercent();
+            }
 
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
             var desiredX = screenRect.X + (screenRect.Width * x);
-            var desiredY = screenRect.Y + (screenRect.Height * y);
 
+            LeftLocationSource = source;
             Left = (int)desiredX;
-            Top = (int)desiredY;
             EnsureBounds();
         }
 
@@ -168,7 +245,7 @@ namespace Sidekick.Views
         {
             if (!Dispatcher.CheckAccess())
             {
-                return Dispatcher.Invoke(() => GetWidth());
+                return Dispatcher.Invoke(() => GetWidthPercent());
             }
 
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
@@ -189,29 +266,67 @@ namespace Sidekick.Views
         {
             if (!Dispatcher.CheckAccess())
             {
-                return Dispatcher.Invoke(() => GetWidth());
+                return Dispatcher.Invoke(() => GetHeightPercent());
             }
 
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
             return ActualHeight / screen.Height;
         }
 
+        protected void SetWidth(double width)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => SetWidth(width));
+                return;
+            }
+
+            Width = width;
+        }
+
+        protected void SetHeight(double height)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => SetHeight(height));
+                return;
+            }
+
+            Height = height;
+        }
+
         protected double GetMouseXPercent()
         {
+            if (!Dispatcher.CheckAccess())
+            {
+                return Dispatcher.Invoke(() => GetMouseXPercent());
+            }
+
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
 
             return (double)(MyCursor.Position.X - screen.X) / screen.Width;
         }
 
-        protected void MoveX(double value)
+        protected void MoveX(double x)
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(() => MoveX(value));
+                Dispatcher.Invoke(() => MoveX(x));
                 return;
             }
 
-            Left += value;
+            Left += x;
+        }
+
+        protected void MoveY(double y)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => MoveY(y));
+                return;
+            }
+
+            Top += y;
         }
     }
 }

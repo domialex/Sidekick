@@ -11,13 +11,14 @@ namespace Sidekick.Views.Leagues
     public partial class LeagueView : BaseOverlay
     {
         public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            : base("league", serviceProvider)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;
             DataContext = ViewModel;
 
-            SetWindowPositionPercent(25, 0);
+            SetTopPercent(0, LocationSource.Begin);
+            SetLeftPercent(50, LocationSource.Center);
             Show();
             Activate();
         }

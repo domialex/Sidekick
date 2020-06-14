@@ -14,6 +14,11 @@ namespace Sidekick.Database
 
             services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=Sidekick.db"));
 
+            var builder = new DbContextOptionsBuilder<SidekickContext>();
+            builder.UseSqlite("Filename=Sidekick.db");
+            var context = new SidekickContext(builder.Options);
+            context.Database.Migrate();
+
             return services;
         }
     }

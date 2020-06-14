@@ -8,7 +8,7 @@ namespace Sidekick.Views.Settings
         private readonly SettingsViewModel viewModel;
 
         public SettingsView(IServiceProvider serviceProvider, SettingsViewModel viewModel)
-            : base(serviceProvider)
+            : base("settings", serviceProvider)
         {
             this.viewModel = viewModel;
 

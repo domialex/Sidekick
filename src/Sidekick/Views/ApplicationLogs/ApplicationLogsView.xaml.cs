@@ -8,7 +8,7 @@ namespace Sidekick.Views.ApplicationLogs
         private readonly ApplicationLogViewModel viewModel;
 
         public ApplicationLogsView(IServiceProvider serviceProvider, ApplicationLogViewModel viewModel)
-            : base(serviceProvider)
+            : base("logs", serviceProvider)
         {
             this.viewModel = viewModel;
 
