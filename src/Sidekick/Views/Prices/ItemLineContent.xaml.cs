@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -5,7 +7,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
-using Sidekick.Views.Prices.Helpers;
 
 namespace Sidekick.Views.Prices
 {
@@ -15,7 +16,7 @@ namespace Sidekick.Views.Prices
     [DependencyProperty]
     public partial class ItemLineContent : UserControl
     {
-        private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
+        private static readonly Regex Highlight = new Regex("[\\+]?[\\d]+(?:[,\\.]\\d+)?[%]?");
 
         [DependencyProperty(OnPropertyChanged = nameof(OnPropertyChanged))]
         public LineContent Property { get; set; }
@@ -31,50 +32,53 @@ namespace Sidekick.Views.Prices
         {
             var itemProperty = (ItemLineContent)dependencyObject;
 
-            itemProperty.RichText.Document.Blocks.Clear();
-            itemProperty.RichText.Document.Blocks.Add(new Paragraph(new Run(itemProperty.Property.Parsed)));
+            var highlightMatches = new Dictionary<int, (string Value, LineContentType Type)>();
+            var text = itemProperty.Property.Parsed;
 
-            // create textpointer translator
-            var trans = new TextPointerTranslator(itemProperty.RichText.Document);
-
-            // enumerate
             foreach (var value in itemProperty.Property.Values)
             {
                 var matches = Highlight.Matches(value.Value);
-                var offset = itemProperty.Property.Parsed.IndexOf(value.Value);
+                var offset = text.IndexOf(value.Value);
 
-                // enumerate
                 for (var i = 0; i < matches.Count; i++)
                 {
                     var info = matches[i];
-                    var start = trans.GetTextPointer(info.Index + offset, false);
-                    var end = trans.GetTextPointer(info.Index + info.Value.Length + offset, false);
 
-                    if (start == null || end == null)
-                    {
-                        continue;
-                    }
-
-                    var range = new TextRange(start, end);
-
-                    if (range != null)
-                    {
-                        range.ApplyPropertyValue(
-                           TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
-
-                        switch (value.Type)
-                        {
-                            case LineContentType.Simple:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.White);
-                                break;
-                            case LineContentType.Augmented:
-                                range.ApplyPropertyValue(
-                                   TextElement.ForegroundProperty, Brushes.LightBlue);
-                                break;
-                        }
-                    }
+                    highlightMatches.Add(offset + info.Index, (info.Value, value.Type));
                 }
+            }
+
+            itemProperty.TextBlock.Inlines.Clear();
+            var index = 0;
+            while (text.Length > 0)
+            {
+                if (highlightMatches.ContainsKey(index))
+                {
+                    var value = highlightMatches[index];
+                    var run = new Run(highlightMatches[index].Value)
+                    {
+                        Foreground = Brushes.LightBlue,
+                        FontWeight = FontWeight.FromOpenTypeWeight(700),
+                    };
+                    switch (value.Type)
+                    {
+                        case LineContentType.Simple:
+                            run.Foreground = Brushes.White;
+                            break;
+                        case LineContentType.Augmented:
+                            run.Foreground = Brushes.LightBlue;
+                            break;
+                    }
+                    itemProperty.TextBlock.Inlines.Add(run);
+                    text = text.Substring(highlightMatches[index].Value.Length);
+                    index += highlightMatches[index].Value.Length;
+                    continue;
+                }
+
+                var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderBy(x => x).FirstOrDefault();
+                itemProperty.TextBlock.Inlines.Add(text.Substring(0, nextIndex == default ? text.Length : nextIndex - index));
+                text = text.Substring(nextIndex == default ? text.Length : nextIndex - index);
+                index += nextIndex - index;
             }
         }
     }

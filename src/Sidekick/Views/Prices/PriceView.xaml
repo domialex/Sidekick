@@ -7,10 +7,10 @@
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:local="clr-namespace:Sidekick.Views.Prices"
     xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
-    Width="900"
-    Height="500"
-    MinWidth="900"
-    MinHeight="500"
+    Width="720"
+    Height="480"
+    MinWidth="720"
+    MinHeight="480"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}"
     Topmost="True"
     WindowStyle="None">
@@ -31,7 +31,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="3*" MinWidth="300" />
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
@@ -65,7 +65,6 @@
 
             <DataGrid
                 Name="ItemList"
-                Margin="0"
                 AutoGenerateColumns="False"
                 ItemsSource="{Binding Path=Results}"
                 ScrollViewer.CanContentScroll="False"
@@ -76,8 +75,8 @@
                         Binding="{Binding Path=Item.Listing.Account.Name}"
                         Header="{loc:Loc OverlayAccountName}" />
                     <DataGridTemplateColumn
-                        Width="2*"
-                        MinWidth="50"
+                        Width="1*"
+                        MinWidth="40"
                         Header="{loc:Loc OverlayPrice}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -97,7 +96,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn
                         Width="1*"
-                        MinWidth="30"
+                        MinWidth="28"
                         Binding="{Binding Path=Item.ItemLevel}"
                         Header="{loc:Loc OverlayItemLevel}" />
                     <DataGridTextColumn
@@ -110,6 +109,8 @@
 
             <Button
                 Grid.Row="1"
+                Margin="3"
+                Padding="5"
                 Click="Button_Click"
                 Content="{loc:Loc LoadMoreData}"
                 Visibility="{Binding FullyLoaded, Converter={StaticResource ReverseBooleanToVisibility}}" />

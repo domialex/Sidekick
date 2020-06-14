@@ -15,7 +15,7 @@ namespace Sidekick.Views.Prices
     [DependencyProperty]
     public partial class Filter : UserControl
     {
-        private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
+        private static readonly Regex Highlight = new Regex("[\\+]?[\\d]+(?:[,\\.]\\d+)?[%]?");
 
         [DependencyProperty(OnPropertyChanged = nameof(OnItemChanged))]
         public PriceFilter Item { get; set; }
@@ -59,43 +59,11 @@ namespace Sidekick.Views.Prices
                     continue;
                 }
 
-                var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderByDescending(x => x).FirstOrDefault();
+                var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderBy(x => x).FirstOrDefault();
                 filter.TextBlock.Inlines.Add(text.Substring(0, nextIndex == default ? text.Length : nextIndex - index));
                 text = text.Substring(nextIndex == default ? text.Length : nextIndex - index);
                 index += nextIndex - index;
             }
-
-            //filter.RichText.Document.Blocks.Clear();
-            //filter.RichText.Document.Blocks.Add(new Paragraph(new Run(filter.Item.Text)));
-            //filter.RichText.Foreground = filter.Item.Type == nameof(StatFilter) ? Brushes.White : Brushes.LightGray;
-
-            //var matches = Highlight.Matches(filter.Item.Text);
-
-            //// create textpointer translator
-            //var trans = new TextPointerTranslator(filter.RichText.Document);
-
-            //// enumerate
-            //for (var i = 0; i < matches.Count; i++)
-            //{
-            //    var info = matches[i];
-            //    var start = trans.GetTextPointer(info.Index, false);
-            //    var end = trans.GetTextPointer(info.Index + info.Value.Length, false);
-
-            //    if (start == null || end == null)
-            //    {
-            //        continue;
-            //    }
-
-            //    var range = new TextRange(start, end);
-
-            //    if (range != null)
-            //    {
-            //        range.ApplyPropertyValue(
-            //           TextElement.ForegroundProperty, Brushes.LightBlue);
-            //        range.ApplyPropertyValue(
-            //           TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
-            //    }
-            //}
         }
     }
 }
