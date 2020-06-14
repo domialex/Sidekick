@@ -36,18 +36,18 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         {
             Rarity = new Dictionary<Rarity, Regex>
             {
-                { Models.Rarity.Normal, new Regex(Regex.Escape(languageProvider.Language.RarityNormal) + "$") },
-                { Models.Rarity.Magic, new Regex(Regex.Escape(languageProvider.Language.RarityMagic) + "$") },
-                { Models.Rarity.Rare, new Regex(Regex.Escape(languageProvider.Language.RarityRare) + "$") },
-                { Models.Rarity.Unique, new Regex(Regex.Escape(languageProvider.Language.RarityUnique) + "$") },
-                { Models.Rarity.Currency, new Regex(Regex.Escape(languageProvider.Language.RarityCurrency) + "$") },
-                { Models.Rarity.Gem, new Regex(Regex.Escape(languageProvider.Language.RarityGem) + "$") },
-                { Models.Rarity.DivinationCard, new Regex(Regex.Escape(languageProvider.Language.RarityDivinationCard) + "$") }
+                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
+                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
+                { Models.Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
+                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
+                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
+                { Models.Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
+                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
             };
 
-            ItemLevel = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemLevel)}[^\\r\\n\\d]*(\\d+)");
-            Unidentified = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionUnidentified)}");
-            Corrupted = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCorrupted)}");
+            ItemLevel = languageProvider.Language.DescriptionItemLevel.IntFromLineRegex();
+            Unidentified = languageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
+            Corrupted = languageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
         }
         #endregion
 
@@ -70,21 +70,24 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitProperties()
         {
-            Armor = new Regex($"(?:^|[\\r\\n]){Regex.Escape(languageProvider.Language.DescriptionArmour)}[^\\r\\n\\d]*(\\d+)");
-            EnergyShield = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEnergyShield)}[^\\r\\n\\d]*(\\d+)");
-            Evasion = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionEvasion)}[^\\r\\n\\d]*(\\d+)");
-            ChanceToBlock = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionChanceToBlock)}[^\\r\\n\\d]*(\\d+)");
-            Quality = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionQuality)}[^\\r\\n\\d]*(\\d+)");
-            Level = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionLevel)}[^\\r\\n\\d]*(\\d+)");
-            MapTier = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMapTier)}[^\\r\\n\\d]*(\\d+)");
-            ItemQuantity = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemQuantity)}[^\\r\\n\\d]*(\\d+)");
-            ItemRarity = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionItemRarity)}[^\\r\\n\\d]*(\\d+)");
-            MonsterPackSize = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionMonsterPackSize)}[^\\r\\n\\d]*(\\d+)");
-            AttacksPerSecond = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionAttacksPerSecond)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            CriticalStrikeChance = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionCriticalStrikeChance)}[^\\r\\n\\d]*([\\d,\\.]+)");
-            ElementalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionElementalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
-            PhysicalDamage = new Regex($"[\\r\\n]{Regex.Escape(languageProvider.Language.DescriptionPhysicalDamage)}[^\\r\\n\\d]*(\\d+-\\d+)");
-            Blighted = new Regex($"[\\ \\r\\n]{Regex.Escape(languageProvider.Language.PrefixBlighted)}[\\ \\r\\n]");
+            Armor = languageProvider.Language.DescriptionArmour.ToRegex(prefix: "(?:^|[\\r\\n])", suffix: "[^\\r\\n\\d]*(\\d+)");
+
+            EnergyShield = languageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
+            Evasion = languageProvider.Language.DescriptionEvasion.IntFromLineRegex();
+            ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
+            Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
+            AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
+            CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
+            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.RangeFromLineRegex();
+            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.RangeFromLineRegex();
+
+            Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
+
+            MapTier = languageProvider.Language.DescriptionMapTier.IntFromLineRegex();
+            ItemQuantity = languageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
+            ItemRarity = languageProvider.Language.DescriptionItemRarity.IntFromLineRegex();
+            MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
+            Blighted = languageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
         }
         #endregion
 
@@ -94,7 +97,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         private void InitSockets()
         {
             // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
-            Socket = new Regex($"{Regex.Escape(languageProvider.Language.DescriptionSockets)}[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
+            Socket = languageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
         }
         #endregion
 
@@ -108,12 +111,12 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitInfluences()
         {
-            Crusader = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceCrusader)}");
-            Elder = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceElder)}");
-            Hunter = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceHunter)}");
-            Redeemer = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceRedeemer)}");
-            Shaper = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceShaper)}");
-            Warlord = new Regex($"[\\r\\n]+{Regex.Escape(languageProvider.Language.InfluenceWarlord)}");
+            Crusader = languageProvider.Language.InfluenceCrusader.ToRegex(prefix: "[\\r\\n]+");
+            Elder = languageProvider.Language.InfluenceElder.ToRegex(prefix: "[\\r\\n]+");
+            Hunter = languageProvider.Language.InfluenceHunter.ToRegex(prefix: "[\\r\\n]+");
+            Redeemer = languageProvider.Language.InfluenceRedeemer.ToRegex(prefix: "[\\r\\n]+");
+            Shaper = languageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
+            Warlord = languageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
         }
         #endregion
 
