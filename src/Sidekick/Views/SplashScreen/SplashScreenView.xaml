@@ -6,7 +6,7 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.Initializer;assembly=Sidekick.Localization"
     Title="Sidekick"
     Width="360"
-    Height="160"
+    Height="165"
     loc:Translation.ResourceManager="{x:Static resx:InitializerResources.ResourceManager}"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
@@ -19,7 +19,16 @@
         <TaskbarItemInfo ProgressState="Normal" ProgressValue="{Binding ProgressValue, FallbackValue=0}" />
     </Window.TaskbarItemInfo>
 
-    <StackPanel Width="340" Margin="{StaticResource Spacer}">
+    <Grid Margin="{StaticResource Spacer}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <WrapPanel HorizontalAlignment="Center">
             <Image
                 Width="50"
@@ -28,13 +37,20 @@
             <Label Content="Sidekick" FontSize="{StaticResource FontSizeDisplay}" />
         </WrapPanel>
 
-        <Label Content="{Binding Title, FallbackValue=Loading}" />
-        <ProgressBar Height="14" Value="{Binding Percentage, FallbackValue=0}" />
+        <Label Grid.Row="1" Content="{Binding Title, FallbackValue=Loading}" />
+        <ProgressBar
+            Grid.Row="2"
+            Height="14"
+            Value="{Binding Percentage, FallbackValue=0}" />
 
-        <Label Content="{Binding StepTitle, FallbackValue=Loading}" />
-        <ProgressBar Height="8" Value="{Binding StepPercentage, FallbackValue=0}" />
+        <Label Grid.Row="3" Content="{Binding StepTitle, FallbackValue=Loading}" />
+        <ProgressBar
+            Grid.Row="4"
+            Height="8"
+            Value="{Binding StepPercentage, FallbackValue=0}" />
 
         <StackPanel
+            Grid.Row="5"
             Margin="{StaticResource SpacerTop}"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
@@ -44,5 +60,5 @@
                 Content="{loc:Loc Logs}" />
             <Button Click="Close_Click" Content="{loc:Loc Exit}" />
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>
