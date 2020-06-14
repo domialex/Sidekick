@@ -14,9 +14,6 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Main.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <converters:IntToVisibilityConverter x:Key="IntToVisibility" />
             <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
@@ -26,11 +23,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel Name="Container">
-        <GroupBox
-            Height="500"
-            Margin="0"
-            Padding="0">
+    <Grid Name="Container">
+        <GroupBox Margin="0" Padding="0">
             <GroupBox.Header>
                 <Grid MinHeight="60" Margin="{StaticResource Spacer}">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -81,5 +75,5 @@
                 </ItemsControl>
             </ScrollViewer>
         </GroupBox>
-    </StackPanel>
+    </Grid>
 </UserControl>

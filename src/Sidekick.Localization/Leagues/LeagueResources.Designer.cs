@@ -140,5 +140,14 @@ namespace Sidekick.Localization.Leagues {
                 return ResourceManager.GetString("LegendValuable", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leagues.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
     }
 }

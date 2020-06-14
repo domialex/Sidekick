@@ -12,5 +12,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
         [JsonIgnore]
         public Rarity Rarity { get; set; }
+
+        [JsonIgnore]
+        public Category Category { get; set; }
     }
 }

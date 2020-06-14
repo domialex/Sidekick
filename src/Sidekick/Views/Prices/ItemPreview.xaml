@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <Grid Name="Container" Visibility="{Binding ViewModel.HasPreviewItem, Converter={StaticResource BooleanToVisibility}}">
-        <GroupBox Height="600" Margin="0">
+        <GroupBox Margin="0">
             <GroupBox.Header>
                 <Grid MinHeight="60">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">

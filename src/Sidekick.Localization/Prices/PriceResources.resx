@@ -168,6 +168,9 @@
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>
+  <data name="LoadMoreData" xml:space="preserve">
+    <value>Load More Data</value>
+  </data>
   <data name="MaxQualityArmour" xml:space="preserve">
     <value>Armour at max Quality</value>
   </data>

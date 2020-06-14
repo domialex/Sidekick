@@ -4,18 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:league="clr-namespace:Sidekick.Views.Leagues"
+    xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:local="clr-namespace:Sidekick.Views.Leagues.Delve"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Delve;assembly=Sidekick.Localization"
-    xmlns:loc="clr-namespace:Sidekick.Views"
-    loc:Translation.ResourceManager="{x:Static resx:DelveResources.ResourceManager}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    loc:Translation.ResourceManager="{x:Static resx:DelveResources.ResourceManager}"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
-    </UserControl.Resources>
-
     <StackPanel Name="Container">
         <ItemsControl ItemsSource="{Binding Path=Model.Regions}">
             <ItemsControl.ItemTemplate>

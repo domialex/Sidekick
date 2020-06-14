@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -5,7 +7,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Views.Prices.Helpers;
 
 namespace Sidekick.Views.Prices
 {
@@ -15,7 +16,7 @@ namespace Sidekick.Views.Prices
     [DependencyProperty]
     public partial class ItemMod : UserControl
     {
-        private static readonly Regex Highlight = new Regex("[\\+]?[\\d,\\.]+[%]?");
+        private static readonly Regex Highlight = new Regex("[\\+]?[\\d]+(?:[,\\.]\\d+)?[%]?");
 
         [DependencyProperty(OnPropertyChanged = nameof(OnTextChanged))]
         public Modifier Modifier { get; set; }
@@ -32,35 +33,37 @@ namespace Sidekick.Views.Prices
         {
             var itemMod = (ItemMod)dependencyObject;
 
-            itemMod.RichText.Document.Blocks.Clear();
-            itemMod.RichText.Document.Blocks.Add(new Paragraph(new Run(itemMod.Modifier.Text)));
+            var text = itemMod.Modifier.Text;
+            var matches = Highlight.Matches(text);
+            var highlightMatches = new Dictionary<int, string>();
 
-            var matches = Highlight.Matches(itemMod.Modifier.Text);
-
-            // create textpointer translator
-            var trans = new TextPointerTranslator(itemMod.RichText.Document);
-
-            // enumerate
             for (var i = 0; i < matches.Count; i++)
             {
                 var info = matches[i];
-                var start = trans.GetTextPointer(info.Index, false);
-                var end = trans.GetTextPointer(info.Index + info.Value.Length, false);
 
-                if (start == null || end == null)
+                highlightMatches.Add(info.Index, info.Value);
+            }
+
+            itemMod.TextBlock.Inlines.Clear();
+            var index = 0;
+            while (text.Length > 0)
+            {
+                if (highlightMatches.ContainsKey(index))
                 {
+                    itemMod.TextBlock.Inlines.Add(new Run(highlightMatches[index])
+                    {
+                        Foreground = Brushes.LightBlue,
+                        FontWeight = FontWeight.FromOpenTypeWeight(700),
+                    });
+                    text = text.Substring(highlightMatches[index].Length);
+                    index += highlightMatches[index].Length;
                     continue;
                 }
 
-                var range = new TextRange(start, end);
-
-                if (range != null)
-                {
-                    range.ApplyPropertyValue(
-                       TextElement.ForegroundProperty, Brushes.LightBlue);
-                    range.ApplyPropertyValue(
-                       TextElement.FontWeightProperty, FontWeight.FromOpenTypeWeight(700));
-                }
+                var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderBy(x => x).FirstOrDefault();
+                itemMod.TextBlock.Inlines.Add(text.Substring(0, nextIndex == default ? text.Length : nextIndex - index));
+                text = text.Substring(nextIndex == default ? text.Length : nextIndex - index);
+                index += nextIndex - index;
             }
         }
     }

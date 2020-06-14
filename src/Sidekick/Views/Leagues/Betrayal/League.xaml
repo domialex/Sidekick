@@ -3,14 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:league="clr-namespace:Sidekick.Views.Leagues"
+    xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:local="clr-namespace:Sidekick.Views.Leagues.Betrayal"
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization"
-    xmlns:loc="clr-namespace:Sidekick.Views"
     loc:Translation.ResourceManager="{x:Static resx:BetrayalResources.ResourceManager}">
-    
-    <UserControl.Resources>
-        <ResourceDictionary Source="/Styles/Main.xaml" />
-    </UserControl.Resources>
 
     <StackPanel Name="Container" Orientation="Horizontal">
         <StackPanel Margin="0,90,5,0">

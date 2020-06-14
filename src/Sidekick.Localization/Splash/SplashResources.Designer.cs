@@ -61,6 +61,24 @@ namespace Sidekick.Localization.Splash {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Another instance of Sidekick is already running.
+        /// </summary>
+        public static string AlreadyRunningText {
+            get {
+                return ResourceManager.GetString("AlreadyRunningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sideckick is already running.
+        /// </summary>
+        public static string AlreadyRunningTitle {
+            get {
+                return ResourceManager.GetString("AlreadyRunningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ready.
         /// </summary>
         public static string Ready {
