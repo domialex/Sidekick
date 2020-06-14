@@ -14,6 +14,8 @@ namespace Sidekick.Business.Caches
         Task Save<TModel>(string key, TModel data)
             where TModel : class;
 
+        Task Delete(string key);
+
         Task Clear();
     }
 }
