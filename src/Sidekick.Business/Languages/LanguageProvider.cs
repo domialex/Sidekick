@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
+using Sidekick.Business.Caches;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
@@ -13,16 +14,19 @@ namespace Sidekick.Business.Languages
     {
         private readonly ILogger logger;
         private readonly IInitializer initializeService;
+        private readonly ICacheService cacheService;
         private readonly SidekickSettings settings;
 
         private readonly string defaultLanguageName = "English";
 
         public LanguageProvider(ILogger logger,
             IInitializer initializeService,
+            ICacheService cacheService,
             SidekickSettings settings)
         {
             this.logger = logger.ForContext(GetType());
             this.initializeService = initializeService;
+            this.cacheService = cacheService;
             this.settings = settings;
 
             AvailableLanguages = new List<LanguageAttribute>();
@@ -59,6 +63,7 @@ namespace Sidekick.Business.Languages
 
             if (language != null && SetLanguage(language.Name))
             {
+                await cacheService.Clear();
                 await initializeService.Initialize();
             }
         }
