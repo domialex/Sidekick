@@ -29,7 +29,15 @@ namespace Sidekick.Business.Caches
                 return default;
             }
 
-            return JsonSerializer.Deserialize<TModel>(data);
+            try
+            {
+                return JsonSerializer.Deserialize<TModel>(data);
+            }
+            catch (Exception)
+            {
+                await Delete(key);
+                return default;
+            }
         }
 
         public async Task<TModel> GetOrCreate<TModel>(string key, Func<Task<TModel>> create)
@@ -65,6 +73,18 @@ namespace Sidekick.Business.Caches
             cache.Data = JsonSerializer.Serialize(data);
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(string key)
+        {
+            using var dbContext = new SidekickContext(options);
+
+            var cache = await dbContext.Caches.Where(x => x.Key == key).FirstOrDefaultAsync();
+            if (cache != null)
+            {
+                dbContext.Caches.Remove(cache);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task Clear()
