@@ -6,7 +6,7 @@
     xmlns:base="clr-namespace:Sidekick.Views"
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
-    Title="Settings - Sidekick"
+    Title="{loc:Loc Title}"
     Width="720"
     Height="640"
     MinWidth="720"

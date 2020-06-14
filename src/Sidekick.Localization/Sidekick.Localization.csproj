@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ApplicationLogs\ApplicationLogsResources.Designer.cs">
+      <DependentUpon>ApplicationLogsResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Application\ApplicationResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -82,6 +87,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="ApplicationLogs\ApplicationLogsResources.resx">
+      <LastGenOutput>ApplicationLogsResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Application\ApplicationResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
