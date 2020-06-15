@@ -38,6 +38,7 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnCloseWindow;
         public event Func<Task<bool>> OnExit;
         public event Func<Task<bool>> OnPriceCheck;
+        public event Func<Task<bool>> OnMapInfo;
         public event Func<Task<bool>> OnHideout;
         public event Func<Task<bool>> OnItemWiki;
         public event Func<Task<bool>> OnFindItems;
@@ -94,6 +95,7 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Close Window", configuration.Key_CloseWindow, input, OnCloseWindow, ref task);
                 ExecuteKeybind("Exit", configuration.Key_Exit, input, OnExit, ref task);
                 ExecuteKeybind("Check Prices", configuration.Key_CheckPrices, input, OnPriceCheck, ref task);
+                ExecuteKeybind("Map Info", configuration.Key_MapInfo, input, OnMapInfo, ref task);
                 ExecuteKeybind("Open Wiki", configuration.Key_OpenWiki, input, OnItemWiki, ref task);
                 ExecuteKeybind("Go to Hideout", configuration.Key_GoToHideout, input, OnHideout, ref task);
                 ExecuteKeybind("Find Items", configuration.Key_FindItems, input, OnFindItems, ref task);

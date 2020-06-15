@@ -6,6 +6,7 @@ using Sidekick.Natives;
 using Sidekick.Views;
 using Sidekick.Views.ApplicationLogs;
 using Sidekick.Views.Leagues;
+using Sidekick.Views.MapInfo;
 using Sidekick.Views.Prices;
 using Sidekick.Views.Settings;
 using Sidekick.Views.SplashScreen;
@@ -23,12 +24,14 @@ namespace Sidekick
             services.AddScoped<ApplicationLogsView>();
             services.AddScoped<LeagueView>();
             services.AddScoped<PriceView>();
+            services.AddScoped<MapInfoView>();
             services.AddScoped<SettingsView>();
             services.AddScoped<SplashScreenView>();
 
             services.AddScoped<ApplicationLogViewModel>();
             services.AddScoped<LeagueViewModel>();
             services.AddScoped<PriceViewModel>();
+            services.AddScoped<MapInfoViewModel>();
             services.AddScoped<SettingsViewModel>();
             services.AddScoped<SplashViewModel>();
 

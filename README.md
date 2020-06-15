@@ -76,6 +76,10 @@ Opens the wiki for the item you have your mouse over.
 Default binding: Ctrl+F
 Quickly search from an item into various screens (stash, passive skill tree).
 
+### Check For Dangerous Map Mods
+Default binding: Ctrl+C
+Quickly check if a map has any dangerous mods (configurable in settings).
+
 ### Open Search
 Default binding: Alt+Q
 
