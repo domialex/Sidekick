@@ -8,14 +8,17 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using System.Text.RegularExpressions;
+using Sidekick.Helpers;
+using System.ComponentModel;
 
 namespace Sidekick.Views.MapInfo
 {
-    public class MapInfoViewModel
+    public class MapInfoViewModel : INotifyPropertyChanged
     {
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
-        private readonly SidekickSettings settings;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MapInfoViewModel(
             INativeClipboard nativeClipboard,
@@ -24,22 +27,21 @@ namespace Sidekick.Views.MapInfo
         {
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;
-            this.settings = settings;
             DangerousModsRegex = new Regex(
                 settings.DangerousModsRegex,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            DangerousMapMods = new List<DangerousMapModModel>();
+            DangerousMapMods = new ObservableList<DangerousMapModModel>();
             NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
+            IsParsing = true;
             Task.Run(Initialize);
         }
 
         public Item Item { get; private set; }
         public bool IsError { get; private set; }
-        public bool IsNotError => !IsError;
-        public bool IsDangerous => DangerousMapMods.Count != 0;
-        public bool IsSafe => !IsDangerous;
-        public List<DangerousMapModModel> DangerousMapMods { get; private set; }
+        public bool IsParsing { get; private set; }
+        public bool IsSafe { get; private set; }
+        public ObservableList<DangerousMapModModel> DangerousMapMods { get; private set; }
 
         private Regex DangerousModsRegex { get; set; }
         private Regex NewLinePattern { get; set; }
@@ -59,6 +61,8 @@ namespace Sidekick.Views.MapInfo
             {
                 DangerousMapMods.Add(new DangerousMapModModel(matchingLine, "#ff2222"));
             }
+            IsSafe = DangerousMapMods.Count == 0;
+            IsParsing = false;
         }
     }
 }

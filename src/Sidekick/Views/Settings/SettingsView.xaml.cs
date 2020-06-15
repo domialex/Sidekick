@@ -28,15 +28,5 @@ namespace Sidekick.Views.Settings
         {
             Close();
         }
-
-        private void DangerousModsRegex_GotFocus(object sender, RoutedEventArgs e)
-        {
-            PreventCloseKeybind = true;
-        }
-
-        private void DangerousModsRegex_LostFocus(object sender, RoutedEventArgs e)
-        {
-            PreventCloseKeybind = false;
-        }
     }
 }

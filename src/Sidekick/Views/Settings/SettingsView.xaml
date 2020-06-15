@@ -98,9 +98,7 @@
                                     <Label Content="{loc:Loc Other_DangerousModsRegex}" />
                                     <TextBox
                                         Grid.Column="1"
-                                        Text="{Binding Path=Settings.DangerousModsRegex}"
-                                        GotFocus="DangerousModsRegex_GotFocus"
-                                        LostFocus="DangerousModsRegex_LostFocus"/>
+                                        Text="{Binding Path=Settings.DangerousModsRegex}" />
                                 </Grid>
                             </StackPanel>
                         </GroupBox>

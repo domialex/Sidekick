@@ -1,4 +1,4 @@
-<base:BaseWindow
+<base:BaseOverlay
     x:Class="Sidekick.Views.MapInfo.MapInfoView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,58 +10,45 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.MapInfo;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:MapInfoResources.ResourceManager}"
     Width="300"
-    MaxHeight="900"
+    Height="150"
+    Title="{loc:Loc DangerousMods}"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Main.xaml" />
-                <ResourceDictionary>
-                    <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
-                </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
     </Window.Resources>
 
     <Window.Style>
-        <Style BasedOn="{StaticResource WindowOverlay}" TargetType="Window" />
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
-
-    <StackPanel Name="Container">
-        <GroupBox Padding="0" Visibility="{Binding IsNotError, Converter={StaticResource BooleanToVisibility}}">
-            <GroupBox.Header>
-                <TextBlock
-                    Width="300"
-                    Padding="{StaticResource Spacer}"
-                    Text="{loc:Loc DangerousMods}" />
-            </GroupBox.Header>
-            <StackPanel>
-                <TextBlock
-                    Visibility="{Binding IsSafe, Converter={StaticResource BooleanToVisibility}}"
-                    Padding="4"
-                    VerticalAlignment="Center"
-                    Text="{loc:Loc SafeMap}"
-                    Width="300"
-                    TextWrapping="Wrap" />
-                <ItemsControl ItemsSource="{Binding Path=DangerousMapMods}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:DangerousMapMod Model="{Binding}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </StackPanel>
-        </GroupBox>
-
-        <StackPanel Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
-            <GroupBox>
-                <TextBlock Text="{loc:Loc Error}" />
-            </GroupBox>
-        </StackPanel>
+    
+    <StackPanel>
+        <TextBlock
+                Visibility="{Binding IsSafe, Converter={StaticResource BooleanToVisibility}}"
+                Padding="4"
+                VerticalAlignment="Center"
+                Text="{loc:Loc SafeMap}"
+                TextWrapping="Wrap" />
+        <ItemsControl ItemsSource="{Binding Path=DangerousMapMods}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:DangerousMapMod Model="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <TextBlock
+            Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}"
+            Text="{loc:Loc Error}" />
+        <ProgressBar
+            Height="16"
+            Margin="{StaticResource SpacerX}"
+            IsIndeterminate="True"
+            Visibility="{Binding IsParsing, Converter={StaticResource BooleanToVisibility}}" />
     </StackPanel>
-</base:BaseWindow>
+</base:BaseOverlay>

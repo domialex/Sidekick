@@ -9,11 +9,10 @@ namespace Sidekick.Views.MapInfo
     /// Interaction logic for MapInfoView.xaml
     /// </summary>
     [DependencyProperty]
-    public partial class MapInfoView : BaseWindow
+    public partial class MapInfoView : BaseOverlay
     {
         public MapInfoView(MapInfoViewModel mapInfoViewModel, IServiceProvider serviceProvider)
-            : base(serviceProvider,
-                  closeOnBlur: true)
+            : base("map_info", serviceProvider)
         {
             InitializeComponent();
             ViewModel = mapInfoViewModel;
@@ -24,12 +23,13 @@ namespace Sidekick.Views.MapInfo
 
             if (GetMouseXPercent() > 0.5)
             {
-                SetWindowPositionPercent(0.66 - GetWidthPercent(), 0.5 - (GetHeightPercent() / 2));
+                SetLeftPercent(66, LocationSource.End);
             }
             else
             {
-                SetWindowPositionPercent(0.34, 0.5 - (GetHeightPercent() / 2));
+                SetLeftPercent(34, LocationSource.Begin);
             }
+            SetTopPercent(50, LocationSource.Center);
             
 
             if (ViewModel.IsError)
