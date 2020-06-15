@@ -16,6 +16,19 @@ namespace Sidekick.Database.Migrations
                 .HasDefaultSchema("sidekick")
                 .HasAnnotation("ProductVersion", "3.1.5");
 
+            modelBuilder.Entity("Sidekick.Database.Caches.Cache", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Caches");
+                });
+
             modelBuilder.Entity("Sidekick.Database.Windows.Window", b =>
                 {
                     b.Property<string>("Id")

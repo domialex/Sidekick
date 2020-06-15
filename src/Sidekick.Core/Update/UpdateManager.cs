@@ -13,7 +13,7 @@ using Sidekick.Core.Update.Github_API;
 
 namespace Sidekick.Core.Update
 {
-    public class UpdateManager : IUpdateManager, IOnBeforeInit
+    public class UpdateManager : IUpdateManager
     {
         private readonly HttpClient _httpClient;
         private readonly IInitializer initializer;
@@ -38,11 +38,6 @@ namespace Sidekick.Core.Update
 
         private GithubRelease LatestRelease { get; set; }
 
-        public Task OnBeforeInit()
-        {
-            return Task.CompletedTask;
-        }
-
         /// <summary>
         /// Checks if there is a newer release available on github
         /// </summary>
@@ -58,7 +53,7 @@ namespace Sidekick.Core.Update
                 var currentVersion = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).GetName().Version;
 
                 var result = currentVersion.CompareTo(latestVersion);
-                return result < 0 ? true : false;
+                return result < 0;
             }
 
             return false;

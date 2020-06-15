@@ -2,12 +2,25 @@
 
 namespace Sidekick.Database.Migrations
 {
-    public partial class v1000 : Migration
+    public partial class Version_1000 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "sidekick");
+
+            migrationBuilder.CreateTable(
+                name: "Caches",
+                schema: "sidekick",
+                columns: table => new
+                {
+                    Key = table.Column<string>(nullable: false),
+                    Data = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Caches", x => x.Key);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Windows",
@@ -26,6 +39,10 @@ namespace Sidekick.Database.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Caches",
+                schema: "sidekick");
+
             migrationBuilder.DropTable(
                 name: "Windows",
                 schema: "sidekick");
