@@ -37,12 +37,10 @@
         <Grid Grid.Row="2" Visibility="{Binding Item.HasRange, Converter={StaticResource BooleanToVisibility}}">
             <Grid Margin="20,0,0,0" Visibility="{Binding Item.Enabled, Converter={StaticResource BooleanToVisibility}}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="1*" MinWidth="50" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="25" />
-                    <ColumnDefinition Width="1*" MinWidth="50" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
@@ -56,13 +54,13 @@
                     MinHeight="0"
                     Text="{Binding Item.Min, Converter={StaticResource StringToNullableDouble}}" />
                 <TextBlock
-                    Grid.Column="3"
+                    Grid.Column="2"
                     Margin="0,0,4,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Text="{loc:Loc Filters_Max}" />
                 <TextBox
-                    Grid.Column="4"
+                    Grid.Column="3"
                     Height="25"
                     MinHeight="0"
                     Text="{Binding Item.Max, Converter={StaticResource StringToNullableDouble}}" />
