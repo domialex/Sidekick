@@ -13,6 +13,7 @@ using Sidekick.Core.Settings;
 using Sidekick.Views;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.Prices;
+using Sidekick.Views.MapInfo;
 
 namespace Sidekick.Handlers
 {
@@ -83,6 +84,7 @@ namespace Sidekick.Handlers
             events.OnWhisperReply -= TriggerReplyToLatestWhisper;
             events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
             events.OnPriceCheck -= Events_OnPriceCheck;
+            events.OnMapInfo -= Events_OnMapInfo;
             events.OnHideout -= Events_OnHideout;
             events.OnExit -= Events_OnExit;
             events.OnTabLeft -= Events_OnTabLeft;
@@ -104,6 +106,7 @@ namespace Sidekick.Handlers
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
             events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
             events.OnPriceCheck += Events_OnPriceCheck;
+            events.OnMapInfo += Events_OnMapInfo;
             events.OnHideout += Events_OnHideout;
             events.OnExit += Events_OnExit;
             events.OnTabLeft += Events_OnTabLeft;
@@ -134,6 +137,15 @@ namespace Sidekick.Handlers
             await clipboard.Copy();
 
             viewLocator.Open<PriceView>();
+            return true;
+        }
+
+        private async Task<bool> Events_OnMapInfo()
+        {
+            viewLocator.CloseAll();
+            await clipboard.Copy();
+
+            viewLocator.Open<MapInfoView>();
             return true;
         }
 

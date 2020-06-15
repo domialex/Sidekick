@@ -10,6 +10,7 @@ namespace Sidekick.Core.Natives
         event Func<Task<bool>> OnCloseWindow;
         event Func<Task<bool>> OnExit;
         event Func<Task<bool>> OnPriceCheck;
+        event Func<Task<bool>> OnMapInfo;
         event Func<Task<bool>> OnHideout;
         event Func<Task<bool>> OnItemWiki;
         event Func<Task<bool>> OnFindItems;
