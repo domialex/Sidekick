@@ -466,8 +466,7 @@ namespace Sidekick.Views.Prices
         private SearchFilters GetFilters()
         {
             var filters = Filters?
-                .SelectMany(x => x.Filters)
-                .Where(x => x.Enabled);
+                .SelectMany(x => x.Filters);
 
             if (filters == null)
             {
