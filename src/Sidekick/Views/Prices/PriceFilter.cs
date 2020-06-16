@@ -18,6 +18,8 @@ namespace Sidekick.Views.Prices
 
         public double? Max { get; set; }
 
+        public bool ApplyNegative { get; set; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

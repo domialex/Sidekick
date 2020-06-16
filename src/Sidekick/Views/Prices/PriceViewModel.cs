@@ -8,6 +8,7 @@ using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
@@ -106,72 +107,112 @@ namespace Sidekick.Views.Prices
 
         private void InitializeFilters()
         {
+            // No filters for prophecies, currencies and divination cards, etc.
+            if (Item.Category == Category.DivinationCard
+                || Item.Category == Category.Currency
+                || Item.Category == Category.Prophecy
+                || Item.Category == Category.ItemisedMonster
+                || Item.Category == Category.Leaguestone
+                || Item.Category == Category.Watchstone
+                || Item.Category == Category.Undefined)
+            {
+                Filters = null;
+                return;
+            }
+
             Filters = new ObservableList<PriceFilterCategory>();
 
             var propertyCategory1 = new PriceFilterCategory();
+            var propertyCategory2 = new PriceFilterCategory();
 
+            // Quality
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Quality), languageProvider.Language.DescriptionQuality, Item.Properties.Quality,
-                enabled: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20,
+                enabled: Item.Rarity == Rarity.Gem,
                 min: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
 
+            // Armour
             InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), languageProvider.Language.DescriptionArmour, Item.Properties.Armor);
+            // Evasion
             InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), languageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
+            // Energy shield
             InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.EnergyShield), languageProvider.Language.DescriptionEnergyShield, Item.Properties.EnergyShield);
+            // Block
             InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Block), languageProvider.Language.DescriptionChanceToBlock, Item.Properties.ChanceToBlock,
                 delta: 1);
 
+            // Gem level
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), languageProvider.Language.DescriptionLevel, Item.Properties.GemLevel,
-                enabled: Item.Properties.GemLevel >= 20,
-                min: Item.Properties.GemLevel >= 20 ? Item.Properties.GemLevel : (double?)null);
+                enabled: true,
+                min: Item.Properties.GemLevel);
+
+            // Item quantity
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemQuantity), languageProvider.Language.DescriptionItemQuantity, Item.Properties.ItemQuantity);
+            // Item rarity
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemRarity), languageProvider.Language.DescriptionItemRarity, Item.Properties.ItemRarity);
+            // Monster pack size
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), languageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
+            // Blighted
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), languageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
                 enabled: Item.Properties.Blighted);
+            // Map tier
             InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), languageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
                 enabled: true,
                 min: Item.Properties.MapTier);
 
+            // Physical Dps
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.PhysicalDps), PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
+            // Elemental Dps
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.ElementalDps), PriceResources.Filters_EDps, Item.Properties.ElementalDps);
+            // Total Dps
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.DamagePerSecond), PriceResources.Filters_Dps, Item.Properties.DamagePerSecond);
+            // Attacks per second
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.AttacksPerSecond), languageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
                 delta: 0.1);
+            // Critical strike chance
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.CriticalStrikeChance), languageProvider.Language.DescriptionCriticalStrikeChance, Item.Properties.CriticalStrikeChance,
                 delta: 1);
+
+            // Item level
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
+                enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Rarity != Rarity.Unique,
+                min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
+
+            // Corrupted
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
+                alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
+                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted,
+                applyNegative: true);
+
+            // Crusader
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), languageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
+                enabled: Item.Influences.Crusader);
+            // Elder
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), languageProvider.Language.InfluenceElder, Item.Influences.Elder,
+                enabled: Item.Influences.Elder);
+            // Hunter
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.HunterItem), languageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
+                enabled: Item.Influences.Hunter);
+            // Redeemer
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.RedeemerItem), languageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
+                enabled: Item.Influences.Redeemer);
+            // Shaper
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), languageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
+                enabled: Item.Influences.Shaper);
+            // Warlord
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), languageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
+                enabled: Item.Influences.Warlord);
 
             if (propertyCategory1.Filters.Any())
             {
                 Filters.Add(propertyCategory1);
             }
 
-            var propertyCategory2 = new PriceFilterCategory();
-
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
-                enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0,
-                min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
-
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
-                alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
-                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), languageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
-                enabled: Item.Influences.Crusader);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), languageProvider.Language.InfluenceElder, Item.Influences.Elder,
-                enabled: Item.Influences.Elder);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.HunterItem), languageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
-                enabled: Item.Influences.Hunter);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.RedeemerItem), languageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
-                enabled: Item.Influences.Redeemer);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), languageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
-                enabled: Item.Influences.Shaper);
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), languageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
-                enabled: Item.Influences.Warlord);
-
             if (propertyCategory2.Filters.Any())
             {
                 Filters.Add(propertyCategory2);
             }
 
+            // Modifiers
             InitializeMods(Item.Modifiers.Pseudo);
             InitializeMods(Item.Modifiers.Enchant, false);
             InitializeMods(Item.Modifiers.Implicit);
@@ -193,6 +234,17 @@ namespace Sidekick.Views.Prices
 
             PriceFilterCategory category = null;
 
+            var settingMods = Item.Category switch
+            {
+                Category.Accessory => settings.AccessoryModifiers,
+                Category.Armour => settings.ArmourModifiers,
+                Category.Flask => settings.FlaskModifiers,
+                Category.Jewel => settings.JewelModifiers,
+                Category.Map => settings.MapModifiers,
+                Category.Weapon => settings.WeaponModifiers,
+                _ => new List<string>(),
+            };
+
             foreach (var modifier in modifiers)
             {
                 if (category == null)
@@ -206,7 +258,7 @@ namespace Sidekick.Views.Prices
                                  !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                  modifier.Values,
                                  normalizeValues: normalizeValues,
-                                 enabled: settings.Modifiers.Contains(modifier.Id)
+                                 enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
                 );
             }
 
@@ -226,7 +278,8 @@ namespace Sidekick.Views.Prices
                                          bool enabled = false,
                                          double? min = null,
                                          bool alwaysIncluded = false,
-                                         bool normalizeValues = true)
+                                         bool normalizeValues = true,
+                                         bool applyNegative = false)
         {
             if (value is bool boolValue)
             {
@@ -290,7 +343,8 @@ namespace Sidekick.Views.Prices
                 Text = label,
                 Min = min,
                 Max = null,
-                HasRange = min.HasValue
+                HasRange = min.HasValue,
+                ApplyNegative = applyNegative,
             };
 
             priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
@@ -320,14 +374,26 @@ namespace Sidekick.Views.Prices
             if (Filters != null)
             {
                 var saveSettings = false;
+
+                var settingMods = Item.Category switch
+                {
+                    Category.Accessory => settings.AccessoryModifiers,
+                    Category.Armour => settings.ArmourModifiers,
+                    Category.Flask => settings.FlaskModifiers,
+                    Category.Jewel => settings.JewelModifiers,
+                    Category.Map => settings.MapModifiers,
+                    Category.Weapon => settings.WeaponModifiers,
+                    _ => new List<string>(),
+                };
+
                 foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
                 {
-                    if (settings.Modifiers.Contains(filter.Id))
+                    if (settingMods.Contains(filter.Id))
                     {
                         if (!filter.Enabled)
                         {
                             saveSettings = true;
-                            settings.Modifiers.Remove(filter.Id);
+                            settingMods.Remove(filter.Id);
                         }
                     }
                     else
@@ -335,12 +401,22 @@ namespace Sidekick.Views.Prices
                         if (filter.Enabled)
                         {
                             saveSettings = true;
-                            settings.Modifiers.Add(filter.Id);
+                            settingMods.Add(filter.Id);
                         }
                     }
                 }
                 if (saveSettings)
                 {
+                    switch (Item.Category)
+                    {
+                        case Category.Accessory: settings.AccessoryModifiers = settingMods; break;
+                        case Category.Armour: settings.ArmourModifiers = settingMods; break;
+                        case Category.Flask: settings.FlaskModifiers = settingMods; break;
+                        case Category.Jewel: settings.JewelModifiers = settingMods; break;
+                        case Category.Map: settings.MapModifiers = settingMods; break;
+                        case Category.Weapon: settings.WeaponModifiers = settingMods; break;
+                    };
+
                     settings.Save();
                 }
             }
@@ -421,7 +497,7 @@ namespace Sidekick.Views.Prices
                     continue;
                 }
 
-                if (property.PropertyType == typeof(SearchFilterOption))
+                if (property.PropertyType == typeof(SearchFilterOption) && (filter.Enabled || filter.ApplyNegative))
                 {
                     property.SetValue(filtersObject, new SearchFilterOption(filter.Enabled ? "true" : "false"));
                 }

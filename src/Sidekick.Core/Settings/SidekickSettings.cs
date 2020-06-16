@@ -34,7 +34,12 @@ namespace Sidekick.Core.Settings
 
         public string DangerousModsRegex { get; set; }
 
-        public List<string> Modifiers { get; set; }
+        public List<string> AccessoryModifiers { get; set; }
+        public List<string> ArmourModifiers { get; set; }
+        public List<string> FlaskModifiers { get; set; }
+        public List<string> JewelModifiers { get; set; }
+        public List<string> MapModifiers { get; set; }
+        public List<string> WeaponModifiers { get; set; }
 
         public string Key_CloseWindow { get; set; }
 

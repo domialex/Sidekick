@@ -37,7 +37,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
-            this.itemNameTokenizer = new ItemNameTokenizer();
+            itemNameTokenizer = new ItemNameTokenizer();
         }
 
         public async Task<Item> ParseItem(string itemText)
@@ -88,7 +88,8 @@ namespace Sidekick.Business.Apis.Poe.Parser
                 Type = itemData.Type,
                 NameLine = itemSections.NameLine,
                 TypeLine = itemSections.TypeLine,
-                Rarity = itemData.Rarity
+                Rarity = itemData.Rarity,
+                Category = itemData.Category,
             };
 
             switch (itemData.Category)
@@ -150,10 +151,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
             item.Properties.Quality = patterns.GetInt(patterns.Quality, mapBlock);
             item.Properties.Blighted = patterns.Blighted.IsMatch(itemSections.WholeSections[0]);
             item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
-
-            // Needs to be implemented in query, I think
-            //item.Influences.Shaper = patterns.Shaper.IsMatch(itemSections.MapInfluenceSection);
-            //item.Influences.Elder = patterns.Elder.IsMatch(itemSections.MapInfluenceSection);
         }
 
         private void ParseSockets(Item item)
