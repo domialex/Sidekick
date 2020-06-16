@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 
 namespace Sidekick.Business.Apis.Poe.Models
 {
@@ -20,6 +21,9 @@ namespace Sidekick.Business.Apis.Poe.Models
 
         [JsonPropertyName("frameType")]
         public Rarity Rarity { get; set; }
+
+        [JsonIgnore]
+        public Category Category { get; set; }
 
         public bool Corrupted { get; set; }
 

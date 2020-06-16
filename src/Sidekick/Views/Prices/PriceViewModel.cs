@@ -8,6 +8,7 @@ using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
@@ -106,8 +107,14 @@ namespace Sidekick.Views.Prices
 
         private void InitializeFilters()
         {
-            // No filters for prophecies, currencies and divination cards
-            if (Item.Rarity == Rarity.Prophecy || Item.Rarity == Rarity.Currency || Item.Rarity == Rarity.DivinationCard)
+            // No filters for prophecies, currencies and divination cards, etc.
+            if (Item.Category == Category.DivinationCard
+                || Item.Category == Category.Currency
+                || Item.Category == Category.Prophecy
+                || Item.Category == Category.ItemisedMonster
+                || Item.Category == Category.Leaguestone
+                || Item.Category == Category.Watchstone
+                || Item.Category == Category.Undefined)
             {
                 Filters = null;
                 return;
