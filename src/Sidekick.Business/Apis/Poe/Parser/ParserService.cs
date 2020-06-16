@@ -37,7 +37,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
-            this.itemNameTokenizer = new ItemNameTokenizer();
+            itemNameTokenizer = new ItemNameTokenizer();
         }
 
         public async Task<Item> ParseItem(string itemText)

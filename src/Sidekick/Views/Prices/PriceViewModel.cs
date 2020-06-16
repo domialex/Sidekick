@@ -234,6 +234,17 @@ namespace Sidekick.Views.Prices
 
             PriceFilterCategory category = null;
 
+            var settingMods = Item.Category switch
+            {
+                Category.Accessory => settings.AccessoryModifiers,
+                Category.Armour => settings.ArmourModifiers,
+                Category.Flask => settings.FlaskModifiers,
+                Category.Jewel => settings.JewelModifiers,
+                Category.Map => settings.MapModifiers,
+                Category.Weapon => settings.WeaponModifiers,
+                _ => new List<string>(),
+            };
+
             foreach (var modifier in modifiers)
             {
                 if (category == null)
@@ -247,7 +258,7 @@ namespace Sidekick.Views.Prices
                                  !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                  modifier.Values,
                                  normalizeValues: normalizeValues,
-                                 enabled: settings.Modifiers.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
+                                 enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
                 );
             }
 
@@ -363,14 +374,26 @@ namespace Sidekick.Views.Prices
             if (Filters != null)
             {
                 var saveSettings = false;
+
+                var settingMods = Item.Category switch
+                {
+                    Category.Accessory => settings.AccessoryModifiers,
+                    Category.Armour => settings.ArmourModifiers,
+                    Category.Flask => settings.FlaskModifiers,
+                    Category.Jewel => settings.JewelModifiers,
+                    Category.Map => settings.MapModifiers,
+                    Category.Weapon => settings.WeaponModifiers,
+                    _ => new List<string>(),
+                };
+
                 foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
                 {
-                    if (settings.Modifiers.Contains(filter.Id))
+                    if (settingMods.Contains(filter.Id))
                     {
                         if (!filter.Enabled)
                         {
                             saveSettings = true;
-                            settings.Modifiers.Remove(filter.Id);
+                            settingMods.Remove(filter.Id);
                         }
                     }
                     else
@@ -378,12 +401,22 @@ namespace Sidekick.Views.Prices
                         if (filter.Enabled)
                         {
                             saveSettings = true;
-                            settings.Modifiers.Add(filter.Id);
+                            settingMods.Add(filter.Id);
                         }
                     }
                 }
                 if (saveSettings)
                 {
+                    switch (Item.Category)
+                    {
+                        case Category.Accessory: settings.AccessoryModifiers = settingMods; break;
+                        case Category.Armour: settings.ArmourModifiers = settingMods; break;
+                        case Category.Flask: settings.FlaskModifiers = settingMods; break;
+                        case Category.Jewel: settings.JewelModifiers = settingMods; break;
+                        case Category.Map: settings.MapModifiers = settingMods; break;
+                        case Category.Weapon: settings.WeaponModifiers = settingMods; break;
+                    };
+
                     settings.Save();
                 }
             }
