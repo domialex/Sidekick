@@ -52,8 +52,8 @@ namespace Sidekick.Business.Whispers
                     if (match.Success)
                     {
                         // No extract only character name
-                        int lastWhitespacePos = match.Value.LastIndexOf(" ") + 1;
-                        return match.Value.Substring(lastWhitespacePos, match.Value.Length - lastWhitespacePos);
+                        var lastWhitespacePos = match.Value.LastIndexOf(" ") + 1;
+                        return match.Value[lastWhitespacePos..];
                     }
 
                     stream.Position -= 1;

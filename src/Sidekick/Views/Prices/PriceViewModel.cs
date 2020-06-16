@@ -124,7 +124,7 @@ namespace Sidekick.Views.Prices
                 min: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
 
             // Armour
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), languageProvider.Language.DescriptionArmour, Item.Properties.Armor,);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), languageProvider.Language.DescriptionArmour, Item.Properties.Armor);
             // Evasion
             InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), languageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
             // Energy shield
@@ -173,7 +173,8 @@ namespace Sidekick.Views.Prices
             // Corrupted
             InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
                 alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
-                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted);
+                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted,
+                applyNegative: true);
 
             // Crusader
             InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), languageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
@@ -259,7 +260,8 @@ namespace Sidekick.Views.Prices
                                          bool enabled = false,
                                          double? min = null,
                                          bool alwaysIncluded = false,
-                                         bool normalizeValues = true)
+                                         bool normalizeValues = true,
+                                         bool applyNegative = false)
         {
             if (value is bool boolValue)
             {
@@ -323,7 +325,8 @@ namespace Sidekick.Views.Prices
                 Text = label,
                 Min = min,
                 Max = null,
-                HasRange = min.HasValue
+                HasRange = min.HasValue,
+                ApplyNegative = applyNegative,
             };
 
             priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
@@ -423,7 +426,8 @@ namespace Sidekick.Views.Prices
         private SearchFilters GetFilters()
         {
             var filters = Filters?
-                .SelectMany(x => x.Filters);
+                .SelectMany(x => x.Filters)
+                .Where(x => x.Enabled);
 
             if (filters == null)
             {
@@ -454,7 +458,7 @@ namespace Sidekick.Views.Prices
                     continue;
                 }
 
-                if (property.PropertyType == typeof(SearchFilterOption))
+                if (property.PropertyType == typeof(SearchFilterOption) && (filter.Enabled || filter.ApplyNegative))
                 {
                     property.SetValue(filtersObject, new SearchFilterOption(filter.Enabled ? "true" : "false"));
                 }
