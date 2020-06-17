@@ -28,5 +28,11 @@ namespace Sidekick.Views.Settings
         {
             Close();
         }
+
+        private void ResetCache_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ResetCache();
+            Close();
+        }
     }
 }

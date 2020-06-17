@@ -252,14 +252,28 @@ namespace Sidekick.Views.Prices
                     category = new PriceFilterCategory();
                 }
 
-                InitializeFilter(category,
-                                 nameof(StatFilter),
-                                 modifier.Id,
-                                 !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
-                                 modifier.Values,
-                                 normalizeValues: normalizeValues,
-                                 enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
-                );
+                if (modifier.OptionValue != null)
+                {
+                    InitializeFilter(category,
+                                     nameof(StatFilter),
+                                     modifier.Id,
+                                     !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
+                                     modifier.OptionValue,
+                                     normalizeValues: normalizeValues,
+                                     enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
+                    );
+                }
+                else
+                {
+                    InitializeFilter(category,
+                                     nameof(StatFilter),
+                                     modifier.Id,
+                                     !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
+                                     modifier.Values,
+                                     normalizeValues: normalizeValues,
+                                     enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
+                    );
+                }
             }
 
             if (category != null)
@@ -281,6 +295,8 @@ namespace Sidekick.Views.Prices
                                          bool normalizeValues = true,
                                          bool applyNegative = false)
         {
+            ModifierOption option = null;
+
             if (value is bool boolValue)
             {
                 if (!boolValue && !alwaysIncluded)
@@ -334,6 +350,10 @@ namespace Sidekick.Views.Prices
                     min = NormalizeValue(min, delta);
                 }
             }
+            else if (value is ModifierOption modifierOption)
+            {
+                option = modifierOption;
+            }
 
             var priceFilter = new PriceFilter()
             {
@@ -345,6 +365,7 @@ namespace Sidekick.Views.Prices
                 Max = null,
                 HasRange = min.HasValue,
                 ApplyNegative = applyNegative,
+                Option = option,
             };
 
             priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
@@ -457,7 +478,8 @@ namespace Sidekick.Views.Prices
                     Value = new SearchFilterValue()
                     {
                         Max = x.Max,
-                        Min = x.Min
+                        Min = x.Min,
+                        Option = x.Option?.Value,
                     }
                 })
                 .ToList();
@@ -510,7 +532,8 @@ namespace Sidekick.Views.Prices
                     var valueObject = new SearchFilterValue
                     {
                         Max = filter.Max,
-                        Min = filter.Min
+                        Min = filter.Min,
+                        Option = filter.Option?.Value,
                     };
                     property.SetValue(filtersObject, valueObject);
                 }
