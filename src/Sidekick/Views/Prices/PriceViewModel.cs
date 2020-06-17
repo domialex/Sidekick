@@ -277,6 +277,7 @@ namespace Sidekick.Views.Prices
                                          double delta = 5,
                                          bool enabled = false,
                                          double? min = null,
+                                         double? max = null,
                                          bool alwaysIncluded = false,
                                          bool normalizeValues = true,
                                          bool applyNegative = false)
@@ -296,7 +297,7 @@ namespace Sidekick.Views.Prices
                 }
                 if (min == null && normalizeValues)
                 {
-                    min = NormalizeValue(intValue, delta);
+                    min = NormalizeMinValue(intValue, delta);
                 }
                 if (LabelValues.IsMatch(label))
                 {
@@ -315,7 +316,7 @@ namespace Sidekick.Views.Prices
                 }
                 if (min == null && normalizeValues)
                 {
-                    min = NormalizeValue(doubleValue, delta);
+                    min = NormalizeMinValue(doubleValue, delta);
                 }
                 if (LabelValues.IsMatch(label))
                 {
@@ -328,10 +329,23 @@ namespace Sidekick.Views.Prices
             }
             else if (value is List<double> groupValue)
             {
-                min = groupValue.OrderBy(x => x).FirstOrDefault();
-                if (normalizeValues)
+                var itemValue = groupValue.OrderBy(x => x).FirstOrDefault();
+
+                if (itemValue >= 0)
                 {
-                    min = NormalizeValue(min, delta);
+                    min = itemValue;
+                    if (normalizeValues)
+                    {
+                        min = NormalizeMinValue(min, delta);
+                    }
+                }
+                else
+                {
+                    max = itemValue;
+                    if (normalizeValues)
+                    {
+                        max = NormalizeMaxValue(max, delta);
+                    }
                 }
             }
 
@@ -342,8 +356,8 @@ namespace Sidekick.Views.Prices
                 Id = id,
                 Text = label,
                 Min = min,
-                Max = null,
-                HasRange = min.HasValue,
+                Max = max,
+                HasRange = min.HasValue || max.HasValue,
                 ApplyNegative = applyNegative,
             };
 
@@ -357,11 +371,38 @@ namespace Sidekick.Views.Prices
         /// <summary>
         /// Smallest positive value between a -5 delta or 90%.
         /// </summary>
-        private int? NormalizeValue(double? value, double delta)
+        private int? NormalizeMinValue(double? value, double delta)
         {
             if (value.HasValue)
             {
-                return (int)Math.Max(Math.Min(value.Value - delta, value.Value * 0.9), 0);
+                if (value.Value > 0)
+                {
+                    return (int)Math.Max(Math.Min(value.Value - delta, value.Value * 0.9), 0);
+                }
+                else
+                {
+                    return (int)Math.Min(Math.Min(value.Value - delta, value.Value * 1.1), 0);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Smallest positive value between a -5 delta or 90%.
+        /// </summary>
+        private int? NormalizeMaxValue(double? value, double delta)
+        {
+            if (value.HasValue)
+            {
+                if (value.Value > 0)
+                {
+                    return (int)Math.Max(Math.Max(value.Value + delta, value.Value * 1.1), 0);
+                }
+                else
+                {
+                    return (int)Math.Min(Math.Max(value.Value + delta, value.Value * 0.9), 0);
+                }
             }
 
             return null;
