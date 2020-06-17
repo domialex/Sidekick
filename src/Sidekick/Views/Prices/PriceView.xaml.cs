@@ -114,7 +114,12 @@ namespace Sidekick.Views.Prices
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.LoadMoreData();
+            _ = viewModel.LoadMoreData();
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            _ = viewModel.UpdateQuery();
         }
     }
 }

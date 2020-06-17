@@ -15,6 +15,7 @@
         <mc:AlternateContent>
             <mc:Choice Requires="debugEnabled">
                 <MenuItem Header="DEBUG - Price Check">
+                    <MenuItem Command="{Binding DebugPriceCheckCommand0}" Header="Clipboard" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand1}" Header="Unique Flask - Blood of the Karui" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand2}" Header="Rare Helmet - Vengeance Crest" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand3}" Header="Currency - Divine Orb" />

@@ -59,6 +59,11 @@ namespace Sidekick.Business.Languages
         /// </summary>
         public async Task FindAndSetLanguage(string itemDescription)
         {
+            if (string.IsNullOrEmpty(itemDescription))
+            {
+                return;
+            }
+
             var language = AvailableLanguages.Find(x => itemDescription.StartsWith(x.DescriptionRarity));
 
             if (language != null && SetLanguage(language.Name))

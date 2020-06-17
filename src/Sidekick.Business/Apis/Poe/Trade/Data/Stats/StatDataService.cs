@@ -41,6 +41,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         private List<StatData> VeiledPatterns { get; set; }
 
         private Regex NewLinePattern { get; set; }
+        private Regex IncreasedPattern { get; set; }
 
         public async Task OnInit()
         {
@@ -54,10 +55,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             VeiledPatterns = new List<StatData>();
 
             NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
+            IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
-            var increasedPattern = new Regex($"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
 
             foreach (var category in categories)
             {
@@ -90,9 +91,28 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                     pattern = Regex.Escape(entry.Text);
                     pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
-                    pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
-                    pattern = increasedPattern.Replace(pattern, $"({languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
+                    pattern = increasedPattern.Replace(pattern, $"(?:{languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
+
+                    if (entry.Option == null || entry.Option.Options == null || entry.Option.Options.Count == 0)
+                    {
+                        pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    }
+                    else
+                    {
+                        foreach (var option in entry.Option.Options)
+                        {
+                            option.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(option.Text))}{suffix}", RegexOptions.None);
+                        }
+
+                        pattern = hashPattern.Replace(pattern, "(.*)");
+                    }
+
+                    if (IncreasedPattern.IsMatch(pattern))
+                    {
+                        var negativePattern = IncreasedPattern.Replace(pattern, languageProvider.Language.ModifierReduced);
+                        entry.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
+                    }
 
                     entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
                     patterns.Add(entry);
@@ -134,31 +154,61 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         private readonly Regex ParseHashPattern = new Regex("\\#");
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
-            foreach (var x in patterns
-                .Where(x => x.Pattern.IsMatch(text)))
+            foreach (var data in patterns
+                .Where(x => x.Pattern != null && x.Pattern.IsMatch(text)))
             {
-                var result = x.Pattern.Match(text);
-                var modifier = new Modifier()
-                {
-                    Id = x.Id,
-                    Text = x.Text,
-                    Category = !x.Id.StartsWith("explicit") ? x.Category : null,
-                };
+                FillMod(mods, text, data, data.Pattern.Match(text));
+            }
 
-                if (result.Groups.Count > 1)
+            foreach (var data in patterns
+                .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
+            {
+                FillMod(mods, text, data, data.NegativePattern.Match(text), true);
+            }
+        }
+
+        private void FillMod(List<Modifier> mods, string text, StatData data, Match result, bool negative = false)
+        {
+            var modifier = new Modifier()
+            {
+                Id = data.Id,
+                Text = data.Text,
+                Category = !data.Id.StartsWith("explicit") ? data.Category : null,
+            };
+
+            if (result.Groups.Count > 1)
+            {
+                for (var index = 1; index < result.Groups.Count; index++)
                 {
-                    for (var index = 1; index < result.Groups.Count; index++)
+                    if (double.TryParse(result.Groups[index].Value, out var parsedValue))
                     {
-                        if (double.TryParse(result.Groups[index].Value, out var parsedValue))
+                        var modifierText = modifier.Text;
+                        if (negative)
                         {
-                            modifier.Values.Add(parsedValue);
-                            modifier.Text = ParseHashPattern.Replace(modifier.Text, result.Groups[index].Value, 1);
+                            parsedValue *= -1;
+                            modifierText = IncreasedPattern.Replace(modifierText, languageProvider.Language.ModifierReduced);
                         }
+
+                        modifier.Values.Add(parsedValue);
+                        modifier.Text = ParseHashPattern.Replace(modifierText, result.Groups[index].Value, 1);
                     }
+                }
+4
+                if (x.Option?.Options?.Any() == true)
+                {
+                    var optionMod = x.Option.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
+                    if (optionMod == null)
+                    {
+                        continue;
+                    }
+                    modifier.OptionValue = optionMod;
+                    modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
                 }
 
                 mods.Add(modifier);
             }
+
+            mods.Add(modifier);
         }
 
         private void FillPseudo(List<Modifier> pseudoMods, List<Modifier> mods)

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -215,5 +215,14 @@
   </data>
   <data name="Unidentified" xml:space="preserve">
     <value>Unidentified</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update now</value>
+  </data>
+  <data name="UpdateSeconds" xml:space="preserve">
+    <value> seconds</value>
+  </data>
+  <data name="UpdateShortly" xml:space="preserve">
+    <value>Updating shortly</value>
   </data>
 </root>
