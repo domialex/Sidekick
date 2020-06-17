@@ -1,11 +1,11 @@
-using Sidekick.TestInfrastructure;
-using AutoFixture;
-using Sidekick.Business.Apis.Poe.Trade;
-using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
+using AutoFixture;
+using Sidekick.Business.Apis.Poe.Trade;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
+using Sidekick.TestInfrastructure;
 
 namespace Sidekick.TestDataCollector
 {
@@ -22,11 +22,12 @@ namespace Sidekick.TestDataCollector
 
             await FetchAndSaveData<ItemDataCategory>(client);
             await FetchAndSaveData<StatDataCategory>(client);
+            await FetchAndSaveData<StatDataCategory>(client, true);
         }
 
-        private static async Task FetchAndSaveData<T>(PoeTradeClient client)
+        private static async Task FetchAndSaveData<T>(PoeTradeClient client, bool useDefaultLanguage = false)
         {
-            var data = await client.Fetch<T>();
+            var data = await client.Fetch<T>(useDefaultLanguage);
 
             File.WriteAllText(Path.Join(
                 "..", "..", "..", "..",

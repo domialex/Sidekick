@@ -203,8 +203,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     modifier.OptionValue = optionMod;
                     modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
                 }
-
-                mods.Add(modifier);
             }
 
             mods.Add(modifier);

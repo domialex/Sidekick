@@ -6,9 +6,11 @@ using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
+using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
+using Sidekick.TestInfrastructure.TestClients.Caches;
 using Sidekick.TestInfrastructure.TestClients.PoeApi;
 
 namespace Sidekick.TestInfrastructure
@@ -24,6 +26,7 @@ namespace Sidekick.TestInfrastructure
             this.Register<IHttpClientFactory>(this.Create<HttpClientFactory>);
             this.Register(DefaultSettings.CreateDefault);
 
+            this.Register(GetInitializable<ICacheService, TestCacheService>);
             this.Register(GetInitializable<IItemDataService, ItemDataService>);
             this.Register(GetInitializable<IParserPatterns, ParserPatterns>);
             this.Register(GetInitializable<IPseudoStatDataService, PseudoStatDataService>);
@@ -41,7 +44,7 @@ namespace Sidekick.TestInfrastructure
                 onBeforeInit.OnBeforeInit().GetAwaiter().GetResult();
             }
 
-            if(instance is IOnInit onInit)
+            if (instance is IOnInit onInit)
             {
                 onInit.OnInit().GetAwaiter().GetResult();
             }
