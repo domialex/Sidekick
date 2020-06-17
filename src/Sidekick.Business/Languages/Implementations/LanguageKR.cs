@@ -37,16 +37,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string PrefixBlighted => "역병";
         public string DescriptionExperience => "경험치";
         public string DescriptionOrgan => "사용";
-        public string KeywordProphecy => "예언을";
         public string KeywordVaal => "바알";
-        public string KeywordCatalyst => "기폭제";
-        public string KeywordOil => "성유";
-        public string KeywordIncubator => "인큐베이터";
-        public string KeywordScarab => "갑충석";
-        public string KeywordResonator => "공명기";
-        public string KeywordFossil => "화석";
-        public string KeywordVial => "시약";
-        public string KeywordEssence => "에센스";
 
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 

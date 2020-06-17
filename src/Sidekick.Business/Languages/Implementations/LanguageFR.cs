@@ -37,16 +37,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionItemRarity => "Rareté des objets";
         public string DescriptionMonsterPackSize => "Taille des groupes de monstres";
         public string PrefixBlighted => "infestée";
-        public string KeywordProphecy => "prophétie";
         public string KeywordVaal => "Vaal";
-        public string KeywordCatalyst => "Catalyseur";
-        public string KeywordOil => "Huile";
-        public string KeywordIncubator => "Incubateur";
-        public string KeywordScarab => "Scarabée";
-        public string KeywordResonator => "Résonateur";
-        public string KeywordFossil => "Fossile";
-        public string KeywordVial => "Fiole";
-        public string KeywordEssence => "Essence";
 
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
