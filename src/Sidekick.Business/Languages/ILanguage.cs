@@ -43,17 +43,7 @@ namespace Sidekick.Business.Languages
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }
 
-        string KeywordProphecy { get; }
         string KeywordVaal { get; }
-
-        string KeywordCatalyst { get; }
-        string KeywordOil { get; }
-        string KeywordIncubator { get; }
-        string KeywordScarab { get; }
-        string KeywordResonator { get; }
-        string KeywordFossil { get; }
-        string KeywordVial { get; }
-        string KeywordEssence { get; }
 
         string InfluenceShaper { get; }
         string InfluenceElder { get; }

@@ -356,5 +356,32 @@ namespace Sidekick.Localization.Prices {
                 return ResourceManager.GetString("Unidentified", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update now.
+        /// </summary>
+        public static string UpdateNow {
+            get {
+                return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  seconds.
+        /// </summary>
+        public static string UpdateSeconds {
+            get {
+                return ResourceManager.GetString("UpdateSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating shortly.
+        /// </summary>
+        public static string UpdateShortly {
+            get {
+                return ResourceManager.GetString("UpdateShortly", resourceCulture);
+            }
+        }
     }
 }

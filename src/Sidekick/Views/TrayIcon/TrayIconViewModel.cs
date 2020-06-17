@@ -35,6 +35,13 @@ namespace Sidekick.Views.TrayIcon
         public ICommand DebugCrashCommand => new RelayCommand(_ => throw new Exception("Crash requested via tray icon"));
 
         #region Debug Price Check
+        public ICommand DebugPriceCheckCommand0 => new RelayCommand(async _ =>
+        {
+            await nativeClipboard.SetText(await nativeClipboard.GetText());
+
+            viewLocator.Open<PriceView>();
+        });
+
         public ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
         {
             await nativeClipboard.SetText(@"Rarity: Unique

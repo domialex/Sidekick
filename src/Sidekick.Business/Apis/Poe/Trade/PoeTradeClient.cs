@@ -26,6 +26,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             this.logger = logger.ForContext(GetType());
             this.languageProvider = languageProvider;
             client = httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
         }
 
         public JsonSerializerOptions Options

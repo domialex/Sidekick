@@ -11,6 +11,14 @@ namespace Sidekick.Business.Http
             this.httpClientFactory = httpClientFactory;
         }
 
-        public HttpClient HttpClient => httpClientFactory.CreateClient();
+        public HttpClient HttpClient
+        {
+            get
+            {
+                var client = httpClientFactory.CreateClient();
+                client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
+                return client;
+            }
+        }
     }
 }

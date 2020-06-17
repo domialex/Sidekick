@@ -37,16 +37,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string PrefixBlighted => "Blighted";
         public string DescriptionExperience => "ประสบการณ์";
         public string DescriptionOrgan => "ใช้";
-        public string KeywordProphecy => "(prophecy)";
+
         public string KeywordVaal => "วาล์";
-        public string KeywordCatalyst => "Catalyst";
-        public string KeywordOil => "Oil";
-        public string KeywordIncubator => "Incubator";
-        public string KeywordScarab => "Scarab";
-        public string KeywordResonator => "Resonator";
-        public string KeywordFossil => "Fossil";
-        public string KeywordVial => "Vial";
-        public string KeywordEssence => "Essence";
 
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 

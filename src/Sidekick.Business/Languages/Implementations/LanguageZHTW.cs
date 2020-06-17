@@ -29,16 +29,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string InfluenceRedeemer => "救贖者物品";
         public string InfluenceWarlord => "總督軍物品";
 
-        public string KeywordProphecy => "預言";
         public string KeywordVaal => "瓦爾";
-        public string KeywordCatalyst => "催化劑";
-        public string KeywordOil => "油瓶";
-        public string KeywordIncubator => "培育器";
-        public string KeywordScarab => "聖甲蟲";
-        public string KeywordResonator => "鑄新儀";
-        public string KeywordFossil => "化石";
-        public string KeywordVial => "之罈";
-        public string KeywordEssence => "精髓";
 
         public string DescriptionUnidentified => "未鑑定";
         public string DescriptionQuality => "品質";

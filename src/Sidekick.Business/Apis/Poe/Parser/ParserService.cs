@@ -60,14 +60,14 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 var itemData = itemDataService.ParseItemData(itemSections);
 
+                if (itemData == null || string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
+                {
+                    throw new NotSupportedException("Item not found.");
+                }
+
                 if (itemData.Rarity == Rarity.Unknown)
                 {
                     itemData.Rarity = GetRarity(itemSections.Rarity);
-                }
-
-                if (string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
-                {
-                    throw new NotSupportedException("Item not found.");
                 }
 
                 return ParseItemDetails(itemText, itemSections, itemData);
