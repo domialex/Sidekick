@@ -36,9 +36,8 @@
 
         <local:Filters
             Grid.Column="0"
-            HorizontalAlignment="Stretch"
             ViewModel="{Binding}"
-            Visibility="{Binding IsError, Converter={StaticResource ReverseBooleanToVisibility}}" />
+            Visibility="{Binding ShowFilters, Converter={StaticResource BooleanToVisibility}}" />
 
         <Grid Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
             <Grid.RowDefinitions>
@@ -58,7 +57,7 @@
         <Grid
             Grid.Column="1"
             Margin="{StaticResource SpacerX}"
-            Visibility="{Binding IsError, Converter={StaticResource ReverseBooleanToVisibility}}">
+            Visibility="{Binding ShowList, Converter={StaticResource BooleanToVisibility}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="Auto" />
@@ -124,7 +123,7 @@
                     IsIndeterminate="True"
                     Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
 
-                <StackPanel VerticalAlignment="Center" Visibility="{Binding IsFetched, Converter={StaticResource BooleanToVisibility}}">
+                <StackPanel VerticalAlignment="Center" Visibility="{Binding IsFetching, Converter={StaticResource ReverseBooleanToVisibility}}">
                     <TextBlock>
                         <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
                             <TextBlock Text="{Binding CountString}" />
@@ -136,6 +135,45 @@
             </Grid>
         </Grid>
 
-        <local:ItemPreview Grid.Column="2" ViewModel="{Binding}" />
+        <Grid
+            Grid.Column="1"
+            Margin="{StaticResource SpacerX}"
+            Visibility="{Binding ShowRefresh, Converter={StaticResource BooleanToVisibility}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="{loc:Loc UpdateShortly}" />
+
+            <TextBlock
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14">
+                <Run FontSize="14" Text="{Binding UpdateCountdown, Mode=OneWay}" />
+                <Run Text="{loc:Loc UpdateSeconds}" />
+            </TextBlock>
+
+            <Button
+                Grid.Row="3"
+                Width="Auto"
+                VerticalAlignment="Center"
+                Click="Refresh_Click"
+                Content="{loc:Loc UpdateNow}" />
+        </Grid>
+
+        <local:ItemPreview
+            Grid.Column="2"
+            ViewModel="{Binding}"
+            Visibility="{Binding ShowPreview, Converter={StaticResource BooleanToVisibility}}" />
     </Grid>
 </base:BaseOverlay>

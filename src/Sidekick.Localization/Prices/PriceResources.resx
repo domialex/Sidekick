@@ -216,4 +216,13 @@
   <data name="Unidentified" xml:space="preserve">
     <value>Unidentified</value>
   </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update Now</value>
+  </data>
+  <data name="UpdateSeconds" xml:space="preserve">
+    <value> seconds</value>
+  </data>
+  <data name="UpdateShortly" xml:space="preserve">
+    <value>Updating Shortly</value>
+  </data>
 </root>
