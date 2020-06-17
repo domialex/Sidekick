@@ -73,9 +73,12 @@ namespace Sidekick.Views.Prices
         public Uri Uri => QueryResult?.Uri;
 
         public bool IsError { get; private set; }
-
         public bool IsFetching { get; private set; }
-        public bool IsFetched => !IsFetching;
+
+        public bool ShowFilters => !IsError;
+        public bool ShowList => !IsError && !ShowRefresh;
+        public bool ShowRefresh { get; private set; } = true;
+        public bool ShowPreview => !IsError;
 
         public bool IsCurrency { get; private set; }
 
@@ -347,7 +350,7 @@ namespace Sidekick.Views.Prices
                 ApplyNegative = applyNegative,
             };
 
-            priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateQuery(); };
+            priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateDebounce(); };
 
             category.Filters.Add(priceFilter);
         }
@@ -367,8 +370,31 @@ namespace Sidekick.Views.Prices
             return null;
         }
 
+        public int UpdateCountdown { get; private set; }
+        private int UpdateCount = 0;
+        public async Task UpdateDebounce()
+        {
+            var count = ++UpdateCount;
+            UpdateCountdown = 2;
+            ShowRefresh = true;
+            while (UpdateCountdown > 0)
+            {
+                await Task.Delay(1000);
+                if (count != UpdateCount)
+                {
+                    continue;
+                }
+                UpdateCountdown -= 1;
+            }
+            if (count == UpdateCount && ShowRefresh)
+            {
+                await UpdateQuery();
+            }
+        }
+
         public async Task UpdateQuery()
         {
+            ShowRefresh = false;
             Results = new ObservableList<PriceItem>();
 
             if (Filters != null)
