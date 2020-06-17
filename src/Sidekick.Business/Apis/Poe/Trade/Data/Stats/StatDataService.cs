@@ -170,7 +170,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     }
                 }
 
-                if (x.Option != null && x.Option.Options != null && x.Option.Options.Count != 0)
+                if (x.Option?.Options?.Any() == true)
                 {
                     var optionMod = x.Option.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
                     if (optionMod == null)
