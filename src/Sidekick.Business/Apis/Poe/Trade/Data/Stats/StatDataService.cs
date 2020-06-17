@@ -91,8 +91,22 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                     pattern = Regex.Escape(entry.Text);
                     pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
-                    pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    pattern = increasedPattern.Replace(pattern, $"(?:{languageProvider.Language.ModifierReduced}|{languageProvider.Language.ModifierIncreased})");
                     pattern = NewLinePattern.Replace(pattern, "\\n");
+
+                    if (entry.Option == null || entry.Option.Options == null || entry.Option.Options.Count == 0)
+                    {
+                        pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                    }
+                    else
+                    {
+                        foreach (var option in entry.Option.Options)
+                        {
+                            option.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(option.Text))}{suffix}", RegexOptions.None);
+                        }
+
+                        pattern = hashPattern.Replace(pattern, "(.*)");
+                    }
 
                     if (IncreasedPattern.IsMatch(pattern))
                     {
@@ -179,6 +193,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                         modifier.Text = ParseHashPattern.Replace(modifierText, result.Groups[index].Value, 1);
                     }
                 }
+4
+                if (x.Option?.Options?.Any() == true)
+                {
+                    var optionMod = x.Option.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
+                    if (optionMod == null)
+                    {
+                        continue;
+                    }
+                    modifier.OptionValue = optionMod;
+                    modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
+                }
+
+                mods.Add(modifier);
             }
 
             mods.Add(modifier);

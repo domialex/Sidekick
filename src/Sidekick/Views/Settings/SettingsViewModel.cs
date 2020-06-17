@@ -1,7 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Trade.Leagues;
+using Sidekick.Business.Caches;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Helpers;
@@ -16,6 +19,8 @@ namespace Sidekick.Views.Settings
         private readonly INativeKeyboard nativeKeyboard;
         private readonly ILeagueDataService leagueDataService;
         private readonly IKeybindEvents keybindEvents;
+        private readonly ICacheService cacheService;
+        private readonly IInitializer initializer;
         private bool isDisposed;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,12 +29,16 @@ namespace Sidekick.Views.Settings
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
             ILeagueDataService leagueDataService,
-            IKeybindEvents keybindEvents)
+            IKeybindEvents keybindEvents,
+            ICacheService cacheService,
+            IInitializer initializer)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
+            this.cacheService = cacheService;
+            this.initializer = initializer;
             this.leagueDataService = leagueDataService;
 
             Settings = new SidekickSettings();
@@ -145,6 +154,15 @@ namespace Sidekick.Views.Settings
             }
 
             isDisposed = true;
+        }
+
+        public void ResetCache()
+        {
+            _ = Task.Run(async () =>
+            {
+                await cacheService.Clear();
+                await initializer.Initialize();
+            });
         }
     }
 }

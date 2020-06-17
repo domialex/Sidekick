@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 
 namespace Sidekick.Business.Apis.Poe.Models
 {
@@ -15,5 +16,7 @@ namespace Sidekick.Business.Apis.Poe.Models
         public string Text { get; set; }
 
         public List<double> Values { get; set; } = new List<double>();
+
+        public ModifierOption OptionValue { get; set; }
     }
 }

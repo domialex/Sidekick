@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Sidekick.Business.Apis.Poe.Models;
 
 namespace Sidekick.Views.Prices
 {
@@ -20,6 +21,7 @@ namespace Sidekick.Views.Prices
 
         public bool ApplyNegative { get; set; }
 
+        public ModifierOption Option { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

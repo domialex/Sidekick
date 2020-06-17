@@ -96,9 +96,7 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Label Content="{loc:Loc Other_DangerousModsRegex}" />
-                                    <TextBox
-                                        Grid.Column="1"
-                                        Text="{Binding Path=Settings.DangerousModsRegex}" />
+                                    <TextBox Grid.Column="1" Text="{Binding Path=Settings.DangerousModsRegex}" />
                                 </Grid>
                             </StackPanel>
                         </GroupBox>
@@ -120,12 +118,28 @@
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-        <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
-            <Button Click="DiscardChanges_Click" Content="{loc:Loc Cancel}" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
             <Button
+                Grid.Column="0"
+                Click="ResetCache_Click"
+                Content="{loc:Loc ResetCache}" />
+
+            <Button
+                Grid.Column="2"
+                Click="DiscardChanges_Click"
+                Content="{loc:Loc Cancel}" />
+            <Button
+                Grid.Column="3"
                 Margin="{StaticResource SpacerLeft}"
                 Click="SaveChanges_Click"
                 Content="{loc:Loc Ok}" />
-        </WrapPanel>
+        </Grid>
     </Grid>
 </base:BaseWindow>

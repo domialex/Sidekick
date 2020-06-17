@@ -304,6 +304,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset Cache.
+        /// </summary>
+        public static string ResetCache {
+            get {
+                return ResourceManager.GetString("ResetCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string Tab_General {
