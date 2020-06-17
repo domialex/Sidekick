@@ -358,7 +358,7 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Now.
+        ///   Looks up a localized string similar to Update now.
         /// </summary>
         public static string UpdateNow {
             get {
@@ -376,7 +376,7 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updating Shortly.
+        ///   Looks up a localized string similar to Updating shortly.
         /// </summary>
         public static string UpdateShortly {
             get {
