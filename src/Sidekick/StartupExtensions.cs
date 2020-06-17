@@ -4,6 +4,7 @@ using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Natives;
 using Sidekick.Views;
+using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.MapInfo;
@@ -21,6 +22,7 @@ namespace Sidekick
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
 
+            services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();
             services.AddScoped<LeagueView>();
             services.AddScoped<PriceView>();

@@ -129,7 +129,10 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ShowAbout" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="ShowLogs" xml:space="preserve">
-    <value>Show Logs</value>
+    <value>Logs</value>
   </data>
 </root>

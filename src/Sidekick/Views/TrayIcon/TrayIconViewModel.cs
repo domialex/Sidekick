@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Input;
 using Sidekick.Core.Natives;
+using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.Prices;
@@ -25,6 +26,8 @@ namespace Sidekick.Views.TrayIcon
         }
 
         public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
+
+        public ICommand ShowAboutCommand => new RelayCommand(_ => viewLocator.Open<AboutView>());
 
         public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open<ApplicationLogsView>());
 
