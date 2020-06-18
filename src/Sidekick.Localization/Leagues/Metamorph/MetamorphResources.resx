@@ -121,57 +121,42 @@
     <value>Abrasive Catalyst</value>
   </data>
   <data name="AbrasiveCatalystEffect" xml:space="preserve">
-    <value>Add Quality that enchances
-Attack modifiers</value>
+    <value>Add Quality that enchances Attack modifiers</value>
   </data>
   <data name="FertileCatalyst" xml:space="preserve">
     <value>Fertile Catalyst</value>
   </data>
   <data name="FertileCatalystEffect" xml:space="preserve">
-    <value>Add Quality that enhances
-Life and Mana Modifiers</value>
+    <value>Add Quality that enhances Life and Mana Modifiers</value>
   </data>
   <data name="ImbuedCatalyst" xml:space="preserve">
     <value>Imbued Catalyst</value>
   </data>
   <data name="ImbuedCatalystEffect" xml:space="preserve">
-    <value>Add Quality that enhances
-Caster Modifiers</value>
+    <value>Add Quality that enhances Caster Modifiers</value>
   </data>
   <data name="IntrinsicCatalyst" xml:space="preserve">
     <value>Intrinsic Catalyst</value>
   </data>
   <data name="IntrinsicCatalystEffect" xml:space="preserve">
-    <value>Adds Quality that enhances
-Attribute Modifiers</value>
+    <value>Adds Quality that enhances Attribute Modifiers</value>
   </data>
   <data name="PrismaticCatalyst" xml:space="preserve">
     <value>Prismatic Catalyst</value>
   </data>
   <data name="PrismaticCatalystEffect" xml:space="preserve">
-    <value>Adds Quality that enhances
-Resistance Modifiers</value>
+    <value>Adds Quality that enhances Resistance Modifiers</value>
   </data>
   <data name="TemperingCatalyst" xml:space="preserve">
     <value>Tempering Catalyst</value>
   </data>
   <data name="TemperingCatalystEffect" xml:space="preserve">
-    <value>Add Quality that enhances
-Defense Modifiers</value>
+    <value>Add Quality that enhances Defense Modifiers</value>
   </data>
   <data name="TurbulentCatalyst" xml:space="preserve">
     <value>Turbulent Catalyst</value>
   </data>
   <data name="TurbulentCatalystEffect" xml:space="preserve">
-    <value>Adds Quality that enhances
-Elemental Damage Modifiers</value>
-  </data>
-  <data name="InformationHeader" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="InformationText" xml:space="preserve">
-    <value>Can be applied to: 
-Rings, Amulets, Belts 
-Applying a Catalyst removes all other Quality</value>
+    <value>Adds Quality that enhances Elemental Damage Modifiers</value>
   </data>
 </root>

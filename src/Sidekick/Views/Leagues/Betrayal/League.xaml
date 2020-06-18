@@ -2,64 +2,66 @@
     x:Class="Sidekick.Views.Leagues.Betrayal.League"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:league="clr-namespace:Sidekick.Views.Leagues"
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:local="clr-namespace:Sidekick.Views.Leagues.Betrayal"
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization"
     loc:Translation.ResourceManager="{x:Static resx:BetrayalResources.ResourceManager}">
 
-    <StackPanel Name="Container" Orientation="Horizontal">
-        <StackPanel Margin="0,90,5,0">
-            <Border MinHeight="60">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="30"
-                    Text="{loc:Loc TypeTransportation}" />
-            </Border>
-            <Border MinHeight="60">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="30"
-                    Text="{loc:Loc TypeFortification}" />
-            </Border>
-            <Border MinHeight="60">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="30"
-                    Text="{loc:Loc TypeResearch}" />
-            </Border>
-            <Border MinHeight="60">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="30"
-                    Text="{loc:Loc TypeIntervention}" />
-            </Border>
-        </StackPanel>
-        <StackPanel>
-            <Border
-                Margin="{StaticResource SpacerBottom}"
-                BorderBrush="Black"
-                BorderThickness="1">
-                <ItemsControl ItemsSource="{Binding Path=Model.Agents}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <local:Agent Model="{Binding}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </Border>
-            <league:Legend />
-        </StackPanel>
-    </StackPanel>
+    <Grid Name="Container">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="18" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{loc:Loc TypeTransportation}"
+            TextWrapping="WrapWithOverflow" />
+
+        <TextBlock
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{loc:Loc TypeFortification}"
+            TextWrapping="WrapWithOverflow" />
+
+        <TextBlock
+            Grid.Column="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{loc:Loc TypeResearch}"
+            TextWrapping="WrapWithOverflow" />
+
+        <TextBlock
+            Grid.Column="4"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{loc:Loc TypeIntervention}"
+            TextWrapping="WrapWithOverflow" />
+
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="6">
+            <ItemsControl ItemsSource="{Binding Path=Model.Agents}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:Agent Model="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

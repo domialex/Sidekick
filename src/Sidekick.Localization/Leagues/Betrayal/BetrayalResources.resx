@@ -481,15 +481,15 @@ Level3: 1-3 White Sockets</value>
     <value>Vorici</value>
   </data>
   <data name="TypeFortification" xml:space="preserve">
-    <value>F</value>
+    <value>Fortification</value>
   </data>
   <data name="TypeIntervention" xml:space="preserve">
-    <value>I</value>
+    <value>Intervention</value>
   </data>
   <data name="TypeResearch" xml:space="preserve">
-    <value>R</value>
+    <value>Research</value>
   </data>
   <data name="TypeTransportation" xml:space="preserve">
-    <value>T</value>
+    <value>Transportation</value>
   </data>
 </root>

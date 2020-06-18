@@ -159,11 +159,4 @@
   <data name="TurbulentCatalystEffect" xml:space="preserve">
     <value>元素傷害詞綴</value>
   </data>
-  <data name="InformationHeader" xml:space="preserve">
-    <value>資訊</value>
-  </data>
-  <data name="InformationText" xml:space="preserve">
-    <value>可以使用於戒指、項鍊或腰帶。
-重複使用會取代其他品質類型。</value>
-  </data>
 </root>
