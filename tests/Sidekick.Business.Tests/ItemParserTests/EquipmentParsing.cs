@@ -148,6 +148,24 @@ namespace Sidekick.Business.Tests.ItemParserTests
             }
         }
 
+        [Test]
+        public async Task ParseMagicWeapon()
+        {
+            var actual = await Subject.ParseItem(MagicWeapon);
+
+            actual.Type.Should().Be("Shadow Axe");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Magic);
+
+            var expectedExplicits = new[]
+            {
+                "11% reduced Enemy Stun Threshold"
+            };
+
+            actual.Modifiers.Explicit
+                            .Select(mod => mod.Text)
+                            .Should().Contain(expectedExplicits);
+        }
+
         #region ItemText
 
         private const string UniqueSixLink = @"Rarity: Unique
@@ -260,6 +278,27 @@ Adds 10 to 16 Physical Damage
 Attacks with this Weapon Penetrate 10% Lightning Resistance
 --------
 Crusader Item
+";
+
+        private const string MagicWeapon = @"Rarity: Magic
+Shadow Axe of the Boxer
+--------
+Two Handed Axe
+Physical Damage: 42-62
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.25
+Weapon Range: 13
+--------
+Requirements:
+Level: 33
+Str: 80
+Dex: 37
+--------
+Sockets: R-R 
+--------
+Item Level: 50
+--------
+11% reduced Enemy Stun Threshold
 ";
 
         #endregion

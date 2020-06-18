@@ -36,15 +36,15 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
             var categories = await cacheService.GetOrCreate("ItemDataService.OnInit", () => poeApiClient.Fetch<ItemDataCategory>());
 
-            FillPattern(categories[0].Entries, Category.Accessory);
-            FillPattern(categories[1].Entries, Category.Armour);
+            FillPattern(categories[0].Entries, Category.Accessory, useRegex: true);
+            FillPattern(categories[1].Entries, Category.Armour, useRegex: true);
             FillPattern(categories[2].Entries, Category.DivinationCard);
             FillPattern(categories[3].Entries, Category.Currency);
-            FillPattern(categories[4].Entries, Category.Flask);
+            FillPattern(categories[4].Entries, Category.Flask, useRegex: true);
             FillPattern(categories[5].Entries, Category.Gem);
-            FillPattern(categories[6].Entries, Category.Jewel);
+            FillPattern(categories[6].Entries, Category.Jewel, useRegex: true);
             FillPattern(categories[7].Entries, Category.Map, useRegex: true);
-            FillPattern(categories[8].Entries, Category.Weapon);
+            FillPattern(categories[8].Entries, Category.Weapon, useRegex: true);
             FillPattern(categories[9].Entries, Category.Leaguestone);
             FillPattern(categories[10].Entries, Category.Prophecy);
             FillPattern(categories[11].Entries, Category.ItemisedMonster);

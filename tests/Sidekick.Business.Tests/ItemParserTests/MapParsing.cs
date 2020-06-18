@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -57,6 +58,35 @@ namespace Sidekick.Business.Tests.ItemParserTests
                 actual.Properties.Quality.Should().Be(10);
                 actual.Properties.ItemQuantity.Should().Be(69);
                 actual.Properties.ItemRarity.Should().Be(356);
+            }
+        }
+
+        [Test]
+        public async Task ParseOccupiedMap()
+        {
+            var actual = await Subject.ParseItem(OccupiedMap);
+
+            using (new AssertionScope())
+            {
+                var expectedImplicits = new[]
+                {
+                    "Area is influenced by The Elder",
+                    "Map is occupied by The Purifier"
+                };
+
+                var expectedExplicits = new[]
+                {
+                    "Players are Cursed with Enfeeble"
+                };
+
+                actual.Type.Should().Be("Carcass Map");
+                actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
+                actual.Modifiers.Implicit
+                      .Select(mod => mod.Text)
+                      .Should().Contain(expectedImplicits);
+                actual.Modifiers.Explicit
+                      .Select(mod => mod.Text)
+                      .Should().Contain(expectedExplicits);
             }
         }
 
@@ -130,6 +160,30 @@ Will they grant me strength or doom?
 --------
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
+
+        private const string OccupiedMap = @"Rarity: Rare
+Lost Roost
+Carcass Map
+--------
+Map Tier: 16
+Atlas Region: Lex Ejoris
+Item Quantity: +91% (augmented)
+Item Rarity: +42% (augmented)
+Monster Pack Size: +27% (augmented)
+Quality: +20% (augmented)
+--------
+Item Level: 82
+--------
+Area is influenced by The Elder (implicit)
+Map is occupied by The Purifier (implicit)
+--------
+Players are Cursed with Enfeeble
+Monsters have 70% chance to Avoid Elemental Ailments
+Monsters fire 2 additional Projectiles
+Monsters' skills Chain 2 additional times
+Players gain 50% reduced Flask Charges
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.";
 
         #endregion
     }
