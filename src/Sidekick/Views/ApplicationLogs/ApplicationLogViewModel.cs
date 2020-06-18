@@ -1,7 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using Sidekick.Core.Logging;
 using Sidekick.Helpers;
 
@@ -23,13 +21,13 @@ namespace Sidekick.Views.ApplicationLogs
 
         private void EventSink_LogEventEmitted(string logEvent)
         {
-                Logs.Add(logEvent);
+            Logs.Add(logEvent);
 
-                // Limit the log size to show.
-                for (var i = Logs.Count; i > 100; i--)
-                {
-                    Logs.RemoveAt(0);
-                }
+            // Limit the log size to show.
+            for (var i = Logs.Count; i > 100; i--)
+            {
+                Logs.RemoveAt(0);
+            }
         }
 
         public ObservableList<string> Logs { get; private set; }
