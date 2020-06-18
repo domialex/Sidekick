@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer>
+        <ScrollViewer Padding="0">
             <ItemsControl ItemsSource="{Binding Path=Model.Regions}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

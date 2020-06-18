@@ -16,7 +16,7 @@
     Title="{loc:Loc Title}"
     Width="720"
     Height="320"
-    MinWidth="720"
+    MinWidth="300"
     MinHeight="320"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
     Topmost="True"
