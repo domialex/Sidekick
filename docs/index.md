@@ -1,5 +1,5 @@
 ---
 title: Sidekick
-menus: Header
+menus: header
 ---
 # Test Homepage
