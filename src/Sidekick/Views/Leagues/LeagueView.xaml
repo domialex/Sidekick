@@ -16,7 +16,7 @@
     Title="{loc:Loc Title}"
     Width="720"
     Height="320"
-    MinWidth="300"
+    MinWidth="720"
     MinHeight="320"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
     Topmost="True"
@@ -25,7 +25,7 @@
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
-    <Grid Margin="{StaticResource Spacer}">
+    <Grid Margin="{StaticResource SpacerX}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="Auto" />
@@ -49,6 +49,6 @@
             </TabItem>
         </TabControl>
 
-        <local:Legend Grid.Row="1" Margin="{StaticResource SpacerTop}" />
+        <local:Legend Grid.Row="1" Margin="{StaticResource SpacerY}" />
     </Grid>
 </base:BaseOverlay>
