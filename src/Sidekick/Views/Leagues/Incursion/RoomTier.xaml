@@ -10,6 +10,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Border
+        Name="Container"
         Background="{DynamicResource {x:Static adonisUi:Brushes.Layer3BackgroundBrush}}"
         BorderBrush="{Binding Model.Color}"
         BorderThickness="5,0,0,0">
