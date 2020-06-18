@@ -68,6 +68,7 @@
                 Name="ItemList"
                 Margin="{StaticResource SpacerBottom}"
                 AutoGenerateColumns="False"
+                IsReadOnly="True"
                 ItemsSource="{Binding Path=Results}"
                 ScrollViewer.CanContentScroll="False"
                 SelectionChanged="ItemList_SelectionChanged">
