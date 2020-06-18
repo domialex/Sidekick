@@ -22,12 +22,11 @@ namespace Sidekick.TestDataCollector
 
             await FetchAndSaveData<ItemDataCategory>(client);
             await FetchAndSaveData<StatDataCategory>(client);
-            await FetchAndSaveData<StatDataCategory>(client, true);
         }
 
-        private static async Task FetchAndSaveData<T>(PoeTradeClient client, bool useDefaultLanguage = false)
+        private static async Task FetchAndSaveData<T>(PoeTradeClient client)
         {
-            var data = await client.Fetch<T>(useDefaultLanguage);
+            var data = await client.Fetch<T>();
 
             File.WriteAllText(Path.Join(
                 "..", "..", "..", "..",
