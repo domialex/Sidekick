@@ -97,7 +97,16 @@ namespace Sidekick.Localization.Tray {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Logs.
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string ShowAbout {
+            get {
+                return ResourceManager.GetString("ShowAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
         /// </summary>
         public static string ShowLogs {
             get {

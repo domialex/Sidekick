@@ -35,6 +35,7 @@
         <MenuItem Command="{Binding ShowSettingsCommand}" Header="{loc:Loc Settings}" />
         <MenuItem Command="{Binding ShowLogsCommand}" Header="{loc:Loc ShowLogs}" />
         <Separator />
+        <MenuItem Command="{Binding ShowAboutCommand}" Header="{loc:Loc ShowAbout}" />
         <MenuItem Command="{Binding ExitApplicationCommand}" Header="{loc:Loc Exit}" />
     </ContextMenu>
 

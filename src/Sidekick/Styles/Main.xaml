@@ -4,6 +4,7 @@
         <ResourceDictionary Source="Controls/CheckBox.xaml" />
         <ResourceDictionary Source="Controls/ComboBox.xaml" />
         <ResourceDictionary Source="Controls/GroupBox.xaml" />
+        <ResourceDictionary Source="Controls/Hyperlink.xaml" />
         <ResourceDictionary Source="Controls/Label.xaml" />
         <ResourceDictionary Source="Controls/TabControl.xaml" />
         <ResourceDictionary Source="Controls/TextBox.xaml" />
