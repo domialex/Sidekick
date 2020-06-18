@@ -3,5 +3,4 @@ description: A Path of Exile tool that allows you to price check items inside th
 baseurl: "/Sidekick"
 url: "localhost:4000"
 repository: https://github.com/domialex/Sidekick
-show_downloads: true
 theme: jekyll-theme-slate
