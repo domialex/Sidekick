@@ -89,7 +89,7 @@ namespace Sidekick.Views.Prices
                 // Query next page when reaching more than 99% of the scrollable content.
                 if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.99d)
                 {
-                    viewModel.LoadMoreData();
+                    _ = viewModel.LoadMoreData();
                 }
             }
         }
