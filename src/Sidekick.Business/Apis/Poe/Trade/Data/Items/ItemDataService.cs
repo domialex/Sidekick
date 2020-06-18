@@ -75,16 +75,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                 {
                     nameAndTypeRegex.Add((key.ToRegex(), item));
                 }
-                else
-                {
-                    if (!nameAndTypeDictionary.TryGetValue(key, out var itemData))
-                    {
-                        itemData = new List<ItemData>();
-                        nameAndTypeDictionary.Add(key, itemData);
-                    }
 
-                    itemData.Add(item);
+                if (!nameAndTypeDictionary.TryGetValue(key, out var itemData))
+                {
+                    itemData = new List<ItemData>();
+                    nameAndTypeDictionary.Add(key, itemData);
                 }
+
+                itemData.Add(item);
             }
         }
 
