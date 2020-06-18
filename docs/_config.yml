@@ -6,3 +6,6 @@ repository: https://github.com/domialex/Sidekick
 theme: jekyll-theme-slate
 plugins:
   - jekyll-menus
+sass:
+  sass_dir: css
+  
