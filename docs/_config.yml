@@ -1,1 +1,7 @@
+title: Sidekick
+description: A Path of Exile tool that allows you to price check items inside the game.
+baseurl: "/Sidekick"
+url: "localhost:4000"
+repository: https://github.com/domialex/Sidekick
+
 theme: jekyll-theme-cayman
