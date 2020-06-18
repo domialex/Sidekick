@@ -1,1 +1,4 @@
+---
+title: About - Sidekick
+---
 # About
