@@ -9,34 +9,46 @@
     xmlns:delve="clr-namespace:Sidekick.Views.Leagues.Delve"
     xmlns:incursion="clr-namespace:Sidekick.Views.Leagues.Incursion"
     xmlns:loc="clr-namespace:Sidekick.Views"
+    xmlns:local="clr-namespace:Sidekick.Views.Leagues"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metamorph="clr-namespace:Sidekick.Views.Leagues.Metamorph"
     xmlns:resx="clr-namespace:Sidekick.Localization.Leagues;assembly=Sidekick.Localization"
     Title="{loc:Loc Title}"
+    Width="1024"
+    Height="320"
+    MinWidth="720"
+    MinHeight="320"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
-    ResizeMode="NoResize"
-    SizeToContent="WidthAndHeight"
     Topmost="True"
     mc:Ignorable="d">
     <Window.Style>
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
-    <TabControl SelectedIndex="{Binding SelectedTabIndex}">
-        <TabItem Header="{loc:Loc LeagueNameBetrayal}">
-            <betrayal:League Model="{Binding Betrayal}" />
-        </TabItem>
-        <TabItem Header="{loc:Loc LeagueNameBlight}">
-            <blight:League Model="{Binding Blight}" />
-        </TabItem>
-        <TabItem Header="{loc:Loc LeagueNameDelve}">
-            <delve:League Model="{Binding Delve}" />
-        </TabItem>
-        <TabItem Header="{loc:Loc LeagueNameIncrusion}">
-            <incursion:League Model="{Binding Incursion}" />
-        </TabItem>
-        <TabItem Header="{loc:Loc LeagueNameMetamorph}">
-            <metamorph:League Model="{Binding Metamorph}" />
-        </TabItem>
-    </TabControl>
+    <Grid Margin="{StaticResource SpacerX}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TabControl SelectedIndex="{Binding SelectedTabIndex}">
+            <TabItem Header="{loc:Loc LeagueNameBetrayal}">
+                <betrayal:League Model="{Binding Betrayal}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc LeagueNameBlight}">
+                <blight:League Model="{Binding Blight}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc LeagueNameDelve}">
+                <delve:League Model="{Binding Delve}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc LeagueNameIncrusion}">
+                <incursion:League Model="{Binding Incursion}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc LeagueNameMetamorph}">
+                <metamorph:League Model="{Binding Metamorph}" />
+            </TabItem>
+        </TabControl>
+
+        <local:Legend Grid.Row="1" Margin="{StaticResource SpacerY}" />
+    </Grid>
 </base:BaseOverlay>

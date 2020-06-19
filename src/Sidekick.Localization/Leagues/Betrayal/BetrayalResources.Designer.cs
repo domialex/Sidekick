@@ -935,7 +935,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F.
+        ///   Looks up a localized string similar to Fortification.
         /// </summary>
         public static string TypeFortification {
             get {
@@ -944,7 +944,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I.
+        ///   Looks up a localized string similar to Intervention.
         /// </summary>
         public static string TypeIntervention {
             get {
@@ -953,7 +953,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R.
+        ///   Looks up a localized string similar to Research.
         /// </summary>
         public static string TypeResearch {
             get {
@@ -962,7 +962,7 @@ namespace Sidekick.Localization.Leagues.Betrayal {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T.
+        ///   Looks up a localized string similar to Transportation.
         /// </summary>
         public static string TypeTransportation {
             get {

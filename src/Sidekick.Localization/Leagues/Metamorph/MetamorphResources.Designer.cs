@@ -70,8 +70,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Quality that enchances
-        ///Attack modifiers.
+        ///   Looks up a localized string similar to Add Quality that enchances Attack modifiers.
         /// </summary>
         public static string AbrasiveCatalystEffect {
             get {
@@ -89,8 +88,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Quality that enhances
-        ///Life and Mana Modifiers.
+        ///   Looks up a localized string similar to Add Quality that enhances Life and Mana Modifiers.
         /// </summary>
         public static string FertileCatalystEffect {
             get {
@@ -108,32 +106,11 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Quality that enhances
-        ///Caster Modifiers.
+        ///   Looks up a localized string similar to Add Quality that enhances Caster Modifiers.
         /// </summary>
         public static string ImbuedCatalystEffect {
             get {
                 return ResourceManager.GetString("ImbuedCatalystEffect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Information.
-        /// </summary>
-        public static string InformationHeader {
-            get {
-                return ResourceManager.GetString("InformationHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Can be applied to: 
-        ///Rings, Amulets, Belts 
-        ///Applying a Catalyst removes all other Quality.
-        /// </summary>
-        public static string InformationText {
-            get {
-                return ResourceManager.GetString("InformationText", resourceCulture);
             }
         }
         
@@ -147,8 +124,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adds Quality that enhances
-        ///Attribute Modifiers.
+        ///   Looks up a localized string similar to Adds Quality that enhances Attribute Modifiers.
         /// </summary>
         public static string IntrinsicCatalystEffect {
             get {
@@ -166,8 +142,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adds Quality that enhances
-        ///Resistance Modifiers.
+        ///   Looks up a localized string similar to Adds Quality that enhances Resistance Modifiers.
         /// </summary>
         public static string PrismaticCatalystEffect {
             get {
@@ -185,8 +160,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Quality that enhances
-        ///Defense Modifiers.
+        ///   Looks up a localized string similar to Add Quality that enhances Defense Modifiers.
         /// </summary>
         public static string TemperingCatalystEffect {
             get {
@@ -204,8 +178,7 @@ namespace Sidekick.Localization.Leagues.Metamorph {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adds Quality that enhances
-        ///Elemental Damage Modifiers.
+        ///   Looks up a localized string similar to Adds Quality that enhances Elemental Damage Modifiers.
         /// </summary>
         public static string TurbulentCatalystEffect {
             get {
