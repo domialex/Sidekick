@@ -834,7 +834,7 @@ namespace Sidekick.Views.Prices
                 {
                     _ = itemCategoryService.SaveCategory(Item.TypeLine, SelectedCategory);
                 }
-                _ = UpdateQuery();
+                _ = UpdateDebounce();
             }
         }
 
