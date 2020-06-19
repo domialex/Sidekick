@@ -57,6 +57,8 @@ namespace Sidekick.Core.Settings
 
         public string Key_OpenSearch { get; set; }
 
+        public string Key_OpenSettings { get; set; }
+
         public string Key_OpenLeagueOverview { get; set; }
 
         public string Key_ReplyToLatestWhisper { get; set; }

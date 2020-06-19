@@ -44,6 +44,7 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnFindItems;
         public event Func<Task<bool>> OnLeaveParty;
         public event Func<Task<bool>> OnOpenSearch;
+        public event Func<Task<bool>> OnOpenSettings;
         public event Func<Task<bool>> OnTabLeft;
         public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
@@ -101,14 +102,11 @@ namespace Sidekick.Natives
                 ExecuteKeybind("Find Items", configuration.Key_FindItems, input, OnFindItems, ref task);
                 ExecuteKeybind("Leave Party", configuration.Key_LeaveParty, input, OnLeaveParty, ref task);
                 ExecuteKeybind("Open Search", configuration.Key_OpenSearch, input, OnOpenSearch, ref task);
+                ExecuteKeybind("Open Settings", configuration.Key_OpenSettings, input, OnOpenSettings, ref task);
                 ExecuteKeybind("Open League Overview", configuration.Key_OpenLeagueOverview, input, OnOpenLeagueOverview, ref task);
                 ExecuteKeybind("Scroll Tab Left", configuration.Key_Stash_Left, input, OnTabLeft, ref task);
                 ExecuteKeybind("Scroll Tab Right", configuration.Key_Stash_Right, input, OnTabRight, ref task);
                 ExecuteKeybind("Whisper Reply", configuration.Key_ReplyToLatestWhisper, input, OnWhisperReply, ref task);
-
-                // We need to make sure some key combinations make it into the game if the keybind returns false
-                SendInputIf("Ctrl+F", input, task);
-                SendInputIf("Space", input, task);
 
                 if (task == null)
                 {
@@ -138,6 +136,8 @@ namespace Sidekick.Natives
                 {
                     returnTask = func.Invoke();
                 }
+
+                SendInputIf(keybind, input, returnTask);
             }
         }
 

@@ -16,6 +16,7 @@ namespace Sidekick.Core.Natives
         event Func<Task<bool>> OnFindItems;
         event Func<Task<bool>> OnLeaveParty;
         event Func<Task<bool>> OnOpenSearch;
+        event Func<Task<bool>> OnOpenSettings;
         event Func<Task<bool>> OnTabLeft;
         event Func<Task<bool>> OnTabRight;
         event Func<Task<bool>> OnOpenLeagueOverview;

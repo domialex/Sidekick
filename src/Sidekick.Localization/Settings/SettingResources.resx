@@ -151,7 +151,7 @@
     <value>Leave Party</value>
   </data>
   <data name="Key_OpenLeagueOverview" xml:space="preserve">
-    <value>Open League Overview</value>
+    <value>Open League View</value>
   </data>
   <data name="Key_OpenSearch" xml:space="preserve">
     <value>Open Search</value>
@@ -215,5 +215,8 @@
   </data>
   <data name="ResetCache" xml:space="preserve">
     <value>Reset Cache</value>
+  </data>
+  <data name="Key_OpenSettings" xml:space="preserve">
+    <value>Open Settings View</value>
   </data>
 </root>
