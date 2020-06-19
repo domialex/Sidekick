@@ -106,7 +106,8 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             // PoeNinja also includes translations of an item's description,
             // we will strip those by supposing that they always end with a dot (end of sentence).
-            var flattenedTranslations = itemsTasks.Select(x => x.request.Result.Language.Translations.Where(y => !y.Value.Contains(".")))
+            var flattenedTranslations = itemsTasks.Select(x => x.request.Result.Language?.Translations?.Where(y => !y.Value.Contains(".")))
+                                                  .Where(x => x != null)
                                                   .SelectMany(x => x)
                                                   .Distinct()
                                                   .ToDictionary(x => x.Key, x => x.Value);
