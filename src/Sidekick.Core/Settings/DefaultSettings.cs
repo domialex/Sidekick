@@ -34,6 +34,7 @@ namespace Sidekick.Core.Settings
                 Key_GoToHideout = "F5",
                 Key_LeaveParty = "F4",
                 Key_OpenSearch = "Alt+Q",
+                Key_OpenSettings = "Ctrl+O",
                 Key_OpenLeagueOverview = "F6",
                 Key_OpenWiki = "Alt+W",
                 Key_ReplyToLatestWhisper = "Ctrl+Shift+R",

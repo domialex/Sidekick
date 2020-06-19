@@ -15,6 +15,13 @@ namespace Sidekick.Views.Settings
             InitializeComponent();
             DataContext = viewModel;
 
+            Topmost = true;
+            Dispatcher.Invoke(async () =>
+            {
+                await System.Threading.Tasks.Task.Delay(1000);
+                Topmost = false;
+            });
+
             Show();
         }
 

@@ -160,7 +160,7 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open League Overview.
+        ///   Looks up a localized string similar to Open League View.
         /// </summary>
         public static string Key_OpenLeagueOverview {
             get {
@@ -174,6 +174,15 @@ namespace Sidekick.Localization.Settings {
         public static string Key_OpenSearch {
             get {
                 return ResourceManager.GetString("Key_OpenSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Settings View.
+        /// </summary>
+        public static string Key_OpenSettings {
+            get {
+                return ResourceManager.GetString("Key_OpenSettings", resourceCulture);
             }
         }
         

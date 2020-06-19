@@ -12,8 +12,9 @@ using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Views;
 using Sidekick.Views.Leagues;
-using Sidekick.Views.Prices;
 using Sidekick.Views.MapInfo;
+using Sidekick.Views.Prices;
+using Sidekick.Views.Settings;
 
 namespace Sidekick.Handlers
 {
@@ -81,6 +82,7 @@ namespace Sidekick.Handlers
             events.OnFindItems -= TriggerFindItem;
             events.OnLeaveParty -= TriggerLeaveParty;
             events.OnOpenSearch -= TriggerOpenSearch;
+            events.OnOpenSettings -= TriggerOpenSettings;
             events.OnWhisperReply -= TriggerReplyToLatestWhisper;
             events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
             events.OnPriceCheck -= Events_OnPriceCheck;
@@ -103,6 +105,7 @@ namespace Sidekick.Handlers
             events.OnFindItems += TriggerFindItem;
             events.OnLeaveParty += TriggerLeaveParty;
             events.OnOpenSearch += TriggerOpenSearch;
+            events.OnOpenSettings += TriggerOpenSettings;
             events.OnWhisperReply += TriggerReplyToLatestWhisper;
             events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
             events.OnPriceCheck += Events_OnPriceCheck;
@@ -235,6 +238,21 @@ namespace Sidekick.Handlers
             }
 
             return false;
+        }
+
+        private Task<bool> TriggerOpenSettings()
+        {
+            if (viewLocator.IsOpened<SettingsView>())
+            {
+                viewLocator.CloseAll();
+            }
+            else
+            {
+                viewLocator.CloseAll();
+                viewLocator.Open<SettingsView>();
+            }
+
+            return Task.FromResult(true);
         }
 
         private async Task<Business.Apis.Poe.Models.Item> TriggerCopyAction()
