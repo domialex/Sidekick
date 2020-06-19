@@ -28,7 +28,7 @@ namespace Sidekick.Core.Settings
                 DangerousModsRegex = "reflect|regen",
                 Key_CloseWindow = "Space",
                 Key_CheckPrices = "Ctrl+D",
-                Key_MapInfo = "Ctrl+C",
+                Key_MapInfo = "Ctrl+X",
                 Key_Exit = "Ctrl+Shift+X",
                 Key_FindItems = "Ctrl+F",
                 Key_GoToHideout = "F5",
