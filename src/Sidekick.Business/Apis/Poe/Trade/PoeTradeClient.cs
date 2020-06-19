@@ -51,19 +51,19 @@ namespace Sidekick.Business.Apis.Poe.Trade
             {
                 case nameof(ItemDataCategory):
                     name = "items";
-                    path = "data/items/";
+                    path = "data/items";
                     break;
                 case nameof(League):
                     name = "leagues";
-                    path = "data/leagues/";
+                    path = "data/leagues";
                     break;
                 case nameof(StaticItemCategory):
                     name = "static items";
-                    path = "data/static/";
+                    path = "data/static";
                     break;
                 case nameof(StatDataCategory):
                     name = "attributes";
-                    path = "data/stats/";
+                    path = "data/stats";
                     break;
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
