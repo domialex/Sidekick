@@ -15,6 +15,7 @@ using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
+using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -24,7 +25,7 @@ using Sidekick.Localization.Prices;
 
 namespace Sidekick.Views.Prices
 {
-    public class PriceViewModel : INotifyPropertyChanged
+    public class PriceViewModel : INotifyPropertyChanged, IDisposable
     {
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
@@ -36,6 +37,7 @@ namespace Sidekick.Views.Prices
         private readonly IParserService parserService;
         private readonly SidekickSettings settings;
         private readonly IStatDataService statDataService;
+        private readonly IItemCategoryService itemCategoryService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,7 +51,8 @@ namespace Sidekick.Views.Prices
             INativeClipboard nativeClipboard,
             IParserService parserService,
             SidekickSettings settings,
-            IStatDataService statDataService)
+            IStatDataService statDataService,
+            IItemCategoryService itemCategoryService)
         {
             this.logger = logger;
             this.tradeSearchService = tradeSearchService;
@@ -61,7 +64,10 @@ namespace Sidekick.Views.Prices
             this.parserService = parserService;
             this.settings = settings;
             this.statDataService = statDataService;
+            this.itemCategoryService = itemCategoryService;
             Task.Run(Initialize);
+
+            PropertyChanged += PriceViewModel_PropertyChanged;
         }
 
         public Item Item { get; private set; }
@@ -80,9 +86,11 @@ namespace Sidekick.Views.Prices
         public bool ShowRefresh { get; private set; } = true;
         public bool ShowPreview => !IsError;
 
-        public bool IsCurrency { get; private set; }
-
         public ObservableList<PriceFilterCategory> Filters { get; set; }
+
+        public ObservableDictionary<string, string> CategoryOptions { get; private set; } = new ObservableDictionary<string, string>();
+        public string SelectedCategory { get; set; }
+        public bool ShowCategory => Item?.Rarity == Rarity.Rare || Item?.Rarity == Rarity.Magic || Item?.Rarity == Rarity.Normal;
 
         private async Task Initialize()
         {
@@ -94,7 +102,70 @@ namespace Sidekick.Views.Prices
                 return;
             }
 
-            IsCurrency = Item.Rarity == Rarity.Currency;
+            if (ShowCategory)
+            {
+                CategoryOptions.Add(Item.TypeLine, null);
+                // CategoryOptions.Add(PriceResources.Class_Any, null);
+                CategoryOptions.Add(PriceResources.Class_Weapon, "weapon");
+                CategoryOptions.Add(PriceResources.Class_WeaponOne, "weapon.one");
+                CategoryOptions.Add(PriceResources.Class_WeaponOneMelee, "weapon.onemelee");
+                CategoryOptions.Add(PriceResources.Class_WeaponTwoMelee, "weapon.twomelee");
+                CategoryOptions.Add(PriceResources.Class_WeaponBow, "weapon.bow");
+                CategoryOptions.Add(PriceResources.Class_WeaponClaw, "weapon.claw");
+                CategoryOptions.Add(PriceResources.Class_WeaponDagger, "weapon.dagger");
+                CategoryOptions.Add(PriceResources.Class_WeaponRuneDagger, "weapon.runedagger");
+                CategoryOptions.Add(PriceResources.Class_WeaponOneAxe, "weapon.oneaxe");
+                CategoryOptions.Add(PriceResources.Class_WeaponOneMace, "weapon.onemace");
+                CategoryOptions.Add(PriceResources.Class_WeaponOneSword, "weapon.onesword");
+                CategoryOptions.Add(PriceResources.Class_WeaponSceptre, "weapon.sceptre");
+                CategoryOptions.Add(PriceResources.Class_WeaponStaff, "weapon.staff");
+                CategoryOptions.Add(PriceResources.Class_WeaponWarstaff, "weapon.warstaff");
+                CategoryOptions.Add(PriceResources.Class_WeaponTwoAxe, "weapon.twoaxe");
+                CategoryOptions.Add(PriceResources.Class_WeaponTwoMace, "weapon.twomace");
+                CategoryOptions.Add(PriceResources.Class_WeaponTwoSword, "weapon.twosword");
+                CategoryOptions.Add(PriceResources.Class_WeaponWand, "weapon.wand");
+                CategoryOptions.Add(PriceResources.Class_WeaponRod, "weapon.rod");
+                CategoryOptions.Add(PriceResources.Class_Armour, "armour");
+                CategoryOptions.Add(PriceResources.Class_ArmourChest, "armour.chest");
+                CategoryOptions.Add(PriceResources.Class_ArmourBoots, "armour.boots");
+                CategoryOptions.Add(PriceResources.Class_ArmourGloves, "armour.gloves");
+                CategoryOptions.Add(PriceResources.Class_ArmourHelmet, "armour.helmet");
+                CategoryOptions.Add(PriceResources.Class_ArmourShield, "armour.shield");
+                CategoryOptions.Add(PriceResources.Class_ArmourQuiver, "armour.quiver");
+                CategoryOptions.Add(PriceResources.Class_Accessory, "accessory");
+                CategoryOptions.Add(PriceResources.Class_AccessoryAmulet, "accessory.amulet");
+                CategoryOptions.Add(PriceResources.Class_AccessoryBelt, "accessory.belt");
+                CategoryOptions.Add(PriceResources.Class_AccessoryRing, "accessory.ring");
+                CategoryOptions.Add(PriceResources.Class_Gem, "gem");
+                CategoryOptions.Add(PriceResources.Class_GemActive, "gem.activegem");
+                CategoryOptions.Add(PriceResources.Class_GemSupport, "gem.supportgem");
+                CategoryOptions.Add(PriceResources.Class_GemAwakenedSupport, "gem.supportgemplus");
+                CategoryOptions.Add(PriceResources.Class_Jewel, "jewel");
+                CategoryOptions.Add(PriceResources.Class_JewelBase, "jewel.base");
+                CategoryOptions.Add(PriceResources.Class_JewelAbyss, "jewel.abyss");
+                CategoryOptions.Add(PriceResources.Class_JewelCluster, "jewel.cluster");
+                CategoryOptions.Add(PriceResources.Class_Flask, "flask");
+                CategoryOptions.Add(PriceResources.Class_Map, "map");
+                CategoryOptions.Add(PriceResources.Class_MapFragment, "map.fragment");
+                CategoryOptions.Add(PriceResources.Class_MapScarab, "map.scarab");
+                CategoryOptions.Add(PriceResources.Class_Watchstone, "watchstone");
+                CategoryOptions.Add(PriceResources.Class_Leaguestone, "leaguestone");
+                CategoryOptions.Add(PriceResources.Class_Prophecy, "prophecy");
+                CategoryOptions.Add(PriceResources.Class_Card, "card");
+                CategoryOptions.Add(PriceResources.Class_MonsterBeast, "monster.beast");
+                CategoryOptions.Add(PriceResources.Class_MonsterSample, "monster.sample");
+                CategoryOptions.Add(PriceResources.Class_Currency, "currency");
+                CategoryOptions.Add(PriceResources.Class_CurrencyPiece, "currency.piece");
+                CategoryOptions.Add(PriceResources.Class_CurrencyResonator, "currency.resonator");
+                CategoryOptions.Add(PriceResources.Class_CurrencyFossil, "currency.fossil");
+                CategoryOptions.Add(PriceResources.Class_CurrencyIncubator, "currency.incubator");
+
+                SelectedCategory = (await itemCategoryService.Get(Item.TypeLine))?.Category;
+                if (!CategoryOptions.Values.Any(x => x == SelectedCategory))
+                {
+                    SelectedCategory = null;
+                }
+            }
 
             InitializeFilters();
 
@@ -606,6 +677,8 @@ namespace Sidekick.Views.Prices
                 }
             }
 
+            searchFilters.TypeFilters.Filters.Category = new SearchFilterOption(SelectedCategory);
+
             return searchFilters;
         }
 
@@ -697,6 +770,29 @@ namespace Sidekick.Views.Prices
         {
             PreviewItem = selectedItem;
             HasPreviewItem = PreviewItem != null;
+        }
+
+        private void PriceViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedCategory))
+            {
+                _ = Task.Run(async () =>
+                {
+                    if (string.IsNullOrEmpty(SelectedCategory))
+                    {
+                        await itemCategoryService.Delete(Item.TypeLine);
+                    }
+                    else
+                    {
+                        await itemCategoryService.SaveCategory(Item.TypeLine, SelectedCategory);
+                    }
+                });
+            }
+        }
+
+        public void Dispose()
+        {
+            PropertyChanged -= PriceViewModel_PropertyChanged;
         }
     }
 }

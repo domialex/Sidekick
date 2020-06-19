@@ -133,6 +133,492 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any Accessory.
+        /// </summary>
+        public static string Class_Accessory {
+            get {
+                return ResourceManager.GetString("Class_Accessory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amulet.
+        /// </summary>
+        public static string Class_AccessoryAmulet {
+            get {
+                return ResourceManager.GetString("Class_AccessoryAmulet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belt.
+        /// </summary>
+        public static string Class_AccessoryBelt {
+            get {
+                return ResourceManager.GetString("Class_AccessoryBelt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ring.
+        /// </summary>
+        public static string Class_AccessoryRing {
+            get {
+                return ResourceManager.GetString("Class_AccessoryRing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string Class_Any {
+            get {
+                return ResourceManager.GetString("Class_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Armour.
+        /// </summary>
+        public static string Class_Armour {
+            get {
+                return ResourceManager.GetString("Class_Armour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boots.
+        /// </summary>
+        public static string Class_ArmourBoots {
+            get {
+                return ResourceManager.GetString("Class_ArmourBoots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body Armour.
+        /// </summary>
+        public static string Class_ArmourChest {
+            get {
+                return ResourceManager.GetString("Class_ArmourChest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gloves.
+        /// </summary>
+        public static string Class_ArmourGloves {
+            get {
+                return ResourceManager.GetString("Class_ArmourGloves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helmet.
+        /// </summary>
+        public static string Class_ArmourHelmet {
+            get {
+                return ResourceManager.GetString("Class_ArmourHelmet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quiver.
+        /// </summary>
+        public static string Class_ArmourQuiver {
+            get {
+                return ResourceManager.GetString("Class_ArmourQuiver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shield.
+        /// </summary>
+        public static string Class_ArmourShield {
+            get {
+                return ResourceManager.GetString("Class_ArmourShield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card.
+        /// </summary>
+        public static string Class_Card {
+            get {
+                return ResourceManager.GetString("Class_Card", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Currency.
+        /// </summary>
+        public static string Class_Currency {
+            get {
+                return ResourceManager.GetString("Class_Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fossil.
+        /// </summary>
+        public static string Class_CurrencyFossil {
+            get {
+                return ResourceManager.GetString("Class_CurrencyFossil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incubator.
+        /// </summary>
+        public static string Class_CurrencyIncubator {
+            get {
+                return ResourceManager.GetString("Class_CurrencyIncubator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unique Fragment.
+        /// </summary>
+        public static string Class_CurrencyPiece {
+            get {
+                return ResourceManager.GetString("Class_CurrencyPiece", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resonator.
+        /// </summary>
+        public static string Class_CurrencyResonator {
+            get {
+                return ResourceManager.GetString("Class_CurrencyResonator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flask.
+        /// </summary>
+        public static string Class_Flask {
+            get {
+                return ResourceManager.GetString("Class_Flask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Gem.
+        /// </summary>
+        public static string Class_Gem {
+            get {
+                return ResourceManager.GetString("Class_Gem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skill Gem.
+        /// </summary>
+        public static string Class_GemActive {
+            get {
+                return ResourceManager.GetString("Class_GemActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awakened Support Gem.
+        /// </summary>
+        public static string Class_GemAwakenedSupport {
+            get {
+                return ResourceManager.GetString("Class_GemAwakenedSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support Gem.
+        /// </summary>
+        public static string Class_GemSupport {
+            get {
+                return ResourceManager.GetString("Class_GemSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Jewel.
+        /// </summary>
+        public static string Class_Jewel {
+            get {
+                return ResourceManager.GetString("Class_Jewel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abyss Jewel.
+        /// </summary>
+        public static string Class_JewelAbyss {
+            get {
+                return ResourceManager.GetString("Class_JewelAbyss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base Jewel.
+        /// </summary>
+        public static string Class_JewelBase {
+            get {
+                return ResourceManager.GetString("Class_JewelBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cluster Jewel.
+        /// </summary>
+        public static string Class_JewelCluster {
+            get {
+                return ResourceManager.GetString("Class_JewelCluster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leaguestone.
+        /// </summary>
+        public static string Class_Leaguestone {
+            get {
+                return ResourceManager.GetString("Class_Leaguestone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        public static string Class_Map {
+            get {
+                return ResourceManager.GetString("Class_Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Fragment.
+        /// </summary>
+        public static string Class_MapFragment {
+            get {
+                return ResourceManager.GetString("Class_MapFragment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scarab.
+        /// </summary>
+        public static string Class_MapScarab {
+            get {
+                return ResourceManager.GetString("Class_MapScarab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Captured Beast.
+        /// </summary>
+        public static string Class_MonsterBeast {
+            get {
+                return ResourceManager.GetString("Class_MonsterBeast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metamorph Sample.
+        /// </summary>
+        public static string Class_MonsterSample {
+            get {
+                return ResourceManager.GetString("Class_MonsterSample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prophecy.
+        /// </summary>
+        public static string Class_Prophecy {
+            get {
+                return ResourceManager.GetString("Class_Prophecy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Watchstone.
+        /// </summary>
+        public static string Class_Watchstone {
+            get {
+                return ResourceManager.GetString("Class_Watchstone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Weapon.
+        /// </summary>
+        public static string Class_Weapon {
+            get {
+                return ResourceManager.GetString("Class_Weapon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bow.
+        /// </summary>
+        public static string Class_WeaponBow {
+            get {
+                return ResourceManager.GetString("Class_WeaponBow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claw.
+        /// </summary>
+        public static string Class_WeaponClaw {
+            get {
+                return ResourceManager.GetString("Class_WeaponClaw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Dagger.
+        /// </summary>
+        public static string Class_WeaponDagger {
+            get {
+                return ResourceManager.GetString("Class_WeaponDagger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Handed Weapon.
+        /// </summary>
+        public static string Class_WeaponOne {
+            get {
+                return ResourceManager.GetString("Class_WeaponOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Handed Axe.
+        /// </summary>
+        public static string Class_WeaponOneAxe {
+            get {
+                return ResourceManager.GetString("Class_WeaponOneAxe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Handed Mace.
+        /// </summary>
+        public static string Class_WeaponOneMace {
+            get {
+                return ResourceManager.GetString("Class_WeaponOneMace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Handed Melee Weapon.
+        /// </summary>
+        public static string Class_WeaponOneMelee {
+            get {
+                return ResourceManager.GetString("Class_WeaponOneMelee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-Handed Sword.
+        /// </summary>
+        public static string Class_WeaponOneSword {
+            get {
+                return ResourceManager.GetString("Class_WeaponOneSword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fishing Rod.
+        /// </summary>
+        public static string Class_WeaponRod {
+            get {
+                return ResourceManager.GetString("Class_WeaponRod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rune Dagger.
+        /// </summary>
+        public static string Class_WeaponRuneDagger {
+            get {
+                return ResourceManager.GetString("Class_WeaponRuneDagger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sceptre.
+        /// </summary>
+        public static string Class_WeaponSceptre {
+            get {
+                return ResourceManager.GetString("Class_WeaponSceptre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any Staff.
+        /// </summary>
+        public static string Class_WeaponStaff {
+            get {
+                return ResourceManager.GetString("Class_WeaponStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-Handed Axe.
+        /// </summary>
+        public static string Class_WeaponTwoAxe {
+            get {
+                return ResourceManager.GetString("Class_WeaponTwoAxe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-Handed Mace.
+        /// </summary>
+        public static string Class_WeaponTwoMace {
+            get {
+                return ResourceManager.GetString("Class_WeaponTwoMace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-Handed Melee Weapon.
+        /// </summary>
+        public static string Class_WeaponTwoMelee {
+            get {
+                return ResourceManager.GetString("Class_WeaponTwoMelee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-Handed Sword.
+        /// </summary>
+        public static string Class_WeaponTwoSword {
+            get {
+                return ResourceManager.GetString("Class_WeaponTwoSword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wand.
+        /// </summary>
+        public static string Class_WeaponWand {
+            get {
+                return ResourceManager.GetString("Class_WeaponWand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warstaff.
+        /// </summary>
+        public static string Class_WeaponWarstaff {
+            get {
+                return ResourceManager.GetString("Class_WeaponWarstaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Corrupted.
         /// </summary>
         public static string Corrupted {
