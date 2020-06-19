@@ -123,7 +123,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 }
                 else
                 {
-                    request.Query.Type = item.Type;
+                    if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
+                    {
+                        request.Query.Type = item.Type;
+                    }
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "nonunique",

@@ -51,28 +51,43 @@
                 </Grid>
             </GroupBox.Header>
 
-            <ScrollViewer Padding="8,8,0,8">
-                <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <ItemsControl ItemsSource="{Binding Filters}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <local:Filter Item="{Binding}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+            <ScrollViewer Padding="{StaticResource Spacer}">
+                <StackPanel>
+                    <ComboBox
+                        DisplayMemberPath="Key"
+                        ItemsSource="{Binding Path=ViewModel.CategoryOptions}"
+                        SelectedValue="{Binding Path=ViewModel.SelectedCategory}"
+                        SelectedValuePath="Value"
+                        Visibility="{Binding ViewModel.ShowCategory, Converter={StaticResource BooleanToVisibility}}" />
 
-                                <Border
-                                    Margin="0,2,0,5"
-                                    BorderBrush="Gray"
-                                    BorderThickness="0,0,0,1" />
+                    <Border
+                        Margin="0,2,0,5"
+                        BorderBrush="Gray"
+                        BorderThickness="0,0,0,1"
+                        Visibility="{Binding ViewModel.ShowCategory, Converter={StaticResource BooleanToVisibility}}" />
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding ViewModel.Filters}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Filters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <local:Filter Item="{Binding}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <Border
+                                        Margin="0,2,0,5"
+                                        BorderBrush="Gray"
+                                        BorderThickness="0,0,0,1" />
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
             </ScrollViewer>
         </GroupBox>
     </Grid>

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Database.Caches;
+using Sidekick.Database.ItemCategories;
 using Sidekick.Database.Windows;
 
 namespace Sidekick.Database
@@ -12,6 +13,8 @@ namespace Sidekick.Database
         }
 
         public DbSet<Cache> Caches { get; set; }
+
+        public DbSet<ItemCategory> ItemCategories { get; set; }
 
         public DbSet<Window> Windows { get; set; }
 
