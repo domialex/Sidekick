@@ -19,69 +19,61 @@ Sidekick should be able to price check almost every item, the idea is to eventua
 5. In **Path of Exile**, hover an item and press **Ctrl+D** (default binding).
 
 ## Features
-### Check Prices
-Default binding: Ctrl+D
-Sidekick allows you to check prices of items from the official path of exile trade market. It is also possible to preview items by clicking on any result. For rare items, we get a price prediction from poeprices.info.
-For unique items, we get a price from poe.ninja.
-![image](https://user-images.githubusercontent.com/5131398/76627770-fce5f600-6511-11ea-886e-ee824a3720d6.png)
+### Price check - Ctrl+D
+Sidekick allows you to price check items using the official Path of Exile trade market. You can compare and preview items by clicking on any result. For rare items, a price prediction from poeprices.info is shown.
+For unique items, prices from poe.ninja are used.
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/price-check.png)
 
-### League Overviews
-Default binding: F6
+### League Overviews - F6
 Access quick cheatsheets about the various leagues.
 
 #### Betrayal
-![image](https://user-images.githubusercontent.com/5131398/76628398-091e8300-6513-11ea-916a-02d296b98248.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-betrayal.png)
 
 #### Blight
-![image](https://user-images.githubusercontent.com/5131398/76628415-0facfa80-6513-11ea-9959-16fbe443a6c9.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-blight.png)
 
 #### Delve
-![image](https://user-images.githubusercontent.com/5131398/76628428-163b7200-6513-11ea-966f-7242406246bd.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-delve.png)
 
 #### Incursion
-![image](https://user-images.githubusercontent.com/5131398/76628445-1cc9e980-6513-11ea-9746-3aa3bba0ac16.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-incursion.png)
 
 #### Metamorph
-![image](https://user-images.githubusercontent.com/5131398/76628461-22bfca80-6513-11ea-81bf-5219fd06f803.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-metamorph.png)
 
-### Settings
-All keybinds are customizable in the settings. The settings are found by right click the Sidekick icon in your Windows notification area.
-![image](https://user-images.githubusercontent.com/5131398/76629436-a4fcbe80-6514-11ea-8063-fb00b2a6aa6e.png)
-![image](https://user-images.githubusercontent.com/5131398/76629450-a9c17280-6514-11ea-8c9f-17220c9139e0.png)
+### Settings - Ctrl+O
+All keybinds are customizable. The settings are also found by right-clicking the Sidekick icon in your Windows notification area.
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/settings-general.png)
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/settings-keybindings.png)
 
-### Go to Hideout
-Default binding: F5
-Allows you to quickly go to your hideout. Writes the following chat command: /hideout .
+### Go to Hideout - F5
+Quickly go to your hideout. Writes the following chat command: `/hideout`.
 
-### Leave Party
-Default binding: F4
-Allows you to quickly leave a party. You must have set your character name in the settings first. Writes the following chat command: /kick {settings.Character_Name}
+### Leave Party - F4
+Quickly leave a party. You must have set your character name in the settings first. Writes the following chat command: `/kick {settings.Character_Name}`
 
-### Reply to Latest Whisper
-Default binding: Ctrl+Shift+R
-Allows you to reply to the last whisper you received quickly. Starts writing the following chat command: @{characterName} 
+### Reply to Latest Whisper - Ctrl+Shift+R
+Reply to the last whisper received. Starts writing the following chat command: `@{characterName}`
 
-### Exit to Character Selection
-Default binding: Ctrl+Shift+X
-Quickly exits to the character selection screen. Writes the following chat command: /exit
+### Exit to Character Selection - Ctrl+Shift+X
+Exit to the character selection screen. Writes the following chat command: `/exit`
 
-### Tab Scrolling
-Using Ctrl+Scroll will allow you to quickly switch tabs when in your stash. We also have unassigned keybinds to switch to the left or right tabs.
+### Tab Scrolling - Ctrl+Scroll-wheel
+Switch tabs in your stash using your scroll-wheel, you can also bind keys instead.
 
-### Open Wiki
-Default binding: Alt+W
-Opens the wiki for the item you have your mouse over.
+### Open Wiki - Alt+W
+Open the wiki for the item currently under your mouse.
 
-### Find Items
-Default binding: Ctrl+F
-Quickly search from an item into various screens (stash, passive skill tree).
+### Find Items - Ctrl+F
+Search an item in your stash or passive tree.
 
-### Check For Dangerous Map Mods
-Default binding: Ctrl+C
-Quickly check if a map has any dangerous mods (configurable in settings).
+### Check For Dangerous Map Mods - Ctrl+X
+Check if a map has any dangerous mods. Mods are configurable.
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/map-dangerous.png)
 
-### Open Search
-Default binding: Alt+Q
+### Open Search - Alt+Q
+Open the official trade website using the item under your mouse.
 
 ## Development
 We accept most PR and ideas. If you want a feature included, create an issue and we will discuss it.
