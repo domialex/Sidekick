@@ -19,14 +19,14 @@ namespace Sidekick.Business.ItemCategories
         {
             using var dbContext = new SidekickContext(options);
 
-            return await dbContext.ItemCategories.Where(x => x.Type == type).FirstOrDefaultAsync();
+            return await dbContext.ItemCategories.FindAsync(type);
         }
 
         public async Task SaveCategory(string type, string category)
         {
             using var dbContext = new SidekickContext(options);
 
-            var itemCategory = await dbContext.ItemCategories.Where(x => x.Type == type).FirstOrDefaultAsync();
+            var itemCategory = await dbContext.ItemCategories.FindAsync(type);
 
             if (itemCategory == null)
             {
@@ -46,7 +46,7 @@ namespace Sidekick.Business.ItemCategories
         {
             using var dbContext = new SidekickContext(options);
 
-            var itemCategory = await dbContext.ItemCategories.Where(x => x.Type == type).FirstOrDefaultAsync();
+            var itemCategory = await dbContext.ItemCategories.FindAsync(type);
 
             if (itemCategory != null)
             {

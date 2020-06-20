@@ -22,16 +22,16 @@ namespace Sidekick.Business.Caches
         {
             using var dbContext = new SidekickContext(options);
 
-            var data = await dbContext.Caches.Where(x => x.Key == key).Select(x => x.Data).FirstOrDefaultAsync();
+            var cache = await dbContext.Caches.FindAsync(key);
 
-            if (string.IsNullOrEmpty(data))
+            if (string.IsNullOrEmpty(cache?.Data))
             {
                 return default;
             }
 
             try
             {
-                return JsonSerializer.Deserialize<TModel>(data);
+                return JsonSerializer.Deserialize<TModel>(cache.Data);
             }
             catch (Exception)
             {
@@ -59,7 +59,7 @@ namespace Sidekick.Business.Caches
         {
             using var dbContext = new SidekickContext(options);
 
-            var cache = await dbContext.Caches.Where(x => x.Key == key).FirstOrDefaultAsync();
+            var cache = await dbContext.Caches.FindAsync(key);
 
             if (cache == null)
             {
@@ -79,7 +79,7 @@ namespace Sidekick.Business.Caches
         {
             using var dbContext = new SidekickContext(options);
 
-            var cache = await dbContext.Caches.Where(x => x.Key == key).FirstOrDefaultAsync();
+            var cache = await dbContext.Caches.FindAsync(key);
             if (cache != null)
             {
                 dbContext.Caches.Remove(cache);

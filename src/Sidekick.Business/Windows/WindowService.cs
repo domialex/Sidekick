@@ -19,14 +19,14 @@ namespace Sidekick.Business.Windows
         {
             using var dbContext = new SidekickContext(options);
 
-            return await dbContext.Windows.Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await dbContext.Windows.FindAsync(id);
         }
 
         public async Task SaveSize(string id, double width, double height)
         {
             using var dbContext = new SidekickContext(options);
 
-            var window = await dbContext.Windows.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var window = await dbContext.Windows.FindAsync(id);
 
             if (window == null)
             {
