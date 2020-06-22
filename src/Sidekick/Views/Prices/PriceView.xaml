@@ -68,6 +68,7 @@
                 Name="ItemList"
                 Margin="{StaticResource SpacerBottom}"
                 AutoGenerateColumns="False"
+                GridLinesVisibility="None"
                 IsReadOnly="True"
                 ItemsSource="{Binding Path=Results}"
                 ScrollViewer.CanContentScroll="False"
