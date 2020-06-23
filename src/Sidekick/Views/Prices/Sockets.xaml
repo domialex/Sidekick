@@ -14,37 +14,81 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Name="Container" Margin="0,4,0,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="54" />
-        </Grid.ColumnDefinitions>
-        <ItemsControl Grid.Column="0" ItemsSource="{Binding SocketGroups}">
+    <Grid Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/crusader-symbol.png"
+                Visibility="{Binding Item.Influences.Crusader, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/elder-symbol.png"
+                Visibility="{Binding Item.Influences.Elder, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/hunter-symbol.png"
+                Visibility="{Binding Item.Influences.Hunter, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/redeemer-symbol.png"
+                Visibility="{Binding Item.Influences.Redeemer, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/shaper-symbol.png"
+                Visibility="{Binding Item.Influences.Shaper, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/warlord-symbol.png"
+                Visibility="{Binding Item.Influences.Warlord, Converter={StaticResource BooleanToVisibility}}" />
+        </StackPanel>
+
+        <ItemsControl
+            Grid.Row="1"
+            Grid.Column="0"
+            ItemsSource="{Binding SocketGroups}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
+                    <WrapPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border
-                        Margin="0,0,8,0"
-                        Padding="4,5,0,5"
+                        Margin="0,4,4,0"
+                        Padding="2,0,4,0"
                         BorderBrush="Gray"
                         BorderThickness="1">
                         <ItemsControl ItemsSource="{Binding}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
+                                    <WrapPanel Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Ellipse
-                                        Width="14"
-                                        Height="14"
-                                        Margin="0,0,4,0"
-                                        Fill="{Binding}" />
+                                        Width="16"
+                                        Height="16"
+                                        Margin="2,4,0,4"
+                                        Stroke="{Binding}"
+                                        StrokeThickness="3" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -53,40 +97,5 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <StackPanel
-            Grid.Column="1"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/crusader-symbol.png"
-                Visibility="{Binding Item.Influences.Crusader, Converter={StaticResource BooleanToVisibility}}" />
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/elder-symbol.png"
-                Visibility="{Binding Item.Influences.Elder, Converter={StaticResource BooleanToVisibility}}" />
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/hunter-symbol.png"
-                Visibility="{Binding Item.Influences.Hunter, Converter={StaticResource BooleanToVisibility}}" />
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/redeemer-symbol.png"
-                Visibility="{Binding Item.Influences.Redeemer, Converter={StaticResource BooleanToVisibility}}" />
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/shaper-symbol.png"
-                Visibility="{Binding Item.Influences.Shaper, Converter={StaticResource BooleanToVisibility}}" />
-            <Image
-                Width="27"
-                Height="27"
-                Source="/Views/Prices/Images/warlord-symbol.png"
-                Visibility="{Binding Item.Influences.Warlord, Converter={StaticResource BooleanToVisibility}}" />
-        </StackPanel>
     </Grid>
 </UserControl>
