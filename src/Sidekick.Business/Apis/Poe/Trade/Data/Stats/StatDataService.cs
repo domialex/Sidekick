@@ -234,6 +234,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 }
             }
 
+            modifier.Text = modifier.Text.Replace("+-", "-");
+
             mods.Add(modifier);
         }
 
