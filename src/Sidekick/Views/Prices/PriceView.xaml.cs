@@ -18,6 +18,7 @@ namespace Sidekick.Views.Prices
             INativeBrowser nativeBrowser)
             : base("price", serviceProvider)
         {
+
             this.viewModel = viewModel;
             this.nativeBrowser = nativeBrowser;
             InitializeComponent();
