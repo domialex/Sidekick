@@ -487,10 +487,18 @@ namespace Sidekick.Views.Prices
                         max = NormalizeMaxValue(max, delta);
                     }
                 }
+
+                if (!groupValue.Any())
+                {
+                    min = null;
+                    max = null;
+                }
             }
             else if (value is ModifierOption modifierOption)
             {
                 option = modifierOption;
+                min = null;
+                max = null;
             }
 
             var priceFilter = new PriceFilter()

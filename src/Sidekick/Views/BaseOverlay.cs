@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Views
 {
-    public abstract class BaseOverlay : BaseWindow, ISidekickView
+    public abstract class BaseOverlay : BaseWindow
     {
         public BaseOverlay()
         {
