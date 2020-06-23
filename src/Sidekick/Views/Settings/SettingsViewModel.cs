@@ -12,7 +12,7 @@ using Sidekick.Localization;
 
 namespace Sidekick.Views.Settings
 {
-    public class SettingsViewModel : IDisposable
+    public class SettingsViewModel : IDisposable, INotifyPropertyChanged
     {
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
@@ -74,7 +74,7 @@ namespace Sidekick.Views.Settings
         // This is called when CurrentKey changes, thanks to Fody
         public void OnCurrentKeyChanged()
         {
-            keybindEvents.Enabled = CurrentKey == null;
+            keybindEvents.Enabled = string.IsNullOrEmpty(CurrentKey);
         }
 
         public void Save()

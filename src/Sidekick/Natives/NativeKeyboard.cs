@@ -78,6 +78,12 @@ namespace Sidekick.Natives
 
             if (OnKeyDown != null)
             {
+                str = str
+                    .Replace("Back", "Backspace")
+                    .Replace("Capital", "CapsLock")
+                    .Replace("Next", "PageDown")
+                    .Replace("Pause", "Break");
+
                 var result = OnKeyDown.Invoke(str.ToString());
                 if (result)
                 {
@@ -116,18 +122,52 @@ namespace Sidekick.Natives
             SendKeys.SendWait("^{v}");
         }
 
+        private static readonly Regex SendKeyReplace = new Regex("([a-zA-Z]+(?![^{]*\\}))");
         public void SendInput(string input)
         {
             var sendKeyStr = input
+                .Replace("Shift+", "+")
                 .Replace("Ctrl+", "^")
-                .Replace("Space", " ")
-                .Replace("Enter", "{Enter}")
+                .Replace("Alt+", "%")
                 .Replace("Up", "{Up}")
                 .Replace("Down", "{Down}")
                 .Replace("Right", "{Right}")
                 .Replace("Left", "{Left}")
-                .Replace("Esc", "{Esc}");
-            sendKeyStr = Regex.Replace(sendKeyStr, "([a-zA-Z]+(?![^{]*\\}))", "{$1}");
+                .Replace("Backspace", "{Backspace}")
+                .Replace("Break", "{Break}")
+                .Replace("CapsLock", "{CapsLock}")
+                .Replace("Delete", "{Delete}")
+                .Replace("End", "{End}")
+                .Replace("Enter", "{Enter}")
+                .Replace("Esc", "{Esc}")
+                .Replace("Help", "{Help}")
+                .Replace("Home", "{Home}")
+                .Replace("Insert", "{Insert}")
+                .Replace("NumLock", "{NumLock}")
+                .Replace("PageDown", "{Pgdn}")
+                .Replace("PageUp", "{Pgup}")
+                .Replace("PrintScreen", "{PrtSc}")
+                .Replace("ScrollLock", "{ScrollLock}")
+                .Replace("Space", "{Space}")
+                .Replace("ScrollLock", "{ScrollLock}")
+                .Replace("Tab", "{Tab}")
+                .Replace("F1", "{F1}")
+                .Replace("F2", "{F2}")
+                .Replace("F3", "{F3}")
+                .Replace("F4", "{F4}")
+                .Replace("F5", "{F5}")
+                .Replace("F6", "{F6}")
+                .Replace("F7", "{F7}")
+                .Replace("F8", "{F8}")
+                .Replace("F9", "{F9}")
+                .Replace("F10", "{F10}")
+                .Replace("F11", "{F11}")
+                .Replace("F12", "{F12}")
+                .Replace("F13", "{F13}")
+                .Replace("F14", "{F14}")
+                .Replace("F15", "{F15}")
+                .Replace("F16", "{F16}");
+            sendKeyStr = SendKeyReplace.Replace(sendKeyStr, "{$1}");
             SendKeys.SendWait(sendKeyStr);
         }
 
