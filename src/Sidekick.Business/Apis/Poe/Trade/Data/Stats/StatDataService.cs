@@ -101,7 +101,36 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     {
                         foreach (var option in entry.Option.Options)
                         {
-                            option.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(option.Text))}{suffix}", RegexOptions.None);
+                            if (option.Text.Contains("increased Damage with Bows"))
+                            {
+                                var a = "";
+                            }
+
+                            if (NewLinePattern.IsMatch(option.Text))
+                            {
+                                var lines = NewLinePattern.Split(option.Text).ToList();
+                                var options = lines.ConvertAll(x => x = hashPattern.Replace(pattern, Regex.Escape(x)));
+                                option.Pattern = new Regex($"(?:^|\\n){string.Join("\\n", options)}{suffix}");
+                                option.Text = string.Join("\n", lines.Select((x, i) => new
+                                {
+                                    Text = x,
+                                    Index = i
+                                })
+                                .ToList()
+                                .ConvertAll(x =>
+                                {
+                                    if (x.Index == 0)
+                                    {
+                                        return x.Text;
+                                    }
+
+                                    return entry.Text.Replace("#", x.Text);
+                                }));
+                            }
+                            else
+                            {
+                                option.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(option.Text))}{suffix}", RegexOptions.None);
+                            }
                         }
 
                         pattern = hashPattern.Replace(pattern, "(.*)");
