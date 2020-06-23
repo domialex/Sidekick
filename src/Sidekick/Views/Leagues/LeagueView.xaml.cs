@@ -17,10 +17,11 @@ namespace Sidekick.Views.Leagues
             ViewModel = leagueViewModel;
             DataContext = ViewModel;
 
-            SetTopPercent(0, LocationSource.Begin);
-            SetLeftPercent(50, LocationSource.Center);
             Show();
             Activate();
+
+            SetTopPercent(0, LocationSource.Begin);
+            SetLeftPercent(50, LocationSource.Center);
         }
 
         public LeagueViewModel ViewModel { get; set; }
