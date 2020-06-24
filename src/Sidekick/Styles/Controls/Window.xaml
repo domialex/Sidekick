@@ -2,21 +2,5 @@
     <Style
         x:Key="{x:Type Window}"
         BasedOn="{StaticResource {x:Type Window}}"
-        TargetType="Window">
-        <Style.Triggers>
-            <EventTrigger RoutedEvent="Window.Loaded">
-                <EventTrigger.Actions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetProperty="Opacity"
-                                From="0"
-                                To="1"
-                                Duration="00:00:00.25" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger.Actions>
-            </EventTrigger>
-        </Style.Triggers>
-    </Style>
+        TargetType="Window" />
 </ResourceDictionary>

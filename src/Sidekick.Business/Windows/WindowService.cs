@@ -1,6 +1,6 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Sidekick.Database;
 using Sidekick.Database.Windows;
 
@@ -8,10 +8,12 @@ namespace Sidekick.Business.Windows
 {
     public class WindowService : IWindowService
     {
+        private readonly ILogger logger;
         private readonly DbContextOptions<SidekickContext> options;
 
-        public WindowService(DbContextOptions<SidekickContext> options)
+        public WindowService(ILogger logger, DbContextOptions<SidekickContext> options)
         {
+            this.logger = logger;
             this.options = options;
         }
 
@@ -19,6 +21,7 @@ namespace Sidekick.Business.Windows
         {
             using var dbContext = new SidekickContext(options);
 
+            logger.Debug($"WindowService : Getting data for {id}");
             return await dbContext.Windows.FindAsync(id);
         }
 
@@ -41,6 +44,8 @@ namespace Sidekick.Business.Windows
             window.Width = width;
 
             await dbContext.SaveChangesAsync();
+
+            logger.Debug($"WindowService : Saved data for {id}. Width: {width}, Height: {height}");
         }
     }
 }

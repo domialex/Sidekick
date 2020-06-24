@@ -1,4 +1,4 @@
-<base:BaseWindow
+<base:BaseView
     x:Class="Sidekick.Views.Settings.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -142,4 +142,4 @@
                 Content="{loc:Loc Ok}" />
         </Grid>
     </Grid>
-</base:BaseWindow>
+</base:BaseView>

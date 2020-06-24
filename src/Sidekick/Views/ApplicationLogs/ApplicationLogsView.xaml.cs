@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Sidekick.Views.ApplicationLogs
 {
-    public partial class ApplicationLogsView : BaseWindow
+    public partial class ApplicationLogsView : BaseView
     {
         private readonly ApplicationLogViewModel viewModel;
 

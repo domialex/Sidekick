@@ -17,6 +17,7 @@ using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
+using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Extensions;
@@ -28,6 +29,7 @@ namespace Sidekick.Views.Prices
     public class PriceViewModel : INotifyPropertyChanged, IDisposable
     {
         private readonly ILogger logger;
+        private readonly IDebouncer debouncer;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticDataService staticDataService;
@@ -43,6 +45,7 @@ namespace Sidekick.Views.Prices
 
         public PriceViewModel(
             ILogger logger,
+            IDebouncer debouncer,
             ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
             IStaticDataService staticDataService,
@@ -55,6 +58,7 @@ namespace Sidekick.Views.Prices
             IItemCategoryService itemCategoryService)
         {
             this.logger = logger;
+            this.debouncer = debouncer;
             this.tradeSearchService = tradeSearchService;
             this.poeNinjaCache = poeNinjaCache;
             this.staticDataService = staticDataService;
@@ -514,7 +518,7 @@ namespace Sidekick.Views.Prices
                 Option = option,
             };
 
-            priceFilter.PropertyChanged += async (object sender, PropertyChangedEventArgs e) => { await UpdateDebounce(); };
+            priceFilter.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { UpdateDebounce(); };
 
             category.Filters.Add(priceFilter);
         }
@@ -562,25 +566,15 @@ namespace Sidekick.Views.Prices
         }
 
         public int UpdateCountdown { get; private set; }
-        private int UpdateCount = 0;
-        public async Task UpdateDebounce()
+        public void UpdateDebounce()
         {
-            var count = ++UpdateCount;
-            UpdateCountdown = 2;
             ShowRefresh = true;
-            while (UpdateCountdown > 0)
-            {
-                await Task.Delay(1000);
-                if (count != UpdateCount)
+
+            _ = debouncer.Debounce("priceview", async () => await UpdateQuery(),
+                delayUpdate: (countdown) =>
                 {
-                    continue;
-                }
-                UpdateCountdown -= 1;
-            }
-            if (count == UpdateCount && ShowRefresh)
-            {
-                await UpdateQuery();
-            }
+                    UpdateCountdown = (int)Math.Round((decimal)countdown / 1000);
+                });
         }
 
         public async Task UpdateQuery()
@@ -842,7 +836,7 @@ namespace Sidekick.Views.Prices
                 {
                     _ = itemCategoryService.SaveCategory(Item.TypeLine, SelectedCategory);
                 }
-                _ = UpdateDebounce();
+                UpdateDebounce();
             }
         }
 

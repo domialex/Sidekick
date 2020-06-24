@@ -7,33 +7,36 @@ using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Sidekick.Business.Windows;
+using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
 {
-    public abstract class BaseWindow : AdonisWindow, ISidekickView
+    public abstract class BaseView : AdonisWindow, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
         private readonly SidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
+        private readonly IDebouncer debouncer;
         private readonly bool closeOnBlur;
         private readonly bool closeOnKey;
         private readonly string id;
 
-        public BaseWindow()
+        public BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        public BaseWindow(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        public BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
             logger = serviceProvider.GetService<ILogger>();
+            debouncer = serviceProvider.GetService<IDebouncer>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
@@ -83,7 +86,7 @@ namespace Sidekick.Views
 
         private void BaseWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Task.Run(async () =>
+            debouncer.Debounce($"{id}_sizechanged", async () =>
             {
                 await windowService.SaveSize(id, GetWidth(), GetHeight());
             });

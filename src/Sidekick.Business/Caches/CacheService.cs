@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Sidekick.Database;
 using Sidekick.Database.Caches;
 
@@ -11,15 +11,20 @@ namespace Sidekick.Business.Caches
     public class CacheService : ICacheService
     {
         private readonly DbContextOptions<SidekickContext> options;
+        private readonly ILogger logger;
 
-        public CacheService(DbContextOptions<SidekickContext> options)
+        public CacheService(DbContextOptions<SidekickContext> options,
+            ILogger logger)
         {
             this.options = options;
+            this.logger = logger;
         }
 
         public async Task<TModel> Get<TModel>(string key)
             where TModel : class
         {
+            logger.Debug($"CacheService : Getting data for {key}");
+
             using var dbContext = new SidekickContext(options);
 
             var cache = await dbContext.Caches.FindAsync(key);
@@ -57,6 +62,8 @@ namespace Sidekick.Business.Caches
         public async Task Save<TModel>(string key, TModel data)
             where TModel : class
         {
+            logger.Debug($"CacheService : Saving data for {key}");
+
             using var dbContext = new SidekickContext(options);
 
             var cache = await dbContext.Caches.FindAsync(key);
@@ -77,6 +84,8 @@ namespace Sidekick.Business.Caches
 
         public async Task Delete(string key)
         {
+            logger.Debug($"CacheService : Deleting data for {key}");
+
             using var dbContext = new SidekickContext(options);
 
             var cache = await dbContext.Caches.FindAsync(key);
@@ -89,6 +98,8 @@ namespace Sidekick.Business.Caches
 
         public async Task Clear()
         {
+            logger.Debug($"CacheService : Clearing data");
+
             using var dbContext = new SidekickContext(options);
             dbContext.Caches.RemoveRange(await dbContext.Caches.ToListAsync());
             await dbContext.SaveChangesAsync();
