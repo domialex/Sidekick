@@ -5,13 +5,14 @@
     xmlns:base="clr-namespace:Sidekick.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:loc="clr-namespace:Sidekick.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Sidekick.Views.MapInfo"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:resx="clr-namespace:Sidekick.Localization.MapInfo;assembly=Sidekick.Localization"
-    loc:Translation.ResourceManager="{x:Static resx:MapInfoResources.ResourceManager}"
+    Title="{loc:Loc DangerousMods}"
     Width="300"
     Height="150"
-    Title="{loc:Loc DangerousMods}"
+    loc:Translation.ResourceManager="{x:Static resx:MapInfoResources.ResourceManager}"
+    Topmost="True"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -22,14 +23,14 @@
     <Window.Style>
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
-    
+
     <StackPanel>
         <TextBlock
-                Visibility="{Binding IsSafe, Converter={StaticResource BooleanToVisibility}}"
-                Padding="4"
-                VerticalAlignment="Center"
-                Text="{loc:Loc SafeMap}"
-                TextWrapping="Wrap" />
+            Padding="4"
+            VerticalAlignment="Center"
+            Text="{loc:Loc SafeMap}"
+            TextWrapping="Wrap"
+            Visibility="{Binding IsSafe, Converter={StaticResource BooleanToVisibility}}" />
         <ItemsControl ItemsSource="{Binding Path=DangerousMapMods}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -42,9 +43,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBlock
-            Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}"
-            Text="{loc:Loc Error}" />
+        <TextBlock Text="{loc:Loc Error}" Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}" />
         <ProgressBar
             Height="16"
             Margin="{StaticResource SpacerX}"

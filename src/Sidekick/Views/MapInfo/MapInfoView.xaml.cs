@@ -23,14 +23,14 @@ namespace Sidekick.Views.MapInfo
 
             if (GetMouseXPercent() > 0.5)
             {
-                SetLeftPercent(66, LocationSource.End);
+                SetLeftPercent(0.654, LocationSource.End);
             }
             else
             {
-                SetLeftPercent(34, LocationSource.Begin);
+                SetLeftPercent(0.346, LocationSource.Begin);
             }
             SetTopPercent(50, LocationSource.Center);
-            
+
 
             if (ViewModel.IsError)
             {
