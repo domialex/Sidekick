@@ -32,11 +32,11 @@ namespace Sidekick.Views.Prices
             SetTopPercent(0.5, LocationSource.Center);
             if (GetMouseXPercent() > 0.5)
             {
-                SetLeftPercent(0.66, LocationSource.End);
+                SetLeftPercent(0.654, LocationSource.End);
             }
             else
             {
-                SetLeftPercent(0.34, LocationSource.Begin);
+                SetLeftPercent(0.346, LocationSource.Begin);
             }
 
             if (viewModel.IsError)
