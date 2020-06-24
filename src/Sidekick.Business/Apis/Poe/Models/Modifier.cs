@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 
 namespace Sidekick.Business.Apis.Poe.Models
 {
     public class Modifier
     {
+        public int Index { get; set; }
+
         public string Id { get; set; }
 
         public string Tier { get; set; }

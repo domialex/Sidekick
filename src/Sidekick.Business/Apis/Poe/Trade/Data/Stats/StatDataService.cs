@@ -101,11 +101,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     {
                         foreach (var option in entry.Option.Options)
                         {
-                            if (option.Text.Contains("increased Damage with Bows"))
-                            {
-                                var a = "";
-                            }
-
                             if (NewLinePattern.IsMatch(option.Text))
                             {
                                 var lines = NewLinePattern.Split(option.Text).ToList();
@@ -182,23 +177,28 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         private readonly Regex ParseHashPattern = new Regex("\\#");
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
+            var unorderedMods = new List<Modifier>();
+
             foreach (var data in patterns
                 .Where(x => x.Pattern != null && x.Pattern.IsMatch(text)))
             {
-                FillMod(mods, text, data, data.Pattern.Match(text));
+                FillMod(unorderedMods, text, data, data.Pattern.Match(text));
             }
 
             foreach (var data in patterns
                 .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
             {
-                FillMod(mods, text, data, data.NegativePattern.Match(text), true);
+                FillMod(unorderedMods, text, data, data.NegativePattern.Match(text), true);
             }
+
+            unorderedMods.OrderBy(x => x.Index).ToList().ForEach(x => mods.Add(x));
         }
 
         private void FillMod(List<Modifier> mods, string text, StatData data, Match result, bool negative = false)
         {
             var modifier = new Modifier()
             {
+                Index = result.Index,
                 Id = data.Id,
                 Text = data.Text,
                 Category = !data.Id.StartsWith("explicit") ? data.Category : null,
