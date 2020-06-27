@@ -9,7 +9,7 @@ namespace Sidekick.Core.Settings
             return new SidekickSettings()
             {
                 Language_UI = "en",
-                Language_Parser = "English",
+                Language_Parser = string.Empty,
                 LeagueId = string.Empty,
                 League_SelectedTabIndex = 0,
                 LeaguesHash = string.Empty,

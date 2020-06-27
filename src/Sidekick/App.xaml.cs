@@ -19,7 +19,7 @@ using Sidekick.Localization.Splash;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
 using Sidekick.Views;
-using Sidekick.Views.SplashScreen;
+using Sidekick.Views.Initialize;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -85,19 +85,7 @@ namespace Sidekick
                 });
             };
 
-            if (settings.ShowSplashScreen)
-            {
-                initializer.OnProgress += (a) =>
-                {
-                    if (!viewLocator.IsOpened<SplashScreenView>())
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            viewLocator.Open<SplashScreenView>();
-                        });
-                    }
-                };
-            }
+            viewLocator.Open<InitializeView>();
 
             initializer.OnError += (error) =>
             {

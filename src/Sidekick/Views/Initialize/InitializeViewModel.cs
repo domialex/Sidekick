@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Localization.Splash;
 
-namespace Sidekick.Views.SplashScreen
+namespace Sidekick.Views.Initialize
 {
-    public class SplashViewModel : IDisposable, INotifyPropertyChanged
+    public class InitializeViewModel : IDisposable, INotifyPropertyChanged
     {
         private readonly IInitializer initializer;
         private bool isDisposed;
 
-        public SplashViewModel(IInitializer initializer)
+        public InitializeViewModel(IInitializer initializer)
         {
             this.initializer = initializer;
 

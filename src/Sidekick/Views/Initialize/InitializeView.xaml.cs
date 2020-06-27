@@ -1,25 +1,34 @@
 using System.Windows;
+using Sidekick.Core.Settings;
 using Sidekick.Views.ApplicationLogs;
 
-namespace Sidekick.Views.SplashScreen
+namespace Sidekick.Views.Initialize
 {
     /// <summary>
     /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class SplashScreenView : Window, ISidekickView
+    public partial class InitializeView : Window, ISidekickView
     {
-        private readonly SplashViewModel viewModel;
+        private readonly InitializeViewModel viewModel;
         private readonly IViewLocator viewLocator;
+        private readonly SidekickSettings settings;
 
-        public SplashScreenView(SplashViewModel viewModel, IViewLocator viewLocator)
+        public InitializeView(InitializeViewModel viewModel,
+            IViewLocator viewLocator,
+            SidekickSettings settings)
         {
+            this.viewModel = viewModel;
+            this.viewLocator = viewLocator;
+            this.settings = settings;
             InitializeComponent();
             DataContext = viewModel;
 
             viewModel.Initialized += SplashViewModel_Initialized;
-            Show();
-            this.viewModel = viewModel;
-            this.viewLocator = viewLocator;
+
+            if (settings.ShowSplashScreen)
+            {
+                Show();
+            }
         }
 
         private void SplashViewModel_Initialized()

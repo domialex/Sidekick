@@ -1,5 +1,5 @@
 <Window
-    x:Class="Sidekick.Views.SplashScreen.SplashScreenView"
+    x:Class="Sidekick.Views.Initialize.InitializeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:loc="clr-namespace:Sidekick.Views"
@@ -9,6 +9,7 @@
     Height="165"
     loc:Translation.ResourceManager="{x:Static resx:InitializerResources.ResourceManager}"
     ResizeMode="NoResize"
+    Topmost="True"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
     <Window.Style>
