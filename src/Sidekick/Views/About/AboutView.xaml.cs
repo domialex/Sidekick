@@ -7,7 +7,7 @@ using Sidekick.Core.Natives;
 namespace Sidekick.Views.About
 {
     [DependencyProperty]
-    public partial class AboutView : BaseWindow, ISidekickView
+    public partial class AboutView : BaseView, ISidekickView
     {
         private readonly INativeBrowser browser;
 

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace Sidekick.Views.Settings
 {
-    public partial class SettingsView : BaseWindow
+    public partial class SettingsView : BaseView
     {
         private readonly SettingsViewModel viewModel;
 

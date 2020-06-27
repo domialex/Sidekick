@@ -42,10 +42,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         public async Task<Item> ParseItem(string itemText)
         {
-            await languageProvider.FindAndSetLanguage(itemText);
-
             try
             {
+                await languageProvider.FindAndSetLanguage(itemText);
+
                 itemText = itemNameTokenizer.CleanString(itemText);
 
                 var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);

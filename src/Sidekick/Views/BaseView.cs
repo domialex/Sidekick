@@ -7,39 +7,41 @@ using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Sidekick.Business.Windows;
+using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
 {
-    public abstract class BaseWindow : AdonisWindow, ISidekickView
+    public abstract class BaseView : AdonisWindow, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
         private readonly SidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
+        private readonly IDebouncer debouncer;
         private readonly bool closeOnBlur;
         private readonly bool closeOnKey;
         private readonly string id;
 
-        public BaseWindow()
+        public BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        public BaseWindow(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        public BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
             logger = serviceProvider.GetService<ILogger>();
+            debouncer = serviceProvider.GetService<IDebouncer>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
             Loaded += BaseWindow_Loaded;
             SizeChanged += EnsureBounds;
-            SizeChanged += BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -57,16 +59,17 @@ namespace Sidekick.Views
         }
 
         protected bool IsClosing = false;
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
             if (IsClosing) return;
+
+            await windowService.SaveSize(id, GetWidth(), GetHeight());
 
             IsClosing = true;
             IsVisibleChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
             Loaded -= BaseWindow_Loaded;
             SizeChanged -= EnsureBounds;
-            SizeChanged -= BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -79,14 +82,6 @@ namespace Sidekick.Views
             }
 
             base.OnClosing(e);
-        }
-
-        private void BaseWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Task.Run(async () =>
-            {
-                await windowService.SaveSize(id, GetWidth(), GetHeight());
-            });
         }
 
         private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
@@ -163,6 +158,7 @@ namespace Sidekick.Views
                 y -= GetHeightPercent();
             }
 
+            logger.Information($"Positioning Info: SetTopPercent: y = {y}");
             logger.Information($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
             logger.Information($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
 
@@ -172,6 +168,7 @@ namespace Sidekick.Views
 
             logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
             logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
+            logger.Information($"Positioning Info: SetTopPercent: Top = {desiredY}");
 
             TopLocationSource = source;
             Top = (int)desiredY;
@@ -200,6 +197,7 @@ namespace Sidekick.Views
                 x -= GetWidthPercent();
             }
 
+            logger.Information($"Positioning Info: SetLeftPercent: x = {x}");
             logger.Information($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
             logger.Information($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
 
@@ -209,6 +207,7 @@ namespace Sidekick.Views
 
             logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
             logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
+            logger.Information($"Positioning Info: SetLeftPercent: Left = {desiredX}");
 
             LeftLocationSource = source;
             Left = (int)desiredX;

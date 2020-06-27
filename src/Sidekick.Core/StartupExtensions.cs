@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Sidekick.Core.Debounce;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Logging;
 using Sidekick.Core.Settings;
@@ -48,6 +49,7 @@ namespace Sidekick.Core
             services.AddSingleton(eventSink);
             services.AddSingleton(Log.Logger);
 
+            services.AddSingleton<IDebouncer, Debouncer>();
             services.AddSingleton<IInitializer, Initializer>();
             services.AddSingleton<IUpdateManager, UpdateManager>();
             return services;
