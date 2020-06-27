@@ -42,7 +42,6 @@ namespace Sidekick.Views
             Loaded += EnsureBounds;
             Loaded += BaseWindow_Loaded;
             SizeChanged += EnsureBounds;
-            SizeChanged += BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -60,16 +59,17 @@ namespace Sidekick.Views
         }
 
         protected bool IsClosing = false;
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
             if (IsClosing) return;
+
+            await windowService.SaveSize(id, GetWidth(), GetHeight());
 
             IsClosing = true;
             IsVisibleChanged -= EnsureBounds;
             Loaded -= EnsureBounds;
             Loaded -= BaseWindow_Loaded;
             SizeChanged -= EnsureBounds;
-            SizeChanged -= BaseWindow_SizeChanged;
 
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
@@ -82,14 +82,6 @@ namespace Sidekick.Views
             }
 
             base.OnClosing(e);
-        }
-
-        private void BaseWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            debouncer.Debounce($"{id}_sizechanged", async () =>
-            {
-                await windowService.SaveSize(id, GetWidth(), GetHeight());
-            });
         }
 
         private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
@@ -166,6 +158,7 @@ namespace Sidekick.Views
                 y -= GetHeightPercent();
             }
 
+            logger.Information($"Positioning Info: SetTopPercent: y = {y}");
             logger.Information($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
             logger.Information($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
 
@@ -175,6 +168,7 @@ namespace Sidekick.Views
 
             logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
             logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
+            logger.Information($"Positioning Info: SetTopPercent: Top = {desiredY}");
 
             TopLocationSource = source;
             Top = (int)desiredY;
@@ -203,6 +197,7 @@ namespace Sidekick.Views
                 x -= GetWidthPercent();
             }
 
+            logger.Information($"Positioning Info: SetLeftPercent: x = {x}");
             logger.Information($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
             logger.Information($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
 
@@ -212,6 +207,7 @@ namespace Sidekick.Views
 
             logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
             logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
+            logger.Information($"Positioning Info: SetLeftPercent: Left = {desiredX}");
 
             LeftLocationSource = source;
             Left = (int)desiredX;
