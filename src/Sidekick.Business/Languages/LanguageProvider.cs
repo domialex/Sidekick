@@ -17,7 +17,7 @@ namespace Sidekick.Business.Languages
         private readonly ICacheService cacheService;
         private readonly SidekickSettings settings;
 
-        private readonly string defaultLanguageName = "English";
+        private const string EnglishLanguageName = "English";
 
         public LanguageProvider(ILogger logger,
             IInitializer initializeService,
@@ -39,15 +39,15 @@ namespace Sidekick.Business.Languages
 
             if (!SetLanguage(settings.Language_Parser))
             {
-                SetLanguage(defaultLanguageName);
+                SetLanguage(EnglishLanguageName);
             }
         }
 
         private List<LanguageAttribute> AvailableLanguages { get; set; }
 
-        public ILanguage DefaultLanguage => CreateLanguageInstance(AvailableLanguages.First(x => x.Name == defaultLanguageName).ImplementationType);
+        public ILanguage EnglishLanguage => CreateLanguageInstance(AvailableLanguages.First(x => x.Name == EnglishLanguageName).ImplementationType);
 
-        public bool IsEnglish => Current.Name == defaultLanguageName;
+        public bool IsEnglish => Current.Name == EnglishLanguageName;
 
         public LanguageAttribute Current => AvailableLanguages.First(x => x.DescriptionRarity == Language.DescriptionRarity);
 
