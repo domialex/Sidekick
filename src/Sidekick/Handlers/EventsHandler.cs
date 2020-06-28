@@ -18,7 +18,7 @@ using Sidekick.Views.Settings;
 
 namespace Sidekick.Handlers
 {
-    public class EventsHandler : IDisposable, IOnReset
+    public class EventsHandler : IDisposable, IOnReset, IOnAfterInit
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -61,7 +61,6 @@ namespace Sidekick.Handlers
             this.stashService = stashService;
             this.settings = settings;
             this.parserService = parserService;
-            Initialize();
         }
 
         public void Dispose()
@@ -93,13 +92,7 @@ namespace Sidekick.Handlers
             events.OnTabRight -= Events_OnTabRight;
         }
 
-        private async Task<bool> Events_OnHideout()
-        {
-            await chatService.Write("/hideout");
-            return true;
-        }
-
-        private void Initialize()
+        public Task OnAfterInit()
         {
             events.OnItemWiki += TriggerItemWiki;
             events.OnFindItems += TriggerFindItem;
@@ -114,6 +107,14 @@ namespace Sidekick.Handlers
             events.OnExit += Events_OnExit;
             events.OnTabLeft += Events_OnTabLeft;
             events.OnTabRight += Events_OnTabRight;
+
+            return Task.CompletedTask;
+        }
+
+        private async Task<bool> Events_OnHideout()
+        {
+            await chatService.Write("/hideout");
+            return true;
         }
 
         private Task<bool> Events_OnTabRight()

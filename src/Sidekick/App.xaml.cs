@@ -7,17 +7,9 @@ using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
-using Sidekick.Core.Update;
-using Sidekick.Handlers;
 using Sidekick.Localization.Application;
-using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Splash;
-using Sidekick.Localization.Tray;
-using Sidekick.Localization.Update;
 using Sidekick.Views;
 using Sidekick.Views.Initialize;
 using Sidekick.Views.TrayIcon;
@@ -35,24 +27,16 @@ namespace Sidekick
     /// </summary>
     public partial class App : Application
     {
-        public static App Instance { get; private set; }
-
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
         private ILogger logger;
         private INativeProcess nativeProcess;
-        private INativeBrowser nativeBrowser;
-        private ILeagueDataService leagueDataService;
-        private IInitializer initializer;
         private IViewLocator viewLocator;
-        private SidekickSettings settings;
-        private TaskbarIcon trayIcon;
+        public TaskbarIcon trayIcon;
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            Instance = this;
-
             base.OnStartup(e);
 
             AttachErrorHandlers();
@@ -64,85 +48,14 @@ namespace Sidekick
 
             logger = serviceProvider.GetRequiredService<ILogger>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
-            nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
-            leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
-            initializer = serviceProvider.GetRequiredService<IInitializer>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
-            settings = serviceProvider.GetRequiredService<SidekickSettings>();
 
             trayIcon = (TaskbarIcon)FindResource("TrayIcon");
             trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
-            await RunAutoUpdate();
-
             EnsureSingleInstance();
 
-            leagueDataService.OnNewLeagues += () =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    AdonisUI.Controls.MessageBox.Show(InitializerResources.Warn_NewLeagues, buttons: AdonisUI.Controls.MessageBoxButton.OK);
-                });
-            };
-
             viewLocator.Open<InitializeView>();
-
-            initializer.OnError += (error) =>
-            {
-                AdonisUI.Controls.MessageBox.Show(InitializerResources.ErrorDuringInit, buttons: AdonisUI.Controls.MessageBoxButton.OK);
-                base.Shutdown(1);
-            };
-
-            await initializer.Initialize();
-
-            trayIcon.ShowBalloonTip(
-                    TrayResources.Notification_Title,
-                    string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()),
-                    trayIcon.Icon,
-                    largeIcon: true);
-
-            serviceProvider.GetRequiredService<EventsHandler>();
-        }
-
-        private async Task RunAutoUpdate()
-        {
-            var updateManagerService = serviceProvider.GetService<IUpdateManager>();
-            if (await updateManagerService.NewVersionAvailable())
-            {
-                if (AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateAvailable, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.YesNo) == AdonisUI.Controls.MessageBoxResult.Yes)
-                {
-                    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    Current.Shutdown();
-
-                    //try
-                    //{
-                    //    if (await updateManagerService.UpdateSidekick())
-                    //    {
-                    //        nativeProcess.Mutex = null;
-                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateCompleted, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.OK);
-
-                    //        var startInfo = new ProcessStartInfo
-                    //        {
-                    //            FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
-                    //            UseShellExecute = false,
-                    //        };
-                    //        Process.Start(startInfo);
-                    //    }
-                    //    else
-                    //    {
-                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
-                    //        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    //    }
-
-                    //    Current.Shutdown();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
-                    //    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    //}
-                }
-            }
         }
 
         protected override void OnExit(ExitEventArgs e)

@@ -11,7 +11,6 @@ namespace Sidekick.Views.Initialize
     {
         private readonly InitializeViewModel viewModel;
         private readonly IViewLocator viewLocator;
-        private readonly SidekickSettings settings;
 
         public InitializeView(InitializeViewModel viewModel,
             IViewLocator viewLocator,
@@ -19,7 +18,7 @@ namespace Sidekick.Views.Initialize
         {
             this.viewModel = viewModel;
             this.viewLocator = viewLocator;
-            this.settings = settings;
+
             InitializeComponent();
             DataContext = viewModel;
 
@@ -29,6 +28,8 @@ namespace Sidekick.Views.Initialize
             {
                 Show();
             }
+
+            _ = viewModel.Initialize();
         }
 
         private void SplashViewModel_Initialized()
@@ -39,7 +40,7 @@ namespace Sidekick.Views.Initialize
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            App.Instance.Shutdown();
+            viewModel.Close();
         }
 
         private void Logs_Click(object sender, RoutedEventArgs e)
