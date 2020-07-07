@@ -10,9 +10,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class MapParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseNormalMap()
+        public void ParseNormalMap()
         {
-            var actual = await Subject.ParseItem(NormalMap);
+            var actual = Subject.ParseItem(NormalMap);
 
             using (new AssertionScope())
             {
@@ -22,9 +22,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseMagicMap()
+        public void ParseMagicMap()
         {
-            var actual = await Subject.ParseItem(MagicMap);
+            var actual = Subject.ParseItem(MagicMap);
 
             using (new AssertionScope())
             {
@@ -34,9 +34,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseBlightedMap()
+        public void ParseBlightedMap()
         {
-            var actual = await Subject.ParseItem(BlightedMap);
+            var actual = Subject.ParseItem(BlightedMap);
 
             using (new AssertionScope())
             {
@@ -47,9 +47,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseUniqueMap()
+        public void ParseUniqueMap()
         {
-            var actual = await Subject.ParseItem(UniqueMap);
+            var actual = Subject.ParseItem(UniqueMap);
 
             using (new AssertionScope())
             {
@@ -62,9 +62,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseOccupiedMap()
+        public void ParseOccupiedMap()
         {
-            var actual = await Subject.ParseItem(OccupiedMap);
+            var actual = Subject.ParseItem(OccupiedMap);
 
             using (new AssertionScope())
             {

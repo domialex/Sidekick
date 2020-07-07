@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
@@ -10,9 +9,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class EquipmentParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseUnidentifiedUnique()
+        public void ParseUnidentifiedUnique()
         {
-            var actual = await Subject.ParseItem(UnidentifiedUnique);
+            var actual = Subject.ParseItem(UnidentifiedUnique);
 
             using (new AssertionScope())
             {
@@ -22,9 +21,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseSixLinkUniqueBodyArmor()
+        public void ParseSixLinkUniqueBodyArmor()
         {
-            var actual = await Subject.ParseItem(UniqueSixLink);
+            var actual = Subject.ParseItem(UniqueSixLink);
 
             var expectedExplicits = new[]
             {
@@ -68,9 +67,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseRareGloves()
+        public void ParseRareGloves()
         {
-            var actual = await Subject.ParseItem(GlovesAssasinsMitts);
+            var actual = Subject.ParseItem(GlovesAssasinsMitts);
 
             var expectedExplicits = new[]
             {
@@ -94,9 +93,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseJewel()
+        public void ParseJewel()
         {
-            var actual = await Subject.ParseItem(JewelBlightCut);
+            var actual = Subject.ParseItem(JewelBlightCut);
 
             var expectedExplicits = new[]
             {
@@ -120,9 +119,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseInfluencedWeapon()
+        public void ParseInfluencedWeapon()
         {
-            var actual = await Subject.ParseItem(InfluencedWand);
+            var actual = Subject.ParseItem(InfluencedWand);
 
             var expectedExplicits = new[]
             {
@@ -149,9 +148,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseMagicWeapon()
+        public void ParseMagicWeapon()
         {
-            var actual = await Subject.ParseItem(MagicWeapon);
+            var actual = Subject.ParseItem(MagicWeapon);
 
             actual.Type.Should().Be("Shadow Axe");
             actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Magic);

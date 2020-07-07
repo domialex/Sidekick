@@ -262,7 +262,7 @@ namespace Sidekick.Handlers
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                return await parserService.ParseItem(text);
+                return parserService.ParseItem(text);
             }
 
             return null;

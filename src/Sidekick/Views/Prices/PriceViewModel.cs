@@ -10,7 +10,6 @@ using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
-using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
@@ -28,6 +27,10 @@ namespace Sidekick.Views.Prices
 {
     public class PriceViewModel : INotifyPropertyChanged, IDisposable
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly ILogger logger;
         private readonly IDebouncer debouncer;
         private readonly ITradeSearchService tradeSearchService;
@@ -38,10 +41,7 @@ namespace Sidekick.Views.Prices
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
         private readonly SidekickSettings settings;
-        private readonly IStatDataService statDataService;
         private readonly IItemCategoryService itemCategoryService;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public PriceViewModel(
             ILogger logger,
@@ -54,7 +54,6 @@ namespace Sidekick.Views.Prices
             INativeClipboard nativeClipboard,
             IParserService parserService,
             SidekickSettings settings,
-            IStatDataService statDataService,
             IItemCategoryService itemCategoryService)
         {
             this.logger = logger;
@@ -67,7 +66,6 @@ namespace Sidekick.Views.Prices
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;
             this.settings = settings;
-            this.statDataService = statDataService;
             this.itemCategoryService = itemCategoryService;
             Task.Run(Initialize);
 
@@ -98,7 +96,7 @@ namespace Sidekick.Views.Prices
 
         private async Task Initialize()
         {
-            Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
+            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
 
             if (Item == null)
             {

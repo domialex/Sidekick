@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
@@ -10,9 +9,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class MiscParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseProphecy()
+        public void ParseProphecy()
         {
-            var actual = await Subject.ParseItem(Prophecy);
+            var actual = Subject.ParseItem(Prophecy);
 
             using (new AssertionScope())
             {
@@ -22,9 +21,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseDivinationCard()
+        public void ParseDivinationCard()
         {
-            var actual = await Subject.ParseItem(DivinationCard);
+            var actual = Subject.ParseItem(DivinationCard);
 
             using (new AssertionScope())
             {
@@ -34,9 +33,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseShaperItemDivinationCard()
+        public void ParseShaperItemDivinationCard()
         {
-            var actual = await Subject.ParseItem(ShaperItemDivinationCard);
+            var actual = Subject.ParseItem(ShaperItemDivinationCard);
 
             using (new AssertionScope())
             {
@@ -47,9 +46,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseCurrency()
+        public void ParseCurrency()
         {
-            var actual = await Subject.ParseItem(Currency);
+            var actual = Subject.ParseItem(Currency);
 
             using (new AssertionScope())
             {

@@ -1,13 +1,11 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Languages;
 using Sidekick.Business.Tokenizers.ItemName;
 
 namespace Sidekick.Business.Apis.Poe.Parser
@@ -15,7 +13,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
     public class ParserService : IParserService
     {
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
         private readonly IStatDataService statsDataService;
         private readonly IItemDataService itemDataService;
         private readonly IParserPatterns patterns;
@@ -27,25 +24,21 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         public ParserService(
             ILogger logger,
-            ILanguageProvider languageProvider,
             IStatDataService statsDataService,
             IItemDataService itemDataService,
             IParserPatterns patterns)
         {
             this.logger = logger.ForContext(GetType());
-            this.languageProvider = languageProvider;
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
             itemNameTokenizer = new ItemNameTokenizer();
         }
 
-        public async Task<Item> ParseItem(string itemText)
+        public Item ParseItem(string itemText)
         {
             try
             {
-                await languageProvider.FindAndSetLanguage(itemText);
-
                 itemText = itemNameTokenizer.CleanString(itemText);
 
                 var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);

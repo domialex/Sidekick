@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Serilog;
-using Sidekick.Business.Caches;
 using Sidekick.Core.Extensions;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Languages
@@ -13,20 +10,14 @@ namespace Sidekick.Business.Languages
     public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;
-        private readonly IInitializer initializeService;
-        private readonly ICacheService cacheService;
         private readonly SidekickSettings settings;
 
         private const string EnglishLanguageName = "English";
 
         public LanguageProvider(ILogger logger,
-            IInitializer initializeService,
-            ICacheService cacheService,
             SidekickSettings settings)
         {
             this.logger = logger.ForContext(GetType());
-            this.initializeService = initializeService;
-            this.cacheService = cacheService;
             this.settings = settings;
 
             AvailableLanguages = new List<LanguageAttribute>();
@@ -52,26 +43,6 @@ namespace Sidekick.Business.Languages
         public LanguageAttribute Current => AvailableLanguages.First(x => x.DescriptionRarity == Language.DescriptionRarity);
 
         public ILanguage Language { get; private set; }
-
-        /// <summary>
-        /// Every item should start with Rarity in the first line.
-        /// This will force the TradeClient to refetch the Public API's data if needed.
-        /// </summary>
-        public async Task FindAndSetLanguage(string itemDescription)
-        {
-            if (string.IsNullOrEmpty(itemDescription))
-            {
-                return;
-            }
-
-            var language = AvailableLanguages.Find(x => itemDescription.StartsWith(x.DescriptionRarity));
-
-            if (language != null && SetLanguage(language.Name))
-            {
-                await cacheService.Clear();
-                await initializeService.Initialize();
-            }
-        }
 
         private bool SetLanguage(string name)
         {

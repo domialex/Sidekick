@@ -11,7 +11,5 @@ namespace Sidekick.Business.Languages
         ILanguage Language { get; }
 
         LanguageAttribute Current { get; }
-
-        Task FindAndSetLanguage(string itemDescription);
     }
 }

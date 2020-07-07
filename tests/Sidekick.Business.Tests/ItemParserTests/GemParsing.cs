@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
@@ -10,9 +9,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class GemParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseVaalGem()
+        public void ParseVaalGem()
         {
-            var actual = await Subject.ParseItem(VaalGem);
+            var actual = Subject.ParseItem(VaalGem);
 
             using (new AssertionScope())
             {
