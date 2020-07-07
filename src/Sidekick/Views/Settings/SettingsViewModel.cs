@@ -14,6 +14,10 @@ namespace Sidekick.Views.Settings
 {
     public class SettingsViewModel : IDisposable, INotifyPropertyChanged
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
@@ -22,8 +26,6 @@ namespace Sidekick.Views.Settings
         private readonly ICacheService cacheService;
         private readonly IInitializer initializer;
         private bool isDisposed;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,

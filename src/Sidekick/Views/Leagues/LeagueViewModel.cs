@@ -10,9 +10,11 @@ namespace Sidekick.Views.Leagues
 {
     public class LeagueViewModel : INotifyPropertyChanged
     {
-        private readonly SidekickSettings settings;
-
+#pragma warning disable 67
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
+        private readonly SidekickSettings settings;
 
         public LeagueViewModel(
             SidekickSettings settings)

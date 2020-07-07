@@ -1,21 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Localization;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
+        private readonly SidekickSettings settings;
         private bool isDisposed;
 
-        public ViewLocator(IServiceProvider serviceProvider)
+        public ViewLocator(IServiceProvider serviceProvider,
+            SidekickSettings settings)
         {
             this.serviceProvider = serviceProvider;
-
+            this.settings = settings;
             Views = new List<ViewInstance>();
         }
 
@@ -25,8 +28,8 @@ namespace Sidekick.Views
             where TView : ISidekickView
         {
             // Still needed for localization of league overlay models
-            Thread.CurrentThread.CurrentCulture = TranslationSource.Instance.CurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = TranslationSource.Instance.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
             var view = new ViewInstance(
                 serviceProvider.CreateScope(),
@@ -39,6 +42,8 @@ namespace Sidekick.Views
             };
 
             Views.Add(view);
+
+            view.Open();
         }
 
         public bool IsOpened<TView>()
@@ -48,9 +53,29 @@ namespace Sidekick.Views
 
         public void CloseAll()
         {
-            for (var i = Views.Count; i > 0; i--)
+            while (Views.Count > 0)
             {
-                Views[i - 1].View.Close();
+                var view = Views[0];
+                view.View.Close();
+                view.Dispose();
+                if (Views.Contains(view))
+                {
+                    Views.Remove(view);
+                }
+            }
+        }
+
+        public void Close<TView>()
+            where TView : ISidekickView
+        {
+            foreach (var view in Views.Where(x => x.ViewType == typeof(TView)))
+            {
+                view.View.Close();
+                view.Dispose();
+                if (Views.Contains(view))
+                {
+                    Views.Remove(view);
+                }
             }
         }
 

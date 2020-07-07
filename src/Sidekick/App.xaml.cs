@@ -7,7 +7,9 @@ using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
+using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
 using Sidekick.Views;
@@ -25,7 +27,7 @@ namespace Sidekick
     /// <summary>
     /// Entry point for the app
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application, INativeApp
     {
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
@@ -33,7 +35,8 @@ namespace Sidekick
         private ILogger logger;
         private INativeProcess nativeProcess;
         private IViewLocator viewLocator;
-        public TaskbarIcon trayIcon;
+        private IInitializer initializer;
+        public TaskbarIcon TrayIcon { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -45,24 +48,41 @@ namespace Sidekick
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
+            serviceProvider.UseSidekickLocalization();
 
             logger = serviceProvider.GetRequiredService<ILogger>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
+            initializer = serviceProvider.GetRequiredService<IInitializer>();
 
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
+            TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
-
-            viewLocator.Open<InitializeView>();
+            Initialize();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon?.Dispose();
+            TrayIcon?.Dispose();
             serviceProvider?.Dispose();
             base.OnExit(e);
+        }
+
+        private async void Initialize()
+        {
+            initializer.OnProgress += (a) =>
+            {
+                if (!viewLocator.IsOpened<InitializeView>())
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        viewLocator.Open<InitializeView>();
+                    });
+                }
+            };
+
+            viewLocator.Open<InitializeView>();
         }
 
         private void EnsureSingleInstance()

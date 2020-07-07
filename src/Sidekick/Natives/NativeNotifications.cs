@@ -1,12 +1,13 @@
 using System;
+using Sidekick.Core.Natives;
 
-namespace Sidekick.Notifications
+namespace Sidekick.Natives
 {
-    public class NotificationManager : INotificationManager
+    public class NativeNotifications : INativeNotifications
     {
         private readonly App app;
 
-        public NotificationManager(App app)
+        public NativeNotifications(App app)
         {
             this.app = app;
         }
@@ -39,10 +40,10 @@ namespace Sidekick.Notifications
         {
             app.Dispatcher.Invoke(() =>
             {
-                app.trayIcon.ShowBalloonTip(
+                app.TrayIcon.ShowBalloonTip(
                     title,
                     message,
-                    app.trayIcon.Icon,
+                    app.TrayIcon.Icon,
                     largeIcon: true);
             });
         }

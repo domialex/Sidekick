@@ -5,6 +5,9 @@ namespace Sidekick.Views
         void Open<TView>()
             where TView : ISidekickView;
 
+        void Close<TView>()
+            where TView : ISidekickView;
+
         bool IsOpened<TView>();
 
         void CloseAll();

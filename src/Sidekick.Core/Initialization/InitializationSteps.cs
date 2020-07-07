@@ -1,6 +1,6 @@
 namespace Sidekick.Core.Initialization
 {
-    public enum ProgressTypeEnum
+    public enum InitializationSteps
     {
         Reset,
         BeforeInit,

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business;
 using Sidekick.Core;
+using Sidekick.Core.Natives;
 using Sidekick.Database;
 using Sidekick.Localization;
 
@@ -16,9 +17,11 @@ namespace Sidekick
               .AddSidekickBusinessServices()
               .AddSidekickLocalization()
               .AddSidekickUIWindows()
-              .AddSidekickDatabase();
+              .AddSidekickDatabase()
+              .AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddSingleton(application);
+            services.AddSingleton<INativeApp, App>((sp) => sp.GetRequiredService<App>());
 
             return services.BuildServiceProvider();
         }

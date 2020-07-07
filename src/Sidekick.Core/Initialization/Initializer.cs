@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Serilog;
 
 namespace Sidekick.Core.Initialization
 {
     public class Initializer : IInitializer
     {
-        public bool IsReady { get; private set; }
-
         private List<IOnReset> resetServices;
         private List<IOnBeforeInit> beforeInitServices;
         private List<IOnInit> initServices;
         private List<IOnAfterInit> afterInitServices;
         private readonly ILogger logger;
         private readonly IServiceProvider serviceProvider;
+        private readonly IStringLocalizer<Initializer> localizer;
 
         public Initializer(ILogger logger,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IStringLocalizer<Initializer> localizer)
         {
             this.logger = logger.ForContext(GetType());
             this.serviceProvider = serviceProvider;
+            this.localizer = localizer;
         }
 
         #region Error handling
@@ -58,35 +60,52 @@ namespace Sidekick.Core.Initialization
 
         public event Action<ProgressEventArgs> OnProgress;
 
-        public void ReportProgress(ProgressTypeEnum progressType, string serviceName, string message)
+        public void ReportProgress(InitializationSteps progressType, string serviceName, string message)
         {
-            var percentage = TotalPercentage;
+            var args = new ProgressEventArgs()
+            {
+                Title = localizer[$"Type_{progressType}"],
+                TotalPercentage = TotalPercentage,
+                Step = progressType,
+                StepTitle = serviceName,
+                StepPercentage = TotalPercentage,
+            };
+
+            if (string.IsNullOrEmpty(args.Title))
+            {
+                args.Title = args.Step.ToString();
+            }
 
             switch (progressType)
             {
-                case ProgressTypeEnum.Reset: percentage = ResetPercentage; break;
-                case ProgressTypeEnum.BeforeInit: percentage = BeforeInitPercentage; break;
-                case ProgressTypeEnum.Init: percentage = InitPercentage; break;
-                case ProgressTypeEnum.AfterInit: percentage = AfterInitPercentage; break;
+                case InitializationSteps.Reset: args.StepPercentage = ResetPercentage; break;
+                case InitializationSteps.BeforeInit: args.StepPercentage = BeforeInitPercentage; break;
+                case InitializationSteps.Init: args.StepPercentage = InitPercentage; break;
+                case InitializationSteps.AfterInit: args.StepPercentage = AfterInitPercentage; break;
             }
 
-            OnProgress?.Invoke(new ProgressEventArgs()
+            if (TotalPercentage >= 100)
             {
-                ServiceName = serviceName,
-                Message = message,
-                Percentage = percentage,
-                TotalPercentage = TotalPercentage,
-                Type = progressType,
-            });
+                args.Title = localizer["Ready"];
+                args.StepPercentage = 100;
+                serviceName = string.Empty;
+            }
+
+            OnProgress?.Invoke(args);
 
             logger.Debug("{totalPercentage}% - {message} {serviceName}", TotalPercentage, message, serviceName);
         }
 
         #endregion
 
+        private bool IsReady { get; set; } = false;
+        private bool IsInitializing { get; set; } = false;
+
         public async Task Initialize()
         {
-            // Doing this here, injecting dependencies in constructor causes dependency loops
+            if (IsInitializing) { return; }
+            IsInitializing = true;
+
             beforeInitServices = GetImplementations(beforeInitServices);
             initServices = GetImplementations(initServices);
             afterInitServices = GetImplementations(afterInitServices);
@@ -102,10 +121,13 @@ namespace Sidekick.Core.Initialization
             InitCompleted = 0;
             AfterInitCompleted = 0;
 
+            ReportProgress(InitializationSteps.Other, nameof(Initializer), "Initializer - Start");
             OnReset();
             await OnBeforeInit();
             await OnInit();
             await OnAfterInit();
+
+            IsInitializing = false;
             IsReady = true;
         }
 
@@ -118,10 +140,10 @@ namespace Sidekick.Core.Initialization
         {
             foreach (var s in resetServices)
             {
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - Start Reset");
+                ReportProgress(InitializationSteps.Reset, s.GetType().Name, "Initializer - Start Reset");
                 s.OnReset();
                 ResetCompleted++;
-                ReportProgress(ProgressTypeEnum.Reset, s.GetType().Name, "Initializer - End Reset");
+                ReportProgress(InitializationSteps.Reset, s.GetType().Name, "Initializer - End Reset");
             }
         }
 
@@ -130,7 +152,7 @@ namespace Sidekick.Core.Initialization
             foreach (var s in beforeInitServices)
             {
                 var serviceName = s.GetType().Name;
-                ReportProgress(ProgressTypeEnum.BeforeInit, serviceName, "Initializer - Start Before Init");
+                ReportProgress(InitializationSteps.BeforeInit, serviceName, "Initializer - Start Before Init");
 
                 try
                 {
@@ -143,7 +165,7 @@ namespace Sidekick.Core.Initialization
                     HandleError(ex, serviceName);
                 }
 
-                ReportProgress(ProgressTypeEnum.BeforeInit, serviceName, "Initializer - End Before Init");
+                ReportProgress(InitializationSteps.BeforeInit, serviceName, "Initializer - End Before Init");
             }
         }
 
@@ -152,7 +174,7 @@ namespace Sidekick.Core.Initialization
             foreach (var s in initServices)
             {
                 var serviceName = s.GetType().Name;
-                ReportProgress(ProgressTypeEnum.Init, serviceName, "Initializer - Start Init");
+                ReportProgress(InitializationSteps.Init, serviceName, "Initializer - Start Init");
 
                 try
                 {
@@ -165,7 +187,7 @@ namespace Sidekick.Core.Initialization
                     HandleError(ex, serviceName);
                 }
 
-                ReportProgress(ProgressTypeEnum.Init, serviceName, "Initializer - End Init");
+                ReportProgress(InitializationSteps.Init, serviceName, "Initializer - End Init");
             }
         }
 
@@ -174,7 +196,7 @@ namespace Sidekick.Core.Initialization
             foreach (var s in afterInitServices)
             {
                 var serviceName = s.GetType().Name;
-                ReportProgress(ProgressTypeEnum.AfterInit, serviceName, "Initializer - Start After Init");
+                ReportProgress(InitializationSteps.AfterInit, serviceName, "Initializer - Start After Init");
 
                 try
                 {
@@ -187,7 +209,7 @@ namespace Sidekick.Core.Initialization
                     HandleError(ex, serviceName);
                 }
 
-                ReportProgress(ProgressTypeEnum.AfterInit, serviceName, "Initializer - End After Init");
+                ReportProgress(InitializationSteps.AfterInit, serviceName, "Initializer - End After Init");
             }
         }
     }

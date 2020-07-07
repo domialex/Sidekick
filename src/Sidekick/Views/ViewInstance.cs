@@ -11,8 +11,6 @@ namespace Sidekick.Views
         {
             Scope = scope;
             ViewType = viewType;
-            View = (ISidekickView)scope.ServiceProvider.GetService(viewType);
-            View.Closed += View_Closed;
         }
 
         public IServiceScope Scope { get; private set; }
@@ -22,6 +20,12 @@ namespace Sidekick.Views
         public Type ViewType { get; private set; }
 
         public event Action Disposed;
+
+        public void Open()
+        {
+            View = (ISidekickView)Scope.ServiceProvider.GetService(ViewType);
+            View.Closed += View_Closed;
+        }
 
         private void View_Closed(object sender, EventArgs e)
         {
@@ -43,7 +47,11 @@ namespace Sidekick.Views
 
             if (disposing)
             {
-                View.Closed -= View_Closed;
+                if (View != null)
+                {
+                    View.Close();
+                    View.Closed -= View_Closed;
+                }
                 Scope?.Dispose();
                 Disposed?.Invoke();
             }

@@ -77,59 +77,5 @@ namespace Sidekick.Localization.Splash {
                 return ResourceManager.GetString("AlreadyRunningTitle", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ready.
-        /// </summary>
-        public static string Ready {
-            get {
-                return ResourceManager.GetString("Ready", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initializing (3 of 3).
-        /// </summary>
-        public static string Type_AfterInit {
-            get {
-                return ResourceManager.GetString("Type_AfterInit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initializing (1 of 3).
-        /// </summary>
-        public static string Type_BeforeInit {
-            get {
-                return ResourceManager.GetString("Type_BeforeInit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initializing (2 of 3).
-        /// </summary>
-        public static string Type_Init {
-            get {
-                return ResourceManager.GetString("Type_Init", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other.
-        /// </summary>
-        public static string Type_Other {
-            get {
-                return ResourceManager.GetString("Type_Other", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reinitializing.
-        /// </summary>
-        public static string Type_Reset {
-            get {
-                return ResourceManager.GetString("Type_Reset", resourceCulture);
-            }
-        }
     }
 }

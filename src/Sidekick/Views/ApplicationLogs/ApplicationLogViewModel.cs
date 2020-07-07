@@ -7,10 +7,12 @@ namespace Sidekick.Views.ApplicationLogs
 {
     public class ApplicationLogViewModel : IDisposable, INotifyPropertyChanged
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly SidekickEventSink eventSink;
         private bool isDisposed;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ApplicationLogViewModel(SidekickEventSink eventSink)
         {

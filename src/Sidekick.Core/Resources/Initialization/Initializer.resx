@@ -117,10 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlreadyRunningText" xml:space="preserve">
-    <value>Another instance of Sidekick is already running</value>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
   </data>
-  <data name="AlreadyRunningTitle" xml:space="preserve">
-    <value>Sideckick is already running</value>
+  <data name="Type_AfterInit" xml:space="preserve">
+    <value>Initializing (3 of 3)</value>
+  </data>
+  <data name="Type_BeforeInit" xml:space="preserve">
+    <value>Initializing (1 of 3)</value>
+  </data>
+  <data name="Type_Init" xml:space="preserve">
+    <value>Initializing (2 of 3)</value>
+  </data>
+  <data name="Type_Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Type_Reset" xml:space="preserve">
+    <value>Reinitializing</value>
   </data>
 </root>

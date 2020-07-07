@@ -7,7 +7,6 @@ using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Sidekick.Business.Windows;
-using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
@@ -20,7 +19,6 @@ namespace Sidekick.Views
         private readonly SidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
-        private readonly IDebouncer debouncer;
         private readonly bool closeOnBlur;
         private readonly bool closeOnKey;
         private readonly string id;
@@ -36,7 +34,6 @@ namespace Sidekick.Views
             settings = serviceProvider.GetService<SidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
             logger = serviceProvider.GetService<ILogger>();
-            debouncer = serviceProvider.GetService<IDebouncer>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;

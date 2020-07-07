@@ -3,7 +3,6 @@ using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Natives;
-using Sidekick.Notifications;
 using Sidekick.Views;
 using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
@@ -22,7 +21,7 @@ namespace Sidekick
         {
             services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
-            services.AddSingleton<INotificationManager, NotificationManager>();
+            services.AddSingleton<INativeNotifications, NativeNotifications>();
 
             services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();

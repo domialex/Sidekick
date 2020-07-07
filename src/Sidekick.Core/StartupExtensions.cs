@@ -51,7 +51,7 @@ namespace Sidekick.Core
 
             services.AddSingleton<IDebouncer, Debouncer>();
             services.AddSingleton<IInitializer, Initializer>();
-            services.AddSingleton<IUpdateManager, UpdateManager>();
+            services.AddInitializableService<IUpdater, Updater>();
             return services;
         }
 
