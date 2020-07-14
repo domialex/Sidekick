@@ -47,7 +47,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             FillPattern(categories[8].Entries, Category.Weapon, useRegex: true);
             FillPattern(categories[9].Entries, Category.Leaguestone);
             FillPattern(categories[10].Entries, Category.Prophecy);
-            FillPattern(categories[11].Entries, Category.ItemisedMonster);
+            FillPattern(categories[11].Entries, Category.ItemisedMonster, useRegex: true);
             FillPattern(categories[12].Entries, Category.Watchstone);
         }
 

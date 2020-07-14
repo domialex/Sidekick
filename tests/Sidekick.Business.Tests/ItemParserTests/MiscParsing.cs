@@ -58,6 +58,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
             }
         }
 
+        [Test]
+        public async Task ParseOrgan()
+        {
+            var actual = await Subject.ParseItem(Organ);
+
+            using (new AssertionScope())
+            {
+                actual.Rarity.Should().Be(Rarity.Unique);
+                actual.Category.Should().Be(Apis.Poe.Trade.Data.Items.Category.ItemisedMonster);
+                actual.Type.Should().Be("Portentia, the Foul");
+            }
+        }
+
         #region ItemText
 
         private const string Prophecy = @"Rarity: Normal
@@ -100,6 +113,20 @@ Sceptre of Celebration
 Shaper Item
 --------
 Though they were a pack of elite combatants, the Emperor's royal guards were not ready to face one of his notorious parties.";
+
+        private const string Organ = @"Rarity: Unique
+Portentia, the Foul's Heart
+--------
+Uses: Blood Bubble
+--------
+Item Level: 79
+--------
+Drops a Rare Weapon
+Drops additional Rare Armour
+Drops additional Rare Armour
+Drops additional Rare Jewellery
+--------
+Combine this with four other different samples in Tane's Laboratory.";
         #endregion
     }
 }
