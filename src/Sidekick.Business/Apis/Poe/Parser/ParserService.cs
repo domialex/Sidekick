@@ -191,6 +191,9 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         private bool ParseFromEnd(Regex pattern, ItemSections itemSections)
         {
+            if (itemSections.WholeSections.Count() < 3)
+                return false;
+
             // Section order at the end:
             // Corruption
             // Influence
