@@ -4,6 +4,7 @@ using FluentAssertions.Execution;
 using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 
 namespace Sidekick.Business.Tests.ItemParserTests
 {
@@ -66,7 +67,7 @@ namespace Sidekick.Business.Tests.ItemParserTests
             using (new AssertionScope())
             {
                 actual.Rarity.Should().Be(Rarity.Unique);
-                actual.Category.Should().Be(Apis.Poe.Trade.Data.Items.Category.ItemisedMonster);
+                actual.Category.Should().Be(Category.ItemisedMonster);
                 actual.Type.Should().Be("Portentia, the Foul");
             }
         }

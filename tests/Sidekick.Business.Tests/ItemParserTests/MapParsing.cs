@@ -4,6 +4,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 
 namespace Sidekick.Business.Tests.ItemParserTests
 {
@@ -87,6 +88,18 @@ namespace Sidekick.Business.Tests.ItemParserTests
                 actual.Modifiers.Explicit
                       .Select(mod => mod.Text)
                       .Should().Contain(expectedExplicits);
+            }
+        }
+
+        [Test]
+        public async Task ParseTimelessKaruiEmblem()
+        {
+            var actual = await Subject.ParseItem(TimelessKaruiEmblem);
+
+            using (new AssertionScope())
+            {
+                actual.Type.Should().Be("Timeless Karui Emblem");
+                actual.Category.Should().Be(Category.Map);
             }
         }
 
@@ -184,6 +197,11 @@ Monsters' skills Chain 2 additional times
 Players gain 50% reduced Flask Charges
 --------
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.";
+
+        private const string TimelessKaruiEmblem = @"Rarity: Normal
+Timeless Karui Emblem
+--------
+Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.";
 
         #endregion
     }
