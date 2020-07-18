@@ -43,7 +43,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
             {
                 foreach (var value in values)
                 {
-                    if (value.Count != 2 || value[1].ValueKind != JsonValueKind.Array)
+                    if (value.Count != 2)
                     {
                         continue;
                     }
@@ -51,7 +51,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                     result.Add(new LineContentValue()
                     {
                         Value = value[0].GetString(),
-                        Type = (LineContentType)value[1][0].GetInt32()
+                        Type = value[1].ValueKind == JsonValueKind.Array ? (LineContentType)value[1][0].GetInt32() : LineContentType.Simple
                     });
                 }
             }
