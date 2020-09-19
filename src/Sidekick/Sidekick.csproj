@@ -5,9 +5,9 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
+    <Version>1.0.3</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Description>A Path of Exile helper that shows item prices using the official Path of Exile Trade API.</Description>
     <PackageProjectUrl>https://github.com/domialex/Sidekick</PackageProjectUrl>

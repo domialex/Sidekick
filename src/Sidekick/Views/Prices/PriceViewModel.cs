@@ -346,6 +346,7 @@ namespace Sidekick.Views.Prices
             InitializeMods(Item.Modifiers.Implicit);
             InitializeMods(Item.Modifiers.Explicit);
             InitializeMods(Item.Modifiers.Crafted);
+            InitializeMods(Item.Modifiers.Fractured);
 
             if (Filters.Count == 0)
             {

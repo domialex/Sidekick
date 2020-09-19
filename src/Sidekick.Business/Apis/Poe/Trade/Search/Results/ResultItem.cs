@@ -20,6 +20,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         public bool Corrupted { get; set; }
 
+        public bool Fractured { get; set; }
+
         public Influences Influences { get; set; } = new Influences();
 
         public bool Verified { get; set; }
@@ -57,6 +59,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
 
         [JsonPropertyName("enchantMods")]
         public List<string> EnchantMods { get; set; }
+
+        [JsonPropertyName("fracturedMods")]
+        public List<string> FracturedMods { get; set; }
 
         public List<Socket> Sockets { get; set; } = new List<Socket>();
 

@@ -166,6 +166,24 @@ namespace Sidekick.Business.Tests.ItemParserTests
                             .Should().Contain(expectedExplicits);
         }
 
+        [Test]
+        public async Task ParseFracturedItem()
+        {
+            var actual = await Subject.ParseItem(FracturedItem);
+
+            actual.Type.Should().Be("Iron Greaves");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
+
+            var expectedFractured = new[]
+            {
+                "10% increased Movement Speed"
+            };
+
+            actual.Modifiers.Fractured
+                            .Select(mod => mod.Text)
+                            .Should().Contain(expectedFractured);
+        }
+
         #region ItemText
 
         private const string UniqueSixLink = @"Rarity: Unique
@@ -299,6 +317,24 @@ Sockets: R-R
 Item Level: 50
 --------
 11% reduced Enemy Stun Threshold
+";
+
+        private const string FracturedItem = @"Rarity: Rare
+Invasion Track
+Iron Greaves
+--------
+Armour: 6
+--------
+Sockets: B B 
+--------
+Item Level: 2
+--------
+10% increased Movement Speed (fractured)
++5 to maximum Life
+Regenerate 1.9 Life per second
++8% to Cold Resistance
+--------
+Fractured Item
 ";
 
         #endregion

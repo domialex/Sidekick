@@ -9,5 +9,6 @@ namespace Sidekick.Business.Apis.Poe.Models
         public List<Modifier> Crafted { get; set; } = new List<Modifier>();
         public List<Modifier> Enchant { get; set; } = new List<Modifier>();
         public List<Modifier> Pseudo { get; set; } = new List<Modifier>();
+        public List<Modifier> Fractured { get; set; } = new List<Modifier>();
     }
 }

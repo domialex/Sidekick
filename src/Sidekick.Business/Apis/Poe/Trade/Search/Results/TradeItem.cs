@@ -64,6 +64,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
                 result.Item.PseudoMods,
                 result.Item.Extended.Mods?.Pseudo,
                 result.Item.Extended.Hashes?.Pseudo);
+
+            ParseMods(statDataService,
+                Modifiers.Fractured,
+                result.Item.FracturedMods,
+                result.Item.Extended.Mods?.Fractured,
+                result.Item.Extended.Hashes?.Fractured);
         }
 
         private void ParseMods(IStatDataService statDataService, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)

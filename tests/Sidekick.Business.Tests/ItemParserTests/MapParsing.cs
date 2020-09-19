@@ -77,7 +77,7 @@ namespace Sidekick.Business.Tests.ItemParserTests
 
                 var expectedExplicits = new[]
                 {
-                    "Players are Cursed with Enfeeble"
+                    "Players are Cursed with Enfeeble, with 60% increased Effect"
                 };
 
                 actual.Type.Should().Be("Carcass Map");
@@ -190,7 +190,7 @@ Item Level: 82
 Area is influenced by The Elder (implicit)
 Map is occupied by The Purifier (implicit)
 --------
-Players are Cursed with Enfeeble
+Players are Cursed with Enfeeble, with 60% increased Effect
 Monsters have 70% chance to Avoid Elemental Ailments
 Monsters fire 2 additional Projectiles
 Monsters' skills Chain 2 additional times

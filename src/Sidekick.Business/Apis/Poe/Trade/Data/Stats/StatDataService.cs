@@ -40,6 +40,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         private List<StatData> VeiledPatterns { get; set; }
 
+        private List<StatData> FracturedPatterns { get; set; }
+
         private Regex NewLinePattern { get; set; }
         private Regex IncreasedPattern { get; set; }
 
@@ -53,6 +55,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             EnchantPatterns = new List<StatData>();
             CraftedPatterns = new List<StatData>();
             VeiledPatterns = new List<StatData>();
+            FracturedPatterns = new List<StatData>();
 
             NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
             IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
@@ -83,6 +86,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = EnchantPatterns; break;
                     case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = CraftedPatterns; break;
                     case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = VeiledPatterns; break;
+                    case "fractured": suffix = "(?:\\ \\(fractured\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = FracturedPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
@@ -159,7 +163,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             FillMods(mods.Implicit, ImplicitPatterns, text);
             FillMods(mods.Enchant, EnchantPatterns, text);
             FillMods(mods.Crafted, CraftedPatterns, text);
-            // FillMods(mods.Veiled, VeiledPatterns, text);
+            //FillMods(mods.Veiled, VeiledPatterns, text);
+            FillMods(mods.Fractured, FracturedPatterns, text);
 
             FillPseudo(mods.Pseudo, mods.Explicit);
             FillPseudo(mods.Pseudo, mods.Implicit);
@@ -297,6 +302,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             }
 
             result = EnchantPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                return result;
+            }
+
+            result = FracturedPatterns.FirstOrDefault(x => x.Id == id);
             if (result != null)
             {
                 return result;

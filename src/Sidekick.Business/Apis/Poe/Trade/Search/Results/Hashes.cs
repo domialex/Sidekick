@@ -36,6 +36,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search.Results
         [JsonIgnore]
         public List<LineContentValue> Pseudo => Parse(ApiPseudo);
 
+        [JsonPropertyName("fractured")]
+        public List<List<JsonElement>> ApiFractured { get; set; }
+        [JsonIgnore]
+        public List<LineContentValue> Fractured => Parse(ApiFractured);
+
         private List<LineContentValue> Parse(List<List<JsonElement>> values)
         {
             var result = new List<LineContentValue>();
