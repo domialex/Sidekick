@@ -57,5 +57,13 @@ namespace Sidekick.Business.Languages.Implementations
 
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
+
+        public string PrefixAnomalous => throw new NotImplementedException();
+
+        public string PrefixDivergent => throw new NotImplementedException();
+
+        public string PrefixPhantasmal => throw new NotImplementedException();
+
+        public string DescriptionAlternateQuality => throw new NotImplementedException();
     }
 }

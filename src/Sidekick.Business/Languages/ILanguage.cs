@@ -20,6 +20,7 @@ namespace Sidekick.Business.Languages
 
         string DescriptionUnidentified { get; }
         string DescriptionQuality { get; }
+        string DescriptionAlternateQuality { get; }
         string DescriptionCorrupted { get; }
         string DescriptionRarity { get; }
         string DescriptionSockets { get; }
@@ -42,6 +43,9 @@ namespace Sidekick.Business.Languages
 
         string PrefixSuperior { get; }
         string PrefixBlighted { get; }
+        string PrefixAnomalous { get; }
+        string PrefixDivergent { get; }
+        string PrefixPhantasmal { get; }
 
         string KeywordVaal { get; }
 

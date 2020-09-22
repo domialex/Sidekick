@@ -186,6 +186,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         {
             item.Properties.GemLevel = patterns.GetInt(patterns.Level, itemSections.WholeSections[1]);
             item.Properties.Quality = patterns.GetInt(patterns.Quality, itemSections.WholeSections[1]);
+            item.Properties.AlternateQuality = patterns.AlternateQuality.IsMatch(itemSections.WholeSections[1]);
             item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
         }
 
