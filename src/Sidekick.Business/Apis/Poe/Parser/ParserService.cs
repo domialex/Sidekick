@@ -58,7 +58,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 var itemSections = new ItemSections(splitSections, wholeSections);
 
-                var itemData = itemDataService.ParseItemData(itemSections);
+                var itemData = itemDataService.ParseItemData(itemSections, GetRarity(itemSections.Rarity));
 
                 if (itemData == null || string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
                 {

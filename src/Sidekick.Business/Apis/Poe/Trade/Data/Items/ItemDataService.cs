@@ -106,11 +106,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             };
         }
 
-        public ItemData ParseItemData(ItemSections itemSections)
+        public ItemData ParseItemData(ItemSections itemSections, Rarity itemRarity)
         {
             var results = new List<ItemData>();
 
-            if (nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
+            // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
+            if (itemRarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
             {
                 results.AddRange(itemData);
             }
