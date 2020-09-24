@@ -56,7 +56,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             prefixes = new[]
             {
                 languageProvider.Language.PrefixSuperior,
-                languageProvider.Language.PrefixBlighted
+                languageProvider.Language.PrefixBlighted,
+                languageProvider.Language.PrefixAnomalous,
+                languageProvider.Language.PrefixDivergent,
+                languageProvider.Language.PrefixPhantasmal,
             };
 
             return Task.CompletedTask;

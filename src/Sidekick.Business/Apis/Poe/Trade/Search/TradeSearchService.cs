@@ -134,6 +134,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     };
                 }
 
+                if (item.Properties.AlternateQuality)
+                {
+                    request.Query.Term = item.NameLine;
+                }
+
                 if (item.Properties.MapTier > 0)
                 {
                     request.Query.Filters.MapFilters.Filters.MapTier = new SearchFilterValue()

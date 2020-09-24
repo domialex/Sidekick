@@ -19,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "Carta de Adivinación";
         public string DescriptionUnidentified => "Sin identificar";
         public string DescriptionQuality => "Calidad";
+        public string DescriptionAlternateQuality => "Calidad alternativa";
         public string DescriptionCorrupted => "Corrupto";
         public string DescriptionRarity => "Rareza";
         public string DescriptionSockets => "Engarces";
@@ -57,5 +58,11 @@ namespace Sidekick.Business.Languages.Implementations
 
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
+
+        public string PrefixAnomalous => "anómala";
+
+        public string PrefixDivergent => "divergente";
+
+        public string PrefixPhantasmal => "fantasmal";
     }
 }

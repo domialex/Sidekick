@@ -7,6 +7,7 @@ namespace Sidekick.Business.Apis.Poe.Models
         public int Evasion { get; set; }
         public int ChanceToBlock { get; set; }
         public int Quality { get; set; }
+        public bool AlternateQuality { get; set; }
         public int GemLevel { get; set; }
         public int MapTier { get; set; }
         public int ItemQuantity { get; set; }
@@ -18,6 +19,5 @@ namespace Sidekick.Business.Apis.Poe.Models
         public double DamagePerSecond { get; set; }
         public double ElementalDps { get; set; }
         public double PhysicalDps { get; set; }
-
     }
 }
