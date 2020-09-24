@@ -19,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "점술 카드";
         public string DescriptionUnidentified => "미확인";
         public string DescriptionQuality => "퀄리티";
+        public string DescriptionAlternateQuality => "대체 퀄리티";
         public string DescriptionCorrupted => "타락";
         public string DescriptionRarity => "아이템 희귀도";
         public string DescriptionSockets => "홈";
@@ -59,12 +60,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
 
-        public string PrefixAnomalous => throw new NotImplementedException();
-
-        public string PrefixDivergent => throw new NotImplementedException();
-
-        public string PrefixPhantasmal => throw new NotImplementedException();
-
-        public string DescriptionAlternateQuality => throw new NotImplementedException();
+        public string PrefixAnomalous => "기묘한";
+        public string PrefixDivergent => "분기하는";
+        public string PrefixPhantasmal => "환영의";
     }
 }

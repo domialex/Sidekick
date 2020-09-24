@@ -19,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "Weissagungskarte";
         public string DescriptionUnidentified => "Nicht identifiziert";
         public string DescriptionQuality => "Qualität";
+        public string DescriptionAlternateQuality => "Alternative Qualität";
         public string DescriptionCorrupted => "Verderbt";
         public string DescriptionRarity => "Seltenheit";
         public string DescriptionSockets => "Fassungen";
@@ -53,12 +54,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
 
-        public string PrefixAnomalous => throw new NotImplementedException();
-
-        public string PrefixDivergent => throw new NotImplementedException();
-
-        public string PrefixPhantasmal => throw new NotImplementedException();
-
-        public string DescriptionAlternateQuality => throw new NotImplementedException();
+        public string PrefixAnomalous => "(anormal)";
+        public string PrefixDivergent => "(abweichend)";
+        public string PrefixPhantasmal => "(illusorisch)";
     }
 }

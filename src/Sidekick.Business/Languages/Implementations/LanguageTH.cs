@@ -19,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "ไพ่พยากรณ์";
         public string DescriptionUnidentified => "ยังไม่ได้ตรวจสอบ";
         public string DescriptionQuality => "คุณภาพ";
+        public string DescriptionAlternateQuality => "คุณภาพแบบพิเศษ";
         public string DescriptionCorrupted => "คอร์รัปต์";
         public string DescriptionRarity => "ความหายาก";
         public string DescriptionSockets => "ซ็อกเก็ต";
@@ -60,12 +61,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
 
-        public string PrefixAnomalous => throw new NotImplementedException();
-
-        public string PrefixDivergent => throw new NotImplementedException();
-
-        public string PrefixPhantasmal => throw new NotImplementedException();
-
-        public string DescriptionAlternateQuality => throw new NotImplementedException();
+        public string PrefixAnomalous => "Anomalous";
+        public string PrefixDivergent => "Divergent";
+        public string PrefixPhantasmal => "Phantasmal";
     }
 }

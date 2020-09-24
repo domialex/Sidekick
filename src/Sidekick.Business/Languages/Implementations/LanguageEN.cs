@@ -53,9 +53,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierReduced => "reduced";
 
         public string PrefixAnomalous => "Anomalous";
-
         public string PrefixDivergent => "Divergent";
-
         public string PrefixPhantasmal => "Phantasmal";
     }
 }

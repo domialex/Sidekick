@@ -33,6 +33,7 @@ namespace Sidekick.Business.Languages.Implementations
 
         public string DescriptionUnidentified => "未鑑定";
         public string DescriptionQuality => "品質";
+        public string DescriptionAlternateQuality => "替代品質";
         public string DescriptionCorrupted => "已汙染";
         public string DescriptionRarity => "稀有度";
         public string DescriptionSockets => "插槽";
@@ -56,12 +57,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
 
-        public string PrefixAnomalous => throw new NotImplementedException();
-
-        public string PrefixDivergent => throw new NotImplementedException();
-
-        public string PrefixPhantasmal => throw new NotImplementedException();
-
-        public string DescriptionAlternateQuality => throw new NotImplementedException();
+        public string PrefixAnomalous => "異常的";
+        public string PrefixDivergent => "相異的";
+        public string PrefixPhantasmal => "幻影的";
     }
 }

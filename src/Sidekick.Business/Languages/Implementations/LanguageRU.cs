@@ -19,6 +19,7 @@ namespace Sidekick.Business.Languages.Implementations
         public string RarityDivinationCard => "Гадальная карта";
         public string DescriptionUnidentified => "Неопознано";
         public string DescriptionQuality => "Качество";
+        public string DescriptionAlternateQuality => "Изменённый эффект качества";
         public string DescriptionCorrupted => "Осквернено";
         public string DescriptionRarity => "Редкость";
         public string DescriptionSockets => "Гнезда";
@@ -60,12 +61,8 @@ namespace Sidekick.Business.Languages.Implementations
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
 
-        public string PrefixAnomalous => throw new NotImplementedException();
-
-        public string PrefixDivergent => throw new NotImplementedException();
-
-        public string PrefixPhantasmal => throw new NotImplementedException();
-
-        public string DescriptionAlternateQuality => throw new NotImplementedException();
+        public string PrefixAnomalous => "Аномальный: ";
+        public string PrefixDivergent => "Искривлённый: ";
+        public string PrefixPhantasmal => "Фантомный: ";
     }
 }
