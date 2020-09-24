@@ -184,6 +184,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
                             .Should().Contain(expectedFractured);
         }
 
+        /// <summary>
+        /// This unique item can have multiple possible bases.
+        /// </summary>
+        [Test]
+        public async Task ParseUniqueItemWithDifferentBases()
+        {
+            var actual = await Subject.ParseItem(UniqueItemWithDifferentBases);
+
+            actual.Name.Should().Be("Wings of Entropy");
+            actual.Type.Should().Be("Ezomyte Axe");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Unique);
+        }
+
         #region ItemText
 
         private const string UniqueSixLink = @"Rarity: Unique
@@ -336,6 +349,36 @@ Regenerate 1.9 Life per second
 --------
 Fractured Item
 ";
+
+        private const string UniqueItemWithDifferentBases = @"Rarity: Unique
+Wings of Entropy
+Ezomyte Axe
+--------
+Two Handed Axe
+Physical Damage: 144-217 (augmented)
+Elemental Damage: 81-175 (augmented)
+Chaos Damage: 85-177 (augmented)
+Critical Strike Chance: 5.70%
+Attacks per Second: 1.35
+Weapon Range: 13
+--------
+Requirements:
+Level: 62
+Str: 140 (unmet)
+Dex: 86
+--------
+Sockets: R-B-R 
+--------
+Item Level: 70
+--------
+7% Chance to Block Spell Damage
++11% Chance to Block Attack Damage while Dual Wielding
+66% increased Physical Damage
+Adds 81 to 175 Fire Damage in Main Hand
+Adds 85 to 177 Chaos Damage in Off Hand
+Counts as Dual Wielding
+--------
+Fire and Anarchy are the most reliable agents of change.";
 
         #endregion
     }
