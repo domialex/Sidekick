@@ -108,14 +108,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             };
         }
 
-        public ItemData ParseItemData(ItemSections itemSections)
+        public ItemData ParseItemData(ItemSections itemSections, Rarity itemRarity)
         {
             var results = new List<ItemData>();
 
-            Rarity rarity = GetRarityFromLine(itemSections.HeaderSection[0]);
-
             // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
-            if (rarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
+            if (itemRarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
             {
                 results.AddRange(itemData);
             }
@@ -143,26 +141,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                 .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
                 .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
                 .FirstOrDefault();
-        }
-
-        private Rarity GetRarityFromLine(string line)
-        {
-            line = line.Split(" ")[1];
-            var properties = languageProvider.Language.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var property in properties)
-            {
-                if (property.Name.StartsWith("Rarity"))
-                {
-                    if (line == (string)property.GetValue(languageProvider.Language))
-                    {
-                        line = (string)languageProvider.EnglishLanguage.GetType().GetProperty(property.Name).GetValue(languageProvider.EnglishLanguage);
-                        var success = Enum.TryParse(typeof(Rarity), line, out var rarity);
-                        return success ? (Rarity)rarity : Rarity.Unknown;
-                    }
-                }
-            }
-
-            return Rarity.Unknown;
         }
 
         private string GetLineWithoutPrefixes(string line)
