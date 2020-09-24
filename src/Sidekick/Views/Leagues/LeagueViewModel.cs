@@ -3,6 +3,7 @@ using Sidekick.Core.Settings;
 using Sidekick.Views.Leagues.Betrayal;
 using Sidekick.Views.Leagues.Blight;
 using Sidekick.Views.Leagues.Delve;
+using Sidekick.Views.Leagues.Heist;
 using Sidekick.Views.Leagues.Incursion;
 using Sidekick.Views.Leagues.Metamorph;
 
@@ -19,6 +20,7 @@ namespace Sidekick.Views.Leagues
         {
             this.settings = settings;
 
+            Heist = new HeistLeague();
             Betrayal = new BetrayalLeague();
             Blight = new BlightLeague();
             Delve = new DelveLeague();
@@ -26,6 +28,7 @@ namespace Sidekick.Views.Leagues
             Metamorph = new MetamorphLeague();
         }
 
+        public HeistLeague Heist { get; private set; }
         public BetrayalLeague Betrayal { get; private set; }
         public BlightLeague Blight { get; private set; }
         public DelveLeague Delve { get; private set; }

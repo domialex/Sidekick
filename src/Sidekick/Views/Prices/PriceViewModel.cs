@@ -308,7 +308,7 @@ namespace Sidekick.Views.Prices
             // Corrupted
             InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
                 alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
-                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique) && Item.Corrupted,
+                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique || Item.Rarity == Rarity.Rare) && Item.Corrupted,
                 applyNegative: true);
 
             // Crusader
@@ -412,6 +412,7 @@ namespace Sidekick.Views.Prices
         }
 
         private static readonly Regex LabelValues = new Regex("(\\#)");
+
         private void InitializeFilter<T>(PriceFilterCategory category,
                                          string type,
                                          string id,
@@ -567,6 +568,7 @@ namespace Sidekick.Views.Prices
         }
 
         public int UpdateCountdown { get; private set; }
+
         public void UpdateDebounce()
         {
             ShowRefresh = true;
@@ -775,6 +777,7 @@ namespace Sidekick.Views.Prices
 
         public bool IsPredicted => !string.IsNullOrEmpty(PredictionText);
         public string PredictionText { get; private set; }
+
         private async Task GetPredictionPrice()
         {
             PredictionText = string.Empty;
@@ -796,6 +799,7 @@ namespace Sidekick.Views.Prices
 
         public bool IsPoeNinja => !string.IsNullOrEmpty(PoeNinjaText);
         public string PoeNinjaText { get; private set; }
+
         private void GetPoeNinjaPrice()
         {
             PoeNinjaText = string.Empty;
@@ -811,6 +815,7 @@ namespace Sidekick.Views.Prices
 
         public bool FullyLoaded { get; private set; }
         public string CountString { get; private set; }
+
         private void UpdateCountString()
         {
             FullyLoaded = (Results?.Count ?? 0) == (QueryResult?.Result?.Count ?? 0);
@@ -819,6 +824,7 @@ namespace Sidekick.Views.Prices
 
         public bool HasPreviewItem { get; private set; }
         public PriceItem PreviewItem { get; private set; }
+
         public void Preview(PriceItem selectedItem)
         {
             PreviewItem = selectedItem;

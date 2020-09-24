@@ -58,6 +58,48 @@
     <None Remove="Views\Leagues\Blight\Images\Teal_Oil.png" />
     <None Remove="Views\Leagues\Blight\Images\Verdant_Oil.png" />
     <None Remove="Views\Leagues\Blight\Images\Violet_Oil.png" />
+    <None Remove="Views\Leagues\Heist\HeistAlly.cs~RF204f36a.TMP" />
+    <None Remove="Views\Leagues\Heist\Images\Acrobatics.png" />
+    <None Remove="Views\Leagues\Heist\Images\AdiyahIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\Bruteforce.png" />
+    <None Remove="Views\Leagues\Heist\Images\CounterThaumaturgy.png" />
+    <None Remove="Views\Leagues\Heist\Images\Deception.png" />
+    <None Remove="Views\Leagues\Heist\Images\Demolition.png" />
+    <None Remove="Views\Leagues\Heist\Images\Engineering.png" />
+    <None Remove="Views\Leagues\Heist\Images\GiannaIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardAbyss.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardArmour.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardBlight.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardBreach.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardCurrency.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardDelirium.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardDivination.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardEssences.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardFossils.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardFragments.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardGems.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardGeneric.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardHarbinger.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardLegion.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardMaps.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardMetamorph.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardProphecies.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardTalismans.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardTrinkets.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardUniques.png" />
+    <None Remove="Views\Leagues\Heist\Images\HeistRewardWeapon.png" />
+    <None Remove="Views\Leagues\Heist\Images\HuckIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\IslaIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\KarstIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\KuraiIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\Lockpick.png" />
+    <None Remove="Views\Leagues\Heist\Images\NenetIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\NilesIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\Perception.png" />
+    <None Remove="Views\Leagues\Heist\Images\TibbsIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\TrapDisarmament.png" />
+    <None Remove="Views\Leagues\Heist\Images\TullinaIcon.png" />
+    <None Remove="Views\Leagues\Heist\Images\VinderiIcon.png" />
     <None Remove="Views\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
     <None Remove="Views\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
     <None Remove="Views\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
@@ -92,7 +134,7 @@
     <PackageReference Include="System.Resources.Extensions" Version="4.7.1" />
     <PackageReference Include="WindowsHook" Version="1.0.1" />
   </ItemGroup>
-    
+
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
@@ -132,6 +174,47 @@
     <Resource Include="Views\Leagues\Blight\Images\Teal_Oil.png" />
     <Resource Include="Views\Leagues\Blight\Images\Verdant_Oil.png" />
     <Resource Include="Views\Leagues\Blight\Images\Violet_Oil.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Acrobatics.png" />
+    <Resource Include="Views\Leagues\Heist\Images\AdiyahIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Bruteforce.png" />
+    <Resource Include="Views\Leagues\Heist\Images\CounterThaumaturgy.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Deception.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Demolition.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Engineering.png" />
+    <Resource Include="Views\Leagues\Heist\Images\GiannaIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardAbyss.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardArmour.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardBlight.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardBreach.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardCurrency.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardDelirium.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardDivination.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardEssences.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardFossils.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardFragments.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardGems.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardGeneric.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardHarbinger.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardLegion.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardMaps.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardMetamorph.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardProphecies.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardTalismans.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardTrinkets.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardUniques.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HeistRewardWeapon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\HuckIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\IslaIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\KarstIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\KuraiIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Lockpick.png" />
+    <Resource Include="Views\Leagues\Heist\Images\NenetIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\NilesIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\Perception.png" />
+    <Resource Include="Views\Leagues\Heist\Images\TibbsIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\TrapDisarmament.png" />
+    <Resource Include="Views\Leagues\Heist\Images\TullinaIcon.png" />
+    <Resource Include="Views\Leagues\Heist\Images\VinderiIcon.png" />
     <Resource Include="Views\Leagues\Metamorph\Images\Abrasive_Catalyst.png" />
     <Resource Include="Views\Leagues\Metamorph\Images\Fertile_Catalyst.png" />
     <Resource Include="Views\Leagues\Metamorph\Images\Imbued_Catalyst.png" />
@@ -188,6 +271,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Variables\Spacers.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Leagues\Heist\Ally.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Prices\ItemLineContent.xaml">

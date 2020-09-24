@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Views"
+    xmlns:heist="clr-namespace:Sidekick.Views.Leagues.Heist"
     xmlns:betrayal="clr-namespace:Sidekick.Views.Leagues.Betrayal"
     xmlns:blight="clr-namespace:Sidekick.Views.Leagues.Blight"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -32,6 +33,9 @@
         </Grid.RowDefinitions>
 
         <TabControl SelectedIndex="{Binding SelectedTabIndex}">
+            <TabItem Header="{loc:Loc LeagueNameHeist}">
+                <heist:League Model="{Binding Heist}" />
+            </TabItem>
             <TabItem Header="{loc:Loc LeagueNameBetrayal}">
                 <betrayal:League Model="{Binding Betrayal}" />
             </TabItem>

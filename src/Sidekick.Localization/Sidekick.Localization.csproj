@@ -39,6 +39,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Leagues\Heist\HeistResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HeistResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Leagues\Incursion\IncursionResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -130,6 +135,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>DelveResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Leagues\Heist\HeistResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HeistResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.zh-tw.resx">
       <SubType>Designer</SubType>
