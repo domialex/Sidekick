@@ -137,6 +137,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             return results
                 .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
                 .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
+                .ThenBy(x => x.Type == itemSections.HeaderSection.Last() ? 0 : 1)
                 .FirstOrDefault();
         }
 
