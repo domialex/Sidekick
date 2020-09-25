@@ -12,6 +12,7 @@ namespace Sidekick.Views.Leagues.Heist
 
             Jobs.Add(new HeistJob("Lockpicking", "Lockpick.png", new HeistReward[] {
                 new HeistReward("Currency", RewardValue.High, "HeistRewardCurrency.png"),
+                new HeistReward("Accessories", RewardValue.Medium, "HeistRewardTrinkets.png"),
                 new HeistReward("Fragments", RewardValue.High, "HeistRewardFragments.png"),
             }, new HeistAlly[] {
                 new HeistAlly("Karst", 5, "KarstIcon.png"),
@@ -21,6 +22,7 @@ namespace Sidekick.Views.Leagues.Heist
             }));
 
             Jobs.Add(new HeistJob("Brute Force", "Bruteforce.png", new HeistReward[] {
+                new HeistReward("Uniques", RewardValue.Medium, "HeistRewardUniques.png"),
                 new HeistReward("Weapon", RewardValue.NoValue, "HeistRewardWeapon.png"),
             }, new HeistAlly[] {
                 new HeistAlly("Tibbs", 5, "TibbsIcon.png"),
@@ -28,6 +30,7 @@ namespace Sidekick.Views.Leagues.Heist
             }));
 
             Jobs.Add(new HeistJob("Perception", "Perception.png", new HeistReward[] {
+                new HeistReward("Accessories", RewardValue.Medium, "HeistRewardTrinkets.png"),
                 new HeistReward("Prophecies", RewardValue.Medium, "HeistRewardProphecies.png"),
                 new HeistReward("Divination Cards", RewardValue.High, "HeistRewardDivination.png"),
             }, new HeistAlly[] {
@@ -58,9 +61,11 @@ namespace Sidekick.Views.Leagues.Heist
             }));
 
             Jobs.Add(new HeistJob("Trap Disarmament", "TrapDisarmament.png", new HeistReward[] {
+                new HeistReward("Armour", RewardValue.NoValue, "HeistRewardArmour.png"),
+                new HeistReward("Weapon", RewardValue.NoValue, "HeistRewardWeapon.png"),
                 new HeistReward("Abyss", RewardValue.Low, "HeistRewardAbyss.png"),
                 new HeistReward("Breach", RewardValue.Medium, "HeistRewardBreach.png"),
-                new HeistReward("Talisman", RewardValue.NoValue, "HeistRewardTalisman.png"),
+                new HeistReward("Talismans", RewardValue.NoValue, "HeistRewardTalismans.png"),
                 new HeistReward("Legion", RewardValue.Medium, "HeistRewardLegion.png"),
             }, new HeistAlly[] {
                 new HeistAlly("Vinderi", 5, "VinderiIcon.png"),
@@ -69,6 +74,8 @@ namespace Sidekick.Views.Leagues.Heist
             }));
 
             Jobs.Add(new HeistJob("Agility", "Acrobatics.png", new HeistReward[] {
+                new HeistReward("Currency", RewardValue.High, "HeistRewardCurrency.png"),
+                new HeistReward("Armour", RewardValue.NoValue, "HeistRewardArmour.png"),
                 new HeistReward("Harbinger", RewardValue.Medium, "HeistRewardHarbinger.png"),
                 new HeistReward("Essences", RewardValue.Low, "HeistRewardEssences.png"),
                 new HeistReward("Fossils", RewardValue.High, "HeistRewardFossils.png"),
@@ -79,6 +86,7 @@ namespace Sidekick.Views.Leagues.Heist
 
             Jobs.Add(new HeistJob("Deception", "Deception.png", new HeistReward[] {
                 new HeistReward("Armour", RewardValue.NoValue, "HeistRewardArmour.png"),
+                new HeistReward("Divination Cards", RewardValue.High, "HeistRewardDivination.png"),
             }, new HeistAlly[] {
                 new HeistAlly("Gianna", 5, "GiannaIcon.png"),
                 new HeistAlly("Niles", 4, "NilesIcon.png"),
@@ -87,6 +95,7 @@ namespace Sidekick.Views.Leagues.Heist
             Jobs.Add(new HeistJob("Engineering", "Engineering.png", new HeistReward[] {
                 new HeistReward("Uniques", RewardValue.Medium, "HeistRewardUniques.png"),
                 new HeistReward("Maps", RewardValue.High, "HeistRewardMaps.png"),
+                new HeistReward("Armour", RewardValue.NoValue, "HeistRewardArmour.png"),
             }, new HeistAlly[] {
                 new HeistAlly("Isla", 5, "IslaIcon.png"),
                 new HeistAlly("Huck", 3, "HuckIcon.png"),
