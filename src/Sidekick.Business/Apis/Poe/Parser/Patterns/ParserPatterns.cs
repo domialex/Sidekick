@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
@@ -82,8 +85,8 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
             AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
             CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
-            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.RangeFromLineRegex();
-            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.RangeFromLineRegex();
+            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.LineRegex();
+            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.LineRegex();
 
             Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
             AlternateQuality = languageProvider.Language.DescriptionAlternateQuality.ToRegex();
@@ -176,16 +179,25 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
                 if (match.Success)
                 {
-                    var split = match.Groups[1].Value.Split('-');
-
-                    if (int.TryParse(split[0], out var minValue) && int.TryParse(split[1], out var maxValue))
+                    var matches = new Regex("(\\d+-\\d+)").Matches(match.Value);
+                    var dps = matches.Select(x => x.Value.Split("-"))
+                                     .ToList()
+                                     .Sum(split =>
                     {
-                        return ((minValue + maxValue) / 2) * attacksPerSecond;
-                    }
+                        if (double.TryParse(split[0], out var minValue)
+                         && double.TryParse(split[1], out var maxValue))
+                        {
+                            return (minValue + maxValue) / 2d;
+                        }
+
+                        return 0d;
+                    });
+
+                    return Math.Round(dps * attacksPerSecond, 2);
                 }
             }
 
-            return 0;
+            return 0d;
         }
 
         #endregion Helpers

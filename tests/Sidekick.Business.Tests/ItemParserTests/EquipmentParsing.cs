@@ -195,6 +195,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
             actual.Name.Should().Be("Wings of Entropy");
             actual.Type.Should().Be("Ezomyte Axe");
             actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Unique);
+
+            actual.Properties.PhysicalDps.Should().Be(243.68);
+            actual.Properties.ElementalDps.Should().Be(172.8);
+            actual.Properties.DamagePerSecond.Should().Be(416.48);
+        }
+        [Test]
+        public async Task ParseWeaponWithMultipleElementalDamages()
+        {
+            var actual = await Subject.ParseItem(WeaponWithMultipleElementalDamages);
+
+            actual.Properties.PhysicalDps.Should().Be(53.94);
+            actual.Properties.ElementalDps.Should().Be(314.07);
+            actual.Properties.DamagePerSecond.Should().Be(368.01);
         }
 
         #region ItemText
@@ -379,6 +392,38 @@ Adds 85 to 177 Chaos Damage in Off Hand
 Counts as Dual Wielding
 --------
 Fire and Anarchy are the most reliable agents of change.";
+
+        private const string WeaponWithMultipleElementalDamages = @"Rarity: Rare
+Honour Beak
+Ancient Sword
+--------
+One Handed Sword
+Quality: +20% (augmented)
+Physical Damage: 22-40 (augmented)
+Elemental Damage: 26-48 (augmented), 47-81 (augmented), 4-155 (augmented)
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.74 (augmented)
+Weapon Range: 11
+--------
+Requirements:
+Level: 50
+Str: 44
+Dex: 44
+--------
+Sockets: R-R B 
+--------
+Item Level: 68
+--------
+Attribute Modifiers have 8% increased Effect (enchant)
+--------
++165 to Accuracy Rating (implicit)
+--------
++37 to Dexterity
+Adds 26 to 48 Fire Damage
+Adds 47 to 81 Cold Damage
+Adds 4 to 155 Lightning Damage
+20% increased Attack Speed
++21% to Global Critical Strike Multiplier";
 
         #endregion
     }
