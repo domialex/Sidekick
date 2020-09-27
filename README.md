@@ -27,6 +27,9 @@ For unique items, prices from poe.ninja are used.
 ### League Overviews - F6
 Access quick cheatsheets about the various leagues.
 
+#### Heist
+![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-heist.png)
+
 #### Betrayal
 ![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-betrayal.png)
 
