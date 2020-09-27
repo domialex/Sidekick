@@ -180,17 +180,20 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         }
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
+
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             var unorderedMods = new List<Modifier>();
 
             foreach (var data in patterns
+                .AsParallel()
                 .Where(x => x.Pattern != null && x.Pattern.IsMatch(text)))
             {
                 FillMod(unorderedMods, text, data, data.Pattern.Match(text));
             }
 
             foreach (var data in patterns
+                .AsParallel()
                 .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
             {
                 FillMod(unorderedMods, text, data, data.NegativePattern.Match(text), true);
