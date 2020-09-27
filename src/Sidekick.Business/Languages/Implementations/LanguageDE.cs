@@ -53,6 +53,8 @@ namespace Sidekick.Business.Languages.Implementations
 
         public string ModifierIncreased => "__TranslationRequired__";
         public string ModifierReduced => "__TranslationRequired__";
+        public string AdditionalProjectile => "__TranslationRequired__";
+        public string AdditionalProjectiles => "__TranslationRequired__";
 
         public string PrefixAnomalous => "(anormal)";
         public string PrefixDivergent => "(abweichend)";

@@ -44,6 +44,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         private Regex NewLinePattern { get; set; }
         private Regex IncreasedPattern { get; set; }
+        private Regex AdditionalProjectilePattern { get; set; }
 
         public async Task OnInit()
         {
@@ -56,12 +57,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             CraftedPatterns = new List<StatData>();
             VeiledPatterns = new List<StatData>();
             FracturedPatterns = new List<StatData>();
-
-            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
             IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
 
+            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+
+            var additionalProjectileEscaped = Regex.Escape(languageProvider.Language.AdditionalProjectile);
+            var additionalProjectiles = hashPattern.Replace(Regex.Escape(languageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
+
+            // We need to ignore the case here, there are some mistakes in the data of the game.
+            AdditionalProjectilePattern = new Regex(languageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
 
             foreach (var category in categories)
             {
@@ -141,6 +147,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                         entry.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
                     }
 
+                    if (AdditionalProjectilePattern.IsMatch(entry.Text))
+                    {
+                        var additionalProjectilePattern = pattern.Replace(additionalProjectileEscaped, additionalProjectiles, System.StringComparison.OrdinalIgnoreCase);
+                        entry.AdditionalProjectilePattern = new Regex($"(?:^|\\n){additionalProjectilePattern}{suffix}", RegexOptions.IgnoreCase);
+                    }
+
                     entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
                     patterns.Add(entry);
                 }
@@ -197,6 +209,13 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                 .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
             {
                 FillMod(unorderedMods, text, data, data.NegativePattern.Match(text), true);
+            }
+
+            foreach (var data in patterns
+                .AsParallel()
+                .Where(x => x.AdditionalProjectilePattern != null && x.AdditionalProjectilePattern.IsMatch(text)))
+            {
+                FillMod(unorderedMods, text, data, data.AdditionalProjectilePattern.Match(text));
             }
 
             unorderedMods.OrderBy(x => x.Index).ToList().ForEach(x => mods.Add(x));

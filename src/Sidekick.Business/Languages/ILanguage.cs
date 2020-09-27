@@ -58,5 +58,7 @@ namespace Sidekick.Business.Languages
 
         string ModifierIncreased { get; }
         string ModifierReduced { get; }
+        string AdditionalProjectile { get; }
+        string AdditionalProjectiles { get; }
     }
 }

@@ -200,6 +200,7 @@ namespace Sidekick.Business.Tests.ItemParserTests
             actual.Properties.ElementalDps.Should().Be(172.8);
             actual.Properties.DamagePerSecond.Should().Be(416.48);
         }
+
         [Test]
         public async Task ParseWeaponWithMultipleElementalDamages()
         {
@@ -208,6 +209,15 @@ namespace Sidekick.Business.Tests.ItemParserTests
             actual.Properties.PhysicalDps.Should().Be(53.94);
             actual.Properties.ElementalDps.Should().Be(314.07);
             actual.Properties.DamagePerSecond.Should().Be(368.01);
+        }
+
+        [Test]
+        public async Task ParseEnchantWithAdditionalProjectiles()
+        {
+            var actual = await Subject.ParseItem(EnchantWithAdditionalProjectiles);
+
+            actual.Modifiers.Enchant.First().Text.Should().Be("Split Arrow fires an additional Projectile");
+            actual.Modifiers.Enchant.First().Values.First().Should().Be(2);
         }
 
         #region ItemText
@@ -424,6 +434,27 @@ Adds 47 to 81 Cold Damage
 Adds 4 to 155 Lightning Damage
 20% increased Attack Speed
 +21% to Global Critical Strike Multiplier";
+
+        private const string EnchantWithAdditionalProjectiles = @"Rarity: Rare
+Doom Glance
+Hubris Circlet
+--------
+Energy Shield: 111 (augmented)
+--------
+Requirements:
+Level: 69
+Int: 154
+--------
+Sockets: B-B 
+--------
+Item Level: 69
+--------
+Split Arrow fires 2 additional Projectiles (enchant)
+--------
++26 to Intelligence
++4 to maximum Energy Shield
+39% increased Energy Shield
++25 to maximum Life";
 
         #endregion
     }

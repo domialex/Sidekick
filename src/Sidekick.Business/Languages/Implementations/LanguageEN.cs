@@ -51,6 +51,8 @@ namespace Sidekick.Business.Languages.Implementations
 
         public string ModifierIncreased => "increased";
         public string ModifierReduced => "reduced";
+        public string AdditionalProjectile => "fires an additional Projectile";
+        public string AdditionalProjectiles => "fires # additional Projectiles";
 
         public string PrefixAnomalous => "Anomalous";
         public string PrefixDivergent => "Divergent";

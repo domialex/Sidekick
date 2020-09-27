@@ -114,7 +114,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             var results = new List<ItemData>();
 
             // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
-            // there are some items which have prefixes which we don't wan to remove, like the "Blighted Delirium Orb"
+            // There are some items which have prefixes which we don't want to remove, like the "Blighted Delirium Orb".
             if (itemRarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(itemSections.HeaderSection[1], out var itemData))
             {
                 results.AddRange(itemData);
