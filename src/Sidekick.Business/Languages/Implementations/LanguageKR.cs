@@ -40,27 +40,27 @@ namespace Sidekick.Business.Languages.Implementations
         public string DescriptionOrgan => "사용";
         public string KeywordVaal => "바알";
 
-        public string DescriptionPhysicalDamage => "__TranslationRequired__";
+        public string DescriptionPhysicalDamage => "물리 피해";
 
-        public string DescriptionElementalDamage => "__TranslationRequired__";
+        public string DescriptionElementalDamage => "원소 피해";
 
-        public string DescriptionAttacksPerSecond => "__TranslationRequired__";
+        public string DescriptionAttacksPerSecond => "초당 공격 횟수";
 
-        public string DescriptionCriticalStrikeChance => "__TranslationRequired__";
+        public string DescriptionCriticalStrikeChance => "치명타 확률";
 
-        public string DescriptionEnergyShield => "__TranslationRequired__";
+        public string DescriptionEnergyShield => "에너지 보호막";
 
-        public string DescriptionArmour => "__TranslationRequired__";
+        public string DescriptionArmour => "방어도";
 
-        public string DescriptionEvasion => "__TranslationRequired__";
-        public string DescriptionChanceToBlock => "__TranslationRequired__";
+        public string DescriptionEvasion => "회피";
+        public string DescriptionChanceToBlock => "막기";
 
-        public string DescriptionLevel => "__TranslationRequired__";
+        public string DescriptionLevel => "레벨";
 
-        public string ModifierIncreased => "__TranslationRequired__";
-        public string ModifierReduced => "__TranslationRequired__";
-        public string AdditionalProjectile => "__TranslationRequired__";
-        public string AdditionalProjectiles => "__TranslationRequired__";
+        public string ModifierIncreased => "증가";
+        public string ModifierReduced => "감소";
+        public string AdditionalProjectile => "투사체 1개 추가 발사";
+        public string AdditionalProjectiles => "투사체 #개 추가 발사";
 
         public string PrefixAnomalous => "기묘한";
         public string PrefixDivergent => "분기하는";
