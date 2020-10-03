@@ -71,6 +71,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
                     logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.Error("Uri: {uri}", uri);
+                    logger.Error("Query: {query}", json);
                 }
             }
             catch (Exception ex)
@@ -176,6 +178,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
                     logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.Error("Uri: {uri}", uri);
+                    logger.Error("Query: {query}", json);
                 }
             }
             catch (Exception ex)
