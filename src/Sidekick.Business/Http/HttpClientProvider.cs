@@ -17,7 +17,7 @@ namespace Sidekick.Business.Http
             {
                 var client = httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
-                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Sidekick");
+                client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
                 return client;
             }
         }
