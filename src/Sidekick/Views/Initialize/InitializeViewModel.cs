@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -19,7 +18,6 @@ namespace Sidekick.Views.Initialize
 
         private readonly IInitializer initializer;
         private readonly IUpdater updater;
-        private readonly ILeagueDataService leagueDataService;
         private readonly INativeNotifications nativeNotifications;
         private readonly INativeApp nativeApp;
         private readonly SidekickSettings settings;
@@ -27,21 +25,18 @@ namespace Sidekick.Views.Initialize
 
         public InitializeViewModel(IInitializer initializer,
             IUpdater updater,
-            ILeagueDataService leagueDataService,
             INativeNotifications nativeNotifications,
             INativeApp nativeApp,
             SidekickSettings settings)
         {
             this.initializer = initializer;
             this.updater = updater;
-            this.leagueDataService = leagueDataService;
             this.nativeNotifications = nativeNotifications;
             this.nativeApp = nativeApp;
             this.settings = settings;
 
             initializer.OnProgress += Initializer_OnProgress;
             initializer.OnError += Initializer_OnError;
-            leagueDataService.OnNewLeagues += LeagueDataService_OnNewLeagues;
         }
 
         public async Task Initialize()
@@ -53,11 +48,6 @@ namespace Sidekick.Views.Initialize
                 TrayResources.Notification_Title,
                 string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString())
             );
-        }
-
-        private void LeagueDataService_OnNewLeagues()
-        {
-            nativeNotifications.ShowMessage(InitializeResources.Warn_NewLeagues);
         }
 
         private void Initializer_OnError(ErrorEventArgs obj)
@@ -118,7 +108,6 @@ namespace Sidekick.Views.Initialize
             {
                 initializer.OnProgress -= Initializer_OnProgress;
                 initializer.OnError -= Initializer_OnError;
-                leagueDataService.OnNewLeagues -= LeagueDataService_OnNewLeagues;
             }
 
             isDisposed = true;

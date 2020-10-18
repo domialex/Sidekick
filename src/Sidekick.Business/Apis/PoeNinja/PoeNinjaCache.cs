@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
@@ -12,7 +11,6 @@ using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
-
     /// <summary>
     /// poe.ninja cache.
     /// Fetch poe.ninja with specified interval in the background.
@@ -36,15 +34,12 @@ namespace Sidekick.Business.Apis.PoeNinja
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger logger,
                              ILanguageProvider languageProvider,
-                             ILeagueDataService leagueDataService,
                              SidekickSettings configuration)
         {
             this.client = client;
             this.languageProvider = languageProvider;
             this.logger = logger.ForContext(GetType());
             this.configuration = configuration;
-
-            leagueDataService.OnLeagueChange += async () => await RefreshData();
         }
         public PoeNinjaItem GetItem(Item item)
         {

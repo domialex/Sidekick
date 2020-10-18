@@ -1,42 +1,40 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Caches;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
-namespace Sidekick.Business.Apis.Poe.Trade.Leagues
+namespace Sidekick.Business.Leagues
 {
-    public class LeagueDataService : ILeagueDataService, IOnBeforeInit
+    public class InitializeDataHandler : INotificationHandler<InitializeData>
     {
-        private readonly IPoeTradeClient poeTradeClient;
         private readonly SidekickSettings settings;
         private readonly ICacheService cacheService;
+        private readonly IMediator mediator;
+        private readonly ILeagueDataService leagueDataService;
 
-        public List<League> Leagues { get; private set; }
-
-        public LeagueDataService(IPoeTradeClient poeTradeClient,
+        public InitializeDataHandler(
             SidekickSettings settings,
-            ICacheService cacheService)
+            ICacheService cacheService,
+            IMediator mediator,
+            ILeagueDataService leagueDataService)
         {
-            this.poeTradeClient = poeTradeClient;
             this.settings = settings;
             this.cacheService = cacheService;
+            this.mediator = mediator;
+            this.leagueDataService = leagueDataService;
         }
 
-        public event Action OnLeagueChange;
-        public event Action OnNewLeagues;
-
-        public void LeagueChanged() => OnLeagueChange.Invoke();
-
-        public async Task OnBeforeInit()
+        public async Task Handle(InitializeData notification, CancellationToken cancellationToken)
         {
-            Leagues = null;
-            Leagues = await poeTradeClient.Fetch<League>();
+            var leagues = await mediator.Send(new GetLeaguesQuery());
+            leagueDataService.Initialize(leagues);
 
             var newLeagues = false;
 
@@ -44,7 +42,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
             var leaguesHash = Encoding.UTF8.GetString(
                 algorithm.ComputeHash(
                     Encoding.UTF8.GetBytes(
-                        JsonSerializer.Serialize(Leagues.Select(x => x.Id).ToList())
+                        JsonSerializer.Serialize(leagues.Select(x => x.Id).ToList())
                     )
                 )
             );
@@ -57,17 +55,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Leagues
                 newLeagues = true;
             }
 
-            if (string.IsNullOrEmpty(settings.LeagueId) || !Leagues.Any(x => x.Id == settings.LeagueId))
+            if (string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId))
             {
                 await cacheService.Clear();
-                settings.LeagueId = Leagues.FirstOrDefault().Id;
+                settings.LeagueId = leagues.FirstOrDefault().Id;
                 settings.Save();
                 newLeagues = true;
             }
 
-            if (newLeagues && OnNewLeagues != null)
+            if (newLeagues)
             {
-                OnNewLeagues.Invoke();
+                await mediator.Publish(new NewLeagues());
             }
         }
     }

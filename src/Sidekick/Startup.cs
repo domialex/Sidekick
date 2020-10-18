@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business;
 using Sidekick.Core;
@@ -18,7 +19,10 @@ namespace Sidekick
               .AddSidekickLocalization()
               .AddSidekickUIWindows()
               .AddSidekickDatabase()
-              .AddLocalization(options => options.ResourcesPath = "Resources");
+              .AddLocalization()
+              .AddMediatR(
+                typeof(Business.StartupExtensions),
+                typeof(Core.StartupExtensions));
 
             services.AddSingleton(application);
             services.AddSingleton<INativeApp, App>((sp) => sp.GetRequiredService<App>());

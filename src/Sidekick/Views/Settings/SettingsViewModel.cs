@@ -2,8 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
+using MediatR;
 using Sidekick.Business.Caches;
+using Sidekick.Business.Leagues;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -21,19 +22,20 @@ namespace Sidekick.Views.Settings
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
-        private readonly ILeagueDataService leagueDataService;
         private readonly IKeybindEvents keybindEvents;
         private readonly ICacheService cacheService;
         private readonly IInitializer initializer;
+        private readonly IMediator mediator;
         private bool isDisposed;
 
         public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
-            ILeagueDataService leagueDataService,
             IKeybindEvents keybindEvents,
             ICacheService cacheService,
-            IInitializer initializer)
+            IInitializer initializer,
+            ILeagueDataService leagueDataService,
+            IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.sidekickSettings = sidekickSettings;
@@ -41,7 +43,7 @@ namespace Sidekick.Views.Settings
             this.keybindEvents = keybindEvents;
             this.cacheService = cacheService;
             this.initializer = initializer;
-            this.leagueDataService = leagueDataService;
+            this.mediator = mediator;
 
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
@@ -55,7 +57,7 @@ namespace Sidekick.Views.Settings
 
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
-            this.leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
+            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
@@ -94,7 +96,7 @@ namespace Sidekick.Views.Settings
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
             sidekickSettings.Save();
 
-            if (leagueHasChanged) leagueDataService.LeagueChanged();
+            if (leagueHasChanged) mediator.Publish(new LeagueChanged());
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Serilog;
@@ -17,14 +18,17 @@ namespace Sidekick.Core.Initialization
         private readonly ILogger logger;
         private readonly IServiceProvider serviceProvider;
         private readonly IStringLocalizer<Initializer> localizer;
+        private readonly IMediator mediator;
 
         public Initializer(ILogger logger,
             IServiceProvider serviceProvider,
-            IStringLocalizer<Initializer> localizer)
+            IStringLocalizer<Initializer> localizer,
+            IMediator mediator)
         {
             this.logger = logger.ForContext(GetType());
             this.serviceProvider = serviceProvider;
             this.localizer = localizer;
+            this.mediator = mediator;
         }
 
         #region Error handling
@@ -149,6 +153,8 @@ namespace Sidekick.Core.Initialization
 
         private async Task OnBeforeInit()
         {
+            await mediator.Publish(new InitializeData());
+
             foreach (var s in beforeInitServices)
             {
                 var serviceName = s.GetType().Name;

@@ -7,7 +7,6 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
@@ -18,6 +17,7 @@ using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
+using Sidekick.Business.Leagues;
 using Sidekick.Business.Parties;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
@@ -32,6 +32,8 @@ namespace Sidekick.Business
         {
             // Http Services
             services.AddHttpClient();
+
+            services.AddTransient<ILeagueDataService, LeagueDataService>();
 
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
@@ -52,7 +54,6 @@ namespace Sidekick.Business
             services.AddInitializableService<IPoeTradeClient, PoeTradeClient>();
             services.AddInitializableService<IStatDataService, StatDataService>();
             services.AddInitializableService<IItemDataService, ItemDataService>();
-            services.AddInitializableService<ILeagueDataService, LeagueDataService>();
             services.AddInitializableService<IParserService, ParserService>();
             services.AddInitializableService<IPoeNinjaClient, PoeNinjaClient>();
             services.AddInitializableService<IPoeNinjaCache, PoeNinjaCache>();

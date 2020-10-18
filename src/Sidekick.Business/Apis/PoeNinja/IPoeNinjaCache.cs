@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
 
@@ -16,5 +17,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         PoeNinjaItem GetItem(Item item);
         PoeNinjaCurrency GetCurrency(Item item);
         double? GetItemPrice(Item item);
+
+        Task RefreshData();
     }
 }

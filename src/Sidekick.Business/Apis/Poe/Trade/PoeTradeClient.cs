@@ -6,9 +6,9 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
+using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
