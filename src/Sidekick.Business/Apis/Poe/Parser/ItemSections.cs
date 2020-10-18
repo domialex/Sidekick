@@ -25,8 +25,6 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         public string MapPropertiesSection => WholeSections[1];
 
-        public string MapInfluenceSection => WholeSections[3];
-
         public string NameLine => HeaderSection.Length > 1 ? HeaderSection[1] : string.Empty;
 
         public string TypeLine => HeaderSection.Length > 2 ? HeaderSection[2] : string.Empty;

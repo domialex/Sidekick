@@ -47,7 +47,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             FillPattern(categories[8].Entries, Category.Weapon, useRegex: true);
             FillPattern(categories[9].Entries, Category.Leaguestone);
             FillPattern(categories[10].Entries, Category.Prophecy);
-            FillPattern(categories[11].Entries, Category.ItemisedMonster);
+            FillPattern(categories[11].Entries, Category.ItemisedMonster, useRegex: true);
             FillPattern(categories[12].Entries, Category.Watchstone);
         }
 
@@ -56,7 +56,10 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             prefixes = new[]
             {
                 languageProvider.Language.PrefixSuperior,
-                languageProvider.Language.PrefixBlighted
+                languageProvider.Language.PrefixBlighted,
+                languageProvider.Language.PrefixAnomalous,
+                languageProvider.Language.PrefixDivergent,
+                languageProvider.Language.PrefixPhantasmal,
             };
 
             return Task.CompletedTask;
@@ -106,11 +109,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             };
         }
 
-        public ItemData ParseItemData(ItemSections itemSections)
+        public ItemData ParseItemData(ItemSections itemSections, Rarity itemRarity)
         {
             var results = new List<ItemData>();
 
-            if (nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out var itemData))
+            // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
+            // There are some items which have prefixes which we don't want to remove, like the "Blighted Delirium Orb".
+            if (itemRarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(itemSections.HeaderSection[1], out var itemData))
+            {
+                results.AddRange(itemData);
+            }
+            else if (itemRarity != Rarity.Rare && nameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(itemSections.HeaderSection[1]), out itemData))
             {
                 results.AddRange(itemData);
             }
@@ -137,6 +146,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             return results
                 .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
                 .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
+                .ThenBy(x => x.Type == itemSections.HeaderSection.Last() ? 0 : 1)
                 .FirstOrDefault();
         }
 

@@ -22,6 +22,19 @@ namespace Sidekick.Business.Tests.ItemParserTests
             }
         }
 
+        [Test]
+        public async Task ParseAnomalousGem()
+        {
+            var actual = await Subject.ParseItem(AnomalousGem);
+
+            using (new AssertionScope())
+            {
+                actual.Rarity.Should().Be(Rarity.Gem);
+                actual.Type.Should().Be("Static Strike");
+                actual.Properties.AlternateQuality.Should().Be(true);
+            }
+        }
+
         #region ItemText
 
         private const string VaalGem = @"Rarity: Gem
@@ -64,6 +77,37 @@ Place into an item socket of the right colour to gain this skill.Right click to 
 Corrupted
 --------
 Note: ~price 2 chaos
+";
+
+        private const string AnomalousGem = @"Rarity: Gem
+Anomalous Static Strike
+--------
+Attack, Melee, Strike, AoE, Duration, Lightning, Chaining
+Level: 1
+Mana Cost: 6
+Effectiveness of Added Damage: 110%
+Quality: +17% (augmented)
+Alternate Quality
+--------
+Requirements:
+Level: 12
+Str: 21
+Int: 14
+--------
+Attack with a melee weapon, gaining static energy for a duration if you hit an enemy. While you have static energy, you'll frequently hit a number of nearby enemies with beams, dealing attack damage.
+--------
+Beams Hit Enemies every 0.40 seconds
+50% of Physical Damage Converted to Lightning Damage
+Deals 110% of Base Damage
+Base duration is 2.00 seconds
+Chains +1 Times
+17% increased Damage
+Beams deal 40% less Damage
+4 maximum Beam Targets
+--------
+Experience: 1/15249
+--------
+Place into an item socket of the right colour to gain this skill. Right click to remove from a socket.
 ";
 
         #endregion

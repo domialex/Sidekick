@@ -19,5 +19,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         [JsonIgnore]
         public Regex NegativePattern { get; set; }
+
+        [JsonIgnore]
+        public Regex AdditionalProjectilePattern { get; set; }
     }
 }

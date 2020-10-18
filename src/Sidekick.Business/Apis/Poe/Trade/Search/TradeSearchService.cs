@@ -71,6 +71,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
                     logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.Error("Uri: {uri}", uri);
+                    logger.Error("Query: {query}", json);
                 }
             }
             catch (Exception ex)
@@ -112,6 +114,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 if (item.Rarity == Rarity.Unique)
                 {
                     request.Query.Name = item.Name;
+                    request.Query.Type = item.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption()
                     {
                         Option = "Unique",
@@ -131,6 +134,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     {
                         Option = "nonunique",
                     };
+                }
+
+                if (item.Properties.AlternateQuality)
+                {
+                    request.Query.Term = item.NameLine;
                 }
 
                 if (item.Properties.MapTier > 0)
@@ -170,6 +178,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
                     logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.Error("Uri: {uri}", uri);
+                    logger.Error("Query: {query}", json);
                 }
             }
             catch (Exception ex)

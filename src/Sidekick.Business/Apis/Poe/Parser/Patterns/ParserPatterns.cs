@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Internal;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Initialization;
@@ -27,6 +30,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         }
 
         #region Header (Rarity, Name, Type)
+
         public Dictionary<Rarity, Regex> Rarity { get; private set; }
         public Regex ItemLevel { get; private set; }
         public Regex Unidentified { get; private set; }
@@ -49,14 +53,17 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Unidentified = languageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
             Corrupted = languageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
         }
-        #endregion
+
+        #endregion Header (Rarity, Name, Type)
 
         #region Properties (Armour, Evasion, Energy Shield, Quality, Level)
+
         public Regex Armor { get; private set; }
         public Regex EnergyShield { get; private set; }
         public Regex Evasion { get; private set; }
         public Regex ChanceToBlock { get; private set; }
         public Regex Quality { get; private set; }
+        public Regex AlternateQuality { get; private set; }
         public Regex Level { get; private set; }
         public Regex MapTier { get; private set; }
         public Regex ItemQuantity { get; private set; }
@@ -78,10 +85,11 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
             AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
             CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
-            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.RangeFromLineRegex();
-            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.RangeFromLineRegex();
+            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.LineRegex();
+            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.LineRegex();
 
             Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
+            AlternateQuality = languageProvider.Language.DescriptionAlternateQuality.ToRegex();
 
             MapTier = languageProvider.Language.DescriptionMapTier.IntFromLineRegex();
             ItemQuantity = languageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
@@ -89,9 +97,11 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
             Blighted = languageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
         }
-        #endregion
+
+        #endregion Properties (Armour, Evasion, Energy Shield, Quality, Level)
 
         #region Sockets
+
         public Regex Socket { get; private set; }
 
         private void InitSockets()
@@ -99,9 +109,11 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
             Socket = languageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
         }
-        #endregion
+
+        #endregion Sockets
 
         #region Influences
+
         public Regex Crusader { get; private set; }
         public Regex Elder { get; private set; }
         public Regex Hunter { get; private set; }
@@ -118,9 +130,11 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             Shaper = languageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
             Warlord = languageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
         }
-        #endregion
+
+        #endregion Influences
 
         #region Helpers
+
         public int GetInt(Regex regex, string input)
         {
             if (regex != null)
@@ -165,17 +179,27 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
                 if (match.Success)
                 {
-                    var split = match.Groups[1].Value.Split('-');
-
-                    if (int.TryParse(split[0], out var minValue) && int.TryParse(split[1], out var maxValue))
+                    var matches = new Regex("(\\d+-\\d+)").Matches(match.Value);
+                    var dps = matches.Select(x => x.Value.Split("-"))
+                                     .ToList()
+                                     .Sum(split =>
                     {
-                        return ((minValue + maxValue) / 2) * attacksPerSecond;
-                    }
+                        if (double.TryParse(split[0], out var minValue)
+                         && double.TryParse(split[1], out var maxValue))
+                        {
+                            return (minValue + maxValue) / 2d;
+                        }
+
+                        return 0d;
+                    });
+
+                    return Math.Round(dps * attacksPerSecond, 2);
                 }
             }
 
-            return 0;
+            return 0d;
         }
-        #endregion
+
+        #endregion Helpers
     }
 }

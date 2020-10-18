@@ -165,6 +165,60 @@ namespace Sidekick.Business.Tests.ItemParserTests
                             .Should().Contain(expectedExplicits);
         }
 
+        [Test]
+        public async Task ParseFracturedItem()
+        {
+            var actual = await Subject.ParseItem(FracturedItem);
+
+            actual.Type.Should().Be("Iron Greaves");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
+
+            var expectedFractured = new[]
+            {
+                "10% increased Movement Speed"
+            };
+
+            actual.Modifiers.Fractured
+                            .Select(mod => mod.Text)
+                            .Should().Contain(expectedFractured);
+        }
+
+        /// <summary>
+        /// This unique item can have multiple possible bases.
+        /// </summary>
+        [Test]
+        public async Task ParseUniqueItemWithDifferentBases()
+        {
+            var actual = await Subject.ParseItem(UniqueItemWithDifferentBases);
+
+            actual.Name.Should().Be("Wings of Entropy");
+            actual.Type.Should().Be("Ezomyte Axe");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Unique);
+
+            actual.Properties.PhysicalDps.Should().Be(243.68);
+            actual.Properties.ElementalDps.Should().Be(172.8);
+            actual.Properties.DamagePerSecond.Should().Be(416.48);
+        }
+
+        [Test]
+        public async Task ParseWeaponWithMultipleElementalDamages()
+        {
+            var actual = await Subject.ParseItem(WeaponWithMultipleElementalDamages);
+
+            actual.Properties.PhysicalDps.Should().Be(53.94);
+            actual.Properties.ElementalDps.Should().Be(314.07);
+            actual.Properties.DamagePerSecond.Should().Be(368.01);
+        }
+
+        [Test]
+        public async Task ParseEnchantWithAdditionalProjectiles()
+        {
+            var actual = await Subject.ParseItem(EnchantWithAdditionalProjectiles);
+
+            actual.Modifiers.Enchant.First().Text.Should().Be("Split Arrow fires an additional Projectile");
+            actual.Modifiers.Enchant.First().Values.First().Should().Be(2);
+        }
+
         #region ItemText
 
         private const string UniqueSixLink = @"Rarity: Unique
@@ -299,6 +353,107 @@ Item Level: 50
 --------
 11% reduced Enemy Stun Threshold
 ";
+
+        private const string FracturedItem = @"Rarity: Rare
+Invasion Track
+Iron Greaves
+--------
+Armour: 6
+--------
+Sockets: B B 
+--------
+Item Level: 2
+--------
+10% increased Movement Speed (fractured)
++5 to maximum Life
+Regenerate 1.9 Life per second
++8% to Cold Resistance
+--------
+Fractured Item
+";
+
+        private const string UniqueItemWithDifferentBases = @"Rarity: Unique
+Wings of Entropy
+Ezomyte Axe
+--------
+Two Handed Axe
+Physical Damage: 144-217 (augmented)
+Elemental Damage: 81-175 (augmented)
+Chaos Damage: 85-177 (augmented)
+Critical Strike Chance: 5.70%
+Attacks per Second: 1.35
+Weapon Range: 13
+--------
+Requirements:
+Level: 62
+Str: 140 (unmet)
+Dex: 86
+--------
+Sockets: R-B-R 
+--------
+Item Level: 70
+--------
+7% Chance to Block Spell Damage
++11% Chance to Block Attack Damage while Dual Wielding
+66% increased Physical Damage
+Adds 81 to 175 Fire Damage in Main Hand
+Adds 85 to 177 Chaos Damage in Off Hand
+Counts as Dual Wielding
+--------
+Fire and Anarchy are the most reliable agents of change.";
+
+        private const string WeaponWithMultipleElementalDamages = @"Rarity: Rare
+Honour Beak
+Ancient Sword
+--------
+One Handed Sword
+Quality: +20% (augmented)
+Physical Damage: 22-40 (augmented)
+Elemental Damage: 26-48 (augmented), 47-81 (augmented), 4-155 (augmented)
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.74 (augmented)
+Weapon Range: 11
+--------
+Requirements:
+Level: 50
+Str: 44
+Dex: 44
+--------
+Sockets: R-R B 
+--------
+Item Level: 68
+--------
+Attribute Modifiers have 8% increased Effect (enchant)
+--------
++165 to Accuracy Rating (implicit)
+--------
++37 to Dexterity
+Adds 26 to 48 Fire Damage
+Adds 47 to 81 Cold Damage
+Adds 4 to 155 Lightning Damage
+20% increased Attack Speed
++21% to Global Critical Strike Multiplier";
+
+        private const string EnchantWithAdditionalProjectiles = @"Rarity: Rare
+Doom Glance
+Hubris Circlet
+--------
+Energy Shield: 111 (augmented)
+--------
+Requirements:
+Level: 69
+Int: 154
+--------
+Sockets: B-B 
+--------
+Item Level: 69
+--------
+Split Arrow fires 2 additional Projectiles (enchant)
+--------
++26 to Intelligence
++4 to maximum Energy Shield
+39% increased Energy Shield
++25 to maximum Life";
 
         #endregion
     }

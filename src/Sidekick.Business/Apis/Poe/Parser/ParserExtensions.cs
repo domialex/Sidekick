@@ -23,5 +23,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
         public static Regex StartOfLineRegex(this string input) => input.ToRegex(prefix: "^");
 
         public static Regex EndOfLineRegex(this string input) => input.ToRegex(suffix: "$");
+
+        public static Regex LineRegex(this string input) => input.ToRegex(prefix: NEW_LINE, suffix: "(?:.*)" + NEW_LINE);
     }
 }

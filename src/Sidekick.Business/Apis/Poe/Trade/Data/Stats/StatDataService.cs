@@ -40,8 +40,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
         private List<StatData> VeiledPatterns { get; set; }
 
+        private List<StatData> FracturedPatterns { get; set; }
+
         private Regex NewLinePattern { get; set; }
         private Regex IncreasedPattern { get; set; }
+        private Regex AdditionalProjectilePattern { get; set; }
 
         public async Task OnInit()
         {
@@ -53,12 +56,18 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             EnchantPatterns = new List<StatData>();
             CraftedPatterns = new List<StatData>();
             VeiledPatterns = new List<StatData>();
-
-            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
+            FracturedPatterns = new List<StatData>();
             IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
 
+            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+
+            var additionalProjectileEscaped = Regex.Escape(languageProvider.Language.AdditionalProjectile);
+            var additionalProjectiles = hashPattern.Replace(Regex.Escape(languageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
+
+            // We need to ignore the case here, there are some mistakes in the data of the game.
+            AdditionalProjectilePattern = new Regex(languageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
 
             foreach (var category in categories)
             {
@@ -83,6 +92,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = EnchantPatterns; break;
                     case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = CraftedPatterns; break;
                     case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = VeiledPatterns; break;
+                    case "fractured": suffix = "(?:\\ \\(fractured\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = FracturedPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
@@ -137,6 +147,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                         entry.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
                     }
 
+                    if (AdditionalProjectilePattern.IsMatch(entry.Text))
+                    {
+                        var additionalProjectilePattern = pattern.Replace(additionalProjectileEscaped, additionalProjectiles, System.StringComparison.OrdinalIgnoreCase);
+                        entry.AdditionalProjectilePattern = new Regex($"(?:^|\\n){additionalProjectilePattern}{suffix}", RegexOptions.IgnoreCase);
+                    }
+
                     entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
                     patterns.Add(entry);
                 }
@@ -159,7 +175,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             FillMods(mods.Implicit, ImplicitPatterns, text);
             FillMods(mods.Enchant, EnchantPatterns, text);
             FillMods(mods.Crafted, CraftedPatterns, text);
-            // FillMods(mods.Veiled, VeiledPatterns, text);
+            //FillMods(mods.Veiled, VeiledPatterns, text);
+            FillMods(mods.Fractured, FracturedPatterns, text);
 
             FillPseudo(mods.Pseudo, mods.Explicit);
             FillPseudo(mods.Pseudo, mods.Implicit);
@@ -175,20 +192,30 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
         }
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
+
         private void FillMods(List<Modifier> mods, List<StatData> patterns, string text)
         {
             var unorderedMods = new List<Modifier>();
 
             foreach (var data in patterns
+                .AsParallel()
                 .Where(x => x.Pattern != null && x.Pattern.IsMatch(text)))
             {
                 FillMod(unorderedMods, text, data, data.Pattern.Match(text));
             }
 
             foreach (var data in patterns
+                .AsParallel()
                 .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
             {
                 FillMod(unorderedMods, text, data, data.NegativePattern.Match(text), true);
+            }
+
+            foreach (var data in patterns
+                .AsParallel()
+                .Where(x => x.AdditionalProjectilePattern != null && x.AdditionalProjectilePattern.IsMatch(text)))
+            {
+                FillMod(unorderedMods, text, data, data.AdditionalProjectilePattern.Match(text));
             }
 
             unorderedMods.OrderBy(x => x.Index).ToList().ForEach(x => mods.Add(x));
@@ -297,6 +324,12 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             }
 
             result = EnchantPatterns.FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                return result;
+            }
+
+            result = FracturedPatterns.FirstOrDefault(x => x.Id == id);
             if (result != null)
             {
                 return result;

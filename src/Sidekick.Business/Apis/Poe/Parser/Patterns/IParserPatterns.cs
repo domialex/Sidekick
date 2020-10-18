@@ -26,6 +26,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         Regex MonsterPackSize { get; }
         Regex PhysicalDamage { get; }
         Regex Quality { get; }
+        Regex AlternateQuality { get; }
         Dictionary<Rarity, Regex> Rarity { get; }
         Regex Redeemer { get; }
         Regex Shaper { get; }
@@ -34,7 +35,9 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         Regex Warlord { get; }
 
         int GetInt(Regex regex, string input);
+
         double GetDouble(Regex regex, string input);
+
         double GetDps(Regex regex, string input, double attacksPerSecond);
     }
 }

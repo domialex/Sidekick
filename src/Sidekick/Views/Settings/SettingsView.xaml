@@ -57,10 +57,10 @@
                                 <Label Content="{loc:Loc Character_League}" />
                                 <ComboBox
                                     Grid.Column="1"
-                                    DisplayMemberPath="Key"
+                                    DisplayMemberPath="Value"
                                     ItemsSource="{Binding Path=LeagueOptions}"
                                     SelectedValue="{Binding Path=Settings.LeagueId}"
-                                    SelectedValuePath="Value" />
+                                    SelectedValuePath="Key" />
                                 <Label Grid.Row="1" Content="{loc:Loc Character_Name}" />
                                 <TextBox
                                     Grid.Row="1"

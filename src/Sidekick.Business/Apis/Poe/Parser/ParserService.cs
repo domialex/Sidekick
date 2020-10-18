@@ -51,7 +51,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
                 var itemSections = new ItemSections(splitSections, wholeSections);
 
-                var itemData = itemDataService.ParseItemData(itemSections);
+                var itemData = itemDataService.ParseItemData(itemSections, GetRarity(itemSections.Rarity));
 
                 if (itemData == null || string.IsNullOrEmpty(itemData.Name) && string.IsNullOrEmpty(itemData.Type))
                 {
@@ -179,11 +179,15 @@ namespace Sidekick.Business.Apis.Poe.Parser
         {
             item.Properties.GemLevel = patterns.GetInt(patterns.Level, itemSections.WholeSections[1]);
             item.Properties.Quality = patterns.GetInt(patterns.Quality, itemSections.WholeSections[1]);
+            item.Properties.AlternateQuality = patterns.AlternateQuality.IsMatch(itemSections.WholeSections[1]);
             item.Corrupted = ParseFromEnd(patterns.Corrupted, itemSections);
         }
 
         private bool ParseFromEnd(Regex pattern, ItemSections itemSections)
         {
+            if (itemSections.WholeSections.Length < 3)
+                return false;
+
             // Section order at the end:
             // Corruption
             // Influence

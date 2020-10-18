@@ -187,6 +187,14 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
+                    <ItemsControl ItemsSource="{Binding Path=ViewModel.PreviewItem.Item.Modifiers.Fractured}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ItemMod Modifier="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
                     <Border
                         Margin="0,2,0,5"
                         BorderBrush="Gray"
