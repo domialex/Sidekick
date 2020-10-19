@@ -32,7 +32,7 @@ namespace Sidekick.Core.Initialization
             };
         }
 
-        public event Action<ErrorEventArgs> OnError;
+        public event Action OnError;
 
         private List<IInitializerStep> Steps { get; set; }
 
@@ -89,11 +89,7 @@ namespace Sidekick.Core.Initialization
                 catch (Exception exception)
                 {
                     logger.Error($"Initializer Error - {step.Name} - {exception.Message}", exception);
-                    OnError?.Invoke(new ErrorEventArgs
-                    {
-                        StepName = step.Name,
-                        Message = exception.Message,
-                    });
+                    OnError?.Invoke();
                     return;
                 }
             }

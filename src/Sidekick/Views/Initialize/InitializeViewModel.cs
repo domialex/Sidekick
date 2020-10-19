@@ -45,7 +45,7 @@ namespace Sidekick.Views.Initialize
             );
         }
 
-        private void Initializer_OnError(ErrorEventArgs obj)
+        private void Initializer_OnError()
         {
             nativeNotifications.ShowMessage(InitializeResources.ErrorDuringInit);
             nativeApp.Shutdown();
