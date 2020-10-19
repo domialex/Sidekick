@@ -6,7 +6,6 @@ using Serilog;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
@@ -16,7 +15,7 @@ namespace Sidekick.Business.Apis.PoeNinja
     /// Fetch poe.ninja with specified interval in the background.
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
-    public class PoeNinjaCache : IPoeNinjaCache, IOnAfterInit
+    public class PoeNinjaCache : IPoeNinjaCache
     {
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
@@ -43,7 +42,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         }
         public PoeNinjaItem GetItem(Item item)
         {
-            string nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
+            var nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
             string translatedName = null; // PoeNinja doesn't translate all items, example : Tabula Rasa.
 
             if (client.IsSupportingCurrentLanguage && Translations.Any())
@@ -119,7 +118,5 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             return;
         }
-
-        public Task OnAfterInit() => RefreshData();
     }
 }

@@ -2,139 +2,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {
-    public class ParserPatterns : IOnAfterInit, IParserPatterns
+    public class ParserPatterns : IParserPatterns
     {
-        private readonly ILanguageProvider languageProvider;
-
-        public ParserPatterns(ILanguageProvider languageProvider)
-        {
-            this.languageProvider = languageProvider;
-        }
-
-        public Task OnAfterInit()
-        {
-            InitHeader();
-            InitProperties();
-            InitSockets();
-            InitInfluences();
-
-            return Task.CompletedTask;
-        }
-
         #region Header (Rarity, Name, Type)
-
-        public Dictionary<Rarity, Regex> Rarity { get; private set; }
-        public Regex ItemLevel { get; private set; }
-        public Regex Unidentified { get; private set; }
-        public Regex Corrupted { get; private set; }
-
-        private void InitHeader()
-        {
-            Rarity = new Dictionary<Rarity, Regex>
-            {
-                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
-                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
-                { Models.Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
-                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
-                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
-                { Models.Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
-                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
-            };
-
-            ItemLevel = languageProvider.Language.DescriptionItemLevel.IntFromLineRegex();
-            Unidentified = languageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
-            Corrupted = languageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
-        }
-
+        public Dictionary<Rarity, Regex> Rarity { get; set; }
+        public Regex ItemLevel { get; set; }
+        public Regex Unidentified { get; set; }
+        public Regex Corrupted { get; set; }
         #endregion Header (Rarity, Name, Type)
 
         #region Properties (Armour, Evasion, Energy Shield, Quality, Level)
-
-        public Regex Armor { get; private set; }
-        public Regex EnergyShield { get; private set; }
-        public Regex Evasion { get; private set; }
-        public Regex ChanceToBlock { get; private set; }
-        public Regex Quality { get; private set; }
-        public Regex AlternateQuality { get; private set; }
-        public Regex Level { get; private set; }
-        public Regex MapTier { get; private set; }
-        public Regex ItemQuantity { get; private set; }
-        public Regex ItemRarity { get; private set; }
-        public Regex MonsterPackSize { get; private set; }
-        public Regex AttacksPerSecond { get; private set; }
-        public Regex CriticalStrikeChance { get; private set; }
-        public Regex ElementalDamage { get; private set; }
-        public Regex PhysicalDamage { get; private set; }
-        public Regex Blighted { get; private set; }
-
-        private void InitProperties()
-        {
-            Armor = languageProvider.Language.DescriptionArmour.ToRegex(prefix: "(?:^|[\\r\\n])", suffix: "[^\\r\\n\\d]*(\\d+)");
-
-            EnergyShield = languageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
-            Evasion = languageProvider.Language.DescriptionEvasion.IntFromLineRegex();
-            ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
-            Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
-            AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
-            CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
-            ElementalDamage = languageProvider.Language.DescriptionElementalDamage.LineRegex();
-            PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.LineRegex();
-
-            Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
-            AlternateQuality = languageProvider.Language.DescriptionAlternateQuality.ToRegex();
-
-            MapTier = languageProvider.Language.DescriptionMapTier.IntFromLineRegex();
-            ItemQuantity = languageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
-            ItemRarity = languageProvider.Language.DescriptionItemRarity.IntFromLineRegex();
-            MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
-            Blighted = languageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
-        }
-
+        public Regex Armor { get; set; }
+        public Regex EnergyShield { get; set; }
+        public Regex Evasion { get; set; }
+        public Regex ChanceToBlock { get; set; }
+        public Regex Quality { get; set; }
+        public Regex AlternateQuality { get; set; }
+        public Regex Level { get; set; }
+        public Regex MapTier { get; set; }
+        public Regex ItemQuantity { get; set; }
+        public Regex ItemRarity { get; set; }
+        public Regex MonsterPackSize { get; set; }
+        public Regex AttacksPerSecond { get; set; }
+        public Regex CriticalStrikeChance { get; set; }
+        public Regex ElementalDamage { get; set; }
+        public Regex PhysicalDamage { get; set; }
+        public Regex Blighted { get; set; }
         #endregion Properties (Armour, Evasion, Energy Shield, Quality, Level)
 
         #region Sockets
-
-        public Regex Socket { get; private set; }
-
-        private void InitSockets()
-        {
-            // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
-            Socket = languageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
-        }
-
+        public Regex Socket { get; set; }
         #endregion Sockets
 
         #region Influences
-
-        public Regex Crusader { get; private set; }
-        public Regex Elder { get; private set; }
-        public Regex Hunter { get; private set; }
-        public Regex Redeemer { get; private set; }
-        public Regex Shaper { get; private set; }
-        public Regex Warlord { get; private set; }
-
-        private void InitInfluences()
-        {
-            Crusader = languageProvider.Language.InfluenceCrusader.ToRegex(prefix: "[\\r\\n]+");
-            Elder = languageProvider.Language.InfluenceElder.ToRegex(prefix: "[\\r\\n]+");
-            Hunter = languageProvider.Language.InfluenceHunter.ToRegex(prefix: "[\\r\\n]+");
-            Redeemer = languageProvider.Language.InfluenceRedeemer.ToRegex(prefix: "[\\r\\n]+");
-            Shaper = languageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
-            Warlord = languageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
-        }
-
+        public Regex Crusader { get; set; }
+        public Regex Elder { get; set; }
+        public Regex Hunter { get; set; }
+        public Regex Redeemer { get; set; }
+        public Regex Shaper { get; set; }
+        public Regex Warlord { get; set; }
         #endregion Influences
 
         #region Helpers
-
         public int GetInt(Regex regex, string input)
         {
             if (regex != null)
@@ -199,7 +112,6 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
             return 0d;
         }
-
         #endregion Helpers
     }
 }

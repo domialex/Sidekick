@@ -7,7 +7,6 @@ using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Views;
@@ -18,7 +17,7 @@ using Sidekick.Views.Settings;
 
 namespace Sidekick.Handlers
 {
-    public class EventsHandler : IDisposable, IOnReset, IOnAfterInit
+    public class EventsHandler : IDisposable
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -32,7 +31,6 @@ namespace Sidekick.Handlers
         private readonly IStashService stashService;
         private readonly SidekickSettings settings;
         private readonly IParserService parserService;
-        private bool isDisposed;
 
         public EventsHandler(
             IKeybindEvents events,
@@ -61,21 +59,29 @@ namespace Sidekick.Handlers
             this.stashService = stashService;
             this.settings = settings;
             this.parserService = parserService;
+
+            events.OnItemWiki += TriggerItemWiki;
+            events.OnFindItems += TriggerFindItem;
+            events.OnLeaveParty += TriggerLeaveParty;
+            events.OnOpenSearch += TriggerOpenSearch;
+            events.OnOpenSettings += TriggerOpenSettings;
+            events.OnWhisperReply += TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
+            events.OnPriceCheck += Events_OnPriceCheck;
+            events.OnMapInfo += Events_OnMapInfo;
+            events.OnHideout += Events_OnHideout;
+            events.OnExit += Events_OnExit;
+            events.OnTabLeft += Events_OnTabLeft;
+            events.OnTabRight += Events_OnTabRight;
         }
 
         public void Dispose()
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            OnReset();
-            isDisposed = true;
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public void OnReset()
+        protected virtual void Dispose(bool disposing)
         {
             events.OnItemWiki -= TriggerItemWiki;
             events.OnFindItems -= TriggerFindItem;
@@ -90,25 +96,6 @@ namespace Sidekick.Handlers
             events.OnExit -= Events_OnExit;
             events.OnTabLeft -= Events_OnTabLeft;
             events.OnTabRight -= Events_OnTabRight;
-        }
-
-        public Task OnAfterInit()
-        {
-            events.OnItemWiki += TriggerItemWiki;
-            events.OnFindItems += TriggerFindItem;
-            events.OnLeaveParty += TriggerLeaveParty;
-            events.OnOpenSearch += TriggerOpenSearch;
-            events.OnOpenSettings += TriggerOpenSettings;
-            events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
-            events.OnPriceCheck += Events_OnPriceCheck;
-            events.OnMapInfo += Events_OnMapInfo;
-            events.OnHideout += Events_OnHideout;
-            events.OnExit += Events_OnExit;
-            events.OnTabLeft += Events_OnTabLeft;
-            events.OnTabRight += Events_OnTabRight;
-
-            return Task.CompletedTask;
         }
 
         private async Task<bool> Events_OnHideout()

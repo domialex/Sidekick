@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Localization;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
@@ -14,29 +16,26 @@ using Sidekick.Core.Update.Github_API;
 
 namespace Sidekick.Core.Update
 {
-    public class Updater : IUpdater
+    public class InitializeUpdateHandler : INotificationHandler<InitializeUpdateNotification>
     {
         private readonly HttpClient _httpClient;
-        private readonly IInitializer initializer;
         private readonly INativeApp nativeApp;
         private readonly INativeNotifications nativeNotifications;
         private readonly INativeBrowser nativeBrowser;
-        private readonly IStringLocalizer<Updater> localizer;
+        private readonly IStringLocalizer<InitializeUpdateHandler> localizer;
 
-        public Updater(
+        public InitializeUpdateHandler(
             IHttpClientFactory httpClientFactory,
-            IInitializer initializer,
             INativeApp nativeApp,
             INativeNotifications nativeNotifications,
             INativeBrowser nativeBrowser,
-            IStringLocalizer<Updater> localizer)
+            IStringLocalizer<InitializeUpdateHandler> localizer)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");
             _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            this.initializer = initializer;
             this.nativeApp = nativeApp;
             this.nativeNotifications = nativeNotifications;
             this.nativeBrowser = nativeBrowser;
@@ -49,9 +48,11 @@ namespace Sidekick.Core.Update
 
         private GithubRelease LatestRelease { get; set; }
 
-        public async Task Update()
+        public async Task Handle(InitializeUpdateNotification notification, CancellationToken cancellationToken)
         {
-            if (await NewVersionAvailable() || true)
+            notification.OnStart("Update");
+
+            if (await NewVersionAvailable())
             {
                 nativeNotifications.ShowYesNo(
                     localizer["Available"],
@@ -90,6 +91,8 @@ namespace Sidekick.Core.Update
                         //}
                     });
             }
+
+            notification.OnEnd("Update");
         }
 
         /// <summary>
@@ -98,31 +101,14 @@ namespace Sidekick.Core.Update
         /// <returns></returns>
         private async Task<bool> NewVersionAvailable()
         {
-            initializer.ReportProgress(InitializationSteps.Other, nameof(Updater), "Checking for Updates...");
             LatestRelease = await GetLatestRelease();
             if (LatestRelease != null)
             {
                 var latestVersion = new Version(Regex.Match(LatestRelease.Tag, @"(\d+\.){2}\d+").ToString());
-                // var currentVersion = new Version("0.2.0");
                 var currentVersion = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).GetName().Version;
 
                 var result = currentVersion.CompareTo(latestVersion);
                 return result < 0;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Trys to update sidekick
-        /// </summary>
-        /// <returns></returns>
-        private async Task<bool> UpdateSidekick()
-        {
-            if (await DownloadNewestRelease())
-            {
-                initializer.ReportProgress(InitializationSteps.Other, nameof(Updater), "Applying update...");
-                return true;
             }
 
             return false;
@@ -168,12 +154,25 @@ namespace Sidekick.Core.Update
         }
 
         /// <summary>
+        /// Trys to update sidekick
+        /// </summary>
+        /// <returns></returns>
+        /*private async Task<bool> UpdateSidekick()
+        {
+            if (await DownloadNewestRelease())
+            {
+                return true;
+            }
+
+            return false;
+        }*/
+
+        /// <summary>
         /// Downloads the latest release from github
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> DownloadNewestRelease()
+        /*private async Task<bool> DownloadNewestRelease()
         {
-            initializer.ReportProgress(InitializationSteps.Other, nameof(Updater), "Downloading latest release from GitHub...");
             if (LatestRelease != null)
             {
                 var downloadUrl = LatestRelease.Assets
@@ -192,6 +191,6 @@ namespace Sidekick.Core.Update
             }
 
             return true;
-        }
+        }*/
     }
 }

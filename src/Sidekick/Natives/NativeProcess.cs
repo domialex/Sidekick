@@ -11,13 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Serilog;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Extensions;
 
 namespace Sidekick.Natives
 {
-    public class NativeProcess : INativeProcess, IOnAfterInit
+    public class NativeProcess : INativeProcess
     {
         #region DllImport
         [DllImport("user32.dll")]
@@ -145,7 +144,7 @@ namespace Sidekick.Natives
 
         private async Task WaitForPathOfExileFocus()
         {
-            while (IsPathOfExileInFocus == false)
+            while (!IsPathOfExileInFocus)
             {
                 await Task.Delay(1000);
             }
@@ -229,12 +228,6 @@ namespace Sidekick.Natives
             }
 
             return result;
-        }
-
-        public Task OnAfterInit()
-        {
-            Task.Run(CheckPermission);
-            return Task.CompletedTask;
         }
     }
 }

@@ -5,7 +5,7 @@ using Sidekick.Business.Leagues;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
-    public class LeagueChangedHandler : INotificationHandler<LeagueChanged>
+    public class LeagueChangedHandler : INotificationHandler<LeagueChangedNotification>
     {
         private readonly IPoeNinjaCache poeNinjaCache;
 
@@ -14,7 +14,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             this.poeNinjaCache = poeNinjaCache;
         }
 
-        public async Task Handle(LeagueChanged notification, CancellationToken cancellationToken)
+        public async Task Handle(LeagueChangedNotification notification, CancellationToken cancellationToken)
         {
             await poeNinjaCache.RefreshData();
         }

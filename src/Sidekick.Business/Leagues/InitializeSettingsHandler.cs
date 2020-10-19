@@ -12,14 +12,14 @@ using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Leagues
 {
-    public class InitializeDataHandler : INotificationHandler<InitializeData>
+    public class InitializeSettingsHandler : INotificationHandler<InitializeSettingsNotification>
     {
         private readonly SidekickSettings settings;
         private readonly ICacheService cacheService;
         private readonly IMediator mediator;
         private readonly ILeagueDataService leagueDataService;
 
-        public InitializeDataHandler(
+        public InitializeSettingsHandler(
             SidekickSettings settings,
             ICacheService cacheService,
             IMediator mediator,
@@ -31,8 +31,10 @@ namespace Sidekick.Business.Leagues
             this.leagueDataService = leagueDataService;
         }
 
-        public async Task Handle(InitializeData notification, CancellationToken cancellationToken)
+        public async Task Handle(InitializeSettingsNotification notification, CancellationToken cancellationToken)
         {
+            notification.OnStart("Leagues");
+
             var leagues = await mediator.Send(new GetLeaguesQuery());
             leagueDataService.Initialize(leagues);
 
@@ -65,8 +67,10 @@ namespace Sidekick.Business.Leagues
 
             if (newLeagues)
             {
-                await mediator.Publish(new NewLeagues());
+                await mediator.Publish(new NewLeaguesNotification());
             }
+
+            notification.OnEnd("Leagues");
         }
     }
 }

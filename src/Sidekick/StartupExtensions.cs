@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Natives;
@@ -38,11 +37,11 @@ namespace Sidekick
             services.AddScoped<SettingsViewModel>();
             services.AddScoped<InitializeViewModel>();
 
-            services.AddInitializableService<IKeybindEvents, KeybindEvents>();
-            services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
-            services.AddInitializableService<INativeProcess, NativeProcess>();
-            services.AddInitializableService<INativeCursor, NativeCursor>();
-            services.AddInitializableService<EventsHandler, EventsHandler>();
+            services.AddSingleton<IKeybindEvents, KeybindEvents>();
+            services.AddSingleton<INativeKeyboard, NativeKeyboard>();
+            services.AddSingleton<INativeProcess, NativeProcess>();
+            services.AddSingleton<INativeCursor, NativeCursor>();
+            services.AddSingleton<EventsHandler, EventsHandler>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<HookProvider>();
 

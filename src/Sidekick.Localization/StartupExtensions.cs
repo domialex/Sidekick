@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Localization
@@ -14,7 +13,7 @@ namespace Sidekick.Localization
             // Http Services
             services.AddHttpClient();
 
-            services.AddInitializableService<IUILanguageProvider, UILanguageProvider>();
+            services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
             return services;
         }

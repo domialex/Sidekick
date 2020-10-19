@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Serilog;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Natives.Helpers;
 
 namespace Sidekick.Natives
 {
-    public class NativeKeyboard : INativeKeyboard, IOnAfterInit, IDisposable, IOnReset
+    public class NativeKeyboard : INativeKeyboard, IDisposable
     {
         private static readonly List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
             WindowsHook.Keys.ControlKey,
@@ -33,20 +31,13 @@ namespace Sidekick.Natives
         {
             this.logger = logger.ForContext(GetType());
             this.hookProvider = hookProvider;
+
+            hookProvider.Hook.KeyDown += Hook_KeyDown;
         }
 
         public bool Enabled { get; set; }
 
         public event Func<string, bool> OnKeyDown;
-
-        private bool isDisposed;
-
-        public Task OnAfterInit()
-        {
-            hookProvider.Hook.KeyDown += Hook_KeyDown;
-
-            return Task.CompletedTask;
-        }
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
         {
@@ -94,17 +85,11 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            OnReset();
-            isDisposed = true;
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public void OnReset()
+        protected virtual void Dispose(bool disposing)
         {
             if (hookProvider.Hook != null) // Hook will be null if auto update was successful
             {

@@ -96,7 +96,7 @@ namespace Sidekick.Views.Settings
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
             sidekickSettings.Save();
 
-            if (leagueHasChanged) mediator.Publish(new LeagueChanged());
+            if (leagueHasChanged) mediator.Publish(new LeagueChangedNotification());
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
@@ -165,7 +165,7 @@ namespace Sidekick.Views.Settings
             _ = Task.Run(async () =>
             {
                 await cacheService.Clear();
-                await initializer.Initialize();
+                await initializer.Initialize(false);
             });
         }
     }

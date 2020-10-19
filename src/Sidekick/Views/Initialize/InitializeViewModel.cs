@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Core.Update;
 using Sidekick.Localization.Initialize;
 using Sidekick.Localization.Tray;
 
@@ -17,20 +16,17 @@ namespace Sidekick.Views.Initialize
 #pragma warning restore 67
 
         private readonly IInitializer initializer;
-        private readonly IUpdater updater;
         private readonly INativeNotifications nativeNotifications;
         private readonly INativeApp nativeApp;
         private readonly SidekickSettings settings;
         private bool isDisposed;
 
         public InitializeViewModel(IInitializer initializer,
-            IUpdater updater,
             INativeNotifications nativeNotifications,
             INativeApp nativeApp,
             SidekickSettings settings)
         {
             this.initializer = initializer;
-            this.updater = updater;
             this.nativeNotifications = nativeNotifications;
             this.nativeApp = nativeApp;
             this.settings = settings;
@@ -41,8 +37,7 @@ namespace Sidekick.Views.Initialize
 
         public async Task Initialize()
         {
-            await updater.Update();
-            await initializer.Initialize();
+            await initializer.Initialize(true);
 
             nativeNotifications.ShowSystemNotification(
                 TrayResources.Notification_Title,
@@ -78,11 +73,11 @@ namespace Sidekick.Views.Initialize
             StepPercentage = args.StepPercentage;
             StepTitle = args.StepTitle;
 
-            if (Percentage == 100)
+            if (Percentage >= 100)
             {
                 Task.Run(async () =>
                 {
-                    await Task.Delay(800);
+                    await Task.Delay(400);
                     if (Initialized != null)
                     {
                         Initialized.Invoke();

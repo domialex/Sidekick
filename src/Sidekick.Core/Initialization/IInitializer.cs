@@ -5,9 +5,8 @@ namespace Sidekick.Core.Initialization
 {
     public interface IInitializer
     {
-        Task Initialize();
+        Task Initialize(bool firstRun);
         event Action<ErrorEventArgs> OnError;
         event Action<ProgressEventArgs> OnProgress;
-        void ReportProgress(InitializationSteps progressType, string serviceName, string message);
     }
 }

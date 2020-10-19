@@ -2,14 +2,13 @@ using System;
 using System.Threading.Tasks;
 using Serilog;
 using Sidekick.Business.Stashes;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using WindowsHook;
 
 namespace Sidekick.Natives
 {
-    public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable, IOnReset
+    public class KeybindEvents : IKeybindEvents, IDisposable
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
@@ -31,6 +30,11 @@ namespace Sidekick.Natives
             this.nativeKeyboard = nativeKeyboard;
             this.stashService = stashService;
             this.hookProvider = hookProvider;
+
+            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+            hookProvider.Hook.MouseWheelExt += Hook_MouseWheelExt;
+
+            Enabled = true;
         }
 
         public bool Enabled { get; set; }
@@ -49,18 +53,6 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
-
-        private bool isDisposed;
-
-        public Task OnAfterInit()
-        {
-            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
-            hookProvider.Hook.MouseWheelExt += Hook_MouseWheelExt;
-
-            Enabled = true;
-
-            return Task.CompletedTask;
-        }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
@@ -161,17 +153,11 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            OnReset();
-            isDisposed = true;
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public void OnReset()
+        protected virtual void Dispose(bool disposing)
         {
             nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
             if (hookProvider.Hook != null) // Hook will be null if auto update was successful
@@ -179,5 +165,6 @@ namespace Sidekick.Natives
                 hookProvider.Hook.MouseWheelExt -= Hook_MouseWheelExt;
             }
         }
+
     }
 }

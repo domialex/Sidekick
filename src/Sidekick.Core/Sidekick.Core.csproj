@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Update\Updater.resx">
+    <EmbeddedResource Update="Update\InitializeUpdateHandler.resx">
       <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
