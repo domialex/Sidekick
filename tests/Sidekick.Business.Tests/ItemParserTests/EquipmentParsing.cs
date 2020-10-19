@@ -166,9 +166,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseFracturedItem()
+        public void ParseFracturedItem()
         {
-            var actual = await Subject.ParseItem(FracturedItem);
+            var actual = Subject.ParseItem(FracturedItem);
 
             actual.Type.Should().Be("Iron Greaves");
             actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
@@ -187,9 +187,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         /// This unique item can have multiple possible bases.
         /// </summary>
         [Test]
-        public async Task ParseUniqueItemWithDifferentBases()
+        public void ParseUniqueItemWithDifferentBases()
         {
-            var actual = await Subject.ParseItem(UniqueItemWithDifferentBases);
+            var actual = Subject.ParseItem(UniqueItemWithDifferentBases);
 
             actual.Name.Should().Be("Wings of Entropy");
             actual.Type.Should().Be("Ezomyte Axe");
@@ -201,9 +201,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseWeaponWithMultipleElementalDamages()
+        public void ParseWeaponWithMultipleElementalDamages()
         {
-            var actual = await Subject.ParseItem(WeaponWithMultipleElementalDamages);
+            var actual = Subject.ParseItem(WeaponWithMultipleElementalDamages);
 
             actual.Properties.PhysicalDps.Should().Be(53.94);
             actual.Properties.ElementalDps.Should().Be(314.07);
@@ -211,9 +211,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         }
 
         [Test]
-        public async Task ParseEnchantWithAdditionalProjectiles()
+        public void ParseEnchantWithAdditionalProjectiles()
         {
-            var actual = await Subject.ParseItem(EnchantWithAdditionalProjectiles);
+            var actual = Subject.ParseItem(EnchantWithAdditionalProjectiles);
 
             actual.Modifiers.Enchant.First().Text.Should().Be("Split Arrow fires an additional Projectile");
             actual.Modifiers.Enchant.First().Values.First().Should().Be(2);

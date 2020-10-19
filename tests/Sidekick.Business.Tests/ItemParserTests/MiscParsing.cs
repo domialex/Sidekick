@@ -1,5 +1,4 @@
 using FluentAssertions;
-using FluentAssertions.Execution;
 using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
@@ -14,11 +13,8 @@ namespace Sidekick.Business.Tests.ItemParserTests
         {
             var actual = Subject.ParseItem(Prophecy);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.Prophecy);
-                actual.Name.Should().Be("The Four Feral Exiles");
-            }
+            actual.Rarity.Should().Be(Rarity.Prophecy);
+            actual.Name.Should().Be("The Four Feral Exiles");
         }
 
         [Test]
@@ -26,11 +22,8 @@ namespace Sidekick.Business.Tests.ItemParserTests
         {
             var actual = Subject.ParseItem(DivinationCard);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.DivinationCard);
-                actual.Type.Should().Be("The Saint's Treasure");
-            }
+            actual.Rarity.Should().Be(Rarity.DivinationCard);
+            actual.Type.Should().Be("The Saint's Treasure");
         }
 
         [Test]
@@ -38,12 +31,9 @@ namespace Sidekick.Business.Tests.ItemParserTests
         {
             var actual = Subject.ParseItem(ShaperItemDivinationCard);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.DivinationCard);
-                actual.Type.Should().Be("The Lord of Celebration");
-                actual.Influences.Shaper.Should().BeFalse();
-            }
+            actual.Rarity.Should().Be(Rarity.DivinationCard);
+            actual.Type.Should().Be("The Lord of Celebration");
+            actual.Influences.Shaper.Should().BeFalse();
         }
 
         [Test]
@@ -51,24 +41,18 @@ namespace Sidekick.Business.Tests.ItemParserTests
         {
             var actual = Subject.ParseItem(Currency);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.Currency);
-                actual.Type.Should().Be("Divine Orb");
-            }
+            actual.Rarity.Should().Be(Rarity.Currency);
+            actual.Type.Should().Be("Divine Orb");
         }
 
         [Test]
-        public async Task ParseOrgan()
+        public void ParseOrgan()
         {
-            var actual = await Subject.ParseItem(Organ);
+            var actual = Subject.ParseItem(Organ);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.Unique);
-                actual.Category.Should().Be(Category.ItemisedMonster);
-                actual.Type.Should().Be("Portentia, the Foul");
-            }
+            actual.Rarity.Should().Be(Rarity.Unique);
+            actual.Category.Should().Be(Category.ItemisedMonster);
+            actual.Type.Should().Be("Portentia, the Foul");
         }
 
         #region ItemText

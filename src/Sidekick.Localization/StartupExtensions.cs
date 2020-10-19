@@ -13,6 +13,7 @@ namespace Sidekick.Localization
             // Http Services
             services.AddHttpClient();
 
+            services.AddLocalization();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
             return services;

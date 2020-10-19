@@ -20,7 +20,6 @@ namespace Sidekick
               .AddSidekickLocalization()
               .AddSidekickUIWindows()
               .AddSidekickDatabase()
-              .AddLocalization()
               .AddSingleton(typeof(IPipelineBehavior<,>), typeof(MediatorLoggingBehavior<,>))
               .AddMediatR(
                 (config) => config.Using<SidekickMediator>().AsTransient(),
