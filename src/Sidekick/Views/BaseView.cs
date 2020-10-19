@@ -23,12 +23,12 @@ namespace Sidekick.Views
         private readonly bool closeOnKey;
         private readonly string id;
 
-        public BaseView()
+        protected BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        public BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        protected BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();

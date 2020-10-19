@@ -88,7 +88,7 @@ namespace Sidekick.Views.Settings
             foreach (var keybind in Keybinds)
             {
                 keybindProperties.First(x => x.Name == keybind.Key).SetValue(Settings, keybind.Value);
-            };
+            }
 
             var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
 

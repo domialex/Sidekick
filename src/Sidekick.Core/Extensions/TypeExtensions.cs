@@ -10,14 +10,14 @@ namespace Sidekick.Core.Extensions
         public static TAttribute GetAttribute<TAttribute>(this Type type)
         {
             var attributeType = typeof(TAttribute);
-            return (TAttribute)type.GetCustomAttributes(false).Where(x => attributeType.IsAssignableFrom(x.GetType())).FirstOrDefault();
+            return (TAttribute)type.GetCustomAttributes(false).FirstOrDefault(x => attributeType.IsInstanceOfType(x));
         }
 
         public static IList<TAttribute> GetAttributes<TAttribute>(this Type type)
         {
             var attributeType = typeof(TAttribute);
             return type.GetCustomAttributes(false)
-              .Where(x => attributeType.IsAssignableFrom(x.GetType()))
+              .Where(x => attributeType.IsInstanceOfType(x))
               .Select(x => (TAttribute)x)
               .ToList();
         }
@@ -29,7 +29,7 @@ namespace Sidekick.Core.Extensions
 
         public static List<Type> GetImplementedAttribute(this Type attribute)
         {
-            return FindTypes(x => x.GetCustomAttributes(false).Any(y => attribute.IsAssignableFrom(y.GetType())));
+            return FindTypes(x => x.GetCustomAttributes(false).Any(y => attribute.IsInstanceOfType(y)));
         }
 
         private static List<Type> FindTypes(Func<Type, bool> func)
@@ -65,7 +65,10 @@ namespace Sidekick.Core.Extensions
 
                     FindTypes(ref results, ref executedAssemblies, func, assembly.GetReferencedAssemblies());
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                    // If an assembly can't be loaded, we skip it. It hasn't caused issues yet.
+                }
             }
         }
     }

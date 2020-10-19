@@ -44,7 +44,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             }
         }
 
-        public async Task<List<TReturn>> Fetch<TReturn>(bool useEnglishLanguage = false)
+        public async Task<List<TReturn>> Fetch<TReturn>(bool useDefaultLanguage = false)
         {
             string path;
             string name;
@@ -69,7 +69,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
                 default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            var language = useEnglishLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
+            var language = useDefaultLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
 
             try
             {

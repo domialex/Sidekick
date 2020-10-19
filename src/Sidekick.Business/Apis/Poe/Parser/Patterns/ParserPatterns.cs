@@ -54,12 +54,9 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             {
                 var match = regex.Match(input);
 
-                if (match.Success)
+                if (match.Success && int.TryParse(match.Groups[1].Value, out var result))
                 {
-                    if (int.TryParse(match.Groups[1].Value, out var result))
-                    {
-                        return result;
-                    }
+                    return result;
                 }
             }
 
@@ -72,12 +69,9 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             {
                 var match = regex.Match(input);
 
-                if (match.Success)
+                if (match.Success && double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
                 {
-                    if (double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
-                    {
-                        return result;
-                    }
+                    return result;
                 }
             }
 
@@ -93,18 +87,18 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
                 if (match.Success)
                 {
                     var matches = new Regex("(\\d+-\\d+)").Matches(match.Value);
-                    var dps = matches.Select(x => x.Value.Split("-"))
-                                     .ToList()
-                                     .Sum(split =>
-                    {
-                        if (double.TryParse(split[0], out var minValue)
-                         && double.TryParse(split[1], out var maxValue))
+                    var dps = matches
+                        .Select(x => x.Value.Split("-"))
+                        .Sum(split =>
                         {
-                            return (minValue + maxValue) / 2d;
-                        }
+                            if (double.TryParse(split[0], out var minValue)
+                             && double.TryParse(split[1], out var maxValue))
+                            {
+                                return (minValue + maxValue) / 2d;
+                            }
 
-                        return 0d;
-                    });
+                            return 0d;
+                        });
 
                     return Math.Round(dps * attacksPerSecond, 2);
                 }

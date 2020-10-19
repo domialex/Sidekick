@@ -95,7 +95,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                             if (statDataService.NewLinePattern.IsMatch(option.Text))
                             {
                                 var lines = statDataService.NewLinePattern.Split(option.Text).ToList();
-                                var options = lines.ConvertAll(x => x = hashPattern.Replace(pattern, Regex.Escape(x)));
+                                var options = lines.ConvertAll(x => hashPattern.Replace(pattern, Regex.Escape(x)));
                                 option.Pattern = new Regex($"(?:^|\\n){string.Join("\\n", options)}{suffix}");
                                 option.Text = string.Join("\n", lines.Select((x, i) => new
                                 {

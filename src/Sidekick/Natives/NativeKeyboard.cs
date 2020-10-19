@@ -167,7 +167,7 @@ namespace Sidekick.Natives
                 default:
                     logger.Warning("NativeKeyboard.IsKeyPressed - Unrecognized key - {key}", key);
                     return false;
-            };
+            }
         }
     }
 }

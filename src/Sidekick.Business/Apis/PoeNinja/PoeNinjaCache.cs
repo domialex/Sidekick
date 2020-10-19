@@ -115,8 +115,6 @@ namespace Sidekick.Business.Apis.PoeNinja
             LastRefreshTimestamp = DateTime.Now;
 
             logger.Information($"PoeNinja cache populated.");
-
-            return;
         }
     }
 }

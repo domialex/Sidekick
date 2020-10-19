@@ -69,7 +69,7 @@ namespace Sidekick
             base.OnExit(e);
         }
 
-        private async void Initialize()
+        private void Initialize()
         {
             initializer.OnProgress += (a) =>
             {
@@ -125,7 +125,11 @@ namespace Sidekick
                 {
                     AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                    // Sometimes showing the MessageBox causes an Exception.
+                    // At this point, there is nothing to do before shutting down the application.
+                }
                 Shutdown(1);
             });
         }

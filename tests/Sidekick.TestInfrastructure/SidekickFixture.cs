@@ -8,7 +8,6 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Settings;
 using Sidekick.TestInfrastructure.TestClients.Caches;
 using Sidekick.TestInfrastructure.TestClients.PoeApi;

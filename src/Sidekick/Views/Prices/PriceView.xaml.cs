@@ -71,8 +71,11 @@ namespace Sidekick.Views.Prices
         private void OverlayWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
-            scrollViewer?.ScrollToTop();
-            scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+            if (scrollViewer != null)
+            {
+                scrollViewer.ScrollToTop();
+                scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+            }
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -85,13 +88,10 @@ namespace Sidekick.Views.Prices
             var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
 
             // Load next results when scrollviewer is at the bottom
-            if (scrollViewer?.ScrollableHeight > 0)
+            // Query next page when reaching more than 99% of the scrollable content.
+            if (scrollViewer != null && scrollViewer.ScrollableHeight > 0 && (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.99d)
             {
-                // Query next page when reaching more than 99% of the scrollable content.
-                if ((scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight) > 0.99d)
-                {
-                    _ = viewModel.LoadMoreData();
-                }
+                _ = viewModel.LoadMoreData();
             }
         }
 

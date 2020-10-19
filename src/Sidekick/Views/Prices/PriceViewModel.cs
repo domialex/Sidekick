@@ -627,7 +627,7 @@ namespace Sidekick.Views.Prices
                         case Category.Jewel: settings.JewelModifiers = settingMods; break;
                         case Category.Map: settings.MapModifiers = settingMods; break;
                         case Category.Weapon: settings.WeaponModifiers = settingMods; break;
-                    };
+                    }
 
                     settings.Save();
                 }
@@ -846,6 +846,12 @@ namespace Sidekick.Views.Prices
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             PropertyChanged -= PriceViewModel_PropertyChanged;
         }
