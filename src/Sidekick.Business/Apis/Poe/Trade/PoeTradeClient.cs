@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
@@ -19,11 +19,11 @@ namespace Sidekick.Business.Apis.Poe.Trade
         private readonly ILanguageProvider languageProvider;
         private readonly HttpClient client;
 
-        public PoeTradeClient(ILogger logger,
+        public PoeTradeClient(ILogger<PoeTradeClient> logger,
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.languageProvider = languageProvider;
             client = httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
@@ -73,18 +73,18 @@ namespace Sidekick.Business.Apis.Poe.Trade
 
             try
             {
-                logger.Information($"Fetching {name} started.");
+                logger.LogInformation($"Fetching {name} started.");
 
                 var response = await client.GetAsync(language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
 
-                logger.Information($"{result.Result.Count} {name} fetched.");
+                logger.LogInformation($"{result.Result.Count} {name} fetched.");
                 return result.Result;
             }
             catch (Exception)
             {
-                logger.Information($"Could not fetch {name} at {language.PoeTradeApiBaseUrl + path}.");
+                logger.LogInformation($"Could not fetch {name} at {language.PoeTradeApiBaseUrl + path}.");
                 throw;
             }
 

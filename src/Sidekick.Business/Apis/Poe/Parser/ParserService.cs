@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
@@ -23,12 +23,12 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private const string SEPARATOR_PATTERN = "--------";
 
         public ParserService(
-            ILogger logger,
+            ILogger<ParserService> logger,
             IStatDataService statsDataService,
             IItemDataService itemDataService,
             IParserPatterns patterns)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.statsDataService = statsDataService;
             this.itemDataService = itemDataService;
             this.patterns = patterns;
@@ -67,7 +67,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
             }
             catch (Exception e)
             {
-                logger.Error(e, "Could not parse item.");
+                logger.LogError(e, "Could not parse item.");
                 return null;
             }
         }

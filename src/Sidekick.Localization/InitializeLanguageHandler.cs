@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Localization

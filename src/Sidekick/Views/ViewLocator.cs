@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Windows.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Settings;
 
@@ -12,13 +13,17 @@ namespace Sidekick.Views
     {
         private readonly IServiceProvider serviceProvider;
         private readonly SidekickSettings settings;
+        private readonly Dispatcher dispatcher;
         private bool isDisposed;
 
-        public ViewLocator(IServiceProvider serviceProvider,
-            SidekickSettings settings)
+        public ViewLocator(
+            IServiceProvider serviceProvider,
+            SidekickSettings settings,
+            Dispatcher dispatcher)
         {
             this.serviceProvider = serviceProvider;
             this.settings = settings;
+            this.dispatcher = dispatcher;
             Views = new List<ViewInstance>();
         }
 
@@ -27,23 +32,26 @@ namespace Sidekick.Views
         public void Open<TView>()
             where TView : ISidekickView
         {
-            // Still needed for localization of league overlay models
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
-
-            var view = new ViewInstance(
-                serviceProvider.CreateScope(),
-                typeof(TView)
-            );
-
-            view.Disposed += () =>
+            dispatcher.Invoke(() =>
             {
-                Views.Remove(view);
-            };
+                // Still needed for localization of league overlay models
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
-            Views.Add(view);
+                var view = new ViewInstance(
+                    serviceProvider.CreateScope(),
+                    typeof(TView)
+                );
 
-            view.Open();
+                view.Disposed += () =>
+                {
+                    Views.Remove(view);
+                };
+
+                Views.Add(view);
+
+                view.Open();
+            });
         }
 
         public bool IsOpened<TView>()
@@ -53,30 +61,36 @@ namespace Sidekick.Views
 
         public void CloseAll()
         {
-            while (Views.Count > 0)
+            dispatcher.Invoke(() =>
             {
-                var view = Views[0];
-                view.View.Close();
-                view.Dispose();
-                if (Views.Contains(view))
+                while (Views.Count > 0)
                 {
-                    Views.Remove(view);
+                    var view = Views[0];
+                    view.View.Close();
+                    view.Dispose();
+                    if (Views.Contains(view))
+                    {
+                        Views.Remove(view);
+                    }
                 }
-            }
+            });
         }
 
         public void Close<TView>()
             where TView : ISidekickView
         {
-            foreach (var view in Views.Where(x => x.ViewType == typeof(TView)))
+            dispatcher.Invoke(() =>
             {
-                view.View.Close();
-                view.Dispose();
-                if (Views.Contains(view))
+                foreach (var view in Views.Where(x => x.ViewType == typeof(TView)))
                 {
-                    Views.Remove(view);
+                    view.View.Close();
+                    view.Dispose();
+                    if (Views.Contains(view))
+                    {
+                        Views.Remove(view);
+                    }
                 }
-            }
+            });
         }
 
         public void Dispose()
@@ -92,14 +106,11 @@ namespace Sidekick.Views
                 return;
             }
 
-            if (disposing)
+            if (disposing && Views != null)
             {
-                if (Views != null)
+                foreach (var view in Views)
                 {
-                    foreach (var view in Views)
-                    {
-                        view.Dispose();
-                    }
+                    view.Dispose();
                 }
             }
 

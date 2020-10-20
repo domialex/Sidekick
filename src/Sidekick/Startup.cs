@@ -1,11 +1,11 @@
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business;
 using Sidekick.Core;
-using Sidekick.Core.Mediator;
 using Sidekick.Core.Natives;
 using Sidekick.Database;
 using Sidekick.Localization;
+using Sidekick.Logging;
+using Sidekick.Mediator;
 
 namespace Sidekick
 {
@@ -14,21 +14,25 @@ namespace Sidekick
         public static ServiceProvider InitializeServices(App application)
         {
             var services = new ServiceCollection()
-              .AddSidekickConfiguration()
-              .AddSidekickCoreServices()
-              .AddSidekickBusinessServices()
-              .AddSidekickLocalization()
-              .AddSidekickUIWindows()
-              .AddSidekickDatabase()
-              .AddSingleton(typeof(IPipelineBehavior<,>), typeof(MediatorLoggingBehavior<,>))
-              .AddMediatR(
-                (config) => config.Using<SidekickMediator>().AsTransient(),
-                typeof(Business.StartupExtensions),
-                typeof(Core.StartupExtensions),
-                typeof(Localization.StartupExtensions),
-                typeof(Sidekick.StartupExtensions));
+
+                // Building blocks
+                .AddSidekickMediator(
+                    typeof(Business.StartupExtensions).Assembly,
+                    typeof(Core.StartupExtensions).Assembly,
+                    typeof(Localization.StartupExtensions).Assembly,
+                    typeof(Sidekick.StartupExtensions).Assembly
+                )
+                .AddSidekickLogging()
+
+                .AddSidekickConfiguration()
+                .AddSidekickCoreServices()
+                .AddSidekickBusinessServices()
+                .AddSidekickLocalization()
+                .AddSidekickUIWindows()
+                .AddSidekickDatabase();
 
             services.AddSingleton(application);
+            services.AddSingleton(application.Dispatcher);
             services.AddSingleton<INativeApp, App>((sp) => sp.GetRequiredService<App>());
 
             return services.BuildServiceProvider();

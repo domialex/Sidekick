@@ -5,15 +5,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using Sidekick.Core.Initialization;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
+using Sidekick.Initialization;
 using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
 using Sidekick.Views;
-using Sidekick.Views.Initialize;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -35,7 +35,7 @@ namespace Sidekick
         private ILogger logger;
         private INativeProcess nativeProcess;
         private IViewLocator viewLocator;
-        private IInitializer initializer;
+        private IMediator mediator;
         public TaskbarIcon TrayIcon { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -50,16 +50,16 @@ namespace Sidekick
             serviceProvider = Sidekick.Startup.InitializeServices(this);
             serviceProvider.UseSidekickLocalization();
 
-            logger = serviceProvider.GetRequiredService<ILogger>();
+            logger = serviceProvider.GetRequiredService<ILogger<App>>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
-            initializer = serviceProvider.GetRequiredService<IInitializer>();
+            mediator = serviceProvider.GetRequiredService<IMediator>();
 
             TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
             TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
-            Initialize();
+            viewLocator.Open<InitializationView>();
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -67,22 +67,6 @@ namespace Sidekick
             TrayIcon?.Dispose();
             serviceProvider?.Dispose();
             base.OnExit(e);
-        }
-
-        private void Initialize()
-        {
-            initializer.OnProgress += (a) =>
-            {
-                if (!viewLocator.IsOpened<InitializeView>())
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        viewLocator.Open<InitializeView>();
-                    });
-                }
-            };
-
-            viewLocator.Open<InitializeView>();
         }
 
         private void EnsureSingleInstance()
@@ -118,7 +102,7 @@ namespace Sidekick
 
         private void LogUnhandledException(Exception ex)
         {
-            logger.Fatal(ex, "Unhandled exception in application root");
+            logger.LogCritical(ex, "Unhandled exception in application root");
             Dispatcher.Invoke(() =>
             {
                 try

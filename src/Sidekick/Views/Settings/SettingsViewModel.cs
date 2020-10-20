@@ -24,7 +24,6 @@ namespace Sidekick.Views.Settings
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
         private readonly ICacheService cacheService;
-        private readonly IInitializer initializer;
         private readonly IMediator mediator;
         private bool isDisposed;
 
@@ -33,7 +32,6 @@ namespace Sidekick.Views.Settings
             INativeKeyboard nativeKeyboard,
             IKeybindEvents keybindEvents,
             ICacheService cacheService,
-            IInitializer initializer,
             ILeagueDataService leagueDataService,
             IMediator mediator)
         {
@@ -42,7 +40,6 @@ namespace Sidekick.Views.Settings
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
             this.cacheService = cacheService;
-            this.initializer = initializer;
             this.mediator = mediator;
 
             Settings = new SidekickSettings();
@@ -165,7 +162,7 @@ namespace Sidekick.Views.Settings
             _ = Task.Run(async () =>
             {
                 await cacheService.Clear();
-                await initializer.Initialize(false);
+                await mediator.Send(new InitializeCommand(false));
             });
         }
     }

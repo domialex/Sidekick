@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
@@ -44,7 +44,7 @@ namespace Sidekick.Views.Prices
         private readonly IItemCategoryService itemCategoryService;
 
         public PriceViewModel(
-            ILogger logger,
+            ILogger<PriceViewModel> logger,
             IDebouncer debouncer,
             ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
@@ -769,7 +769,7 @@ namespace Sidekick.Views.Prices
             }
             catch (Exception e)
             {
-                logger.Error(e, "Error loading more data");
+                logger.LogError(e, "Error loading more data");
             }
         }
 

@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 
 namespace Sidekick.Core.Natives
 {
@@ -16,7 +16,9 @@ namespace Sidekick.Core.Natives
 
         public Task Handle(InitializeKeybindsNotification notification, CancellationToken cancellationToken)
         {
+            notification.OnStart("Sidekick.Core.Natives");
             Task.Run(nativeProcess.CheckPermission);
+            notification.OnEnd("Sidekick.Core.Natives");
             return Task.CompletedTask;
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Business.Leagues

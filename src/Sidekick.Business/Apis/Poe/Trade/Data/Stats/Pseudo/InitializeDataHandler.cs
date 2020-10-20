@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 {
@@ -18,7 +18,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
         private readonly ICacheService cacheService;
         private readonly IPseudoStatDataService pseudoStatDataService;
 
-        public InitializeDataHandler(ILogger logger,
+        public InitializeDataHandler(ILogger<InitializeDataHandler> logger,
             IPoeTradeClient poeApiClient,
             ICacheService cacheService,
             IPseudoStatDataService pseudoStatDataService)
@@ -38,11 +38,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 
             try
             {
-                logger.Information($"Pseudo stat service initialization started.");
+                logger.LogInformation($"Pseudo stat service initialization started.");
 
                 var result = await cacheService.GetOrCreate("PseudoStatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true));
 
-                logger.Information($"{result.Count} attributes fetched.");
+                logger.LogInformation($"{result.Count} attributes fetched.");
 
                 var groups = InitGroups(result);
 
@@ -115,7 +115,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             }
             catch (Exception)
             {
-                logger.Information($"Could not initialize pseudo service.");
+                logger.LogInformation($"Could not initialize pseudo service.");
                 throw;
             }
         }

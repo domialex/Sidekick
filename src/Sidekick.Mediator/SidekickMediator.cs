@@ -4,9 +4,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
-namespace Sidekick.Core.Mediator
+namespace Sidekick.Mediator
 {
     public class SidekickMediator : IMediator
     {
@@ -14,7 +14,7 @@ namespace Sidekick.Core.Mediator
         private readonly MediatR.Mediator mediator;
 
         public SidekickMediator(
-            ILogger logger,
+            ILogger<SidekickMediator> logger,
             ServiceFactory serviceFactory)
         {
             this.logger = logger;
@@ -27,21 +27,21 @@ namespace Sidekick.Core.Mediator
             var stopwatch = Stopwatch.StartNew();
             var requestNameWithGuid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}] {notification?.GetType()?.Name}";
 
-            logger.Information($"[MediatR:EVENT] {requestNameWithGuid}");
+            logger.LogInformation($"[MediatR:EVENT] {requestNameWithGuid}");
 
             try
             {
-                logger.Information($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
+                logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
             }
             catch (Exception)
             {
-                logger.Information($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
+                logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
             }
 
             await mediator.Publish<TNotification>(notification, cancellationToken);
 
             stopwatch.Stop();
-            logger.Information($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
         }
 
         public async Task Publish(object notification, CancellationToken cancellationToken = default)
@@ -49,21 +49,21 @@ namespace Sidekick.Core.Mediator
             var stopwatch = Stopwatch.StartNew();
             var requestNameWithGuid = $"{ notification?.GetType()?.Name} [{Guid.NewGuid().ToString().Substring(0, 8)}]";
 
-            logger.Information($"[MediatR:EVENT] {requestNameWithGuid}");
+            logger.LogInformation($"[MediatR:EVENT] {requestNameWithGuid}");
 
             try
             {
-                logger.Information($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
+                logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
             }
             catch (Exception)
             {
-                logger.Information($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
+                logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
             }
 
             await mediator.Publish(notification, cancellationToken);
 
             stopwatch.Stop();
-            logger.Information($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
         }
 
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)

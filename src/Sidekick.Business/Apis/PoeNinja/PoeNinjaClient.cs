@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Http;
 
@@ -37,10 +37,10 @@ namespace Sidekick.Business.Apis.PoeNinja
         public string LanguageCode { get; set; }
 
         public PoeNinjaClient(IHttpClientProvider httpClientProvider,
-                              ILogger logger)
+                              ILogger<PoeNinjaClient> logger)
         {
             httpClient = httpClientProvider.HttpClient;
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
 
             var jsonSerializerOptions = new JsonSerializerOptions()
             {
@@ -63,7 +63,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             }
             catch (Exception)
             {
-                logger.Information("Could not fetch {itemType} from poe.ninja", itemType);
+                logger.LogInformation("Could not fetch {itemType} from poe.ninja", itemType);
             }
 
             return new PoeNinjaQueryResult<PoeNinjaItem>() { Lines = new List<PoeNinjaItem>() };
@@ -81,7 +81,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             }
             catch
             {
-                logger.Information("Could not fetch {currency} from poe.ninja", currency);
+                logger.LogInformation("Could not fetch {currency} from poe.ninja", currency);
             }
 
             return new PoeNinjaQueryResult<PoeNinjaCurrency>() { Lines = new List<PoeNinjaCurrency>() };

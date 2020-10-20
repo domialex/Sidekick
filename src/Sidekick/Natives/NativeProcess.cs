@@ -10,7 +10,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Extensions;
 
@@ -66,9 +66,9 @@ namespace Sidekick.Natives
 
         private readonly ILogger logger;
 
-        public NativeProcess(ILogger logger)
+        public NativeProcess(ILogger<NativeProcess> logger)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
         }
 
         public Mutex Mutex { get; set; }
@@ -138,7 +138,7 @@ namespace Sidekick.Natives
             }
             else
             {
-                logger.Information("Permission Sufficient.");
+                logger.LogInformation("Permission Sufficient.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Sidekick.Natives
         private void RestartAsAdmin()
         {
             var message = "This application must be run as administrator.";
-            logger.Error(message);
+            logger.LogError(message);
 
             if (MessageBox.Show(message + "\nClick Yes will restart as administrator automatically.", "Sidekick", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -223,7 +223,7 @@ namespace Sidekick.Natives
             }
             catch (Exception e)
             {
-                logger.Error(e, e.Message);
+                logger.LogError(e, e.Message);
                 RestartAsAdmin();
             }
 

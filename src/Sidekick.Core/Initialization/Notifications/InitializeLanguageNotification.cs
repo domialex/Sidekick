@@ -1,12 +1,12 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Core.Initialization.Notifications
 {
     /// <summary>
-    /// Tries to update the application during the application initialization
+    /// Initializes languages during the application initialization
     /// </summary>
-    public class InitializeUpdateNotification : IInitializerNotification
+    public class InitializeLanguageNotification : IInitializerNotification
     {
         [JsonIgnore]
         public Action<string> OnStart { get; set; }

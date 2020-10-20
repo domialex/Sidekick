@@ -1,8 +1,6 @@
-using System;
-
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Core.Initialization.Notifications
 {
-    public class ProgressEventArgs : EventArgs
+    public class ProgressNotification
     {
         public string Title { get; set; }
         public int TotalPercentage { get; set; }

@@ -1,10 +1,7 @@
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 using Sidekick.Core.Debounce;
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Logging;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Core
@@ -28,25 +25,7 @@ namespace Sidekick.Core
 
         public static IServiceCollection AddSidekickCoreServices(this IServiceCollection services)
         {
-            var eventSink = new SidekickEventSink();
-
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.File("Sidekick_Log.log",
-                    rollingInterval: RollingInterval.Day,
-                    retainedFileCountLimit: 1,
-                    fileSizeLimitBytes: 5242880,
-                    rollOnFileSizeLimit: true)
-                .WriteTo.Sink(eventSink)
-                .CreateLogger();
-
-            services.AddSingleton(eventSink);
-            services.AddSingleton(Log.Logger);
-
             services.AddSingleton<IDebouncer, Debouncer>();
-            services.AddSingleton<IInitializer, Initializer>();
 
             return services;
         }

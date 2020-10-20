@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Languages;
@@ -31,13 +31,13 @@ namespace Sidekick.Business.Apis.PoeNinja
         public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
         public PoeNinjaCache(IPoeNinjaClient client,
-                             ILogger logger,
+                             ILogger<PoeNinjaCache> logger,
                              ILanguageProvider languageProvider,
                              SidekickSettings configuration)
         {
             this.client = client;
             this.languageProvider = languageProvider;
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.configuration = configuration;
         }
         public PoeNinjaItem GetItem(Item item)
@@ -78,11 +78,11 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             if (!client.IsSupportingCurrentLanguage)
             {
-                logger.Information($"PoeNinja doesn't support this language.");
+                logger.LogInformation($"PoeNinja doesn't support this language.");
                 return;
             }
 
-            logger.Information($"Populating PoeNinja cache.");
+            logger.LogInformation($"Populating PoeNinja cache.");
 
             var itemsTasks = Enum.GetValues(typeof(ItemType))
                                  .Cast<ItemType>()
@@ -114,7 +114,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             LastRefreshTimestamp = DateTime.Now;
 
-            logger.Information($"PoeNinja cache populated.");
+            logger.LogInformation($"PoeNinja cache populated.");
         }
     }
 }

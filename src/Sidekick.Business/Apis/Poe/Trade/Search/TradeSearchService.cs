@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
@@ -30,7 +30,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         private readonly INativeBrowser nativeBrowser;
         private readonly IStatDataService statDataService;
 
-        public TradeSearchService(ILogger logger,
+        public TradeSearchService(ILogger<TradeSearchService> logger,
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticDataService staticDataService,
@@ -39,7 +39,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             INativeBrowser nativeBrowser,
             IStatDataService statDataService)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
             this.staticDataService = staticDataService;
@@ -53,7 +53,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         {
             try
             {
-                logger.Information("Querying Exchange API.");
+                logger.LogInformation("Querying Exchange API.");
 
                 var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}exchange/{configuration.LeagueId}";
                 var json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
@@ -70,14 +70,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 else
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
-                    logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
-                    logger.Error("Uri: {uri}", uri);
-                    logger.Error("Query: {query}", json);
+                    logger.LogError("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.LogError("Uri: {uri}", uri);
+                    logger.LogError("Query: {query}", json);
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Exception thrown while querying trade api.");
+                logger.LogError(ex, "Exception thrown while querying trade api.");
             }
 
             return null;
@@ -87,7 +87,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         {
             try
             {
-                logger.Information("Querying Trade API.");
+                logger.LogInformation("Querying Trade API.");
 
                 if (filters == null)
                 {
@@ -177,14 +177,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 else
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
-                    logger.Error("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
-                    logger.Error("Uri: {uri}", uri);
-                    logger.Error("Query: {query}", json);
+                    logger.LogError("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.LogError("Uri: {uri}", uri);
+                    logger.LogError("Query: {query}", json);
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Exception thrown while querying trade api.");
+                logger.LogError(ex, "Exception thrown while querying trade api.");
             }
 
             return null;
@@ -194,7 +194,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         {
             try
             {
-                logger.Information($"Fetching Trade API Listings from Query {queryId}.");
+                logger.LogInformation($"Fetching Trade API Listings from Query {queryId}.");
 
                 var pseudo = string.Empty;
                 if (stats != null)
@@ -221,7 +221,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             }
             catch (Exception ex)
             {
-                logger.Error(ex, $"Exception thrown when fetching trade API listings from Query {queryId}.");
+                logger.LogError(ex, $"Exception thrown when fetching trade API listings from Query {queryId}.");
             }
 
             return null;

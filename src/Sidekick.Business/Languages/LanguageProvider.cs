@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Extensions;
 using Sidekick.Core.Settings;
 
@@ -14,10 +14,10 @@ namespace Sidekick.Business.Languages
 
         private const string EnglishLanguageName = "English";
 
-        public LanguageProvider(ILogger logger,
+        public LanguageProvider(ILogger<LanguageProvider> logger,
             SidekickSettings settings)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.settings = settings;
 
             AvailableLanguages = new List<LanguageAttribute>();
@@ -50,13 +50,13 @@ namespace Sidekick.Business.Languages
 
             if (language == null)
             {
-                logger.Information("Couldn't find language matching {language}.", name);
+                logger.LogInformation("Couldn't find language matching {language}.", name);
                 return false;
             }
 
             if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
             {
-                logger.Information("Changed active language support to {language}.", language.Name);
+                logger.LogInformation("Changed active language support to {language}.", language.Name);
                 Language = CreateLanguageInstance(language.ImplementationType);
 
                 settings.Language_Parser = name;

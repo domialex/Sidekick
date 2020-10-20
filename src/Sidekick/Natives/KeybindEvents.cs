@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Stashes;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -17,14 +17,14 @@ namespace Sidekick.Natives
         private readonly IStashService stashService;
         private readonly HookProvider hookProvider;
 
-        public KeybindEvents(ILogger logger,
+        public KeybindEvents(ILogger<KeybindEvents> logger,
             INativeProcess nativeProcess,
             SidekickSettings configuration,
             INativeKeyboard nativeKeyboard,
             IStashService stashService,
             HookProvider hookProvider)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
@@ -123,7 +123,7 @@ namespace Sidekick.Natives
         {
             if (input == keybind)
             {
-                logger.Information("Keybind Triggered - {keybindName}", name);
+                logger.LogInformation("Keybind Triggered - {keybindName}", name);
                 if (func != null)
                 {
                     returnTask = func.Invoke();

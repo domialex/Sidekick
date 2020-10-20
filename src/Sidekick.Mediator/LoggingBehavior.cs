@@ -4,15 +4,15 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
-namespace Sidekick.Core.Mediator
+namespace Sidekick.Mediator
 {
-    public class MediatorLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly ILogger logger;
 
-        public MediatorLoggingBehavior(ILogger logger)
+        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
         {
             this.logger = logger;
         }
@@ -21,7 +21,7 @@ namespace Sidekick.Core.Mediator
         {
             var requestNameWithGuid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}] {request.GetType().Name}";
 
-            logger.Information($"[MediatR:START] {requestNameWithGuid}");
+            logger.LogInformation($"[MediatR:START] {requestNameWithGuid}");
             TResponse response;
 
             var stopwatch = Stopwatch.StartNew();
@@ -29,11 +29,11 @@ namespace Sidekick.Core.Mediator
             {
                 try
                 {
-                    logger.Information($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
+                    logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
                 }
                 catch (Exception)
                 {
-                    logger.Information($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the request.");
+                    logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the request.");
                 }
 
                 response = await next();
@@ -41,7 +41,7 @@ namespace Sidekick.Core.Mediator
             finally
             {
                 stopwatch.Stop();
-                logger.Information($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+                logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
             }
 
             return response;

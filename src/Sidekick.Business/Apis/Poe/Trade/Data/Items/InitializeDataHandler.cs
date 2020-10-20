@@ -7,7 +7,7 @@ using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
@@ -32,8 +32,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
         public async Task Handle(InitializeDataNotification notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("Items");
-
             itemDataService.NameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
             itemDataService.NameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
@@ -61,8 +59,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
                 languageProvider.Language.PrefixDivergent,
                 languageProvider.Language.PrefixPhantasmal,
             };
-
-            notification.OnEnd("Items");
         }
 
         private void FillPattern(List<ItemData> items, Category category, bool useRegex = false)

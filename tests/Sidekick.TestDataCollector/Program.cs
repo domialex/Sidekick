@@ -10,10 +10,10 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Core;
 using Sidekick.Core.Initialization;
-using Sidekick.Core.Mediator;
 using Sidekick.Core.Natives;
 using Sidekick.Database;
 using Sidekick.Localization;
+using Sidekick.Mediator;
 
 namespace Sidekick.TestDataCollector
 {
@@ -22,30 +22,30 @@ namespace Sidekick.TestDataCollector
         // Collects required data from live APIs and stores it for use in testing.
         // Needs to be run when API data may have been update, like when new leagues are released.
         // When tests are added which rely on data other than ItemDataCategory or StatDataCategory, this program will have to be updated.
-        public static async Task Main(string[] args)
+        public static async Task Main()
         {
             var services = new ServiceCollection()
-              .AddSingleton<INativeApp>(new Mock<INativeApp>().Object)
-              .AddSingleton<INativeNotifications>(new Mock<INativeNotifications>().Object)
-              .AddSingleton<INativeBrowser>(new Mock<INativeBrowser>().Object)
-              .AddSingleton<INativeProcess>(new Mock<INativeProcess>().Object)
-              .AddSidekickConfiguration()
-              .AddSidekickCoreServices()
-              .AddSidekickBusinessServices()
-              .AddSidekickLocalization()
-              .AddSidekickDatabase()
-              .AddSingleton(typeof(IPipelineBehavior<,>), typeof(MediatorLoggingBehavior<,>))
-              .AddMediatR(
-                (config) => config.Using<SidekickMediator>().AsTransient(),
-                typeof(Business.StartupExtensions),
-                typeof(Core.StartupExtensions),
-                typeof(Localization.StartupExtensions));
+                .AddSidekickMediator(
+                    typeof(Business.StartupExtensions).Assembly,
+                    typeof(Core.StartupExtensions).Assembly,
+                    typeof(Localization.StartupExtensions).Assembly
+                )
+
+                .AddSingleton<INativeApp>(new Mock<INativeApp>().Object)
+                .AddSingleton<INativeNotifications>(new Mock<INativeNotifications>().Object)
+                .AddSingleton<INativeBrowser>(new Mock<INativeBrowser>().Object)
+                .AddSingleton<INativeProcess>(new Mock<INativeProcess>().Object)
+                .AddSidekickConfiguration()
+                .AddSidekickCoreServices()
+                .AddSidekickBusinessServices()
+                .AddSidekickLocalization()
+                .AddSidekickDatabase();
 
 
             var provider = services.BuildServiceProvider();
 
-            var initializer = provider.GetRequiredService<IInitializer>();
-            await initializer.Initialize(true);
+            var mediator = provider.GetRequiredService<IMediator>();
+            await mediator.Send(new InitializeCommand(true));
 
             var client = provider.GetRequiredService<IPoeTradeClient>();
 

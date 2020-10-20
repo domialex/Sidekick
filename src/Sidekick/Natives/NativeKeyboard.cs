@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Natives.Helpers;
 
@@ -27,9 +27,9 @@ namespace Sidekick.Natives
         private readonly ILogger logger;
         private readonly HookProvider hookProvider;
 
-        public NativeKeyboard(ILogger logger, HookProvider hookProvider)
+        public NativeKeyboard(ILogger<NativeKeyboard> logger, HookProvider hookProvider)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.hookProvider = hookProvider;
 
             hookProvider.Hook.KeyDown += Hook_KeyDown;
@@ -165,7 +165,7 @@ namespace Sidekick.Natives
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
                                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
                 default:
-                    logger.Warning("NativeKeyboard.IsKeyPressed - Unrecognized key - {key}", key);
+                    logger.LogWarning("NativeKeyboard.IsKeyPressed - Unrecognized key - {key}", key);
                     return false;
             }
         }

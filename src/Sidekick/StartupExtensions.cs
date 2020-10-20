@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Natives;
 using Sidekick.Handlers;
+using Sidekick.Initialization;
 using Sidekick.Natives;
 using Sidekick.Views;
 using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
-using Sidekick.Views.Initialize;
 using Sidekick.Views.Leagues;
 using Sidekick.Views.MapInfo;
 using Sidekick.Views.Prices;
@@ -24,7 +24,7 @@ namespace Sidekick
 
             services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();
-            services.AddScoped<InitializeView>();
+            services.AddScoped<InitializationView>();
             services.AddScoped<LeagueView>();
             services.AddScoped<PriceView>();
             services.AddScoped<MapInfoView>();
@@ -35,7 +35,7 @@ namespace Sidekick
             services.AddScoped<PriceViewModel>();
             services.AddScoped<MapInfoViewModel>();
             services.AddScoped<SettingsViewModel>();
-            services.AddScoped<InitializeViewModel>();
+            services.AddScoped<InitializationViewModel>();
 
             services.AddSingleton<IKeybindEvents, KeybindEvents>();
             services.AddSingleton<INativeKeyboard, NativeKeyboard>();

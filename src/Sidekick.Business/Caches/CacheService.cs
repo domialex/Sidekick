@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Database;
 using Sidekick.Database.Caches;
 
@@ -14,7 +14,7 @@ namespace Sidekick.Business.Caches
         private readonly ILogger logger;
 
         public CacheService(DbContextOptions<SidekickContext> options,
-            ILogger logger)
+            ILogger<CacheService> logger)
         {
             this.options = options;
             this.logger = logger;
@@ -23,7 +23,7 @@ namespace Sidekick.Business.Caches
         public async Task<TModel> Get<TModel>(string key)
             where TModel : class
         {
-            logger.Debug($"CacheService : Getting data for {key}");
+            logger.LogDebug($"CacheService : Getting data for {key}");
 
             using var dbContext = new SidekickContext(options);
 
@@ -62,7 +62,7 @@ namespace Sidekick.Business.Caches
         public async Task Save<TModel>(string key, TModel data)
             where TModel : class
         {
-            logger.Debug($"CacheService : Saving data for {key}");
+            logger.LogDebug($"CacheService : Saving data for {key}");
 
             using var dbContext = new SidekickContext(options);
 
@@ -84,7 +84,7 @@ namespace Sidekick.Business.Caches
 
         public async Task Delete(string key)
         {
-            logger.Debug($"CacheService : Deleting data for {key}");
+            logger.LogDebug($"CacheService : Deleting data for {key}");
 
             using var dbContext = new SidekickContext(options);
 
@@ -98,7 +98,7 @@ namespace Sidekick.Business.Caches
 
         public async Task Clear()
         {
-            logger.Debug($"CacheService : Clearing data");
+            logger.LogDebug($"CacheService : Clearing data");
 
             using var dbContext = new SidekickContext(options);
             dbContext.Caches.RemoveRange(await dbContext.Caches.ToListAsync());

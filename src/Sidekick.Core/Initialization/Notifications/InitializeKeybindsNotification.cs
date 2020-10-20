@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Core.Initialization.Notifications
 {
     /// <summary>
     /// Binds keybinds during the application initialization

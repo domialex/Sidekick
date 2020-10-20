@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {

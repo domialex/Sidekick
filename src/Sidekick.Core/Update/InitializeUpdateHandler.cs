@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Sidekick.Core.Initialization;
+using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Update.Github_API;
 

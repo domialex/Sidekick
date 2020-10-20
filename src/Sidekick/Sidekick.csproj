@@ -141,6 +141,7 @@
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
     <ProjectReference Include="..\Sidekick.Database\Sidekick.Database.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
+    <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -286,5 +287,9 @@
     <Page Update="Views\Prices\ItemPreview.xaml">
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Initialize\" />
   </ItemGroup>
 </Project>

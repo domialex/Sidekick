@@ -6,11 +6,11 @@ using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Display;
 
-namespace Sidekick.Core.Logging
+namespace Sidekick.Logging
 {
-    public class SidekickEventSink : ILogEventSink
+    public class LogSink : ILogEventSink
     {
-        private readonly ITextFormatter textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}");
+        private readonly ITextFormatter textFormatter = new MessageTemplateTextFormatter("{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}", null);
 
         public ConcurrentQueue<string> Events { get; } = new ConcurrentQueue<string>();
         public event Action<string> LogEventEmitted;

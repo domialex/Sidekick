@@ -32,7 +32,7 @@ namespace Sidekick.Business
             // Http Services
             services.AddHttpClient();
 
-            services.AddTransient<ILeagueDataService, LeagueDataService>();
+            services.AddSingleton<ILeagueDataService, LeagueDataService>();
 
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();

@@ -1,12 +1,12 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Core.Initialization.Notifications
 {
     /// <summary>
-    /// Initializes settings during the application initialization
+    /// Tries to update the application during the application initialization
     /// </summary>
-    public class InitializeSettingsNotification : IInitializerNotification
+    public class InitializeUpdateNotification : IInitializerNotification
     {
         [JsonIgnore]
         public Action<string> OnStart { get; set; }

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Forms;
 using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Windows;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -144,7 +144,7 @@ namespace Sidekick.Views
 
             if (y > 1) { y /= 100; }
 
-            logger.Information($"Positioning Info: SetTopPercent({y}, {source})");
+            logger.LogInformation($"Positioning Info: SetTopPercent({y}, {source})");
 
             if (source == LocationSource.Center)
             {
@@ -155,17 +155,17 @@ namespace Sidekick.Views
                 y -= GetHeightPercent();
             }
 
-            logger.Information($"Positioning Info: SetTopPercent: y = {y}");
-            logger.Information($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
-            logger.Information($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: y = {y}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
 
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
             var desiredY = screenRect.Y + (screenRect.Height * y);
 
-            logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
-            logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
-            logger.Information($"Positioning Info: SetTopPercent: Top = {desiredY}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Top = {desiredY}");
 
             TopLocationSource = source;
             Top = (int)desiredY;
@@ -183,7 +183,7 @@ namespace Sidekick.Views
 
             if (x > 1) { x /= 100; }
 
-            logger.Information($"Positioning Info: SetLeftPercent({x}, {source})");
+            logger.LogInformation($"Positioning Info: SetLeftPercent({x}, {source})");
 
             if (source == LocationSource.Center)
             {
@@ -194,17 +194,17 @@ namespace Sidekick.Views
                 x -= GetWidthPercent();
             }
 
-            logger.Information($"Positioning Info: SetLeftPercent: x = {x}");
-            logger.Information($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
-            logger.Information($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: x = {x}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
 
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
             var desiredX = screenRect.X + (screenRect.Width * x);
 
-            logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
-            logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
-            logger.Information($"Positioning Info: SetLeftPercent: Left = {desiredX}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Left = {desiredX}");
 
             LeftLocationSource = source;
             Left = (int)desiredX;
