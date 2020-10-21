@@ -6,7 +6,7 @@ namespace Sidekick.Core.Settings
 {
     public class SidekickSettings
     {
-        public const string FileName = "Sidekick_settings.json";
+        internal const string FileName = "Sidekick_settings.json";
 
         public string Language_UI { get; set; }
 

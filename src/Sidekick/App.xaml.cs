@@ -13,7 +13,6 @@ using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
-using Sidekick.Views;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -34,7 +33,6 @@ namespace Sidekick
         private ServiceProvider serviceProvider;
         private ILogger logger;
         private INativeProcess nativeProcess;
-        private IViewLocator viewLocator;
         private IMediator mediator;
         public TaskbarIcon TrayIcon { get; set; }
 
@@ -52,7 +50,6 @@ namespace Sidekick
 
             logger = serviceProvider.GetRequiredService<ILogger<App>>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
-            viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
             mediator = serviceProvider.GetRequiredService<IMediator>();
 
             TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
