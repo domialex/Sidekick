@@ -15,20 +15,20 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Core.Update
 {
-    public class InitializeUpdateHandler : INotificationHandler<UpdateInitializationStarted>
+    public class UpdateInitializationStartedHandler : INotificationHandler<UpdateInitializationStarted>
     {
         private readonly HttpClient _httpClient;
         private readonly INativeApp nativeApp;
         private readonly INativeNotifications nativeNotifications;
         private readonly INativeBrowser nativeBrowser;
-        private readonly IStringLocalizer<InitializeUpdateHandler> localizer;
+        private readonly IStringLocalizer<UpdateInitializationStartedHandler> localizer;
 
-        public InitializeUpdateHandler(
+        public UpdateInitializationStartedHandler(
             IHttpClientFactory httpClientFactory,
             INativeApp nativeApp,
             INativeNotifications nativeNotifications,
             INativeBrowser nativeBrowser,
-            IStringLocalizer<InitializeUpdateHandler> localizer)
+            IStringLocalizer<UpdateInitializationStartedHandler> localizer)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");

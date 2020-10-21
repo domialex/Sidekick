@@ -6,13 +6,13 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
-    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
+    public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeNinjaClient poeNinjaClient;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly ILanguageProvider languageProvider;
 
-        public InitializeDataHandler(
+        public DataInitializationStartedHandler(
             IPoeNinjaClient poeNinjaClient,
             IPoeNinjaCache poeNinjaCache,
             ILanguageProvider languageProvider)

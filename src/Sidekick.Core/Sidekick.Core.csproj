@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Update\InitializeUpdateHandler.resx">
+    <EmbeddedResource Update="Update\UpdateInitializationStartedHandler.resx">
       <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -7,12 +7,12 @@ using Sidekick.Views;
 
 namespace Sidekick.Initialization
 {
-    public class InitializeStartedHandler : INotificationHandler<InitializationStarted>
+    public class InitializationStartedHandler : INotificationHandler<InitializationStarted>
     {
         private readonly IViewLocator viewLocator;
         private readonly SidekickSettings settings;
 
-        public InitializeStartedHandler(
+        public InitializationStartedHandler(
             IViewLocator viewLocator,
             SidekickSettings settings)
         {

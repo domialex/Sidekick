@@ -12,14 +12,14 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Leagues
 {
-    public class InitializeSettingsHandler : INotificationHandler<SettingsInitializationStarted>
+    public class SettingsInitializationStartedHandler : INotificationHandler<SettingsInitializationStarted>
     {
         private readonly SidekickSettings settings;
         private readonly ICacheService cacheService;
         private readonly IMediator mediator;
         private readonly ILeagueDataService leagueDataService;
 
-        public InitializeSettingsHandler(
+        public SettingsInitializationStartedHandler(
             SidekickSettings settings,
             ICacheService cacheService,
             IMediator mediator,

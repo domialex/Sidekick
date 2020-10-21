@@ -7,12 +7,12 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Localization
 {
-    public class InitializeLanguageHandler : INotificationHandler<LanguageInitializationStarted>
+    public class LanguageInitializationStartedHandler : INotificationHandler<LanguageInitializationStarted>
     {
         private readonly IUILanguageProvider uILanguageProvider;
         private readonly SidekickSettings settings;
 
-        public InitializeLanguageHandler(
+        public LanguageInitializationStartedHandler(
             IUILanguageProvider uILanguageProvider,
             SidekickSettings settings)
         {

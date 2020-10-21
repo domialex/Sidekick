@@ -11,14 +11,14 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {
-    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
+    public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IItemDataService itemDataService;
         private readonly ICacheService cacheService;
         private readonly IPoeTradeClient poeTradeClient;
         private readonly ILanguageProvider languageProvider;
 
-        public InitializeDataHandler(
+        public DataInitializationStartedHandler(
             IItemDataService itemDataService,
             ICacheService cacheService,
             IPoeTradeClient poeTradeClient,

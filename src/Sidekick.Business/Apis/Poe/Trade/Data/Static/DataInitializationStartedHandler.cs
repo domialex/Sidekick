@@ -7,13 +7,13 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
-    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
+    public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ICacheService cacheService;
         private readonly IStaticDataService staticDataService;
 
-        public InitializeDataHandler(
+        public DataInitializationStartedHandler(
             IPoeTradeClient poeApiClient,
             ICacheService cacheService,
             IStaticDataService staticDataService)

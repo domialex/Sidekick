@@ -9,12 +9,12 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {
-    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
+    public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly ILanguageProvider languageProvider;
         private readonly IParserPatterns parserPatterns;
 
-        public InitializeDataHandler(
+        public DataInitializationStartedHandler(
             ILanguageProvider languageProvider,
             IParserPatterns parserPatterns)
         {

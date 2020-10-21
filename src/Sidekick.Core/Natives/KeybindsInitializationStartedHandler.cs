@@ -5,11 +5,11 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Core.Natives
 {
-    public class InitializeKeybindsHandler : INotificationHandler<KeybindsInitializationStarted>
+    public class KeybindsInitializationStartedHandler : INotificationHandler<KeybindsInitializationStarted>
     {
         private readonly INativeProcess nativeProcess;
 
-        public InitializeKeybindsHandler(INativeProcess nativeProcess)
+        public KeybindsInitializationStartedHandler(INativeProcess nativeProcess)
         {
             this.nativeProcess = nativeProcess;
         }

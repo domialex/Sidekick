@@ -10,14 +10,14 @@ using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
-    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
+    public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
         private readonly ICacheService cacheService;
         private readonly IStatDataService statDataService;
 
-        public InitializeDataHandler(IPoeTradeClient poeApiClient,
+        public DataInitializationStartedHandler(IPoeTradeClient poeApiClient,
             ILanguageProvider languageProvider,
             ICacheService cacheService,
             IStatDataService statDataService)
