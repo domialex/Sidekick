@@ -52,9 +52,9 @@ namespace Sidekick.Application.Initialization
 
             foreach (var step in steps)
             {
-                await ReportProgress(steps, step);
                 try
                 {
+                    await ReportProgress(steps, step);
                     await step.Run(request.FirstRun);
                 }
                 catch (Exception exception)
@@ -64,27 +64,27 @@ namespace Sidekick.Application.Initialization
                     nativeApp.Shutdown();
                     return Unit.Value;
                 }
-                await ReportProgress(steps, step);
             }
 
+            await ReportProgress(steps);
             await mediator.Publish(new InitializationCompleted());
 
             return Unit.Value;
         }
 
-        private async Task ReportProgress(List<IInitializerStep> steps, IInitializerStep step)
+        private async Task ReportProgress(List<IInitializerStep> steps, IInitializerStep step = null)
         {
             var count = steps.Sum(x => x.Count);
             var completed = steps.Sum(x => x.Completed);
             var percentage = count == 0 ? 0 : (completed) * 100 / (count);
 
-            var args = new InitializationProgressed()
-            {
-                Title = localizer["Title", steps.IndexOf(step) + 1, steps.Count],
-                TotalPercentage = percentage,
-            };
+            var args = new InitializationProgressed(percentage);
 
-            if (percentage >= 100)
+            if (step != null)
+            {
+                args.Title = localizer["Title", steps.IndexOf(step) + 1, steps.Count];
+            }
+            else if (percentage >= 100)
             {
                 args.Title = localizer["Ready"];
             }

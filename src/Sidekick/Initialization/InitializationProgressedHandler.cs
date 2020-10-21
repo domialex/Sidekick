@@ -18,7 +18,7 @@ namespace Sidekick.Initialization
         public Task Handle(InitializationProgressed notification, CancellationToken cancellationToken)
         {
             viewModel.Title = notification.Title;
-            viewModel.Percentage = notification.TotalPercentage;
+            viewModel.Percentage = notification.Percentage;
 
             return Task.CompletedTask;
         }

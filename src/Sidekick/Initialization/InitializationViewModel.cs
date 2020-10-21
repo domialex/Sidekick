@@ -18,15 +18,12 @@ namespace Sidekick.Initialization
             this.nativeApp = nativeApp;
         }
 
-        public void Close()
-        {
-            nativeApp.Shutdown();
-        }
-
         public string Title { get; set; }
         public int Percentage { get; set; }
 
         public double ProgressValue => Percentage / 100.0;
+
+        public event Action Initialized;
 
         public void Complete()
         {
@@ -36,6 +33,9 @@ namespace Sidekick.Initialization
             }
         }
 
-        public event Action Initialized;
+        public void Close()
+        {
+            nativeApp.Shutdown();
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Sidekick.Initialization
 
         public async Task Handle(InitializationCompleted notification, CancellationToken cancellationToken)
         {
-            await Task.Delay(400);
+            await Task.Delay(500);
             viewModel.Complete();
 
             nativeNotifications.ShowSystemNotification(
