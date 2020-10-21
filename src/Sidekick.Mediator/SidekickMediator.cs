@@ -5,65 +5,68 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Mediator.Internal;
 
 namespace Sidekick.Mediator
 {
     public class SidekickMediator : IMediator
     {
         private readonly ILogger logger;
-        private readonly MediatR.Mediator mediator;
+        private readonly MediatorOverride mediator;
 
         public SidekickMediator(
             ILogger<SidekickMediator> logger,
             ServiceFactory serviceFactory)
         {
             this.logger = logger;
-            mediator = new MediatR.Mediator(serviceFactory);
+            mediator = new MediatorOverride(serviceFactory, logger);
         }
 
         public async Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
              where TNotification : INotification
         {
-            var stopwatch = Stopwatch.StartNew();
-            var requestNameWithGuid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}] {notification?.GetType()?.Name}";
+            var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
+            var nameWithGuid = $"{guid} { notification?.GetType()?.FullName}";
 
-            logger.LogInformation($"[MediatR:EVENT] {requestNameWithGuid}");
+            var stopwatch = Stopwatch.StartNew();
+            logger.LogInformation($"[MediatR:NOTIF] {nameWithGuid}");
 
             try
             {
-                logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
+                logger.LogInformation($"[MediatR:PROPS] {guid} {JsonSerializer.Serialize(notification)}");
             }
             catch (Exception)
             {
-                logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
+                logger.LogInformation($"[MediatR:ERROR] {guid} Could not serialize the notification.");
             }
 
             await mediator.Publish<TNotification>(notification, cancellationToken);
 
             stopwatch.Stop();
-            logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            logger.LogInformation($"[MediatR:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
         }
 
         public async Task Publish(object notification, CancellationToken cancellationToken = default)
         {
-            var stopwatch = Stopwatch.StartNew();
-            var requestNameWithGuid = $"{ notification?.GetType()?.Name} [{Guid.NewGuid().ToString().Substring(0, 8)}]";
+            var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
+            var nameWithGuid = $"{guid} { notification?.GetType()?.FullName}";
 
-            logger.LogInformation($"[MediatR:EVENT] {requestNameWithGuid}");
+            var stopwatch = Stopwatch.StartNew();
+            logger.LogInformation($"[MediatR:NOTIF] {nameWithGuid}");
 
             try
             {
-                logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(notification)}");
+                logger.LogInformation($"[MediatR:PROPS] {guid} {JsonSerializer.Serialize(notification)}");
             }
             catch (Exception)
             {
-                logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the notification.");
+                logger.LogInformation($"[MediatR:ERROR] {guid} Could not serialize the notification.");
             }
 
             await mediator.Publish(notification, cancellationToken);
 
             stopwatch.Stop();
-            logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            logger.LogInformation($"[MediatR:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
         }
 
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
@@ -75,5 +78,6 @@ namespace Sidekick.Mediator
         {
             return mediator.Send(request, cancellationToken);
         }
+
     }
 }

@@ -6,7 +6,7 @@
     xmlns:resx="clr-namespace:Sidekick.Localization.Initialize;assembly=Sidekick.Localization"
     Title="Sidekick"
     Width="360"
-    Height="165"
+    Height="140"
     loc:Translation.ResourceManager="{x:Static resx:InitializeResources.ResourceManager}"
     ResizeMode="NoResize"
     Topmost="True"
@@ -26,8 +26,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <WrapPanel HorizontalAlignment="Center">
@@ -43,12 +41,6 @@
             Grid.Row="2"
             Height="14"
             Value="{Binding Percentage, FallbackValue=0}" />
-
-        <Label Grid.Row="3" Content="{Binding StepTitle, FallbackValue=Loading}" />
-        <ProgressBar
-            Grid.Row="4"
-            Height="8"
-            Value="{Binding StepPercentage, FallbackValue=0}" />
 
         <StackPanel
             Grid.Row="5"

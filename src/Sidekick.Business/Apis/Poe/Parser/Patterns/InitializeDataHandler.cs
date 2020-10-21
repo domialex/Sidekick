@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {
-    public class InitializeDataHandler : INotificationHandler<InitializeDataNotification>
+    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly ILanguageProvider languageProvider;
         private readonly IParserPatterns parserPatterns;
@@ -22,7 +22,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
             this.parserPatterns = parserPatterns;
         }
 
-        public Task Handle(InitializeDataNotification notification, CancellationToken cancellationToken)
+        public Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
             InitHeader();
             InitProperties();

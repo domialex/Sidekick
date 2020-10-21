@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Leagues
 {
-    public class InitializeSettingsHandler : INotificationHandler<InitializeSettingsNotification>
+    public class InitializeSettingsHandler : INotificationHandler<SettingsInitializationStarted>
     {
         private readonly SidekickSettings settings;
         private readonly ICacheService cacheService;
@@ -31,10 +31,8 @@ namespace Sidekick.Business.Leagues
             this.leagueDataService = leagueDataService;
         }
 
-        public async Task Handle(InitializeSettingsNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(SettingsInitializationStarted notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("Leagues");
-
             var leagues = await mediator.Send(new GetLeaguesQuery());
             leagueDataService.Initialize(leagues);
 
@@ -69,8 +67,6 @@ namespace Sidekick.Business.Leagues
             {
                 await mediator.Publish(new NewLeaguesNotification());
             }
-
-            notification.OnEnd("Leagues");
         }
     }
 }

@@ -1,12 +1,11 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Application.Initialization
 {
     internal class InitializerStep<TNotification> : IInitializerStep
-      where TNotification : IInitializerNotification, new()
+      where TNotification : INotification, new()
     {
         private readonly IMediator mediator;
 
@@ -30,7 +29,7 @@ namespace Sidekick.Core.Initialization
         public string Name { get; }
         public bool RunOnce { get; }
 
-        public async Task Run(bool isFirstRun, Action<string> onStartHandler, Action<string> onEndHandler)
+        public async Task Run(bool isFirstRun)
         {
             // Make sure that steps that should be run once are not run multiple times
             if (!isFirstRun && RunOnce)
@@ -40,19 +39,10 @@ namespace Sidekick.Core.Initialization
             }
 
             // Publish the notification
-            await mediator.Publish(new TNotification
-            {
-                OnStart = onStartHandler,
-                OnEnd = (name) =>
-                {
-                    Completed++;
-                    onEndHandler.Invoke(name);
-                }
-            });
+            await mediator.Publish(new TNotification());
 
             // Make sure that after all handlers run, the Completed count is updated
             Completed = Count;
-            onEndHandler.Invoke(null);
         }
     }
 }

@@ -19,21 +19,23 @@ namespace Sidekick.Mediator
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var requestNameWithGuid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}] {request.GetType().Name}";
+            var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
+            var nameWithGuid = $"{guid} {request.GetType().FullName}";
 
-            logger.LogInformation($"[MediatR:START] {requestNameWithGuid}");
             TResponse response;
 
             var stopwatch = Stopwatch.StartNew();
             try
             {
+                logger.LogInformation($"[MediatR:START] {nameWithGuid}");
+
                 try
                 {
-                    logger.LogInformation($"[MediatR:PROPS] {requestNameWithGuid} {JsonSerializer.Serialize(request)}");
+                    logger.LogInformation($"[MediatR:PROPS] {guid} {JsonSerializer.Serialize(request)}");
                 }
                 catch (Exception)
                 {
-                    logger.LogInformation($"[MediatR:ERROR] {requestNameWithGuid} Could not serialize the request.");
+                    logger.LogInformation($"[MediatR:ERROR] {guid} Could not serialize the request.");
                 }
 
                 response = await next();
@@ -41,7 +43,7 @@ namespace Sidekick.Mediator
             finally
             {
                 stopwatch.Stop();
-                logger.LogInformation($"[MediatR:END]   {requestNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+                logger.LogInformation($"[MediatR:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
             }
 
             return response;

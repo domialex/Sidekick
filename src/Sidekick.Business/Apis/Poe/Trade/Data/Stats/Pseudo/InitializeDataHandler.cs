@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
 {
-    public class InitializeDataHandler : INotificationHandler<InitializeDataNotification>
+    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly ILogger logger;
         private readonly IPoeTradeClient poeApiClient;
@@ -29,7 +29,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             this.pseudoStatDataService = pseudoStatDataService;
         }
 
-        public async Task Handle(InitializeDataNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
             if (pseudoStatDataService.Definitions != null && pseudoStatDataService.Definitions.Count > 0)
             {

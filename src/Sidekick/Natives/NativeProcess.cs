@@ -161,7 +161,7 @@ namespace Sidekick.Natives
                 try
                 {
                     using var p = new Process();
-                    p.StartInfo.FileName = Application.ExecutablePath;
+                    p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
                     p.StartInfo.UseShellExecute = true;
                     p.StartInfo.Verb = "runas";
                     p.Start();

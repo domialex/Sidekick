@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
-    public class InitializeDataHandler : INotificationHandler<InitializeDataNotification>
+    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
@@ -28,10 +28,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             this.statDataService = statDataService;
         }
 
-        public async Task Handle(InitializeDataNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("Stats");
-
             var categories = await cacheService.GetOrCreate("StatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>());
 
             statDataService.PseudoPatterns = new List<StatData>();
@@ -140,8 +138,6 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                     patterns.Add(entry);
                 }
             }
-
-            notification.OnEnd("Stats");
         }
     }
 }

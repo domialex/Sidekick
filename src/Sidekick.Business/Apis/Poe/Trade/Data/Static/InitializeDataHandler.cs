@@ -3,11 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
 {
-    public class InitializeDataHandler : INotificationHandler<InitializeDataNotification>
+    public class InitializeDataHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ICacheService cacheService;
@@ -23,7 +23,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
             this.staticDataService = staticDataService;
         }
 
-        public async Task Handle(InitializeDataNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
             var categories = await cacheService.GetOrCreate("StaticDataService.OnInit", () => poeApiClient.Fetch<StaticItemCategory>());
 

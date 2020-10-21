@@ -35,7 +35,7 @@ namespace Sidekick
             services.AddScoped<PriceViewModel>();
             services.AddScoped<MapInfoViewModel>();
             services.AddScoped<SettingsViewModel>();
-            services.AddScoped<InitializationViewModel>();
+            services.AddSingleton<InitializationViewModel>();
 
             services.AddSingleton<IKeybindEvents, KeybindEvents>();
             services.AddSingleton<INativeKeyboard, NativeKeyboard>();

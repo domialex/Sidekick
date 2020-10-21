@@ -7,7 +7,7 @@ namespace Sidekick.Logging
     {
         public static IServiceCollection AddSidekickLogging(this IServiceCollection services)
         {
-            var eventSink = new LogSink();
+            var logSink = new LogSink();
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -18,13 +18,15 @@ namespace Sidekick.Logging
                     retainedFileCountLimit: 1,
                     fileSizeLimitBytes: 5242880,
                     rollOnFileSizeLimit: true)
-                .WriteTo.Sink(eventSink)
+                .WriteTo.Sink(logSink)
                 .CreateLogger();
 
             services.AddLogging(builder =>
             {
                 builder.AddSerilog();
             });
+
+            services.AddSingleton(logSink);
 
             return services;
         }

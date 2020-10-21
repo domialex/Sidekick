@@ -9,7 +9,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
-using Sidekick.Initialization;
+using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
@@ -27,7 +27,7 @@ namespace Sidekick
     /// <summary>
     /// Entry point for the app
     /// </summary>
-    public partial class App : Application, INativeApp
+    public partial class App : System.Windows.Application, INativeApp
     {
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
@@ -38,7 +38,7 @@ namespace Sidekick
         private IMediator mediator;
         public TaskbarIcon TrayIcon { get; set; }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
@@ -59,7 +59,7 @@ namespace Sidekick
             TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
-            viewLocator.Open<InitializationView>();
+            await mediator.Send(new InitializeCommand(true));
         }
 
         protected override void OnExit(ExitEventArgs e)

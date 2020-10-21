@@ -1,8 +1,6 @@
-using System;
 using MediatR;
-using Sidekick.Core.Initialization.Notifications;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Domain.Initialization.Commands
 {
     public class InitializeCommand : IRequest
     {
@@ -12,7 +10,5 @@ namespace Sidekick.Core.Initialization
         }
 
         public bool FirstRun { get; }
-        public Action OnError { get; set; }
-        public Action<ProgressNotification> OnProgress { get; set; }
     }
 }

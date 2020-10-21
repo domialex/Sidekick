@@ -1,7 +1,6 @@
-using System;
 using System.Threading.Tasks;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Application.Initialization
 {
     internal interface IInitializerStep
     {
@@ -9,6 +8,6 @@ namespace Sidekick.Core.Initialization
         int Count { get; }
         int Completed { get; set; }
         int Percentage { get; }
-        Task Run(bool isFirstRun, Action<string> onStartHandler, Action<string> onEndHandler);
+        Task Run(bool isFirstRun);
     }
 }

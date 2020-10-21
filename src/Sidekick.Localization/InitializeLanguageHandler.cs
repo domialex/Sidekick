@@ -2,12 +2,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Localization
 {
-    public class InitializeLanguageHandler : INotificationHandler<InitializeLanguageNotification>
+    public class InitializeLanguageHandler : INotificationHandler<LanguageInitializationStarted>
     {
         private readonly IUILanguageProvider uILanguageProvider;
         private readonly SidekickSettings settings;
@@ -20,10 +20,8 @@ namespace Sidekick.Localization
             this.settings = settings;
         }
 
-        public Task Handle(InitializeLanguageNotification notification, CancellationToken cancellationToken)
+        public Task Handle(LanguageInitializationStarted notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("UI Language");
-
             var current = uILanguageProvider.AvailableLanguages.FirstOrDefault(x => x.Name == settings.Language_UI);
             if (current != null)
             {
@@ -33,8 +31,6 @@ namespace Sidekick.Localization
             {
                 uILanguageProvider.SetLanguage(uILanguageProvider.AvailableLanguages.FirstOrDefault().Name);
             }
-
-            notification.OnEnd("UI Language");
 
             return Task.CompletedTask;
         }

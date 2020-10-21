@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Core.Natives;
+using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Initialization.Notifications;
 
-namespace Sidekick.Core.Initialization
+namespace Sidekick.Application.Initialization
 {
     public class InitializeHandler : IRequestHandler<InitializeCommand>
     {
@@ -16,76 +18,78 @@ namespace Sidekick.Core.Initialization
         private readonly IStringLocalizer<InitializeHandler> localizer;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
+        private readonly INativeNotifications nativeNotifications;
+        private readonly INativeApp nativeApp;
 
         public InitializeHandler(
             ILogger<InitializeHandler> logger,
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
-            ServiceFactory serviceFactory)
+            ServiceFactory serviceFactory,
+            INativeNotifications nativeNotifications,
+            INativeApp nativeApp)
         {
             this.logger = logger;
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
+            this.nativeNotifications = nativeNotifications;
+            this.nativeApp = nativeApp;
         }
 
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
+            await mediator.Publish(new InitializationStarted());
+
             var steps = new List<IInitializerStep>()
             {
-                new InitializerStep<InitializeUpdateNotification>(mediator, serviceFactory, "Update", runOnce: true),
-                new InitializerStep<InitializeSettingsNotification>(mediator, serviceFactory, "Settings"),
-                new InitializerStep<InitializeLanguageNotification>(mediator, serviceFactory, "Language"),
-                new InitializerStep<InitializeDataNotification>(mediator, serviceFactory, "Data"),
-                new InitializerStep<InitializeKeybindsNotification>(mediator, serviceFactory, "Keybinds", runOnce: true),
+                new InitializerStep<UpdateInitializationStarted>(mediator, serviceFactory, "Update", runOnce: true),
+                new InitializerStep<SettingsInitializationStarted>(mediator, serviceFactory, "Settings"),
+                new InitializerStep<LanguageInitializationStarted>(mediator, serviceFactory, "Language"),
+                new InitializerStep<DataInitializationStarted>(mediator, serviceFactory, "Data"),
+                new InitializerStep<KeybindsInitializationStarted>(mediator, serviceFactory, "Keybinds", runOnce: true),
             };
 
             foreach (var step in steps)
             {
-                ReportProgress(request, steps, step, null, "Start Step");
+                await ReportProgress(steps, step);
                 try
                 {
-                    await step.Run(
-                        request.FirstRun,
-                        (name) => ReportProgress(request, steps, step, name, "Start Service"),
-                        (name) => ReportProgress(request, steps, step, name, "End Service")
-                    );
+                    await step.Run(request.FirstRun);
                 }
                 catch (Exception exception)
                 {
                     logger.LogError($"Initializer Error - {step.Name} - {exception.Message}", exception);
-                    request.OnError?.Invoke();
+                    nativeNotifications.ShowMessage(localizer["Error"]);
+                    nativeApp.Shutdown();
                     return Unit.Value;
                 }
-                ReportProgress(request, steps, step, null, "End Step");
+                await ReportProgress(steps, step);
             }
+
+            await mediator.Publish(new InitializationCompleted());
 
             return Unit.Value;
         }
 
-        private void ReportProgress(InitializeCommand request, List<IInitializerStep> steps, IInitializerStep step, string serviceName, string message)
+        private async Task ReportProgress(List<IInitializerStep> steps, IInitializerStep step)
         {
             var count = steps.Sum(x => x.Count);
             var completed = steps.Sum(x => x.Completed);
             var percentage = count == 0 ? 0 : (completed) * 100 / (count);
 
-            var args = new ProgressNotification()
+            var args = new InitializationProgressed()
             {
                 Title = localizer["Title", steps.IndexOf(step) + 1, steps.Count],
                 TotalPercentage = percentage,
-                StepTitle = serviceName,
-                StepPercentage = step.Percentage,
             };
 
             if (percentage >= 100)
             {
                 args.Title = localizer["Ready"];
-                args.StepPercentage = 100;
             }
 
-            request.OnProgress?.Invoke(args);
-
-            logger.LogDebug($"Initializer - {percentage}% - {step.Name} - {message} {serviceName}");
+            await mediator.Publish(args);
         }
 
     }

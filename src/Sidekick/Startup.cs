@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
@@ -16,13 +17,14 @@ namespace Sidekick
             var services = new ServiceCollection()
 
                 // Building blocks
+                .AddSidekickLogging()
                 .AddSidekickMediator(
+                    typeof(InitializeHandler).Assembly,
                     typeof(Business.StartupExtensions).Assembly,
                     typeof(Core.StartupExtensions).Assembly,
                     typeof(Localization.StartupExtensions).Assembly,
                     typeof(Sidekick.StartupExtensions).Assembly
                 )
-                .AddSidekickLogging()
 
                 .AddSidekickConfiguration()
                 .AddSidekickCoreServices()

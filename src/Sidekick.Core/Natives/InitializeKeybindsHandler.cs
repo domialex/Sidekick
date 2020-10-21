@@ -1,11 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Core.Natives
 {
-    public class InitializeKeybindsHandler : INotificationHandler<InitializeKeybindsNotification>
+    public class InitializeKeybindsHandler : INotificationHandler<KeybindsInitializationStarted>
     {
         private readonly INativeProcess nativeProcess;
 
@@ -14,11 +14,9 @@ namespace Sidekick.Core.Natives
             this.nativeProcess = nativeProcess;
         }
 
-        public Task Handle(InitializeKeybindsNotification notification, CancellationToken cancellationToken)
+        public Task Handle(KeybindsInitializationStarted notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("Sidekick.Core.Natives");
             Task.Run(nativeProcess.CheckPermission);
-            notification.OnEnd("Sidekick.Core.Natives");
             return Task.CompletedTask;
         }
     }

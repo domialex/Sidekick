@@ -1,5 +1,5 @@
+using System;
 using System.Windows;
-using Sidekick.Core.Settings;
 using Sidekick.Views;
 using Sidekick.Views.ApplicationLogs;
 
@@ -8,14 +8,14 @@ namespace Sidekick.Initialization
     /// <summary>
     /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class InitializationView : Window, ISidekickView
+    public partial class InitializationView : Window, ISidekickView, IDisposable
     {
         private readonly InitializationViewModel viewModel;
         private readonly IViewLocator viewLocator;
 
-        public InitializationView(InitializationViewModel viewModel,
-            IViewLocator viewLocator,
-            SidekickSettings settings)
+        public InitializationView(
+            InitializationViewModel viewModel,
+            IViewLocator viewLocator)
         {
             this.viewModel = viewModel;
             this.viewLocator = viewLocator;
@@ -25,12 +25,7 @@ namespace Sidekick.Initialization
 
             viewModel.Initialized += SplashViewModel_Initialized;
 
-            if (settings.ShowSplashScreen)
-            {
-                Show();
-            }
-
-            _ = viewModel.Initialize();
+            Show();
         }
 
         private void SplashViewModel_Initialized()
@@ -47,6 +42,17 @@ namespace Sidekick.Initialization
         private void Logs_Click(object sender, RoutedEventArgs e)
         {
             viewLocator.Open<ApplicationLogsView>();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            viewModel.Initialized -= SplashViewModel_Initialized;
         }
     }
 }

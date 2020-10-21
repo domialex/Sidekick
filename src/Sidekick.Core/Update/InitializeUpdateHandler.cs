@@ -9,14 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Sidekick.Core.Initialization.Notifications;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Update.Github_API;
-
+using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Core.Update
 {
-    public class InitializeUpdateHandler : INotificationHandler<InitializeUpdateNotification>
+    public class InitializeUpdateHandler : INotificationHandler<UpdateInitializationStarted>
     {
         private readonly HttpClient _httpClient;
         private readonly INativeApp nativeApp;
@@ -48,10 +47,8 @@ namespace Sidekick.Core.Update
 
         private GithubRelease LatestRelease { get; set; }
 
-        public async Task Handle(InitializeUpdateNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(UpdateInitializationStarted notification, CancellationToken cancellationToken)
         {
-            notification.OnStart("Update");
-
             if (await NewVersionAvailable())
             {
                 nativeNotifications.ShowYesNo(
@@ -91,8 +88,6 @@ namespace Sidekick.Core.Update
                         //}
                     });
             }
-
-            notification.OnEnd("Update");
         }
 
         /// <summary>

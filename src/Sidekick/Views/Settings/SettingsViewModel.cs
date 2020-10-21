@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Caches;
 using Sidekick.Business.Leagues;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -157,13 +157,10 @@ namespace Sidekick.Views.Settings
             isDisposed = true;
         }
 
-        public void ResetCache()
+        public async Task ResetCache()
         {
-            _ = Task.Run(async () =>
-            {
-                await cacheService.Clear();
-                await mediator.Send(new InitializeCommand(false));
-            });
+            await cacheService.Clear();
+            await mediator.Send(new InitializeCommand(false));
         }
     }
 }
