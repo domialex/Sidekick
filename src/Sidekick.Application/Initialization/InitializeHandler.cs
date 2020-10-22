@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Application.Initialization
 {
@@ -19,22 +20,19 @@ namespace Sidekick.Application.Initialization
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly INativeNotifications nativeNotifications;
-        private readonly INativeApp nativeApp;
 
         public InitializeHandler(
             ILogger<InitializeHandler> logger,
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
-            INativeNotifications nativeNotifications,
-            INativeApp nativeApp)
+            INativeNotifications nativeNotifications)
         {
             this.logger = logger;
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.nativeNotifications = nativeNotifications;
-            this.nativeApp = nativeApp;
         }
 
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
@@ -61,7 +59,7 @@ namespace Sidekick.Application.Initialization
                 {
                     logger.LogError($"Initializer Error - {step.Name} - {exception.Message}", exception);
                     nativeNotifications.ShowMessage(localizer["Error"]);
-                    nativeApp.Shutdown();
+                    await mediator.Send(new ShutdownCommand());
                     return Unit.Value;
                 }
             }

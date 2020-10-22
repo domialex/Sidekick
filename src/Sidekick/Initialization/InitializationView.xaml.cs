@@ -1,4 +1,6 @@
 using System.Windows;
+using MediatR;
+using Sidekick.Domain.Natives.Initialization.Commands;
 using Sidekick.Views;
 using Sidekick.Views.ApplicationLogs;
 
@@ -9,23 +11,23 @@ namespace Sidekick.Initialization
     /// </summary>
     public partial class InitializationView : Window, ISidekickView
     {
-        private readonly InitializationViewModel viewModel;
         private readonly IViewLocator viewLocator;
+        private readonly IMediator mediator;
 
         public InitializationView(
             InitializationViewModel viewModel,
-            IViewLocator viewLocator)
+            IViewLocator viewLocator,
+            IMediator mediator)
         {
-            this.viewModel = viewModel;
             this.viewLocator = viewLocator;
-
+            this.mediator = mediator;
             InitializeComponent();
             DataContext = viewModel;
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private async void Close_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Close();
+            await mediator.Send(new ShutdownCommand());
         }
 
         private void Logs_Click(object sender, RoutedEventArgs e)

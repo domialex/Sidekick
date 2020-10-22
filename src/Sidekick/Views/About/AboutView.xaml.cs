@@ -18,8 +18,8 @@ namespace Sidekick.Views.About
 
             InitializeComponent();
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             VersionNumber = fileVersionInfo.ProductVersion;
 
             try

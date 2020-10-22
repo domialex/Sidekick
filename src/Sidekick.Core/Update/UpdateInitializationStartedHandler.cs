@@ -12,33 +12,36 @@ using Microsoft.Extensions.Localization;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Update.Github_API;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Core.Update
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded", Justification = "<Pending>")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out", Justification = "<Pending>")]
     public class UpdateInitializationStartedHandler : INotificationHandler<UpdateInitializationStarted>
     {
         private readonly HttpClient _httpClient;
-        private readonly INativeApp nativeApp;
         private readonly INativeNotifications nativeNotifications;
         private readonly INativeBrowser nativeBrowser;
         private readonly IStringLocalizer<UpdateInitializationStartedHandler> localizer;
+        private readonly IMediator mediator;
 
         public UpdateInitializationStartedHandler(
             IHttpClientFactory httpClientFactory,
-            INativeApp nativeApp,
             INativeNotifications nativeNotifications,
             INativeBrowser nativeBrowser,
-            IStringLocalizer<UpdateInitializationStartedHandler> localizer)
+            IStringLocalizer<UpdateInitializationStartedHandler> localizer,
+            IMediator mediator)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://api.github.com");
             _httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            this.nativeApp = nativeApp;
             this.nativeNotifications = nativeNotifications;
             this.nativeBrowser = nativeBrowser;
             this.localizer = localizer;
+            this.mediator = mediator;
         }
 
         public string InstallDirectory => Path.GetDirectoryName(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("Sidekick")).Location);
@@ -54,10 +57,10 @@ namespace Sidekick.Core.Update
                 nativeNotifications.ShowYesNo(
                     localizer["Available"],
                     localizer["Title"],
-                    onYes: () =>
+                    onYes: async () =>
                     {
                         nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                        nativeApp.Shutdown();
+                        await mediator.Send(new ShutdownCommand());
 
                         //try
                         //{

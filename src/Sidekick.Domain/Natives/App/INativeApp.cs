@@ -1,4 +1,4 @@
-namespace Sidekick.Core.Natives
+namespace Sidekick.Domain.Natives.App
 {
     public interface INativeApp
     {
