@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Caches;
+using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
@@ -20,6 +21,7 @@ namespace Sidekick.Views.Settings
 #pragma warning restore 67
 
         private readonly IUILanguageProvider uiLanguageProvider;
+        private readonly ILanguageProvider languageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
@@ -27,7 +29,9 @@ namespace Sidekick.Views.Settings
         private readonly IMediator mediator;
         private bool isDisposed;
 
-        public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
+        public SettingsViewModel(
+            IUILanguageProvider uiLanguageProvider,
+            ILanguageProvider languageProvider,
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
             IKeybindEvents keybindEvents,
@@ -36,6 +40,7 @@ namespace Sidekick.Views.Settings
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
+            this.languageProvider = languageProvider;
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
@@ -56,6 +61,7 @@ namespace Sidekick.Views.Settings
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
             leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+            languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
@@ -68,6 +74,8 @@ namespace Sidekick.Views.Settings
 
         public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
 
+        public ObservableDictionary<string, string> ParserLanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
+
         public string CurrentKey { get; set; }
 
         public SidekickSettings Settings { get; private set; }
@@ -78,7 +86,7 @@ namespace Sidekick.Views.Settings
             keybindEvents.Enabled = string.IsNullOrEmpty(CurrentKey);
         }
 
-        public void Save()
+        public async Task Save()
         {
             var keybindProperties = Settings.GetType().GetProperties();
 
@@ -88,12 +96,15 @@ namespace Sidekick.Views.Settings
             }
 
             var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
+            var languageHasChanged = languageProvider.Current.LanguageCode != Settings.Language_Parser;
 
             AssignValues(Settings, sidekickSettings);
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
+            languageProvider.SetLanguage(Settings.Language_Parser);
             sidekickSettings.Save();
 
-            if (leagueHasChanged) mediator.Publish(new LeagueChangedNotification());
+            if (languageHasChanged) await ResetCache();
+            else if (leagueHasChanged) await mediator.Publish(new LeagueChangedNotification());
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)

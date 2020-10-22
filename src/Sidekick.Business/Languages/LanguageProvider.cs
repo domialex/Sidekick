@@ -12,7 +12,7 @@ namespace Sidekick.Business.Languages
         private readonly ILogger logger;
         private readonly SidekickSettings settings;
 
-        private const string EnglishLanguageName = "English";
+        private const string EnglishLanguageCode = "en";
 
         public LanguageProvider(ILogger<LanguageProvider> logger,
             SidekickSettings settings)
@@ -30,37 +30,36 @@ namespace Sidekick.Business.Languages
 
             if (!SetLanguage(settings.Language_Parser))
             {
-                SetLanguage(EnglishLanguageName);
+                SetLanguage(EnglishLanguageCode);
             }
+
+            EnglishLanguage = CreateLanguageInstance(AvailableLanguages.First(x => x.LanguageCode == EnglishLanguageCode).ImplementationType);
         }
 
-        private List<LanguageAttribute> AvailableLanguages { get; set; }
+        public List<LanguageAttribute> AvailableLanguages { get; private set; }
 
-        public ILanguage EnglishLanguage => CreateLanguageInstance(AvailableLanguages.First(x => x.Name == EnglishLanguageName).ImplementationType);
+        public ILanguage EnglishLanguage { get; private set; }
 
-        public bool IsEnglish => Current.Name == EnglishLanguageName;
+        public bool IsEnglish => Current.LanguageCode == EnglishLanguageCode;
 
         public LanguageAttribute Current => AvailableLanguages.First(x => x.DescriptionRarity == Language.DescriptionRarity);
 
         public ILanguage Language { get; private set; }
 
-        private bool SetLanguage(string name)
+        public bool SetLanguage(string languageCode)
         {
-            var language = AvailableLanguages.Find(x => x.Name == name);
+            var language = AvailableLanguages.Find(x => x.LanguageCode == languageCode);
 
             if (language == null)
             {
-                logger.LogInformation("Couldn't find language matching {language}.", name);
+                logger.LogInformation("Couldn't find language matching {language}.", languageCode);
                 return false;
             }
 
-            if (Language == null || Language.DescriptionRarity != language.DescriptionRarity)
+            if (Language?.DescriptionRarity != language.DescriptionRarity)
             {
                 logger.LogInformation("Changed active language support to {language}.", language.Name);
                 Language = CreateLanguageInstance(language.ImplementationType);
-
-                settings.Language_Parser = name;
-                settings.Save();
 
                 return true;
             }

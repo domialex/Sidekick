@@ -85,7 +85,7 @@ namespace Sidekick.Views.Prices
 
         public bool ShowFilters => !IsError;
         public bool ShowList => !IsError && !ShowRefresh;
-        public bool ShowRefresh { get; private set; } = true;
+        public bool ShowRefresh { get; private set; } = false;
         public bool ShowPreview => !IsError;
 
         public ObservableList<PriceFilterCategory> Filters { get; set; }

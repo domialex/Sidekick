@@ -23,9 +23,10 @@ namespace Sidekick.Views.Settings
             });
         }
 
-        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        private async void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Save();
+            Hide();
+            await viewModel.Save();
             Close();
         }
 
