@@ -5,29 +5,30 @@ using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Localization.Tray;
+using Sidekick.Views;
 
 namespace Sidekick.Initialization
 {
     public class InitializationCompletedHandler : INotificationHandler<InitializationCompleted>
     {
         private readonly SidekickSettings settings;
-        private readonly InitializationViewModel viewModel;
         private readonly INativeNotifications nativeNotifications;
+        private readonly IViewLocator viewLocator;
 
         public InitializationCompletedHandler(
             SidekickSettings settings,
-            InitializationViewModel viewModel,
-            INativeNotifications nativeNotifications)
+            INativeNotifications nativeNotifications,
+            IViewLocator viewLocator)
         {
             this.settings = settings;
-            this.viewModel = viewModel;
             this.nativeNotifications = nativeNotifications;
+            this.viewLocator = viewLocator;
         }
 
         public async Task Handle(InitializationCompleted notification, CancellationToken cancellationToken)
         {
             await Task.Delay(500);
-            viewModel.Complete();
+            viewLocator.Close<InitializationView>();
 
             nativeNotifications.ShowSystemNotification(
                 TrayResources.Notification_Title,

@@ -32,7 +32,6 @@ namespace Sidekick.Views.About
                 // Getting the operating system can fail
             }
 
-            Show();
             this.browser = browser;
         }
 

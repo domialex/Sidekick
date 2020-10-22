@@ -1,31 +1,37 @@
 using System;
+using System.Globalization;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Core.Settings;
 
 namespace Sidekick.Views
 {
-    public class ViewInstance : IDisposable
+    public class ViewInstance<TView> : IViewInstance
+        where TView : ISidekickView
     {
-        private bool isDisposed;
+        private readonly ViewLocator viewLocator;
 
-        public ViewInstance(IServiceScope scope, Type viewType)
+        public ViewInstance(ViewLocator viewLocator, IServiceProvider serviceProvider)
         {
-            Scope = scope;
-            ViewType = viewType;
-        }
+            this.viewLocator = viewLocator;
+            Scope = serviceProvider.CreateScope();
 
-        public IServiceScope Scope { get; private set; }
+            // Still needed for localization of league overlay models
+            var settings = Scope.ServiceProvider.GetService<SidekickSettings>();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
-        public ISidekickView View { get; private set; }
-
-        public Type ViewType { get; private set; }
-
-        public event Action Disposed;
-
-        public void Open()
-        {
-            View = (ISidekickView)Scope.ServiceProvider.GetService(ViewType);
+            // View initialization and show
+            View = Scope.ServiceProvider.GetService<TView>();
             View.Closed += View_Closed;
+            View.Show();
         }
+
+        private IServiceScope Scope { get; set; }
+
+        private ISidekickView View { get; set; }
+
+        public Type Type => typeof(TView);
 
         private void View_Closed(object sender, EventArgs e)
         {
@@ -40,23 +46,13 @@ namespace Sidekick.Views
 
         protected virtual void Dispose(bool disposing)
         {
-            if (isDisposed)
+            if (View != null)
             {
-                return;
+                View.Closed -= View_Closed;
             }
-
-            if (disposing)
-            {
-                if (View != null)
-                {
-                    View.Close();
-                    View.Closed -= View_Closed;
-                }
-                Scope?.Dispose();
-                Disposed?.Invoke();
-            }
-
-            isDisposed = true;
+            View.Close();
+            viewLocator.Views.Remove(this);
+            Scope?.Dispose();
         }
     }
 }

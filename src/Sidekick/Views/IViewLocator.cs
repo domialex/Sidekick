@@ -8,8 +8,11 @@ namespace Sidekick.Views
         void Close<TView>()
             where TView : ISidekickView;
 
-        bool IsOpened<TView>();
+        bool IsOpened<TView>()
+            where TView : ISidekickView;
 
         void CloseAll();
+
+        void Remove(IViewInstance viewInstance);
     }
 }

@@ -21,8 +21,6 @@ namespace Sidekick.Views.Settings
                 await System.Threading.Tasks.Task.Delay(1000);
                 Topmost = false;
             });
-
-            Show();
         }
 
         private void SaveChanges_Click(object sender, RoutedEventArgs e)

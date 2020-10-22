@@ -33,7 +33,7 @@ namespace Sidekick.Views
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<SidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
-            logger = serviceProvider.GetService<ILogger>();
+            logger = serviceProvider.GetService<ILogger<BaseView>>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;

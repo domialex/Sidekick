@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using Sidekick.Core.Natives;
 
@@ -22,16 +21,6 @@ namespace Sidekick.Initialization
         public int Percentage { get; set; }
 
         public double ProgressValue => Percentage / 100.0;
-
-        public event Action Initialized;
-
-        public void Complete()
-        {
-            if (Initialized != null)
-            {
-                Initialized.Invoke();
-            }
-        }
 
         public void Close()
         {
