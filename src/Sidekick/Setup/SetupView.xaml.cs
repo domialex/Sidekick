@@ -9,7 +9,7 @@ namespace Sidekick.Setup
         private readonly SetupViewModel viewModel;
 
         public SetupView(IServiceProvider serviceProvider, SetupViewModel viewModel)
-            : base("settings", serviceProvider)
+            : base("setup", serviceProvider)
         {
             this.viewModel = viewModel;
 

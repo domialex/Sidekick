@@ -10,7 +10,7 @@ namespace Sidekick.Core.Settings
             {
                 HasSetupCompleted = false,
                 Language_UI = "en",
-                Language_Parser = string.Empty,
+                Language_Parser = "en",
                 LeagueId = string.Empty,
                 League_SelectedTabIndex = 0,
                 LeaguesHash = string.Empty,

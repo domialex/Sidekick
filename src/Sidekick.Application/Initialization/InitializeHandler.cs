@@ -66,26 +66,29 @@ namespace Sidekick.Application.Initialization
             // Let everyone know that the initialization process has started
             await mediator.Publish(new InitializationStarted());
 
-            var runSetup = false;
+            var runSetup = !settings.HasSetupCompleted;
             if (request.FirstRun)
             {
                 var leagues = await mediator.Send(new GetLeaguesQuery());
                 leagueDataService.Initialize(leagues);
 
-                runSetup = string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId);
                 var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
                 if (leaguesHash != settings.LeaguesHash)
                 {
                     await cacheService.Clear();
                     settings.LeaguesHash = leaguesHash;
                     settings.Save();
-                    runSetup = true;
-                    nativeNotifications.ShowMessage(localizer["NewLeagues"]);
+                    if (!runSetup)
+                    {
+                        runSetup = true;
+                        nativeNotifications.ShowMessage(localizer["NewLeagues"]);
+                    }
                 }
+
+                runSetup = runSetup || string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId);
             }
 
             // Check to see if we should run Setup first before running the rest of the initialization process
-            runSetup = runSetup || !settings.HasSetupCompleted;
             if (runSetup)
             {
                 await mediator.Send(new SetupCommand());

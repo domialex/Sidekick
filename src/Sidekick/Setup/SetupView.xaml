@@ -6,10 +6,10 @@
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
     Title="{loc:Loc Title}"
-    Width="720"
-    Height="340"
-    MinWidth="720"
-    MinHeight="340"
+    Width="560"
+    Height="360"
+    MinWidth="560"
+    MinHeight="360"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     WindowStartupLocation="CenterScreen">
     <Window.Style>
