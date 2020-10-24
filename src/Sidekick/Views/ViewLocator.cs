@@ -2,66 +2,70 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
+using Sidekick.Mediator;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
+        private readonly IMediator mediator;
         private readonly Dispatcher dispatcher;
 
         public ViewLocator(
             IServiceProvider serviceProvider,
+            IMediator mediator,
             Dispatcher dispatcher)
         {
             this.serviceProvider = serviceProvider;
+            this.mediator = mediator;
             this.dispatcher = dispatcher;
-            Views = new List<IViewInstance>();
+            Views = new List<ViewInstance>();
         }
 
-        public List<IViewInstance> Views { get; set; }
+        public List<ViewInstance> Views { get; set; }
 
-        public void Open<TView>()
-            where TView : ISidekickView
+        public void Open(View view)
         {
             dispatcher.Invoke(() =>
             {
-                Views.Add(new ViewInstance<TView>(this, serviceProvider));
+                Views.Add(new ViewInstance(this, view, serviceProvider));
             });
         }
 
-        public bool IsOpened<TView>()
-            where TView : ISidekickView
-        {
-            return Views.Any(x => x.Type == typeof(TView));
-        }
+        public bool IsOpened(View view) => Views.Any(x => x.View == view);
 
         public void CloseAll()
         {
-            dispatcher.Invoke(() =>
+            dispatcher.Invoke(async () =>
             {
+                foreach (var view in Views)
+                {
+                    view.WpfView.Hide();
+                }
+                await mediator.WhenAll;
                 while (Views.Count > 0)
                 {
-                    Remove(Views[0]);
+                    Views[0].WpfView.Close();
                 }
             });
         }
 
-        public void Close<TView>()
-            where TView : ISidekickView
+        public void Close(View view)
         {
-            dispatcher.Invoke(() =>
+            dispatcher.Invoke(async () =>
             {
-                while (Views.Any(x => x.Type == typeof(TView)))
+                foreach (var view in Views.Where(x => x.View == view))
                 {
-                    Remove(Views.FirstOrDefault(x => x.Type == typeof(TView)));
+                    view.WpfView.Hide();
+                }
+                await mediator.WhenAll;
+                while (Views.Any(x => x.View == view))
+                {
+                    Views.FirstOrDefault(x => x.View == view)?.WpfView.Close();
                 }
             });
-        }
-
-        public void Remove(IViewInstance viewInstance)
-        {
-            viewInstance?.Dispose();
         }
 
         public void Dispose()

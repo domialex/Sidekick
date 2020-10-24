@@ -9,11 +9,7 @@ using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
-using Sidekick.Views;
-using Sidekick.Views.Leagues;
-using Sidekick.Views.MapInfo;
-using Sidekick.Views.Prices;
-using Sidekick.Views.Settings;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Handlers
 {
@@ -126,7 +122,7 @@ namespace Sidekick.Handlers
             viewLocator.CloseAll();
             await clipboard.Copy();
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
             return true;
         }
 
@@ -135,20 +131,20 @@ namespace Sidekick.Handlers
             viewLocator.CloseAll();
             await clipboard.Copy();
 
-            viewLocator.Open<MapInfoView>();
+            viewLocator.Open(View.Map);
             return true;
         }
 
         private Task<bool> Events_OnOpenLeagueOverview()
         {
-            if (viewLocator.IsOpened<LeagueView>())
+            if (viewLocator.IsOpened(View.League))
             {
                 viewLocator.CloseAll();
             }
             else
             {
                 viewLocator.CloseAll();
-                viewLocator.Open<LeagueView>();
+                viewLocator.Open(View.League);
             }
 
             return Task.FromResult(true);
@@ -229,14 +225,14 @@ namespace Sidekick.Handlers
 
         private Task<bool> TriggerOpenSettings()
         {
-            if (viewLocator.IsOpened<SettingsView>())
+            if (viewLocator.IsOpened(View.Settings))
             {
                 viewLocator.CloseAll();
             }
             else
             {
                 viewLocator.CloseAll();
-                viewLocator.Open<SettingsView>();
+                viewLocator.Open(View.Settings);
             }
 
             return Task.FromResult(true);

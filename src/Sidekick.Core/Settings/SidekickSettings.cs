@@ -8,6 +8,8 @@ namespace Sidekick.Core.Settings
     {
         internal const string FileName = "Sidekick_settings.json";
 
+        public bool HasSetupCompleted { get; set; }
+
         public string Language_UI { get; set; }
 
         public string Language_Parser { get; set; }

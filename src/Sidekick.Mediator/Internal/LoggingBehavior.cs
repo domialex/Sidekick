@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Sidekick.Mediator
+namespace Sidekick.Mediator.Internal
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
@@ -27,15 +27,15 @@ namespace Sidekick.Mediator
             var stopwatch = Stopwatch.StartNew();
             try
             {
-                logger.LogInformation($"[MediatR:START] {nameWithGuid}");
+                logger.LogInformation($"[Mediator:START] {nameWithGuid}");
 
                 try
                 {
-                    logger.LogInformation($"[MediatR:PROPS] {guid} {JsonSerializer.Serialize(request)}");
+                    logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(request)}");
                 }
                 catch (Exception)
                 {
-                    logger.LogInformation($"[MediatR:ERROR] {guid} Could not serialize the request.");
+                    logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the request.");
                 }
 
                 response = await next();
@@ -43,7 +43,7 @@ namespace Sidekick.Mediator
             finally
             {
                 stopwatch.Stop();
-                logger.LogInformation($"[MediatR:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+                logger.LogInformation($"[Mediator:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
             }
 
             return response;

@@ -10,15 +10,14 @@ namespace Sidekick.Business.Languages
     public class LanguageProvider : ILanguageProvider
     {
         private readonly ILogger logger;
-        private readonly SidekickSettings settings;
 
         private const string EnglishLanguageCode = "en";
 
-        public LanguageProvider(ILogger<LanguageProvider> logger,
+        public LanguageProvider(
+            ILogger<LanguageProvider> logger,
             SidekickSettings settings)
         {
             this.logger = logger;
-            this.settings = settings;
 
             AvailableLanguages = new List<LanguageAttribute>();
             foreach (var type in typeof(LanguageAttribute).GetImplementedAttribute())

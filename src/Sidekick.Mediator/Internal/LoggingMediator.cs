@@ -8,11 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Sidekick.Mediator.Internal
 {
-    internal class MediatorOverride : MediatR.Mediator
+    internal class LoggingMediator : MediatR.Mediator
     {
         private readonly ILogger logger;
 
-        public MediatorOverride(
+        public LoggingMediator(
             ServiceFactory serviceFactory,
             ILogger logger)
             : base(serviceFactory)
@@ -23,19 +23,19 @@ namespace Sidekick.Mediator.Internal
         /// <summary>
         /// Overriding the default PublishCore so that we can log notifications
         /// </summary>
-        protected override async Task PublishCore(IEnumerable<Func<INotification, CancellationToken, Task>> allHandlers, INotification notification, CancellationToken cancellationToken)
+        protected override async Task PublishCore(IEnumerable<Func<MediatR.INotification, CancellationToken, Task>> allHandlers, MediatR.INotification notification, CancellationToken cancellationToken)
         {
             foreach (var handler in allHandlers)
             {
                 var handlerNameWithGuid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}] { notification?.GetType()?.FullName}";
                 var stopwatch = Stopwatch.StartNew();
 
-                logger.LogInformation($"[MediatR:START] {handlerNameWithGuid}");
+                logger.LogInformation($"[Mediator:START] {handlerNameWithGuid}");
 
                 await handler(notification, cancellationToken).ConfigureAwait(false);
 
                 stopwatch.Stop();
-                logger.LogInformation($"[MediatR:END]   {handlerNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+                logger.LogInformation($"[Mediator:END]   {handlerNameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
             }
         }
     }

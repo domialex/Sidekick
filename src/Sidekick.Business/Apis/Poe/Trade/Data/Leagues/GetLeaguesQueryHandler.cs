@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Leagues
 {
-    public class GetLeaguesQueryHandler : IRequestHandler<GetLeaguesQuery, List<League>>
+    public class GetLeaguesQueryHandler : IQueryHandler<GetLeaguesQuery, List<League>>
     {
         private readonly IPoeTradeClient poeTradeClient;
 

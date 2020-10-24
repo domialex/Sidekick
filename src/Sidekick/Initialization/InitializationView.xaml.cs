@@ -1,8 +1,8 @@
 using System.Windows;
 using MediatR;
 using Sidekick.Domain.Natives.Initialization.Commands;
+using Sidekick.Presentation.Views;
 using Sidekick.Views;
-using Sidekick.Views.ApplicationLogs;
 
 namespace Sidekick.Initialization
 {
@@ -32,7 +32,7 @@ namespace Sidekick.Initialization
 
         private void Logs_Click(object sender, RoutedEventArgs e)
         {
-            viewLocator.Open<ApplicationLogsView>();
+            viewLocator.Open(View.Logs);
         }
     }
 }

@@ -12,6 +12,7 @@ using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Database;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Natives.App;
 using Sidekick.Localization;
 using Sidekick.Mediator;
 
@@ -31,10 +32,10 @@ namespace Sidekick.TestDataCollector
                     typeof(Localization.StartupExtensions).Assembly
                 )
 
-                .AddSingleton<INativeApp>(new Mock<INativeApp>().Object)
-                .AddSingleton<INativeNotifications>(new Mock<INativeNotifications>().Object)
-                .AddSingleton<INativeBrowser>(new Mock<INativeBrowser>().Object)
-                .AddSingleton<INativeProcess>(new Mock<INativeProcess>().Object)
+                .AddSingleton(new Mock<INativeApp>().Object)
+                .AddSingleton(new Mock<INativeNotifications>().Object)
+                .AddSingleton(new Mock<INativeBrowser>().Object)
+                .AddSingleton(new Mock<INativeProcess>().Object)
                 .AddSidekickConfiguration()
                 .AddSidekickCoreServices()
                 .AddSidekickBusinessServices()

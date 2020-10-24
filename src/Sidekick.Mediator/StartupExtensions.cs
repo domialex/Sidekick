@@ -1,6 +1,7 @@
 using System.Reflection;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Mediator.Internal;
 
 namespace Sidekick.Mediator
 {
@@ -11,9 +12,11 @@ namespace Sidekick.Mediator
             services
                 .AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>))
                 .AddMediatR(
-                    (config) => config.Using<SidekickMediator>().AsTransient(),
+                    (config) => config.Using<Mediator>().AsSingleton(),
                     assemblies
                 );
+
+            services.AddSingleton<IMediator, Mediator>((sp) => (Mediator)sp.GetService<MediatR.IMediator>());
 
             return services;
         }

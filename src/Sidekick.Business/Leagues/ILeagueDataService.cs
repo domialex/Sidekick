@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
+using System.Collections.Generic;
+using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Business.Leagues
 {

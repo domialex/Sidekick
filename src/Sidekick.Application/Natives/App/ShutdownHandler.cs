@@ -6,7 +6,7 @@ using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Application.Natives.App
 {
-    public class ShutdownHandler : IRequestHandler<ShutdownCommand>
+    public class ShutdownHandler : ICommandHandler<ShutdownCommand>
     {
         private readonly INativeApp nativeApp;
 

@@ -1,11 +1,7 @@
 using System;
 using System.Windows.Input;
 using Sidekick.Core.Natives;
-using Sidekick.Views.About;
-using Sidekick.Views.ApplicationLogs;
-using Sidekick.Views.Leagues;
-using Sidekick.Views.Prices;
-using Sidekick.Views.Settings;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views.TrayIcon
 {
@@ -25,15 +21,15 @@ namespace Sidekick.Views.TrayIcon
             this.nativeClipboard = nativeClipboard;
         }
 
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open<SettingsView>());
+        public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open(View.Settings));
 
-        public ICommand ShowAboutCommand => new RelayCommand(_ => viewLocator.Open<AboutView>());
+        public ICommand ShowAboutCommand => new RelayCommand(_ => viewLocator.Open(View.About));
 
-        public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open<ApplicationLogsView>());
+        public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open(View.Logs));
 
         public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
 
-        public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open<LeagueView>());
+        public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open(View.League));
 
         public ICommand DebugCrashCommand => new RelayCommand(_ => throw new Exception("Crash requested via tray icon"));
 
@@ -42,7 +38,7 @@ namespace Sidekick.Views.TrayIcon
         {
             await nativeClipboard.SetText(await nativeClipboard.GetText());
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
@@ -74,7 +70,7 @@ So their King might go on.""
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand2 => new RelayCommand(async _ =>
@@ -105,7 +101,7 @@ Explosive Arrow deals 25% increased Damage (enchant)
 Note: ~price 1 chaos
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand3 => new RelayCommand(async _ =>
@@ -121,7 +117,7 @@ Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand4 => new RelayCommand(async _ =>
@@ -136,7 +132,7 @@ You will enter a map that holds four additional Rogue Exiles.
 Right-click to add this prophecy to your character.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand5 => new RelayCommand(async _ =>
@@ -171,7 +167,7 @@ La Première des Plaines nous enseigne que même
 la plus grande des proies peut être éventuellement déchiquetée.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand6 => new RelayCommand(async _ =>
@@ -198,7 +194,7 @@ Item Level: 61
 0.23% of Physical Attack Damage Leeched as Mana
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand7 => new RelayCommand(async _ =>
@@ -217,7 +213,7 @@ Item Level: 68
 Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand8 => new RelayCommand(async _ =>
@@ -264,7 +260,7 @@ Corrupted
 Note: ~price 2 chaos
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         public ICommand DebugPriceCheckCommand9 => new RelayCommand(async _ =>
@@ -279,7 +275,7 @@ Stack Size: 1/10
 Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
 ");
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
         });
 
         #endregion

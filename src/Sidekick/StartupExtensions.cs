@@ -3,6 +3,8 @@ using Sidekick.Core.Natives;
 using Sidekick.Handlers;
 using Sidekick.Initialization;
 using Sidekick.Natives;
+using Sidekick.Presentation.Views;
+using Sidekick.Setup;
 using Sidekick.Views;
 using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
@@ -29,6 +31,7 @@ namespace Sidekick
             services.AddScoped<PriceView>();
             services.AddScoped<MapInfoView>();
             services.AddScoped<SettingsView>();
+            services.AddScoped<SetupView>();
 
             services.AddScoped<ApplicationLogViewModel>();
             services.AddScoped<LeagueViewModel>();
@@ -36,6 +39,7 @@ namespace Sidekick
             services.AddScoped<MapInfoViewModel>();
             services.AddScoped<SettingsViewModel>();
             services.AddSingleton<InitializationViewModel>();
+            services.AddScoped<SetupViewModel>();
 
             services.AddSingleton<IKeybindEvents, KeybindEvents>();
             services.AddSingleton<INativeKeyboard, NativeKeyboard>();

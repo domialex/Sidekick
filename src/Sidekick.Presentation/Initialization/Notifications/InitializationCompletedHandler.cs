@@ -5,7 +5,7 @@ using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Localization.Tray;
-using Sidekick.Views;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Initialization
 {
@@ -27,13 +27,16 @@ namespace Sidekick.Initialization
 
         public async Task Handle(InitializationCompleted notification, CancellationToken cancellationToken)
         {
+            // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
             await Task.Delay(500);
-            viewLocator.Close<InitializationView>();
 
+            // Show a system notification
             nativeNotifications.ShowSystemNotification(
                 TrayResources.Notification_Title,
                 string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString())
             );
+
+            viewLocator.Close(View.Initialization);
         }
     }
 }

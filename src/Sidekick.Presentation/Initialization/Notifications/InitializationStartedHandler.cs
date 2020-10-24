@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Views;
+using Sidekick.Presentation.Views;
 
-namespace Sidekick.Initialization
+namespace Sidekick.Presentation.Initialization.Notifications
 {
     public class InitializationStartedHandler : INotificationHandler<InitializationStarted>
     {
@@ -22,9 +22,11 @@ namespace Sidekick.Initialization
 
         public Task Handle(InitializationStarted notification, CancellationToken cancellationToken)
         {
-            if (settings.ShowSplashScreen && !viewLocator.IsOpened<InitializationView>())
+            viewLocator.Close(View.Settings);
+            viewLocator.Close(View.Setup);
+            if (settings.ShowSplashScreen && !viewLocator.IsOpened(View.Initialization))
             {
-                viewLocator.Open<InitializationView>();
+                viewLocator.Open(View.Initialization);
             }
             return Task.CompletedTask;
         }

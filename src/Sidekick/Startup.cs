@@ -7,6 +7,7 @@ using Sidekick.Domain.Natives.App;
 using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
+using Sidekick.Presentation.Initialization.Commands;
 
 namespace Sidekick
 {
@@ -23,7 +24,8 @@ namespace Sidekick
                     typeof(Business.StartupExtensions).Assembly,
                     typeof(Core.StartupExtensions).Assembly,
                     typeof(Localization.StartupExtensions).Assembly,
-                    typeof(Sidekick.StartupExtensions).Assembly
+                    typeof(StartupExtensions).Assembly,
+                    typeof(SetupHandler).Assembly
                 )
 
                 .AddSidekickConfiguration()

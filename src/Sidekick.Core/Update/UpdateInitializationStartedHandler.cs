@@ -16,8 +16,6 @@ using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Core.Update
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded", Justification = "<Pending>")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S125:Sections of code should not be commented out", Justification = "<Pending>")]
     public class UpdateInitializationStartedHandler : INotificationHandler<UpdateInitializationStarted>
     {
         private readonly HttpClient _httpClient;

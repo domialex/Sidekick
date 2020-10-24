@@ -8,6 +8,7 @@ namespace Sidekick.Core.Settings
         {
             return new SidekickSettings()
             {
+                HasSetupCompleted = false,
                 Language_UI = "en",
                 Language_Parser = string.Empty,
                 LeagueId = string.Empty,
@@ -44,6 +45,6 @@ namespace Sidekick.Core.Settings
             };
         }
 
-        public static SidekickSettings Settings = CreateDefault();
+        public static SidekickSettings Settings { get; } = CreateDefault();
     }
 }

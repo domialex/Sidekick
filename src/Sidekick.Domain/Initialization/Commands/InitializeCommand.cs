@@ -2,7 +2,7 @@ using MediatR;
 
 namespace Sidekick.Domain.Initialization.Commands
 {
-    public class InitializeCommand : IRequest
+    public class InitializeCommand : ICommand
     {
         public InitializeCommand(bool firstRun)
         {

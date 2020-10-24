@@ -147,6 +147,7 @@
     <ProjectReference Include="..\Sidekick.Database\Sidekick.Database.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
+    <ProjectReference Include="..\Sidekick.Presentation\Sidekick.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>

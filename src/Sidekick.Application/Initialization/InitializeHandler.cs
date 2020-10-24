@@ -1,52 +1,96 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Caches;
+using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
+using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Application.Initialization
 {
-    public class InitializeHandler : IRequestHandler<InitializeCommand>
+    public class InitializeHandler : ICommandHandler<InitializeCommand>
     {
         private readonly ILogger logger;
         private readonly IStringLocalizer<InitializeHandler> localizer;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly INativeNotifications nativeNotifications;
+        private readonly ILeagueDataService leagueDataService;
+        private readonly ICacheService cacheService;
+        private readonly SidekickSettings settings;
 
         public InitializeHandler(
             ILogger<InitializeHandler> logger,
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
-            INativeNotifications nativeNotifications)
+            INativeNotifications nativeNotifications,
+            ILeagueDataService leagueDataService,
+            ICacheService cacheService,
+            SidekickSettings settings)
         {
             this.logger = logger;
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.nativeNotifications = nativeNotifications;
+            this.leagueDataService = leagueDataService;
+            this.cacheService = cacheService;
+            this.settings = settings;
         }
 
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
-            await mediator.Publish(new InitializationStarted());
-
             var steps = new List<IInitializerStep>()
             {
                 new InitializerStep<UpdateInitializationStarted>(mediator, serviceFactory, "Update", runOnce: true),
-                new InitializerStep<SettingsInitializationStarted>(mediator, serviceFactory, "Settings"),
                 new InitializerStep<LanguageInitializationStarted>(mediator, serviceFactory, "Language"),
                 new InitializerStep<DataInitializationStarted>(mediator, serviceFactory, "Data"),
                 new InitializerStep<KeybindsInitializationStarted>(mediator, serviceFactory, "Keybinds", runOnce: true),
             };
+
+            // Report initial progress
+            await ReportProgress(steps);
+
+            // Let everyone know that the initialization process has started
+            await mediator.Publish(new InitializationStarted());
+
+            var runSetup = false;
+            if (request.FirstRun)
+            {
+                var leagues = await mediator.Send(new GetLeaguesQuery());
+                leagueDataService.Initialize(leagues);
+
+                runSetup = string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId);
+                var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
+                if (leaguesHash != settings.LeaguesHash)
+                {
+                    await cacheService.Clear();
+                    settings.LeaguesHash = leaguesHash;
+                    settings.Save();
+                    runSetup = true;
+                    nativeNotifications.ShowMessage(localizer["NewLeagues"]);
+                }
+            }
+
+            // Check to see if we should run Setup first before running the rest of the initialization process
+            runSetup = runSetup || !settings.HasSetupCompleted;
+            if (runSetup)
+            {
+                await mediator.Send(new SetupCommand());
+                return Unit.Value;
+            }
 
             foreach (var step in steps)
             {
@@ -85,6 +129,10 @@ namespace Sidekick.Application.Initialization
             else if (percentage >= 100)
             {
                 args.Title = localizer["Ready"];
+            }
+            else
+            {
+                args.Title = localizer["Title", 0, steps.Count];
             }
 
             await mediator.Publish(args);

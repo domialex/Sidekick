@@ -6,10 +6,10 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
-using Sidekick.Business.Apis.Poe.Trade.Data.Leagues;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
+using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Business.Apis.Poe.Trade
 {

@@ -41,14 +41,11 @@ namespace Sidekick.Views
                 var localValue = dependencyObject.ReadLocalValue(Translation.ResourceManagerProperty);
 
                 // does this control have a "Translation.ResourceManager" attached property with a set value?
-                if (localValue != DependencyProperty.UnsetValue)
+                if (localValue != DependencyProperty.UnsetValue && localValue is ResourceManager resourceManager)
                 {
-                    if (localValue is ResourceManager resourceManager)
-                    {
-                        TranslationSource.Instance.AddResourceManager(resourceManager);
+                    TranslationSource.Instance.AddResourceManager(resourceManager);
 
-                        return resourceManager;
-                    }
+                    return resourceManager;
                 }
             }
 
@@ -72,24 +69,22 @@ namespace Sidekick.Views
             }
 
             if (string.IsNullOrEmpty(baseName))
-                {
+            {
                 // rootObject is the root control of the visual tree (the top parent of targetObject)
                 var rootObject = (serviceProvider as IRootObjectProvider)?.RootObject;
                 baseName = GetResourceManager(rootObject)?.BaseName ?? string.Empty;
             }
 
-            if (string.IsNullOrEmpty(baseName)) // template re-binding
+            // template re-binding
+            if (string.IsNullOrEmpty(baseName) && targetObject is FrameworkElement frameworkElement)
             {
-                if (targetObject is FrameworkElement frameworkElement)
-                {
-                    baseName = GetResourceManager(frameworkElement.TemplatedParent)?.BaseName ?? string.Empty;
-                }
+                baseName = GetResourceManager(frameworkElement.TemplatedParent)?.BaseName ?? string.Empty;
             }
 
             var binding = new Binding
             {
                 Mode = BindingMode.OneWay,
-                Path = new PropertyPath($"[{baseName}.{StringName}]"),
+                Path = new PropertyPath(path: $"[{baseName}.{StringName}]"),
                 Source = TranslationSource.Instance,
                 FallbackValue = StringName
             };

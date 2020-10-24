@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Trade.Data.Leagues
+namespace Sidekick.Domain.Leagues
 {
     public class League
     {
