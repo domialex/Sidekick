@@ -22,6 +22,8 @@ namespace Sidekick.Setup
                 await System.Threading.Tasks.Task.Delay(1000);
                 Topmost = false;
             });
+
+            _ = viewModel.Initialize();
         }
 
         private async void SaveChanges_Click(object sender, RoutedEventArgs e)

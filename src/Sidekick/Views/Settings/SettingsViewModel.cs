@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Leagues;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -36,7 +36,6 @@ namespace Sidekick.Views.Settings
             INativeKeyboard nativeKeyboard,
             IKeybindEvents keybindEvents,
             ICacheService cacheService,
-            ILeagueDataService leagueDataService,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
@@ -59,11 +58,16 @@ namespace Sidekick.Views.Settings
 
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
-            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
             languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+        }
+
+        public async Task Initialize()
+        {
+            var leagues = await mediator.Send(new GetLeaguesQuery(true));
+            leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
         }
 
         public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();

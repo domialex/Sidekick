@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Leagues;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Leagues;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -27,7 +27,6 @@ namespace Sidekick.Setup
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
             SidekickSettings sidekickSettings,
-            ILeagueDataService leagueDataService,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
@@ -37,9 +36,14 @@ namespace Sidekick.Setup
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
 
-            leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
             languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
+        }
+
+        public async Task Initialize()
+        {
+            var leagues = await mediator.Send(new GetLeaguesQuery(true));
+            leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
         }
 
         public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();

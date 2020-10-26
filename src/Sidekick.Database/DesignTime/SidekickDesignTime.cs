@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Sidekick.Database
+namespace Sidekick.Database.DesignTime
 {
-    public class SidekickDesignTime : IDesignTimeDbContextFactory<SidekickContext>
+    internal class SidekickDesignTime : IDesignTimeDbContextFactory<SidekickContext>
     {
         public SidekickContext CreateDbContext(string[] args)
         {

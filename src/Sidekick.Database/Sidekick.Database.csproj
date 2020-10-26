@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,12 +5,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Trade.Data.Items;
-using Sidekick.Business.Apis.Poe.Trade.Data.Static;
-using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Languages;
 
-namespace Sidekick.Business.Apis.Poe.Trade
+namespace Sidekick.Infrastructure.Poe
 {
     public class PoeTradeClient : IPoeTradeClient
     {
@@ -18,7 +15,8 @@ namespace Sidekick.Business.Apis.Poe.Trade
         private readonly ILanguageProvider languageProvider;
         private readonly HttpClient client;
 
-        public PoeTradeClient(ILogger<PoeTradeClient> logger,
+        public PoeTradeClient(
+            ILogger<PoeTradeClient> logger,
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
@@ -43,27 +41,9 @@ namespace Sidekick.Business.Apis.Poe.Trade
             }
         }
 
-        public async Task<List<TReturn>> Fetch<TReturn>(bool useDefaultLanguage = false)
+        public async Task<List<TReturn>> Fetch<TReturn>(string path, bool useDefaultLanguage = false)
         {
-            string path;
-            string name;
-            switch (typeof(TReturn).Name)
-            {
-                case nameof(ItemDataCategory):
-                    name = "items";
-                    path = "data/items";
-                    break;
-                case nameof(StaticItemCategory):
-                    name = "static items";
-                    path = "data/static";
-                    break;
-                case nameof(StatDataCategory):
-                    name = "attributes";
-                    path = "data/stats";
-                    break;
-                default: throw new ArgumentException("The type to fetch is not recognized by the PoeApiService.");
-            }
-
+            var name = typeof(TReturn).Name;
             var language = useDefaultLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
 
             try
@@ -82,7 +62,6 @@ namespace Sidekick.Business.Apis.Poe.Trade
                 logger.LogInformation($"Could not fetch {name} at {language.PoeTradeApiBaseUrl + path}.");
                 throw;
             }
-
         }
     }
 }

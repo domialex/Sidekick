@@ -17,7 +17,6 @@ using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Leagues;
 using Sidekick.Business.Parties;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
@@ -31,8 +30,6 @@ namespace Sidekick.Business
         {
             // Http Services
             services.AddHttpClient();
-
-            services.AddSingleton<ILeagueDataService, LeagueDataService>();
 
             services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();

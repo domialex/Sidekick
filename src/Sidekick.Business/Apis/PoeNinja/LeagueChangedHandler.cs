@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Leagues;
+using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {

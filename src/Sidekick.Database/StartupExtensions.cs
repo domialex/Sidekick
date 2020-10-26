@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Database.Leagues;
+using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Database
 {
@@ -18,6 +20,8 @@ namespace Sidekick.Database
             builder.UseSqlite("Filename=Sidekick.db");
             var context = new SidekickContext(builder.Options);
             context.Database.Migrate();
+
+            services.AddTransient<ILeagueRepository, LeagueRepository>();
 
             return services;
         }
