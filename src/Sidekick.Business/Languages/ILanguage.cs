@@ -8,7 +8,6 @@ namespace Sidekick.Business.Languages
         Uri PoeTradeExchangeBaseUrl { get; }
         Uri PoeTradeApiBaseUrl { get; }
         Uri PoeCdnBaseUrl { get; }
-        Uri PoeWebsite { get; }
 
         string RarityUnique { get; }
         string RarityRare { get; }

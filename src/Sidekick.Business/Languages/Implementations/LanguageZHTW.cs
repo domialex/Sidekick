@@ -9,7 +9,6 @@ namespace Sidekick.Business.Languages.Implementations
         public Uri PoeTradeExchangeBaseUrl => new Uri("http://web.poe.garena.tw/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("http://web.poe.garena.tw/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
-        public Uri PoeWebsite => new Uri("http://web.poe.garena.tw/");
 
         public string RarityUnique => "傳奇";
         public string RarityRare => "稀有";
