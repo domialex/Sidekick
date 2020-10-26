@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Sidekick.Domain.Natives.Initialization.Commands
+namespace Sidekick.Domain.App.Commands
 {
     public class ShutdownCommand : ICommand
     {

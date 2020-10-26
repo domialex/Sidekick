@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
-    <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
   </ItemGroup>
 

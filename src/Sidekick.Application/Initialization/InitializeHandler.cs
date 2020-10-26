@@ -12,10 +12,11 @@ using Sidekick.Business.Caches;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Initialization.Queries;
 using Sidekick.Domain.Leagues;
-using Sidekick.Domain.Natives.Initialization.Commands;
 
 namespace Sidekick.Application.Initialization
 {
@@ -54,7 +55,6 @@ namespace Sidekick.Application.Initialization
         {
             var steps = new List<IInitializerStep>()
             {
-                new InitializerStep<UpdateInitializationStarted>(mediator, serviceFactory, "Update", runOnce: true),
                 new InitializerStep<LanguageInitializationStarted>(mediator, serviceFactory, "Language"),
                 new InitializerStep<DataInitializationStarted>(mediator, serviceFactory, "Data"),
                 new InitializerStep<KeybindsInitializationStarted>(mediator, serviceFactory, "Keybinds", runOnce: true),
@@ -65,6 +65,19 @@ namespace Sidekick.Application.Initialization
 
             // Let everyone know that the initialization process has started
             await mediator.Publish(new InitializationStarted());
+
+            // Check for updates
+            if (await mediator.Send(new IsNewVersionAvailableQuery()))
+            {
+                nativeNotifications.ShowYesNo(
+                    localizer["UpdateAvailable"],
+                    localizer["UpdateTitle"],
+                    onYes: async () =>
+                    {
+                        await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
+                        await mediator.Send(new ShutdownCommand());
+                    });
+            }
 
             var runSetup = !settings.HasSetupCompleted;
             if (request.FirstRun)

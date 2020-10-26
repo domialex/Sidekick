@@ -1,10 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Natives.App;
-using Sidekick.Domain.Natives.Initialization.Commands;
+using Sidekick.Domain.App.Commands;
 
-namespace Sidekick.Application.Natives.App
+namespace Sidekick.Presentation.App
 {
     public class ShutdownHandler : ICommandHandler<ShutdownCommand>
     {

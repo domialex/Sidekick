@@ -203,7 +203,7 @@ namespace Sidekick.Handlers
 
             if (item != null)
             {
-                wikiProvider.Open(item);
+                await wikiProvider.Open(item);
                 return true;
             }
 

@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Natives.App;
 using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
+using Sidekick.Presentation.App;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML

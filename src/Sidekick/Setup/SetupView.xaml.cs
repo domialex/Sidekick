@@ -29,9 +29,9 @@ namespace Sidekick.Setup
             await viewModel.Save();
         }
 
-        private void DiscardChanges_Click(object sender, RoutedEventArgs e)
+        private async void DiscardChanges_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Close();
+            await viewModel.Close();
         }
     }
 }

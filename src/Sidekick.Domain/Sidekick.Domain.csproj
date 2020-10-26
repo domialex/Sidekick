@@ -12,4 +12,10 @@
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="App\Commands\ShutdownCommand - Copy.resx">
+      <DependentUpon>ShutdownCommand.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

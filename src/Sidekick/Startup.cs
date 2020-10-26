@@ -3,10 +3,11 @@ using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Core;
 using Sidekick.Database;
-using Sidekick.Domain.Natives.App;
+using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
+using Sidekick.Presentation.App;
 using Sidekick.Presentation.Initialization.Commands;
 
 namespace Sidekick
@@ -21,6 +22,7 @@ namespace Sidekick
                 .AddSidekickLogging()
                 .AddSidekickMediator(
                     typeof(InitializeHandler).Assembly,
+                    typeof(Infrastructure.StartupExtensions).Assembly,
                     typeof(Business.StartupExtensions).Assembly,
                     typeof(Core.StartupExtensions).Assembly,
                     typeof(Localization.StartupExtensions).Assembly,
@@ -32,6 +34,7 @@ namespace Sidekick
                 .AddSidekickCoreServices()
                 .AddSidekickBusinessServices()
                 .AddSidekickLocalization()
+                .AddSidekickInfrastructure()
                 .AddSidekickUIWindows()
                 .AddSidekickDatabase();
 

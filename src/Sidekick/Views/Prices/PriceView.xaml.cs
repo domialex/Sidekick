@@ -3,24 +3,25 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Sidekick.Core.Natives;
+using MediatR;
+using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Views.Prices
 {
     public partial class PriceView : BaseOverlay
     {
         private readonly PriceViewModel viewModel;
-        private readonly INativeBrowser nativeBrowser;
+        private readonly IMediator mediator;
 
         public PriceView(
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
-            INativeBrowser nativeBrowser)
+            IMediator mediator)
             : base("price", serviceProvider)
         {
 
             this.viewModel = viewModel;
-            this.nativeBrowser = nativeBrowser;
+            this.mediator = mediator;
             InitializeComponent();
             DataContext = viewModel;
 
@@ -102,9 +103,9 @@ namespace Sidekick.Views.Prices
             scrollViewer?.ScrollToTop();
         }
 
-        private void OpenLink(object sender, RequestNavigateEventArgs e)
+        private async void OpenLink(object sender, RequestNavigateEventArgs e)
         {
-            nativeBrowser.Open(e.Uri);
+            await mediator.Send(new OpenBrowserCommand(e.Uri));
             e.Handled = true;
         }
 

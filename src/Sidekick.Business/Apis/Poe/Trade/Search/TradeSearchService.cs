@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
@@ -14,8 +15,8 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search
 {
@@ -27,8 +28,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         private readonly IStaticDataService staticDataService;
         private readonly SidekickSettings configuration;
         private readonly IPoeTradeClient poeTradeClient;
-        private readonly INativeBrowser nativeBrowser;
         private readonly IStatDataService statDataService;
+        private readonly IMediator mediator;
 
         public TradeSearchService(ILogger<TradeSearchService> logger,
             ILanguageProvider languageProvider,
@@ -36,8 +37,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             IStaticDataService staticDataService,
             SidekickSettings configuration,
             IPoeTradeClient poeTradeClient,
-            INativeBrowser nativeBrowser,
-            IStatDataService statDataService)
+            IStatDataService statDataService,
+            IMediator mediator)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
@@ -45,8 +46,8 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.staticDataService = staticDataService;
             this.configuration = configuration;
             this.poeTradeClient = poeTradeClient;
-            this.nativeBrowser = nativeBrowser;
             this.statDataService = statDataService;
+            this.mediator = mediator;
         }
 
         public async Task<FetchResult<string>> SearchBulk(Item item)
@@ -231,11 +232,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         {
             if (item.Rarity == Rarity.Currency)
             {
-                nativeBrowser.Open((await SearchBulk(item)).Uri);
+                await mediator.Send(new OpenBrowserCommand((await SearchBulk(item)).Uri));
             }
             else
             {
-                nativeBrowser.Open((await Search(item)).Uri);
+                await mediator.Send(new OpenBrowserCommand((await Search(item)).Uri));
             }
         }
     }

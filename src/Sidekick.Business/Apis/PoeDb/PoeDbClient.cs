@@ -1,8 +1,10 @@
 using System;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Business.Apis.PoeDb
 {
@@ -18,25 +20,20 @@ namespace Sidekick.Business.Apis.PoeDb
         private const string SubUrlItem = "item.php?n=";
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
-        private readonly INativeBrowser nativeBrowser;
+        private readonly IMediator mediator;
 
         public PoeDbClient(ILogger<PoeDbClient> logger,
             ILanguageProvider languageProvider,
-            INativeBrowser nativeBrowser)
+            IMediator mediator)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
-            this.nativeBrowser = nativeBrowser;
+            this.mediator = mediator;
         }
 
-        public void Open(Item item)
+        public async Task Open(Item item)
         {
-            if (item == null)
-            {
-                return;
-            }
-
-            if (!languageProvider.IsEnglish)
+            if (item == null || !languageProvider.IsEnglish)
             {
                 return;
             }
@@ -47,7 +44,7 @@ namespace Sidekick.Business.Apis.PoeDb
                 return;
             }
 
-            nativeBrowser.Open(CreateUri(item));
+            await mediator.Send(new OpenBrowserCommand(CreateUri(item)));
         }
 
         private Uri CreateUri(Item item)

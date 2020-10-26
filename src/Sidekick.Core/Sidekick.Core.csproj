@@ -22,10 +22,4 @@
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Update\UpdateInitializationStartedHandler.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

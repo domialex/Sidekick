@@ -20,7 +20,6 @@ namespace Sidekick
     {
         public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
         {
-            services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
             services.AddSingleton<INativeNotifications, NativeNotifications>();
 

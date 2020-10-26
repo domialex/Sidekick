@@ -5,8 +5,8 @@ using MediatR;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Leagues;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Natives.App;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -22,21 +22,18 @@ namespace Sidekick.Setup
         private readonly ILanguageProvider languageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly IMediator mediator;
-        private readonly INativeApp nativeApp;
 
         public SetupViewModel(
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
             SidekickSettings sidekickSettings,
             ILeagueDataService leagueDataService,
-            IMediator mediator,
-            INativeApp nativeApp)
+            IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.languageProvider = languageProvider;
             this.sidekickSettings = sidekickSettings;
             this.mediator = mediator;
-            this.nativeApp = nativeApp;
             Settings = new SidekickSettings();
             AssignValues(sidekickSettings, Settings);
 
@@ -70,9 +67,9 @@ namespace Sidekick.Setup
             src.GetType().GetProperties().ToList().ForEach(x => x.SetValue(dest, x.GetValue(src)));
         }
 
-        public void Close()
+        public async Task Close()
         {
-            nativeApp.Shutdown();
+            await mediator.Send(new ShutdownCommand());
         }
     }
 }

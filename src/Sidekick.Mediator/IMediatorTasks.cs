@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Sidekick.Mediator
 {
-    public interface IMediator
+    public interface IMediatorTasks
     {
         Task Notify<TNotification>(TNotification notification, CancellationToken cancellationToken = default)
              where TNotification : INotification;

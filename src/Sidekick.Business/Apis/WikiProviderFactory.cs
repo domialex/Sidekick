@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeWiki;
@@ -18,9 +19,9 @@ namespace Sidekick.Business.Apis
             this.poeDbClient = poeDbClient;
         }
 
-        public void Open(Item item)
+        public Task Open(Item item)
         {
-            GetCurrentProvider().Open(item);
+            return GetCurrentProvider().Open(item);
         }
 
         private IWikiProvider GetCurrentProvider()

@@ -10,12 +10,12 @@ namespace Sidekick.Views
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
-        private readonly IMediator mediator;
+        private readonly IMediatorTasks mediator;
         private readonly Dispatcher dispatcher;
 
         public ViewLocator(
             IServiceProvider serviceProvider,
-            IMediator mediator,
+            IMediatorTasks mediator,
             Dispatcher dispatcher)
         {
             this.serviceProvider = serviceProvider;

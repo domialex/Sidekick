@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation", "src\Sidekick.Presentation\Sidekick.Presentation.csproj", "{76DB7E71-66D9-4300-AE60-3E70ECD56778}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Infrastructure", "Sidekick.Infrastructure\Sidekick.Infrastructure.csproj", "{27D9A33B-740B-43BC-B941-DB786B41C7F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27D9A33B-740B-43BC-B941-DB786B41C7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27D9A33B-740B-43BC-B941-DB786B41C7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27D9A33B-740B-43BC-B941-DB786B41C7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27D9A33B-740B-43BC-B941-DB786B41C7F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

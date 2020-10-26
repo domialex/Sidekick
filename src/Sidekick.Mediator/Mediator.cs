@@ -11,7 +11,7 @@ using Sidekick.Mediator.Internal;
 
 namespace Sidekick.Mediator
 {
-    public class Mediator : IMediator, MediatR.IMediator
+    public class Mediator : IMediatorTasks, MediatR.IMediator
     {
         private readonly ILogger logger;
         private readonly LoggingMediator mediator;

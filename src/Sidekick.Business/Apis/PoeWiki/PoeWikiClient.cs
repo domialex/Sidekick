@@ -1,8 +1,10 @@
 using System;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Languages;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Business.Apis.PoeWiki
 {
@@ -11,29 +13,24 @@ namespace Sidekick.Business.Apis.PoeWiki
         private const string WIKI_BASE_URI = "https://pathofexile.gamepedia.com/";
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
-        private readonly INativeBrowser nativeBrowser;
+        private readonly IMediator mediator;
 
         public PoeWikiClient(ILogger<PoeWikiClient> logger,
             ILanguageProvider languageProvider,
-            INativeBrowser nativeBrowser)
+            IMediator mediator)
         {
             this.logger = logger;
             this.languageProvider = languageProvider;
-            this.nativeBrowser = nativeBrowser;
+            this.mediator = mediator;
         }
 
         /// <summary>
         /// Attempts to generate and open the wiki link for the given item
         /// </summary>
-        public void Open(Item item)
+        public async Task Open(Item item)
         {
-            if (item == null)
-            {
-                return;
-            }
-
-            // only available for english portal
-            if (!languageProvider.IsEnglish)
+            // Only available for english portal
+            if (item == null || !languageProvider.IsEnglish)
             {
                 return;
             }
@@ -46,7 +43,7 @@ namespace Sidekick.Business.Apis.PoeWiki
                 return;
             }
 
-            nativeBrowser.Open(CreateItemWikiLink(item));
+            await mediator.Send(new OpenBrowserCommand(CreateItemWikiLink(item)));
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Sidekick.Mediator
                     assemblies
                 );
 
-            services.AddSingleton<IMediator, Mediator>((sp) => (Mediator)sp.GetService<MediatR.IMediator>());
+            services.AddSingleton<IMediatorTasks, Mediator>((sp) => (Mediator)sp.GetService<IMediator>());
 
             return services;
         }
