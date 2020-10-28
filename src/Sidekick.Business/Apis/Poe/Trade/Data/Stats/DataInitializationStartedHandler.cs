@@ -4,8 +4,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
+using Sidekick.Domain.Cache;
 using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
@@ -14,23 +14,25 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     {
         private readonly IPoeTradeClient poeApiClient;
         private readonly ILanguageProvider languageProvider;
-        private readonly ICacheService cacheService;
         private readonly IStatDataService statDataService;
+        private readonly ICacheRepository cacheRepository;
 
         public DataInitializationStartedHandler(IPoeTradeClient poeApiClient,
             ILanguageProvider languageProvider,
-            ICacheService cacheService,
-            IStatDataService statDataService)
+            IStatDataService statDataService,
+            ICacheRepository cacheRepository)
         {
             this.poeApiClient = poeApiClient;
             this.languageProvider = languageProvider;
-            this.cacheService = cacheService;
             this.statDataService = statDataService;
+            this.cacheRepository = cacheRepository;
         }
 
         public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
-            var categories = await cacheService.GetOrCreate("StatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>());
+            var categories = await cacheRepository.GetOrSet(
+                "Sidekick.Business.Apis.Poe.Trade.Data.Stats.DataInitializationStartedHandler",
+                () => poeApiClient.Fetch<StatDataCategory>());
 
             statDataService.PseudoPatterns = new List<StatData>();
             statDataService.ExplicitPatterns = new List<StatData>();

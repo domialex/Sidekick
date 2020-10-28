@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Caches;
+using Sidekick.Domain.Cache;
 using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
@@ -15,18 +15,19 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
     {
         private readonly ILogger logger;
         private readonly IPoeTradeClient poeApiClient;
-        private readonly ICacheService cacheService;
         private readonly IPseudoStatDataService pseudoStatDataService;
+        private readonly ICacheRepository cacheRepository;
 
-        public DataInitializationStartedHandler(ILogger<DataInitializationStartedHandler> logger,
+        public DataInitializationStartedHandler(
+            ILogger<DataInitializationStartedHandler> logger,
             IPoeTradeClient poeApiClient,
-            ICacheService cacheService,
-            IPseudoStatDataService pseudoStatDataService)
+            IPseudoStatDataService pseudoStatDataService,
+            ICacheRepository cacheRepository)
         {
             this.logger = logger;
             this.poeApiClient = poeApiClient;
-            this.cacheService = cacheService;
             this.pseudoStatDataService = pseudoStatDataService;
+            this.cacheRepository = cacheRepository;
         }
 
         public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
@@ -40,7 +41,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo
             {
                 logger.LogInformation($"Pseudo stat service initialization started.");
 
-                var result = await cacheService.GetOrCreate("PseudoStatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true));
+                var result = await cacheRepository.GetOrSet(
+                    "Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo.DataInitializationStartedHandler",
+                    () => poeApiClient.Fetch<StatDataCategory>(useDefaultLanguage: true));
 
                 logger.LogInformation($"{result.Count} attributes fetched.");
 

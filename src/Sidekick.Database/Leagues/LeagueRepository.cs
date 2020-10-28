@@ -21,14 +21,9 @@ namespace Sidekick.Database.Leagues
 
         public async Task SaveAll(List<League> leagues)
         {
-            await Clear();
+            context.Leagues.RemoveRange(await FindAll());
             context.AddRange(leagues);
             await context.SaveChangesAsync();
-        }
-
-        public async Task Clear()
-        {
-            context.Leagues.RemoveRange(await FindAll());
         }
     }
 }

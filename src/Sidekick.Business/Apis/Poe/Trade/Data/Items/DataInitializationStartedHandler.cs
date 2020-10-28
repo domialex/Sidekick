@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
-using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
+using Sidekick.Domain.Cache;
 using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
@@ -14,20 +14,20 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IItemDataService itemDataService;
-        private readonly ICacheService cacheService;
         private readonly IPoeTradeClient poeTradeClient;
         private readonly ILanguageProvider languageProvider;
+        private readonly ICacheRepository cacheRepository;
 
         public DataInitializationStartedHandler(
             IItemDataService itemDataService,
-            ICacheService cacheService,
             IPoeTradeClient poeTradeClient,
-            ILanguageProvider languageProvider)
+            ILanguageProvider languageProvider,
+            ICacheRepository cacheRepository)
         {
             this.itemDataService = itemDataService;
-            this.cacheService = cacheService;
             this.poeTradeClient = poeTradeClient;
             this.languageProvider = languageProvider;
+            this.cacheRepository = cacheRepository;
         }
 
         public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
@@ -35,7 +35,9 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
             itemDataService.NameAndTypeDictionary = new Dictionary<string, List<ItemData>>();
             itemDataService.NameAndTypeRegex = new List<(Regex Regex, ItemData Item)>();
 
-            var categories = await cacheService.GetOrCreate("Sidekick.Business.Apis.Poe.Trade.Data.Items.InitializeDataHandler", () => poeTradeClient.Fetch<ItemDataCategory>());
+            var categories = await cacheRepository.GetOrSet(
+                "Sidekick.Business.Apis.Poe.Trade.Data.Items.InitializeDataHandler",
+                () => poeTradeClient.Fetch<ItemDataCategory>());
 
             FillPattern(categories[0].Entries, Category.Accessory, useRegex: true);
             FillPattern(categories[1].Entries, Category.Armour, useRegex: true);

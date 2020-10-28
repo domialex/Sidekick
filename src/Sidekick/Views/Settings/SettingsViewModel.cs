@@ -3,10 +3,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Caches;
 using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Leagues;
 using Sidekick.Helpers;
@@ -25,7 +25,6 @@ namespace Sidekick.Views.Settings
         private readonly SidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
-        private readonly ICacheService cacheService;
         private readonly IMediator mediator;
         private bool isDisposed;
 
@@ -35,7 +34,6 @@ namespace Sidekick.Views.Settings
             SidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
             IKeybindEvents keybindEvents,
-            ICacheService cacheService,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
@@ -43,7 +41,6 @@ namespace Sidekick.Views.Settings
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
-            this.cacheService = cacheService;
             this.mediator = mediator;
 
             Settings = new SidekickSettings();
@@ -174,7 +171,7 @@ namespace Sidekick.Views.Settings
 
         public async Task ResetCache()
         {
-            await cacheService.Clear();
+            await mediator.Send(new ClearCacheCommand());
             await mediator.Send(new InitializeCommand(false));
         }
     }

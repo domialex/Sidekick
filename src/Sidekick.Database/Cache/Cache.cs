@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace Sidekick.Database.Caches
+namespace Sidekick.Database.Cache
 {
     public class Cache
     {
-        [Key]
         public string Key { get; set; }
 
         public string Data { get; set; }

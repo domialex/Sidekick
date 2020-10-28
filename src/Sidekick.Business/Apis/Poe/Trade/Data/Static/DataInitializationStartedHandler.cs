@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Caches;
+using Sidekick.Domain.Cache;
 using Sidekick.Domain.Initialization.Notifications;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
@@ -10,22 +10,24 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Static
     public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
-        private readonly ICacheService cacheService;
         private readonly IStaticDataService staticDataService;
+        private readonly ICacheRepository cacheRepository;
 
         public DataInitializationStartedHandler(
             IPoeTradeClient poeApiClient,
-            ICacheService cacheService,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService,
+            ICacheRepository cacheRepository)
         {
             this.poeApiClient = poeApiClient;
-            this.cacheService = cacheService;
             this.staticDataService = staticDataService;
+            this.cacheRepository = cacheRepository;
         }
 
         public async Task Handle(DataInitializationStarted notification, CancellationToken cancellationToken)
         {
-            var categories = await cacheService.GetOrCreate("StaticDataService.OnInit", () => poeApiClient.Fetch<StaticItemCategory>());
+            var categories = await cacheRepository.GetOrSet(
+                "Sidekick.Business.Apis.Poe.Trade.Data.Static.DataInitializationStartedHandler",
+                () => poeApiClient.Fetch<StaticItemCategory>());
 
             staticDataService.ImageUrls = new Dictionary<string, string>();
             staticDataService.Ids = new Dictionary<string, string>();

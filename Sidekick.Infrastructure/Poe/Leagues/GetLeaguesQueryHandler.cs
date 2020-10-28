@@ -23,7 +23,11 @@ namespace Sidekick.Infrastructure.Poe.Leagues
         {
             if (request.UseCache)
             {
-                return await leagueRepository.FindAll();
+                var cacheLeagues = await leagueRepository.FindAll();
+                if (cacheLeagues.Count != 0)
+                {
+                    return cacheLeagues;
+                }
             }
 
             var leagues = await poeTradeClient.Fetch<League>("data/leagues");

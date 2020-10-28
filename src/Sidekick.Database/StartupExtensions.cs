@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Database.Cache;
 using Sidekick.Database.Leagues;
+using Sidekick.Domain.Cache;
 using Sidekick.Domain.Leagues;
 
 namespace Sidekick.Database
@@ -21,6 +23,7 @@ namespace Sidekick.Database
             var context = new SidekickContext(builder.Options);
             context.Database.Migrate();
 
+            services.AddTransient<ICacheRepository, CacheRepository>();
             services.AddTransient<ILeagueRepository, LeagueRepository>();
 
             return services;

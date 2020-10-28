@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Caches;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
@@ -26,7 +26,6 @@ namespace Sidekick.Application.Initialization
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly INativeNotifications nativeNotifications;
-        private readonly ICacheService cacheService;
         private readonly SidekickSettings settings;
 
         public InitializeHandler(
@@ -35,7 +34,6 @@ namespace Sidekick.Application.Initialization
             IMediator mediator,
             ServiceFactory serviceFactory,
             INativeNotifications nativeNotifications,
-            ICacheService cacheService,
             SidekickSettings settings)
         {
             this.logger = logger;
@@ -43,7 +41,6 @@ namespace Sidekick.Application.Initialization
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.nativeNotifications = nativeNotifications;
-            this.cacheService = cacheService;
             this.settings = settings;
         }
 
@@ -83,7 +80,7 @@ namespace Sidekick.Application.Initialization
                 var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
                 if (leaguesHash != settings.LeaguesHash)
                 {
-                    await cacheService.Clear();
+                    await mediator.Send(new ClearCacheCommand());
                     settings.LeaguesHash = leaguesHash;
                     settings.Save();
                     if (!runSetup)

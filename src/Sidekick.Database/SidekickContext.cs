@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Sidekick.Database.Caches;
+using Sidekick.Database.Cache;
 using Sidekick.Database.ItemCategories;
 using Sidekick.Database.Leagues;
 using Sidekick.Database.Windows;
@@ -14,7 +14,7 @@ namespace Sidekick.Database
         {
         }
 
-        public DbSet<Cache> Caches { get; set; }
+        public DbSet<Cache.Cache> Caches { get; set; }
 
         public DbSet<ItemCategory> ItemCategories { get; set; }
 
@@ -26,6 +26,7 @@ namespace Sidekick.Database
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema("sidekick");
+            modelBuilder.ApplyConfiguration(new CacheConfiguration());
             modelBuilder.ApplyConfiguration(new LeagueConfiguration());
         }
     }
