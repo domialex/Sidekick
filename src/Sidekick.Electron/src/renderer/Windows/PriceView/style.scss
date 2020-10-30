@@ -1,0 +1,72 @@
+@import '~@blueprintjs/core/lib/scss/variables';
+
+.blueprint-view {
+    width: 100vw;
+    height: 100vh;
+    background-color: $dark-gray1;
+
+    * {
+        outline: none;
+    }
+
+    .content {
+        padding: 1em;
+    }
+
+    .window-tab {
+        display: flex;
+        height: auto;
+        padding-left: 0;
+        padding-right: 0;
+
+        .bp3-navbar-group {
+            height: auto;
+        }
+
+        &__handle {
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+
+            .window-logo {
+                width: 16px;
+                height: 16px;
+                margin: 0.5em;
+                margin-right: 0.25em;
+            }
+        }
+
+        .window-close-button {
+            margin-right: 0;
+            border-radius: 0;
+        }
+    }
+
+    .item {
+        transition: opacity 0.1s;
+        opacity: 0;
+
+        &--has-item {
+            transition: none;
+            opacity: 1;
+        }
+    }
+
+    .item-loader {
+        opacity: 0;
+        animation: fadeIn 0.3s;
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+}

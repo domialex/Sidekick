@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": "./src",
+        "paths": {
+            "common/*": ["common/*"],
+            "@/*": ["main/*", "renderer/*"]
+        },
+        "jsx": "react"
+    },
+    "exclude": ["node_modules", "dist"],
+    "extends": "./node_modules/electron-webpack/tsconfig-base.json"
+}

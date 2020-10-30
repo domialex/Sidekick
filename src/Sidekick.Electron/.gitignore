@@ -1,0 +1,7 @@
+node_modules
+dist
+build
+*.db
+*.log
+Sidekick_settings.json
+Sidekick.db

@@ -1,0 +1,74 @@
+{
+    "name": "sidekick2",
+    "description": "A Path of Exile helper that shows item prices using the official Path of Exile Trade API.",
+    "version": "2.0.0",
+    "author": {
+        "name": "Dominique Alexandre"
+    },
+    "license": "MIT",
+    "build": {
+        "extraFiles": [
+            {
+                "from": "./build/Sidekick.Console",
+                "to": "Sidekick.Console",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/domialex/Sidekick.git"
+    },
+    "scripts": {
+        "dev": "electron-webpack dev",
+        "compile": "electron-webpack",
+        "dist": "yarn build-sidekick-console && yarn compile && yarn generate-icons && electron-builder",
+        "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+        "generate-icons": "electron-icon-builder --input=./static/icon.png --output=build --flatten",
+        "build-sidekick-console": "dotnet publish ../Sidekick.Console -r win-x64 -c Release --self-contained -o ../Sidekick.Electron/build/Sidekick.Console",
+        "robotjs:rebuild": "npm rebuild --runtime=electron --target=10.0.0 --disturl=https://atom.io/download/atom-shell --abi=82",
+        "postinstall": "patch-package && electron-builder install-app-deps",
+        "postuninstall": "electron-builder install-app-deps"
+    },
+    "dependencies": {
+        "@blueprintjs/core": "^3.32.1",
+        "classnames": "^2.2.6",
+        "electron-cgi": "^1.0.6",
+        "react": "^16.13.1",
+        "react-dom": "npm:@hot-loader/react-dom",
+        "react-hot-loader": "^4.13.0",
+        "react-router-dom": "^5.2.0",
+        "robotjs": "^0.6.0",
+        "source-map-support": "^0.5.19"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.11.5",
+        "@babel/preset-react": "^7.10.4",
+        "@types/classnames": "^2.2.10",
+        "@types/electron-devtools-installer": "^2.2.0",
+        "@types/node": "^14.11.2",
+        "@types/react": "^16.9.49",
+        "@types/react-dom": "^16.9.8",
+        "@types/react-router-dom": "^5.1.5",
+        "@typescript-eslint/eslint-plugin": "^4.3.0",
+        "@typescript-eslint/parser": "^4.3.0",
+        "babel-eslint": "^10.1.0",
+        "electron": "10.1.2",
+        "electron-builder": "^22.8.1",
+        "electron-devtools-installer": "^3.1.1",
+        "electron-icon-builder": "^1.0.2",
+        "electron-webpack": "^2.8.2",
+        "electron-webpack-eslint": "^6.0.0",
+        "electron-webpack-ts": "^4.0.1",
+        "eslint": "^7.10.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-react": "^7.21.2",
+        "node-sass": "^4.14.1",
+        "patch-package": "^6.2.2",
+        "sass-loader": "^10.0.2",
+        "typescript": "^4.0.3",
+        "webpack": "~4.44.2"
+    }
+}
