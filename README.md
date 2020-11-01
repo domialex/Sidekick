@@ -7,9 +7,8 @@ If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), 
 Sidekick should be able to price check almost every item, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
 
 ## Installation
-1. [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.exe)
-2. Install **[.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-desktop-3.1.4-windows-x64-installer)** if needed
-3. Run Sidekick.exe
+1. [Download Sidekick](https://github.com/domialex/Sidekick/releases/latest/download/Sidekick.zip)
+2. Extract somewhere and run Sidekick.exe
 
 ## Usage
 1. Add an exception for **Sidekick.exe** in your anti-virus, some people have reported that it can block Sidekick in some cases.
