@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Sidekick.Database.Migrations
+namespace Sidekick.Persistence.Migrations
 {
     public partial class Version_1000 : Migration
     {

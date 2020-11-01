@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Sidekick.Database.ItemCategories
+namespace Sidekick.Persistence.ItemCategories
 {
     public class ItemCategory
     {

@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
-    <ProjectReference Include="..\Sidekick.Database\Sidekick.Database.csproj" />
+    <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
   </ItemGroup>
 

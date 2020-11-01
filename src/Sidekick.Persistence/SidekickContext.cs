@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Sidekick.Database.Cache;
-using Sidekick.Database.ItemCategories;
-using Sidekick.Database.Leagues;
-using Sidekick.Database.Windows;
+using Sidekick.Persistence.Cache;
+using Sidekick.Persistence.ItemCategories;
+using Sidekick.Persistence.Leagues;
+using Sidekick.Persistence.Windows;
 using Sidekick.Domain.Leagues;
 
-namespace Sidekick.Database
+namespace Sidekick.Persistence
 {
     public class SidekickContext : DbContext
     {

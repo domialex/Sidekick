@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Domain.Cache;
 
-namespace Sidekick.Database.Cache
+namespace Sidekick.Persistence.Cache
 {
     public class CacheRepository : ICacheRepository
     {

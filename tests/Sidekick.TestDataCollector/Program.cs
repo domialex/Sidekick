@@ -10,7 +10,7 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Core;
 using Sidekick.Core.Natives;
-using Sidekick.Database;
+using Sidekick.Persistence;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Localization;
 using Sidekick.Mediator;

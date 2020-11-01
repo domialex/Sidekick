@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Core;
-using Sidekick.Database;
+using Sidekick.Persistence;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;

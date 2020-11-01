@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Sidekick.Database;
+using Sidekick.Persistence;
 
-namespace Sidekick.Database.Migrations
+namespace Sidekick.Persistence.Migrations
 {
     [DbContext(typeof(SidekickContext))]
     partial class SidekickContextModelSnapshot : ModelSnapshot

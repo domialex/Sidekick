@@ -1,4 +1,4 @@
-namespace Sidekick.Database.Cache
+namespace Sidekick.Persistence.Cache
 {
     public class Cache
     {

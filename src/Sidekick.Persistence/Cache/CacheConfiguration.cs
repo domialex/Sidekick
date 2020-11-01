@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Sidekick.Database.Cache
+namespace Sidekick.Persistence.Cache
 {
     internal class CacheConfiguration : IEntityTypeConfiguration<Cache>
     {

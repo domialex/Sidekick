@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Sidekick.Database;
-using Sidekick.Database.Windows;
+using Sidekick.Persistence;
+using Sidekick.Persistence.Windows;
 
 namespace Sidekick.Business.Windows
 {

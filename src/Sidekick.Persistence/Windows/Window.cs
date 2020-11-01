@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Sidekick.Database.Windows
+namespace Sidekick.Persistence.Windows
 {
     public class Window
     {

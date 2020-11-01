@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Database.Cache;
-using Sidekick.Database.Leagues;
+using Sidekick.Persistence.Cache;
+using Sidekick.Persistence.Leagues;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Leagues;
 
-namespace Sidekick.Database
+namespace Sidekick.Persistence
 {
     public static class StartupExtensions
     {

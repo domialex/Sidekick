@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Domain.Leagues;
 
-namespace Sidekick.Database.Leagues
+namespace Sidekick.Persistence.Leagues
 {
     public class LeagueRepository : ILeagueRepository
     {

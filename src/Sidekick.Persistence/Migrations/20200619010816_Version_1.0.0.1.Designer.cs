@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Sidekick.Database;
+using Sidekick.Persistence;
 
-namespace Sidekick.Database.Migrations
+namespace Sidekick.Persistence.Migrations
 {
     [DbContext(typeof(SidekickContext))]
     [Migration("20200619010816_Version_1.0.0.1")]

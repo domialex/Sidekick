@@ -3,20 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Sidekick.Database;
+using Sidekick.Persistence;
 
-namespace Sidekick.Database.Migrations
+namespace Sidekick.Persistence.Migrations
 {
     [DbContext(typeof(SidekickContext))]
-    [Migration("20200614211816_Version_1.0.0.0")]
-    partial class Version_1000
+    [Migration("20201026234436_Version_1.2.0.0")]
+    partial class Version_1200
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("sidekick")
-                .HasAnnotation("ProductVersion", "3.1.5");
+                .HasAnnotation("ProductVersion", "3.1.9");
 
             modelBuilder.Entity("Sidekick.Database.Caches.Cache", b =>
                 {
@@ -29,6 +29,19 @@ namespace Sidekick.Database.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("Caches");
+                });
+
+            modelBuilder.Entity("Sidekick.Database.ItemCategories.ItemCategory", b =>
+                {
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Type");
+
+                    b.ToTable("ItemCategories");
                 });
 
             modelBuilder.Entity("Sidekick.Database.Windows.Window", b =>
@@ -45,6 +58,19 @@ namespace Sidekick.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Windows");
+                });
+
+            modelBuilder.Entity("Sidekick.Domain.Leagues.League", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Leagues");
                 });
 #pragma warning restore 612, 618
         }
