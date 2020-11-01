@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
@@ -16,6 +15,7 @@ using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
 using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Notifications.Commands;
 
 namespace Sidekick.Application.Initialization
 {
@@ -25,7 +25,6 @@ namespace Sidekick.Application.Initialization
         private readonly IStringLocalizer<InitializeHandler> localizer;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
-        private readonly INativeNotifications nativeNotifications;
         private readonly SidekickSettings settings;
 
         public InitializeHandler(
@@ -33,14 +32,12 @@ namespace Sidekick.Application.Initialization
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
-            INativeNotifications nativeNotifications,
             SidekickSettings settings)
         {
             this.logger = logger;
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
-            this.nativeNotifications = nativeNotifications;
             this.settings = settings;
         }
 
@@ -62,14 +59,11 @@ namespace Sidekick.Application.Initialization
             // Check for updates
             if (await mediator.Send(new IsNewVersionAvailableQuery()))
             {
-                nativeNotifications.ShowYesNo(
-                    localizer["UpdateAvailable"],
-                    localizer["UpdateTitle"],
-                    onYes: async () =>
-                    {
-                        await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
-                        await mediator.Send(new ShutdownCommand());
-                    });
+                await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
+                {
+                    await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
+                    await mediator.Send(new ShutdownCommand());
+                }));
             }
 
             var runSetup = !settings.HasSetupCompleted;
@@ -86,7 +80,7 @@ namespace Sidekick.Application.Initialization
                     if (!runSetup)
                     {
                         runSetup = true;
-                        nativeNotifications.ShowMessage(localizer["NewLeagues"]);
+                        await mediator.Send(new OpenNotificationCommand(localizer["NewLeagues"]));
                     }
                 }
 
@@ -110,7 +104,7 @@ namespace Sidekick.Application.Initialization
                 catch (Exception exception)
                 {
                     logger.LogError($"Initializer Error - {step.Name} - {exception.Message}", exception);
-                    nativeNotifications.ShowMessage(localizer["Error"]);
+                    await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
                     await mediator.Send(new ShutdownCommand());
                     return Unit.Value;
                 }

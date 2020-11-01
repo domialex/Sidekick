@@ -21,7 +21,6 @@ namespace Sidekick
         public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
         {
             services.AddSingleton<INativeClipboard, NativeClipboard>();
-            services.AddSingleton<INativeNotifications, NativeNotifications>();
 
             services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();

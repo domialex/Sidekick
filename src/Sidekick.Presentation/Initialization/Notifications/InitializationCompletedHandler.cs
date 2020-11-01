@@ -1,27 +1,27 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Localization.Tray;
 using Sidekick.Presentation.Views;
 
-namespace Sidekick.Initialization
+namespace Sidekick.Presentation.Initialization.Notifications
 {
     public class InitializationCompletedHandler : INotificationHandler<InitializationCompleted>
     {
         private readonly SidekickSettings settings;
-        private readonly INativeNotifications nativeNotifications;
+        private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
 
         public InitializationCompletedHandler(
             SidekickSettings settings,
-            INativeNotifications nativeNotifications,
+            IMediator mediator,
             IViewLocator viewLocator)
         {
             this.settings = settings;
-            this.nativeNotifications = nativeNotifications;
+            this.mediator = mediator;
             this.viewLocator = viewLocator;
         }
 
@@ -31,10 +31,10 @@ namespace Sidekick.Initialization
             await Task.Delay(500);
 
             // Show a system notification
-            nativeNotifications.ShowSystemNotification(
-                TrayResources.Notification_Title,
-                string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString())
-            );
+            await mediator.Send(new OpenNotificationCommand(string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()), true)
+            {
+                Title = TrayResources.Notification_Title,
+            });
 
             viewLocator.Close(View.Initialization);
         }

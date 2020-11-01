@@ -16,7 +16,21 @@ namespace Sidekick.Database.Cache
             this.context = context;
         }
 
-        public async Task<TModel> Get<TModel>(string key)
+        public async Task<TModel> GetOrSet<TModel>(string key, Func<Task<TModel>> func)
+            where TModel : class
+        {
+            var result = await Get<TModel>(key);
+
+            if (result == default)
+            {
+                result = await func.Invoke();
+                await Save(key, result);
+            }
+
+            return result;
+        }
+
+        private async Task<TModel> Get<TModel>(string key)
             where TModel : class
         {
             var cache = await context.Caches.FindAsync(key);
@@ -37,21 +51,7 @@ namespace Sidekick.Database.Cache
             }
         }
 
-        public async Task<TModel> GetOrSet<TModel>(string key, Func<Task<TModel>> func)
-            where TModel : class
-        {
-            var result = await Get<TModel>(key);
-
-            if (result == default)
-            {
-                result = await func.Invoke();
-                await Save(key, result);
-            }
-
-            return result;
-        }
-
-        public async Task Save(string key, object data)
+        private async Task Save(string key, object data)
         {
             var cache = await context.Caches.FindAsync(key);
 
