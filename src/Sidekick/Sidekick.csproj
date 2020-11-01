@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -141,10 +141,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
