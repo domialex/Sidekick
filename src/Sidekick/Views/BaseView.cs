@@ -60,7 +60,15 @@ namespace Sidekick.Views
         {
             if (IsClosing) return;
 
-            await windowService.SaveSize(id, GetWidth(), GetHeight());
+            try
+            {
+                await windowService.SaveSize(id, GetWidth(), GetHeight());
+            }
+            catch (ObjectDisposedException)
+            {
+                // Catches, if the service provider is being disposed.
+                // We keep going
+            }
 
             IsClosing = true;
             IsVisibleChanged -= EnsureBounds;

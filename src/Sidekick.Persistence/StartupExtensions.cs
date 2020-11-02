@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Persistence.Cache;
-using Sidekick.Persistence.Leagues;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Leagues;
+using Sidekick.Persistence.Cache;
+using Sidekick.Persistence.Leagues;
 
 namespace Sidekick.Persistence
 {
@@ -16,10 +16,10 @@ namespace Sidekick.Persistence
             if (Added) { return services; }
             Added = true;
 
-            services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=Sidekick.db"));
+            services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=Sidekick_database.db"));
 
             var builder = new DbContextOptionsBuilder<SidekickContext>();
-            builder.UseSqlite("Filename=Sidekick.db");
+            builder.UseSqlite("Filename=Sidekick_database.db");
             var context = new SidekickContext(builder.Options);
             context.Database.Migrate();
 

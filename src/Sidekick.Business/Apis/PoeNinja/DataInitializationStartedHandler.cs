@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Languages;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {

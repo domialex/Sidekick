@@ -43,5 +43,14 @@ namespace Sidekick.Helpers
                 }
             });
         }
+
+        /// <inheritdoc />
+        public new void Clear()
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                base.Clear();
+            });
+        }
     }
 }

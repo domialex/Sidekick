@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -41,100 +40,115 @@ namespace Sidekick.Application.Initialization
             this.settings = settings;
         }
 
+        private int Count = 0;
+
+        private int Completed = 0;
+
+        private void AddCount<TNotification>(bool shouldAdd = true)
+            where TNotification : INotification
+        {
+            if (!shouldAdd) return;
+
+            Count += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
+        }
+
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
-            var steps = new List<IInitializerStep>()
+            try
             {
-                new InitializerStep<LanguageInitializationStarted>(mediator, serviceFactory, "Language"),
-                new InitializerStep<DataInitializationStarted>(mediator, serviceFactory, "Data"),
-                new InitializerStep<KeybindsInitializationStarted>(mediator, serviceFactory, "Keybinds", runOnce: true),
-            };
+                // Set the total count of handlers
+                AddCount<LanguageInitializationStarted>();
+                AddCount<DataInitializationStarted>();
+                AddCount<KeybindsInitializationStarted>(request.FirstRun);
 
-            // Report initial progress
-            await ReportProgress(steps);
+                // Report initial progress
+                await ReportProgress();
 
-            // Let everyone know that the initialization process has started
-            await mediator.Publish(new InitializationStarted());
+                // Let everyone know that the initialization process has started
+                await mediator.Publish(new InitializationStarted());
+                await RunStep<LanguageInitializationStarted>();
 
-            // Check for updates
-            if (await mediator.Send(new IsNewVersionAvailableQuery()))
-            {
-                await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
+                // Check for updates
+                if (await mediator.Send(new IsNewVersionAvailableQuery()))
                 {
-                    await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
-                    await mediator.Send(new ShutdownCommand());
-                }));
-            }
-
-            var runSetup = !settings.HasSetupCompleted;
-            if (request.FirstRun)
-            {
-                var leagues = await mediator.Send(new GetLeaguesQuery(false));
-
-                var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
-                if (leaguesHash != settings.LeaguesHash)
-                {
-                    await mediator.Send(new ClearCacheCommand());
-                    settings.LeaguesHash = leaguesHash;
-                    settings.Save();
-                    if (!runSetup)
+                    await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
                     {
-                        runSetup = true;
+                        await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
+                        await mediator.Send(new ShutdownCommand());
+                    }));
+                }
+
+                // Check to see if we should run Setup first before running the rest of the initialization process
+                if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))
+                {
+                    await mediator.Send(new SetupCommand());
+                    return Unit.Value;
+                }
+
+                if (request.FirstRun)
+                {
+                    var leagues = await mediator.Send(new GetLeaguesQuery(false));
+                    var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
+
+                    if (leaguesHash != settings.LeaguesHash)
+                    {
+                        await mediator.Send(new ClearCacheCommand());
+                        settings.LeaguesHash = leaguesHash;
+                        settings.Save();
+                    }
+
+                    // Check to see if we should run Setup first before running the rest of the initialization process
+                    if (string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId))
+                    {
                         await mediator.Send(new OpenNotificationCommand(localizer["NewLeagues"]));
+                        await mediator.Send(new SetupCommand());
+                        return Unit.Value;
                     }
                 }
 
-                runSetup = runSetup || string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId);
-            }
+                await RunStep<DataInitializationStarted>();
+                await RunStep<KeybindsInitializationStarted>(request.FirstRun);
 
-            // Check to see if we should run Setup first before running the rest of the initialization process
-            if (runSetup)
-            {
-                await mediator.Send(new SetupCommand());
+                await mediator.Publish(new InitializationCompleted());
+
                 return Unit.Value;
             }
-
-            foreach (var step in steps)
+            catch (Exception exception)
             {
-                try
-                {
-                    await ReportProgress(steps, step);
-                    await step.Run(request.FirstRun);
-                }
-                catch (Exception exception)
-                {
-                    logger.LogError($"Initializer Error - {step.Name} - {exception.Message}", exception);
-                    await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
-                    await mediator.Send(new ShutdownCommand());
-                    return Unit.Value;
-                }
+                logger.LogError($"Initializer Error - {exception.Message}", exception);
+                await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
+                await mediator.Send(new ShutdownCommand());
+                return Unit.Value;
             }
-
-            await ReportProgress(steps);
-            await mediator.Publish(new InitializationCompleted());
-
-            return Unit.Value;
         }
 
-        private async Task ReportProgress(List<IInitializerStep> steps, IInitializerStep step = null)
+        private async Task RunStep<TNotification>(bool shouldRun = true)
+            where TNotification : INotification, new()
         {
-            var count = steps.Sum(x => x.Count);
-            var completed = steps.Sum(x => x.Completed);
-            var percentage = count == 0 ? 0 : (completed) * 100 / (count);
+            if (!shouldRun) return;
+
+            // Publish the notification
+            await mediator.Publish(new TNotification());
+
+            // Make sure that after all handlers run, the Completed count is updated
+            Completed += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
+
+            // Report progress
+            await ReportProgress();
+        }
+
+        private async Task ReportProgress()
+        {
+            var percentage = Count == 0 ? 0 : (Completed) * 100 / (Count);
 
             var args = new InitializationProgressed(percentage);
-
-            if (step != null)
-            {
-                args.Title = localizer["Title", steps.IndexOf(step) + 1, steps.Count];
-            }
-            else if (percentage >= 100)
+            if (percentage >= 100)
             {
                 args.Title = localizer["Ready"];
             }
             else
             {
-                args.Title = localizer["Title", 0, steps.Count];
+                args.Title = localizer["Title", Completed, Count];
             }
 
             await mediator.Publish(args);

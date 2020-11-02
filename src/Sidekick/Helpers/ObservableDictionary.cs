@@ -7,7 +7,7 @@ using PropertyChanged;
 namespace Sidekick.Helpers
 {
     [Serializable]
-    public class ObservableDictionary<TKey, TValue> : ObservableList<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IEnumerable<ObservableKeyValuePair<TKey, TValue>>
+    public class ObservableDictionary<TKey, TValue> : ObservableList<ObservableKeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>
     {
         [SuppressPropertyChangedWarnings]
         public TValue this[TKey key]
@@ -17,7 +17,7 @@ namespace Sidekick.Helpers
                 if (TryGetValue(key, out var result))
                     return result;
 
-                return default; //throw new ArgumentException("Key not found", "key");
+                return default;
             }
             set
             {
@@ -99,15 +99,9 @@ namespace Sidekick.Helpers
             return Equals(pair.Value, item.Value);
         }
 
-        public ICollection<TKey> Keys
-        {
-            get { return (from i in ToCollection() select i.Key).ToList(); }
-        }
+        public ICollection<TKey> Keys => ToCollection().Select(x => x.Key).ToList();
 
-        public ICollection<TValue> Values
-        {
-            get { return (from i in ToCollection() select i.Value).ToList(); }
-        }
+        public ICollection<TValue> Values => ToCollection().Select(x => x.Value).ToList();
 
         public bool TryGetValue(TKey key, out TValue value)
         {

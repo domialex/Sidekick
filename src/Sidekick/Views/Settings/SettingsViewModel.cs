@@ -3,12 +3,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Languages;
 using Sidekick.Core.Natives;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Languages;
+using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
+using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -44,7 +46,7 @@ namespace Sidekick.Views.Settings
             this.mediator = mediator;
 
             Settings = new SidekickSettings();
-            AssignValues(sidekickSettings, Settings);
+            sidekickSettings.CopyValuesTo(Settings);
 
             Keybinds.Clear();
             Settings.GetType()
@@ -99,9 +101,9 @@ namespace Sidekick.Views.Settings
             var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
             var languageHasChanged = languageProvider.Current.LanguageCode != Settings.Language_Parser;
 
-            AssignValues(Settings, sidekickSettings);
+            Settings.CopyValuesTo(sidekickSettings);
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
-            languageProvider.SetLanguage(Settings.Language_Parser);
+            await mediator.Send(new SetLanguageCommand(Settings.Language_Parser));
             sidekickSettings.Save();
 
             if (languageHasChanged) await ResetCache();
@@ -111,13 +113,6 @@ namespace Sidekick.Views.Settings
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
         {
             return Keybinds.ToCollection().Any(x => x.Value == keybind && x.Key != ignoreKey);
-        }
-
-        private void AssignValues(SidekickSettings src, SidekickSettings dest)
-        {
-            // iterates through src Settings (properties) and copies them to dest settings (properties)
-            // If there ever comes a time, where some properties do not have to be copied, we can add attributes to exclude them
-            src.GetType().GetProperties().ToList().ForEach(x => x.SetValue(dest, x.GetValue(src)));
         }
 
         private bool NativeKeyboard_OnKeyDown(string input)

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {

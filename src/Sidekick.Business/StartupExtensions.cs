@@ -20,6 +20,7 @@ using Sidekick.Business.Parties;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
 using Sidekick.Business.Windows;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business
 {

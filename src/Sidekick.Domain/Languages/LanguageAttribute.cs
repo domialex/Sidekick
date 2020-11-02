@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Business.Languages
+namespace Sidekick.Domain.Languages
 {
     public class LanguageAttribute : Attribute
     {

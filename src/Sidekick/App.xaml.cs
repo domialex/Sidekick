@@ -105,6 +105,16 @@ namespace Sidekick
             {
                 try
                 {
+                    // Try to dispose the provider before shutting down
+                    try
+                    {
+                        serviceProvider.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                        // Nothing
+                    }
+
                     AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
                 }
                 catch (Exception)

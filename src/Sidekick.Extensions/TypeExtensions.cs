@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Sidekick.Core.Extensions
+namespace Sidekick.Extensions
 {
     public static class TypeExtensions
     {
+        /// <summary>
+        /// Get the specified attribute from the specified type
+        /// </summary>
+        /// <typeparam name="TAttribute">The attribute to get from the type</typeparam>
+        /// <param name="type">The type from which to find the attribute</param>
+        /// <returns>The attribute, or null</returns>
         public static TAttribute GetAttribute<TAttribute>(this Type type)
         {
             var attributeType = typeof(TAttribute);
             return (TAttribute)type.GetCustomAttributes(false).FirstOrDefault(x => attributeType.IsInstanceOfType(x));
         }
 
+        /// <summary>
+        /// Get all instances of the specified attributes from the specified type
+        /// </summary>
+        /// <typeparam name="TAttribute">The attribute to get from the type</typeparam>
+        /// <param name="type">The type from which to find the attributes</param>
+        /// <returns>The list of attributes</returns>
         public static IList<TAttribute> GetAttributes<TAttribute>(this Type type)
         {
             var attributeType = typeof(TAttribute);
@@ -22,11 +34,21 @@ namespace Sidekick.Core.Extensions
               .ToList();
         }
 
+        /// <summary>
+        /// Get all types implementing the interface
+        /// </summary>
+        /// <param name="interface">The interface to find on types</param>
+        /// <returns>The list of types implementing the interface</returns>
         public static List<Type> GetImplementedInterface(this Type @interface)
         {
             return FindTypes(x => x.GetInterfaces().Contains(@interface));
         }
 
+        /// <summary>
+        /// Get all types implementing the attribute
+        /// </summary>
+        /// <param name="attribute">The attribute to find on types</param>
+        /// <returns>The list of types implementing the attribute</returns>
         public static List<Type> GetImplementedAttribute(this Type attribute)
         {
             return FindTypes(x => x.GetCustomAttributes(false).Any(y => attribute.IsInstanceOfType(y)));

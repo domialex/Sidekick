@@ -14,9 +14,9 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search
 {

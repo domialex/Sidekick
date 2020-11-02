@@ -21,10 +21,9 @@ namespace Sidekick.Mediator.Internal
         {
             var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
             var nameWithGuid = $"{guid} {request.GetType().FullName}";
-
+            var stopwatch = Stopwatch.StartNew();
             TResponse response;
 
-            var stopwatch = Stopwatch.StartNew();
             try
             {
                 logger.LogInformation($"[Mediator:START] {nameWithGuid}");
@@ -39,6 +38,11 @@ namespace Sidekick.Mediator.Internal
                 }
 
                 response = await next();
+            }
+            catch (Exception e)
+            {
+                logger.LogInformation($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
+                throw;
             }
             finally
             {

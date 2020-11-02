@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
-using Sidekick.Business.Languages;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {

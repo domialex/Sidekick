@@ -8,9 +8,8 @@ namespace Sidekick.Core.Settings
         {
             return new SidekickSettings()
             {
-                HasSetupCompleted = false,
                 Language_UI = "en",
-                Language_Parser = "en",
+                Language_Parser = null,
                 LeagueId = string.Empty,
                 League_SelectedTabIndex = 0,
                 LeaguesHash = string.Empty,

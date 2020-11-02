@@ -84,23 +84,33 @@ namespace Sidekick.Mediator
         {
             var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
             var nameWithGuid = $"{guid} { notification?.GetType()?.FullName}";
-
             var stopwatch = Stopwatch.StartNew();
-            logger.LogInformation($"[Mediator:NOTIF] {nameWithGuid}");
 
             try
             {
-                logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(notification)}");
+                logger.LogInformation($"[Mediator:NOTIF] {nameWithGuid}");
+
+                try
+                {
+                    logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(notification)}");
+                }
+                catch (Exception)
+                {
+                    logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the notification.");
+                }
+
+                await AddTask(mediator.Publish(notification, cancellationToken));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the notification.");
+                logger.LogInformation($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
+                throw;
             }
-
-            await AddTask(mediator.Publish(notification, cancellationToken));
-
-            stopwatch.Stop();
-            logger.LogInformation($"[Mediator:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            finally
+            {
+                stopwatch.Stop();
+                logger.LogInformation($"[Mediator:END]   {nameWithGuid}; Execution time={stopwatch.ElapsedMilliseconds}ms");
+            }
         }
 
         public Task Publish(object notification, CancellationToken cancellationToken = default)
@@ -108,7 +118,7 @@ namespace Sidekick.Mediator
             return PublishCore(notification, cancellationToken);
         }
 
-        public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : MediatR.INotification
+        public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
         {
             return PublishCore(notification, cancellationToken);
         }

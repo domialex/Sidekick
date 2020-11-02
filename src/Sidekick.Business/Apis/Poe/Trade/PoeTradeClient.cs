@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Languages;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
 {

@@ -5,6 +5,7 @@
     xmlns:base="clr-namespace:Sidekick.Views"
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
+    xmlns:vm="clr-namespace:Sidekick.Setup"
     Title="{loc:Loc Title}"
     Width="560"
     Height="360"
@@ -29,8 +30,8 @@
                 <GroupBox Header="{loc:Loc Language_Title}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -41,7 +42,7 @@
                             Grid.Column="1"
                             DisplayMemberPath="Key"
                             ItemsSource="{Binding Path=UILanguageOptions}"
-                            SelectedValue="{Binding Path=Settings.Language_UI}"
+                            SelectedValue="{Binding Path=Language_UI, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                             SelectedValuePath="Value" />
                         <Label Grid.Row="2" Content="{loc:Loc Language_Parser}" />
                         <ComboBox
@@ -49,15 +50,15 @@
                             Grid.Column="1"
                             DisplayMemberPath="Key"
                             ItemsSource="{Binding Path=ParserLanguageOptions}"
-                            SelectedValue="{Binding Path=Settings.Language_Parser}"
+                            SelectedValue="{Binding Path=Language_Parser, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                             SelectedValuePath="Value" />
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="{loc:Loc Character_Title}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -68,13 +69,13 @@
                             Grid.Column="1"
                             DisplayMemberPath="Value"
                             ItemsSource="{Binding Path=LeagueOptions}"
-                            SelectedValue="{Binding Path=Settings.LeagueId}"
+                            SelectedValue="{Binding Path=LeagueId, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                             SelectedValuePath="Key" />
                         <Label Grid.Row="1" Content="{loc:Loc Character_Name}" />
                         <TextBox
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="{Binding Path=Settings.Character_Name}" />
+                            Text="{Binding Path=Character_Name, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </GroupBox>
             </StackPanel>

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Languages;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.PoeWiki
 {
@@ -15,7 +15,8 @@ namespace Sidekick.Business.Apis.PoeWiki
         private readonly ILanguageProvider languageProvider;
         private readonly IMediator mediator;
 
-        public PoeWikiClient(ILogger<PoeWikiClient> logger,
+        public PoeWikiClient(
+            ILogger<PoeWikiClient> logger,
             ILanguageProvider languageProvider,
             IMediator mediator)
         {
