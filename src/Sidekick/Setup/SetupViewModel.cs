@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Initialization.Commands;
@@ -28,18 +29,20 @@ namespace Sidekick.Setup
         private readonly ILanguageProvider languageProvider;
         private readonly SidekickSettings sidekickSettings;
         private readonly IMediator mediator;
+        private readonly IStringLocalizer localizer;
 
         public SetupViewModel(
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
             SidekickSettings sidekickSettings,
-            IMediator mediator)
+            IMediator mediator,
+            IStringLocalizer<SetupViewModel> localizer)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.languageProvider = languageProvider;
             this.sidekickSettings = sidekickSettings;
             this.mediator = mediator;
-
+            this.localizer = localizer;
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
             languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
@@ -100,13 +103,13 @@ namespace Sidekick.Setup
             switch (propertyName)
             {
                 case nameof(Language_UI):
-                    if (string.IsNullOrEmpty(Language_UI)) result.Add("Language is required.");
+                    if (string.IsNullOrEmpty(Language_UI)) result.Add(localizer["Validation_Language_UI"]);
                     break;
                 case nameof(Language_Parser):
-                    if (string.IsNullOrEmpty(Language_Parser)) result.Add("Language is required.");
+                    if (string.IsNullOrEmpty(Language_Parser)) result.Add(localizer["Validation_Language_Parser"]);
                     break;
                 case nameof(LeagueId):
-                    if (string.IsNullOrEmpty(LeagueId)) result.Add("A league is required.");
+                    if (string.IsNullOrEmpty(LeagueId)) result.Add(localizer["Validation_LeagueId"]);
                     break;
                 case nameof(Character_Name):
                     break;
