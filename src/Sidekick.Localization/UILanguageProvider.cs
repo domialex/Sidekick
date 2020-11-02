@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 
 namespace Sidekick.Localization
 {
@@ -11,7 +12,7 @@ namespace Sidekick.Localization
         public UILanguageProvider()
         {
             AvailableLanguages = SupportedLanguages
-                .Select(x => new CultureInfo(x))
+                .Select(x => CultureInfo.GetCultureInfo(x))
                 .ToList();
         }
 
@@ -19,7 +20,9 @@ namespace Sidekick.Localization
 
         public void SetLanguage(string name)
         {
-            TranslationSource.Instance.CurrentCulture = new CultureInfo(name);
+            TranslationSource.Instance.CurrentCulture = CultureInfo.GetCultureInfo(name);
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(name);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(name);
         }
     }
 }

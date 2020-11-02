@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
@@ -16,9 +17,10 @@ using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
 using Sidekick.Debounce;
 using Sidekick.Domain.Languages;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization.Prices;
@@ -40,8 +42,9 @@ namespace Sidekick.Views.Prices
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IItemCategoryService itemCategoryService;
+        private readonly IMediator mediator;
 
         public PriceViewModel(
             ILogger<PriceViewModel> logger,
@@ -53,8 +56,9 @@ namespace Sidekick.Views.Prices
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
             IParserService parserService,
-            SidekickSettings settings,
-            IItemCategoryService itemCategoryService)
+            ISidekickSettings settings,
+            IItemCategoryService itemCategoryService,
+            IMediator mediator)
         {
             this.logger = logger;
             this.debouncer = debouncer;
@@ -67,6 +71,7 @@ namespace Sidekick.Views.Prices
             this.parserService = parserService;
             this.settings = settings;
             this.itemCategoryService = itemCategoryService;
+            this.mediator = mediator;
             Task.Run(Initialize);
 
             PropertyChanged += PriceViewModel_PropertyChanged;
@@ -585,8 +590,6 @@ namespace Sidekick.Views.Prices
 
             if (Filters != null)
             {
-                var saveSettings = false;
-
                 var settingMods = Item.Category switch
                 {
                     Category.Accessory => settings.AccessoryModifiers,
@@ -604,7 +607,6 @@ namespace Sidekick.Views.Prices
                     {
                         if (!filter.Enabled)
                         {
-                            saveSettings = true;
                             settingMods.Remove(filter.Id);
                         }
                     }
@@ -612,25 +614,12 @@ namespace Sidekick.Views.Prices
                     {
                         if (filter.Enabled)
                         {
-                            saveSettings = true;
                             settingMods.Add(filter.Id);
                         }
                     }
                 }
-                if (saveSettings)
-                {
-                    switch (Item.Category)
-                    {
-                        case Category.Accessory: settings.AccessoryModifiers = settingMods; break;
-                        case Category.Armour: settings.ArmourModifiers = settingMods; break;
-                        case Category.Flask: settings.FlaskModifiers = settingMods; break;
-                        case Category.Jewel: settings.JewelModifiers = settingMods; break;
-                        case Category.Map: settings.MapModifiers = settingMods; break;
-                        case Category.Weapon: settings.WeaponModifiers = settingMods; break;
-                    }
 
-                    settings.Save();
-                }
+                await mediator.Send(new SaveSettingsCommand(settings));
             }
 
             IsFetching = true;

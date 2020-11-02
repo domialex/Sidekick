@@ -10,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Localization;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
 using Sidekick.Presentation.App;
@@ -47,7 +46,6 @@ namespace Sidekick
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
-            serviceProvider.UseSidekickLocalization();
 
             logger = serviceProvider.GetRequiredService<ILogger<App>>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();

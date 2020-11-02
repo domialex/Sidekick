@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using Sidekick.Initialization;
 using Sidekick.Presentation.Views;
 using Sidekick.Setup;
@@ -47,7 +47,7 @@ namespace Sidekick.Views
             Scope = serviceProvider.CreateScope();
 
             // Still needed for localization of league overlay models
-            var settings = Scope.ServiceProvider.GetService<SidekickSettings>();
+            var settings = Scope.ServiceProvider.GetService<ISidekickSettings>();
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Application;
 using Sidekick.Application.Initialization;
 using Sidekick.Business;
-using Sidekick.Core;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
@@ -24,13 +24,12 @@ namespace Sidekick
                     typeof(InitializeHandler).Assembly,
                     typeof(Infrastructure.StartupExtensions).Assembly,
                     typeof(Business.StartupExtensions).Assembly,
-                    typeof(Core.StartupExtensions).Assembly,
                     typeof(Localization.StartupExtensions).Assembly,
                     typeof(StartupExtensions).Assembly,
                     typeof(SetupHandler).Assembly
                 )
 
-                .AddSidekickConfiguration()
+                .AddSidekickApplication()
                 .AddSidekickBusinessServices()
                 .AddSidekickLocalization()
                 .AddSidekickInfrastructure()

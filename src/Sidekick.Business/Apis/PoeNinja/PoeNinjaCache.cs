@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.Languages;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
@@ -20,7 +20,7 @@ namespace Sidekick.Business.Apis.PoeNinja
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings settings;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
 
@@ -33,12 +33,12 @@ namespace Sidekick.Business.Apis.PoeNinja
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger<PoeNinjaCache> logger,
                              ILanguageProvider languageProvider,
-                             SidekickSettings configuration)
+                             ISidekickSettings settings)
         {
             this.client = client;
             this.languageProvider = languageProvider;
             this.logger = logger;
-            this.configuration = configuration;
+            this.settings = settings;
         }
         public PoeNinjaItem GetItem(Item item)
         {
@@ -86,11 +86,11 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             var itemsTasks = Enum.GetValues(typeof(ItemType))
                                  .Cast<ItemType>()
-                                 .Select(x => new { itemType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                 .Select(x => new { itemType = x, request = client.QueryItem(settings.LeagueId, x) })
                                  .ToList();
             var currenciesTasks = Enum.GetValues(typeof(CurrencyType))
                                       .Cast<CurrencyType>()
-                                      .Select(x => new { currencyType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                      .Select(x => new { currencyType = x, request = client.QueryItem(settings.LeagueId, x) })
                                       .ToList();
 
             await Task.WhenAll(itemsTasks.Select(x => x.request).Cast<Task>().Concat(currenciesTasks.Select(x => x.request).Cast<Task>()));

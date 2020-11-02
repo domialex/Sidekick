@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Settings;
 using Sidekick.Presentation.Views;
 
 namespace Sidekick.Presentation.Initialization.Notifications
@@ -10,11 +10,11 @@ namespace Sidekick.Presentation.Initialization.Notifications
     public class InitializationStartedHandler : INotificationHandler<InitializationStarted>
     {
         private readonly IViewLocator viewLocator;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
 
         public InitializationStartedHandler(
             IViewLocator viewLocator,
-            SidekickSettings settings)
+            ISidekickSettings settings)
         {
             this.viewLocator = viewLocator;
             this.settings = settings;

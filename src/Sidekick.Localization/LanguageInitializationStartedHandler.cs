@@ -2,19 +2,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Localization
 {
     public class LanguageInitializationStartedHandler : INotificationHandler<LanguageInitializationStarted>
     {
         private readonly IUILanguageProvider uILanguageProvider;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
 
         public LanguageInitializationStartedHandler(
             IUILanguageProvider uILanguageProvider,
-            SidekickSettings settings)
+            ISidekickSettings settings)
         {
             this.uILanguageProvider = uILanguageProvider;
             this.settings = settings;

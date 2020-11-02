@@ -8,7 +8,7 @@ using Sidekick.Business.Chat;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using Sidekick.Presentation.Views;
 
 namespace Sidekick.Handlers
@@ -25,7 +25,7 @@ namespace Sidekick.Handlers
         private readonly IViewLocator viewLocator;
         private readonly IChatService chatService;
         private readonly IStashService stashService;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IParserService parserService;
 
         public EventsHandler(
@@ -39,7 +39,7 @@ namespace Sidekick.Handlers
             IViewLocator viewLocator,
             IChatService chatService,
             IStashService stashService,
-            SidekickSettings settings,
+            ISidekickSettings settings,
             IParserService parserService)
         {
             this.events = events;

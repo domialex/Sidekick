@@ -6,12 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Sidekick.Core.Settings;
+using Sidekick.Application.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization;
@@ -27,14 +29,14 @@ namespace Sidekick.Setup
 
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly ILanguageProvider languageProvider;
-        private readonly SidekickSettings sidekickSettings;
+        private readonly ISidekickSettings sidekickSettings;
         private readonly IMediator mediator;
         private readonly IStringLocalizer localizer;
 
         public SetupViewModel(
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
-            SidekickSettings sidekickSettings,
+            ISidekickSettings sidekickSettings,
             IMediator mediator,
             IStringLocalizer<SetupViewModel> localizer)
         {
@@ -84,10 +86,13 @@ namespace Sidekick.Setup
 
         public async Task Save()
         {
-            this.CopyValuesTo(sidekickSettings);
+            var newSettings = new SidekickSettings();
+            sidekickSettings.CopyValuesTo(newSettings);
+            this.CopyValuesTo(newSettings);
+
             uiLanguageProvider.SetLanguage(Language_UI);
             await mediator.Send(new SetLanguageCommand(Language_Parser));
-            sidekickSettings.Save();
+            await mediator.Send(new SaveSettingsCommand(newSettings));
             await mediator.Send(new InitializeCommand(true));
         }
 

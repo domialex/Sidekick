@@ -1,5 +1,8 @@
 using System.ComponentModel;
-using Sidekick.Core.Settings;
+using System.Threading.Tasks;
+using MediatR;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Views.Leagues.Betrayal;
 using Sidekick.Views.Leagues.Blight;
 using Sidekick.Views.Leagues.Delve;
@@ -15,13 +18,15 @@ namespace Sidekick.Views.Leagues
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore 67
 
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
+        private readonly IMediator mediator;
 
         public LeagueViewModel(
-            SidekickSettings settings)
+            ISidekickSettings settings,
+            IMediator mediator)
         {
             this.settings = settings;
-
+            this.mediator = mediator;
             Heist = new HeistLeague();
             Betrayal = new BetrayalLeague();
             Blight = new BlightLeague();
@@ -45,8 +50,7 @@ namespace Sidekick.Views.Leagues
             }
             set
             {
-                settings.League_SelectedTabIndex = value;
-                settings.Save();
+                Task.Run(() => mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.League_SelectedTabIndex), value)));
             }
         }
     }

@@ -14,9 +14,9 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Languages;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search
 {
@@ -26,7 +26,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         private readonly ILanguageProvider languageProvider;
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IStaticDataService staticDataService;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings settings;
         private readonly IPoeTradeClient poeTradeClient;
         private readonly IStatDataService statDataService;
         private readonly IMediator mediator;
@@ -35,7 +35,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             ILanguageProvider languageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticDataService staticDataService,
-            SidekickSettings configuration,
+            ISidekickSettings settings,
             IPoeTradeClient poeTradeClient,
             IStatDataService statDataService,
             IMediator mediator)
@@ -44,7 +44,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             this.languageProvider = languageProvider;
             this.httpClientProvider = httpClientProvider;
             this.staticDataService = staticDataService;
-            this.configuration = configuration;
+            this.settings = settings;
             this.poeTradeClient = poeTradeClient;
             this.statDataService = statDataService;
             this.mediator = mediator;
@@ -56,7 +56,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             {
                 logger.LogInformation("Querying Exchange API.");
 
-                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}exchange/{configuration.LeagueId}";
+                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}exchange/{settings.LeagueId}";
                 var json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
@@ -65,7 +65,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var content = await response.Content.ReadAsStreamAsync();
                     var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeExchangeBaseUrl}{configuration.LeagueId}/{result.Id}");
+                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeExchangeBaseUrl}{settings.LeagueId}/{result.Id}");
                     return result;
                 }
                 else
@@ -163,7 +163,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     };
                 }
 
-                var uri = new Uri($"{languageProvider.Language.PoeTradeApiBaseUrl}search/{configuration.LeagueId}");
+                var uri = new Uri($"{languageProvider.Language.PoeTradeApiBaseUrl}search/{settings.LeagueId}");
                 var json = JsonSerializer.Serialize(request, poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
@@ -172,7 +172,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var content = await response.Content.ReadAsStreamAsync();
                     var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{configuration.LeagueId}/{result.Id}");
+                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{result.Id}");
                     return result;
                 }
                 else

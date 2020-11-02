@@ -3,13 +3,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Application.Settings;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization;
@@ -24,7 +26,7 @@ namespace Sidekick.Views.Settings
 
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly ILanguageProvider languageProvider;
-        private readonly SidekickSettings sidekickSettings;
+        private readonly ISidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IKeybindEvents keybindEvents;
         private readonly IMediator mediator;
@@ -33,7 +35,7 @@ namespace Sidekick.Views.Settings
         public SettingsViewModel(
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
-            SidekickSettings sidekickSettings,
+            ISidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
             IKeybindEvents keybindEvents,
             IMediator mediator)
@@ -101,10 +103,9 @@ namespace Sidekick.Views.Settings
             var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
             var languageHasChanged = languageProvider.Current.LanguageCode != Settings.Language_Parser;
 
-            Settings.CopyValuesTo(sidekickSettings);
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
             await mediator.Send(new SetLanguageCommand(Settings.Language_Parser));
-            sidekickSettings.Save();
+            await mediator.Send(new SaveSettingsCommand(Settings));
 
             if (languageHasChanged) await ResetCache();
             else if (leagueHasChanged) await mediator.Publish(new LeagueChangedNotification());

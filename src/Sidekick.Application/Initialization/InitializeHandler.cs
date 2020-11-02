@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
@@ -15,6 +14,8 @@ using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
 using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Notifications.Commands;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 
 namespace Sidekick.Application.Initialization
 {
@@ -24,14 +25,14 @@ namespace Sidekick.Application.Initialization
         private readonly IStringLocalizer<InitializeHandler> localizer;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
 
         public InitializeHandler(
             ILogger<InitializeHandler> logger,
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
-            SidekickSettings settings)
+            ISidekickSettings settings)
         {
             this.logger = logger;
             this.localizer = localizer;
@@ -93,8 +94,7 @@ namespace Sidekick.Application.Initialization
                     if (leaguesHash != settings.LeaguesHash)
                     {
                         await mediator.Send(new ClearCacheCommand());
-                        settings.LeaguesHash = leaguesHash;
-                        settings.Save();
+                        await mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.LeaguesHash), leaguesHash));
                     }
 
                     // Check to see if we should run Setup first before running the rest of the initialization process

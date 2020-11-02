@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Stashes;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using WindowsHook;
 
 namespace Sidekick.Natives
@@ -12,14 +12,14 @@ namespace Sidekick.Natives
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IStashService stashService;
         private readonly HookProvider hookProvider;
 
         public KeybindEvents(ILogger<KeybindEvents> logger,
             INativeProcess nativeProcess,
-            SidekickSettings configuration,
+            ISidekickSettings configuration,
             INativeKeyboard nativeKeyboard,
             IStashService stashService,
             HookProvider hookProvider)

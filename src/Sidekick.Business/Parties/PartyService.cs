@@ -1,19 +1,19 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Chat;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Parties
 {
     public class PartyService : IPartyService
     {
         private readonly ILogger logger;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IChatService chatService;
 
         public PartyService(
             ILogger<PartyService> logger,
-            SidekickSettings settings,
+            ISidekickSettings settings,
             IChatService chatService)
         {
             this.logger = logger;

@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Core.Natives
 {
     public class NativeClipboard : INativeClipboard
     {
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly INativeKeyboard keyboard;
 
-        public NativeClipboard(SidekickSettings settings, INativeKeyboard keyboard)
+        public NativeClipboard(ISidekickSettings settings, INativeKeyboard keyboard)
         {
             this.settings = settings;
             this.keyboard = keyboard;

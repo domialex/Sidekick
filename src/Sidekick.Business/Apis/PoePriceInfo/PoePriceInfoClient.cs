@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis.PoePriceInfo.Models
 {
@@ -12,15 +12,15 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
     {
         private const string PoePricesBaseUrl = "https://www.poeprices.info/api";
         private readonly ILogger logger;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings settings;
         private readonly HttpClient client;
 
         public PoePriceInfoClient(ILogger<PoePriceInfoClient> logger,
             IHttpClientFactory httpClientFactory,
-            SidekickSettings configuration)
+            ISidekickSettings settings)
         {
             this.logger = logger;
-            this.configuration = configuration;
+            this.settings = settings;
 
             client = httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(PoePricesBaseUrl);
@@ -32,7 +32,7 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
 
             try
             {
-                var response = await client.GetAsync("?l=" + configuration.LeagueId + "&i=" + encodedItem);
+                var response = await client.GetAsync("?l=" + settings.LeagueId + "&i=" + encodedItem);
                 var content = await response.Content.ReadAsStreamAsync();
 
                 return await JsonSerializer.DeserializeAsync<PriceInfoResult>(content, new JsonSerializerOptions()

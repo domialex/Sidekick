@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Languages.Commands;
+using Sidekick.Domain.Settings;
 using Sidekick.Extensions;
 
 namespace Sidekick.Application.Languages
@@ -15,12 +15,12 @@ namespace Sidekick.Application.Languages
     public class LanguageInitializationStartedHandler : INotificationHandler<LanguageInitializationStarted>
     {
         private readonly ILanguageProvider languageProvider;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IMediator mediator;
 
         public LanguageInitializationStartedHandler(
             ILanguageProvider languageProvider,
-            SidekickSettings settings,
+            ISidekickSettings settings,
             IMediator mediator)
         {
             this.languageProvider = languageProvider;

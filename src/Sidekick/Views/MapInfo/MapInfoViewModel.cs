@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using Sidekick.Helpers;
 
 namespace Sidekick.Views.MapInfo
@@ -22,7 +22,7 @@ namespace Sidekick.Views.MapInfo
         public MapInfoViewModel(
             INativeClipboard nativeClipboard,
             IParserService parserService,
-            SidekickSettings settings)
+            ISidekickSettings settings)
         {
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;

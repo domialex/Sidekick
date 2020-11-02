@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Windows;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
@@ -16,7 +16,7 @@ namespace Sidekick.Views
     public abstract class BaseView : AdonisWindow, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
         private readonly bool closeOnBlur;
@@ -31,7 +31,7 @@ namespace Sidekick.Views
         protected BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
-            settings = serviceProvider.GetService<SidekickSettings>();
+            settings = serviceProvider.GetService<ISidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
             logger = serviceProvider.GetService<ILogger<BaseView>>();
 

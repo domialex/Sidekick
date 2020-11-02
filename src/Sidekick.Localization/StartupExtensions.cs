@@ -1,8 +1,4 @@
-using System;
-using System.Globalization;
-using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.Settings;
 
 namespace Sidekick.Localization
 {
@@ -17,14 +13,6 @@ namespace Sidekick.Localization
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
             return services;
-        }
-
-        public static void UseSidekickLocalization(this IServiceProvider serviceProvider)
-        {
-            var settings = serviceProvider.GetRequiredService<SidekickSettings>();
-
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
         }
     }
 }
