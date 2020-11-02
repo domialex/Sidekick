@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Core.Natives;
+using Sidekick.Debounce;
 using Sidekick.Handlers;
 using Sidekick.Initialization;
 using Sidekick.Natives;
@@ -21,6 +22,7 @@ namespace Sidekick
         public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
         {
             services.AddSingleton<INativeClipboard, NativeClipboard>();
+            services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();

@@ -1,7 +1,6 @@
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.Debounce;
 using Sidekick.Core.Settings;
 
 namespace Sidekick.Core
@@ -19,13 +18,6 @@ namespace Sidekick.Core
             var sidekickConfiguration = DefaultSettings.CreateDefault();
             configuration.Bind(sidekickConfiguration);
             services.AddSingleton(sidekickConfiguration);
-
-            return services;
-        }
-
-        public static IServiceCollection AddSidekickCoreServices(this IServiceCollection services)
-        {
-            services.AddSingleton<IDebouncer, Debouncer>();
 
             return services;
         }

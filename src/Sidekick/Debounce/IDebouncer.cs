@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
-namespace Sidekick.Core.Debounce
+namespace Sidekick.Debounce
 {
     public interface IDebouncer
     {

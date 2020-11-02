@@ -2,11 +2,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Core;
-using Sidekick.Persistence;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
+using Sidekick.Persistence;
 using Sidekick.Presentation.App;
 using Sidekick.Presentation.Initialization.Commands;
 
@@ -31,7 +31,6 @@ namespace Sidekick
                 )
 
                 .AddSidekickConfiguration()
-                .AddSidekickCoreServices()
                 .AddSidekickBusinessServices()
                 .AddSidekickLocalization()
                 .AddSidekickInfrastructure()

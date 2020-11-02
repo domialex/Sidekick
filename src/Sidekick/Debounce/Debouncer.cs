@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sidekick.Core.Debounce
+namespace Sidekick.Debounce
 {
     public class Debouncer : IDebouncer
     {
