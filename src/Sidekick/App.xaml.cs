@@ -5,21 +5,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using Hardcodet.Wpf.TaskbarNotification;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
-using Sidekick.Core.Initialization;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
-using Sidekick.Core.Update;
-using Sidekick.Handlers;
+using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Localization.Application;
-using Sidekick.Localization.Initializer;
 using Sidekick.Localization.Splash;
-using Sidekick.Localization.Tray;
-using Sidekick.Localization.Update;
-using Sidekick.Views;
-using Sidekick.Views.SplashScreen;
+using Sidekick.Presentation.App;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -33,26 +26,18 @@ namespace Sidekick
     /// <summary>
     /// Entry point for the app
     /// </summary>
-    public partial class App : Application
+    public partial class App : System.Windows.Application, INativeApp
     {
-        public static App Instance { get; private set; }
-
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
         private ServiceProvider serviceProvider;
         private ILogger logger;
         private INativeProcess nativeProcess;
-        private INativeBrowser nativeBrowser;
-        private ILeagueDataService leagueDataService;
-        private IInitializer initializer;
-        private IViewLocator viewLocator;
-        private SidekickSettings settings;
-        private TaskbarIcon trayIcon;
+        private IMediator mediator;
+        public TaskbarIcon TrayIcon { get; set; }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            Instance = this;
-
             base.OnStartup(e);
 
             AttachErrorHandlers();
@@ -62,104 +47,20 @@ namespace Sidekick
 
             serviceProvider = Sidekick.Startup.InitializeServices(this);
 
-            logger = serviceProvider.GetRequiredService<ILogger>();
+            logger = serviceProvider.GetRequiredService<ILogger<App>>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
-            nativeBrowser = serviceProvider.GetRequiredService<INativeBrowser>();
-            leagueDataService = serviceProvider.GetRequiredService<ILeagueDataService>();
-            initializer = serviceProvider.GetRequiredService<IInitializer>();
-            viewLocator = serviceProvider.GetRequiredService<IViewLocator>();
-            settings = serviceProvider.GetRequiredService<SidekickSettings>();
+            mediator = serviceProvider.GetRequiredService<IMediator>();
 
-            trayIcon = (TaskbarIcon)FindResource("TrayIcon");
-            trayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
-
-            await RunAutoUpdate();
+            TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
+            TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
-
-            leagueDataService.OnNewLeagues += () =>
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    AdonisUI.Controls.MessageBox.Show(InitializerResources.Warn_NewLeagues, buttons: AdonisUI.Controls.MessageBoxButton.OK);
-                });
-            };
-
-            if (settings.ShowSplashScreen)
-            {
-                initializer.OnProgress += (a) =>
-                {
-                    if (!viewLocator.IsOpened<SplashScreenView>())
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            viewLocator.Open<SplashScreenView>();
-                        });
-                    }
-                };
-            }
-
-            initializer.OnError += (error) =>
-            {
-                AdonisUI.Controls.MessageBox.Show(InitializerResources.ErrorDuringInit, buttons: AdonisUI.Controls.MessageBoxButton.OK);
-                base.Shutdown(1);
-            };
-
-            await initializer.Initialize();
-
-            trayIcon.ShowBalloonTip(
-                    TrayResources.Notification_Title,
-                    string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()),
-                    trayIcon.Icon,
-                    largeIcon: true);
-
-            serviceProvider.GetRequiredService<EventsHandler>();
-        }
-
-        private async Task RunAutoUpdate()
-        {
-            var updateManagerService = serviceProvider.GetService<IUpdateManager>();
-            if (await updateManagerService.NewVersionAvailable())
-            {
-                if (AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateAvailable, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.YesNo) == AdonisUI.Controls.MessageBoxResult.Yes)
-                {
-                    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    Current.Shutdown();
-
-                    //try
-                    //{
-                    //    if (await updateManagerService.UpdateSidekick())
-                    //    {
-                    //        nativeProcess.Mutex = null;
-                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateCompleted, UpdateResources.Title, AdonisUI.Controls.MessageBoxButton.OK);
-
-                    //        var startInfo = new ProcessStartInfo
-                    //        {
-                    //            FileName = Path.Combine(updateManagerService.InstallDirectory, "Sidekick.exe"),
-                    //            UseShellExecute = false,
-                    //        };
-                    //        Process.Start(startInfo);
-                    //    }
-                    //    else
-                    //    {
-                    //        AdonisUI.Controls.MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
-                    //        nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    //    }
-
-                    //    Current.Shutdown();
-                    //}
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show(UpdateResources.UpdateFailed, UpdateResources.Title);
-                    //    nativeBrowser.Open(new Uri("https://github.com/domialex/Sidekick/releases"));
-                    //}
-                }
-            }
+            await mediator.Send(new InitializeCommand(true));
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            trayIcon?.Dispose();
+            TrayIcon?.Dispose();
             serviceProvider?.Dispose();
             base.OnExit(e);
         }
@@ -197,14 +98,28 @@ namespace Sidekick
 
         private void LogUnhandledException(Exception ex)
         {
-            logger.Fatal(ex, "Unhandled exception in application root");
+            logger.LogCritical(ex, "Unhandled exception in application root");
             Dispatcher.Invoke(() =>
             {
                 try
                 {
+                    // Try to dispose the provider before shutting down
+                    try
+                    {
+                        serviceProvider.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                        // Nothing
+                    }
+
                     AdonisUI.Controls.MessageBox.Show(ApplicationResources.FatalErrorOccured, buttons: AdonisUI.Controls.MessageBoxButton.OK);
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                    // Sometimes showing the MessageBox causes an Exception.
+                    // At this point, there is nothing to do before shutting down the application.
+                }
                 Shutdown(1);
             });
         }

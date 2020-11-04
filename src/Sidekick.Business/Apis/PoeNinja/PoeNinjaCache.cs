@@ -2,28 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
 using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Languages;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
-
     /// <summary>
     /// poe.ninja cache.
     /// Fetch poe.ninja with specified interval in the background.
     /// Alternatively give the user the option to refresh the cache via TrayIcon or Shortcut.
     /// </summary>
-    public class PoeNinjaCache : IPoeNinjaCache, IOnAfterInit
+    public class PoeNinjaCache : IPoeNinjaCache
     {
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
         private readonly ILanguageProvider languageProvider;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings settings;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
 
@@ -34,21 +31,18 @@ namespace Sidekick.Business.Apis.PoeNinja
         public bool IsInitialized => LastRefreshTimestamp.HasValue;
 
         public PoeNinjaCache(IPoeNinjaClient client,
-                             ILogger logger,
+                             ILogger<PoeNinjaCache> logger,
                              ILanguageProvider languageProvider,
-                             ILeagueDataService leagueDataService,
-                             SidekickSettings configuration)
+                             ISidekickSettings settings)
         {
             this.client = client;
             this.languageProvider = languageProvider;
-            this.logger = logger.ForContext(GetType());
-            this.configuration = configuration;
-
-            leagueDataService.OnLeagueChange += async () => await RefreshData();
+            this.logger = logger;
+            this.settings = settings;
         }
         public PoeNinjaItem GetItem(Item item)
         {
-            string nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
+            var nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
             string translatedName = null; // PoeNinja doesn't translate all items, example : Tabula Rasa.
 
             if (client.IsSupportingCurrentLanguage && Translations.Any())
@@ -84,19 +78,19 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             if (!client.IsSupportingCurrentLanguage)
             {
-                logger.Information($"PoeNinja doesn't support this language.");
+                logger.LogInformation($"PoeNinja doesn't support this language.");
                 return;
             }
 
-            logger.Information($"Populating PoeNinja cache.");
+            logger.LogInformation($"Populating PoeNinja cache.");
 
             var itemsTasks = Enum.GetValues(typeof(ItemType))
                                  .Cast<ItemType>()
-                                 .Select(x => new { itemType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                 .Select(x => new { itemType = x, request = client.QueryItem(settings.LeagueId, x) })
                                  .ToList();
             var currenciesTasks = Enum.GetValues(typeof(CurrencyType))
                                       .Cast<CurrencyType>()
-                                      .Select(x => new { currencyType = x, request = client.QueryItem(configuration.LeagueId, x) })
+                                      .Select(x => new { currencyType = x, request = client.QueryItem(settings.LeagueId, x) })
                                       .ToList();
 
             await Task.WhenAll(itemsTasks.Select(x => x.request).Cast<Task>().Concat(currenciesTasks.Select(x => x.request).Cast<Task>()));
@@ -120,11 +114,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             LastRefreshTimestamp = DateTime.Now;
 
-            logger.Information($"PoeNinja cache populated.");
-
-            return;
+            logger.LogInformation($"PoeNinja cache populated.");
         }
-
-        public Task OnAfterInit() => RefreshData();
     }
 }

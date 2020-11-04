@@ -1,23 +1,16 @@
 using AutoFixture;
-using Moq;
 using Sidekick.TestInfrastructure;
 
 namespace Sidekick.Business.Tests
 {
     public abstract class TestContext<T>
     {
-        public SidekickFixture Fixture { get; set; }
-
-        public T Subject => Fixture.Freeze<T>();
-
-        public Mock<TMock> GetMockFor<TMock>() where TMock : class
+        protected TestContext()
         {
-            return Fixture.Freeze<Mock<TMock>>();
+            var fixture = new SidekickFixture();
+            Subject = fixture.Freeze<T>();
         }
 
-        public TestContext()
-        {
-            Fixture = new SidekickFixture();
-        }
+        public T Subject { get; }
     }
 }

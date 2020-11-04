@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Execution;
 using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
@@ -10,30 +8,24 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class GemParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseVaalGem()
+        public void ParseVaalGem()
         {
-            var actual = await Subject.ParseItem(VaalGem);
+            var actual = Subject.ParseItem(VaalGem);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.Gem);
-                actual.Type.Should().Be("Vaal Double Strike");
-                actual.Properties.GemLevel.Should().Be(1);
-                actual.Corrupted.Should().BeTrue();
-            }
+            actual.Rarity.Should().Be(Rarity.Gem);
+            actual.Type.Should().Be("Vaal Double Strike");
+            actual.Properties.GemLevel.Should().Be(1);
+            actual.Corrupted.Should().BeTrue();
         }
 
         [Test]
-        public async Task ParseAnomalousGem()
+        public void ParseAnomalousGem()
         {
-            var actual = await Subject.ParseItem(AnomalousGem);
+            var actual = Subject.ParseItem(AnomalousGem);
 
-            using (new AssertionScope())
-            {
-                actual.Rarity.Should().Be(Rarity.Gem);
-                actual.Type.Should().Be("Static Strike");
-                actual.Properties.AlternateQuality.Should().Be(true);
-            }
+            actual.Rarity.Should().Be(Rarity.Gem);
+            actual.Type.Should().Be("Static Strike");
+            actual.Properties.AlternateQuality.Should().Be(true);
         }
 
         #region ItemText

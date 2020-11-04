@@ -35,12 +35,24 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
                                 <Label Content="{loc:Loc Language_UI}" />
                                 <ComboBox
                                     Grid.Column="1"
                                     DisplayMemberPath="Key"
                                     ItemsSource="{Binding Path=UILanguageOptions}"
                                     SelectedValue="{Binding Path=Settings.Language_UI}"
+                                    SelectedValuePath="Value" />
+                                <Label Grid.Row="2" Content="{loc:Loc Language_Parser}" />
+                                <ComboBox
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    DisplayMemberPath="Key"
+                                    ItemsSource="{Binding Path=ParserLanguageOptions}"
+                                    SelectedValue="{Binding Path=Settings.Language_Parser}"
                                     SelectedValuePath="Value" />
                             </Grid>
                         </GroupBox>

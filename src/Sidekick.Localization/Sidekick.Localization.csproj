@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
   </ItemGroup>
 
@@ -19,10 +23,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ApplicationResources.resx</DependentUpon>
     </Compile>
-    <Compile Update="Initializer\InitializerResources.Designer.cs">
+    <Compile Update="Initialize\InitializeResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>InitializerResources.resx</DependentUpon>
+      <DependentUpon>InitializeResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Leagues\Betrayal\BetrayalResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -89,11 +93,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Update\UpdateResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>UpdateResources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -105,9 +104,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Initializer\InitializerResources.resx">
+    <EmbeddedResource Update="Initialize\InitializeResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>InitializerResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>InitializeResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Betrayal\BetrayalResources.zh-tw.resx">
       <Generator></Generator>
@@ -137,7 +136,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Heist\HeistResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HeistResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Leagues\Incursion\IncursionResources.zh-tw.resx">
@@ -193,10 +192,6 @@
     <EmbeddedResource Update="Tray\TrayResources.resx">
       <LastGenOutput>TrayResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Update\UpdateResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UpdateResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

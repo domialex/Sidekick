@@ -219,4 +219,7 @@
   <data name="Key_OpenSettings" xml:space="preserve">
     <value>Open Settings View</value>
   </data>
+  <data name="Language_Parser" xml:space="preserve">
+    <value>Game Language</value>
+  </data>
 </root>

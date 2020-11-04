@@ -2,11 +2,17 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
-using Sidekick.Business.Caches;
-using Sidekick.Core.Initialization;
+using MediatR;
+using Sidekick.Application.Settings;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Languages;
+using Sidekick.Domain.Languages.Commands;
+using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
+using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization;
 
@@ -14,35 +20,35 @@ namespace Sidekick.Views.Settings
 {
     public class SettingsViewModel : IDisposable, INotifyPropertyChanged
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly SidekickSettings sidekickSettings;
+        private readonly ILanguageProvider languageProvider;
+        private readonly ISidekickSettings sidekickSettings;
         private readonly INativeKeyboard nativeKeyboard;
-        private readonly ILeagueDataService leagueDataService;
         private readonly IKeybindEvents keybindEvents;
-        private readonly ICacheService cacheService;
-        private readonly IInitializer initializer;
+        private readonly IMediator mediator;
         private bool isDisposed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public SettingsViewModel(IUILanguageProvider uiLanguageProvider,
-            SidekickSettings sidekickSettings,
+        public SettingsViewModel(
+            IUILanguageProvider uiLanguageProvider,
+            ILanguageProvider languageProvider,
+            ISidekickSettings sidekickSettings,
             INativeKeyboard nativeKeyboard,
-            ILeagueDataService leagueDataService,
             IKeybindEvents keybindEvents,
-            ICacheService cacheService,
-            IInitializer initializer)
+            IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
+            this.languageProvider = languageProvider;
             this.sidekickSettings = sidekickSettings;
             this.nativeKeyboard = nativeKeyboard;
             this.keybindEvents = keybindEvents;
-            this.cacheService = cacheService;
-            this.initializer = initializer;
-            this.leagueDataService = leagueDataService;
+            this.mediator = mediator;
 
             Settings = new SidekickSettings();
-            AssignValues(sidekickSettings, Settings);
+            sidekickSettings.CopyValuesTo(Settings);
 
             Keybinds.Clear();
             Settings.GetType()
@@ -53,10 +59,16 @@ namespace Sidekick.Views.Settings
 
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
-            this.leagueDataService.Leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+            languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+        }
+
+        public async Task Initialize()
+        {
+            var leagues = await mediator.Send(new GetLeaguesQuery(true));
+            leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
         }
 
         public ObservableDictionary<string, string> Keybinds { get; private set; } = new ObservableDictionary<string, string>();
@@ -66,6 +78,8 @@ namespace Sidekick.Views.Settings
         public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
 
         public ObservableDictionary<string, string> UILanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
+
+        public ObservableDictionary<string, string> ParserLanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
 
         public string CurrentKey { get; set; }
 
@@ -77,34 +91,29 @@ namespace Sidekick.Views.Settings
             keybindEvents.Enabled = string.IsNullOrEmpty(CurrentKey);
         }
 
-        public void Save()
+        public async Task Save()
         {
             var keybindProperties = Settings.GetType().GetProperties();
 
             foreach (var keybind in Keybinds)
             {
                 keybindProperties.First(x => x.Name == keybind.Key).SetValue(Settings, keybind.Value);
-            };
+            }
 
             var leagueHasChanged = Settings.LeagueId != sidekickSettings.LeagueId;
+            var languageHasChanged = languageProvider.Current.LanguageCode != Settings.Language_Parser;
 
-            AssignValues(Settings, sidekickSettings);
             uiLanguageProvider.SetLanguage(Settings.Language_UI);
-            sidekickSettings.Save();
+            await mediator.Send(new SetLanguageCommand(Settings.Language_Parser));
+            await mediator.Send(new SaveSettingsCommand(Settings));
 
-            if (leagueHasChanged) leagueDataService.LeagueChanged();
+            if (languageHasChanged) await ResetCache();
+            else if (leagueHasChanged) await mediator.Publish(new LeagueChangedNotification());
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
         {
             return Keybinds.ToCollection().Any(x => x.Value == keybind && x.Key != ignoreKey);
-        }
-
-        private void AssignValues(SidekickSettings src, SidekickSettings dest)
-        {
-            // iterates through src Settings (properties) and copies them to dest settings (properties)
-            // If there ever comes a time, where some properties do not have to be copied, we can add attributes to exclude them
-            src.GetType().GetProperties().ToList().ForEach(x => x.SetValue(dest, x.GetValue(src)));
         }
 
         private bool NativeKeyboard_OnKeyDown(string input)
@@ -156,13 +165,10 @@ namespace Sidekick.Views.Settings
             isDisposed = true;
         }
 
-        public void ResetCache()
+        public async Task ResetCache()
         {
-            _ = Task.Run(async () =>
-            {
-                await cacheService.Clear();
-                await initializer.Initialize();
-            });
+            await mediator.Send(new ClearCacheCommand());
+            await mediator.Send(new InitializeCommand(false));
         }
     }
 }

@@ -2,24 +2,27 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using Bindables;
-using Sidekick.Core.Natives;
+using MediatR;
+using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Views.About
 {
     [DependencyProperty]
     public partial class AboutView : BaseView, ISidekickView
     {
-        private readonly INativeBrowser browser;
+        private readonly IMediator mediator;
 
-        public AboutView(IServiceProvider serviceProvider, INativeBrowser browser)
+        public AboutView(
+            IServiceProvider serviceProvider,
+            IMediator mediator)
             : base("about", serviceProvider)
         {
             DataContext = this;
 
             InitializeComponent();
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             VersionNumber = fileVersionInfo.ProductVersion;
 
             try
@@ -32,17 +35,16 @@ namespace Sidekick.Views.About
                 // Getting the operating system can fail
             }
 
-            Show();
-            this.browser = browser;
+            this.mediator = mediator;
         }
 
         public string VersionNumber { get; private set; }
         public string OperatingSystem { get; private set; }
         public string EnvironmentVersion { get; private set; }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private async void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            browser.Open(e.Uri);
+            await mediator.Send(new OpenBrowserCommand(e.Uri));
         }
     }
 }

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Initialization\InitializationView.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Initialization\InitializationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
+    <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
+  </ItemGroup>
+
+</Project>

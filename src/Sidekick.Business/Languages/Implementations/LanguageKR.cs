@@ -1,4 +1,5 @@
 using System;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Languages.Implementations
 {
@@ -9,7 +10,6 @@ namespace Sidekick.Business.Languages.Implementations
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://poe.game.daum.net/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://poe.game.daum.net/api/trade/");
         public Uri PoeCdnBaseUrl => new Uri("https://web.poecdn.com/");
-        public Uri PoeWebsite => new Uri("https://poe.game.daum.net/");
         public string RarityUnique => "고유";
         public string RarityRare => "희귀";
         public string RarityMagic => "마법";

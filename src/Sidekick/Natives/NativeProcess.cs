@@ -10,14 +10,13 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Serilog;
-using Sidekick.Core.Initialization;
+using Microsoft.Extensions.Logging;
 using Sidekick.Core.Natives;
 using Sidekick.Extensions;
 
 namespace Sidekick.Natives
 {
-    public class NativeProcess : INativeProcess, IOnAfterInit
+    public class NativeProcess : INativeProcess
     {
         #region DllImport
         [DllImport("user32.dll")]
@@ -67,9 +66,9 @@ namespace Sidekick.Natives
 
         private readonly ILogger logger;
 
-        public NativeProcess(ILogger logger)
+        public NativeProcess(ILogger<NativeProcess> logger)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
         }
 
         public Mutex Mutex { get; set; }
@@ -139,13 +138,13 @@ namespace Sidekick.Natives
             }
             else
             {
-                logger.Information("Permission Sufficient.");
+                logger.LogInformation("Permission Sufficient.");
             }
         }
 
         private async Task WaitForPathOfExileFocus()
         {
-            while (IsPathOfExileInFocus == false)
+            while (!IsPathOfExileInFocus)
             {
                 await Task.Delay(1000);
             }
@@ -154,7 +153,7 @@ namespace Sidekick.Natives
         private void RestartAsAdmin()
         {
             var message = "This application must be run as administrator.";
-            logger.Error(message);
+            logger.LogError(message);
 
             if (MessageBox.Show(message + "\nClick Yes will restart as administrator automatically.", "Sidekick", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -162,7 +161,7 @@ namespace Sidekick.Natives
                 try
                 {
                     using var p = new Process();
-                    p.StartInfo.FileName = Application.ExecutablePath;
+                    p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
                     p.StartInfo.UseShellExecute = true;
                     p.StartInfo.Verb = "runas";
                     p.Start();
@@ -224,17 +223,11 @@ namespace Sidekick.Natives
             }
             catch (Exception e)
             {
-                logger.Error(e, e.Message);
+                logger.LogError(e, e.Message);
                 RestartAsAdmin();
             }
 
             return result;
-        }
-
-        public Task OnAfterInit()
-        {
-            Task.Run(CheckPermission);
-            return Task.CompletedTask;
         }
     }
 }

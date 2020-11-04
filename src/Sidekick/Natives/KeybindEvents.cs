@@ -1,36 +1,40 @@
 using System;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Stashes;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using WindowsHook;
 
 namespace Sidekick.Natives
 {
-    public class KeybindEvents : IKeybindEvents, IOnAfterInit, IDisposable, IOnReset
+    public class KeybindEvents : IKeybindEvents, IDisposable
     {
         private readonly ILogger logger;
         private readonly INativeProcess nativeProcess;
-        private readonly SidekickSettings configuration;
+        private readonly ISidekickSettings configuration;
         private readonly INativeKeyboard nativeKeyboard;
         private readonly IStashService stashService;
         private readonly HookProvider hookProvider;
 
-        public KeybindEvents(ILogger logger,
+        public KeybindEvents(ILogger<KeybindEvents> logger,
             INativeProcess nativeProcess,
-            SidekickSettings configuration,
+            ISidekickSettings configuration,
             INativeKeyboard nativeKeyboard,
             IStashService stashService,
             HookProvider hookProvider)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.nativeProcess = nativeProcess;
             this.configuration = configuration;
             this.nativeKeyboard = nativeKeyboard;
             this.stashService = stashService;
             this.hookProvider = hookProvider;
+
+            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+            hookProvider.Hook.MouseWheelExt += Hook_MouseWheelExt;
+
+            Enabled = true;
         }
 
         public bool Enabled { get; set; }
@@ -49,18 +53,6 @@ namespace Sidekick.Natives
         public event Func<Task<bool>> OnTabRight;
         public event Func<Task<bool>> OnOpenLeagueOverview;
         public event Func<Task<bool>> OnWhisperReply;
-
-        private bool isDisposed;
-
-        public Task OnAfterInit()
-        {
-            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
-            hookProvider.Hook.MouseWheelExt += Hook_MouseWheelExt;
-
-            Enabled = true;
-
-            return Task.CompletedTask;
-        }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
@@ -131,7 +123,7 @@ namespace Sidekick.Natives
         {
             if (input == keybind)
             {
-                logger.Information("Keybind Triggered - {keybindName}", name);
+                logger.LogInformation("Keybind Triggered - {keybindName}", name);
                 if (func != null)
                 {
                     returnTask = func.Invoke();
@@ -161,17 +153,11 @@ namespace Sidekick.Natives
 
         public void Dispose()
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            OnReset();
-            isDisposed = true;
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public void OnReset()
+        protected virtual void Dispose(bool disposing)
         {
             nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
             if (hookProvider.Hook != null) // Hook will be null if auto update was successful
@@ -179,5 +165,6 @@ namespace Sidekick.Natives
                 hookProvider.Hook.MouseWheelExt -= Hook_MouseWheelExt;
             }
         }
+
     }
 }
