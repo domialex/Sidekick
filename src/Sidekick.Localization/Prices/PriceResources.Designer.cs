@@ -637,7 +637,7 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to find prices for this item..
+        ///   Looks up a localized string similar to Unable to find prices for this item. Make sure you have set your game language correctly in the settings..
         /// </summary>
         public static string Error {
             get {

@@ -1,163 +1,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
-using Sidekick.Business.Caches;
-using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 {
-    public class StatDataService : IStatDataService, IOnInit
+    public class StatDataService : IStatDataService
     {
-        private readonly IPoeTradeClient poeApiClient;
         private readonly IPseudoStatDataService pseudoStatDataService;
         private readonly ILanguageProvider languageProvider;
-        private readonly ICacheService cacheService;
 
-        public StatDataService(IPoeTradeClient poeApiClient,
+        public StatDataService(
             IPseudoStatDataService pseudoStatDataService,
-            ILanguageProvider languageProvider,
-            ICacheService cacheService)
+            ILanguageProvider languageProvider)
         {
-            this.poeApiClient = poeApiClient;
             this.pseudoStatDataService = pseudoStatDataService;
             this.languageProvider = languageProvider;
-            this.cacheService = cacheService;
         }
 
-        private List<StatData> PseudoPatterns { get; set; }
+        public List<StatData> PseudoPatterns { get; set; }
+        public List<StatData> ExplicitPatterns { get; set; }
+        public List<StatData> ImplicitPatterns { get; set; }
+        public List<StatData> EnchantPatterns { get; set; }
+        public List<StatData> CraftedPatterns { get; set; }
+        public List<StatData> VeiledPatterns { get; set; }
+        public List<StatData> FracturedPatterns { get; set; }
 
-        private List<StatData> ExplicitPatterns { get; set; }
-
-        private List<StatData> ImplicitPatterns { get; set; }
-
-        private List<StatData> EnchantPatterns { get; set; }
-
-        private List<StatData> CraftedPatterns { get; set; }
-
-        private List<StatData> VeiledPatterns { get; set; }
-
-        private List<StatData> FracturedPatterns { get; set; }
-
-        private Regex NewLinePattern { get; set; }
-        private Regex IncreasedPattern { get; set; }
-        private Regex AdditionalProjectilePattern { get; set; }
-
-        public async Task OnInit()
-        {
-            var categories = await cacheService.GetOrCreate("StatDataService.OnInit", () => poeApiClient.Fetch<StatDataCategory>());
-
-            PseudoPatterns = new List<StatData>();
-            ExplicitPatterns = new List<StatData>();
-            ImplicitPatterns = new List<StatData>();
-            EnchantPatterns = new List<StatData>();
-            CraftedPatterns = new List<StatData>();
-            VeiledPatterns = new List<StatData>();
-            FracturedPatterns = new List<StatData>();
-            IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
-
-            NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
-            var hashPattern = new Regex("\\\\#");
-            var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
-
-            var additionalProjectileEscaped = Regex.Escape(languageProvider.Language.AdditionalProjectile);
-            var additionalProjectiles = hashPattern.Replace(Regex.Escape(languageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
-
-            // We need to ignore the case here, there are some mistakes in the data of the game.
-            AdditionalProjectilePattern = new Regex(languageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
-
-            foreach (var category in categories)
-            {
-                var first = category.Entries.FirstOrDefault();
-                if (first == null)
-                {
-                    continue;
-                }
-
-                // The notes in parentheses are never translated by the game.
-                // We should be fine hardcoding them this way.
-                string suffix, pattern;
-                List<StatData> patterns;
-                switch (first.Id.Split('.').First())
-                {
-                    default: continue;
-                    case "pseudo": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = PseudoPatterns; break;
-                    case "delve":
-                    case "monster":
-                    case "explicit": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = ExplicitPatterns; break;
-                    case "implicit": suffix = "(?:\\ \\(implicit\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = ImplicitPatterns; break;
-                    case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = EnchantPatterns; break;
-                    case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = CraftedPatterns; break;
-                    case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = VeiledPatterns; break;
-                    case "fractured": suffix = "(?:\\ \\(fractured\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = FracturedPatterns; break;
-                }
-
-                foreach (var entry in category.Entries)
-                {
-                    entry.Category = category.Label;
-
-                    pattern = Regex.Escape(entry.Text);
-                    pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
-                    pattern = NewLinePattern.Replace(pattern, "\\n");
-
-                    if (entry.Option == null || entry.Option.Options == null || entry.Option.Options.Count == 0)
-                    {
-                        pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
-                    }
-                    else
-                    {
-                        foreach (var option in entry.Option.Options)
-                        {
-                            if (NewLinePattern.IsMatch(option.Text))
-                            {
-                                var lines = NewLinePattern.Split(option.Text).ToList();
-                                var options = lines.ConvertAll(x => x = hashPattern.Replace(pattern, Regex.Escape(x)));
-                                option.Pattern = new Regex($"(?:^|\\n){string.Join("\\n", options)}{suffix}");
-                                option.Text = string.Join("\n", lines.Select((x, i) => new
-                                {
-                                    Text = x,
-                                    Index = i
-                                })
-                                .ToList()
-                                .ConvertAll(x =>
-                                {
-                                    if (x.Index == 0)
-                                    {
-                                        return x.Text;
-                                    }
-
-                                    return entry.Text.Replace("#", x.Text);
-                                }));
-                            }
-                            else
-                            {
-                                option.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(option.Text))}{suffix}", RegexOptions.None);
-                            }
-                        }
-
-                        pattern = hashPattern.Replace(pattern, "(.*)");
-                    }
-
-                    if (IncreasedPattern.IsMatch(pattern))
-                    {
-                        var negativePattern = IncreasedPattern.Replace(pattern, languageProvider.Language.ModifierReduced);
-                        entry.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
-                    }
-
-                    if (AdditionalProjectilePattern.IsMatch(entry.Text))
-                    {
-                        var additionalProjectilePattern = pattern.Replace(additionalProjectileEscaped, additionalProjectiles, System.StringComparison.OrdinalIgnoreCase);
-                        entry.AdditionalProjectilePattern = new Regex($"(?:^|\\n){additionalProjectilePattern}{suffix}", RegexOptions.IgnoreCase);
-                    }
-
-                    entry.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
-                    patterns.Add(entry);
-                }
-            }
-        }
+        public Regex NewLinePattern { get; set; } = new Regex("(?:\\\\)*[\\r\\n]+");
+        public Regex IncreasedPattern { get; set; }
+        public Regex AdditionalProjectilePattern { get; set; }
 
         public Modifiers ParseMods(string text)
         {

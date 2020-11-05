@@ -22,12 +22,13 @@ namespace Sidekick.Views.Settings
                 Topmost = false;
             });
 
-            Show();
+            _ = viewModel.Initialize();
         }
 
-        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        private async void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.Save();
+            Hide();
+            await viewModel.Save();
             Close();
         }
 
@@ -36,9 +37,10 @@ namespace Sidekick.Views.Settings
             Close();
         }
 
-        private void ResetCache_Click(object sender, RoutedEventArgs e)
+        private async void ResetCache_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.ResetCache();
+            Hide();
+            await viewModel.ResetCache();
             Close();
         }
     }

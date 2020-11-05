@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Database.Windows;
+using Sidekick.Persistence.Windows;
 
 namespace Sidekick.Business.Windows
 {

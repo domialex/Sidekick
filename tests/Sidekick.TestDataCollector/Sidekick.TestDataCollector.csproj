@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Database\Sidekick.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Localization\Sidekick.Localization.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Mediator\Sidekick.Mediator.csproj" />
     <ProjectReference Include="..\Sidekick.TestInfrastructure\Sidekick.TestInfrastructure.csproj" />
   </ItemGroup>
 

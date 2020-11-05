@@ -4,12 +4,13 @@ namespace Sidekick.Views
 {
     public abstract class BaseOverlay : BaseView
     {
-        public BaseOverlay()
+        protected BaseOverlay()
+            : base()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        public BaseOverlay(string id, IServiceProvider serviceProvider)
+        protected BaseOverlay(string id, IServiceProvider serviceProvider)
             : base(id, serviceProvider, closeOnBlur: true, closeOnKey: true)
         {
         }

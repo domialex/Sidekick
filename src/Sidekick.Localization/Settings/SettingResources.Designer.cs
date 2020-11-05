@@ -223,6 +223,15 @@ namespace Sidekick.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game Language.
+        /// </summary>
+        public static string Language_Parser {
+            get {
+                return ResourceManager.GetString("Language_Parser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language Settings.
         /// </summary>
         public static string Language_Title {

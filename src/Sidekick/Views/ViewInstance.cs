@@ -1,27 +1,67 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Settings;
+using Sidekick.Initialization;
+using Sidekick.Presentation.Views;
+using Sidekick.Setup;
+using Sidekick.Views.About;
+using Sidekick.Views.ApplicationLogs;
+using Sidekick.Views.Leagues;
+using Sidekick.Views.MapInfo;
+using Sidekick.Views.Prices;
+using Sidekick.Views.Settings;
 
 namespace Sidekick.Views
 {
     public class ViewInstance : IDisposable
     {
-        private bool isDisposed;
+        private static readonly Dictionary<View, Type> ViewTypes = new Dictionary<View, Type>() {
+            { View.About, typeof(AboutView) },
+            { View.Initialization, typeof(InitializationView) },
+            { View.Map, typeof(MapInfoView) },
+            { View.League, typeof(LeagueView) },
+            { View.Logs, typeof(ApplicationLogsView) },
+            { View.Price, typeof(PriceView) },
+            { View.Settings, typeof(SettingsView) },
+            { View.Setup, typeof(SetupView) },
+        };
 
-        public ViewInstance(IServiceScope scope, Type viewType)
+        private readonly ViewLocator viewLocator;
+
+        public ViewInstance(ViewLocator viewLocator, View view, IServiceProvider serviceProvider)
         {
-            Scope = scope;
-            ViewType = viewType;
-            View = (ISidekickView)scope.ServiceProvider.GetService(viewType);
-            View.Closed += View_Closed;
+            var logger = serviceProvider.GetService<ILogger<ViewInstance>>();
+
+            if (!ViewTypes.ContainsKey(view))
+            {
+                logger.LogError($"The view {view} could not be opened.");
+                return;
+            }
+
+            this.viewLocator = viewLocator;
+            View = view;
+            Scope = serviceProvider.CreateScope();
+
+            // Still needed for localization of league overlay models
+            var settings = Scope.ServiceProvider.GetService<ISidekickSettings>();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+
+            // View initialization and show
+            WpfView = (ISidekickView)Scope.ServiceProvider.GetService(ViewTypes[view]);
+            WpfView.Closed += View_Closed;
+            WpfView.Show();
         }
 
-        public IServiceScope Scope { get; private set; }
+        private IServiceScope Scope { get; set; }
 
-        public ISidekickView View { get; private set; }
+        public ISidekickView WpfView { get; set; }
 
-        public Type ViewType { get; private set; }
-
-        public event Action Disposed;
+        public View View { get; }
 
         private void View_Closed(object sender, EventArgs e)
         {
@@ -36,19 +76,13 @@ namespace Sidekick.Views
 
         protected virtual void Dispose(bool disposing)
         {
-            if (isDisposed)
+            if (WpfView != null)
             {
-                return;
+                WpfView.Closed -= View_Closed;
             }
-
-            if (disposing)
-            {
-                View.Closed -= View_Closed;
-                Scope?.Dispose();
-                Disposed?.Invoke();
-            }
-
-            isDisposed = true;
+            WpfView.Close();
+            viewLocator.Views.Remove(this);
+            Scope?.Dispose();
         }
     }
 }

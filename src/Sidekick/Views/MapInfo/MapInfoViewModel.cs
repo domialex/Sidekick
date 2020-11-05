@@ -1,29 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Parser;
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
-using System.Text.RegularExpressions;
-using Sidekick.Helpers;
 using System.ComponentModel;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Core.Natives;
+using Sidekick.Domain.Settings;
+using Sidekick.Helpers;
 
 namespace Sidekick.Views.MapInfo
 {
     public class MapInfoViewModel : INotifyPropertyChanged
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public MapInfoViewModel(
             INativeClipboard nativeClipboard,
             IParserService parserService,
-            SidekickSettings settings)
+            ISidekickSettings settings)
         {
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;
@@ -46,9 +45,9 @@ namespace Sidekick.Views.MapInfo
         private Regex DangerousModsRegex { get; set; }
         private Regex NewLinePattern { get; set; }
 
-        private async Task Initialize()
+        private void Initialize()
         {
-            Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
+            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
 
             if (Item == null || Item.Properties.MapTier == 0)
             {

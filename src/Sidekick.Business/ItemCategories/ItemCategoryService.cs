@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using Sidekick.Database;
-using Sidekick.Database.ItemCategories;
+using Microsoft.Extensions.Logging;
+using Sidekick.Persistence;
+using Sidekick.Persistence.ItemCategories;
 
 namespace Sidekick.Business.ItemCategories
 {
@@ -12,7 +12,7 @@ namespace Sidekick.Business.ItemCategories
         private readonly ILogger logger;
 
         public ItemCategoryService(DbContextOptions<SidekickContext> options,
-            ILogger logger)
+            ILogger<ItemCategoryService> logger)
         {
             this.options = options;
             this.logger = logger;
@@ -20,7 +20,7 @@ namespace Sidekick.Business.ItemCategories
 
         public async Task<ItemCategory> Get(string type)
         {
-            logger.Debug($"ItemCategoryService : Getting data for {type}");
+            logger.LogDebug($"ItemCategoryService : Getting data for {type}");
 
             using var dbContext = new SidekickContext(options);
 
@@ -29,7 +29,7 @@ namespace Sidekick.Business.ItemCategories
 
         public async Task SaveCategory(string type, string category)
         {
-            logger.Debug($"ItemCategoryService : Saving data for {type}");
+            logger.LogDebug($"ItemCategoryService : Saving data for {type}");
 
             using var dbContext = new SidekickContext(options);
 
@@ -51,7 +51,7 @@ namespace Sidekick.Business.ItemCategories
 
         public async Task Delete(string type)
         {
-            logger.Debug($"ItemCategoryService : Deleting data for {type}");
+            logger.LogDebug($"ItemCategoryService : Deleting data for {type}");
 
             using var dbContext = new SidekickContext(options);
 

@@ -1,22 +1,24 @@
 using System;
 using System.ComponentModel;
-using Sidekick.Core.Logging;
 using Sidekick.Helpers;
+using Sidekick.Logging;
 
 namespace Sidekick.Views.ApplicationLogs
 {
     public class ApplicationLogViewModel : IDisposable, INotifyPropertyChanged
     {
-        private readonly SidekickEventSink eventSink;
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
+        private readonly LogSink logSink;
         private bool isDisposed;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public ApplicationLogViewModel(SidekickEventSink eventSink)
+        public ApplicationLogViewModel(LogSink logSink)
         {
-            this.eventSink = eventSink;
-            Logs = new ObservableList<string>(eventSink.Events);
-            eventSink.LogEventEmitted += EventSink_LogEventEmitted;
+            this.logSink = logSink;
+            Logs = new ObservableList<string>(logSink.Events);
+            logSink.LogEventEmitted += EventSink_LogEventEmitted;
         }
 
         private void EventSink_LogEventEmitted(string logEvent)
@@ -49,7 +51,7 @@ namespace Sidekick.Views.ApplicationLogs
 
             if (disposing)
             {
-                eventSink.LogEventEmitted -= EventSink_LogEventEmitted;
+                logSink.LogEventEmitted -= EventSink_LogEventEmitted;
             }
 
             isDisposed = true;

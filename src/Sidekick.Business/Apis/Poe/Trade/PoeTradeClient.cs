@@ -4,12 +4,11 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Business.Apis.Poe.Trade.Leagues;
-using Sidekick.Business.Languages;
+using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
 {
@@ -19,11 +18,11 @@ namespace Sidekick.Business.Apis.Poe.Trade
         private readonly ILanguageProvider languageProvider;
         private readonly HttpClient client;
 
-        public PoeTradeClient(ILogger logger,
+        public PoeTradeClient(ILogger<PoeTradeClient> logger,
             ILanguageProvider languageProvider,
             IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.languageProvider = languageProvider;
             client = httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
@@ -44,7 +43,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
             }
         }
 
-        public async Task<List<TReturn>> Fetch<TReturn>(bool useEnglishLanguage = false)
+        public async Task<List<TReturn>> Fetch<TReturn>(bool useDefaultLanguage = false)
         {
             string path;
             string name;
@@ -54,10 +53,6 @@ namespace Sidekick.Business.Apis.Poe.Trade
                     name = "items";
                     path = "data/items";
                     break;
-                case nameof(League):
-                    name = "leagues";
-                    path = "data/leagues";
-                    break;
                 case nameof(StaticItemCategory):
                     name = "static items";
                     path = "data/static";
@@ -66,25 +61,25 @@ namespace Sidekick.Business.Apis.Poe.Trade
                     name = "attributes";
                     path = "data/stats";
                     break;
-                default: throw new Exception("The type to fetch is not recognized by the PoeApiService.");
+                default: throw new ArgumentException("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            var language = useEnglishLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
+            var language = useDefaultLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
 
             try
             {
-                logger.Information($"Fetching {name} started.");
+                logger.LogInformation($"Fetching {name} started.");
 
                 var response = await client.GetAsync(language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
 
-                logger.Information($"{result.Result.Count} {name} fetched.");
+                logger.LogInformation($"{result.Result.Count} {name} fetched.");
                 return result.Result;
             }
             catch (Exception)
             {
-                logger.Information($"Could not fetch {name} at {language.PoeTradeApiBaseUrl + path}.");
+                logger.LogInformation($"Could not fetch {name} at {language.PoeTradeApiBaseUrl + path}.");
                 throw;
             }
 

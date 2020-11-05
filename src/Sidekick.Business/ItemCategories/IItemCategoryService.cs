@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Database.ItemCategories;
+using Sidekick.Persistence.ItemCategories;
 
 namespace Sidekick.Business.ItemCategories
 {

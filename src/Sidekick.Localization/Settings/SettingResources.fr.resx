@@ -129,6 +129,9 @@
   <data name="Character_Title" xml:space="preserve">
     <value>Paramètres de personnage</value>
   </data>
+  <data name="Language_Parser" xml:space="preserve">
+    <value>Langue du jeu</value>
+  </data>
   <data name="Language_Title" xml:space="preserve">
     <value>Paramètres de langue</value>
   </data>

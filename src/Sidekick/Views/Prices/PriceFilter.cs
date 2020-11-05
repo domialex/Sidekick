@@ -5,6 +5,10 @@ namespace Sidekick.Views.Prices
 {
     public class PriceFilter : INotifyPropertyChanged
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         public string Type { get; set; }
 
         public bool Enabled { get; set; }
@@ -22,7 +26,5 @@ namespace Sidekick.Views.Prices
         public bool ApplyNegative { get; set; }
 
         public ModifierOption Option { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

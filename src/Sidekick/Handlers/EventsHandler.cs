@@ -1,24 +1,19 @@
 using System;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Chat;
 using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
-using Sidekick.Core.Initialization;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
-using Sidekick.Views;
-using Sidekick.Views.Leagues;
-using Sidekick.Views.MapInfo;
-using Sidekick.Views.Prices;
-using Sidekick.Views.Settings;
+using Sidekick.Domain.Settings;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Handlers
 {
-    public class EventsHandler : IDisposable, IOnReset
+    public class EventsHandler : IDisposable
     {
         private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
@@ -30,53 +25,58 @@ namespace Sidekick.Handlers
         private readonly IViewLocator viewLocator;
         private readonly IChatService chatService;
         private readonly IStashService stashService;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IParserService parserService;
-        private bool isDisposed;
 
         public EventsHandler(
             IKeybindEvents events,
             IWhisperService whisperService,
             INativeClipboard clipboard,
             INativeKeyboard keyboard,
-            ILogger logger,
+            ILogger<EventsHandler> logger,
             ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
             IViewLocator viewLocator,
             IChatService chatService,
             IStashService stashService,
-            SidekickSettings settings,
+            ISidekickSettings settings,
             IParserService parserService)
         {
             this.events = events;
             this.whisperService = whisperService;
             this.clipboard = clipboard;
             this.keyboard = keyboard;
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
             this.tradeSearchService = tradeSearchService;
-            this.logger = logger.ForContext(GetType());
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
             this.chatService = chatService;
             this.stashService = stashService;
             this.settings = settings;
             this.parserService = parserService;
-            Initialize();
+
+            events.OnItemWiki += TriggerItemWiki;
+            events.OnFindItems += TriggerFindItem;
+            events.OnLeaveParty += TriggerLeaveParty;
+            events.OnOpenSearch += TriggerOpenSearch;
+            events.OnOpenSettings += TriggerOpenSettings;
+            events.OnWhisperReply += TriggerReplyToLatestWhisper;
+            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
+            events.OnPriceCheck += Events_OnPriceCheck;
+            events.OnMapInfo += Events_OnMapInfo;
+            events.OnHideout += Events_OnHideout;
+            events.OnExit += Events_OnExit;
+            events.OnTabLeft += Events_OnTabLeft;
+            events.OnTabRight += Events_OnTabRight;
         }
 
         public void Dispose()
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            OnReset();
-            isDisposed = true;
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        public void OnReset()
+        protected virtual void Dispose(bool disposing)
         {
             events.OnItemWiki -= TriggerItemWiki;
             events.OnFindItems -= TriggerFindItem;
@@ -97,23 +97,6 @@ namespace Sidekick.Handlers
         {
             await chatService.Write("/hideout");
             return true;
-        }
-
-        private void Initialize()
-        {
-            events.OnItemWiki += TriggerItemWiki;
-            events.OnFindItems += TriggerFindItem;
-            events.OnLeaveParty += TriggerLeaveParty;
-            events.OnOpenSearch += TriggerOpenSearch;
-            events.OnOpenSettings += TriggerOpenSettings;
-            events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
-            events.OnPriceCheck += Events_OnPriceCheck;
-            events.OnMapInfo += Events_OnMapInfo;
-            events.OnHideout += Events_OnHideout;
-            events.OnExit += Events_OnExit;
-            events.OnTabLeft += Events_OnTabLeft;
-            events.OnTabRight += Events_OnTabRight;
         }
 
         private Task<bool> Events_OnTabRight()
@@ -139,7 +122,7 @@ namespace Sidekick.Handlers
             viewLocator.CloseAll();
             await clipboard.Copy();
 
-            viewLocator.Open<PriceView>();
+            viewLocator.Open(View.Price);
             return true;
         }
 
@@ -148,20 +131,20 @@ namespace Sidekick.Handlers
             viewLocator.CloseAll();
             await clipboard.Copy();
 
-            viewLocator.Open<MapInfoView>();
+            viewLocator.Open(View.Map);
             return true;
         }
 
         private Task<bool> Events_OnOpenLeagueOverview()
         {
-            if (viewLocator.IsOpened<LeagueView>())
+            if (viewLocator.IsOpened(View.League))
             {
                 viewLocator.CloseAll();
             }
             else
             {
                 viewLocator.CloseAll();
-                viewLocator.Open<LeagueView>();
+                viewLocator.Open(View.League);
             }
 
             return Task.FromResult(true);
@@ -180,7 +163,7 @@ namespace Sidekick.Handlers
             // This operation is only valid if the user has added their character name to the settings file.
             if (string.IsNullOrEmpty(settings.Character_Name))
             {
-                logger.Warning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
+                logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
                 return false;
             }
             await chatService.Write($"/kick {settings.Character_Name}");
@@ -198,7 +181,7 @@ namespace Sidekick.Handlers
                 var clipboardContents = await clipboard.GetText();
 
                 // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
-                logger.Information("Searching for {itemName}", item.Name);
+                logger.LogInformation("Searching for {itemName}", item.Name);
                 await clipboard.SetText(item.Name);
 
                 keyboard.SendInput("Ctrl+F");
@@ -220,7 +203,7 @@ namespace Sidekick.Handlers
 
             if (item != null)
             {
-                wikiProvider.Open(item);
+                await wikiProvider.Open(item);
                 return true;
             }
 
@@ -242,14 +225,14 @@ namespace Sidekick.Handlers
 
         private Task<bool> TriggerOpenSettings()
         {
-            if (viewLocator.IsOpened<SettingsView>())
+            if (viewLocator.IsOpened(View.Settings))
             {
                 viewLocator.CloseAll();
             }
             else
             {
                 viewLocator.CloseAll();
-                viewLocator.Open<SettingsView>();
+                viewLocator.Open(View.Settings);
             }
 
             return Task.FromResult(true);
@@ -261,7 +244,7 @@ namespace Sidekick.Handlers
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                return await parserService.ParseItem(text);
+                return parserService.ParseItem(text);
             }
 
             return null;

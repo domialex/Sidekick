@@ -5,11 +5,10 @@ using System.Windows;
 using System.Windows.Forms;
 using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Windows;
-using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Domain.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Views
@@ -17,26 +16,24 @@ namespace Sidekick.Views
     public abstract class BaseView : AdonisWindow, ISidekickView
     {
         private readonly IKeybindEvents keybindEvents;
-        private readonly SidekickSettings settings;
+        private readonly ISidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
-        private readonly IDebouncer debouncer;
         private readonly bool closeOnBlur;
         private readonly bool closeOnKey;
         private readonly string id;
 
-        public BaseView()
+        protected BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        public BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        protected BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
         {
             keybindEvents = serviceProvider.GetService<IKeybindEvents>();
-            settings = serviceProvider.GetService<SidekickSettings>();
+            settings = serviceProvider.GetService<ISidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
-            logger = serviceProvider.GetService<ILogger>();
-            debouncer = serviceProvider.GetService<IDebouncer>();
+            logger = serviceProvider.GetService<ILogger<BaseView>>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
@@ -63,7 +60,15 @@ namespace Sidekick.Views
         {
             if (IsClosing) return;
 
-            await windowService.SaveSize(id, GetWidth(), GetHeight());
+            try
+            {
+                await windowService.SaveSize(id, GetWidth(), GetHeight());
+            }
+            catch (ObjectDisposedException)
+            {
+                // Catches, if the service provider is being disposed.
+                // We keep going
+            }
 
             IsClosing = true;
             IsVisibleChanged -= EnsureBounds;
@@ -147,7 +152,7 @@ namespace Sidekick.Views
 
             if (y > 1) { y /= 100; }
 
-            logger.Information($"Positioning Info: SetTopPercent({y}, {source})");
+            logger.LogInformation($"Positioning Info: SetTopPercent({y}, {source})");
 
             if (source == LocationSource.Center)
             {
@@ -158,17 +163,17 @@ namespace Sidekick.Views
                 y -= GetHeightPercent();
             }
 
-            logger.Information($"Positioning Info: SetTopPercent: y = {y}");
-            logger.Information($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
-            logger.Information($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: y = {y}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
 
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
             var desiredY = screenRect.Y + (screenRect.Height * y);
 
-            logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
-            logger.Information($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
-            logger.Information($"Positioning Info: SetTopPercent: Top = {desiredY}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
+            logger.LogInformation($"Positioning Info: SetTopPercent: Top = {desiredY}");
 
             TopLocationSource = source;
             Top = (int)desiredY;
@@ -186,7 +191,7 @@ namespace Sidekick.Views
 
             if (x > 1) { x /= 100; }
 
-            logger.Information($"Positioning Info: SetLeftPercent({x}, {source})");
+            logger.LogInformation($"Positioning Info: SetLeftPercent({x}, {source})");
 
             if (source == LocationSource.Center)
             {
@@ -197,17 +202,17 @@ namespace Sidekick.Views
                 x -= GetWidthPercent();
             }
 
-            logger.Information($"Positioning Info: SetLeftPercent: x = {x}");
-            logger.Information($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
-            logger.Information($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: x = {x}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
 
             var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
 
             var desiredX = screenRect.X + (screenRect.Width * x);
 
-            logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
-            logger.Information($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
-            logger.Information($"Positioning Info: SetLeftPercent: Left = {desiredX}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
+            logger.LogInformation($"Positioning Info: SetLeftPercent: Left = {desiredX}");
 
             LeftLocationSource = source;
             Left = (int)desiredX;

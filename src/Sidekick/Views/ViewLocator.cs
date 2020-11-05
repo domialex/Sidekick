@@ -1,57 +1,71 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Localization;
+using System.Windows.Threading;
+using Sidekick.Mediator;
+using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IServiceProvider serviceProvider;
-        private bool isDisposed;
+        private readonly IMediatorTasks mediator;
+        private readonly Dispatcher dispatcher;
 
-        public ViewLocator(IServiceProvider serviceProvider)
+        public ViewLocator(
+            IServiceProvider serviceProvider,
+            IMediatorTasks mediator,
+            Dispatcher dispatcher)
         {
             this.serviceProvider = serviceProvider;
-
+            this.mediator = mediator;
+            this.dispatcher = dispatcher;
             Views = new List<ViewInstance>();
         }
 
-        private List<ViewInstance> Views { get; set; }
+        public List<ViewInstance> Views { get; set; }
 
-        public void Open<TView>()
-            where TView : ISidekickView
+        public void Open(View view)
         {
-            // Still needed for localization of league overlay models
-            Thread.CurrentThread.CurrentCulture = TranslationSource.Instance.CurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = TranslationSource.Instance.CurrentCulture;
-
-            var view = new ViewInstance(
-                serviceProvider.CreateScope(),
-                typeof(TView)
-            );
-
-            view.Disposed += () =>
+            dispatcher.Invoke(() =>
             {
-                Views.Remove(view);
-            };
-
-            Views.Add(view);
+                Views.Add(new ViewInstance(this, view, serviceProvider));
+            });
         }
 
-        public bool IsOpened<TView>()
-        {
-            return Views.Any(x => x.ViewType == typeof(TView));
-        }
+        public bool IsOpened(View view) => Views.Any(x => x.View == view);
 
         public void CloseAll()
         {
-            for (var i = Views.Count; i > 0; i--)
+            dispatcher.Invoke(async () =>
             {
-                Views[i - 1].View.Close();
-            }
+                foreach (var view in Views)
+                {
+                    view.WpfView.Hide();
+                }
+                await mediator.WhenAll;
+                while (Views.Count > 0)
+                {
+                    Views[0].WpfView.Close();
+                }
+            });
+        }
+
+        public void Close(View view)
+        {
+            dispatcher.Invoke(async () =>
+            {
+                foreach (var view in Views.Where(x => x.View == view))
+                {
+                    view.WpfView.Hide();
+                }
+                await mediator.WhenAll;
+                while (Views.Any(x => x.View == view))
+                {
+                    Views.FirstOrDefault(x => x.View == view)?.WpfView.Close();
+                }
+            });
         }
 
         public void Dispose()
@@ -62,23 +76,7 @@ namespace Sidekick.Views
 
         protected virtual void Dispose(bool disposing)
         {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (Views != null)
-                {
-                    foreach (var view in Views)
-                    {
-                        view.Dispose();
-                    }
-                }
-            }
-
-            isDisposed = true;
+            CloseAll();
         }
     }
 }

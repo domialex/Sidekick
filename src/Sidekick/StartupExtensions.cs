@@ -1,8 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core;
 using Sidekick.Core.Natives;
+using Sidekick.Debounce;
 using Sidekick.Handlers;
+using Sidekick.Initialization;
 using Sidekick.Natives;
+using Sidekick.Presentation.Views;
+using Sidekick.Setup;
 using Sidekick.Views;
 using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
@@ -10,7 +13,6 @@ using Sidekick.Views.Leagues;
 using Sidekick.Views.MapInfo;
 using Sidekick.Views.Prices;
 using Sidekick.Views.Settings;
-using Sidekick.Views.SplashScreen;
 using Sidekick.Views.TrayIcon;
 
 namespace Sidekick
@@ -19,30 +21,32 @@ namespace Sidekick
     {
         public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
         {
-            services.AddSingleton<INativeBrowser, NativeBrowser>();
             services.AddSingleton<INativeClipboard, NativeClipboard>();
+            services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<AboutView>();
             services.AddScoped<ApplicationLogsView>();
+            services.AddScoped<InitializationView>();
             services.AddScoped<LeagueView>();
             services.AddScoped<PriceView>();
             services.AddScoped<MapInfoView>();
             services.AddScoped<SettingsView>();
-            services.AddScoped<SplashScreenView>();
+            services.AddScoped<SetupView>();
 
             services.AddScoped<ApplicationLogViewModel>();
             services.AddScoped<LeagueViewModel>();
             services.AddScoped<PriceViewModel>();
             services.AddScoped<MapInfoViewModel>();
             services.AddScoped<SettingsViewModel>();
-            services.AddScoped<SplashViewModel>();
+            services.AddSingleton<InitializationViewModel>();
+            services.AddScoped<SetupViewModel>();
 
-            services.AddInitializableService<IKeybindEvents, KeybindEvents>();
-            services.AddInitializableService<INativeKeyboard, NativeKeyboard>();
-            services.AddInitializableService<INativeProcess, NativeProcess>();
-            services.AddInitializableService<INativeCursor, NativeCursor>();
+            services.AddSingleton<IKeybindEvents, KeybindEvents>();
+            services.AddSingleton<INativeKeyboard, NativeKeyboard>();
+            services.AddSingleton<INativeProcess, NativeProcess>();
+            services.AddSingleton<INativeCursor, NativeCursor>();
+            services.AddSingleton<EventsHandler, EventsHandler>();
             services.AddSingleton<TrayIconViewModel>();
-            services.AddSingleton<EventsHandler>();
             services.AddSingleton<HookProvider>();
 
             services.AddSingleton<IViewLocator, ViewLocator>();

@@ -4,24 +4,22 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
-using Sidekick.Core.Initialization;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {
     /// <summary>
     /// https://poe.ninja/swagger
     /// </summary>
-    public class PoeNinjaClient : IPoeNinjaClient, IOnAfterInit
+    public class PoeNinjaClient : IPoeNinjaClient
     {
         private readonly static Uri POE_NINJA_API_BASE_URL = new Uri("https://poe.ninja/api/data/");
         /// <summary>
         /// Poe.ninja uses its own language codes.
         /// </summary>
-        private readonly static Dictionary<string, string> POE_NINJA_LANGUAGE_CODES = new Dictionary<string, string>()
+        public readonly static Dictionary<string, string> POE_NINJA_LANGUAGE_CODES = new Dictionary<string, string>()
         {
              { "de", "ge" }, // German.
              { "en", "en" }, // English.
@@ -32,20 +30,17 @@ namespace Sidekick.Business.Apis.PoeNinja
              { "ru", "ru" }, // Russian.
              { "th", "th" }, // Thai.
         };
-        private string languageCode;
         private readonly HttpClient httpClient;
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
-        private JsonSerializerOptions _jsonSerializerOptions;
-        public bool IsSupportingCurrentLanguage { get; private set; }
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
+        public bool IsSupportingCurrentLanguage { get; set; }
+        public string LanguageCode { get; set; }
 
         public PoeNinjaClient(IHttpClientProvider httpClientProvider,
-                              ILanguageProvider languageProvider,
-                              ILogger logger)
+                              ILogger<PoeNinjaClient> logger)
         {
             httpClient = httpClientProvider.HttpClient;
-            this.languageProvider = languageProvider;
-            this.logger = logger.ForContext(GetType());
+            this.logger = logger;
 
             var jsonSerializerOptions = new JsonSerializerOptions()
             {
@@ -58,7 +53,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public async Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType)
         {
-            var url = new Uri($"{POE_NINJA_API_BASE_URL}itemoverview?league={leagueId}&type={itemType}&language={languageCode}");
+            var url = new Uri($"{POE_NINJA_API_BASE_URL}itemoverview?league={leagueId}&type={itemType}&language={LanguageCode}");
 
             try
             {
@@ -68,7 +63,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             }
             catch (Exception)
             {
-                logger.Information("Could not fetch {itemType} from poe.ninja", itemType);
+                logger.LogInformation("Could not fetch {itemType} from poe.ninja", itemType);
             }
 
             return new PoeNinjaQueryResult<PoeNinjaItem>() { Lines = new List<PoeNinjaItem>() };
@@ -76,7 +71,7 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency)
         {
-            var url = new Uri($"{POE_NINJA_API_BASE_URL}currencyoverview?league={leagueId}&type={currency}&language={languageCode}");
+            var url = new Uri($"{POE_NINJA_API_BASE_URL}currencyoverview?league={leagueId}&type={currency}&language={LanguageCode}");
 
             try
             {
@@ -86,17 +81,10 @@ namespace Sidekick.Business.Apis.PoeNinja
             }
             catch
             {
-                logger.Information("Could not fetch {currency} from poe.ninja", currency);
+                logger.LogInformation("Could not fetch {currency} from poe.ninja", currency);
             }
 
             return new PoeNinjaQueryResult<PoeNinjaCurrency>() { Lines = new List<PoeNinjaCurrency>() };
-        }
-
-        public Task OnAfterInit()
-        {
-            IsSupportingCurrentLanguage = POE_NINJA_LANGUAGE_CODES.TryGetValue(languageProvider.Current.LanguageCode, out languageCode);
-
-            return Task.CompletedTask;
         }
     }
 }

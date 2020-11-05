@@ -1,7 +1,5 @@
 using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Execution;
 using NUnit.Framework;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
@@ -11,96 +9,78 @@ namespace Sidekick.Business.Tests.ItemParserTests
     public class MapParsing : TestContext<ParserService>
     {
         [Test]
-        public async Task ParseNormalMap()
+        public void ParseNormalMap()
         {
-            var actual = await Subject.ParseItem(NormalMap);
+            var actual = Subject.ParseItem(NormalMap);
 
-            using (new AssertionScope())
-            {
-                actual.Type.Should().Be("Beach Map");
-                actual.Properties.MapTier.Should().Be(1);
-            }
+            actual.Type.Should().Be("Beach Map");
+            actual.Properties.MapTier.Should().Be(1);
         }
 
         [Test]
-        public async Task ParseMagicMap()
+        public void ParseMagicMap()
         {
-            var actual = await Subject.ParseItem(MagicMap);
+            var actual = Subject.ParseItem(MagicMap);
 
-            using (new AssertionScope())
-            {
-                actual.Type.Should().Be("Beach Map");
-                actual.Properties.MapTier.Should().Be(1);
-            }
+            actual.Type.Should().Be("Beach Map");
+            actual.Properties.MapTier.Should().Be(1);
         }
 
         [Test]
-        public async Task ParseBlightedMap()
+        public void ParseBlightedMap()
         {
-            var actual = await Subject.ParseItem(BlightedMap);
+            var actual = Subject.ParseItem(BlightedMap);
 
-            using (new AssertionScope())
-            {
-                actual.Type.Should().Be("Ramparts Map");
-                actual.Properties.MapTier.Should().Be(2);
-                actual.Properties.Blighted.Should().BeTrue();
-            }
+            actual.Type.Should().Be("Ramparts Map");
+            actual.Properties.MapTier.Should().Be(2);
+            actual.Properties.Blighted.Should().BeTrue();
         }
 
         [Test]
-        public async Task ParseUniqueMap()
+        public void ParseUniqueMap()
         {
-            var actual = await Subject.ParseItem(UniqueMap);
+            var actual = Subject.ParseItem(UniqueMap);
 
-            using (new AssertionScope())
-            {
-                actual.Name.Should().Be("Maelström of Chaos");
-                actual.Properties.MapTier.Should().Be(5);
-                actual.Properties.Quality.Should().Be(10);
-                actual.Properties.ItemQuantity.Should().Be(69);
-                actual.Properties.ItemRarity.Should().Be(356);
-            }
+            actual.Name.Should().Be("Maelström of Chaos");
+            actual.Properties.MapTier.Should().Be(5);
+            actual.Properties.Quality.Should().Be(10);
+            actual.Properties.ItemQuantity.Should().Be(69);
+            actual.Properties.ItemRarity.Should().Be(356);
         }
 
         [Test]
-        public async Task ParseOccupiedMap()
+        public void ParseOccupiedMap()
         {
-            var actual = await Subject.ParseItem(OccupiedMap);
+            var actual = Subject.ParseItem(OccupiedMap);
 
-            using (new AssertionScope())
+            var expectedImplicits = new[]
             {
-                var expectedImplicits = new[]
-                {
                     "Area is influenced by The Elder",
                     "Map is occupied by The Purifier"
                 };
 
-                var expectedExplicits = new[]
-                {
+            var expectedExplicits = new[]
+            {
                     "Players are Cursed with Enfeeble, with 60% increased Effect"
                 };
 
-                actual.Type.Should().Be("Carcass Map");
-                actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
-                actual.Modifiers.Implicit
-                      .Select(mod => mod.Text)
-                      .Should().Contain(expectedImplicits);
-                actual.Modifiers.Explicit
-                      .Select(mod => mod.Text)
-                      .Should().Contain(expectedExplicits);
-            }
+            actual.Type.Should().Be("Carcass Map");
+            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
+            actual.Modifiers.Implicit
+                  .Select(mod => mod.Text)
+                  .Should().Contain(expectedImplicits);
+            actual.Modifiers.Explicit
+                  .Select(mod => mod.Text)
+                  .Should().Contain(expectedExplicits);
         }
 
         [Test]
-        public async Task ParseTimelessKaruiEmblem()
+        public void ParseTimelessKaruiEmblem()
         {
-            var actual = await Subject.ParseItem(TimelessKaruiEmblem);
+            var actual = Subject.ParseItem(TimelessKaruiEmblem);
 
-            using (new AssertionScope())
-            {
-                actual.Type.Should().Be("Timeless Karui Emblem");
-                actual.Category.Should().Be(Category.Map);
-            }
+            actual.Type.Should().Be("Timeless Karui Emblem");
+            actual.Category.Should().Be(Category.Map);
         }
 
         #region ItemText

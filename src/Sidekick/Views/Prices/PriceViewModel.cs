@@ -4,22 +4,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Serilog;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
-using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.ItemCategories;
-using Sidekick.Business.Languages;
-using Sidekick.Core.Debounce;
 using Sidekick.Core.Natives;
-using Sidekick.Core.Settings;
+using Sidekick.Debounce;
+using Sidekick.Domain.Languages;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 using Sidekick.Helpers;
 using Sidekick.Localization.Prices;
@@ -28,6 +29,10 @@ namespace Sidekick.Views.Prices
 {
     public class PriceViewModel : INotifyPropertyChanged, IDisposable
     {
+#pragma warning disable 67
+        public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore 67
+
         private readonly ILogger logger;
         private readonly IDebouncer debouncer;
         private readonly ITradeSearchService tradeSearchService;
@@ -37,14 +42,12 @@ namespace Sidekick.Views.Prices
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly INativeClipboard nativeClipboard;
         private readonly IParserService parserService;
-        private readonly SidekickSettings settings;
-        private readonly IStatDataService statDataService;
+        private readonly ISidekickSettings settings;
         private readonly IItemCategoryService itemCategoryService;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private readonly IMediator mediator;
 
         public PriceViewModel(
-            ILogger logger,
+            ILogger<PriceViewModel> logger,
             IDebouncer debouncer,
             ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
@@ -53,9 +56,9 @@ namespace Sidekick.Views.Prices
             IPoePriceInfoClient poePriceInfoClient,
             INativeClipboard nativeClipboard,
             IParserService parserService,
-            SidekickSettings settings,
-            IStatDataService statDataService,
-            IItemCategoryService itemCategoryService)
+            ISidekickSettings settings,
+            IItemCategoryService itemCategoryService,
+            IMediator mediator)
         {
             this.logger = logger;
             this.debouncer = debouncer;
@@ -67,8 +70,8 @@ namespace Sidekick.Views.Prices
             this.nativeClipboard = nativeClipboard;
             this.parserService = parserService;
             this.settings = settings;
-            this.statDataService = statDataService;
             this.itemCategoryService = itemCategoryService;
+            this.mediator = mediator;
             Task.Run(Initialize);
 
             PropertyChanged += PriceViewModel_PropertyChanged;
@@ -87,7 +90,7 @@ namespace Sidekick.Views.Prices
 
         public bool ShowFilters => !IsError;
         public bool ShowList => !IsError && !ShowRefresh;
-        public bool ShowRefresh { get; private set; } = true;
+        public bool ShowRefresh { get; private set; } = false;
         public bool ShowPreview => !IsError;
 
         public ObservableList<PriceFilterCategory> Filters { get; set; }
@@ -98,7 +101,7 @@ namespace Sidekick.Views.Prices
 
         private async Task Initialize()
         {
-            Item = await parserService.ParseItem(nativeClipboard.LastCopiedText);
+            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
 
             if (Item == null)
             {
@@ -587,8 +590,6 @@ namespace Sidekick.Views.Prices
 
             if (Filters != null)
             {
-                var saveSettings = false;
-
                 var settingMods = Item.Category switch
                 {
                     Category.Accessory => settings.AccessoryModifiers,
@@ -606,7 +607,6 @@ namespace Sidekick.Views.Prices
                     {
                         if (!filter.Enabled)
                         {
-                            saveSettings = true;
                             settingMods.Remove(filter.Id);
                         }
                     }
@@ -614,25 +614,12 @@ namespace Sidekick.Views.Prices
                     {
                         if (filter.Enabled)
                         {
-                            saveSettings = true;
                             settingMods.Add(filter.Id);
                         }
                     }
                 }
-                if (saveSettings)
-                {
-                    switch (Item.Category)
-                    {
-                        case Category.Accessory: settings.AccessoryModifiers = settingMods; break;
-                        case Category.Armour: settings.ArmourModifiers = settingMods; break;
-                        case Category.Flask: settings.FlaskModifiers = settingMods; break;
-                        case Category.Jewel: settings.JewelModifiers = settingMods; break;
-                        case Category.Map: settings.MapModifiers = settingMods; break;
-                        case Category.Weapon: settings.WeaponModifiers = settingMods; break;
-                    };
 
-                    settings.Save();
-                }
+                await mediator.Send(new SaveSettingsCommand(settings));
             }
 
             IsFetching = true;
@@ -771,7 +758,7 @@ namespace Sidekick.Views.Prices
             }
             catch (Exception e)
             {
-                logger.Error(e, "Error loading more data");
+                logger.LogError(e, "Error loading more data");
             }
         }
 
@@ -848,6 +835,12 @@ namespace Sidekick.Views.Prices
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             PropertyChanged -= PriceViewModel_PropertyChanged;
         }
