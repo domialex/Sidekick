@@ -255,6 +255,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\Controls\Button.xaml">
       <SubType>Designer</SubType>
     </Page>

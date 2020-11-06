@@ -38,6 +38,9 @@ namespace Sidekick
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            MainWindow = new SplashScreen();
+            MainWindow.Show();
+
             base.OnStartup(e);
 
             AttachErrorHandlers();
@@ -55,6 +58,8 @@ namespace Sidekick
             TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
+
+            MainWindow.Close();
             await mediator.Send(new InitializeCommand(true));
         }
 

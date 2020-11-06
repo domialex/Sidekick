@@ -89,7 +89,6 @@ namespace Sidekick.Handlers
             {
                 var clipboardContents = await clipboard.GetText();
 
-                // #TODO: trademacro has a lot of fine graining and modifiers when searching specific items like map tier or type of item
                 logger.LogInformation("Searching for {itemName}", item.Name);
                 await clipboard.SetText(item.Name);
 
