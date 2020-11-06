@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Input;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.Clipboard;
 using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views.TrayIcon

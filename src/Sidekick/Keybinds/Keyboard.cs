@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Sidekick.Natives.Helpers
+namespace Sidekick.Keybinds
 {
     /// <summary>
     /// https://www.pinvoke.net/default.aspx/user32.getkeyboardstate
@@ -8,35 +8,16 @@ namespace Sidekick.Natives.Helpers
     public class Keyboard
     {
         [DllImport("user32.dll")]
-        static extern short GetKeyState(VirtualKeyStates nVirtKey);
+        extern private static short GetKeyState(VirtualKeyStates nVirtKey);
 
-        public static bool IsKeyPressed(VirtualKeyStates testKey)
+        public static bool IsKeyPressed(VirtualKeyStates key) => GetKeyState(key) switch
         {
-            var result = GetKeyState(testKey);
+            0 => false,// Not pressed and not toggled on.
+            1 => false,// Not pressed, but toggled on
+            _ => true,// Pressed (and may be toggled on)
+        };
 
-            bool keyPressed;
-            switch (result)
-            {
-                case 0:
-                    // Not pressed and not toggled on.
-                    keyPressed = false;
-                    break;
-
-                case 1:
-                    // Not pressed, but toggled on
-                    keyPressed = false;
-                    break;
-
-                default:
-                    // Pressed (and may be toggled on)
-                    keyPressed = true;
-                    break;
-            }
-
-            return keyPressed;
-        }
-
-        public enum VirtualKeyStates : int
+        public enum VirtualKeyStates
         {
             VK_LBUTTON = 0x01,
             VK_RBUTTON = 0x02,

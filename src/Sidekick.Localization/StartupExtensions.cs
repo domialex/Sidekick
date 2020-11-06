@@ -6,9 +6,6 @@ namespace Sidekick.Localization
     {
         public static IServiceCollection AddSidekickLocalization(this IServiceCollection services)
         {
-            // Http Services
-            services.AddHttpClient();
-
             services.AddLocalization();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 

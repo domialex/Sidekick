@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Microsoft.Extensions.Logging;
-using Sidekick.Core.Natives;
-using Sidekick.Natives.Helpers;
+using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Process;
+using Sidekick.Domain.Settings;
+using WindowsHook;
 
-namespace Sidekick.Natives
+namespace Sidekick.Keybinds
 {
-    public class NativeKeyboard : INativeKeyboard, IDisposable
+    public class KeybindsProvider : IKeybindsProvider, IDisposable
     {
         private static readonly List<WindowsHook.Keys> KEYS_INVALID = new List<WindowsHook.Keys>() {
             WindowsHook.Keys.ControlKey,
@@ -23,25 +24,33 @@ namespace Sidekick.Natives
             WindowsHook.Keys.LMenu,
             WindowsHook.Keys.RMenu,
         };
+        private readonly INativeProcess nativeProcess;
+        private readonly ISidekickSettings settings;
 
-        private readonly ILogger logger;
-        private readonly HookProvider hookProvider;
-
-        public NativeKeyboard(ILogger<NativeKeyboard> logger, HookProvider hookProvider)
+        public KeybindsProvider(
+            INativeProcess nativeProcess,
+            ISidekickSettings settings)
         {
-            this.logger = logger;
-            this.hookProvider = hookProvider;
-
-            hookProvider.Hook.KeyDown += Hook_KeyDown;
+            this.nativeProcess = nativeProcess;
+            this.settings = settings;
         }
 
-        public bool Enabled { get; set; }
+        public IKeyboardMouseEvents Hook { get; private set; }
 
         public event Func<string, bool> OnKeyDown;
+        public event Func<bool> OnScrollDown;
+        public event Func<bool> OnScrollUp;
+
+        public void Initialize()
+        {
+            Hook = WindowsHook.Hook.GlobalEvents();
+            Hook.KeyDown += Hook_KeyDown;
+            Hook.MouseWheelExt += Hook_MouseWheelExt;
+        }
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
         {
-            if (KEYS_INVALID.Contains(e.KeyCode))
+            if ((!nativeProcess.IsPathOfExileInFocus && !nativeProcess.IsSidekickInFocus) || KEYS_INVALID.Contains(e.KeyCode))
             {
                 return;
             }
@@ -67,50 +76,43 @@ namespace Sidekick.Natives
 
             str.Append(e.KeyCode);
 
-            if (OnKeyDown != null)
-            {
-                str = str
-                    .Replace("Back", "Backspace")
-                    .Replace("Capital", "CapsLock")
-                    .Replace("Next", "PageDown")
-                    .Replace("Pause", "Break");
+            str = str
+                .Replace("Back", "Backspace")
+                .Replace("Capital", "CapsLock")
+                .Replace("Next", "PageDown")
+                .Replace("Pause", "Break");
 
-                var result = OnKeyDown.Invoke(str.ToString());
-                if (result)
-                {
-                    e.Handled = true;
-                }
+            e.Handled = OnKeyDown?.Invoke(str.ToString()) ?? false;
+        }
+
+        private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
+        {
+            if (!nativeProcess.IsPathOfExileInFocus || !settings.EnableCtrlScroll || !IsCtrlPressed())
+            {
+                return;
+            }
+
+            if (e.Delta > 0)
+            {
+                e.Handled = OnScrollUp?.Invoke() ?? false;
+            }
+            else
+            {
+                e.Handled = OnScrollDown?.Invoke() ?? false;
             }
         }
 
-        public void Dispose()
+        private bool IsCtrlPressed()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (hookProvider.Hook != null) // Hook will be null if auto update was successful
-            {
-                hookProvider.Hook.KeyDown -= Hook_KeyDown;
-            }
-        }
-
-        public void Copy()
-        {
-            SendKeys.SendWait("^{c}");
-        }
-
-        public void Paste()
-        {
-            SendKeys.SendWait("^{v}");
+            return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
+                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
+                || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
         }
 
         private static readonly Regex SendKeyReplace = new Regex("([a-zA-Z]+(?![^{]*\\}))");
-        public void SendInput(string input)
+        public void PressKey(string keys)
         {
-            var sendKeyStr = input
+            var sendKeyStr = keys
                 .Replace("Shift+", "+")
                 .Replace("Ctrl+", "^")
                 .Replace("Alt+", "%")
@@ -151,22 +153,26 @@ namespace Sidekick.Natives
                 .Replace("F13", "{F13}")
                 .Replace("F14", "{F14}")
                 .Replace("F15", "{F15}")
-                .Replace("F16", "{F16}");
+                .Replace("F16", "{F16}")
+                .Replace("Copy", "^{c}")
+                .Replace("Paste", "^{v}");
             sendKeyStr = SendKeyReplace.Replace(sendKeyStr, "{$1}");
             SendKeys.SendWait(sendKeyStr);
         }
 
-        public bool IsKeyPressed(string key)
+        public void Dispose()
         {
-            switch (key)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (Hook != null) // Hook will be null if auto update was successful
             {
-                case "Ctrl":
-                    return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
-                               || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
-                               || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_RCONTROL);
-                default:
-                    logger.LogWarning("NativeKeyboard.IsKeyPressed - Unrecognized key - {key}", key);
-                    return false;
+                Hook.KeyDown -= Hook_KeyDown;
+                Hook.MouseWheelExt -= Hook_MouseWheelExt;
+                Hook.Dispose();
             }
         }
     }

@@ -2,39 +2,40 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Sidekick.Business.Chat;
-using Sidekick.Core.Natives;
+using MediatR;
+using Sidekick.Domain.Game.Chat.Commands;
+using Sidekick.Domain.Process;
 
 namespace Sidekick.Business.Whispers
 {
     public class WhisperService : IWhisperService
     {
         private readonly INativeProcess pathOfExileProcess;
-        private readonly IChatService chatService;
+        private readonly IMediator mediator;
 
         public WhisperService(
             INativeProcess pathOfExileProcess,
-            IChatService chatService)
+            IMediator mediator)
         {
             this.pathOfExileProcess = pathOfExileProcess;
-            this.chatService = chatService;
+            this.mediator = mediator;
         }
 
-        public Task<bool> ReplyToLatestWhisper()
+        public async Task<bool> ReplyToLatestWhisper()
         {
             var characterName = GetLatestWhisperCharacterName();
             if (!string.IsNullOrEmpty(characterName))
             {
-                chatService.StartWriting($"@{characterName} ");
-                return Task.FromResult(true);
+                await mediator.Send(new StartWritingChatCommand($"@{characterName} "));
+                return true;
             }
-            return Task.FromResult(false);
+            return false;
         }
 
         private string GetLatestWhisperCharacterName()
         {
             var clientLogFile = pathOfExileProcess?.ClientLogPath;
-            if (!pathOfExileProcess.IsPathOfExileInFocus || clientLogFile == null) return string.Empty;
+            if (clientLogFile == null || !pathOfExileProcess.IsPathOfExileInFocus) return string.Empty;
 
             using (var stream = new FileStream(clientLogFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {

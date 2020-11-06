@@ -1,120 +1,44 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
-using Sidekick.Business.Chat;
-using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
-using Sidekick.Core.Natives;
-using Sidekick.Domain.Settings;
+using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Presentation.Views;
 
 namespace Sidekick.Handlers
 {
-    public class EventsHandler : IDisposable
+    public class EventsHandler
     {
-        private readonly IKeybindEvents events;
         private readonly IWhisperService whisperService;
         private readonly INativeClipboard clipboard;
-        private readonly INativeKeyboard keyboard;
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
         private readonly IViewLocator viewLocator;
-        private readonly IChatService chatService;
-        private readonly IStashService stashService;
-        private readonly ISidekickSettings settings;
         private readonly IParserService parserService;
+        private readonly IKeybindsProvider keybindsProvider;
 
         public EventsHandler(
-            IKeybindEvents events,
             IWhisperService whisperService,
             INativeClipboard clipboard,
-            INativeKeyboard keyboard,
             ILogger<EventsHandler> logger,
             ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
             IViewLocator viewLocator,
-            IChatService chatService,
-            IStashService stashService,
-            ISidekickSettings settings,
-            IParserService parserService)
+            IParserService parserService,
+            IKeybindsProvider keybindsProvider)
         {
-            this.events = events;
             this.whisperService = whisperService;
             this.clipboard = clipboard;
-            this.keyboard = keyboard;
             this.logger = logger;
             this.tradeSearchService = tradeSearchService;
             this.wikiProvider = wikiProvider;
             this.viewLocator = viewLocator;
-            this.chatService = chatService;
-            this.stashService = stashService;
-            this.settings = settings;
             this.parserService = parserService;
-
-            events.OnItemWiki += TriggerItemWiki;
-            events.OnFindItems += TriggerFindItem;
-            events.OnLeaveParty += TriggerLeaveParty;
-            events.OnOpenSearch += TriggerOpenSearch;
-            events.OnOpenSettings += TriggerOpenSettings;
-            events.OnWhisperReply += TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview += Events_OnOpenLeagueOverview;
-            events.OnPriceCheck += Events_OnPriceCheck;
-            events.OnMapInfo += Events_OnMapInfo;
-            events.OnHideout += Events_OnHideout;
-            events.OnExit += Events_OnExit;
-            events.OnTabLeft += Events_OnTabLeft;
-            events.OnTabRight += Events_OnTabRight;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            events.OnItemWiki -= TriggerItemWiki;
-            events.OnFindItems -= TriggerFindItem;
-            events.OnLeaveParty -= TriggerLeaveParty;
-            events.OnOpenSearch -= TriggerOpenSearch;
-            events.OnOpenSettings -= TriggerOpenSettings;
-            events.OnWhisperReply -= TriggerReplyToLatestWhisper;
-            events.OnOpenLeagueOverview -= Events_OnOpenLeagueOverview;
-            events.OnPriceCheck -= Events_OnPriceCheck;
-            events.OnMapInfo -= Events_OnMapInfo;
-            events.OnHideout -= Events_OnHideout;
-            events.OnExit -= Events_OnExit;
-            events.OnTabLeft -= Events_OnTabLeft;
-            events.OnTabRight -= Events_OnTabRight;
-        }
-
-        private async Task<bool> Events_OnHideout()
-        {
-            await chatService.Write("/hideout");
-            return true;
-        }
-
-        private Task<bool> Events_OnTabRight()
-        {
-            stashService.ScrollRight();
-            return Task.FromResult(true);
-        }
-
-        private Task<bool> Events_OnTabLeft()
-        {
-            stashService.ScrollLeft();
-            return Task.FromResult(true);
-        }
-
-        private async Task<bool> Events_OnExit()
-        {
-            await chatService.Write("/exit");
-            return true;
+            this.keybindsProvider = keybindsProvider;
         }
 
         private async Task<bool> Events_OnPriceCheck()
@@ -156,21 +80,6 @@ namespace Sidekick.Handlers
         }
 
         /// <summary>
-        /// Kick yourself from the current party
-        /// </summary>
-        private async Task<bool> TriggerLeaveParty()
-        {
-            // This operation is only valid if the user has added their character name to the settings file.
-            if (string.IsNullOrEmpty(settings.Character_Name))
-            {
-                logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
-                return false;
-            }
-            await chatService.Write($"/kick {settings.Character_Name}");
-            return true;
-        }
-
-        /// <summary>
         /// Attempts to fill the search field of the stash tab with the current items name if any
         /// </summary>
         private async Task<bool> TriggerFindItem()
@@ -184,10 +93,10 @@ namespace Sidekick.Handlers
                 logger.LogInformation("Searching for {itemName}", item.Name);
                 await clipboard.SetText(item.Name);
 
-                keyboard.SendInput("Ctrl+F");
-                keyboard.SendInput("Ctrl+A");
-                keyboard.Paste();
-                keyboard.SendInput("Enter");
+                keybindsProvider.PressKey("Ctrl+F");
+                keybindsProvider.PressKey("Ctrl+A");
+                keybindsProvider.PressKey("Paste");
+                keybindsProvider.PressKey("Enter");
                 await Task.Delay(250);
                 await clipboard.SetText(clipboardContents);
 

@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Business", "src\Sidekick.Business\Sidekick.Business.csproj", "{E14E16C1-3570-4886-9732-C942EFAE46E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Core", "src\Sidekick.Core\Sidekick.Core.csproj", "{1F6D0041-F405-4C9C-883C-F486D4CC2E09}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick", "src\Sidekick\Sidekick.csproj", "{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Localization", "src\Sidekick.Localization\Sidekick.Localization.csproj", "{C7A61A43-9474-415E-84AD-381E45003C6F}"
@@ -45,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Persistence", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Infrastructure", "src\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj", "{A81460B5-7B3B-4122-86DE-7B710EF2416B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Extensions", "src\Sidekick.Extensions\Sidekick.Extensions.csproj", "{4135AA01-4A10-4574-B38D-103CF1359867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Extensions", "src\Sidekick.Extensions\Sidekick.Extensions.csproj", "{4135AA01-4A10-4574-B38D-103CF1359867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +55,6 @@ Global
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F6D0041-F405-4C9C-883C-F486D4CC2E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F6D0041-F405-4C9C-883C-F486D4CC2E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F6D0041-F405-4C9C-883C-F486D4CC2E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F6D0041-F405-4C9C-883C-F486D4CC2E09}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBDA2C98-1E9D-4E5B-866B-297FF28B824E}.Release|Any CPU.ActiveCfg = Release|Any CPU

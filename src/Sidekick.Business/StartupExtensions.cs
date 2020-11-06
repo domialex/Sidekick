@@ -12,7 +12,6 @@ using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
-using Sidekick.Business.Chat;
 using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
@@ -31,7 +30,6 @@ namespace Sidekick.Business
             // Http Services
             services.AddHttpClient();
 
-            services.AddSingleton<IChatService, ChatService>();
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemCategoryService, ItemCategoryService>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();

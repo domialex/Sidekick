@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Chat;
+using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Parties
@@ -9,16 +10,16 @@ namespace Sidekick.Business.Parties
     {
         private readonly ILogger logger;
         private readonly ISidekickSettings settings;
-        private readonly IChatService chatService;
+        private readonly IMediator mediator;
 
         public PartyService(
             ILogger<PartyService> logger,
             ISidekickSettings settings,
-            IChatService chatService)
+            IMediator mediator)
         {
             this.logger = logger;
             this.settings = settings;
-            this.chatService = chatService;
+            this.mediator = mediator;
         }
 
         public async Task LeaveParty()
@@ -29,7 +30,7 @@ namespace Sidekick.Business.Parties
                 logger.LogWarning(@"This command requires a ""CharacterName"" to be specified in the settings menu.");
                 return;
             }
-            await chatService.Write($"/kick {settings.Character_Name}");
+            await mediator.Send(new WriteChatCommand($"/kick {settings.Character_Name}"));
         }
     }
 }

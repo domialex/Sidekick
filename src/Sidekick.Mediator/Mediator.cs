@@ -11,7 +11,7 @@ using Sidekick.Mediator.Internal;
 
 namespace Sidekick.Mediator
 {
-    public class Mediator : IMediatorTasks, MediatR.IMediator
+    public class Mediator : IMediatorTasks, IMediator
     {
         private readonly ILogger logger;
         private readonly LoggingMediator mediator;
@@ -69,6 +69,11 @@ namespace Sidekick.Mediator
             return AddTask(mediator.Send(command, cancellationToken));
         }
 
+        public Task<TResponse> Command<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default)
+        {
+            return AddTask(mediator.Send(command, cancellationToken));
+        }
+
         #region MediatR interface
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
@@ -80,7 +85,7 @@ namespace Sidekick.Mediator
             return AddTask(mediator.Send(request, cancellationToken));
         }
 
-        private async Task PublishCore(object notification, CancellationToken cancellationToken = default)
+        public async Task Publish(object notification, CancellationToken cancellationToken = default)
         {
             var guid = $"[{Guid.NewGuid().ToString().Substring(0, 8)}]";
             var nameWithGuid = $"{guid} { notification?.GetType()?.FullName}";
@@ -92,7 +97,11 @@ namespace Sidekick.Mediator
 
                 try
                 {
-                    logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(notification)}");
+                    var props = JsonSerializer.Serialize(notification);
+                    if (props != "{}")
+                    {
+                        logger.LogInformation($"[Mediator:PROPS] {guid} {props}");
+                    }
                 }
                 catch (Exception)
                 {
@@ -113,14 +122,9 @@ namespace Sidekick.Mediator
             }
         }
 
-        public Task Publish(object notification, CancellationToken cancellationToken = default)
-        {
-            return PublishCore(notification, cancellationToken);
-        }
-
         public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
         {
-            return PublishCore(notification, cancellationToken);
+            return Publish((object)notification, cancellationToken);
         }
         #endregion
     }

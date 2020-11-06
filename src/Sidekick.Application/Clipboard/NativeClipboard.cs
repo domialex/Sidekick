@@ -1,17 +1,21 @@
 using System.Threading.Tasks;
+using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Settings;
 
-namespace Sidekick.Core.Natives
+namespace Sidekick.Application.Clipboard
 {
     public class NativeClipboard : INativeClipboard
     {
         private readonly ISidekickSettings settings;
-        private readonly INativeKeyboard keyboard;
+        private readonly IKeybindsProvider keybindsProvider;
 
-        public NativeClipboard(ISidekickSettings settings, INativeKeyboard keyboard)
+        public NativeClipboard(
+            ISidekickSettings settings,
+            IKeybindsProvider keybindsProvider)
         {
             this.settings = settings;
-            this.keyboard = keyboard;
+            this.keybindsProvider = keybindsProvider;
         }
 
         public string LastCopiedText { get; private set; }
@@ -31,7 +35,7 @@ namespace Sidekick.Core.Natives
 
             await SetText(string.Empty);
 
-            keyboard.Copy();
+            keybindsProvider.PressKey("Copy");
 
             await Task.Delay(100);
 

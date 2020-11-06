@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Sidekick.Core.Natives
+namespace Sidekick.Domain.Clipboard
 {
     public interface INativeClipboard
     {

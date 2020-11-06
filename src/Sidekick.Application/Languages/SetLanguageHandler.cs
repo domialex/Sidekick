@@ -26,11 +26,10 @@ namespace Sidekick.Application.Languages
 
             if (language == null)
             {
-                logger.LogInformation("Couldn't find language matching {language}.", request.LanguageCode);
+                logger.LogWarning("Couldn't find language matching {language}.", request.LanguageCode);
                 return Unit.Task;
             }
 
-            logger.LogInformation("Changed active language support to {language}.", language.Name);
             languageProvider.Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
 
             return Unit.Task;

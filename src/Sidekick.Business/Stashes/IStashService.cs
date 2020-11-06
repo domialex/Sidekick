@@ -1,4 +1,4 @@
-﻿namespace Sidekick.Business.Stashes
+namespace Sidekick.Business.Stashes
 {
     public interface IStashService
     {

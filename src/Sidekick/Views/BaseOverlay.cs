@@ -11,7 +11,7 @@ namespace Sidekick.Views
         }
 
         protected BaseOverlay(string id, IServiceProvider serviceProvider)
-            : base(id, serviceProvider, closeOnBlur: true, closeOnKey: true)
+            : base(id, serviceProvider, closeOnBlur: true)
         {
         }
     }

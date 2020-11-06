@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.Process;
 using Sidekick.Extensions;
 
 namespace Sidekick.Natives

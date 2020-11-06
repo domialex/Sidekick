@@ -1,24 +1,25 @@
-using Sidekick.Core.Natives;
+using Sidekick.Domain.Keybinds;
 
 namespace Sidekick.Business.Stashes
 {
     public class StashService : IStashService
     {
-        private readonly INativeKeyboard keyboard;
+        private readonly IKeybindsProvider keybindsProvider;
 
-        public StashService(INativeKeyboard keyboard)
+        public StashService(
+            IKeybindsProvider keybindsProvider)
         {
-            this.keyboard = keyboard;
+            this.keybindsProvider = keybindsProvider;
         }
 
         public void ScrollRight()
         {
-            keyboard.SendInput("Right");
+            keybindsProvider.PressKey("Right");
         }
 
         public void ScrollLeft()
         {
-            keyboard.SendInput("Left");
+            keybindsProvider.PressKey("Left");
         }
     }
 }

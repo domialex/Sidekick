@@ -7,7 +7,6 @@ using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Business.Windows;
-using Sidekick.Core.Natives;
 using Sidekick.Domain.Settings;
 using MyCursor = System.Windows.Forms.Cursor;
 
@@ -15,12 +14,10 @@ namespace Sidekick.Views
 {
     public abstract class BaseView : AdonisWindow, ISidekickView
     {
-        private readonly IKeybindEvents keybindEvents;
         private readonly ISidekickSettings settings;
         private readonly IWindowService windowService;
         private readonly ILogger logger;
         private readonly bool closeOnBlur;
-        private readonly bool closeOnKey;
         private readonly string id;
 
         protected BaseView()
@@ -28,9 +25,8 @@ namespace Sidekick.Views
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        protected BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false, bool closeOnKey = false)
+        protected BaseView(string id, IServiceProvider serviceProvider, bool closeOnBlur = false)
         {
-            keybindEvents = serviceProvider.GetService<IKeybindEvents>();
             settings = serviceProvider.GetService<ISidekickSettings>();
             windowService = serviceProvider.GetService<IWindowService>();
             logger = serviceProvider.GetService<ILogger<BaseView>>();
@@ -45,13 +41,7 @@ namespace Sidekick.Views
                 Deactivated += BaseBorderlessWindow_Deactivated;
             }
 
-            if (closeOnKey)
-            {
-                keybindEvents.OnCloseWindow += KeybindEvents_OnCloseWindow;
-            }
-
             this.closeOnBlur = closeOnBlur;
-            this.closeOnKey = closeOnKey;
             this.id = id;
         }
 
@@ -79,11 +69,6 @@ namespace Sidekick.Views
             if (closeOnBlur && settings.CloseOverlayWithMouse)
             {
                 Deactivated -= BaseBorderlessWindow_Deactivated;
-            }
-
-            if (closeOnKey)
-            {
-                keybindEvents.OnCloseWindow -= KeybindEvents_OnCloseWindow;
             }
 
             base.OnClosing(e);
@@ -122,12 +107,6 @@ namespace Sidekick.Views
                     EnsureBounds();
                 }
             });
-        }
-
-        private Task<bool> KeybindEvents_OnCloseWindow()
-        {
-            Close();
-            return Task.FromResult(true);
         }
 
         private void BaseBorderlessWindow_Deactivated(object sender, EventArgs e)

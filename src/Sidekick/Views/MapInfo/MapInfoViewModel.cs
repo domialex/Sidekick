@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Settings;
 using Sidekick.Helpers;
 

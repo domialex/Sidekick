@@ -1,8 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Core.Natives;
 using Sidekick.Debounce;
+using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Process;
 using Sidekick.Handlers;
 using Sidekick.Initialization;
+using Sidekick.Keybinds;
 using Sidekick.Natives;
 using Sidekick.Presentation.Views;
 using Sidekick.Setup;
@@ -21,7 +23,6 @@ namespace Sidekick
     {
         public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
         {
-            services.AddSingleton<INativeClipboard, NativeClipboard>();
             services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<AboutView>();
@@ -41,13 +42,10 @@ namespace Sidekick
             services.AddSingleton<InitializationViewModel>();
             services.AddScoped<SetupViewModel>();
 
-            services.AddSingleton<IKeybindEvents, KeybindEvents>();
-            services.AddSingleton<INativeKeyboard, NativeKeyboard>();
             services.AddSingleton<INativeProcess, NativeProcess>();
-            services.AddSingleton<INativeCursor, NativeCursor>();
             services.AddSingleton<EventsHandler, EventsHandler>();
             services.AddSingleton<TrayIconViewModel>();
-            services.AddSingleton<HookProvider>();
+            services.AddSingleton<IKeybindsProvider, KeybindsProvider>();
 
             services.AddSingleton<IViewLocator, ViewLocator>();
 
