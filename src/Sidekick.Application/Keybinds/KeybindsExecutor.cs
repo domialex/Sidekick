@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Stashes;
 using Sidekick.Domain.Game.Chat.Commands;
+using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views.Commands;
@@ -14,18 +14,15 @@ namespace Sidekick.Application.Keybinds
         private readonly IKeybindsProvider keybindsProvider;
         private readonly IMediator mediator;
         private readonly ISidekickSettings settings;
-        private readonly IStashService stashService;
 
         public KeybindsExecutor(
             IKeybindsProvider keybindsProvider,
             IMediator mediator,
-            ISidekickSettings settings,
-            IStashService stashService)
+            ISidekickSettings settings)
         {
             this.keybindsProvider = keybindsProvider;
             this.mediator = mediator;
             this.settings = settings;
-            this.stashService = stashService;
         }
 
         public bool Enabled { get; set; }
@@ -40,13 +37,13 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnScrollUp()
         {
-            Task.Run(() => stashService.ScrollLeft());
+            Task.Run(() => mediator.Send(new ScrollStashUpCommand()));
             return true;
         }
 
         private bool KeybindsProvider_OnScrollDown()
         {
-            Task.Run(() => stashService.ScrollRight());
+            Task.Run(() => mediator.Send(new ScrollStashDownCommand()));
             return true;
         }
 
@@ -75,9 +72,11 @@ namespace Sidekick.Application.Keybinds
             // ExecuteKeybind(settings.Key_OpenSearch, request.Keys, OnOpenSearch, ref task);
             // ExecuteKeybind(settings.Key_OpenSettings, request.Keys, OnOpenSettings, ref task);
             // ExecuteKeybind(settings.Key_OpenLeagueOverview, request.Keys, OnOpenLeagueOverview, ref task);
-            // ExecuteKeybind(settings.Key_Stash_Left, request.Keys, OnTabLeft, ref task);
-            // ExecuteKeybind(settings.Key_Stash_Right, request.Keys, OnTabRight, ref task);
             // ExecuteKeybind(settings.Key_ReplyToLatestWhisper, request.Keys, OnWhisperReply, ref task);
+
+            // Game commands
+            ExecuteKeybind<ScrollStashUpCommand>(settings.Key_Stash_Left, arg, ref task);
+            ExecuteKeybind<ScrollStashDownCommand>(settings.Key_Stash_Right, arg, ref task);
 
             if (task == null)
             {
@@ -123,6 +122,12 @@ namespace Sidekick.Application.Keybinds
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             keybindsProvider.OnKeyDown -= KeybindsProvider_OnKeyDown;
             keybindsProvider.OnScrollDown -= KeybindsProvider_OnScrollDown;

@@ -16,7 +16,6 @@ using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Parties;
-using Sidekick.Business.Stashes;
 using Sidekick.Business.Whispers;
 using Sidekick.Business.Windows;
 using Sidekick.Domain.Languages;
@@ -35,7 +34,6 @@ namespace Sidekick.Business
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<IPartyService, PartyService>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
-            services.AddSingleton<IStashService, StashService>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
             services.AddSingleton<IWindowService, WindowService>();
             services.AddSingleton<IWhisperService, WhisperService>();
