@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Domain.Views;
 using Sidekick.Domain.Views.Commands;
 
 namespace Sidekick.Presentation.Views.Commands
@@ -19,19 +20,9 @@ namespace Sidekick.Presentation.Views.Commands
 
         public Task<bool> Handle(CloseViewCommand request, CancellationToken cancellationToken)
         {
-            var result = false;
+            var result = viewLocator.IsAnyOpened();
 
-            if (viewLocator.IsOpened(View.League))
-            {
-                viewLocator.Close(View.League);
-                result = true;
-            }
-
-            if (viewLocator.IsOpened(View.Price))
-            {
-                viewLocator.Close(View.Price);
-                result = true;
-            }
+            viewLocator.CloseAll();
 
             return Task.FromResult(result);
         }

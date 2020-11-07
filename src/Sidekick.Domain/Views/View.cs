@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Views
+namespace Sidekick.Domain.Views
 {
     public enum View
     {

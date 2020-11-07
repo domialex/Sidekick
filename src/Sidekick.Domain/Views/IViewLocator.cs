@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Views
+namespace Sidekick.Domain.Views
 {
     public interface IViewLocator
     {
@@ -7,6 +7,8 @@ namespace Sidekick.Presentation.Views
         void Close(View view);
 
         bool IsOpened(View view);
+
+        bool IsAnyOpened();
 
         void CloseAll();
     }

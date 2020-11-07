@@ -2,10 +2,12 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Cheatsheets.Commands;
 using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views.Commands;
 
 namespace Sidekick.Application.Keybinds
@@ -70,13 +72,13 @@ namespace Sidekick.Application.Keybinds
 
             // View commands
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
+            ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Key_OpenLeagueOverview, arg, ref task);
+            ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
             // ExecuteKeybind(settings.Key_CheckPrices, request.Keys, OnPriceCheck, ref task);
             // ExecuteKeybind(settings.Key_MapInfo, request.Keys, OnMapInfo, ref task);
             // ExecuteKeybind(settings.Key_OpenWiki, request.Keys, OnItemWiki, ref task);
             // ExecuteKeybind(settings.Key_FindItems, request.Keys, OnFindItems, ref task);
             // ExecuteKeybind(settings.Key_OpenSearch, request.Keys, OnOpenSearch, ref task);
-            // ExecuteKeybind(settings.Key_OpenSettings, request.Keys, OnOpenSettings, ref task);
-            // ExecuteKeybind(settings.Key_OpenLeagueOverview, request.Keys, OnOpenLeagueOverview, ref task);
 
             // Game commands
             ExecuteKeybind<ScrollStashUpCommand>(settings.Key_Stash_Left, arg, ref task);

@@ -5,7 +5,7 @@ using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
 
 namespace Sidekick.Handlers
 {
@@ -55,27 +55,14 @@ namespace Sidekick.Handlers
             return true;
         }
 
-        private Task<bool> Events_OnOpenLeagueOverview()
-        {
-            if (viewLocator.IsOpened(View.League))
-            {
-                viewLocator.CloseAll();
-            }
-            else
-            {
-                viewLocator.CloseAll();
-                viewLocator.Open(View.League);
-            }
-
-            return Task.FromResult(true);
-        }
-
         /// <summary>
         /// Attempts to fill the search field of the stash tab with the current items name if any
         /// </summary>
         private async Task<bool> TriggerFindItem()
         {
-            var item = await TriggerCopyAction();
+            var text = await clipboard.Copy();
+            var item = parserService.ParseItem(text);
+
             if (item != null)
             {
                 var clipboardContents = await clipboard.GetText();
@@ -98,7 +85,8 @@ namespace Sidekick.Handlers
 
         private async Task<bool> TriggerItemWiki()
         {
-            var item = await TriggerCopyAction();
+            var text = await clipboard.Copy();
+            var item = parserService.ParseItem(text);
 
             if (item != null)
             {
@@ -111,7 +99,8 @@ namespace Sidekick.Handlers
 
         private async Task<bool> TriggerOpenSearch()
         {
-            var item = await TriggerCopyAction();
+            var text = await clipboard.Copy();
+            var item = parserService.ParseItem(text);
 
             if (item != null)
             {
@@ -120,33 +109,6 @@ namespace Sidekick.Handlers
             }
 
             return false;
-        }
-
-        private Task<bool> TriggerOpenSettings()
-        {
-            if (viewLocator.IsOpened(View.Settings))
-            {
-                viewLocator.CloseAll();
-            }
-            else
-            {
-                viewLocator.CloseAll();
-                viewLocator.Open(View.Settings);
-            }
-
-            return Task.FromResult(true);
-        }
-
-        private async Task<Business.Apis.Poe.Models.Item> TriggerCopyAction()
-        {
-            var text = await clipboard.Copy();
-
-            if (!string.IsNullOrWhiteSpace(text))
-            {
-                return parserService.ParseItem(text);
-            }
-
-            return null;
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Windows;
 using MediatR;
 using Sidekick.Domain.App.Commands;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
 using Sidekick.Views;
 
 namespace Sidekick.Initialization

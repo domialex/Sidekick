@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 using Sidekick.Domain.Clipboard;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
 
 namespace Sidekick.Views.TrayIcon
 {

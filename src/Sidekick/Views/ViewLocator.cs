@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
+using Sidekick.Domain.Views;
 using Sidekick.Mediator;
-using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views
 {
@@ -35,6 +35,8 @@ namespace Sidekick.Views
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View == view);
+
+        public bool IsAnyOpened() => Views.Any();
 
         public void CloseAll()
         {

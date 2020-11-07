@@ -37,6 +37,11 @@ namespace Sidekick.Business.Apis.Poe.Parser
 
         public Item ParseItem(string itemText)
         {
+            if (string.IsNullOrEmpty(itemText))
+            {
+                return null;
+            }
+
             try
             {
                 itemText = itemNameTokenizer.CleanString(itemText);
