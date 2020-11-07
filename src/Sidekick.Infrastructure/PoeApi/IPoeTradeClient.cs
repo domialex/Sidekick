@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Sidekick.Infrastructure.Poe
+namespace Sidekick.Infrastructure.PoeApi
 {
     public interface IPoeTradeClient
     {

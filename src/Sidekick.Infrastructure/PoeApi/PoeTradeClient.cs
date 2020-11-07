@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Languages;
 
-namespace Sidekick.Infrastructure.Poe
+namespace Sidekick.Infrastructure.PoeApi
 {
     public class PoeTradeClient : IPoeTradeClient
     {

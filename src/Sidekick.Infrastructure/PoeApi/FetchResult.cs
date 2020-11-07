@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Sidekick.Infrastructure.Poe
+namespace Sidekick.Infrastructure.PoeApi
 {
     public class FetchResult<T>
     {

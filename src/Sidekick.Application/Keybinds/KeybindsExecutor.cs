@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
@@ -11,15 +12,18 @@ namespace Sidekick.Application.Keybinds
 {
     public class KeybindsExecutor : IKeybindsExecutor, IDisposable
     {
+        private readonly ILogger<KeybindsExecutor> logger;
         private readonly IKeybindsProvider keybindsProvider;
         private readonly IMediator mediator;
         private readonly ISidekickSettings settings;
 
         public KeybindsExecutor(
+            ILogger<KeybindsExecutor> logger,
             IKeybindsProvider keybindsProvider,
             IMediator mediator,
             ISidekickSettings settings)
         {
+            this.logger = logger;
             this.keybindsProvider = keybindsProvider;
             this.mediator = mediator;
             this.settings = settings;
@@ -62,6 +66,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Key_Exit, arg, ref task);
             ExecuteKeybind<GoToHideoutCommand>(settings.Key_GoToHideout, arg, ref task);
             ExecuteKeybind<LeavePartyCommand>(settings.Key_LeaveParty, arg, ref task);
+            ExecuteKeybind<ReplyToLatestWhisperCommand>(settings.Key_ReplyToLatestWhisper, arg, ref task);
 
             // View commands
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
@@ -72,7 +77,6 @@ namespace Sidekick.Application.Keybinds
             // ExecuteKeybind(settings.Key_OpenSearch, request.Keys, OnOpenSearch, ref task);
             // ExecuteKeybind(settings.Key_OpenSettings, request.Keys, OnOpenSettings, ref task);
             // ExecuteKeybind(settings.Key_OpenLeagueOverview, request.Keys, OnOpenLeagueOverview, ref task);
-            // ExecuteKeybind(settings.Key_ReplyToLatestWhisper, request.Keys, OnWhisperReply, ref task);
 
             // Game commands
             ExecuteKeybind<ScrollStashUpCommand>(settings.Key_Stash_Left, arg, ref task);
@@ -100,6 +104,8 @@ namespace Sidekick.Application.Keybinds
         {
             if (input == keybind)
             {
+                logger.LogInformation($"Keybind detected: {keybind}! Executing the command {typeof(TCommand).Name}.");
+
                 var task = mediator.Send(new TCommand());
 
                 // We need to make sure some key combinations make it into the game no matter what

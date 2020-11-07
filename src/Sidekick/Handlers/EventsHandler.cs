@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
-using Sidekick.Business.Whispers;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Presentation.Views;
@@ -12,7 +11,6 @@ namespace Sidekick.Handlers
 {
     public class EventsHandler
     {
-        private readonly IWhisperService whisperService;
         private readonly INativeClipboard clipboard;
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
@@ -22,7 +20,6 @@ namespace Sidekick.Handlers
         private readonly IKeybindsProvider keybindsProvider;
 
         public EventsHandler(
-            IWhisperService whisperService,
             INativeClipboard clipboard,
             ILogger<EventsHandler> logger,
             ITradeSearchService tradeSearchService,
@@ -31,7 +28,6 @@ namespace Sidekick.Handlers
             IParserService parserService,
             IKeybindsProvider keybindsProvider)
         {
-            this.whisperService = whisperService;
             this.clipboard = clipboard;
             this.logger = logger;
             this.tradeSearchService = tradeSearchService;
@@ -72,11 +68,6 @@ namespace Sidekick.Handlers
             }
 
             return Task.FromResult(true);
-        }
-
-        private Task<bool> TriggerReplyToLatestWhisper()
-        {
-            return whisperService.ReplyToLatestWhisper();
         }
 
         /// <summary>

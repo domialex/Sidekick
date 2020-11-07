@@ -6,7 +6,7 @@ using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Process;
 using Sidekick.Domain.Settings;
 
-namespace Sidekick.Application.Game.Chat
+namespace Sidekick.Infrastructure.Game.Chat
 {
     public class LeavePartyHandler : ICommandHandler<LeavePartyCommand, bool>
     {

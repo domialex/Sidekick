@@ -4,14 +4,14 @@ using MediatR;
 using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Process;
 
-namespace Sidekick.Application.Game.Chat
+namespace Sidekick.Infrastructure.Game.Chat
 {
-    public class GoToHideoutHandler : ICommandHandler<GoToHideoutCommand, bool>
+    public class ExitToCharacterSelectionHandler : ICommandHandler<ExitToCharacterSelectionCommand, bool>
     {
         private readonly IMediator mediator;
         private readonly INativeProcess nativeProcess;
 
-        public GoToHideoutHandler(
+        public ExitToCharacterSelectionHandler(
             IMediator mediator,
             INativeProcess nativeProcess)
         {
@@ -19,14 +19,14 @@ namespace Sidekick.Application.Game.Chat
             this.nativeProcess = nativeProcess;
         }
 
-        public async Task<bool> Handle(GoToHideoutCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ExitToCharacterSelectionCommand request, CancellationToken cancellationToken)
         {
             if (!nativeProcess.IsPathOfExileInFocus)
             {
                 return false;
             }
 
-            await mediator.Send(new WriteChatCommand("/hideout"));
+            await mediator.Send(new WriteChatCommand("/exit"));
             return true;
         }
     }

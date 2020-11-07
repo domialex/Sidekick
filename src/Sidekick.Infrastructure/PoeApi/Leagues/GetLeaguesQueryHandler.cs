@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Leagues;
 
-namespace Sidekick.Infrastructure.Poe.Leagues
+namespace Sidekick.Infrastructure.PoeApi.Leagues
 {
     public class GetLeaguesQueryHandler : IQueryHandler<GetLeaguesQuery, List<League>>
     {
