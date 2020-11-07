@@ -16,15 +16,15 @@ namespace Sidekick.Views.MapInfo
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore 67
 
-        private readonly INativeClipboard nativeClipboard;
+        private readonly IClipboardProvider clipboardProvider;
         private readonly IParserService parserService;
 
         public MapInfoViewModel(
-            INativeClipboard nativeClipboard,
+            IClipboardProvider clipboardProvider,
             IParserService parserService,
             ISidekickSettings settings)
         {
-            this.nativeClipboard = nativeClipboard;
+            this.clipboardProvider = clipboardProvider;
             this.parserService = parserService;
             DangerousModsRegex = new Regex(
                 settings.DangerousModsRegex,
@@ -47,7 +47,7 @@ namespace Sidekick.Views.MapInfo
 
         private void Initialize()
         {
-            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
+            Item = parserService.ParseItem(clipboardProvider.LastCopiedText);
 
             if (Item == null || Item.Properties.MapTier == 0)
             {

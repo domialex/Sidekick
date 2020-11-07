@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Domain.Clipboard
 {
-    public interface INativeClipboard
+    public interface IClipboardProvider
     {
         string LastCopiedText { get; }
         Task<string> Copy();

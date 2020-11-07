@@ -26,7 +26,7 @@ namespace Sidekick.Application
 
             services.AddSingleton<ISidekickSettings>(sp => sp.GetRequiredService<SidekickSettings>());
             services.AddSingleton<IKeybindsExecutor, KeybindsExecutor>();
-            services.AddSingleton<INativeClipboard, NativeClipboard>();
+            services.AddSingleton<IClipboardProvider, ClipboardProvider>();
 
             return services;
         }

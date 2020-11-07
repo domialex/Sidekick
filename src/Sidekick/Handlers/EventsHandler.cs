@@ -11,7 +11,7 @@ namespace Sidekick.Handlers
 {
     public class EventsHandler
     {
-        private readonly INativeClipboard clipboard;
+        private readonly IClipboardProvider clipboard;
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
@@ -20,7 +20,7 @@ namespace Sidekick.Handlers
         private readonly IKeybindsProvider keybindsProvider;
 
         public EventsHandler(
-            INativeClipboard clipboard,
+            IClipboardProvider clipboard,
             ILogger<EventsHandler> logger,
             ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,

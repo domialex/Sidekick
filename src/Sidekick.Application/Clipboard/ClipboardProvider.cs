@@ -5,12 +5,12 @@ using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Clipboard
 {
-    public class NativeClipboard : INativeClipboard
+    public class ClipboardProvider : IClipboardProvider
     {
         private readonly ISidekickSettings settings;
         private readonly IKeybindsProvider keybindsProvider;
 
-        public NativeClipboard(
+        public ClipboardProvider(
             ISidekickSettings settings,
             IKeybindsProvider keybindsProvider)
         {

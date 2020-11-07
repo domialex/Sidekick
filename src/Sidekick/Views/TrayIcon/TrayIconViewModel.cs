@@ -6,44 +6,44 @@ using Sidekick.Domain.Views;
 namespace Sidekick.Views.TrayIcon
 {
     public class TrayIconViewModel
+  {
+    private readonly App application;
+    private readonly IViewLocator viewLocator;
+    private readonly IClipboardProvider clipboardProvider;
+
+    public TrayIconViewModel(
+        App application,
+        IViewLocator viewLocator,
+        IClipboardProvider clipboardProvider)
     {
-        private readonly App application;
-        private readonly IViewLocator viewLocator;
-        private readonly INativeClipboard nativeClipboard;
+      this.application = application;
+      this.viewLocator = viewLocator;
+      this.clipboardProvider = clipboardProvider;
+    }
 
-        public TrayIconViewModel(
-            App application,
-            IViewLocator viewLocator,
-            INativeClipboard nativeClipboard)
-        {
-            this.application = application;
-            this.viewLocator = viewLocator;
-            this.nativeClipboard = nativeClipboard;
-        }
+    public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open(View.Settings));
 
-        public ICommand ShowSettingsCommand => new RelayCommand(_ => viewLocator.Open(View.Settings));
+    public ICommand ShowAboutCommand => new RelayCommand(_ => viewLocator.Open(View.About));
 
-        public ICommand ShowAboutCommand => new RelayCommand(_ => viewLocator.Open(View.About));
+    public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open(View.Logs));
 
-        public ICommand ShowLogsCommand => new RelayCommand(_ => viewLocator.Open(View.Logs));
+    public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
 
-        public ICommand ExitApplicationCommand => new RelayCommand(_ => application.Shutdown());
+    public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open(View.League));
 
-        public ICommand DebugLeagueOverlayCommand => new RelayCommand(_ => viewLocator.Open(View.League));
+    public ICommand DebugCrashCommand => new RelayCommand(_ => throw new Exception("Crash requested via tray icon"));
 
-        public ICommand DebugCrashCommand => new RelayCommand(_ => throw new Exception("Crash requested via tray icon"));
+    #region Debug Price Check
+    public ICommand DebugPriceCheckCommand0 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(await clipboardProvider.GetText());
 
-        #region Debug Price Check
-        public ICommand DebugPriceCheckCommand0 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(await nativeClipboard.GetText());
+      viewLocator.Open(View.Price);
+    });
 
-            viewLocator.Open(View.Price);
-        });
-
-        public ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Unique
+    public ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Unique
 Blood of the Karui
 Sanctified Life Flask
 --------
@@ -70,12 +70,12 @@ So their King might go on.""
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand2 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Rare
+    public ICommand DebugPriceCheckCommand2 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Rare
 Vengeance Crest
 Eternal Burgonet
 --------
@@ -101,12 +101,12 @@ Explosive Arrow deals 25% increased Damage (enchant)
 Note: ~price 1 chaos
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand3 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Currency
+    public ICommand DebugPriceCheckCommand3 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Currency
 Divine Orb
 --------
 Stack Size: 2/10
@@ -117,12 +117,12 @@ Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand4 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Normal
+    public ICommand DebugPriceCheckCommand4 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Normal
 The Four Feral Exiles
 --------
 In a faraway dream, four souls far from home prepare to fight to the death.
@@ -132,12 +132,12 @@ You will enter a map that holds four additional Rogue Exiles.
 Right-click to add this prophecy to your character.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand5 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rareté: Unique
+    public ICommand DebugPriceCheckCommand5 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rareté: Unique
 Assaut de Farrul
 Gantelets en écailles d'hydre
 --------
@@ -167,12 +167,12 @@ La Première des Plaines nous enseigne que même
 la plus grande des proies peut être éventuellement déchiquetée.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand6 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Rare
+    public ICommand DebugPriceCheckCommand6 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Rare
 Death Nails
 Assassin's Mitts
 --------
@@ -194,12 +194,12 @@ Item Level: 61
 0.23% of Physical Attack Damage Leeched as Mana
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand7 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Rare
+    public ICommand DebugPriceCheckCommand7 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Rare
 Blight Cut
 Cobalt Jewel
 --------
@@ -213,12 +213,12 @@ Item Level: 68
 Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand8 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Gem
+    public ICommand DebugPriceCheckCommand8 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Gem
 Double Strike
 --------
 Vaal, Attack, Melee, Strike, Duration, Physical
@@ -260,12 +260,12 @@ Corrupted
 Note: ~price 2 chaos
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        public ICommand DebugPriceCheckCommand9 => new RelayCommand(async _ =>
-        {
-            await nativeClipboard.SetText(@"Rarity: Divination Card
+    public ICommand DebugPriceCheckCommand9 => new RelayCommand(async _ =>
+    {
+      await clipboardProvider.SetText(@"Rarity: Divination Card
 The Saint's Treasure
 --------
 Stack Size: 1/10
@@ -275,9 +275,9 @@ Stack Size: 1/10
 Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
 ");
 
-            viewLocator.Open(View.Price);
-        });
+      viewLocator.Open(View.Price);
+    });
 
-        #endregion
-    }
+    #endregion
+  }
 }

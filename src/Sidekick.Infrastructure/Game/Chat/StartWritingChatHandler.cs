@@ -11,12 +11,12 @@ namespace Sidekick.Infrastructure.Game.Chat.Commands
     public class StartWritingChatHandler : ICommandHandler<StartWritingChatCommand>
     {
         private readonly ISidekickSettings settings;
-        private readonly INativeClipboard clipboard;
+        private readonly IClipboardProvider clipboard;
         private readonly IKeybindsProvider keybindsProvider;
 
         public StartWritingChatHandler(
             ISidekickSettings settings,
-            INativeClipboard clipboard,
+            IClipboardProvider clipboard,
             IKeybindsProvider keybindsProvider)
         {
             this.settings = settings;

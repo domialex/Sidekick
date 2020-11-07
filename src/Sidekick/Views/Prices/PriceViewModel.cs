@@ -40,7 +40,7 @@ namespace Sidekick.Views.Prices
         private readonly IStaticDataService staticDataService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
-        private readonly INativeClipboard nativeClipboard;
+        private readonly IClipboardProvider clipboardProvider;
         private readonly IParserService parserService;
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryService itemCategoryService;
@@ -54,7 +54,7 @@ namespace Sidekick.Views.Prices
             IStaticDataService staticDataService,
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
-            INativeClipboard nativeClipboard,
+            IClipboardProvider clipboardProvider,
             IParserService parserService,
             ISidekickSettings settings,
             IItemCategoryService itemCategoryService,
@@ -67,7 +67,7 @@ namespace Sidekick.Views.Prices
             this.staticDataService = staticDataService;
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
-            this.nativeClipboard = nativeClipboard;
+            this.clipboardProvider = clipboardProvider;
             this.parserService = parserService;
             this.settings = settings;
             this.itemCategoryService = itemCategoryService;
@@ -101,7 +101,7 @@ namespace Sidekick.Views.Prices
 
         private async Task Initialize()
         {
-            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
+            Item = parserService.ParseItem(clipboardProvider.LastCopiedText);
 
             if (Item == null)
             {
