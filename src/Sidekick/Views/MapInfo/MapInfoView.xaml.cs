@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Bindables;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Views.MapInfo
 {
@@ -11,15 +12,19 @@ namespace Sidekick.Views.MapInfo
     [DependencyProperty]
     public partial class MapInfoView : BaseOverlay
     {
-        public MapInfoView(MapInfoViewModel mapInfoViewModel, IServiceProvider serviceProvider)
+        private readonly MapInfoViewModel viewModel;
+
+        public MapInfoView(MapInfoViewModel viewModel, IServiceProvider serviceProvider)
             : base("map_info", serviceProvider)
         {
+            this.viewModel = viewModel;
             InitializeComponent();
-            ViewModel = mapInfoViewModel;
-            DataContext = ViewModel;
+            DataContext = viewModel;
+        }
 
-            Show();
-            Activate();
+        public override async Task Open(params object[] args)
+        {
+            await base.Open(args);
 
             if (GetMouseXPercent() > 0.5)
             {
@@ -31,17 +36,7 @@ namespace Sidekick.Views.MapInfo
             }
             SetTopPercent(50, LocationSource.Center);
 
-
-            if (ViewModel.IsError)
-            {
-                Dispatcher.InvokeAsync(async () =>
-                {
-                    await Task.Delay(1500);
-                    Close();
-                });
-            }
+            viewModel.Initialize((Item)args[0]);
         }
-
-        public MapInfoViewModel ViewModel { get; set; }
     }
 }

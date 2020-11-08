@@ -1,4 +1,4 @@
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Extensions
 {

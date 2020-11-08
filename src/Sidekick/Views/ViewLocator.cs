@@ -26,11 +26,11 @@ namespace Sidekick.Views
 
         public List<ViewInstance> Views { get; set; }
 
-        public void Open(View view)
+        public void Open(View view, params object[] args)
         {
             dispatcher.Invoke(() =>
             {
-                Views.Add(new ViewInstance(this, view, serviceProvider));
+                Views.Add(new ViewInstance(this, serviceProvider, view, args));
             });
         }
 

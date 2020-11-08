@@ -5,7 +5,6 @@ using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Views;
 
 namespace Sidekick.Handlers
 {
@@ -15,7 +14,6 @@ namespace Sidekick.Handlers
         private readonly ILogger logger;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IWikiProvider wikiProvider;
-        private readonly IViewLocator viewLocator;
         private readonly IParserService parserService;
         private readonly IKeybindsProvider keybindsProvider;
 
@@ -24,7 +22,6 @@ namespace Sidekick.Handlers
             ILogger<EventsHandler> logger,
             ITradeSearchService tradeSearchService,
             IWikiProvider wikiProvider,
-            IViewLocator viewLocator,
             IParserService parserService,
             IKeybindsProvider keybindsProvider)
         {
@@ -32,27 +29,8 @@ namespace Sidekick.Handlers
             this.logger = logger;
             this.tradeSearchService = tradeSearchService;
             this.wikiProvider = wikiProvider;
-            this.viewLocator = viewLocator;
             this.parserService = parserService;
             this.keybindsProvider = keybindsProvider;
-        }
-
-        private async Task<bool> Events_OnPriceCheck()
-        {
-            viewLocator.CloseAll();
-            await clipboard.Copy();
-
-            viewLocator.Open(View.Price);
-            return true;
-        }
-
-        private async Task<bool> Events_OnMapInfo()
-        {
-            viewLocator.CloseAll();
-            await clipboard.Copy();
-
-            viewLocator.Open(View.Map);
-            return true;
         }
 
         /// <summary>

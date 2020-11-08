@@ -18,15 +18,13 @@ namespace Sidekick.Application.Clipboard
             this.keybindsProvider = keybindsProvider;
         }
 
-        public string LastCopiedText { get; private set; }
-
         public async Task<string> Copy()
         {
             var clipboardText = string.Empty;
 
             if (settings.RetainClipboard)
             {
-                clipboardText = await GetText();
+                clipboardText = await TextCopy.ClipboardService.GetTextAsync();
                 if (clipboardText == null)
                 {
                     clipboardText = string.Empty;
@@ -40,7 +38,7 @@ namespace Sidekick.Application.Clipboard
             await Task.Delay(100);
 
             // Retrieve clipboard.
-            LastCopiedText = await GetText();
+            var result = await TextCopy.ClipboardService.GetTextAsync();
 
             if (settings.RetainClipboard)
             {
@@ -48,7 +46,7 @@ namespace Sidekick.Application.Clipboard
                 await TextCopy.ClipboardService.SetTextAsync(clipboardText);
             }
 
-            return LastCopiedText;
+            return result;
         }
 
         public async Task<string> GetText()
@@ -63,7 +61,6 @@ namespace Sidekick.Application.Clipboard
                 text = string.Empty;
             }
             await TextCopy.ClipboardService.SetTextAsync(text);
-            LastCopiedText = text;
         }
     }
 }

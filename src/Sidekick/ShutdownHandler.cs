@@ -3,20 +3,20 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
 
-namespace Sidekick.Presentation.App
+namespace Sidekick
 {
     public class ShutdownHandler : ICommandHandler<ShutdownCommand>
     {
-        private readonly INativeApp nativeApp;
+        private readonly App app;
 
-        public ShutdownHandler(INativeApp nativeApp)
+        public ShutdownHandler(App app)
         {
-            this.nativeApp = nativeApp;
+            this.app = app;
         }
 
         public Task<Unit> Handle(ShutdownCommand request, CancellationToken cancellationToken)
         {
-            nativeApp.Shutdown();
+            app.Shutdown();
             return Task.FromResult(Unit.Value);
         }
     }

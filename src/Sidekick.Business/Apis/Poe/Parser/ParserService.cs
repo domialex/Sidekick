@@ -2,11 +2,11 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Tokenizers.ItemName;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis.Poe.Parser
 {

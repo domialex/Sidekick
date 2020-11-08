@@ -7,6 +7,7 @@ namespace Sidekick.Domain.Views
         League,
         Logs,
         Map,
+        ParserError,
         Price,
         Settings,
         Setup,

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeDb;
 using Sidekick.Business.Apis.PoeWiki;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis

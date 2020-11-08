@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Domain.Game.Items.Models
 {
     public class ModifierOption
     {

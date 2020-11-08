@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Windows;
 using MediatR;
 using Sidekick.Domain.App.Commands;
@@ -23,6 +24,12 @@ namespace Sidekick.Initialization
             this.mediator = mediator;
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        public Task Open(params object[] args)
+        {
+            Show();
+            return Task.CompletedTask;
         }
 
         private async void Close_Click(object sender, RoutedEventArgs e)

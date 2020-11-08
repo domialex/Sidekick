@@ -2,8 +2,8 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.PoeWiki

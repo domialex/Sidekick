@@ -39,21 +39,6 @@
             ViewModel="{Binding}"
             Visibility="{Binding ShowFilters, Converter={StaticResource BooleanToVisibility}}" />
 
-        <Grid Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <GroupBox>
-                <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
-            </GroupBox>
-            <ProgressBar
-                Grid.Row="1"
-                Width="250"
-                Height="16"
-                IsIndeterminate="True" />
-        </Grid>
-
         <Grid
             Grid.Column="1"
             Margin="{StaticResource SpacerX}"

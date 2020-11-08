@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis.PoeNinja
 {

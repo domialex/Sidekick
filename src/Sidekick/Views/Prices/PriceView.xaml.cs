@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using MediatR;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Views.Prices
 {
@@ -27,10 +28,13 @@ namespace Sidekick.Views.Prices
 
             Loaded += OverlayWindow_Loaded;
 
-            Show();
-            Activate();
+            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
 
-            SetTopPercent(0.5, LocationSource.Center);
+        public override async Task Open(params object[] args)
+        {
+            await base.Open(args);
+
             if (GetMouseXPercent() > 0.5)
             {
                 SetLeftPercent(0.654, LocationSource.End);
@@ -39,17 +43,9 @@ namespace Sidekick.Views.Prices
             {
                 SetLeftPercent(0.346, LocationSource.Begin);
             }
+            SetTopPercent(50, LocationSource.Center);
 
-            if (viewModel.IsError)
-            {
-                Dispatcher.InvokeAsync(async () =>
-                {
-                    await Task.Delay(1500);
-                    Close();
-                });
-            }
-
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            await viewModel.Initialize((Item)args[0]);
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

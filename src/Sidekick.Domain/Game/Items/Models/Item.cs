@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Domain.Game.Items.Models
 {
     public class Item
     {

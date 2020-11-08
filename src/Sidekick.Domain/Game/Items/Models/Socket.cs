@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Domain.Game.Items.Models
 {
     public class Socket
     {

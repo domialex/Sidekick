@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Models
+namespace Sidekick.Domain.Game.Items.Models
 {
     public enum SocketColour
     {

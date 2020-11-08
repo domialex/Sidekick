@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
+namespace Sidekick.Domain.Game.Items.Models
 {
     public enum Category
     {

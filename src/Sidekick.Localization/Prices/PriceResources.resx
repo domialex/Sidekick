@@ -309,9 +309,6 @@
   <data name="CountString" xml:space="preserve">
     <value>Showing {0} out of {1} items</value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>Unable to find prices for this item. Make sure you have set your game language correctly in the settings.</value>
-  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>Damage per second</value>
   </data>

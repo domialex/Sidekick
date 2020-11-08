@@ -113,7 +113,7 @@ namespace Sidekick.Natives
 
             return null;
         }
-
+        /*
         public float ActiveWindowDpi
         {
             get
@@ -127,7 +127,7 @@ namespace Sidekick.Natives
         {
             return GetWindowRect(GetForegroundWindow(), out var rectangle) ? rectangle : default;
         }
-
+        */
         public async Task CheckPermission()
         {
             await WaitForPathOfExileFocus();
