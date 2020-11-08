@@ -15,7 +15,6 @@ using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
-using Sidekick.Business.Parties;
 using Sidekick.Business.Windows;
 using Sidekick.Domain.Languages;
 
@@ -31,7 +30,6 @@ namespace Sidekick.Business
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
             services.AddSingleton<IItemCategoryService, ItemCategoryService>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<IPartyService, PartyService>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
             services.AddSingleton<IWindowService, WindowService>();

@@ -9,14 +9,24 @@ namespace Sidekick.Domain.Prices.Commands
     public class PriceCheckItemCommand : ICommand<bool>
     {
         /// <summary>
-        /// Price checks the item
+        /// Price checks the item under the cursor inside Path of Exile
         /// </summary>
-        /// <param name="item">The item to price check. If null, it will try to price check the item under the cursor inside Path of Exile.</param>
-        public PriceCheckItemCommand(Item item = null)
+        public PriceCheckItemCommand()
+        {
+        }
+
+        /// <summary>
+        /// Price checks the item passed as an argument
+        /// </summary>
+        /// <param name="item">The item to price check</param>
+        public PriceCheckItemCommand(Item item)
         {
             Item = item;
         }
 
+        /// <summary>
+        /// The item to price check
+        /// </summary>
         public Item Item { get; }
     }
 }

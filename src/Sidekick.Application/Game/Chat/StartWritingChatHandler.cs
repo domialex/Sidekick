@@ -6,15 +6,15 @@ using Sidekick.Domain.Game.Chat.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Settings;
 
-namespace Sidekick.Infrastructure.Game.Chat.Commands
+namespace Sidekick.Application.Game.Chat.Commands
 {
-    public class WriteChatHandler : ICommandHandler<WriteChatCommand>
+    public class StartWritingChatHandler : ICommandHandler<StartWritingChatCommand>
     {
         private readonly ISidekickSettings settings;
         private readonly IClipboardProvider clipboard;
         private readonly IKeybindsProvider keybindsProvider;
 
-        public WriteChatHandler(
+        public StartWritingChatHandler(
             ISidekickSettings settings,
             IClipboardProvider clipboard,
             IKeybindsProvider keybindsProvider)
@@ -24,7 +24,7 @@ namespace Sidekick.Infrastructure.Game.Chat.Commands
             this.keybindsProvider = keybindsProvider;
         }
 
-        public async Task<Unit> Handle(WriteChatCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(StartWritingChatCommand request, CancellationToken cancellationToken)
         {
             string clipboardValue = null;
             if (settings.RetainClipboard)
@@ -37,11 +37,6 @@ namespace Sidekick.Infrastructure.Game.Chat.Commands
             keybindsProvider.PressKey("Enter");
             keybindsProvider.PressKey("Ctrl+A");
             keybindsProvider.PressKey("Paste");
-            keybindsProvider.PressKey("Enter");
-            keybindsProvider.PressKey("Enter");
-            keybindsProvider.PressKey("Up");
-            keybindsProvider.PressKey("Up");
-            keybindsProvider.PressKey("Esc");
 
             if (settings.RetainClipboard)
             {

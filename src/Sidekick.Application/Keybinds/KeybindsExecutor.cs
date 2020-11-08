@@ -4,11 +4,15 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Cheatsheets.Commands;
 using Sidekick.Domain.Game.Chat.Commands;
+using Sidekick.Domain.Game.Shortcuts;
 using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Maps.Commands;
+using Sidekick.Domain.Prices.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views.Commands;
+using Sidekick.Domain.Wikis.Commands;
 
 namespace Sidekick.Application.Keybinds
 {
@@ -74,15 +78,17 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
             ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Key_OpenLeagueOverview, arg, ref task);
             ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
-            // ExecuteKeybind(settings.Key_CheckPrices, request.Keys, OnPriceCheck, ref task);
-            // ExecuteKeybind(settings.Key_MapInfo, request.Keys, OnMapInfo, ref task);
-            // ExecuteKeybind(settings.Key_OpenWiki, request.Keys, OnItemWiki, ref task);
-            // ExecuteKeybind(settings.Key_FindItems, request.Keys, OnFindItems, ref task);
-            // ExecuteKeybind(settings.Key_OpenSearch, request.Keys, OnOpenSearch, ref task);
+            ExecuteKeybind<OpenMapInfoCommand>(settings.Key_MapInfo, arg, ref task);
+            ExecuteKeybind<PriceCheckItemCommand>(settings.Key_CheckPrices, arg, ref task);
+
+            // Webpages
+            ExecuteKeybind<OpenWikiPageCommand>(settings.Key_OpenWiki, arg, ref task);
+            ExecuteKeybind<OpenTradePageCommand>(settings.Key_OpenSearch, arg, ref task);
 
             // Game commands
             ExecuteKeybind<ScrollStashUpCommand>(settings.Key_Stash_Left, arg, ref task);
             ExecuteKeybind<ScrollStashDownCommand>(settings.Key_Stash_Right, arg, ref task);
+            ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, arg, ref task);
 
             if (task == null)
             {

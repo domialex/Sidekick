@@ -3,7 +3,6 @@ using Sidekick.Debounce;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Process;
 using Sidekick.Domain.Views;
-using Sidekick.Handlers;
 using Sidekick.Initialization;
 using Sidekick.Keybinds;
 using Sidekick.Natives;
@@ -43,7 +42,6 @@ namespace Sidekick
             services.AddScoped<SetupViewModel>();
 
             services.AddSingleton<INativeProcess, NativeProcess>();
-            services.AddSingleton<EventsHandler, EventsHandler>();
             services.AddSingleton<TrayIconViewModel>();
             services.AddSingleton<IKeybindsProvider, KeybindsProvider>();
 

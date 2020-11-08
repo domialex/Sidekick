@@ -105,7 +105,7 @@ Explosive Arrow deals 25% increased Damage (enchant)
 Note: ~price 1 chaos
 ");
 
-            viewLocator.Open(View.Price);
+            viewLocator.Open(View.Price, item);
         });
 
         public ICommand DebugPriceCheckCommand3 => new RelayCommand(_ =>

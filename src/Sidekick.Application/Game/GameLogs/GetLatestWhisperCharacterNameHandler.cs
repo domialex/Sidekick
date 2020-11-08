@@ -7,7 +7,7 @@ using MediatR;
 using Sidekick.Domain.Game.GameLogs.Queries;
 using Sidekick.Domain.Process;
 
-namespace Sidekick.Infrastructure.Game.GameLogs
+namespace Sidekick.Application.Game.GameLogs
 {
     public class GetLatestWhisperCharacterNameHandler : IQueryHandler<GetLatestWhisperCharacterNameQuery, string>
     {

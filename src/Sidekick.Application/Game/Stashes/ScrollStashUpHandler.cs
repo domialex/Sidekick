@@ -5,7 +5,7 @@ using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Process;
 
-namespace Sidekick.Infrastructure.Game.Stashes
+namespace Sidekick.Application.Game.Stashes
 {
     public class ScrollStashUpHandler : ICommandHandler<ScrollStashUpCommand, bool>
     {
