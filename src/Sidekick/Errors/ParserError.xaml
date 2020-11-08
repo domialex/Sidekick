@@ -20,17 +20,35 @@
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
     </Window.Style>
 
-    <Grid Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <GroupBox>
-            <TextBlock HorizontalAlignment="Center" Text="{loc:Loc Error}" />
-        </GroupBox>
-        <ProgressBar
+
+        <WrapPanel
+            Margin="{StaticResource Spacer}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Image
+                Width="50"
+                Height="50"
+                Source="/Resources/ExaltedOrb.png" />
+            <Label Content="Sidekick" FontSize="{StaticResource FontSizeDisplay}" />
+        </WrapPanel>
+
+        <TextBlock
             Grid.Row="1"
-            Width="250"
+            Margin="{StaticResource Spacer}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="{loc:Loc ParserError}"
+            TextWrapping="Wrap" />
+
+        <ProgressBar
+            Grid.Row="2"
+            Width="360"
             Height="16"
             IsIndeterminate="True" />
     </Grid>

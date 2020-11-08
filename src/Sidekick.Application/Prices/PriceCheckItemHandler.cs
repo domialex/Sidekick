@@ -37,9 +37,14 @@ namespace Sidekick.Application.Prices
             viewLocator.Close(View.Price);
 
             // Parses the item by copying the item under the cursor
-            var item = parserService.ParseItem(await clipboardProvider.Copy());
+            var item = request.Item;
+            if (item == null)
+            {
+                var itemText = await clipboardProvider.Copy();
+                item = parserService.ParseItem(itemText);
+            }
 
-            if (item == null || item.Properties.MapTier == 0)
+            if (item == null)
             {
                 // If the item can't be parsed, show an error
                 viewLocator.Open(View.ParserError);
