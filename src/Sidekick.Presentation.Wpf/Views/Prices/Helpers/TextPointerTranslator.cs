@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Documents;
 
-namespace Sidekick.Views.Prices.Helpers
+namespace Sidekick.Presentation.Wpf.Views.Prices.Helpers
 {
     public static class FlowHelper
     {

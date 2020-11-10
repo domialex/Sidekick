@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Presentation.Wpf.Helpers
 {
     [Serializable]
     public sealed class ObservableKeyValuePair<TKey, TValue> : INotifyPropertyChanged

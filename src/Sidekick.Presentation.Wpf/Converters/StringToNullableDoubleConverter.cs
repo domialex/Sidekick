@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Sidekick.Converters
+namespace Sidekick.Presentation.Wpf.Converters
 {
     public class StringToNullableDoubleConverter : IValueConverter
     {

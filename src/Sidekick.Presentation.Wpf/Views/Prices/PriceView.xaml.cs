@@ -7,7 +7,7 @@ using MediatR;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     public partial class PriceView : BaseOverlay
     {

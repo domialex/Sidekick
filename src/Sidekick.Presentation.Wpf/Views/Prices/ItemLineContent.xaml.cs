@@ -8,7 +8,7 @@ using System.Windows.Media;
 using Bindables;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     /// <summary>
     /// Interaction logic for Agent.xaml

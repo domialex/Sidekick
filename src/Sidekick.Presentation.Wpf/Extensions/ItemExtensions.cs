@@ -1,6 +1,6 @@
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Extensions
+namespace Sidekick.Presentation.Wpf.Extensions
 {
     public static class ItemExtensions
     {

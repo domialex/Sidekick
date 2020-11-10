@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace Sidekick.SplashScreen
+namespace Sidekick.Presentation.Wpf.SplashScreen
 {
     public partial class SplashScreen : Window
     {

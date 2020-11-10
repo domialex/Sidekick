@@ -4,7 +4,7 @@ using System.Windows;
 using Bindables;
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Views.MapInfo
+namespace Sidekick.Presentation.Wpf.Views.MapInfo
 {
     /// <summary>
     /// Interaction logic for MapInfoView.xaml

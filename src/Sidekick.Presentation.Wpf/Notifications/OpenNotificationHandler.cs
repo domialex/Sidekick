@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using MediatR;
 using Sidekick.Domain.Notifications.Commands;
-using Sidekick.Presentation.Wpf;
 
-namespace Sidekick.Notifications
+namespace Sidekick.Presentation.Wpf.Notifications
 {
     public class OpenNotificationHandler : ICommandHandler<OpenNotificationCommand>
     {

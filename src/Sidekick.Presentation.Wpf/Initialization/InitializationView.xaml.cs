@@ -3,9 +3,9 @@ using System.Windows;
 using MediatR;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Views;
-using Sidekick.Views;
+using Sidekick.Presentation.Wpf.Views;
 
-namespace Sidekick.Initialization
+namespace Sidekick.Presentation.Wpf.Initialization
 {
     /// <summary>
     /// Interaction logic for SplashScreen.xaml

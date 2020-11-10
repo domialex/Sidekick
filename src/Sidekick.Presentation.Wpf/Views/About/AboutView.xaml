@@ -1,9 +1,9 @@
 <base:BaseView
-    x:Class="Sidekick.Views.About.AboutView"
+    x:Class="Sidekick.Presentation.Wpf.Views.About.AboutView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:base="clr-namespace:Sidekick.Views"
-    xmlns:converters="clr-namespace:Sidekick.Converters"
+    xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:converters="clr-namespace:Sidekick.Presentation.Wpf.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="About"

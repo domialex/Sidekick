@@ -1,8 +1,8 @@
 using System;
 using System.Windows;
-using Sidekick.Views;
+using Sidekick.Presentation.Wpf.Views;
 
-namespace Sidekick.Setup
+namespace Sidekick.Presentation.Wpf.Setup
 {
     public partial class SetupView : BaseView
     {

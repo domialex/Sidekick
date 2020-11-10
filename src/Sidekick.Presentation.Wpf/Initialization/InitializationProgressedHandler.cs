@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Initialization.Notifications;
 
-namespace Sidekick.Initialization
+namespace Sidekick.Presentation.Wpf.Initialization
 {
     public class InitializationProgressedHandler : INotificationHandler<InitializationProgressed>
     {

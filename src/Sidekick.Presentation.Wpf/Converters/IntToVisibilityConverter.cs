@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Sidekick.Converters
+namespace Sidekick.Presentation.Wpf.Converters
 {
     public class IntToVisibilityConverter : IValueConverter
     {

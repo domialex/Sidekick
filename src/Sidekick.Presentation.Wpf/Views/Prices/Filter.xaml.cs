@@ -7,7 +7,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     /// <summary>
     /// Interaction logic for Filter.xaml

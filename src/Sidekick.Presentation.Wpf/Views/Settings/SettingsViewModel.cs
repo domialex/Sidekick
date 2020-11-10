@@ -13,10 +13,10 @@ using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Helpers;
 using Sidekick.Localization;
+using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Views.Settings
+namespace Sidekick.Presentation.Wpf.Views.Settings
 {
     public class SettingsViewModel : IDisposable, INotifyPropertyChanged
     {

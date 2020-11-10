@@ -8,7 +8,7 @@ using Sidekick.Domain.Process;
 using Sidekick.Domain.Settings;
 using WindowsHook;
 
-namespace Sidekick.Keybinds
+namespace Sidekick.Presentation.Wpf.Keybinds
 {
     public class KeybindsProvider : IKeybindsProvider, IDisposable
     {

@@ -13,16 +13,16 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.ItemCategories;
-using Sidekick.Debounce;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
-using Sidekick.Extensions;
-using Sidekick.Helpers;
 using Sidekick.Localization.Prices;
+using Sidekick.Presentation.Wpf.Debounce;
+using Sidekick.Presentation.Wpf.Extensions;
+using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     public class PriceViewModel : INotifyPropertyChanged, IDisposable
     {

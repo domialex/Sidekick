@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Sidekick.Initialization
+namespace Sidekick.Presentation.Wpf.Initialization
 {
     public class InitializationViewModel : INotifyPropertyChanged
     {

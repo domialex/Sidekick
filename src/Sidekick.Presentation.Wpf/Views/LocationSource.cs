@@ -1,4 +1,4 @@
-namespace Sidekick.Views
+namespace Sidekick.Presentation.Wpf.Views
 {
     public enum LocationSource
   {

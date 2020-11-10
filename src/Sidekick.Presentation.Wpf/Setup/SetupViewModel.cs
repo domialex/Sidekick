@@ -15,10 +15,10 @@ using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Helpers;
 using Sidekick.Localization;
+using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Setup
+namespace Sidekick.Presentation.Wpf.Setup
 {
     public class SetupViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {

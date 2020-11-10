@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
-using Sidekick.Extensions;
 using Sidekick.Localization.Prices;
+using Sidekick.Presentation.Wpf.Extensions;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     public partial class PriceItem
     {

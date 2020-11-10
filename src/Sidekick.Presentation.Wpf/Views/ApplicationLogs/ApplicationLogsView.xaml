@@ -1,9 +1,9 @@
 <base:BaseView
-    x:Class="Sidekick.Views.ApplicationLogs.ApplicationLogsView"
+    x:Class="Sidekick.Presentation.Wpf.Views.ApplicationLogs.ApplicationLogsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:base="clr-namespace:Sidekick.Views"
-    xmlns:loc="clr-namespace:Sidekick.Views"
+    xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
     Title="{loc:Loc Title}"
     Width="360"

@@ -1,21 +1,21 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Debounce;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Process;
 using Sidekick.Domain.Views;
-using Sidekick.Errors;
-using Sidekick.Initialization;
-using Sidekick.Keybinds;
-using Sidekick.Natives;
-using Sidekick.Setup;
-using Sidekick.Views;
-using Sidekick.Views.About;
-using Sidekick.Views.ApplicationLogs;
-using Sidekick.Views.Leagues;
-using Sidekick.Views.MapInfo;
-using Sidekick.Views.Prices;
-using Sidekick.Views.Settings;
-using Sidekick.Views.TrayIcon;
+using Sidekick.Presentation.Wpf.Cheatsheets;
+using Sidekick.Presentation.Wpf.Debounce;
+using Sidekick.Presentation.Wpf.Errors;
+using Sidekick.Presentation.Wpf.Initialization;
+using Sidekick.Presentation.Wpf.Keybinds;
+using Sidekick.Presentation.Wpf.Natives;
+using Sidekick.Presentation.Wpf.Setup;
+using Sidekick.Presentation.Wpf.Views;
+using Sidekick.Presentation.Wpf.Views.About;
+using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
+using Sidekick.Presentation.Wpf.Views.MapInfo;
+using Sidekick.Presentation.Wpf.Views.Prices;
+using Sidekick.Presentation.Wpf.Views.Settings;
+using Sidekick.Presentation.Wpf.Views.TrayIcon;
 
 namespace Sidekick.Presentation.Wpf
 {

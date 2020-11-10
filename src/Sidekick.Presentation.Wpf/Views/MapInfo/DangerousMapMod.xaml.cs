@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Bindables;
 
-namespace Sidekick.Views.MapInfo
+namespace Sidekick.Presentation.Wpf.Views.MapInfo
 {
     /// <summary>
     /// Interaction logic for DangerousMapMod.xaml

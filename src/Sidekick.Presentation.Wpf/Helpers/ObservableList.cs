@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Sidekick.Helpers
+namespace Sidekick.Presentation.Wpf.Helpers
 {
     public class ObservableList<T> : ObservableCollection<T>
     {

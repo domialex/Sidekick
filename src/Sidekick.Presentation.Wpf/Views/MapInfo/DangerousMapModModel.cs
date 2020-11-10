@@ -1,4 +1,4 @@
-namespace Sidekick.Views.MapInfo
+namespace Sidekick.Presentation.Wpf.Views.MapInfo
 {
     public class DangerousMapModModel
     {

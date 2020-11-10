@@ -7,16 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
-using Sidekick.Initialization;
-using Sidekick.Setup;
-using Sidekick.Views.About;
-using Sidekick.Views.ApplicationLogs;
-using Sidekick.Views.Leagues;
-using Sidekick.Views.MapInfo;
-using Sidekick.Views.Prices;
-using Sidekick.Views.Settings;
+using Sidekick.Presentation.Wpf.Cheatsheets;
+using Sidekick.Presentation.Wpf.Initialization;
+using Sidekick.Presentation.Wpf.Setup;
+using Sidekick.Presentation.Wpf.Views.About;
+using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
+using Sidekick.Presentation.Wpf.Views.MapInfo;
+using Sidekick.Presentation.Wpf.Views.Prices;
+using Sidekick.Presentation.Wpf.Views.Settings;
 
-namespace Sidekick.Views
+namespace Sidekick.Presentation.Wpf.Views
 {
     public class ViewInstance : IDisposable
     {

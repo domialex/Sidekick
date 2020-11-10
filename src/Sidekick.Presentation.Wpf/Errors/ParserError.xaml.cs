@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using Sidekick.Views;
+using Sidekick.Presentation.Wpf.Views;
 
-namespace Sidekick.Errors
+namespace Sidekick.Presentation.Wpf.Errors
 {
     public partial class ParserError : BaseOverlay
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sidekick.Debounce
+namespace Sidekick.Presentation.Wpf.Debounce
 {
     public interface IDebouncer
     {

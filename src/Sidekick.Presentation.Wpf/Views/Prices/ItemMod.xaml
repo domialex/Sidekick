@@ -1,8 +1,8 @@
 <UserControl
-    x:Class="Sidekick.Views.Prices.ItemMod"
+    x:Class="Sidekick.Presentation.Wpf.Views.Prices.ItemMod"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Sidekick.Views.Prices">
+    xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Views.Prices">
     <Grid Name="Container">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

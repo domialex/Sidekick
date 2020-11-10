@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Bindables;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     /// <summary>
     /// Interaction logic for Agent.xaml

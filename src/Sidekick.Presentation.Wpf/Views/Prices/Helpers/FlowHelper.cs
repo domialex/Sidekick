@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Documents;
 
-namespace Sidekick.Views.Prices.Helpers
+namespace Sidekick.Presentation.Wpf.Views.Prices.Helpers
 {
     /// <summary>
     /// <para>TextPointerTranslator class.</para>

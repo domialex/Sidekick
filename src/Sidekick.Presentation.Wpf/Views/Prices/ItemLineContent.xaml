@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="Sidekick.Views.Prices.ItemLineContent"
+    x:Class="Sidekick.Presentation.Wpf.Views.Prices.ItemLineContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <TextBlock

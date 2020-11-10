@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using Bindables;
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Views.Prices
+namespace Sidekick.Presentation.Wpf.Views.Prices
 {
     /// <summary>
     /// Interaction logic for Sockets.xaml

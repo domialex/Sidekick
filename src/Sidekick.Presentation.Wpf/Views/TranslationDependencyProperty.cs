@@ -7,7 +7,7 @@ using System.Windows.Markup;
 using System.Xaml;
 using Sidekick.Localization;
 
-namespace Sidekick.Views
+namespace Sidekick.Presentation.Wpf.Views
 {
     public class Translation : DependencyObject
     {

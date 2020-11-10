@@ -4,7 +4,7 @@ using System.Windows.Threading;
 using MediatR;
 using Sidekick.Domain.Notifications.Commands;
 
-namespace Sidekick.Notifications
+namespace Sidekick.Presentation.Wpf.Notifications
 {
     public class OpenConfirmNotificationHandler : ICommandHandler<OpenConfirmNotificationCommand>
     {

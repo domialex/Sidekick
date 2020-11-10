@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Sidekick.Views.ApplicationLogs
+namespace Sidekick.Presentation.Wpf.Views.ApplicationLogs
 {
     public partial class ApplicationLogsView : BaseView
     {

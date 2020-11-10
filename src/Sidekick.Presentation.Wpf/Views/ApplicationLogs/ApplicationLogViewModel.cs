@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
-using Sidekick.Helpers;
 using Sidekick.Logging;
+using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Views.ApplicationLogs
+namespace Sidekick.Presentation.Wpf.Views.ApplicationLogs
 {
     public class ApplicationLogViewModel : IDisposable, INotifyPropertyChanged
     {

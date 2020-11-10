@@ -5,7 +5,7 @@ using System.Windows.Threading;
 using Sidekick.Domain.Views;
 using Sidekick.Mediator;
 
-namespace Sidekick.Views
+namespace Sidekick.Presentation.Wpf.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
@@ -60,9 +60,11 @@ namespace Sidekick.Views
         {
             dispatcher.Invoke(async () =>
             {
-                foreach (var view in Views.Where(x => x.View == view))
+                var views = Views.Where(x => x.View == view);
+                var count = views.Count();
+                for (var i = 0; i < count; i++)
                 {
-                    view.WpfView.Hide();
+                    views.ElementAt(i).WpfView.Hide();
                 }
                 await mediator.WhenAll;
                 while (Views.Any(x => x.View == view))

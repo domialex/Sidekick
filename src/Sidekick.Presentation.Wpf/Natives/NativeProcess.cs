@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Process;
-using Sidekick.Extensions;
+using Sidekick.Presentation.Wpf.Extensions;
 
-namespace Sidekick.Natives
+namespace Sidekick.Presentation.Wpf.Natives
 {
     public class NativeProcess : INativeProcess
     {

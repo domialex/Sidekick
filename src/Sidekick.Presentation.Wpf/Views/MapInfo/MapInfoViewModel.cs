@@ -3,9 +3,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Settings;
-using Sidekick.Helpers;
+using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Views.MapInfo
+namespace Sidekick.Presentation.Wpf.Views.MapInfo
 {
     public class MapInfoViewModel : INotifyPropertyChanged
     {

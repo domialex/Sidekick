@@ -5,7 +5,7 @@ using Bindables;
 using MediatR;
 using Sidekick.Domain.App.Commands;
 
-namespace Sidekick.Views.About
+namespace Sidekick.Presentation.Wpf.Views.About
 {
     [DependencyProperty]
     public partial class AboutView : BaseView, ISidekickView
