@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
-    xmlns:resx="clr-namespace:Sidekick.Localization.ApplicationLogs;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.ApplicationLogs;assembly=Sidekick.Presentation"
     Title="{loc:Loc Title}"
     Width="360"
     Height="720"

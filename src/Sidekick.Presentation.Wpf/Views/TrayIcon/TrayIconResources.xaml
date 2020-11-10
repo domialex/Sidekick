@@ -4,7 +4,7 @@
     xmlns:debugEnabled="debug-mode"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Tray;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Tray;assembly=Sidekick.Presentation"
     xmlns:tb="http://www.hardcodet.net/taskbar">
     <ContextMenu
         x:Key="SysTrayMenu"

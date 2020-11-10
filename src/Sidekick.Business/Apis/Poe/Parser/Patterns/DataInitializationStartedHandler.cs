@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {

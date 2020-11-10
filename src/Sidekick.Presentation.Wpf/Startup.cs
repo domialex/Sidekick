@@ -3,7 +3,7 @@ using Sidekick.Application;
 using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Infrastructure;
-using Sidekick.Localization;
+using Sidekick.Presentation.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
 using Sidekick.Persistence;

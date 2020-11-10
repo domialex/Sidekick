@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Localization.Settings;
+using Sidekick.Presentation.Localization.Settings;
 
 namespace Sidekick.Presentation.Wpf.Views.Settings.UserControls
 {

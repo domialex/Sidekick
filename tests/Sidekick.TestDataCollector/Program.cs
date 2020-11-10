@@ -12,7 +12,7 @@ using Sidekick.Core;
 using Sidekick.Core.Natives;
 using Sidekick.Persistence;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Localization;
+using Sidekick.Presentation.Localization;
 using Sidekick.Mediator;
 
 namespace Sidekick.TestDataCollector

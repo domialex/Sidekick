@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Incursion;
+using Sidekick.Presentation.Localization.Leagues.Incursion;
 
 namespace Sidekick.Presentation.Cheatsheets.Incursion
 {

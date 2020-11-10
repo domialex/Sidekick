@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Metamorph;
+using Sidekick.Presentation.Localization.Leagues.Metamorph;
 
 namespace Sidekick.Presentation.Cheatsheets.Metamorph
 {

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Betrayal;
+using Sidekick.Presentation.Localization.Leagues.Betrayal;
 
 namespace Sidekick.Presentation.Cheatsheets.Betrayal
 {

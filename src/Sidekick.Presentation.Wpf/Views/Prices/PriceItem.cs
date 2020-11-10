@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
-using Sidekick.Localization.Prices;
+using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Extensions;
 
 namespace Sidekick.Presentation.Wpf.Views.Prices

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Application.Settings;
 using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Languages;
-using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Localization;
+using Sidekick.Presentation.Localization;
 using Sidekick.Presentation.Wpf.Helpers;
 
 namespace Sidekick.Presentation.Wpf.Views.Settings

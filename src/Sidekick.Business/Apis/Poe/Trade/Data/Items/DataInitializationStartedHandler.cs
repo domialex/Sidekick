@@ -6,8 +6,8 @@ using MediatR;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {

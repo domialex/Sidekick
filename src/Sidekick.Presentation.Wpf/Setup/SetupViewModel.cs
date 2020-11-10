@@ -8,14 +8,14 @@ using MediatR;
 using Microsoft.Extensions.Localization;
 using Sidekick.Application.Settings;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Languages;
-using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Localization;
+using Sidekick.Presentation.Localization;
 using Sidekick.Presentation.Wpf.Helpers;
 
 namespace Sidekick.Presentation.Wpf.Setup

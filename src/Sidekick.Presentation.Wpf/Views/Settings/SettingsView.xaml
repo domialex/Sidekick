@@ -5,7 +5,7 @@
     xmlns:UC="clr-namespace:Sidekick.Presentation.Wpf.Views.Settings.UserControls"
     xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Settings;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Settings;assembly=Sidekick.Presentation"
     Title="{loc:Loc Title}"
     Width="720"
     Height="640"

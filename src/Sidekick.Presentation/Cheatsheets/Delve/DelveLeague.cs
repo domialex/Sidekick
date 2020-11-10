@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Delve;
+using Sidekick.Presentation.Localization.Leagues.Delve;
 
 namespace Sidekick.Presentation.Cheatsheets.Delve
 {

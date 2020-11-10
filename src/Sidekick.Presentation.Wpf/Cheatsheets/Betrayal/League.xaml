@@ -5,7 +5,7 @@
     xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Cheatsheets.Betrayal"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Betrayal;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Leagues.Betrayal;assembly=Sidekick.Presentation"
     loc:Translation.ResourceManager="{x:Static resx:BetrayalResources.ResourceManager}">
 
     <Grid Name="Container">

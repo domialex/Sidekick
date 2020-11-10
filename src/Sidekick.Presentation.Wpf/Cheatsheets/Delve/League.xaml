@@ -6,7 +6,7 @@
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Cheatsheets.Delve"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Leagues.Delve;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Leagues.Delve;assembly=Sidekick.Presentation"
     d:DesignHeight="450"
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:DelveResources.ResourceManager}"

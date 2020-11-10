@@ -7,7 +7,7 @@
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Views.Prices"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Prices;assembly=Sidekick.Presentation"
     d:DesignHeight="450"
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}"

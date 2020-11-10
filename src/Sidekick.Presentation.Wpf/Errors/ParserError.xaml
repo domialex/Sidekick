@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Errors;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Errors;assembly=Sidekick.Presentation"
     Title="Sidekick"
     Width="360"
     Height="140"

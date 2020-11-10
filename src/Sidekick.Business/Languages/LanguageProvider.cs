@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business.Languages
 {

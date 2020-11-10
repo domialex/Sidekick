@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Blight;
+using Sidekick.Presentation.Localization.Leagues.Blight;
 
 namespace Sidekick.Presentation.Cheatsheets.Blight
 {

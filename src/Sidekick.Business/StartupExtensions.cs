@@ -16,7 +16,7 @@ using Sidekick.Business.Http;
 using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
 using Sidekick.Business.Windows;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business
 {

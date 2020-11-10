@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Xaml;
-using Sidekick.Localization;
+using Sidekick.Presentation.Localization;
 
 namespace Sidekick.Presentation.Wpf.Views
 {

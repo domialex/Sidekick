@@ -15,7 +15,7 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search

@@ -5,7 +5,7 @@
     xmlns:converters="clr-namespace:Sidekick.Presentation.Wpf.Converters"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Views.Prices"
-    xmlns:resx="clr-namespace:Sidekick.Localization.Prices;assembly=Sidekick.Localization"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Prices;assembly=Sidekick.Presentation"
     loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}">
     <UserControl.Resources>
         <ResourceDictionary>
