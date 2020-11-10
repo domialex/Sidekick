@@ -16,7 +16,7 @@ using Sidekick.Views.Prices;
 using Sidekick.Views.Settings;
 using Sidekick.Views.TrayIcon;
 
-namespace Sidekick
+namespace Sidekick.Presentation.Wpf
 {
     public static class StartupExtensions
     {

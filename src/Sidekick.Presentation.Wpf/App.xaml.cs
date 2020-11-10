@@ -20,7 +20,7 @@ using Sidekick.Views.TrayIcon;
 [assembly: XmlnsDefinition("debug-mode", "Namespace")]
 #endif
 
-namespace Sidekick
+namespace Sidekick.Presentation.Wpf
 {
     /// <summary>
     /// Entry point for the app
@@ -47,7 +47,7 @@ namespace Sidekick
             // Tooltip opened indefinitely until mouse is moved.
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(int.MaxValue));
 
-            serviceProvider = Sidekick.Startup.InitializeServices(this);
+            serviceProvider = Wpf.Startup.InitializeServices(this);
 
             logger = serviceProvider.GetRequiredService<ILogger<App>>();
             nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();

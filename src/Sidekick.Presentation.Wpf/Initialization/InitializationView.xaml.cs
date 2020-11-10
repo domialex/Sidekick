@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System;
 using System.Windows;
 using MediatR;
 using Sidekick.Domain.App.Commands;
@@ -10,7 +10,7 @@ namespace Sidekick.Initialization
     /// <summary>
     /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class InitializationView : Window, ISidekickView
+    public partial class InitializationView : BaseOverlay
     {
         private readonly IViewLocator viewLocator;
         private readonly IMediator mediator;
@@ -18,18 +18,14 @@ namespace Sidekick.Initialization
         public InitializationView(
             InitializationViewModel viewModel,
             IViewLocator viewLocator,
-            IMediator mediator)
+            IMediator mediator,
+            IServiceProvider serviceProvider)
+            : base("Initialization", serviceProvider)
         {
             this.viewLocator = viewLocator;
             this.mediator = mediator;
             InitializeComponent();
             DataContext = viewModel;
-        }
-
-        public Task Open(params object[] args)
-        {
-            Show();
-            return Task.CompletedTask;
         }
 
         private async void Close_Click(object sender, RoutedEventArgs e)

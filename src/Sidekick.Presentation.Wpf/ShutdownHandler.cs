@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
 
-namespace Sidekick
+namespace Sidekick.Presentation.Wpf
 {
     public class ShutdownHandler : ICommandHandler<ShutdownCommand>
     {

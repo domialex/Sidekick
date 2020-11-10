@@ -1,7 +1,8 @@
-<Window
+<base:BaseOverlay
     x:Class="Sidekick.Initialization.InitializationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Views"
     xmlns:loc="clr-namespace:Sidekick.Views"
     xmlns:resx="clr-namespace:Sidekick.Localization.Initialize;assembly=Sidekick.Localization"
     Title="Sidekick"
@@ -54,4 +55,4 @@
             <Button Click="Close_Click" Content="{loc:Loc Exit}" />
         </StackPanel>
     </Grid>
-</Window>
+</base:BaseOverlay>

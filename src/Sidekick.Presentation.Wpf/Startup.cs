@@ -9,7 +9,7 @@ using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Presentation.Initialization.Commands;
 
-namespace Sidekick
+namespace Sidekick.Presentation.Wpf
 {
     public static class Startup
     {

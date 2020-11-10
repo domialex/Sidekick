@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Views;
+using Sidekick.Presentation.Wpf;
 
 namespace Sidekick.Views.TrayIcon
 {

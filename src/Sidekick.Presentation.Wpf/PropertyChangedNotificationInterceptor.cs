@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick
+namespace Sidekick.Presentation.Wpf
 {
     public static class PropertyChangedNotificationInterceptor
     {
