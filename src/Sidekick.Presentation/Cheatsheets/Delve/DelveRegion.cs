@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Delve
+namespace Sidekick.Presentation.Cheatsheets.Delve
 {
     public class DelveRegion
     {

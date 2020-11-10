@@ -1,5 +1,6 @@
 using System.Windows.Controls;
 using Bindables;
+using Sidekick.Presentation.Cheatsheets.Heist;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets.Heist
 {

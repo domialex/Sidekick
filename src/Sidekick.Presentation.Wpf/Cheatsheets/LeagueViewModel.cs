@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
-using Sidekick.Presentation.Wpf.Cheatsheets.Betrayal;
-using Sidekick.Presentation.Wpf.Cheatsheets.Blight;
-using Sidekick.Presentation.Wpf.Cheatsheets.Delve;
-using Sidekick.Presentation.Wpf.Cheatsheets.Heist;
-using Sidekick.Presentation.Wpf.Cheatsheets.Incursion;
-using Sidekick.Presentation.Wpf.Cheatsheets.Metamorph;
+using Sidekick.Presentation.Cheatsheets.Betrayal;
+using Sidekick.Presentation.Cheatsheets.Blight;
+using Sidekick.Presentation.Cheatsheets.Delve;
+using Sidekick.Presentation.Cheatsheets.Heist;
+using Sidekick.Presentation.Cheatsheets.Incursion;
+using Sidekick.Presentation.Cheatsheets.Metamorph;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets
 {

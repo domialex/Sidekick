@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Metamorph
+namespace Sidekick.Presentation.Cheatsheets.Metamorph
 {
     public class MetamorphCatalyst
     {

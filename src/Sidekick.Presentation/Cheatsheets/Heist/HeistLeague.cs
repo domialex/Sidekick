@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Sidekick.Localization.Leagues.Heist;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Heist
+namespace Sidekick.Presentation.Cheatsheets.Heist
 {
     public class HeistLeague
     {

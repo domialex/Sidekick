@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Betrayal
+namespace Sidekick.Presentation.Cheatsheets.Betrayal
 {
     public class BetrayalReward
     {

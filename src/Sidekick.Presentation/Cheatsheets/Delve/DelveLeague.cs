@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Delve;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Delve
+namespace Sidekick.Presentation.Cheatsheets.Delve
 {
     public class DelveLeague
     {

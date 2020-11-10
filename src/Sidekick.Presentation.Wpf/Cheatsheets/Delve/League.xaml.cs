@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
+using Sidekick.Presentation.Cheatsheets.Delve;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets.Delve
 {

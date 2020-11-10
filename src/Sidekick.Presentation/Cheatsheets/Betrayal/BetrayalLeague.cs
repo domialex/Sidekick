@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Betrayal;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Betrayal
+namespace Sidekick.Presentation.Cheatsheets.Betrayal
 {
     public class BetrayalLeague
     {

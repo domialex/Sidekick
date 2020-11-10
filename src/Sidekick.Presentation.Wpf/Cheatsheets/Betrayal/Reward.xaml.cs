@@ -1,5 +1,6 @@
 using System.Windows.Controls;
 using Bindables;
+using Sidekick.Presentation.Cheatsheets.Betrayal;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets.Betrayal
 {

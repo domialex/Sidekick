@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Metamorph;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Metamorph
+namespace Sidekick.Presentation.Cheatsheets.Metamorph
 {
     public class MetamorphLeague
     {

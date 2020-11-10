@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Wpf.Cheatsheets
+namespace Sidekick.Presentation.Cheatsheets
 {
     public static class RewardValueExtensions
     {

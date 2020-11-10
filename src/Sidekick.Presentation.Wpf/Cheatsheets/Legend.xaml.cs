@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using Sidekick.Presentation.Cheatsheets;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets
 {

@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Heist
+namespace Sidekick.Presentation.Cheatsheets.Heist
 {
     public class HeistReward
     {

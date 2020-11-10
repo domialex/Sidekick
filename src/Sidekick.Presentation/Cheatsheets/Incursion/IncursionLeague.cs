@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sidekick.Localization.Leagues.Incursion;
 
-namespace Sidekick.Presentation.Wpf.Cheatsheets.Incursion
+namespace Sidekick.Presentation.Cheatsheets.Incursion
 {
     public class IncursionLeague
     {

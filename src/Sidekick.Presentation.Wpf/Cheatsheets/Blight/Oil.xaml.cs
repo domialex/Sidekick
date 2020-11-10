@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Bindables;
+using Sidekick.Presentation.Cheatsheets.Blight;
 
 namespace Sidekick.Presentation.Wpf.Cheatsheets.Blight
 {
