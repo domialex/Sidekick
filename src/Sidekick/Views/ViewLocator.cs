@@ -42,11 +42,13 @@ namespace Sidekick.Views
         {
             dispatcher.Invoke(async () =>
             {
-                foreach (var view in Views)
+                for (var i = 0; i < Views.Count; i++)
                 {
-                    view.WpfView.Hide();
+                    Views[i].WpfView.Hide();
                 }
+
                 await mediator.WhenAll;
+
                 while (Views.Count > 0)
                 {
                     Views[0].WpfView.Close();
