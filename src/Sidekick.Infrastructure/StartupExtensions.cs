@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Infrastructure.Github;
-using Sidekick.Infrastructure.Poe;
+using Sidekick.Infrastructure.PoeApi;
 
 namespace Sidekick.Infrastructure
 {

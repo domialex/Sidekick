@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search
 {

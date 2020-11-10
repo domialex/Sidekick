@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Cache;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Languages;
 

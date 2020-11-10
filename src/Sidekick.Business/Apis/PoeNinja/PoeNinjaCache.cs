@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Settings;
 

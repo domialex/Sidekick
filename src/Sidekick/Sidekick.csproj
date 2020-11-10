@@ -143,7 +143,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
-    <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
     <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
@@ -256,6 +255,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="SplashScreen\SplashScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\Controls\Button.xaml">
       <SubType>Designer</SubType>
     </Page>

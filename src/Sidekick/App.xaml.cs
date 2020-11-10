@@ -8,11 +8,10 @@ using Hardcodet.Wpf.TaskbarNotification;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Natives;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Process;
 using Sidekick.Localization.Application;
 using Sidekick.Localization.Splash;
-using Sidekick.Presentation.App;
 using Sidekick.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -26,7 +25,7 @@ namespace Sidekick
     /// <summary>
     /// Entry point for the app
     /// </summary>
-    public partial class App : System.Windows.Application, INativeApp
+    public partial class App : System.Windows.Application
     {
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
 
@@ -38,6 +37,9 @@ namespace Sidekick
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            MainWindow = new SplashScreen.SplashScreen();
+            MainWindow.Show();
+
             base.OnStartup(e);
 
             AttachErrorHandlers();
@@ -55,6 +57,8 @@ namespace Sidekick
             TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
 
             EnsureSingleInstance();
+
+            MainWindow.Close();
             await mediator.Send(new InitializeCommand(true));
         }
 

@@ -6,18 +6,15 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Trade;
-using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.ItemCategories;
-using Sidekick.Core.Natives;
 using Sidekick.Debounce;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
@@ -40,8 +37,6 @@ namespace Sidekick.Views.Prices
         private readonly IStaticDataService staticDataService;
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
-        private readonly INativeClipboard nativeClipboard;
-        private readonly IParserService parserService;
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryService itemCategoryService;
         private readonly IMediator mediator;
@@ -54,8 +49,6 @@ namespace Sidekick.Views.Prices
             IStaticDataService staticDataService,
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
-            INativeClipboard nativeClipboard,
-            IParserService parserService,
             ISidekickSettings settings,
             IItemCategoryService itemCategoryService,
             IMediator mediator)
@@ -67,12 +60,9 @@ namespace Sidekick.Views.Prices
             this.staticDataService = staticDataService;
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
-            this.nativeClipboard = nativeClipboard;
-            this.parserService = parserService;
             this.settings = settings;
             this.itemCategoryService = itemCategoryService;
             this.mediator = mediator;
-            Task.Run(Initialize);
 
             PropertyChanged += PriceViewModel_PropertyChanged;
         }
@@ -99,15 +89,9 @@ namespace Sidekick.Views.Prices
         public string SelectedCategory { get; set; }
         public bool ShowCategory { get; set; }
 
-        private async Task Initialize()
+        public async Task Initialize(Item item)
         {
-            Item = parserService.ParseItem(nativeClipboard.LastCopiedText);
-
-            if (Item == null)
-            {
-                IsError = true;
-                return;
-            }
+            Item = item;
 
             CategoryOptions.Add(Item.TypeLine, null);
             // CategoryOptions.Add(PriceResources.Class_Any, null);

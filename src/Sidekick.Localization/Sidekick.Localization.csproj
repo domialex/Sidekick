@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ApplicationResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Errors\ErrorResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Initialize\InitializeResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -103,6 +108,10 @@
     <EmbeddedResource Update="Application\ApplicationResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Errors\ErrorResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Initialize\InitializeResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

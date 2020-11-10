@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Languages;
 
@@ -38,13 +38,13 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         {
             parserPatterns.Rarity = new Dictionary<Rarity, Regex>
             {
-                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
-                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
-                { Models.Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
-                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
-                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
-                { Models.Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
-                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
+                { Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
+                { Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
+                { Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
+                { Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
+                { Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
+                { Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
+                { Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
             };
 
             parserPatterns.ItemLevel = languageProvider.Language.DescriptionItemLevel.IntFromLineRegex();

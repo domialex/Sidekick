@@ -9,10 +9,11 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.9" />
+    <PackageReference Include="TextCopy" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
+    <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
     <ProjectReference Include="..\Sidekick.Extensions\Sidekick.Extensions.csproj" />
     <ProjectReference Include="..\Sidekick.Logging\Sidekick.Logging.csproj" />

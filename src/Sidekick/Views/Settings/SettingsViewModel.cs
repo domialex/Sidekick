@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Application.Settings;
-using Sidekick.Core.Natives;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Languages.Commands;
 using Sidekick.Domain.Leagues;
@@ -27,8 +27,8 @@ namespace Sidekick.Views.Settings
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly ILanguageProvider languageProvider;
         private readonly ISidekickSettings sidekickSettings;
-        private readonly INativeKeyboard nativeKeyboard;
-        private readonly IKeybindEvents keybindEvents;
+        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IMediator mediator;
         private bool isDisposed;
 
@@ -36,15 +36,15 @@ namespace Sidekick.Views.Settings
             IUILanguageProvider uiLanguageProvider,
             ILanguageProvider languageProvider,
             ISidekickSettings sidekickSettings,
-            INativeKeyboard nativeKeyboard,
-            IKeybindEvents keybindEvents,
+            IKeybindsProvider keybindsProvider,
+            IKeybindsExecutor keybindsExecutor,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.languageProvider = languageProvider;
             this.sidekickSettings = sidekickSettings;
-            this.nativeKeyboard = nativeKeyboard;
-            this.keybindEvents = keybindEvents;
+            this.keybindsProvider = keybindsProvider;
+            this.keybindsExecutor = keybindsExecutor;
             this.mediator = mediator;
 
             Settings = new SidekickSettings();
@@ -62,7 +62,7 @@ namespace Sidekick.Views.Settings
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
             languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
-            nativeKeyboard.OnKeyDown += NativeKeyboard_OnKeyDown;
+            keybindsProvider.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
 
         public async Task Initialize()
@@ -88,7 +88,7 @@ namespace Sidekick.Views.Settings
         // This is called when CurrentKey changes, thanks to Fody
         public void OnCurrentKeyChanged()
         {
-            keybindEvents.Enabled = string.IsNullOrEmpty(CurrentKey);
+            keybindsExecutor.Enabled = string.IsNullOrEmpty(CurrentKey);
         }
 
         public async Task Save()
@@ -159,7 +159,7 @@ namespace Sidekick.Views.Settings
 
             if (disposing)
             {
-                nativeKeyboard.OnKeyDown -= NativeKeyboard_OnKeyDown;
+                keybindsProvider.OnKeyDown -= NativeKeyboard_OnKeyDown;
             }
 
             isDisposed = true;

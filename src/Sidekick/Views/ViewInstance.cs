@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
+using Sidekick.Domain.Views;
 using Sidekick.Initialization;
-using Sidekick.Presentation.Views;
 using Sidekick.Setup;
 using Sidekick.Views.About;
 using Sidekick.Views.ApplicationLogs;
@@ -25,6 +26,7 @@ namespace Sidekick.Views
             { View.Map, typeof(MapInfoView) },
             { View.League, typeof(LeagueView) },
             { View.Logs, typeof(ApplicationLogsView) },
+            { View.ParserError, typeof(Errors.ParserError) },
             { View.Price, typeof(PriceView) },
             { View.Settings, typeof(SettingsView) },
             { View.Setup, typeof(SetupView) },
@@ -32,7 +34,7 @@ namespace Sidekick.Views
 
         private readonly ViewLocator viewLocator;
 
-        public ViewInstance(ViewLocator viewLocator, View view, IServiceProvider serviceProvider)
+        public ViewInstance(ViewLocator viewLocator, IServiceProvider serviceProvider, View view, params object[] args)
         {
             var logger = serviceProvider.GetService<ILogger<ViewInstance>>();
 
@@ -54,7 +56,18 @@ namespace Sidekick.Views
             // View initialization and show
             WpfView = (ISidekickView)Scope.ServiceProvider.GetService(ViewTypes[view]);
             WpfView.Closed += View_Closed;
-            WpfView.Show();
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await WpfView.Open(args);
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e, $"The view {view} could not be opened. {e.Message}");
+                }
+            });
         }
 
         private IServiceScope Scope { get; set; }

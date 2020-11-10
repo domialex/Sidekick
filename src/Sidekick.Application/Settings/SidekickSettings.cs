@@ -7,17 +7,17 @@ namespace Sidekick.Application.Settings
     {
         public string Language_UI { get; set; } = "en";
 
-        public string Language_Parser { get; set; } = null;
+        public string Language_Parser { get; set; } = "";
 
-        public string LeagueId { get; set; } = null;
+        public string LeagueId { get; set; } = "";
 
-        public string LeaguesHash { get; set; } = null;
+        public string LeaguesHash { get; set; } = "";
 
         public int League_SelectedTabIndex { get; set; } = 0;
 
         public WikiSetting Wiki_Preferred { get; set; } = WikiSetting.PoeWiki;
 
-        public string Character_Name { get; set; } = null;
+        public string Character_Name { get; set; } = "";
 
         public bool RetainClipboard { get; set; } = true;
 
@@ -62,8 +62,8 @@ namespace Sidekick.Application.Settings
 
         public string Key_Exit { get; set; } = "Ctrl+Shift+X";
 
-        public string Key_Stash_Left { get; set; } = null;
+        public string Key_Stash_Left { get; set; } = "";
 
-        public string Key_Stash_Right { get; set; } = null;
+        public string Key_Stash_Right { get; set; } = "";
     }
 }

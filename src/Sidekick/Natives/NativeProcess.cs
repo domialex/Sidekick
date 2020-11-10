@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
-using Sidekick.Core.Natives;
+using Sidekick.Domain.Process;
 using Sidekick.Extensions;
 
 namespace Sidekick.Natives
@@ -113,7 +113,7 @@ namespace Sidekick.Natives
 
             return null;
         }
-
+        /*
         public float ActiveWindowDpi
         {
             get
@@ -127,7 +127,7 @@ namespace Sidekick.Natives
         {
             return GetWindowRect(GetForegroundWindow(), out var rectangle) ? rectangle : default;
         }
-
+        */
         public async Task CheckPermission()
         {
             await WaitForPathOfExileFocus();

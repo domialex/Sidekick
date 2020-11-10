@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
@@ -15,6 +14,7 @@ using Sidekick.Business.Apis.Poe.Trade.Search.Requests;
 using Sidekick.Business.Apis.Poe.Trade.Search.Results;
 using Sidekick.Business.Http;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 using Sidekick.Domain.Settings;
 

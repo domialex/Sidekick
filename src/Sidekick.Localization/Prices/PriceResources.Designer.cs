@@ -637,15 +637,6 @@ namespace Sidekick.Localization.Prices {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to find prices for this item. Make sure you have set your game language correctly in the settings..
-        /// </summary>
-        public static string Error {
-            get {
-                return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Damage per second.
         /// </summary>
         public static string Filters_Dps {

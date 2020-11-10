@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Threading;
+using Sidekick.Domain.Views;
 using Sidekick.Mediator;
-using Sidekick.Presentation.Views;
 
 namespace Sidekick.Views
 {
@@ -26,15 +26,17 @@ namespace Sidekick.Views
 
         public List<ViewInstance> Views { get; set; }
 
-        public void Open(View view)
+        public void Open(View view, params object[] args)
         {
             dispatcher.Invoke(() =>
             {
-                Views.Add(new ViewInstance(this, view, serviceProvider));
+                Views.Add(new ViewInstance(this, serviceProvider, view, args));
             });
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View == view);
+
+        public bool IsAnyOpened() => Views.Any();
 
         public void CloseAll()
         {

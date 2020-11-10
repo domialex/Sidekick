@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis
 {

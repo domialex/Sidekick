@@ -7,7 +7,6 @@ using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
-using Sidekick.Presentation.App;
 using Sidekick.Presentation.Initialization.Commands;
 
 namespace Sidekick
@@ -38,7 +37,6 @@ namespace Sidekick
 
             services.AddSingleton(application);
             services.AddSingleton(application.Dispatcher);
-            services.AddSingleton<INativeApp, App>((sp) => sp.GetRequiredService<App>());
 
             return services.BuildServiceProvider();
         }

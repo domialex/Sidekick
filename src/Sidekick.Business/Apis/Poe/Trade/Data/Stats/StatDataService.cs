@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
+using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats

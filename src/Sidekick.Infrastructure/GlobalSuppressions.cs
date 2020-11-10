@@ -5,5 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded", Justification = "<Pending>", Scope = "member", Target = "~M:Sidekick.Infrastructure.Github.UpdateInitializationStartedHandler.Handle(Sidekick.Domain.Initialization.Notifications.UpdateInitializationStarted,System.Threading.CancellationToken)~System.Threading.Tasks.Task")]
 [assembly: SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded", Justification = "<Pending>", Scope = "member", Target = "~M:Sidekick.Infrastructure.Github.GithubClient.#ctor(System.Net.Http.IHttpClientFactory)")]

@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Views.Prices
 {

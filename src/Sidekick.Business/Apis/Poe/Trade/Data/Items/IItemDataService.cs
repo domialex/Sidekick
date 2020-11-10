@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Parser;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 {

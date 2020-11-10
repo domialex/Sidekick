@@ -43,11 +43,5 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <TextBlock Text="{loc:Loc Error}" Visibility="{Binding IsError, Converter={StaticResource BooleanToVisibility}}" />
-        <ProgressBar
-            Height="16"
-            Margin="{StaticResource SpacerX}"
-            IsIndeterminate="True"
-            Visibility="{Binding IsParsing, Converter={StaticResource BooleanToVisibility}}" />
     </StackPanel>
 </base:BaseOverlay>

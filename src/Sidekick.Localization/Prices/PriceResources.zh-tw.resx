@@ -147,10 +147,6 @@
   <data name="CountString" xml:space="preserve">
     <value>在 {1} 項結果中顯示了 {0} 物品</value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>無法搜尋此物品的價格</value>
-    <comment>Translation required - We need to let the user know that the problem may be due to incorrect game language settings</comment>
-  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>每秒造成傷害</value>
   </data>

@@ -30,7 +30,11 @@ namespace Sidekick.Mediator.Internal
 
                 try
                 {
-                    logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(request)}");
+                    var props = JsonSerializer.Serialize(request);
+                    if (props != "{}")
+                    {
+                        logger.LogInformation($"[Mediator:PROPS] {guid} {props}");
+                    }
                 }
                 catch (Exception)
                 {

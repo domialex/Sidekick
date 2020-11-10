@@ -1,13 +1,13 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Sidekick.Views
 {
     public interface ISidekickView
     {
-        bool IsVisible { get; }
+        Task Open(params object[] args);
         void Close();
         void Hide();
-        void Show();
         event EventHandler Closed;
     }
 }
