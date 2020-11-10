@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
+using System.Windows.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
@@ -36,7 +36,8 @@ namespace Sidekick.Views
 
         public ViewInstance(ViewLocator viewLocator, IServiceProvider serviceProvider, View view, params object[] args)
         {
-            var logger = serviceProvider.GetService<ILogger<ViewInstance>>();
+            var logger = serviceProvider.GetRequiredService<ILogger<ViewInstance>>();
+            var dispatcher = serviceProvider.GetRequiredService<Dispatcher>();
 
             if (!ViewTypes.ContainsKey(view))
             {
@@ -49,15 +50,15 @@ namespace Sidekick.Views
             Scope = serviceProvider.CreateScope();
 
             // Still needed for localization of league overlay models
-            var settings = Scope.ServiceProvider.GetService<ISidekickSettings>();
+            var settings = Scope.ServiceProvider.GetRequiredService<ISidekickSettings>();
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
             // View initialization and show
-            WpfView = (ISidekickView)Scope.ServiceProvider.GetService(ViewTypes[view]);
+            WpfView = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
             WpfView.Closed += View_Closed;
 
-            Task.Run(async () =>
+            dispatcher.InvokeAsync(async () =>
             {
                 try
                 {
@@ -66,6 +67,7 @@ namespace Sidekick.Views
                 catch (Exception e)
                 {
                     logger.LogError(e, $"The view {view} could not be opened. {e.Message}");
+                    Dispose();
                 }
             });
         }
@@ -92,8 +94,8 @@ namespace Sidekick.Views
             if (WpfView != null)
             {
                 WpfView.Closed -= View_Closed;
+                WpfView.Close();
             }
-            WpfView.Close();
             viewLocator.Views.Remove(this);
             Scope?.Dispose();
         }

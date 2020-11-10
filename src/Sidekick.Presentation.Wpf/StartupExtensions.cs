@@ -3,6 +3,7 @@ using Sidekick.Debounce;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Process;
 using Sidekick.Domain.Views;
+using Sidekick.Errors;
 using Sidekick.Initialization;
 using Sidekick.Keybinds;
 using Sidekick.Natives;
@@ -32,6 +33,7 @@ namespace Sidekick.Presentation.Wpf
             services.AddScoped<MapInfoView>();
             services.AddScoped<SettingsView>();
             services.AddScoped<SetupView>();
+            services.AddScoped<ParserError>();
 
             services.AddScoped<ApplicationLogViewModel>();
             services.AddScoped<LeagueViewModel>();

@@ -26,7 +26,7 @@ namespace Sidekick.Errors
 
             dispatcher.InvokeAsync(async () =>
             {
-                await Task.Delay(1500);
+                await Task.Delay(2000);
                 Close();
             });
         }
