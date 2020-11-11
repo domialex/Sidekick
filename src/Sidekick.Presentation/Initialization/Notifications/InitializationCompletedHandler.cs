@@ -6,7 +6,7 @@ using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
-using Sidekick.Localization.Tray;
+using Sidekick.Presentation.Localization.Tray;
 
 namespace Sidekick.Presentation.Initialization.Notifications
 {

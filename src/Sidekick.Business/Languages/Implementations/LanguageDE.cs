@@ -1,5 +1,5 @@
 using System;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business.Languages.Implementations
 {

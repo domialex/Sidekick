@@ -2,20 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Views;
 using Sidekick.Persistence.Cache;
 using Sidekick.Persistence.Leagues;
+using Sidekick.Persistence.Views;
 
 namespace Sidekick.Persistence
 {
     public static class StartupExtensions
     {
-        private static bool Added = false;
-
-        public static IServiceCollection AddSidekickDatabase(this IServiceCollection services)
+        public static IServiceCollection AddSidekickPersistence(this IServiceCollection services)
         {
-            if (Added) { return services; }
-            Added = true;
-
             services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=Sidekick_database.db"));
 
             var builder = new DbContextOptionsBuilder<SidekickContext>();
@@ -25,6 +22,7 @@ namespace Sidekick.Persistence
 
             services.AddTransient<ICacheRepository, CacheRepository>();
             services.AddTransient<ILeagueRepository, LeagueRepository>();
+            services.AddSingleton<IViewPreferenceRepository, ViewPreferenceRepository>();
 
             return services;
         }

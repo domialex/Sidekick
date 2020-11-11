@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business.Apis.PoeWiki
 {

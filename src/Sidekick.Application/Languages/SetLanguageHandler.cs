@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Languages;
-using Sidekick.Domain.Languages.Commands;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Languages.Commands;
 
 namespace Sidekick.Application.Languages
 {
@@ -13,7 +13,8 @@ namespace Sidekick.Application.Languages
         private readonly ILanguageProvider languageProvider;
         private readonly ILogger<SetLanguageHandler> logger;
 
-        public SetLanguageHandler(ILanguageProvider languageProvider,
+        public SetLanguageHandler(
+            ILanguageProvider languageProvider,
             ILogger<SetLanguageHandler> logger)
         {
             this.languageProvider = languageProvider;

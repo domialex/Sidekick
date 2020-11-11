@@ -14,49 +14,7 @@ namespace Sidekick.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("sidekick")
-                .HasAnnotation("ProductVersion", "3.1.9");
-
-            modelBuilder.Entity("Sidekick.Database.Caches.Cache", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Data")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("Caches");
-                });
-
-            modelBuilder.Entity("Sidekick.Database.ItemCategories.ItemCategory", b =>
-                {
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Type");
-
-                    b.ToTable("ItemCategories");
-                });
-
-            modelBuilder.Entity("Sidekick.Database.Windows.Window", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("Width")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Windows");
-                });
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Sidekick.Domain.Leagues.League", b =>
                 {
@@ -69,6 +27,48 @@ namespace Sidekick.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Leagues");
+                });
+
+            modelBuilder.Entity("Sidekick.Domain.Views.ViewPreference", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ViewPreferences");
+                });
+
+            modelBuilder.Entity("Sidekick.Persistence.Cache.Cache", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Caches");
+                });
+
+            modelBuilder.Entity("Sidekick.Persistence.ItemCategories.ItemCategory", b =>
+                {
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Type");
+
+                    b.ToTable("ItemCategories");
                 });
 #pragma warning restore 612, 618
         }
