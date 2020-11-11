@@ -5,16 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture.AutoMoq" Version="4.14.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Business\Sidekick.Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="TestData\" />
+    <ProjectReference Include="..\..\src\Sidekick.Domain\Sidekick.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Persistence\Sidekick.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace Sidekick.Presentation.Wpf.Initialization
             IViewLocator viewLocator,
             IMediator mediator,
             IServiceProvider serviceProvider)
-            : base("Initialization", serviceProvider)
+            : base(View.Initialization, serviceProvider)
         {
             this.viewLocator = viewLocator;
             this.mediator = mediator;

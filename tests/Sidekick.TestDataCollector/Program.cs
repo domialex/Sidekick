@@ -1,18 +1,18 @@
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Sidekick.Application;
 using Sidekick.Business;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Core;
-using Sidekick.Core.Natives;
-using Sidekick.Persistence;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Presentation.Localization;
+using Sidekick.Domain.Process;
+using Sidekick.Infrastructure;
 using Sidekick.Mediator;
 
 namespace Sidekick.TestDataCollector
@@ -26,18 +26,16 @@ namespace Sidekick.TestDataCollector
         {
             var services = new ServiceCollection()
                 .AddSidekickMediator(
-                    typeof(Business.StartupExtensions).Assembly,
-                    typeof(Core.StartupExtensions).Assembly,
-                    typeof(Localization.StartupExtensions).Assembly
+                    Assembly.Load("Sidekick.Application"),
+                    Assembly.Load("Sidekick.Domain"),
+                    Assembly.Load("Sidekick.Infrastructure"),
+                    Assembly.Load("Sidekick.Business")
                 )
 
-                .AddSingleton(new Mock<INativeNotifications>().Object)
                 .AddSingleton(new Mock<INativeProcess>().Object)
-                .AddSidekickConfiguration()
-                .AddSidekickCoreServices()
+                .AddSidekickApplication()
                 .AddSidekickBusinessServices()
-                .AddSidekickLocalization()
-                .AddSidekickDatabase();
+                .AddSidekickInfrastructure();
 
 
             var provider = services.BuildServiceProvider();

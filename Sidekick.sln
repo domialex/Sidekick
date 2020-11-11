@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Extensions", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Wpf", "src\Sidekick.Presentation.Wpf\Sidekick.Presentation.Wpf.csproj", "{7695E480-5FFC-40CD-86A5-C659274EB17B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Application.Tests", "tests\Sidekick.Application.Tests\Sidekick.Application.Tests.csproj", "{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{5248279F-EAC3-444C-B9BD-925C68E89A11} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
 		{BDC69A0B-3D18-4720-BD78-FA34A6C81173} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
 		{4135AA01-4A10-4574-B38D-103CF1359867} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
+		{279A17F4-9C1A-4DAF-B77F-E8E43E64793D} = {B4E782B6-CF03-4448-81D1-3E308D20BF2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B5631D-95B3-4007-BE6B-C9BBE799D014}

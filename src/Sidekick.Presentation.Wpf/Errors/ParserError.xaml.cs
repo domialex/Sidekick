@@ -10,7 +10,7 @@ namespace Sidekick.Presentation.Wpf.Errors
         public ParserError(
             IServiceProvider serviceProvider,
             Dispatcher dispatcher)
-            : base("parserError", serviceProvider)
+            : base(Domain.Views.View.ParserError, serviceProvider)
         {
             InitializeComponent();
 

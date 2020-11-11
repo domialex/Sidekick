@@ -18,7 +18,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             IServiceProvider serviceProvider,
             PriceViewModel viewModel,
             IMediator mediator)
-            : base("price", serviceProvider)
+            : base(Domain.Views.View.Price, serviceProvider)
         {
 
             this.viewModel = viewModel;

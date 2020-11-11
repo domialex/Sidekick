@@ -1,13 +1,11 @@
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application;
-using Sidekick.Application.Initialization;
 using Sidekick.Business;
 using Sidekick.Infrastructure;
-using Sidekick.Presentation.Localization;
 using Sidekick.Logging;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
-using Sidekick.Presentation.Initialization.Commands;
 
 namespace Sidekick.Presentation.Wpf
 {
@@ -20,20 +18,21 @@ namespace Sidekick.Presentation.Wpf
                 // Building blocks
                 .AddSidekickLogging()
                 .AddSidekickMediator(
-                    typeof(InitializeHandler).Assembly,
-                    typeof(Infrastructure.StartupExtensions).Assembly,
-                    typeof(Business.StartupExtensions).Assembly,
-                    typeof(Localization.StartupExtensions).Assembly,
-                    typeof(StartupExtensions).Assembly,
-                    typeof(SetupHandler).Assembly
+                    Assembly.Load("Sidekick.Application"),
+                    Assembly.Load("Sidekick.Domain"),
+                    Assembly.Load("Sidekick.Infrastructure"),
+                    Assembly.Load("Sidekick.Persistence"),
+                    Assembly.Load("Sidekick.Presentation"),
+                    Assembly.Load("Sidekick.Presentation.Wpf"),
+                    Assembly.Load("Sidekick.Business")
                 )
 
                 .AddSidekickApplication()
                 .AddSidekickBusinessServices()
-                .AddSidekickLocalization()
                 .AddSidekickInfrastructure()
-                .AddSidekickUIWindows()
-                .AddSidekickDatabase();
+                .AddSidekickPersistence()
+                .AddSidekickPresentation()
+                .AddSidekickPresentationWpf();
 
             services.AddSingleton(application);
             services.AddSingleton(application.Dispatcher);

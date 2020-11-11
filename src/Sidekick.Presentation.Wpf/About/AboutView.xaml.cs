@@ -16,7 +16,7 @@ namespace Sidekick.Presentation.Wpf.About
         public AboutView(
             IServiceProvider serviceProvider,
             IMediator mediator)
-            : base("about", serviceProvider)
+            : base(Domain.Views.View.About, serviceProvider)
         {
             DataContext = this;
 

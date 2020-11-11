@@ -21,7 +21,7 @@ namespace Sidekick.Presentation.Wpf
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddSidekickUIWindows(this IServiceCollection services)
+        public static IServiceCollection AddSidekickPresentationWpf(this IServiceCollection services)
         {
             services.AddSingleton<IDebouncer, Debouncer>();
 

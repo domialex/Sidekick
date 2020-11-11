@@ -9,7 +9,7 @@ namespace Sidekick.Presentation.Wpf.Setup
         private readonly SetupViewModel viewModel;
 
         public SetupView(IServiceProvider serviceProvider, SetupViewModel viewModel)
-            : base("setup", serviceProvider)
+            : base(Domain.Views.View.Setup, serviceProvider)
         {
             this.viewModel = viewModel;
 

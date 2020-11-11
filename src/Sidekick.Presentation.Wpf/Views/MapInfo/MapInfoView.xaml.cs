@@ -15,7 +15,7 @@ namespace Sidekick.Presentation.Wpf.Views.MapInfo
         private readonly MapInfoViewModel viewModel;
 
         public MapInfoView(MapInfoViewModel viewModel, IServiceProvider serviceProvider)
-            : base("map_info", serviceProvider)
+            : base(Domain.Views.View.Map, serviceProvider)
         {
             this.viewModel = viewModel;
             InitializeComponent();

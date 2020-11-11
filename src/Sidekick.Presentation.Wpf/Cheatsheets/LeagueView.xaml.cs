@@ -12,7 +12,7 @@ namespace Sidekick.Presentation.Wpf.Cheatsheets
     public partial class LeagueView : BaseOverlay
     {
         public LeagueView(LeagueViewModel leagueViewModel, IServiceProvider serviceProvider)
-            : base("league", serviceProvider)
+            : base(Domain.Views.View.League, serviceProvider)
         {
             InitializeComponent();
             ViewModel = leagueViewModel;
