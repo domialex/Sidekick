@@ -74,6 +74,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<LeavePartyCommand>(settings.Key_LeaveParty, arg, ref task);
 
             // View commands
+            ExecuteKeybind<CloseViewCommand>("Escape", arg, ref task);
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
             ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Key_OpenLeagueOverview, arg, ref task);
             ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
