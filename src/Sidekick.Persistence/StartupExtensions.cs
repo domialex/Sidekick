@@ -22,7 +22,7 @@ namespace Sidekick.Persistence
 
             services.AddTransient<ICacheRepository, CacheRepository>();
             services.AddTransient<ILeagueRepository, LeagueRepository>();
-            services.AddSingleton<IViewPreferenceRepository, ViewPreferenceRepository>();
+            services.AddTransient<IViewPreferenceRepository, ViewPreferenceRepository>();
 
             return services;
         }

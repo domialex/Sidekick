@@ -1,24 +1,27 @@
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Persistence.Views
 {
     public class ViewPreferenceRepository : IViewPreferenceRepository
     {
-        private readonly SidekickContext context;
+        private readonly DbContextOptions<SidekickContext> options;
 
-        public ViewPreferenceRepository(SidekickContext context)
+        public ViewPreferenceRepository(DbContextOptions<SidekickContext> options)
         {
-            this.context = context;
+            this.options = options;
         }
 
         public async Task<ViewPreference> Get(View id)
         {
+            using var context = new SidekickContext(options);
             return await context.ViewPreferences.FindAsync(id);
         }
 
         public async Task SaveSize(View id, double width, double height)
         {
+            using var context = new SidekickContext(options);
             var preference = await context.ViewPreferences.FindAsync(id);
 
             if (preference == null)
