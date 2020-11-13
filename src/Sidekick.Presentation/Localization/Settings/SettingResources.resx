@@ -159,9 +159,6 @@
   <data name="Key_OpenWiki" xml:space="preserve">
     <value>Open Wiki</value>
   </data>
-  <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
-    <value>Reply to Latest Whisper</value>
-  </data>
   <data name="Key_Stash_Left" xml:space="preserve">
     <value>Tab Scroll Left</value>
   </data>
