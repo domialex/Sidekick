@@ -24,7 +24,6 @@ namespace Sidekick.Domain.Settings
         string Key_OpenSearch { get; }
         string Key_OpenSettings { get; }
         string Key_OpenWiki { get; }
-        string Key_ReplyToLatestWhisper { get; }
         string Key_Stash_Left { get; }
         string Key_Stash_Right { get; }
         string Language_Parser { get; }

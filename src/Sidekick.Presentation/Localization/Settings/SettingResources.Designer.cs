@@ -196,15 +196,6 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reply to Latest Whisper.
-        /// </summary>
-        public static string Key_ReplyToLatestWhisper {
-            get {
-                return ResourceManager.GetString("Key_ReplyToLatestWhisper", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tab Scroll Left.
         /// </summary>
         public static string Key_Stash_Left {

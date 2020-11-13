@@ -58,8 +58,6 @@ namespace Sidekick.Application.Settings
 
         public string Key_OpenLeagueOverview { get; set; } = "F6";
 
-        public string Key_ReplyToLatestWhisper { get; set; } = "Ctrl+Shift+R";
-
         public string Key_Exit { get; set; } = "Ctrl+Shift+X";
 
         public string Key_Stash_Left { get; set; } = "";
