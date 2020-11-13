@@ -8,17 +8,17 @@ namespace Sidekick.Persistence.Cache
 {
     public class CacheRepository : ICacheRepository
     {
-        private readonly SidekickContext context;
+        private readonly DbContextOptions<SidekickContext> options;
 
-        public CacheRepository(
-            SidekickContext context)
+        public CacheRepository(DbContextOptions<SidekickContext> options)
         {
-            this.context = context;
+            this.options = options;
         }
 
         public async Task<TModel> GetOrSet<TModel>(string key, Func<Task<TModel>> func)
             where TModel : class
         {
+            using var context = new SidekickContext(options);
             var result = await Get<TModel>(key);
 
             if (result == default)
@@ -33,6 +33,7 @@ namespace Sidekick.Persistence.Cache
         private async Task<TModel> Get<TModel>(string key)
             where TModel : class
         {
+            using var context = new SidekickContext(options);
             var cache = await context.Caches.FindAsync(key);
 
             if (string.IsNullOrEmpty(cache?.Data))
@@ -53,6 +54,7 @@ namespace Sidekick.Persistence.Cache
 
         private async Task Save(string key, object data)
         {
+            using var context = new SidekickContext(options);
             var cache = await context.Caches.FindAsync(key);
 
             if (cache == null)
@@ -71,6 +73,7 @@ namespace Sidekick.Persistence.Cache
 
         public async Task Delete(string key)
         {
+            using var context = new SidekickContext(options);
             var cache = await context.Caches.FindAsync(key);
             if (cache != null)
             {
@@ -81,6 +84,7 @@ namespace Sidekick.Persistence.Cache
 
         public async Task Clear()
         {
+            using var context = new SidekickContext(options);
             context.Caches.RemoveRange(await context.Caches.ToListAsync());
             await context.SaveChangesAsync();
         }
