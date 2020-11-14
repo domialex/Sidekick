@@ -13,19 +13,24 @@ namespace Sidekick.Domain.Settings
         string Character_Name { get; }
         bool RetainClipboard { get; }
 
-        string Price_Key_Check { get; }
-        bool Price_Prediction_Enable { get; }
-
         bool Overlay_CloseWithMouse { get; }
 
-        List<string> AccessoryModifiers { get; }
-        List<string> ArmourModifiers { get; }
-        string DangerousModsRegex { get; }
+        string Price_Key_Check { get; }
+        bool Price_Prediction_Enable { get; }
+        List<string> Price_Mods_Accessory { get; }
+        List<string> Price_Mods_Armour { get; }
+        List<string> Price_Mods_Flask { get; }
+        List<string> Price_Mods_Jewel { get; }
+        List<string> Price_Mods_Map { get; }
+        List<string> Price_Mods_Weapon { get; }
+
+        string Map_Key_Check { get; }
+        string Map_Dangerous_Regex { get; }
+
         bool EnableCtrlScroll { get; }
-        List<string> FlaskModifiers { get; }
-        List<string> JewelModifiers { get; }
 
         string Key_FindItems { get; }
+
         string Cheatsheets_Key_Open { get; }
         int Cheatsheets_SelectedIndex { get; }
 
@@ -33,15 +38,14 @@ namespace Sidekick.Domain.Settings
         string Key_Exit { get; }
         string Key_GoToHideout { get; }
         string Key_LeaveParty { get; }
-        string Key_MapInfo { get; }
         string Key_OpenSearch { get; }
         string Key_OpenSettings { get; }
         string Key_OpenWiki { get; }
         string Key_Stash_Left { get; }
         string Key_Stash_Right { get; }
-        List<string> MapModifiers { get; }
+
         bool ShowSplashScreen { get; }
-        List<string> WeaponModifiers { get; }
+
         WikiSetting Wiki_Preferred { get; }
     }
 }

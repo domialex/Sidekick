@@ -78,7 +78,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
             ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, arg, ref task);
             ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
-            ExecuteKeybind<OpenMapInfoCommand>(settings.Key_MapInfo, arg, ref task);
+            ExecuteKeybind<OpenMapInfoCommand>(settings.Map_Key_Check, arg, ref task);
             ExecuteKeybind<PriceCheckItemCommand>(settings.Price_Key_Check, arg, ref task);
 
             // Webpages

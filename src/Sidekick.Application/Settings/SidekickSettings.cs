@@ -29,20 +29,20 @@ namespace Sidekick.Application.Settings
 
         public bool ShowSplashScreen { get; set; } = true;
 
-        public string DangerousModsRegex { get; set; } = "reflect|regen";
+        public string Map_Dangerous_Regex { get; set; } = "reflect|regen";
 
-        public List<string> AccessoryModifiers { get; set; } = new List<string>();
-        public List<string> ArmourModifiers { get; set; } = new List<string>();
-        public List<string> FlaskModifiers { get; set; } = new List<string>();
-        public List<string> JewelModifiers { get; set; } = new List<string>();
-        public List<string> MapModifiers { get; set; } = new List<string>();
-        public List<string> WeaponModifiers { get; set; } = new List<string>();
+        public List<string> Price_Mods_Accessory { get; set; } = new List<string>();
+        public List<string> Price_Mods_Armour { get; set; } = new List<string>();
+        public List<string> Price_Mods_Flask { get; set; } = new List<string>();
+        public List<string> Price_Mods_Jewel { get; set; } = new List<string>();
+        public List<string> Price_Mods_Map { get; set; } = new List<string>();
+        public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
 
         public string Key_CloseWindow { get; set; } = "Space";
 
         public string Price_Key_Check { get; set; } = "Ctrl+D";
 
-        public string Key_MapInfo { get; set; } = "Ctrl+X";
+        public string Map_Key_Check { get; set; } = "Ctrl+X";
 
         public string Key_GoToHideout { get; set; } = "F5";
 

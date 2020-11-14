@@ -17,7 +17,7 @@ namespace Sidekick.Presentation.Wpf.Views.MapInfo
             ISidekickSettings settings)
         {
             DangerousModsRegex = new Regex(
-                settings.DangerousModsRegex,
+                settings.Map_Dangerous_Regex,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             DangerousMapMods = new ObservableList<DangerousMapModModel>();

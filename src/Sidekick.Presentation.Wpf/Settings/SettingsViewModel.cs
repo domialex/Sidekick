@@ -73,23 +73,23 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string CurrentKey { get; set; }
 
-        public List<string> AccessoryModifiers { get; set; }
+        public List<string> Price_Mods_Accessory { get; set; }
 
-        public List<string> ArmourModifiers { get; set; }
+        public List<string> Price_Mods_Armour { get; set; }
 
         public string Character_Name { get; set; }
 
         public bool Overlay_CloseWithMouse { get; set; }
 
-        public string DangerousModsRegex { get; set; }
+        public string Map_Dangerous_Regex { get; set; }
 
         public bool EnableCtrlScroll { get; set; }
 
         public bool Price_Prediction_Enable { get; set; }
 
-        public List<string> FlaskModifiers { get; set; }
+        public List<string> Price_Mods_Flask { get; set; }
 
-        public List<string> JewelModifiers { get; set; }
+        public List<string> Price_Mods_Jewel { get; set; }
 
         public string Price_Key_Check { get; set; }
 
@@ -103,7 +103,7 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Key_LeaveParty { get; set; }
 
-        public string Key_MapInfo { get; set; }
+        public string Map_Key_Check { get; set; }
 
         public string Cheatsheets_Key_Open { get; set; }
 
@@ -127,13 +127,13 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string LeaguesHash { get; set; }
 
-        public List<string> MapModifiers { get; set; }
+        public List<string> Price_Mods_Map { get; set; }
 
         public bool RetainClipboard { get; set; }
 
         public bool ShowSplashScreen { get; set; }
 
-        public List<string> WeaponModifiers { get; set; }
+        public List<string> Price_Mods_Weapon { get; set; }
 
         public WikiSetting Wiki_Preferred { get; set; }
 

@@ -12,5 +12,39 @@
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     mc:Ignorable="d">
-    <ScrollViewer x:Name="ScrollViewer" />
+    <ScrollViewer x:Name="ScrollViewer">
+        <StackPanel>
+            <GroupBox Header="{loc:Loc Group_Keybinds}">
+                <StackPanel>
+                    <controls:KeybindEditor
+                        Key="Map_Key_Check"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Map_Key_Check}" />
+                    <controls:KeybindEditor
+                        Key="Key_CloseWindow"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Key_CloseWindow}" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{loc:Loc Map_Dangerous}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{loc:Loc Map_Dangerous_Regex}" />
+                        <TextBox Grid.Column="1" Text="{Binding Path=ViewModel.Map_Dangerous_Regex}" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{loc:Loc Group_Other}">
+                <StackPanel>
+                    <CheckBox Content="{loc:Loc Overlay_CloseWithMouse}" IsChecked="{Binding Path=ViewModel.Overlay_CloseWithMouse}" />
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

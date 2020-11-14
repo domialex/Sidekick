@@ -132,7 +132,7 @@
   <data name="Price_Key_Check" xml:space="preserve">
     <value>Check Prices</value>
   </data>
-  <data name="Key_MapInfo" xml:space="preserve">
+  <data name="Map_Key_Check" xml:space="preserve">
     <value>Check Map Mods</value>
   </data>
   <data name="Key_CloseWindow" xml:space="preserve">
@@ -189,8 +189,8 @@
   <data name="Other_TabScroll" xml:space="preserve">
     <value>Enable Tab Scrolling with Ctrl + Scroll</value>
   </data>
-  <data name="Other_DangerousModsRegex" xml:space="preserve">
-    <value>Dangerous Mods Regex</value>
+  <data name="Map_Dangerous_Regex" xml:space="preserve">
+    <value>Regex</value>
   </data>
   <data name="Group_Other" xml:space="preserve">
     <value>Other Settings</value>
@@ -233,5 +233,8 @@
   </data>
   <data name="Wiki" xml:space="preserve">
     <value>Wiki Settings</value>
+  </data>
+  <data name="Map_Dangerous" xml:space="preserve">
+    <value>Dangerous Modifiers</value>
   </data>
 </root>

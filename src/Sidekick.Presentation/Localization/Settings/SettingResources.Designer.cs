@@ -214,15 +214,6 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check Map Mods.
-        /// </summary>
-        public static string Key_MapInfo {
-            get {
-                return ResourceManager.GetString("Key_MapInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Search.
         /// </summary>
         public static string Key_OpenSearch {
@@ -304,20 +295,38 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dangerous Modifiers.
+        /// </summary>
+        public static string Map_Dangerous {
+            get {
+                return ResourceManager.GetString("Map_Dangerous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regex.
+        /// </summary>
+        public static string Map_Dangerous_Regex {
+            get {
+                return ResourceManager.GetString("Map_Dangerous_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Map Mods.
+        /// </summary>
+        public static string Map_Key_Check {
+            get {
+                return ResourceManager.GetString("Map_Key_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dangerous Mods Regex.
-        /// </summary>
-        public static string Other_DangerousModsRegex {
-            get {
-                return ResourceManager.GetString("Other_DangerousModsRegex", resourceCulture);
             }
         }
         

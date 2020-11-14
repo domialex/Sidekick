@@ -352,12 +352,12 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             var settingMods = Item.Category switch
             {
-                Category.Accessory => settings.AccessoryModifiers,
-                Category.Armour => settings.ArmourModifiers,
-                Category.Flask => settings.FlaskModifiers,
-                Category.Jewel => settings.JewelModifiers,
-                Category.Map => settings.MapModifiers,
-                Category.Weapon => settings.WeaponModifiers,
+                Category.Accessory => settings.Price_Mods_Accessory,
+                Category.Armour => settings.Price_Mods_Armour,
+                Category.Flask => settings.Price_Mods_Flask,
+                Category.Jewel => settings.Price_Mods_Jewel,
+                Category.Map => settings.Price_Mods_Map,
+                Category.Weapon => settings.Price_Mods_Weapon,
                 _ => new List<string>(),
             };
 
@@ -576,12 +576,12 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             {
                 var settingMods = Item.Category switch
                 {
-                    Category.Accessory => settings.AccessoryModifiers,
-                    Category.Armour => settings.ArmourModifiers,
-                    Category.Flask => settings.FlaskModifiers,
-                    Category.Jewel => settings.JewelModifiers,
-                    Category.Map => settings.MapModifiers,
-                    Category.Weapon => settings.WeaponModifiers,
+                    Category.Accessory => settings.Price_Mods_Accessory,
+                    Category.Armour => settings.Price_Mods_Armour,
+                    Category.Flask => settings.Price_Mods_Flask,
+                    Category.Jewel => settings.Price_Mods_Jewel,
+                    Category.Map => settings.Price_Mods_Map,
+                    Category.Weapon => settings.Price_Mods_Weapon,
                     _ => new List<string>(),
                 };
 
