@@ -76,10 +76,10 @@ namespace Sidekick.Application.Keybinds
             // View commands
             ExecuteKeybind<CloseViewCommand>("Escape", arg, ref task);
             ExecuteKeybind<CloseViewCommand>(settings.Key_CloseWindow, arg, ref task);
-            ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Key_OpenLeagueOverview, arg, ref task);
+            ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, arg, ref task);
             ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
             ExecuteKeybind<OpenMapInfoCommand>(settings.Key_MapInfo, arg, ref task);
-            ExecuteKeybind<PriceCheckItemCommand>(settings.Key_CheckPrices, arg, ref task);
+            ExecuteKeybind<PriceCheckItemCommand>(settings.Price_Key_Check, arg, ref task);
 
             // Webpages
             ExecuteKeybind<OpenWikiPageCommand>(settings.Key_OpenWiki, arg, ref task);

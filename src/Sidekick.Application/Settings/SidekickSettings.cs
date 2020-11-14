@@ -13,7 +13,7 @@ namespace Sidekick.Application.Settings
 
         public string LeaguesHash { get; set; } = "";
 
-        public int League_SelectedTabIndex { get; set; } = 0;
+        public int Cheatsheets_SelectedIndex { get; set; } = 0;
 
         public WikiSetting Wiki_Preferred { get; set; } = WikiSetting.PoeWiki;
 
@@ -21,11 +21,11 @@ namespace Sidekick.Application.Settings
 
         public bool RetainClipboard { get; set; } = true;
 
-        public bool CloseOverlayWithMouse { get; set; } = true;
+        public bool Overlay_CloseWithMouse { get; set; } = true;
 
         public bool EnableCtrlScroll { get; set; } = true;
 
-        public bool EnablePricePrediction { get; set; } = true;
+        public bool Price_Prediction_Enable { get; set; } = true;
 
         public bool ShowSplashScreen { get; set; } = true;
 
@@ -40,7 +40,7 @@ namespace Sidekick.Application.Settings
 
         public string Key_CloseWindow { get; set; } = "Space";
 
-        public string Key_CheckPrices { get; set; } = "Ctrl+D";
+        public string Price_Key_Check { get; set; } = "Ctrl+D";
 
         public string Key_MapInfo { get; set; } = "Ctrl+X";
 
@@ -56,7 +56,7 @@ namespace Sidekick.Application.Settings
 
         public string Key_OpenSettings { get; set; } = "Ctrl+O";
 
-        public string Key_OpenLeagueOverview { get; set; } = "F6";
+        public string Cheatsheets_Key_Open { get; set; } = "F6";
 
         public string Key_Exit { get; set; } = "Ctrl+Shift+X";
 

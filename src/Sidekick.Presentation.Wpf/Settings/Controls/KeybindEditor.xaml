@@ -1,0 +1,28 @@
+<UserControl
+    x:Class="Sidekick.Presentation.Wpf.Settings.Controls.KeybindEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid x:Name="Grid" Margin="{StaticResource SpacerBottom}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding Label}" />
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Background="{Binding BackgroundColor}"
+                Click="HotkeyButton_Click"
+                Content="{Binding Value}" />
+            <Button
+                Grid.Column="1"
+                Background="{Binding BackgroundColor}"
+                Click="ClearButton_Click"
+                Content="X"
+                Style="{StaticResource ButtonSmall}" />
+        </Grid>
+    </Grid>
+</UserControl>

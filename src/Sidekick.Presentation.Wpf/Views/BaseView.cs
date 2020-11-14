@@ -39,7 +39,7 @@ namespace Sidekick.Presentation.Wpf.Views
             Loaded += BaseWindow_Loaded;
             SizeChanged += EnsureBounds;
 
-            if (closeOnBlur && settings.CloseOverlayWithMouse)
+            if (closeOnBlur && settings.Overlay_CloseWithMouse)
             {
                 Deactivated += BaseBorderlessWindow_Deactivated;
             }
@@ -81,7 +81,7 @@ namespace Sidekick.Presentation.Wpf.Views
             Loaded -= BaseWindow_Loaded;
             SizeChanged -= EnsureBounds;
 
-            if (closeOnBlur && settings.CloseOverlayWithMouse)
+            if (closeOnBlur && settings.Overlay_CloseWithMouse)
             {
                 Deactivated -= BaseBorderlessWindow_Deactivated;
             }

@@ -34,7 +34,7 @@ namespace Sidekick.Presentation.Wpf.Views
             StringName = stringName;
         }
 
-        private ResourceManager GetResourceManager(object control)
+        private static ResourceManager GetResourceManager(object control)
         {
             if (control is DependencyObject dependencyObject)
             {

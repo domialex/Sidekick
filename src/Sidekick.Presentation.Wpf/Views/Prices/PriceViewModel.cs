@@ -214,7 +214,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             GetPoeNinjaPrice();
 
-            if (settings.EnablePricePrediction)
+            if (settings.Price_Prediction_Enable)
             {
                 _ = GetPredictionPrice();
             }

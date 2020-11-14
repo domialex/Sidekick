@@ -239,6 +239,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Settings\Tabs\StashTab.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Prices\ItemLineContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -255,6 +258,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Settings\Tabs\StashTab.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SplashScreen\SplashScreen.xaml">
       <SubType>Designer</SubType>
     </Page>
