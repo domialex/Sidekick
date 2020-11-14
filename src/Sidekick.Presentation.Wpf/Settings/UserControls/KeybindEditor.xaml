@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="Sidekick.Presentation.Wpf.Views.Settings.UserControls.KeybindEditor"
+    x:Class="Sidekick.Presentation.Wpf.Settings.UserControls.KeybindEditor"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid x:Name="Grid" Margin="{StaticResource SpacerBottom}">

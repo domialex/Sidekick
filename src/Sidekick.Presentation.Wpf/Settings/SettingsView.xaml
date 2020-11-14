@@ -1,8 +1,8 @@
 <base:BaseView
-    x:Class="Sidekick.Presentation.Wpf.Views.Settings.SettingsView"
+    x:Class="Sidekick.Presentation.Wpf.Settings.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:UC="clr-namespace:Sidekick.Presentation.Wpf.Views.Settings.UserControls"
+    xmlns:UC="clr-namespace:Sidekick.Presentation.Wpf.Settings.UserControls"
     xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
     xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Settings;assembly=Sidekick.Presentation"

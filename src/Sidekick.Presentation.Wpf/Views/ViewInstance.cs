@@ -10,11 +10,11 @@ using Sidekick.Domain.Views;
 using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
 using Sidekick.Presentation.Wpf.Initialization;
+using Sidekick.Presentation.Wpf.Settings;
 using Sidekick.Presentation.Wpf.Setup;
 using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
 using Sidekick.Presentation.Wpf.Views.MapInfo;
 using Sidekick.Presentation.Wpf.Views.Prices;
-using Sidekick.Presentation.Wpf.Views.Settings;
 
 namespace Sidekick.Presentation.Wpf.Views
 {

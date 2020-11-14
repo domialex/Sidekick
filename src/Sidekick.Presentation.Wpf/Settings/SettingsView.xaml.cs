@@ -1,7 +1,8 @@
 using System;
 using System.Windows;
+using Sidekick.Presentation.Wpf.Views;
 
-namespace Sidekick.Presentation.Wpf.Views.Settings
+namespace Sidekick.Presentation.Wpf.Settings
 {
     public partial class SettingsView : BaseView
     {

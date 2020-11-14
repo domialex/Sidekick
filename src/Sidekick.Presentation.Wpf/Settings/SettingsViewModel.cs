@@ -16,7 +16,7 @@ using Sidekick.Extensions;
 using Sidekick.Presentation.Localization;
 using Sidekick.Presentation.Wpf.Helpers;
 
-namespace Sidekick.Presentation.Wpf.Views.Settings
+namespace Sidekick.Presentation.Wpf.Settings
 {
     public class SettingsViewModel : IDisposable, INotifyPropertyChanged
     {
