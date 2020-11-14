@@ -83,7 +83,7 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Map_Dangerous_Regex { get; set; }
 
-        public bool EnableCtrlScroll { get; set; }
+        public bool Stash_EnableCtrlScroll { get; set; }
 
         public bool Price_Prediction_Enable { get; set; }
 
@@ -95,13 +95,13 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Overlay_Key_Close { get; set; }
 
-        public string Key_Exit { get; set; }
+        public string Chat_Key_Exit { get; set; }
 
         public string Key_FindItems { get; set; }
 
-        public string Key_GoToHideout { get; set; }
+        public string Chat_Key_Hideout { get; set; }
 
-        public string Key_LeaveParty { get; set; }
+        public string Chat_Key_LeaveParty { get; set; }
 
         public string Map_Key_Check { get; set; }
 
@@ -113,9 +113,9 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Wiki_Key_Open { get; set; }
 
-        public string Key_Stash_Left { get; set; }
+        public string Stash_Key_Left { get; set; }
 
-        public string Key_Stash_Right { get; set; }
+        public string Stash_Key_Right { get; set; }
 
         public string Language_Parser { get; set; }
 

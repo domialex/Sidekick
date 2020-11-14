@@ -12,5 +12,24 @@
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     mc:Ignorable="d">
-    <ScrollViewer x:Name="ScrollViewer" />
+    <ScrollViewer x:Name="ScrollViewer">
+        <StackPanel>
+            <GroupBox Header="{loc:Loc Group_Keybinds}">
+                <StackPanel>
+                    <controls:KeybindEditor
+                        Key="Chat_Key_Hideout"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Chat_Key_Hideout}" />
+                    <controls:KeybindEditor
+                        Key="Chat_Key_LeaveParty"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Chat_Key_LeaveParty}" />
+                    <controls:KeybindEditor
+                        Key="Chat_Key_Exit"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Chat_Key_Exit}" />
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

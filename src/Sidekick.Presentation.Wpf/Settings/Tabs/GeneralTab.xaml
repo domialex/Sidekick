@@ -80,13 +80,17 @@
                     <CheckBox Content="{loc:Loc General_ShowSplashScreen}" IsChecked="{Binding Path=ViewModel.ShowSplashScreen}" />
                     <CheckBox Content="{loc:Loc General_RetainClipboard}" IsChecked="{Binding Path=ViewModel.RetainClipboard}" />
                     <controls:KeybindEditor
-                        Key="Overlay_Key_Close"
+                        Key="Key_OpenSettings"
                         ViewModel="{Binding Path=ViewModel}"
-                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
+                        Value="{Binding Path=ViewModel.Key_OpenSettings}" />
                     <controls:KeybindEditor
                         Key="Key_FindItems"
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Key_FindItems}" />
+                    <controls:KeybindEditor
+                        Key="Overlay_Key_Close"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>

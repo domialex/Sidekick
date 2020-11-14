@@ -69,9 +69,9 @@ namespace Sidekick.Application.Keybinds
             Task<bool> task = null;
 
             // Chat commands
-            ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Key_Exit, arg, ref task);
-            ExecuteKeybind<GoToHideoutCommand>(settings.Key_GoToHideout, arg, ref task);
-            ExecuteKeybind<LeavePartyCommand>(settings.Key_LeaveParty, arg, ref task);
+            ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, arg, ref task);
+            ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, arg, ref task);
+            ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, arg, ref task);
 
             // View commands
             ExecuteKeybind<CloseViewCommand>("Escape", arg, ref task);
@@ -86,8 +86,8 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<OpenTradePageCommand>(settings.Price_Key_OpenSearch, arg, ref task);
 
             // Game commands
-            ExecuteKeybind<ScrollStashUpCommand>(settings.Key_Stash_Left, arg, ref task);
-            ExecuteKeybind<ScrollStashDownCommand>(settings.Key_Stash_Right, arg, ref task);
+            ExecuteKeybind<ScrollStashUpCommand>(settings.Stash_Key_Left, arg, ref task);
+            ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, arg, ref task);
             ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, arg, ref task);
 
             if (task == null)

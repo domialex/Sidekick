@@ -23,7 +23,7 @@ namespace Sidekick.Application.Settings
 
         public bool Overlay_CloseWithMouse { get; set; } = true;
 
-        public bool EnableCtrlScroll { get; set; } = true;
+        public bool Stash_EnableCtrlScroll { get; set; } = true;
 
         public bool Price_Prediction_Enable { get; set; } = true;
 
@@ -44,13 +44,13 @@ namespace Sidekick.Application.Settings
 
         public string Map_Key_Check { get; set; } = "Ctrl+X";
 
-        public string Key_GoToHideout { get; set; } = "F5";
+        public string Chat_Key_Hideout { get; set; } = "F5";
 
         public string Wiki_Key_Open { get; set; } = "Alt+W";
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
 
-        public string Key_LeaveParty { get; set; } = "F4";
+        public string Chat_Key_LeaveParty { get; set; } = "F4";
 
         public string Price_Key_OpenSearch { get; set; } = "Alt+Q";
 
@@ -58,10 +58,10 @@ namespace Sidekick.Application.Settings
 
         public string Cheatsheets_Key_Open { get; set; } = "F6";
 
-        public string Key_Exit { get; set; } = "Ctrl+Shift+X";
+        public string Chat_Key_Exit { get; set; } = "Ctrl+Shift+X";
 
-        public string Key_Stash_Left { get; set; } = "";
+        public string Stash_Key_Left { get; set; } = "";
 
-        public string Key_Stash_Right { get; set; } = "";
+        public string Stash_Key_Right { get; set; } = "";
     }
 }

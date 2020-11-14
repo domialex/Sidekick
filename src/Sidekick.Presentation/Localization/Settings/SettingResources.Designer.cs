@@ -106,6 +106,33 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit to Character Selection.
+        /// </summary>
+        public static string Chat_Key_Exit {
+            get {
+                return ResourceManager.GetString("Chat_Key_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Hideout.
+        /// </summary>
+        public static string Chat_Key_Hideout {
+            get {
+                return ResourceManager.GetString("Chat_Key_Hideout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave Party.
+        /// </summary>
+        public static string Chat_Key_LeaveParty {
+            get {
+                return ResourceManager.GetString("Chat_Key_LeaveParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cheatsheets.
         /// </summary>
         public static string Cheatsheets {
@@ -169,15 +196,6 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exit to Character Selection.
-        /// </summary>
-        public static string Key_Exit {
-            get {
-                return ResourceManager.GetString("Key_Exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Find Items.
         /// </summary>
         public static string Key_FindItems {
@@ -187,47 +205,11 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to Hideout.
-        /// </summary>
-        public static string Key_GoToHideout {
-            get {
-                return ResourceManager.GetString("Key_GoToHideout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Leave Party.
-        /// </summary>
-        public static string Key_LeaveParty {
-            get {
-                return ResourceManager.GetString("Key_LeaveParty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Settings View.
         /// </summary>
         public static string Key_OpenSettings {
             get {
                 return ResourceManager.GetString("Key_OpenSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tab Scroll Left.
-        /// </summary>
-        public static string Key_Stash_Left {
-            get {
-                return ResourceManager.GetString("Key_Stash_Left", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tab Scroll Right.
-        /// </summary>
-        public static string Key_Stash_Right {
-            get {
-                return ResourceManager.GetString("Key_Stash_Right", resourceCulture);
             }
         }
         
@@ -304,15 +286,6 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Tab Scrolling with Ctrl + Scroll.
-        /// </summary>
-        public static string Other_TabScroll {
-            get {
-                return ResourceManager.GetString("Other_TabScroll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close Overlay with Mouse Click.
         /// </summary>
         public static string Overlay_CloseWithMouse {
@@ -381,6 +354,33 @@ namespace Sidekick.Presentation.Localization.Settings {
         public static string Stash {
             get {
                 return ResourceManager.GetString("Stash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Tab Scrolling with Ctrl + Scroll.
+        /// </summary>
+        public static string Stash_EnableCtrlScroll {
+            get {
+                return ResourceManager.GetString("Stash_EnableCtrlScroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Left.
+        /// </summary>
+        public static string Stash_Key_Left {
+            get {
+                return ResourceManager.GetString("Stash_Key_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Right.
+        /// </summary>
+        public static string Stash_Key_Right {
+            get {
+                return ResourceManager.GetString("Stash_Key_Right", resourceCulture);
             }
         }
         

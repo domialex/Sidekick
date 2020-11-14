@@ -12,5 +12,26 @@
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     mc:Ignorable="d">
-    <ScrollViewer x:Name="ScrollViewer" />
+    <ScrollViewer x:Name="ScrollViewer">
+        <StackPanel>
+            <GroupBox Header="{loc:Loc Group_Keybinds}">
+                <StackPanel>
+                    <controls:KeybindEditor
+                        Key="Stash_Key_Left"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Stash_Key_Left}" />
+                    <controls:KeybindEditor
+                        Key="Stash_Key_Right"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Stash_Key_Right}" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{loc:Loc Group_Other}">
+                <StackPanel>
+                    <CheckBox Content="{loc:Loc Stash_EnableCtrlScroll}" IsChecked="{Binding Path=ViewModel.Stash_EnableCtrlScroll}" />
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

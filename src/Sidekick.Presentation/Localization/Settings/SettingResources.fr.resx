@@ -156,11 +156,11 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Other_TabScroll" xml:space="preserve">
-    <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>
-  </data>
   <data name="Overlay_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
+  </data>
+  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
+    <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>
   </data>
   <data name="Wiki" xml:space="preserve">
     <value>Paramètres du wiki</value>

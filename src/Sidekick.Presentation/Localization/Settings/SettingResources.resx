@@ -138,16 +138,16 @@
   <data name="Overlay_Key_Close" xml:space="preserve">
     <value>Close Window</value>
   </data>
-  <data name="Key_Exit" xml:space="preserve">
+  <data name="Chat_Key_Exit" xml:space="preserve">
     <value>Exit to Character Selection</value>
   </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>Find Items</value>
   </data>
-  <data name="Key_GoToHideout" xml:space="preserve">
+  <data name="Chat_Key_Hideout" xml:space="preserve">
     <value>Go to Hideout</value>
   </data>
-  <data name="Key_LeaveParty" xml:space="preserve">
+  <data name="Chat_Key_LeaveParty" xml:space="preserve">
     <value>Leave Party</value>
   </data>
   <data name="Cheatsheets_Key_Open" xml:space="preserve">
@@ -159,10 +159,10 @@
   <data name="Wiki_Key_Open" xml:space="preserve">
     <value>Open Wiki</value>
   </data>
-  <data name="Key_Stash_Left" xml:space="preserve">
+  <data name="Stash_Key_Left" xml:space="preserve">
     <value>Tab Scroll Left</value>
   </data>
-  <data name="Key_Stash_Right" xml:space="preserve">
+  <data name="Stash_Key_Right" xml:space="preserve">
     <value>Tab Scroll Right</value>
   </data>
   <data name="Language_Title" xml:space="preserve">
@@ -186,7 +186,7 @@
   <data name="General_ShowSplashScreen" xml:space="preserve">
     <value>Show the splash screen when starting</value>
   </data>
-  <data name="Other_TabScroll" xml:space="preserve">
+  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
     <value>Enable Tab Scrolling with Ctrl + Scroll</value>
   </data>
   <data name="Map_Dangerous_Regex" xml:space="preserve">

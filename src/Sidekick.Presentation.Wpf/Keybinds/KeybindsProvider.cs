@@ -87,7 +87,7 @@ namespace Sidekick.Presentation.Wpf.Keybinds
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
         {
-            if (!nativeProcess.IsPathOfExileInFocus || !settings.EnableCtrlScroll || !IsCtrlPressed())
+            if (!nativeProcess.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !IsCtrlPressed())
             {
                 return;
             }

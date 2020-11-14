@@ -12,6 +12,9 @@ namespace Sidekick.Domain.Settings
 
         string Character_Name { get; }
         bool RetainClipboard { get; }
+        string Key_FindItems { get; }
+        string Key_OpenSettings { get; }
+        bool ShowSplashScreen { get; }
 
         bool Overlay_CloseWithMouse { get; }
         string Overlay_Key_Close { get; }
@@ -29,23 +32,18 @@ namespace Sidekick.Domain.Settings
         string Map_Key_Check { get; }
         string Map_Dangerous_Regex { get; }
 
-        bool EnableCtrlScroll { get; }
-
-        string Key_FindItems { get; }
-
         string Cheatsheets_Key_Open { get; }
         int Cheatsheets_SelectedIndex { get; }
 
-        string Key_Exit { get; }
-        string Key_GoToHideout { get; }
-        string Key_LeaveParty { get; }
-        string Key_OpenSettings { get; }
+        string Chat_Key_Exit { get; }
+        string Chat_Key_Hideout { get; }
+        string Chat_Key_LeaveParty { get; }
+
+        string Stash_Key_Left { get; }
+        string Stash_Key_Right { get; }
+        bool Stash_EnableCtrlScroll { get; }
+
         string Wiki_Key_Open { get; }
-        string Key_Stash_Left { get; }
-        string Key_Stash_Right { get; }
-
-        bool ShowSplashScreen { get; }
-
         WikiSetting Wiki_Preferred { get; }
     }
 }
