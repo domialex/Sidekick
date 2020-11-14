@@ -4,7 +4,7 @@ using System.Windows.Media;
 using Bindables;
 using Sidekick.Presentation.Localization.Settings;
 
-namespace Sidekick.Presentation.Wpf.Views.Settings.UserControls
+namespace Sidekick.Presentation.Wpf.Settings.Controls
 {
     /// <summary>
     /// Interaction logic for KeybindEditor.xaml

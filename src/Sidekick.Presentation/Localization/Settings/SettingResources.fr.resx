@@ -129,6 +129,21 @@
   <data name="Character_Title" xml:space="preserve">
     <value>Paramètres de personnage</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="General_RetainClipboard" xml:space="preserve">
+    <value>Garder les données du presse-papier</value>
+  </data>
+  <data name="General_ShowSplashScreen" xml:space="preserve">
+    <value>Afficher la fenêtre d'accueil au chargement</value>
+  </data>
+  <data name="Group_Keybinds" xml:space="preserve">
+    <value>Raccourcis</value>
+  </data>
+  <data name="Group_Other" xml:space="preserve">
+    <value>Autres paramètres</value>
+  </data>
   <data name="Language_Parser" xml:space="preserve">
     <value>Langue du jeu</value>
   </data>
@@ -141,31 +156,16 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Other_CloseWithMouseClick" xml:space="preserve">
+  <data name="Overlay_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
   </data>
-  <data name="Other_RetainClipboard" xml:space="preserve">
-    <value>Garder les données du presse-papier</value>
-  </data>
-  <data name="Other_ShowSplashScreen" xml:space="preserve">
-    <value>Afficher la fenêtre d'accueil au chargement</value>
-  </data>
-  <data name="Other_TabScroll" xml:space="preserve">
+  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
     <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>
   </data>
-  <data name="Other_Title" xml:space="preserve">
-    <value>Autres paramètres</value>
-  </data>
-  <data name="Tab_General" xml:space="preserve">
-    <value>Général</value>
-  </data>
-  <data name="Tab_Keybindings" xml:space="preserve">
-    <value>Raccourcis</value>
+  <data name="Wiki" xml:space="preserve">
+    <value>Paramètres du wiki</value>
   </data>
   <data name="Wiki_Preferred" xml:space="preserve">
     <value>Wiki préféré</value>
-  </data>
-  <data name="Wiki_Title" xml:space="preserve">
-    <value>Paramètres du wiki</value>
   </data>
 </root>

@@ -97,29 +97,101 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check Prices.
+        ///   Looks up a localized string similar to Chat Commands.
         /// </summary>
-        public static string Key_CheckPrices {
+        public static string Chat {
             get {
-                return ResourceManager.GetString("Key_CheckPrices", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close Window.
-        /// </summary>
-        public static string Key_CloseWindow {
-            get {
-                return ResourceManager.GetString("Key_CloseWindow", resourceCulture);
+                return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Exit to Character Selection.
         /// </summary>
-        public static string Key_Exit {
+        public static string Chat_Key_Exit {
             get {
-                return ResourceManager.GetString("Key_Exit", resourceCulture);
+                return ResourceManager.GetString("Chat_Key_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go to Hideout.
+        /// </summary>
+        public static string Chat_Key_Hideout {
+            get {
+                return ResourceManager.GetString("Chat_Key_Hideout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave Party.
+        /// </summary>
+        public static string Chat_Key_LeaveParty {
+            get {
+                return ResourceManager.GetString("Chat_Key_LeaveParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cheatsheets.
+        /// </summary>
+        public static string Cheatsheets {
+            get {
+                return ResourceManager.GetString("Cheatsheets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Cheatsheets.
+        /// </summary>
+        public static string Cheatsheets_Key_Open {
+            get {
+                return ResourceManager.GetString("Cheatsheets_Key_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retain Clipboard Data.
+        /// </summary>
+        public static string General_RetainClipboard {
+            get {
+                return ResourceManager.GetString("General_RetainClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the splash screen when starting.
+        /// </summary>
+        public static string General_ShowSplashScreen {
+            get {
+                return ResourceManager.GetString("General_ShowSplashScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keybindings.
+        /// </summary>
+        public static string Group_Keybinds {
+            get {
+                return ResourceManager.GetString("Group_Keybinds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Settings.
+        /// </summary>
+        public static string Group_Other {
+            get {
+                return ResourceManager.GetString("Group_Other", resourceCulture);
             }
         }
         
@@ -133,83 +205,11 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to Hideout.
-        /// </summary>
-        public static string Key_GoToHideout {
-            get {
-                return ResourceManager.GetString("Key_GoToHideout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Leave Party.
-        /// </summary>
-        public static string Key_LeaveParty {
-            get {
-                return ResourceManager.GetString("Key_LeaveParty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check Map Mods.
-        /// </summary>
-        public static string Key_MapInfo {
-            get {
-                return ResourceManager.GetString("Key_MapInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open League View.
-        /// </summary>
-        public static string Key_OpenLeagueOverview {
-            get {
-                return ResourceManager.GetString("Key_OpenLeagueOverview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Search.
-        /// </summary>
-        public static string Key_OpenSearch {
-            get {
-                return ResourceManager.GetString("Key_OpenSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Settings View.
         /// </summary>
         public static string Key_OpenSettings {
             get {
                 return ResourceManager.GetString("Key_OpenSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Wiki.
-        /// </summary>
-        public static string Key_OpenWiki {
-            get {
-                return ResourceManager.GetString("Key_OpenWiki", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tab Scroll Left.
-        /// </summary>
-        public static string Key_Stash_Left {
-            get {
-                return ResourceManager.GetString("Key_Stash_Left", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tab Scroll Right.
-        /// </summary>
-        public static string Key_Stash_Right {
-            get {
-                return ResourceManager.GetString("Key_Stash_Right", resourceCulture);
             }
         }
         
@@ -241,6 +241,42 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map Information.
+        /// </summary>
+        public static string Map {
+            get {
+                return ResourceManager.GetString("Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dangerous Modifiers.
+        /// </summary>
+        public static string Map_Dangerous {
+            get {
+                return ResourceManager.GetString("Map_Dangerous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regex.
+        /// </summary>
+        public static string Map_Dangerous_Regex {
+            get {
+                return ResourceManager.GetString("Map_Dangerous_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Map Mods.
+        /// </summary>
+        public static string Map_Key_Check {
+            get {
+                return ResourceManager.GetString("Map_Key_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
@@ -252,63 +288,54 @@ namespace Sidekick.Presentation.Localization.Settings {
         /// <summary>
         ///   Looks up a localized string similar to Close Overlay with Mouse Click.
         /// </summary>
-        public static string Other_CloseWithMouseClick {
+        public static string Overlay_CloseWithMouse {
             get {
-                return ResourceManager.GetString("Other_CloseWithMouseClick", resourceCulture);
+                return ResourceManager.GetString("Overlay_CloseWithMouse", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dangerous Mods Regex.
+        ///   Looks up a localized string similar to Close Window.
         /// </summary>
-        public static string Other_DangerousModsRegex {
+        public static string Overlay_Key_Close {
             get {
-                return ResourceManager.GetString("Other_DangerousModsRegex", resourceCulture);
+                return ResourceManager.GetString("Overlay_Key_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Information.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check Prices.
+        /// </summary>
+        public static string Price_Key_Check {
+            get {
+                return ResourceManager.GetString("Price_Key_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Search.
+        /// </summary>
+        public static string Price_Key_OpenSearch {
+            get {
+                return ResourceManager.GetString("Price_Key_OpenSearch", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Enable Price Prediction.
         /// </summary>
-        public static string Other_PricePrediction {
+        public static string Price_Prediction_Enable {
             get {
-                return ResourceManager.GetString("Other_PricePrediction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Retain Clipboard Data.
-        /// </summary>
-        public static string Other_RetainClipboard {
-            get {
-                return ResourceManager.GetString("Other_RetainClipboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show the splash screen when starting.
-        /// </summary>
-        public static string Other_ShowSplashScreen {
-            get {
-                return ResourceManager.GetString("Other_ShowSplashScreen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable Tab Scrolling with Ctrl + Scroll.
-        /// </summary>
-        public static string Other_TabScroll {
-            get {
-                return ResourceManager.GetString("Other_TabScroll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Other Settings.
-        /// </summary>
-        public static string Other_Title {
-            get {
-                return ResourceManager.GetString("Other_Title", resourceCulture);
+                return ResourceManager.GetString("Price_Prediction_Enable", resourceCulture);
             }
         }
         
@@ -322,20 +349,38 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to General.
+        ///   Looks up a localized string similar to Stash Commands.
         /// </summary>
-        public static string Tab_General {
+        public static string Stash {
             get {
-                return ResourceManager.GetString("Tab_General", resourceCulture);
+                return ResourceManager.GetString("Stash", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keybindings.
+        ///   Looks up a localized string similar to Enable Tab Scrolling with Ctrl + Scroll.
         /// </summary>
-        public static string Tab_Keybindings {
+        public static string Stash_EnableCtrlScroll {
             get {
-                return ResourceManager.GetString("Tab_Keybindings", resourceCulture);
+                return ResourceManager.GetString("Stash_EnableCtrlScroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Left.
+        /// </summary>
+        public static string Stash_Key_Left {
+            get {
+                return ResourceManager.GetString("Stash_Key_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab Scroll Right.
+        /// </summary>
+        public static string Stash_Key_Right {
+            get {
+                return ResourceManager.GetString("Stash_Key_Right", resourceCulture);
             }
         }
         
@@ -349,20 +394,29 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Wiki Settings.
+        /// </summary>
+        public static string Wiki {
+            get {
+                return ResourceManager.GetString("Wiki", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Wiki.
+        /// </summary>
+        public static string Wiki_Key_Open {
+            get {
+                return ResourceManager.GetString("Wiki_Key_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred Wiki.
         /// </summary>
         public static string Wiki_Preferred {
             get {
                 return ResourceManager.GetString("Wiki_Preferred", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wiki Settings.
-        /// </summary>
-        public static string Wiki_Title {
-            get {
-                return ResourceManager.GetString("Wiki_Title", resourceCulture);
             }
         }
     }

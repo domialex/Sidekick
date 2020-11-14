@@ -46,11 +46,11 @@ namespace Sidekick.Presentation.Wpf.Cheatsheets
         {
             get
             {
-                return settings.League_SelectedTabIndex;
+                return settings.Cheatsheets_SelectedIndex;
             }
             set
             {
-                Task.Run(() => mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.League_SelectedTabIndex), value)));
+                Task.Run(() => mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.Cheatsheets_SelectedIndex), value)));
             }
         }
     }

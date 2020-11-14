@@ -1,0 +1,72 @@
+<base:BaseView
+    x:Class="Sidekick.Presentation.Wpf.Settings.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Settings;assembly=Sidekick.Presentation"
+    xmlns:tabs="clr-namespace:Sidekick.Presentation.Wpf.Settings.Tabs"
+    Title="{loc:Loc Title}"
+    Width="720"
+    Height="640"
+    MinWidth="720"
+    MinHeight="640"
+    loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
+    WindowStartupLocation="CenterScreen">
+    <Window.Style>
+        <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />
+    </Window.Style>
+
+    <Grid Margin="{StaticResource Spacer}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl Margin="{StaticResource SpacerBottom}" TabStripPlacement="Left">
+            <TabItem Header="{loc:Loc General}">
+                <tabs:GeneralTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc Price}">
+                <tabs:PriceTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc Map}">
+                <tabs:MapTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc Wiki}">
+                <tabs:WikiTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc Chat}">
+                <tabs:ChatTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+            <TabItem Header="{loc:Loc Stash}">
+                <tabs:StashTab ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
+            </TabItem>
+        </TabControl>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Click="ResetCache_Click"
+                Content="{loc:Loc ResetCache}" />
+
+            <Button
+                Grid.Column="2"
+                Click="DiscardChanges_Click"
+                Content="{loc:Loc Cancel}" />
+            <Button
+                Grid.Column="3"
+                Margin="{StaticResource SpacerLeft}"
+                Click="SaveChanges_Click"
+                Content="{loc:Loc Ok}" />
+        </Grid>
+    </Grid>
+</base:BaseView>

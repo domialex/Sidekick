@@ -9,12 +9,12 @@ using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
 using Sidekick.Presentation.Wpf.Keybinds;
 using Sidekick.Presentation.Wpf.Natives;
+using Sidekick.Presentation.Wpf.Settings;
 using Sidekick.Presentation.Wpf.Setup;
 using Sidekick.Presentation.Wpf.Views;
 using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
 using Sidekick.Presentation.Wpf.Views.MapInfo;
 using Sidekick.Presentation.Wpf.Views.Prices;
-using Sidekick.Presentation.Wpf.Views.Settings;
 using Sidekick.Presentation.Wpf.Views.TrayIcon;
 
 namespace Sidekick.Presentation.Wpf
