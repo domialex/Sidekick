@@ -93,7 +93,7 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Price_Key_Check { get; set; }
 
-        public string Key_CloseWindow { get; set; }
+        public string Overlay_Key_Close { get; set; }
 
         public string Key_Exit { get; set; }
 
@@ -107,11 +107,11 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Cheatsheets_Key_Open { get; set; }
 
-        public string Key_OpenSearch { get; set; }
+        public string Price_Key_OpenSearch { get; set; }
 
         public string Key_OpenSettings { get; set; }
 
-        public string Key_OpenWiki { get; set; }
+        public string Wiki_Key_Open { get; set; }
 
         public string Key_Stash_Left { get; set; }
 

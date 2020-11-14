@@ -115,7 +115,7 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open League View.
+        ///   Looks up a localized string similar to Open Cheatsheets.
         /// </summary>
         public static string Cheatsheets_Key_Open {
             get {
@@ -169,15 +169,6 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close Window.
-        /// </summary>
-        public static string Key_CloseWindow {
-            get {
-                return ResourceManager.GetString("Key_CloseWindow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Exit to Character Selection.
         /// </summary>
         public static string Key_Exit {
@@ -214,29 +205,11 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Search.
-        /// </summary>
-        public static string Key_OpenSearch {
-            get {
-                return ResourceManager.GetString("Key_OpenSearch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Settings View.
         /// </summary>
         public static string Key_OpenSettings {
             get {
                 return ResourceManager.GetString("Key_OpenSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Wiki.
-        /// </summary>
-        public static string Key_OpenWiki {
-            get {
-                return ResourceManager.GetString("Key_OpenWiki", resourceCulture);
             }
         }
         
@@ -349,6 +322,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Window.
+        /// </summary>
+        public static string Overlay_Key_Close {
+            get {
+                return ResourceManager.GetString("Overlay_Key_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price Information.
         /// </summary>
         public static string Price {
@@ -363,6 +345,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         public static string Price_Key_Check {
             get {
                 return ResourceManager.GetString("Price_Key_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Search.
+        /// </summary>
+        public static string Price_Key_OpenSearch {
+            get {
+                return ResourceManager.GetString("Price_Key_OpenSearch", resourceCulture);
             }
         }
         
@@ -408,6 +399,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         public static string Wiki {
             get {
                 return ResourceManager.GetString("Wiki", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Wiki.
+        /// </summary>
+        public static string Wiki_Key_Open {
+            get {
+                return ResourceManager.GetString("Wiki_Key_Open", resourceCulture);
             }
         }
         

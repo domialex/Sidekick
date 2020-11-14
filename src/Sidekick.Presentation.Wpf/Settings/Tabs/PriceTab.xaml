@@ -21,9 +21,13 @@
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Price_Key_Check}" />
                     <controls:KeybindEditor
-                        Key="Key_CloseWindow"
+                        Key="Price_Key_OpenSearch"
                         ViewModel="{Binding Path=ViewModel}"
-                        Value="{Binding Path=ViewModel.Key_CloseWindow}" />
+                        Value="{Binding Path=ViewModel.Price_Key_OpenSearch}" />
+                    <controls:KeybindEditor
+                        Key="Overlay_Key_Close"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
                 </StackPanel>
             </GroupBox>
 

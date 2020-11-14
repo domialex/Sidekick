@@ -38,7 +38,7 @@ namespace Sidekick.Application.Settings
         public List<string> Price_Mods_Map { get; set; } = new List<string>();
         public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
 
-        public string Key_CloseWindow { get; set; } = "Space";
+        public string Overlay_Key_Close { get; set; } = "Space";
 
         public string Price_Key_Check { get; set; } = "Ctrl+D";
 
@@ -46,13 +46,13 @@ namespace Sidekick.Application.Settings
 
         public string Key_GoToHideout { get; set; } = "F5";
 
-        public string Key_OpenWiki { get; set; } = "Alt+W";
+        public string Wiki_Key_Open { get; set; } = "Alt+W";
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
 
         public string Key_LeaveParty { get; set; } = "F4";
 
-        public string Key_OpenSearch { get; set; } = "Alt+Q";
+        public string Price_Key_OpenSearch { get; set; } = "Alt+Q";
 
         public string Key_OpenSettings { get; set; } = "Ctrl+O";
 

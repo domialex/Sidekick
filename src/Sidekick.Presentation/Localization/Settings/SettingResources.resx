@@ -135,7 +135,7 @@
   <data name="Map_Key_Check" xml:space="preserve">
     <value>Check Map Mods</value>
   </data>
-  <data name="Key_CloseWindow" xml:space="preserve">
+  <data name="Overlay_Key_Close" xml:space="preserve">
     <value>Close Window</value>
   </data>
   <data name="Key_Exit" xml:space="preserve">
@@ -151,12 +151,12 @@
     <value>Leave Party</value>
   </data>
   <data name="Cheatsheets_Key_Open" xml:space="preserve">
-    <value>Open League View</value>
+    <value>Open Cheatsheets</value>
   </data>
-  <data name="Key_OpenSearch" xml:space="preserve">
+  <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>Open Search</value>
   </data>
-  <data name="Key_OpenWiki" xml:space="preserve">
+  <data name="Wiki_Key_Open" xml:space="preserve">
     <value>Open Wiki</value>
   </data>
   <data name="Key_Stash_Left" xml:space="preserve">

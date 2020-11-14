@@ -14,8 +14,10 @@ namespace Sidekick.Domain.Settings
         bool RetainClipboard { get; }
 
         bool Overlay_CloseWithMouse { get; }
+        string Overlay_Key_Close { get; }
 
         string Price_Key_Check { get; }
+        string Price_Key_OpenSearch { get; }
         bool Price_Prediction_Enable { get; }
         List<string> Price_Mods_Accessory { get; }
         List<string> Price_Mods_Armour { get; }
@@ -34,13 +36,11 @@ namespace Sidekick.Domain.Settings
         string Cheatsheets_Key_Open { get; }
         int Cheatsheets_SelectedIndex { get; }
 
-        string Key_CloseWindow { get; }
         string Key_Exit { get; }
         string Key_GoToHideout { get; }
         string Key_LeaveParty { get; }
-        string Key_OpenSearch { get; }
         string Key_OpenSettings { get; }
-        string Key_OpenWiki { get; }
+        string Wiki_Key_Open { get; }
         string Key_Stash_Left { get; }
         string Key_Stash_Right { get; }
 

@@ -12,5 +12,34 @@
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
     mc:Ignorable="d">
-    <ScrollViewer x:Name="ScrollViewer" />
+    <ScrollViewer x:Name="ScrollViewer">
+        <StackPanel>
+            <GroupBox Header="{loc:Loc Group_Keybinds}">
+                <StackPanel>
+                    <controls:KeybindEditor
+                        Key="Wiki_Key_Open"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Wiki_Key_Open}" />
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{loc:Loc Group_Other}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{loc:Loc Wiki_Preferred}" />
+                        <ComboBox
+                            Grid.Column="1"
+                            DisplayMemberPath="Key"
+                            ItemsSource="{Binding Path=ViewModel.WikiOptions}"
+                            SelectedValue="{Binding Path=ViewModel.Wiki_Preferred}"
+                            SelectedValuePath="Value" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

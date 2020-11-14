@@ -144,9 +144,6 @@
   <data name="Group_Other" xml:space="preserve">
     <value>其他設定</value>
   </data>
-  <data name="Key_CloseWindow" xml:space="preserve">
-    <value>關閉視窗</value>
-  </data>
   <data name="Key_Exit" xml:space="preserve">
     <value>回到選擇角色介面</value>
   </data>
@@ -158,12 +155,6 @@
   </data>
   <data name="Key_LeaveParty" xml:space="preserve">
     <value>離開組隊</value>
-  </data>
-  <data name="Key_OpenSearch" xml:space="preserve">
-    <value>在瀏覽器中開啟查詢結果</value>
-  </data>
-  <data name="Key_OpenWiki" xml:space="preserve">
-    <value>開啟資料庫</value>
   </data>
   <data name="Key_ReplyToLatestWhisper" xml:space="preserve">
     <value>回復最近的密語</value>
@@ -189,14 +180,23 @@
   <data name="Overlay_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
+  <data name="Overlay_Key_Close" xml:space="preserve">
+    <value>關閉視窗</value>
+  </data>
   <data name="Price_Key_Check" xml:space="preserve">
     <value>查詢價錢</value>
+  </data>
+  <data name="Price_Key_OpenSearch" xml:space="preserve">
+    <value>在瀏覽器中開啟查詢結果</value>
   </data>
   <data name="Price_Prediction_Enable" xml:space="preserve">
     <value>啟用價錢預測</value>
   </data>
   <data name="Wiki" xml:space="preserve">
     <value>資料庫設定</value>
+  </data>
+  <data name="Wiki_Key_Open" xml:space="preserve">
+    <value>開啟資料庫</value>
   </data>
   <data name="Wiki_Preferred" xml:space="preserve">
     <value>想使用的資料庫</value>
