@@ -29,48 +29,49 @@ namespace Sidekick.Presentation.Wpf.Views
 
         public void Open(View view, params object[] args)
         {
-            dispatcher.Invoke(() =>
-            {
-                Views.Add(new ViewInstance(this, serviceProvider, view, args));
-            });
+            Views.Add(new ViewInstance(this, serviceProvider, view, args));
         }
 
-        public bool IsOpened(View view) => Views.Any(x => x.View == view && x.WpfView.IsVisible);
+        public bool IsOpened(View view) => Views.Any(x => x.View.View == view && x.View.IsVisible);
 
         public bool IsAnyOpened() => Views.Any();
 
         public void CloseAll()
         {
+            var views = Views.Where(x => x.View.IsVisible).ToList();
+            foreach (var view in views)
+            {
+                view.View.Hide();
+            }
+
             Task.Run(async () =>
             {
-                for (var i = 0; i < Views.Count; i++)
-                {
-                    Views[i].WpfView.Hide();
-                }
-
                 await mediator.WhenAll;
 
-                while (Views.Count > 0)
+                var views = Views.Where(x => !x.View.IsVisible).ToList();
+                foreach (var view in views)
                 {
-                    Views[0].WpfView.Close();
+                    view.View.Close();
                 }
             });
         }
 
         public void Close(View view)
         {
+            var views = Views.Where(x => x.View.View == view && x.View.IsVisible).ToList();
+            foreach (var item in views)
+            {
+                item.View.Hide();
+            }
+
             Task.Run(async () =>
             {
-                var views = Views.Where(x => x.View == view);
-                var count = views.Count();
-                for (var i = 0; i < count; i++)
-                {
-                    views.ElementAt(i).WpfView.Hide();
-                }
                 await mediator.WhenAll;
-                while (Views.Any(x => x.View == view))
+
+                var views = Views.Where(x => x.View.View == view && !x.View.IsVisible).ToList();
+                foreach (var item in views)
                 {
-                    Views.FirstOrDefault(x => x.View == view)?.WpfView.Close();
+                    item.View.Close();
                 }
             });
         }

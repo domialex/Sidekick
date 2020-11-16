@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Maps.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Domain.Views.Commands;
@@ -14,18 +14,15 @@ namespace Sidekick.Application.Maps
         private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IParserService parserService;
 
         public OpenMapInfoHandler(
             IMediator mediator,
             IViewLocator viewLocator,
-            IClipboardProvider clipboardProvider,
-            IParserService parserService)
+            IClipboardProvider clipboardProvider)
         {
             this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
-            this.parserService = parserService;
         }
 
         public async Task<bool> Handle(OpenMapInfoCommand request, CancellationToken cancellationToken)
@@ -37,7 +34,7 @@ namespace Sidekick.Application.Maps
             viewLocator.Close(View.Map);
 
             // Parses the item by copying the item under the cursor
-            var item = parserService.ParseItem(await clipboardProvider.Copy());
+            var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.Copy()));
 
             if (item == null || item.Properties.MapTier == 0)
             {

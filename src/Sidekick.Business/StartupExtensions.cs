@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Business.Apis;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
@@ -13,7 +12,6 @@ using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Apis.PoeWiki;
 using Sidekick.Business.Http;
-using Sidekick.Business.ItemCategories;
 using Sidekick.Business.Languages;
 using Sidekick.Domain.Game.Languages;
 
@@ -27,7 +25,6 @@ namespace Sidekick.Business
             services.AddHttpClient();
 
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
-            services.AddSingleton<IItemCategoryService, ItemCategoryService>();
             services.AddSingleton<ILanguageProvider, LanguageProvider>();
             services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
@@ -39,7 +36,6 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeTradeClient, PoeTradeClient>();
             services.AddSingleton<IStatDataService, StatDataService>();
             services.AddSingleton<IItemDataService, ItemDataService>();
-            services.AddSingleton<IParserService, ParserService>();
             services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
             services.AddSingleton<IPoeNinjaCache, PoeNinjaCache>();
             services.AddSingleton<IPseudoStatDataService, PseudoStatDataService>();

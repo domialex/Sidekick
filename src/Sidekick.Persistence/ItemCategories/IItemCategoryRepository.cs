@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using Sidekick.Persistence.ItemCategories;
 
-namespace Sidekick.Business.ItemCategories
+namespace Sidekick.Persistence.ItemCategories
 {
-    public interface IItemCategoryService
+    public interface IItemCategoryRepository
     {
         Task<ItemCategory> Get(string type);
         Task SaveCategory(string type, string category);

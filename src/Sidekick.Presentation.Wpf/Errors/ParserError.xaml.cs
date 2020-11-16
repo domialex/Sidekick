@@ -26,11 +26,8 @@ namespace Sidekick.Presentation.Wpf.Errors
             }
             SetTopPercent(50, LocationSource.Center);
 
-            Task.Run(async () =>
-            {
-                await Task.Delay(2000);
-                Close();
-            });
+            await Task.Delay(2000);
+            Close();
         }
     }
 }

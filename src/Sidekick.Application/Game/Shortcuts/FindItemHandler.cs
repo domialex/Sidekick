@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Shortcuts;
 using Sidekick.Domain.Keybinds;
 
@@ -12,22 +12,22 @@ namespace Sidekick.Application.Game.Shortcuts
     {
         private readonly IKeybindsProvider keybindsProvider;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IParserService parserService;
+        private readonly IMediator mediator;
 
         public FindItemHandler(
             IKeybindsProvider keybindsProvider,
             IClipboardProvider clipboardProvider,
-            IParserService parserService)
+            IMediator mediator)
         {
             this.keybindsProvider = keybindsProvider;
             this.clipboardProvider = clipboardProvider;
-            this.parserService = parserService;
+            this.mediator = mediator;
         }
 
         public async Task<bool> Handle(FindItemCommand request, CancellationToken cancellationToken)
         {
             var text = await clipboardProvider.Copy();
-            var item = parserService.ParseItem(text);
+            var item = await mediator.Send(new ParseItemCommand(text));
 
             if (item != null)
             {

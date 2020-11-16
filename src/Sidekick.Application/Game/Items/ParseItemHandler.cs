@@ -1,16 +1,21 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Business.Apis.Poe.Parser.Patterns;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Tokenizers.ItemName;
+using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Business.Apis.Poe.Parser
+namespace Sidekick.Application.Game.Items
 {
-    public class ParserService : IParserService
+    public class ParseItemHandler : ICommandHandler<ParseItemCommand, Item>
     {
         private readonly ILogger logger;
         private readonly IStatDataService statsDataService;
@@ -19,11 +24,10 @@ namespace Sidekick.Business.Apis.Poe.Parser
         private readonly ItemNameTokenizer itemNameTokenizer;
 
         private readonly Regex newLinePattern = new Regex("[\\r\\n]+");
-
         private const string SEPARATOR_PATTERN = "--------";
 
-        public ParserService(
-            ILogger<ParserService> logger,
+        public ParseItemHandler(
+            ILogger<ParseItemHandler> logger,
             IStatDataService statsDataService,
             IItemDataService itemDataService,
             IParserPatterns patterns)
@@ -35,16 +39,16 @@ namespace Sidekick.Business.Apis.Poe.Parser
             itemNameTokenizer = new ItemNameTokenizer();
         }
 
-        public Item ParseItem(string itemText)
+        public Task<Item> Handle(ParseItemCommand request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(itemText))
+            if (string.IsNullOrEmpty(request.ItemText))
             {
-                return null;
+                return Task.FromResult<Item>(null);
             }
 
             try
             {
-                itemText = itemNameTokenizer.CleanString(itemText);
+                var itemText = itemNameTokenizer.CleanString(request.ItemText);
 
                 var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);
                 var splitSections = wholeSections
@@ -68,12 +72,18 @@ namespace Sidekick.Business.Apis.Poe.Parser
                     itemData.Rarity = GetRarity(itemSections.Rarity);
                 }
 
-                return ParseItemDetails(itemText, itemSections, itemData);
+                if (itemData.Rarity == Rarity.Unknown)
+                {
+                    logger.LogError("Could not parse item.");
+                    return Task.FromResult<Item>(null);
+                }
+
+                return Task.FromResult(ParseItemDetails(itemText, itemSections, itemData));
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Could not parse item.");
-                return null;
+                return Task.FromResult<Item>(null);
             }
         }
 
@@ -174,7 +184,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                             case 'W': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.White }); break;
                             case 'A': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Abyss }); break;
                         }
-                        groupValue = groupValue.Substring(1);
+                        groupValue = groupValue[1..];
                     }
                 }
             }
@@ -226,7 +236,7 @@ namespace Sidekick.Business.Apis.Poe.Parser
                     return pattern.Key;
                 }
             }
-            throw new Exception("Can't parse rarity.");
+            return Rarity.Unknown;
         }
     }
 }

@@ -21,15 +21,15 @@ namespace Sidekick.Presentation.Wpf.Views
     public class ViewInstance : IDisposable
     {
         private static readonly Dictionary<View, Type> ViewTypes = new Dictionary<View, Type>() {
-            { View.About, typeof(AboutView) },
-            { View.Initialization, typeof(InitializationView) },
-            { View.Map, typeof(MapInfoView) },
-            { View.League, typeof(LeagueView) },
-            { View.Logs, typeof(ApplicationLogsView) },
-            { View.ParserError, typeof(Errors.ParserError) },
-            { View.Price, typeof(PriceView) },
-            { View.Settings, typeof(SettingsView) },
-            { View.Setup, typeof(SetupView) },
+            { Domain.Views.View.About, typeof(AboutView) },
+            { Domain.Views.View.Initialization, typeof(InitializationView) },
+            { Domain.Views.View.Map, typeof(MapInfoView) },
+            { Domain.Views.View.League, typeof(LeagueView) },
+            { Domain.Views.View.Logs, typeof(ApplicationLogsView) },
+            { Domain.Views.View.ParserError, typeof(Errors.ParserError) },
+            { Domain.Views.View.Price, typeof(PriceView) },
+            { Domain.Views.View.Settings, typeof(SettingsView) },
+            { Domain.Views.View.Setup, typeof(SetupView) },
         };
 
         private readonly ViewLocator viewLocator;
@@ -46,7 +46,6 @@ namespace Sidekick.Presentation.Wpf.Views
             }
 
             this.viewLocator = viewLocator;
-            View = view;
             Scope = serviceProvider.CreateScope();
 
             // Still needed for localization of league overlay models
@@ -54,14 +53,14 @@ namespace Sidekick.Presentation.Wpf.Views
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
             // View initialization and show
-            WpfView = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
-            WpfView.Closed += View_Closed;
+            View = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
+            View.Closed += View_Closed;
 
             Task.Run(async () =>
             {
                 try
                 {
-                    await WpfView.Open(args);
+                    await View.Open(args);
                 }
                 catch (Exception e)
                 {
@@ -73,9 +72,7 @@ namespace Sidekick.Presentation.Wpf.Views
 
         private IServiceScope Scope { get; set; }
 
-        public ISidekickView WpfView { get; set; }
-
-        public View View { get; }
+        public ISidekickView View { get; set; }
 
         private void View_Closed(object sender, EventArgs e)
         {
@@ -90,10 +87,10 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected virtual void Dispose(bool disposing)
         {
-            if (WpfView != null)
+            if (View != null)
             {
-                WpfView.Closed -= View_Closed;
-                WpfView.Close();
+                View.Closed -= View_Closed;
+                View.Close();
             }
             viewLocator.Views.Remove(this);
             Scope?.Dispose();

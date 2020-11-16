@@ -1,7 +1,7 @@
 using System;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Prices.Commands;
 using Sidekick.Domain.Views;
 
@@ -12,20 +12,17 @@ namespace Sidekick.Presentation.Wpf.Views.TrayIcon
         private readonly App application;
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IParserService parserService;
         private readonly IMediator mediator;
 
         public TrayIconViewModel(
             App application,
             IViewLocator viewLocator,
             IClipboardProvider clipboardProvider,
-            IParserService parserService,
             IMediator mediator)
         {
             this.application = application;
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
-            this.parserService = parserService;
             this.mediator = mediator;
         }
 
@@ -44,14 +41,14 @@ namespace Sidekick.Presentation.Wpf.Views.TrayIcon
         #region Debug Price Check
         public System.Windows.Input.ICommand DebugPriceCheckCommand0 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(await clipboardProvider.GetText());
+            var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.GetText()));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand1 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Unique
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Unique
 Blood of the Karui
 Sanctified Life Flask
 --------
@@ -76,14 +73,14 @@ So their King might go on.""
 - Lavianga, Advisor to Kaom
 --------
 Right click to drink.Can only hold charges while in belt.Refills as you kill monsters.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand2 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Rare
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Rare
 Vengeance Crest
 Eternal Burgonet
 --------
@@ -107,14 +104,14 @@ Explosive Arrow deals 25% increased Damage (enchant)
 +26% to Cold Resistance (crafted)
 --------
 Note: ~price 1 chaos
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand3 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Currency
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Currency
 Divine Orb
 --------
 Stack Size: 2/10
@@ -123,14 +120,14 @@ Randomises the numeric values of the random modifiers on an item
 --------
 Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand4 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Normal
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Normal
 The Four Feral Exiles
 --------
 In a faraway dream, four souls far from home prepare to fight to the death.
@@ -138,14 +135,14 @@ In a faraway dream, four souls far from home prepare to fight to the death.
 You will enter a map that holds four additional Rogue Exiles.
 --------
 Right-click to add this prophecy to your character.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand5 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rareté: Unique
+            var item = await mediator.Send(new ParseItemCommand(@"Rareté: Unique
 Assaut de Farrul
 Gantelets en écailles d'hydre
 --------
@@ -173,14 +170,14 @@ Une bête affamée ne gaspille jamais son énergie.
 Chaque coup, quelle que soit sa force, doit être porté en vue de la victoire.
 La Première des Plaines nous enseigne que même
 la plus grande des proies peut être éventuellement déchiquetée.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand6 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Rare
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Rare
 Death Nails
 Assassin's Mitts
 --------
@@ -200,14 +197,14 @@ Item Level: 61
 +73 to maximum Life
 +14% to Lightning Resistance
 0.23% of Physical Attack Damage Leeched as Mana
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand7 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Rare
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Rare
 Blight Cut
 Cobalt Jewel
 --------
@@ -219,14 +216,14 @@ Item Level: 68
 15% increased Damage with Wands
 --------
 Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand8 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Gem
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Gem
 Double Strike
 --------
 Vaal, Attack, Melee, Strike, Duration, Physical
@@ -266,14 +263,14 @@ Place into an item socket of the right colour to gain this skill.Right click to 
 Corrupted
 --------
 Note: ~price 2 chaos
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand9 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Divination Card
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Divination Card
 The Saint's Treasure
 --------
 Stack Size: 1/10
@@ -281,14 +278,14 @@ Stack Size: 1/10
 2x Exalted Orb
 --------
 Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
         public System.Windows.Input.ICommand DebugPriceCheckCommand10 => new RelayCommand(async _ =>
         {
-            var item = parserService.ParseItem(@"Rarity: Normal
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Normal
 Contract: Underbelly
 --------
 Client: Marcine Clavus
@@ -302,7 +299,7 @@ Item Level: 41
 have made it my life's work. There must be a deeper meaning!""
 --------
 Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist.
-");
+"));
 
             await mediator.Send(new PriceCheckItemCommand(item));
         });

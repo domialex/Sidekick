@@ -12,11 +12,11 @@ using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Apis.PoePriceInfo.Models;
-using Sidekick.Business.ItemCategories;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
+using Sidekick.Persistence.ItemCategories;
 using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Debounce;
 using Sidekick.Presentation.Wpf.Extensions;
@@ -38,7 +38,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         private readonly ILanguageProvider languageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly ISidekickSettings settings;
-        private readonly IItemCategoryService itemCategoryService;
+        private readonly IItemCategoryRepository itemCategoryRepository;
         private readonly IMediator mediator;
 
         public PriceViewModel(
@@ -50,7 +50,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             ILanguageProvider languageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             ISidekickSettings settings,
-            IItemCategoryService itemCategoryService,
+            IItemCategoryRepository itemCategoryRepository,
             IMediator mediator)
         {
             this.logger = logger;
@@ -61,7 +61,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             this.languageProvider = languageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
             this.settings = settings;
-            this.itemCategoryService = itemCategoryService;
+            this.itemCategoryRepository = itemCategoryRepository;
             this.mediator = mediator;
 
             PropertyChanged += PriceViewModel_PropertyChanged;
@@ -199,7 +199,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 CategoryOptions.Add(PriceResources.Class_CurrencyIncubator, "currency.incubator");
             }
 
-            SelectedCategory = (await itemCategoryService.Get(Item.TypeLine))?.Category;
+            SelectedCategory = (await itemCategoryRepository.Get(Item.TypeLine))?.Category;
             if (!CategoryOptions.Values.Any(x => x == SelectedCategory))
             {
                 SelectedCategory = null;
@@ -807,11 +807,11 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             {
                 if (string.IsNullOrEmpty(SelectedCategory))
                 {
-                    _ = itemCategoryService.Delete(Item.TypeLine);
+                    _ = itemCategoryRepository.Delete(Item.TypeLine);
                 }
                 else
                 {
-                    _ = itemCategoryService.SaveCategory(Item.TypeLine, SelectedCategory);
+                    _ = itemCategoryRepository.SaveCategory(Item.TypeLine, SelectedCategory);
                 }
                 UpdateDebounce();
             }

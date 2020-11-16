@@ -44,11 +44,6 @@ namespace Sidekick.Business.Apis.PoeDb
                 return;
             }
 
-            await mediator.Send(new OpenBrowserCommand(CreateUri(item)));
-        }
-
-        private Uri CreateUri(Item item)
-        {
             var subUrl = item.Rarity switch
             {
                 Rarity.Unique => SubUrlUnique,
@@ -58,7 +53,8 @@ namespace Sidekick.Business.Apis.PoeDb
 
             var searchLink = item.Name ?? item.Type;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
-            return new Uri(PoeDbBaseUri + wikiLink);
+
+            await mediator.Send(new OpenBrowserCommand(new Uri(PoeDbBaseUri + wikiLink)));
         }
     }
 }

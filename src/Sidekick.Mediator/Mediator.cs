@@ -28,17 +28,17 @@ namespace Sidekick.Mediator
 
         private Task AddTask(Task task)
         {
-            RunAfterHandler(task);
+            AddRunningTask(task);
             return task;
         }
 
         private Task<T> AddTask<T>(Task<T> task)
         {
-            RunAfterHandler(task);
+            AddRunningTask(task);
             return task;
         }
 
-        private void RunAfterHandler(Task task)
+        private void AddRunningTask(Task task)
         {
             lock (RunningTasks)
             {
@@ -50,7 +50,6 @@ namespace Sidekick.Mediator
         public Task WhenAll => Task.Run(async () =>
         {
             await Task.WhenAll(RunningTasks.Select(x => x).ToList());
-            await Task.Delay(100);
         });
 
         public Task Notify<TNotification>(TNotification notification, CancellationToken cancellationToken = default)

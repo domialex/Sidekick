@@ -19,14 +19,13 @@ namespace Sidekick.Presentation.Wpf.Views
         private readonly IViewPreferenceRepository viewPreferenceRepository;
         private readonly ILogger logger;
         private readonly bool closeOnBlur;
-        private readonly Domain.Views.View id;
 
         protected BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        protected BaseView(Domain.Views.View id, IServiceProvider serviceProvider, bool closeOnBlur = false)
+        protected BaseView(Domain.Views.View view, IServiceProvider serviceProvider, bool closeOnBlur = false)
         {
             settings = serviceProvider.GetService<ISidekickSettings>();
             viewPreferenceRepository = serviceProvider.GetService<IViewPreferenceRepository>();
@@ -43,8 +42,10 @@ namespace Sidekick.Presentation.Wpf.Views
             }
 
             this.closeOnBlur = closeOnBlur;
-            this.id = id;
+            View = view;
         }
+
+        public Domain.Views.View View { get; }
 
         public virtual Task Open(params object[] args)
         {
@@ -92,7 +93,7 @@ namespace Sidekick.Presentation.Wpf.Views
 
             try
             {
-                await viewPreferenceRepository.SaveSize(id, GetWidth(), GetHeight());
+                await viewPreferenceRepository.SaveSize(View, GetWidth(), GetHeight());
             }
             catch (ObjectDisposedException)
             {
@@ -118,7 +119,7 @@ namespace Sidekick.Presentation.Wpf.Views
         {
             Task.Run(async () =>
             {
-                var window = await viewPreferenceRepository.Get(id);
+                var window = await viewPreferenceRepository.Get(View);
                 if (window != null)
                 {
                     var previousWidth = GetWidth();

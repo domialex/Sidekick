@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
+using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Prices.Commands;
 using Sidekick.Domain.Views;
 
@@ -12,16 +12,16 @@ namespace Sidekick.Application.Prices
     {
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IParserService parserService;
+        private readonly IMediator mediator;
 
         public PriceCheckItemHandler(
             IViewLocator viewLocator,
             IClipboardProvider clipboardProvider,
-            IParserService parserService)
+            IMediator mediator)
         {
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
-            this.parserService = parserService;
+            this.mediator = mediator;
         }
 
         public async Task<bool> Handle(PriceCheckItemCommand request, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ namespace Sidekick.Application.Prices
             if (item == null)
             {
                 var itemText = await clipboardProvider.Copy();
-                item = parserService.ParseItem(itemText);
+                item = await mediator.Send(new ParseItemCommand(itemText));
             }
 
             if (item == null)
