@@ -1,9 +1,14 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis;
+using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Items.Commands;
+using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Views;
 using Sidekick.Domain.Wikis.Commands;
 
 namespace Sidekick.Application.Wikis
@@ -11,17 +16,23 @@ namespace Sidekick.Application.Wikis
     public class OpenWikiPageHandler : ICommandHandler<OpenWikiPageCommand, bool>
     {
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IWikiProvider wikiProvider;
+        private readonly ILanguageProvider languageProvider;
         private readonly IMediator mediator;
+        private readonly IViewLocator viewLocator;
+        private readonly ISidekickSettings settings;
 
         public OpenWikiPageHandler(
             IClipboardProvider clipboardProvider,
-            IWikiProvider wikiProvider,
-            IMediator mediator)
+            ILanguageProvider languageProvider,
+            IMediator mediator,
+            IViewLocator viewLocator,
+            ISidekickSettings settings)
         {
             this.clipboardProvider = clipboardProvider;
-            this.wikiProvider = wikiProvider;
+            this.languageProvider = languageProvider;
             this.mediator = mediator;
+            this.viewLocator = viewLocator;
+            this.settings = settings;
         }
 
         public async Task<bool> Handle(OpenWikiPageCommand request, CancellationToken cancellationToken)
@@ -29,13 +40,69 @@ namespace Sidekick.Application.Wikis
             var text = await clipboardProvider.Copy();
             var item = await mediator.Send(new ParseItemCommand(text));
 
-            if (item != null)
+            if (item == null)
             {
-                await wikiProvider.Open(item);
-                return true;
+                // If the item can't be parsed, show an error
+                viewLocator.Open(View.ParserError);
+                return false;
+            }
+            else if (!languageProvider.IsEnglish)
+            {
+                // Only available for english language
+                viewLocator.Open(View.AvailableInEnglishError);
+                return false;
+            }
+            else if (string.IsNullOrEmpty(item.Name))
+            {
+                // Most items will open the basetype wiki link.
+                // Does not work for unique items that are not identified.
+                viewLocator.Open(View.InvalidItemError);
+                return false;
             }
 
-            return false;
+            if (settings.Wiki_Preferred == WikiSetting.PoeDb)
+            {
+                await OpenPoeDb(item);
+            }
+            else
+            {
+                await OpenPoeWiki(item);
+            }
+
+            return true;
         }
+
+        #region PoeDb
+        private const string PoeDb_BaseUri = "https://poedb.tw/";
+        private const string PoeDb_SubUrlUnique = "unique.php?n=";
+        private const string PoeDb_SubUrlGem = "gem.php?n=";
+        private const string PoeDb_SubUrlItem = "item.php?n=";
+        private Task OpenPoeDb(Item item)
+        {
+            var subUrl = item.Rarity switch
+            {
+                Rarity.Unique => PoeDb_SubUrlUnique,
+                Rarity.Gem => PoeDb_SubUrlGem,
+                _ => PoeDb_SubUrlItem
+            };
+
+            var searchLink = item.Name ?? item.Type;
+            var wikiLink = subUrl + searchLink.Replace(" ", "+");
+
+            return mediator.Send(new OpenBrowserCommand(new Uri(PoeDb_BaseUri + wikiLink)));
+        }
+        #endregion
+
+        #region PoeWiki
+        private Task OpenPoeWiki(Item item)
+        {
+            // determine search link, so wiki can be opened for any item
+            var searchLink = item.Name ?? item.Type;
+            // replace space encodes with '_' to match the link layout of the poe wiki and then url encode it
+            var itemLink = System.Net.WebUtility.UrlEncode(searchLink.Replace(" ", "_"));
+
+            return mediator.Send(new OpenBrowserCommand(new Uri($"https://pathofexile.gamepedia.com/{itemLink}")));
+        }
+        #endregion
     }
 }

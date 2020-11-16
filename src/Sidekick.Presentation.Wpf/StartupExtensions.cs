@@ -30,8 +30,12 @@ namespace Sidekick.Presentation.Wpf
             services.AddScoped<ApplicationLogsView>();
             services.AddScoped<ApplicationLogViewModel>();
 
+            services.AddScoped<AvailableInEnglishError>();
+
             services.AddScoped<InitializationView>();
             services.AddSingleton<InitializationViewModel>();
+
+            services.AddScoped<InvalidItemError>();
 
             services.AddScoped<LeagueView>();
             services.AddScoped<LeagueViewModel>();

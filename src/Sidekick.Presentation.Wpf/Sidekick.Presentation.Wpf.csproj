@@ -239,6 +239,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Errors\AvailableInEnglishError.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Errors\InvalidItemError.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Settings\Tabs\StashTab.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -258,6 +264,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Errors\AvailableInEnglishError.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Errors\InvalidItemError.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Settings\Tabs\StashTab.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

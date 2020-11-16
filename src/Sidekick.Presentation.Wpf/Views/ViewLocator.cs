@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Sidekick.Domain.Views;
 using Sidekick.Mediator;
 
@@ -12,16 +11,13 @@ namespace Sidekick.Presentation.Wpf.Views
     {
         private readonly IServiceProvider serviceProvider;
         private readonly IMediatorTasks mediator;
-        private readonly Dispatcher dispatcher;
 
         public ViewLocator(
             IServiceProvider serviceProvider,
-            IMediatorTasks mediator,
-            Dispatcher dispatcher)
+            IMediatorTasks mediator)
         {
             this.serviceProvider = serviceProvider;
             this.mediator = mediator;
-            this.dispatcher = dispatcher;
             Views = new List<ViewInstance>();
         }
 

@@ -2,7 +2,7 @@ namespace Sidekick.Domain.Views
 {
     public class ViewPreference
     {
-        public View Id { get; set; }
+        public string Id { get; set; }
 
         public double Height { get; set; }
 

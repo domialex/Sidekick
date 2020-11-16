@@ -9,6 +9,7 @@ using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
+using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
 using Sidekick.Presentation.Wpf.Settings;
 using Sidekick.Presentation.Wpf.Setup;
@@ -22,11 +23,13 @@ namespace Sidekick.Presentation.Wpf.Views
     {
         private static readonly Dictionary<View, Type> ViewTypes = new Dictionary<View, Type>() {
             { Domain.Views.View.About, typeof(AboutView) },
+            { Domain.Views.View.AvailableInEnglishError, typeof(AvailableInEnglishError) },
             { Domain.Views.View.Initialization, typeof(InitializationView) },
+            { Domain.Views.View.InvalidItemError, typeof(InvalidItemError) },
             { Domain.Views.View.Map, typeof(MapInfoView) },
             { Domain.Views.View.League, typeof(LeagueView) },
             { Domain.Views.View.Logs, typeof(ApplicationLogsView) },
-            { Domain.Views.View.ParserError, typeof(Errors.ParserError) },
+            { Domain.Views.View.ParserError, typeof(ParserError) },
             { Domain.Views.View.Price, typeof(PriceView) },
             { Domain.Views.View.Settings, typeof(SettingsView) },
             { Domain.Views.View.Setup, typeof(SetupView) },

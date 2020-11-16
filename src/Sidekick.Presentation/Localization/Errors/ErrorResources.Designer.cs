@@ -61,6 +61,24 @@ namespace Sidekick.Presentation.Localization.Errors {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This feature is only available when the game is running in english..
+        /// </summary>
+        public static string AvailableInEnglishError {
+            get {
+                return ResourceManager.GetString("AvailableInEnglishError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This item is invalid for this feature..
+        /// </summary>
+        public static string InvalidItemError {
+            get {
+                return ResourceManager.GetString("InvalidItemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to parse this item. Make sure you have set your game language correctly in the settings..
         /// </summary>
         public static string ParserError {
