@@ -92,13 +92,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             }
         }
 
-        public new void Show()
-        {
-            base.Show();
-            var scrollViewer = ItemList.GetChildOfType<ScrollViewer>();
-            scrollViewer?.ScrollToTop();
-        }
-
         private async void OpenLink(object sender, RequestNavigateEventArgs e)
         {
             await mediator.Send(new OpenBrowserCommand(e.Uri));

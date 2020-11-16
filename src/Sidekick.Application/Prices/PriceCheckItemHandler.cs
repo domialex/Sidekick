@@ -5,24 +5,20 @@ using Sidekick.Business.Apis.Poe.Parser;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Prices.Commands;
 using Sidekick.Domain.Views;
-using Sidekick.Domain.Views.Commands;
 
 namespace Sidekick.Application.Prices
 {
     public class PriceCheckItemHandler : ICommandHandler<PriceCheckItemCommand, bool>
     {
-        private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
         private readonly IParserService parserService;
 
         public PriceCheckItemHandler(
-            IMediator mediator,
             IViewLocator viewLocator,
             IClipboardProvider clipboardProvider,
             IParserService parserService)
         {
-            this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
             this.parserService = parserService;
@@ -30,8 +26,6 @@ namespace Sidekick.Application.Prices
 
         public async Task<bool> Handle(PriceCheckItemCommand request, CancellationToken cancellationToken)
         {
-            await mediator.Send(new CloseViewCommand());
-
             // Close previously opened price views
             viewLocator.Close(View.ParserError);
             viewLocator.Close(View.Price);

@@ -45,7 +45,7 @@ namespace Sidekick.Presentation.Wpf.Setup
             this.sidekickSettings = sidekickSettings;
             this.mediator = mediator;
             this.localizer = localizer;
-            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName.Substring(1), x.Name));
+            uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName[1..], x.Name));
             languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             sidekickSettings.CopyValuesTo(this);

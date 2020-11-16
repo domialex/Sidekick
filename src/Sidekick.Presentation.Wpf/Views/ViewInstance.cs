@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using System.Windows.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
@@ -37,7 +37,7 @@ namespace Sidekick.Presentation.Wpf.Views
         public ViewInstance(ViewLocator viewLocator, IServiceProvider serviceProvider, View view, params object[] args)
         {
             var logger = serviceProvider.GetRequiredService<ILogger<ViewInstance>>();
-            var dispatcher = serviceProvider.GetRequiredService<Dispatcher>();
+            var settings = serviceProvider.GetRequiredService<ISidekickSettings>();
 
             if (!ViewTypes.ContainsKey(view))
             {
@@ -50,7 +50,6 @@ namespace Sidekick.Presentation.Wpf.Views
             Scope = serviceProvider.CreateScope();
 
             // Still needed for localization of league overlay models
-            var settings = Scope.ServiceProvider.GetRequiredService<ISidekickSettings>();
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
 
@@ -58,7 +57,7 @@ namespace Sidekick.Presentation.Wpf.Views
             WpfView = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
             WpfView.Closed += View_Closed;
 
-            dispatcher.InvokeAsync(async () =>
+            Task.Run(async () =>
             {
                 try
                 {
