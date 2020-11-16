@@ -14,6 +14,7 @@ namespace Sidekick.Presentation.Wpf.Views
         protected BaseOverlay(View id, IServiceProvider serviceProvider)
             : base(id, serviceProvider, closeOnBlur: true)
         {
+            Topmost = true;
         }
     }
 }

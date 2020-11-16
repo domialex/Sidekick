@@ -12,7 +12,6 @@
     Height="140"
     loc:Translation.ResourceManager="{x:Static resx:ErrorResources.ResourceManager}"
     ResizeMode="NoResize"
-    Topmost="True"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">

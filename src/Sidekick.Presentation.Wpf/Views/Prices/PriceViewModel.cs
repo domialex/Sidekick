@@ -94,7 +94,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             Item = item;
 
             CategoryOptions.Add(Item.TypeLine, null);
-            // CategoryOptions.Add(PriceResources.Class_Any, null);
             if (Item.Category == Category.Weapon)
             {
                 CategoryOptions.Add(PriceResources.Class_Weapon, "weapon");
@@ -206,7 +205,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 SelectedCategory = null;
             }
 
-            ShowCategory = (Item?.Rarity == Rarity.Rare || Item?.Rarity == Rarity.Magic || Item?.Rarity == Rarity.Normal) && CategoryOptions.Count > 1;
+            ShowCategory = (Item?.Rarity == Rarity.Rare || Item?.Rarity == Rarity.Magic || Item?.Rarity == Rarity.Normal) && CategoryOptions.Count > 2;
 
             InitializeFilters();
 

@@ -20,7 +20,6 @@
     MinWidth="720"
     MinHeight="320"
     loc:Translation.ResourceManager="{x:Static resx:LeagueResources.ResourceManager}"
-    Topmost="True"
     mc:Ignorable="d">
     <Window.Style>
         <Style BasedOn="{StaticResource {x:Type Window}}" TargetType="Window" />

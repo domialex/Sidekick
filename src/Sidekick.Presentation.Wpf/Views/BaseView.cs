@@ -165,7 +165,7 @@ namespace Sidekick.Presentation.Wpf.Views
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(() => SetTopPercent(y));
+                Dispatcher.Invoke(() => SetTopPercent(y, source));
                 return;
             }
 
@@ -204,7 +204,7 @@ namespace Sidekick.Presentation.Wpf.Views
         {
             if (!Dispatcher.CheckAccess())
             {
-                Dispatcher.Invoke(() => SetLeftPercent(x));
+                Dispatcher.Invoke(() => SetLeftPercent(x, source));
                 return;
             }
 
