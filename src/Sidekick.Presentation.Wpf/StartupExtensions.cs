@@ -26,21 +26,28 @@ namespace Sidekick.Presentation.Wpf
             services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<AboutView>();
+
             services.AddScoped<ApplicationLogsView>();
+            services.AddScoped<ApplicationLogViewModel>();
+
             services.AddScoped<InitializationView>();
+            services.AddSingleton<InitializationViewModel>();
+
             services.AddScoped<LeagueView>();
-            services.AddScoped<PriceView>();
-            services.AddScoped<MapInfoView>();
-            services.AddScoped<SettingsView>();
-            services.AddScoped<SetupView>();
+            services.AddScoped<LeagueViewModel>();
+
             services.AddScoped<ParserError>();
 
-            services.AddScoped<ApplicationLogViewModel>();
-            services.AddScoped<LeagueViewModel>();
+            services.AddScoped<PriceView>();
             services.AddScoped<PriceViewModel>();
+
+            services.AddScoped<MapInfoView>();
             services.AddScoped<MapInfoViewModel>();
+
+            services.AddScoped<SettingsView>();
             services.AddScoped<SettingsViewModel>();
-            services.AddSingleton<InitializationViewModel>();
+
+            services.AddScoped<SetupView>();
             services.AddScoped<SetupViewModel>();
 
             services.AddSingleton<INativeProcess, NativeProcess>();

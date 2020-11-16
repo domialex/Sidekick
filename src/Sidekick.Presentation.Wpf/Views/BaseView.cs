@@ -18,7 +18,6 @@ namespace Sidekick.Presentation.Wpf.Views
         private readonly ISidekickSettings settings;
         private readonly IViewPreferenceRepository viewPreferenceRepository;
         private readonly ILogger logger;
-        private readonly Dispatcher dispatcher;
         private readonly bool closeOnBlur;
         private readonly Domain.Views.View id;
 
@@ -32,7 +31,6 @@ namespace Sidekick.Presentation.Wpf.Views
             settings = serviceProvider.GetService<ISidekickSettings>();
             viewPreferenceRepository = serviceProvider.GetService<IViewPreferenceRepository>();
             logger = serviceProvider.GetService<ILogger<BaseView>>();
-            dispatcher = serviceProvider.GetService<Dispatcher>();
 
             IsVisibleChanged += EnsureBounds;
             Loaded += EnsureBounds;
@@ -50,14 +48,41 @@ namespace Sidekick.Presentation.Wpf.Views
 
         public virtual Task Open(params object[] args)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => Open());
+                Dispatcher.Invoke(() =>
+                {
+                    Show();
+                    Activate();
+                });
+                return Task.CompletedTask;
             }
 
             Show();
             Activate();
             return Task.CompletedTask;
+        }
+
+        public new void Close()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => base.Close());
+                return;
+            }
+
+            base.Close();
+        }
+
+        public new void Hide()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => base.Hide());
+                return;
+            }
+
+            base.Hide();
         }
 
         protected bool IsClosing = false;
@@ -138,9 +163,9 @@ namespace Sidekick.Presentation.Wpf.Views
         private LocationSource TopLocationSource = LocationSource.Begin;
         protected void SetTopPercent(double y, LocationSource source = LocationSource.Begin)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => SetTopPercent(y));
+                Dispatcher.Invoke(() => SetTopPercent(y));
                 return;
             }
 
@@ -177,9 +202,9 @@ namespace Sidekick.Presentation.Wpf.Views
         private LocationSource LeftLocationSource = LocationSource.Begin;
         protected void SetLeftPercent(double x, LocationSource source = LocationSource.Begin)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => SetLeftPercent(x));
+                Dispatcher.Invoke(() => SetLeftPercent(x));
                 return;
             }
 
@@ -215,9 +240,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected void EnsureBounds()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => EnsureBounds());
+                Dispatcher.Invoke(() => EnsureBounds());
                 return;
             }
 
@@ -255,9 +280,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected double GetWidth()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => GetWidth());
+                return Dispatcher.Invoke(() => GetWidth());
             }
 
             return ActualWidth;
@@ -265,9 +290,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected double GetWidthPercent()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => GetWidthPercent());
+                return Dispatcher.Invoke(() => GetWidthPercent());
             }
 
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
@@ -276,9 +301,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected double GetHeight()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => GetHeight());
+                return Dispatcher.Invoke(() => GetHeight());
             }
 
             return ActualHeight;
@@ -286,9 +311,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected double GetHeightPercent()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => GetHeightPercent());
+                return Dispatcher.Invoke(() => GetHeightPercent());
             }
 
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
@@ -297,9 +322,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected void SetWidth(double width)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => SetWidth(width));
+                Dispatcher.Invoke(() => SetWidth(width));
                 return;
             }
 
@@ -308,9 +333,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected void SetHeight(double height)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => SetHeight(height));
+                Dispatcher.Invoke(() => SetHeight(height));
                 return;
             }
 
@@ -319,9 +344,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected double GetMouseXPercent()
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                return dispatcher.Invoke(() => GetMouseXPercent());
+                return Dispatcher.Invoke(() => GetMouseXPercent());
             }
 
             var screen = Screen.FromPoint(MyCursor.Position).Bounds;
@@ -331,9 +356,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected void MoveX(double x)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => MoveX(x));
+                Dispatcher.Invoke(() => MoveX(x));
                 return;
             }
 
@@ -342,9 +367,9 @@ namespace Sidekick.Presentation.Wpf.Views
 
         protected void MoveY(double y)
         {
-            if (!dispatcher.CheckAccess())
+            if (!Dispatcher.CheckAccess())
             {
-                dispatcher.Invoke(() => MoveY(y));
+                Dispatcher.Invoke(() => MoveY(y));
                 return;
             }
 

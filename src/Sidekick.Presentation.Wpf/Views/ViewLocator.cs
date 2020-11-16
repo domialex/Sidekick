@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using Sidekick.Domain.Views;
 using Sidekick.Mediator;
@@ -34,13 +35,13 @@ namespace Sidekick.Presentation.Wpf.Views
             });
         }
 
-        public bool IsOpened(View view) => Views.Any(x => x.View == view);
+        public bool IsOpened(View view) => Views.Any(x => x.View == view && x.WpfView.IsVisible);
 
         public bool IsAnyOpened() => Views.Any();
 
         public void CloseAll()
         {
-            dispatcher.Invoke(async () =>
+            Task.Run(async () =>
             {
                 for (var i = 0; i < Views.Count; i++)
                 {
@@ -58,7 +59,7 @@ namespace Sidekick.Presentation.Wpf.Views
 
         public void Close(View view)
         {
-            dispatcher.Invoke(async () =>
+            Task.Run(async () =>
             {
                 var views = Views.Where(x => x.View == view);
                 var count = views.Count();

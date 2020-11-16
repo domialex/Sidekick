@@ -102,7 +102,7 @@ namespace Sidekick.Presentation.Wpf.Keybinds
             }
         }
 
-        private bool IsCtrlPressed()
+        private static bool IsCtrlPressed()
         {
             return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
                 || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)

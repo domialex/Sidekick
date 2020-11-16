@@ -517,7 +517,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         /// <summary>
         /// Smallest positive value between a -5 delta or 90%.
         /// </summary>
-        private int? NormalizeMinValue(double? value, double delta)
+        private static int? NormalizeMinValue(double? value, double delta)
         {
             if (value.HasValue)
             {
@@ -537,7 +537,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         /// <summary>
         /// Smallest positive value between a -5 delta or 90%.
         /// </summary>
-        private int? NormalizeMaxValue(double? value, double delta)
+        private static int? NormalizeMaxValue(double? value, double delta)
         {
             if (value.HasValue)
             {
