@@ -127,6 +127,7 @@ namespace Sidekick.Presentation.Wpf.Keybinds
                 .Replace("End", "{End}")
                 .Replace("Enter", "{Enter}")
                 .Replace("Esc", "{Esc}")
+                .Replace("{Esc}ape", "{Esc}") // Fix for when the Escape key is sent instead of simply Esc.
                 .Replace("Help", "{Help}")
                 .Replace("Home", "{Home}")
                 .Replace("Insert", "{Insert}")
