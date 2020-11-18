@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Infrastructure.PoeNinja.Models;
 
-namespace Sidekick.Business.Apis.PoeNinja
+namespace Sidekick.Infrastructure.PoeNinja
 {
     /// <summary>
     /// poe.ninja cache. The basic idea is fetching current poe.ninja with specified interval (e.g. hourly) in the background.
@@ -15,7 +15,9 @@ namespace Sidekick.Business.Apis.PoeNinja
         DateTime? LastRefreshTimestamp { get; }
 
         PoeNinjaItem GetItem(Item item);
+
         PoeNinjaCurrency GetCurrency(Item item);
+
         double? GetItemPrice(Item item);
 
         Task RefreshData();

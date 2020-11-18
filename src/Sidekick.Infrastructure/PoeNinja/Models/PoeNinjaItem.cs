@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace Sidekick.Business.Apis.PoeNinja.Models
+namespace Sidekick.Infrastructure.PoeNinja.Models
 {
     public class PoeNinjaItem : PoeNinjaResult
     {

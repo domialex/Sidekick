@@ -1,4 +1,4 @@
-namespace Sidekick.Business.Apis.PoeNinja.Models
+namespace Sidekick.Infrastructure.PoeNinja.Models
 {
     public class PoeNinjaCurrency : PoeNinjaResult
     {

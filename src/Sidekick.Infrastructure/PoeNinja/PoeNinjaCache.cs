@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.PoeNinja.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
+using Sidekick.Infrastructure.PoeNinja.Models;
 
-namespace Sidekick.Business.Apis.PoeNinja
+namespace Sidekick.Infrastructure.PoeNinja
 {
     /// <summary>
     /// poe.ninja cache.
@@ -28,8 +28,6 @@ namespace Sidekick.Business.Apis.PoeNinja
         public List<PoeNinjaCurrency> Currencies { get; private set; } = new List<PoeNinjaCurrency>();
         public Dictionary<string, string> Translations { get; private set; } = new Dictionary<string, string>();
 
-        public bool IsInitialized => LastRefreshTimestamp.HasValue;
-
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger<PoeNinjaCache> logger,
                              IGameLanguageProvider gameLanguageProvider,
@@ -40,6 +38,7 @@ namespace Sidekick.Business.Apis.PoeNinja
             this.logger = logger;
             this.settings = settings;
         }
+
         public PoeNinjaItem GetItem(Item item)
         {
             var nameToSearch = item.Type.Contains(gameLanguageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;

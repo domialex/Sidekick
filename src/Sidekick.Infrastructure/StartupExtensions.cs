@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Infrastructure.Github;
 using Sidekick.Infrastructure.PoeApi;
+using Sidekick.Infrastructure.PoeNinja;
 using Sidekick.Infrastructure.PoePriceInfo;
 
 namespace Sidekick.Infrastructure
@@ -12,6 +13,8 @@ namespace Sidekick.Infrastructure
             services.AddTransient<IPoeTradeClient, PoeTradeClient>();
             services.AddTransient<IGithubClient, GithubClient>();
             services.AddTransient<IPoePriceInfoClient, PoePriceInfoClient>();
+            services.AddTransient<IPoeNinjaClient, PoeNinjaClient>();
+            services.AddSingleton<IPoeNinjaCache, PoeNinjaCache>();
 
             return services;
         }

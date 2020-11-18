@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Leagues;
 
-namespace Sidekick.Business.Apis.PoeNinja
+namespace Sidekick.Infrastructure.PoeNinja
 {
     public class LeagueChangedHandler : INotificationHandler<LeagueChangedNotification>
     {

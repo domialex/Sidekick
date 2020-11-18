@@ -5,10 +5,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.PoeNinja.Models;
-using Sidekick.Business.Http;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Infrastructure.PoeNinja.Models;
 
-namespace Sidekick.Business.Apis.PoeNinja
+namespace Sidekick.Infrastructure.PoeNinja
 {
     /// <summary>
     /// https://poe.ninja/swagger
@@ -30,25 +30,43 @@ namespace Sidekick.Business.Apis.PoeNinja
              { "ru", "ru" }, // Russian.
              { "th", "th" }, // Thai.
         };
-        private readonly HttpClient httpClient;
+        private readonly HttpClient client;
         private readonly ILogger logger;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
-        public bool IsSupportingCurrentLanguage { get; set; }
-        public string LanguageCode { get; set; }
+        private readonly IGameLanguageProvider gameLanguageProvider;
+        private readonly JsonSerializerOptions options;
 
-        public PoeNinjaClient(IHttpClientProvider httpClientProvider,
-                              ILogger<PoeNinjaClient> logger)
+        public string LanguageCode
         {
-            httpClient = httpClientProvider.HttpClient;
-            this.logger = logger;
+            get
+            {
+                if (POE_NINJA_LANGUAGE_CODES.TryGetValue(gameLanguageProvider.Current.LanguageCode, out var languageCode))
+                {
+                    return languageCode;
+                }
+                return string.Empty;
+            }
+        }
 
-            var jsonSerializerOptions = new JsonSerializerOptions()
+        public bool IsSupportingCurrentLanguage => !string.IsNullOrEmpty(LanguageCode);
+
+        public PoeNinjaClient(
+            IHttpClientFactory httpClientFactory,
+            ILogger<PoeNinjaClient> logger,
+            IGameLanguageProvider gameLanguageProvider)
+        {
+            this.logger = logger;
+            this.gameLanguageProvider = gameLanguageProvider;
+
+            options = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 IgnoreNullValues = true,
             };
-            jsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-            _jsonSerializerOptions = jsonSerializerOptions;
+            options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+            client = httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
+            client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
         }
 
         public async Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType)
@@ -57,9 +75,10 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             try
             {
-                var response = await httpClient.GetAsync(url);
+                var response = await client.GetAsync(url);
                 var responseStream = await response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, _jsonSerializerOptions);
+                var result = await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, options);
+                return result;
             }
             catch (Exception)
             {
@@ -75,9 +94,9 @@ namespace Sidekick.Business.Apis.PoeNinja
 
             try
             {
-                var response = await httpClient.GetAsync(url);
+                var response = await client.GetAsync(url);
                 var responseStream = await response.Content.ReadAsStreamAsync();
-                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseStream, _jsonSerializerOptions);
+                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaCurrency>>(responseStream, options);
             }
             catch
             {

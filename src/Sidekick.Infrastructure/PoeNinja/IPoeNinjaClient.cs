@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
-using Sidekick.Business.Apis.PoeNinja.Models;
+using Sidekick.Infrastructure.PoeNinja.Models;
 
-namespace Sidekick.Business.Apis.PoeNinja
+namespace Sidekick.Infrastructure.PoeNinja
 {
     public interface IPoeNinjaClient
     {
-        bool IsSupportingCurrentLanguage { get; set; }
-        string LanguageCode { get; set; }
+        bool IsSupportingCurrentLanguage { get; }
+
         Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType);
 
         Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency);

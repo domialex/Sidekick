@@ -6,7 +6,6 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Business.Apis.Poe.Trade.Search;
-using Sidekick.Business.Apis.PoeNinja;
 using Sidekick.Business.Http;
 
 namespace Sidekick.Business
@@ -24,8 +23,6 @@ namespace Sidekick.Business
             services.AddSingleton<IPoeTradeClient, PoeTradeClient>();
             services.AddSingleton<IStatDataService, StatDataService>();
             services.AddSingleton<IItemDataService, ItemDataService>();
-            services.AddSingleton<IPoeNinjaClient, PoeNinjaClient>();
-            services.AddSingleton<IPoeNinjaCache, PoeNinjaCache>();
             services.AddSingleton<IPseudoStatDataService, PseudoStatDataService>();
             services.AddSingleton<IParserPatterns, ParserPatterns>();
             services.AddSingleton<IStaticDataService, StaticDataService>();
