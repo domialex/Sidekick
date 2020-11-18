@@ -38,14 +38,14 @@ namespace Sidekick.Mediator.Internal
                 }
                 catch (Exception)
                 {
-                    logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the request.");
+                    logger.LogError($"[Mediator:ERROR] {guid} Could not serialize the request.");
                 }
 
                 response = await next();
             }
             catch (Exception e)
             {
-                logger.LogInformation($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
+                logger.LogError($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
                 throw;
             }
             finally

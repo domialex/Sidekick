@@ -15,17 +15,16 @@ namespace Sidekick.Presentation.Wpf.Views
 {
     public abstract class BaseView : AdonisWindow, ISidekickView
     {
-        private readonly ISidekickSettings settings;
-        private readonly IViewPreferenceRepository viewPreferenceRepository;
-        private readonly ILogger logger;
-        private readonly bool closeOnBlur;
+        protected readonly ISidekickSettings settings;
+        protected readonly IViewPreferenceRepository viewPreferenceRepository;
+        protected readonly ILogger logger;
 
         protected BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        protected BaseView(Domain.Views.View view, IServiceProvider serviceProvider, bool closeOnBlur = false)
+        protected BaseView(Domain.Views.View view, IServiceProvider serviceProvider)
         {
             settings = serviceProvider.GetService<ISidekickSettings>();
             viewPreferenceRepository = serviceProvider.GetService<IViewPreferenceRepository>();
@@ -36,12 +35,6 @@ namespace Sidekick.Presentation.Wpf.Views
             Loaded += BaseWindow_Loaded;
             SizeChanged += EnsureBounds;
 
-            if (closeOnBlur && settings.Overlay_CloseWithMouse)
-            {
-                Deactivated += BaseBorderlessWindow_Deactivated;
-            }
-
-            this.closeOnBlur = closeOnBlur;
             View = view;
         }
 
@@ -91,14 +84,17 @@ namespace Sidekick.Presentation.Wpf.Views
         {
             if (IsClosing) return;
 
-            try
+            if (ResizeMode == ResizeMode.CanResize || ResizeMode == ResizeMode.CanResizeWithGrip)
             {
-                await viewPreferenceRepository.SaveSize(View, GetWidth(), GetHeight());
-            }
-            catch (ObjectDisposedException)
-            {
-                // Catches, if the service provider is being disposed.
-                // We keep going
+                try
+                {
+                    await viewPreferenceRepository.SaveSize(View, GetWidth(), GetHeight());
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Catches, if the service provider is being disposed.
+                    // We keep going
+                }
             }
 
             IsClosing = true;
@@ -107,52 +103,45 @@ namespace Sidekick.Presentation.Wpf.Views
             Loaded -= BaseWindow_Loaded;
             SizeChanged -= EnsureBounds;
 
-            if (closeOnBlur && settings.Overlay_CloseWithMouse)
-            {
-                Deactivated -= BaseBorderlessWindow_Deactivated;
-            }
-
             base.OnClosing(e);
         }
 
         private void BaseWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(async () =>
+            if (ResizeMode == ResizeMode.CanResize || ResizeMode == ResizeMode.CanResizeWithGrip)
             {
-                var window = await viewPreferenceRepository.Get(View);
-                if (window != null)
+                Task.Run(async () =>
                 {
-                    var previousWidth = GetWidth();
-                    var previousHeight = GetHeight();
-                    SetWidth(window.Width);
-                    SetHeight(window.Height);
-
-                    if (LeftLocationSource == LocationSource.Center)
+                    var preferences = await viewPreferenceRepository.Get(View);
+                    if (preferences != null)
                     {
-                        MoveX((previousWidth - window.Width) / 2);
-                    }
-                    else if (LeftLocationSource == LocationSource.End)
-                    {
-                        MoveX(previousWidth - window.Width);
-                    }
+                        var previousWidth = GetWidth();
+                        var previousHeight = GetHeight();
+                        SetWidth(preferences.Width);
+                        SetHeight(preferences.Height);
 
-                    if (TopLocationSource == LocationSource.Center)
-                    {
-                        MoveY((previousHeight - window.Height) / 2);
-                    }
-                    else if (TopLocationSource == LocationSource.End)
-                    {
-                        MoveY(previousHeight - window.Height);
-                    }
+                        if (LeftLocationSource == LocationSource.Center)
+                        {
+                            MoveX((previousWidth - preferences.Width) / 2);
+                        }
+                        else if (LeftLocationSource == LocationSource.End)
+                        {
+                            MoveX(previousWidth - preferences.Width);
+                        }
 
-                    EnsureBounds();
-                }
-            });
-        }
+                        if (TopLocationSource == LocationSource.Center)
+                        {
+                            MoveY((previousHeight - preferences.Height) / 2);
+                        }
+                        else if (TopLocationSource == LocationSource.End)
+                        {
+                            MoveY(previousHeight - preferences.Height);
+                        }
 
-        private void BaseBorderlessWindow_Deactivated(object sender, EventArgs e)
-        {
-            Close();
+                        EnsureBounds();
+                    }
+                });
+            }
         }
 
         public new void Show()

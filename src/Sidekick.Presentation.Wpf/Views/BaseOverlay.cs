@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Wpf.Views
@@ -12,9 +13,26 @@ namespace Sidekick.Presentation.Wpf.Views
         }
 
         protected BaseOverlay(View id, IServiceProvider serviceProvider)
-            : base(id, serviceProvider, closeOnBlur: true)
+            : base(id, serviceProvider)
         {
             Topmost = true;
+
+            if (settings.Overlay_CloseWithMouse)
+            {
+                Deactivated += BaseBorderlessWindow_Deactivated;
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Deactivated -= BaseBorderlessWindow_Deactivated;
+
+            base.OnClosing(e);
+        }
+
+        private void BaseBorderlessWindow_Deactivated(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

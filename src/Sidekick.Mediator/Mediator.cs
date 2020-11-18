@@ -104,14 +104,14 @@ namespace Sidekick.Mediator
                 }
                 catch (Exception)
                 {
-                    logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the notification.");
+                    logger.LogError($"[Mediator:ERROR] {guid} Could not serialize the notification.");
                 }
 
                 await AddTask(mediator.Publish(notification, cancellationToken));
             }
             catch (Exception e)
             {
-                logger.LogInformation($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
+                logger.LogError($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
                 throw;
             }
             finally
