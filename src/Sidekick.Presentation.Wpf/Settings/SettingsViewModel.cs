@@ -25,7 +25,7 @@ namespace Sidekick.Presentation.Wpf.Settings
 #pragma warning restore 67
 
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings sidekickSettings;
         private readonly IKeybindsProvider keybindsProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
@@ -34,14 +34,14 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public SettingsViewModel(
             IUILanguageProvider uiLanguageProvider,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings sidekickSettings,
             IKeybindsProvider keybindsProvider,
             IKeybindsExecutor keybindsExecutor,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.sidekickSettings = sidekickSettings;
             this.keybindsProvider = keybindsProvider;
             this.keybindsExecutor = keybindsExecutor;
@@ -52,7 +52,7 @@ namespace Sidekick.Presentation.Wpf.Settings
             WikiOptions.Add("POE Wiki", WikiSetting.PoeWiki.ToString());
             WikiOptions.Add("POE Db", WikiSetting.PoeDb.ToString());
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName[1..], x.Name));
-            languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
+            gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             keybindsProvider.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
@@ -146,10 +146,10 @@ namespace Sidekick.Presentation.Wpf.Settings
         public async Task Save()
         {
             var leagueHasChanged = LeagueId != sidekickSettings.LeagueId;
-            var languageHasChanged = languageProvider.Current.LanguageCode != Language_Parser;
+            var languageHasChanged = gameLanguageProvider.Current.LanguageCode != Language_Parser;
 
             uiLanguageProvider.SetLanguage(Language_UI);
-            await mediator.Send(new SetLanguageCommand(Language_Parser));
+            await mediator.Send(new SetGameLanguageCommand(Language_Parser));
             await mediator.Send(new SaveSettingsCommand(this));
 
             if (languageHasChanged) await ResetCache();

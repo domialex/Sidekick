@@ -7,7 +7,7 @@ using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Initialization.Notifications;
 
-namespace Sidekick.Business.Apis.Poe.Parser.Patterns
+namespace Sidekick.Application.Game.Items.Parser.Patterns
 {
     public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {

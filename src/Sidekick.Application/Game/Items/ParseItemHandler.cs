@@ -55,7 +55,8 @@ namespace Sidekick.Application.Game.Items
                     .Select(block => newLinePattern
                         .Split(block)
                         .Where(line => line != "")
-                        .ToArray())
+                        .ToArray()
+                    )
                     .ToArray();
 
                 var itemSections = new ItemSections(splitSections, wholeSections);

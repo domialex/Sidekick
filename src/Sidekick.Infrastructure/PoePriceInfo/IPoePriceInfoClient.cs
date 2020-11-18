@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using Sidekick.Infrastructure.PoePriceInfo.Models;
 
-namespace Sidekick.Business.Apis.PoePriceInfo.Models
+namespace Sidekick.Infrastructure.PoePriceInfo
 {
     public interface IPoePriceInfoClient
     {

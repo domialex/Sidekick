@@ -13,17 +13,17 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
         private readonly IPoeTradeClient poeApiClient;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IStatDataService statDataService;
         private readonly ICacheRepository cacheRepository;
 
         public DataInitializationStartedHandler(IPoeTradeClient poeApiClient,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IStatDataService statDataService,
             ICacheRepository cacheRepository)
         {
             this.poeApiClient = poeApiClient;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.statDataService = statDataService;
             this.cacheRepository = cacheRepository;
         }
@@ -41,16 +41,16 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
             statDataService.CraftedPatterns = new List<StatData>();
             statDataService.VeiledPatterns = new List<StatData>();
             statDataService.FracturedPatterns = new List<StatData>();
-            statDataService.IncreasedPattern = new Regex(languageProvider.Language.ModifierIncreased);
+            statDataService.IncreasedPattern = new Regex(gameLanguageProvider.Language.ModifierIncreased);
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
 
-            var additionalProjectileEscaped = Regex.Escape(languageProvider.Language.AdditionalProjectile);
-            var additionalProjectiles = hashPattern.Replace(Regex.Escape(languageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
+            var additionalProjectileEscaped = Regex.Escape(gameLanguageProvider.Language.AdditionalProjectile);
+            var additionalProjectiles = hashPattern.Replace(Regex.Escape(gameLanguageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
 
             // We need to ignore the case here, there are some mistakes in the data of the game.
-            statDataService.AdditionalProjectilePattern = new Regex(languageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
+            statDataService.AdditionalProjectilePattern = new Regex(gameLanguageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
 
             foreach (var category in categories)
             {
@@ -126,7 +126,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
 
                     if (statDataService.IncreasedPattern.IsMatch(pattern))
                     {
-                        var negativePattern = statDataService.IncreasedPattern.Replace(pattern, languageProvider.Language.ModifierReduced);
+                        var negativePattern = statDataService.IncreasedPattern.Replace(pattern, gameLanguageProvider.Language.ModifierReduced);
                         entry.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
                     }
 

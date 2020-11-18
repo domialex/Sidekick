@@ -1,10 +1,10 @@
 using System;
 using Sidekick.Domain.Game.Languages;
 
-namespace Sidekick.Business.Languages.Implementations
+namespace Sidekick.Application.Game.Languages.Implementations
 {
-    [Language("German", "Seltenheit", "de")]
-    public class LanguageDE : ILanguage
+    [GameLanguage("German", "Seltenheit", "de")]
+    public class GameLanguageDE : IGameLanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://de.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://de.pathofexile.com/trade/exchange/");

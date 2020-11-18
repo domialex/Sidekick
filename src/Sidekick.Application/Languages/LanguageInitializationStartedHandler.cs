@@ -14,33 +14,33 @@ namespace Sidekick.Application.Languages
 {
     public class LanguageInitializationStartedHandler : INotificationHandler<LanguageInitializationStarted>
     {
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings settings;
         private readonly IMediator mediator;
 
         public LanguageInitializationStartedHandler(
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings settings,
             IMediator mediator)
         {
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.settings = settings;
             this.mediator = mediator;
         }
 
         public async Task Handle(LanguageInitializationStarted notification, CancellationToken cancellationToken)
         {
-            languageProvider.AvailableLanguages = new List<LanguageAttribute>();
-            foreach (var type in typeof(LanguageAttribute).GetImplementedAttribute())
+            gameLanguageProvider.AvailableLanguages = new List<GameLanguageAttribute>();
+            foreach (var type in typeof(GameLanguageAttribute).GetImplementedAttribute())
             {
-                var attribute = type.GetAttribute<LanguageAttribute>();
+                var attribute = type.GetAttribute<GameLanguageAttribute>();
                 attribute.ImplementationType = type;
-                languageProvider.AvailableLanguages.Add(attribute);
+                gameLanguageProvider.AvailableLanguages.Add(attribute);
             }
 
-            await mediator.Send(new SetLanguageCommand(settings.Language_Parser));
+            await mediator.Send(new SetGameLanguageCommand(settings.Language_Parser));
 
-            languageProvider.EnglishLanguage = (ILanguage)Activator.CreateInstance(languageProvider.AvailableLanguages.First(x => x.LanguageCode == "en").ImplementationType);
+            gameLanguageProvider.EnglishLanguage = (IGameLanguage)Activator.CreateInstance(gameLanguageProvider.AvailableLanguages.First(x => x.LanguageCode == "en").ImplementationType);
         }
     }
 }

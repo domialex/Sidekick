@@ -5,13 +5,13 @@ namespace Sidekick.Domain.Game.Languages.Commands
     /// <summary>
     /// Sets the language currently used inside Path of Exile
     /// </summary>
-    public class SetLanguageCommand : ICommand
+    public class SetGameLanguageCommand : ICommand
     {
         /// <summary>
         /// Sets the language currently used inside Path of Exile
         /// </summary>
         /// <param name="languageCode">The language to set the parser and game data to. Exemple: en</param>
-        public SetLanguageCommand(string languageCode)
+        public SetGameLanguageCommand(string languageCode)
         {
             LanguageCode = languageCode;
         }

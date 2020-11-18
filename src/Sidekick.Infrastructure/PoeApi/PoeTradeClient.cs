@@ -12,49 +12,40 @@ namespace Sidekick.Infrastructure.PoeApi
     public class PoeTradeClient : IPoeTradeClient
     {
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly HttpClient client;
 
         public PoeTradeClient(
             ILogger<PoeTradeClient> logger,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             client = httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
+
+            Options = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                IgnoreNullValues = true,
+            };
+            Options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
         }
 
-        public JsonSerializerOptions Options
-        {
-            get
-            {
-                var options = new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                    IgnoreNullValues = true,
-                };
-                options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                return options;
-            }
-        }
+        public JsonSerializerOptions Options { get; }
 
         public async Task<List<TReturn>> Fetch<TReturn>(string path, bool useDefaultLanguage = false)
         {
             var name = typeof(TReturn).Name;
-            var language = useDefaultLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
+            var language = useDefaultLanguage ? gameLanguageProvider.EnglishLanguage : gameLanguageProvider.Language;
 
             try
             {
-                logger.LogInformation($"Fetching {name} started.");
-
                 var response = await client.GetAsync(language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
                 var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
-
-                logger.LogInformation($"{result.Result.Count} {name} fetched.");
                 return result.Result;
             }
             catch (Exception)

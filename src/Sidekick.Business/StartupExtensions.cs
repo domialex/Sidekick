@@ -7,10 +7,7 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats.Pseudo;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.PoeNinja;
-using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Business.Http;
-using Sidekick.Business.Languages;
-using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business
 {
@@ -22,8 +19,6 @@ namespace Sidekick.Business
             services.AddHttpClient();
 
             services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
-            services.AddSingleton<ILanguageProvider, LanguageProvider>();
-            services.AddSingleton<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
 
             services.AddSingleton<IPoeTradeClient, PoeTradeClient>();

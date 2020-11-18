@@ -19,7 +19,7 @@ namespace Sidekick.Business.Apis.PoeNinja
     {
         private readonly IPoeNinjaClient client;
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings settings;
 
         public DateTime? LastRefreshTimestamp { get; private set; }
@@ -32,17 +32,17 @@ namespace Sidekick.Business.Apis.PoeNinja
 
         public PoeNinjaCache(IPoeNinjaClient client,
                              ILogger<PoeNinjaCache> logger,
-                             ILanguageProvider languageProvider,
+                             IGameLanguageProvider gameLanguageProvider,
                              ISidekickSettings settings)
         {
             this.client = client;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.logger = logger;
             this.settings = settings;
         }
         public PoeNinjaItem GetItem(Item item)
         {
-            var nameToSearch = item.Type.Contains(languageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
+            var nameToSearch = item.Type.Contains(gameLanguageProvider.Language.KeywordVaal) ? item.Type : item.NameLine;
             string translatedName = null; // PoeNinja doesn't translate all items, example : Tabula Rasa.
 
             if (client.IsSupportingCurrentLanguage && Translations.Any())

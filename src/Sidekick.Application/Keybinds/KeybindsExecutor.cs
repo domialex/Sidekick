@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Cheatsheets.Commands;
 using Sidekick.Domain.Game.Chat.Commands;
-using Sidekick.Domain.Game.Shortcuts;
+using Sidekick.Domain.Game.Shortcuts.Commands;
 using Sidekick.Domain.Game.Stashes.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Maps.Commands;

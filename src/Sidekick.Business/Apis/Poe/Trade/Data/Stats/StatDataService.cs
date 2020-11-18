@@ -10,14 +10,14 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
     public class StatDataService : IStatDataService
     {
         private readonly IPseudoStatDataService pseudoStatDataService;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
 
         public StatDataService(
             IPseudoStatDataService pseudoStatDataService,
-            ILanguageProvider languageProvider)
+            IGameLanguageProvider gameLanguageProvider)
         {
             this.pseudoStatDataService = pseudoStatDataService;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
         }
 
         public List<StatData> PseudoPatterns { get; set; }
@@ -114,7 +114,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Stats
                         if (negative)
                         {
                             parsedValue *= -1;
-                            modifierText = IncreasedPattern.Replace(modifierText, languageProvider.Language.ModifierReduced);
+                            modifierText = IncreasedPattern.Replace(modifierText, gameLanguageProvider.Language.ModifierReduced);
                         }
 
                         modifier.Values.Add(parsedValue);

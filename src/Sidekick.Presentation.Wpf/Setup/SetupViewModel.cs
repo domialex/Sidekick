@@ -28,25 +28,25 @@ namespace Sidekick.Presentation.Wpf.Setup
 #pragma warning restore 67
 
         private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings sidekickSettings;
         private readonly IMediator mediator;
         private readonly IStringLocalizer localizer;
 
         public SetupViewModel(
             IUILanguageProvider uiLanguageProvider,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings sidekickSettings,
             IMediator mediator,
             IStringLocalizer<SetupViewModel> localizer)
         {
             this.uiLanguageProvider = uiLanguageProvider;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.sidekickSettings = sidekickSettings;
             this.mediator = mediator;
             this.localizer = localizer;
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName[1..], x.Name));
-            languageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
+            gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
             sidekickSettings.CopyValuesTo(this);
 
@@ -58,14 +58,14 @@ namespace Sidekick.Presentation.Wpf.Setup
         {
             Task.Run(async () =>
             {
-                await mediator.Send(new SetLanguageCommand(Language_Parser));
+                await mediator.Send(new SetGameLanguageCommand(Language_Parser));
                 await InitializeLeagues();
             });
         }
 
         public async Task InitializeLeagues()
         {
-            if (languageProvider.Language != null)
+            if (gameLanguageProvider.Language != null)
             {
                 var leagues = await mediator.Send(new GetLeaguesQuery(false));
                 LeagueOptions.Clear();
@@ -91,7 +91,7 @@ namespace Sidekick.Presentation.Wpf.Setup
             this.CopyValuesTo(newSettings);
 
             uiLanguageProvider.SetLanguage(Language_UI);
-            await mediator.Send(new SetLanguageCommand(Language_Parser));
+            await mediator.Send(new SetGameLanguageCommand(Language_Parser));
             await mediator.Send(new SaveSettingsCommand(newSettings));
             await mediator.Send(new InitializeCommand(true));
         }

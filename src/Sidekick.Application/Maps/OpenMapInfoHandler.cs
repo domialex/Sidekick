@@ -36,10 +36,15 @@ namespace Sidekick.Application.Maps
             // Parses the item by copying the item under the cursor
             var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.Copy()));
 
-            if (item == null || item.Properties.MapTier == 0)
+            if (item == null)
             {
                 // If the item can't be parsed, show an error
                 viewLocator.Open(View.ParserError);
+            }
+            else if (item.Properties.MapTier == 0)
+            {
+                // If the item is not a map
+                viewLocator.Open(View.InvalidItemError);
             }
             else
             {

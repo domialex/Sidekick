@@ -2,7 +2,7 @@ using System;
 
 namespace Sidekick.Domain.Game.Languages
 {
-    public interface ILanguage
+    public interface IGameLanguage
     {
         Uri PoeTradeSearchBaseUrl { get; }
         Uri PoeTradeExchangeBaseUrl { get; }

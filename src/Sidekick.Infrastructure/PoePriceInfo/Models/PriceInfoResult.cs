@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Business.Apis.PoePriceInfo.Models
+namespace Sidekick.Infrastructure.PoePriceInfo.Models
 {
     public class PriceInfoResult
     {
@@ -9,9 +9,6 @@ namespace Sidekick.Business.Apis.PoePriceInfo.Models
         public double? Max { get; set; }
 
         public string Currency { get; set; }
-
-        //[JsonPropertyName("pred_explanation")]
-        //public List<Dictionary<string, double>> Explanation { get; set; }
 
         [JsonPropertyName("pred_confidence_score")]
         public double ConfidenceScore { get; set; }

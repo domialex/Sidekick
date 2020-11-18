@@ -16,20 +16,20 @@ namespace Sidekick.Application.Wikis
     public class OpenWikiPageHandler : ICommandHandler<OpenWikiPageCommand, bool>
     {
         private readonly IClipboardProvider clipboardProvider;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
         private readonly ISidekickSettings settings;
 
         public OpenWikiPageHandler(
             IClipboardProvider clipboardProvider,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IMediator mediator,
             IViewLocator viewLocator,
             ISidekickSettings settings)
         {
             this.clipboardProvider = clipboardProvider;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.settings = settings;
@@ -46,13 +46,15 @@ namespace Sidekick.Application.Wikis
                 viewLocator.Open(View.ParserError);
                 return false;
             }
-            else if (!languageProvider.IsEnglish)
+
+            if (!gameLanguageProvider.IsEnglish)
             {
                 // Only available for english language
                 viewLocator.Open(View.AvailableInEnglishError);
                 return false;
             }
-            else if (string.IsNullOrEmpty(item.Name))
+
+            if (string.IsNullOrEmpty(item.Name))
             {
                 // Most items will open the basetype wiki link.
                 // Does not work for unique items that are not identified.

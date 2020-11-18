@@ -2,9 +2,9 @@ using System;
 
 namespace Sidekick.Domain.Game.Languages
 {
-    public class LanguageAttribute : Attribute
+    public class GameLanguageAttribute : Attribute
     {
-        public LanguageAttribute(string name, string descriptionRarity, string languageCode)
+        public GameLanguageAttribute(string name, string descriptionRarity, string languageCode)
         {
             Name = name;
             DescriptionRarity = descriptionRarity;

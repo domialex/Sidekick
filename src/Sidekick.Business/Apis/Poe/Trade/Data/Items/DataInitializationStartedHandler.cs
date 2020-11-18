@@ -15,18 +15,18 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
     {
         private readonly IItemDataService itemDataService;
         private readonly IPoeTradeClient poeTradeClient;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheRepository cacheRepository;
 
         public DataInitializationStartedHandler(
             IItemDataService itemDataService,
             IPoeTradeClient poeTradeClient,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             ICacheRepository cacheRepository)
         {
             this.itemDataService = itemDataService;
             this.poeTradeClient = poeTradeClient;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.cacheRepository = cacheRepository;
         }
 
@@ -55,11 +55,11 @@ namespace Sidekick.Business.Apis.Poe.Trade.Data.Items
 
             itemDataService.Prefixes = new[]
             {
-                languageProvider.Language.PrefixSuperior,
-                languageProvider.Language.PrefixBlighted,
-                languageProvider.Language.PrefixAnomalous,
-                languageProvider.Language.PrefixDivergent,
-                languageProvider.Language.PrefixPhantasmal,
+                gameLanguageProvider.Language.PrefixSuperior,
+                gameLanguageProvider.Language.PrefixBlighted,
+                gameLanguageProvider.Language.PrefixAnomalous,
+                gameLanguageProvider.Language.PrefixDivergent,
+                gameLanguageProvider.Language.PrefixPhantasmal,
             };
         }
 

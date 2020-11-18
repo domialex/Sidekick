@@ -1,10 +1,10 @@
 using System;
 using Sidekick.Domain.Game.Languages;
 
-namespace Sidekick.Business.Languages.Implementations
+namespace Sidekick.Application.Game.Languages.Implementations
 {
-    [Language("Korean", "아이템 희귀도", "kr")]
-    public class LanguageKR : ILanguage
+    [GameLanguage("Korean", "아이템 희귀도", "kr")]
+    public class GameLanguageKR : IGameLanguage
     {
         public Uri PoeTradeSearchBaseUrl => new Uri("https://poe.game.daum.net/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://poe.game.daum.net/trade/exchange/");

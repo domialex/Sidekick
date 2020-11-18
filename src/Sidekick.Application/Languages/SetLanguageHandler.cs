@@ -8,22 +8,22 @@ using Sidekick.Domain.Game.Languages.Commands;
 
 namespace Sidekick.Application.Languages
 {
-    public class SetLanguageHandler : ICommandHandler<SetLanguageCommand>
+    public class SetLanguageHandler : ICommandHandler<SetGameLanguageCommand>
     {
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ILogger<SetLanguageHandler> logger;
 
         public SetLanguageHandler(
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             ILogger<SetLanguageHandler> logger)
         {
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.logger = logger;
         }
 
-        public Task<Unit> Handle(SetLanguageCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(SetGameLanguageCommand request, CancellationToken cancellationToken)
         {
-            var language = languageProvider.AvailableLanguages.Find(x => x.LanguageCode == request.LanguageCode);
+            var language = gameLanguageProvider.AvailableLanguages.Find(x => x.LanguageCode == request.LanguageCode);
 
             if (language == null)
             {
@@ -31,7 +31,7 @@ namespace Sidekick.Application.Languages
                 return Unit.Task;
             }
 
-            languageProvider.Language = (ILanguage)Activator.CreateInstance(language.ImplementationType);
+            gameLanguageProvider.Language = (IGameLanguage)Activator.CreateInstance(language.ImplementationType);
 
             return Unit.Task;
         }

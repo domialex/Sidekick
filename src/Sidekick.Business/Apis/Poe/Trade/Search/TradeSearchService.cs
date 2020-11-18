@@ -23,7 +23,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
     public class TradeSearchService : ITradeSearchService
     {
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IHttpClientProvider httpClientProvider;
         private readonly IStaticDataService staticDataService;
         private readonly ISidekickSettings settings;
@@ -32,7 +32,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
         private readonly IMediator mediator;
 
         public TradeSearchService(ILogger<TradeSearchService> logger,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IHttpClientProvider httpClientProvider,
             IStaticDataService staticDataService,
             ISidekickSettings settings,
@@ -41,7 +41,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             IMediator mediator)
         {
             this.logger = logger;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.httpClientProvider = httpClientProvider;
             this.staticDataService = staticDataService;
             this.settings = settings;
@@ -56,7 +56,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
             {
                 logger.LogInformation("Querying Exchange API.");
 
-                var uri = $"{languageProvider.Language.PoeTradeApiBaseUrl}exchange/{settings.LeagueId}";
+                var uri = $"{gameLanguageProvider.Language.PoeTradeApiBaseUrl}exchange/{settings.LeagueId}";
                 var json = JsonSerializer.Serialize(new BulkQueryRequest(item, staticDataService), poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
@@ -65,7 +65,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var content = await response.Content.ReadAsStreamAsync();
                     var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeExchangeBaseUrl}{settings.LeagueId}/{result.Id}");
+                    result.Uri = new Uri($"{gameLanguageProvider.Language.PoeTradeExchangeBaseUrl}{settings.LeagueId}/{result.Id}");
                     return result;
                 }
                 else
@@ -163,7 +163,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     };
                 }
 
-                var uri = new Uri($"{languageProvider.Language.PoeTradeApiBaseUrl}search/{settings.LeagueId}");
+                var uri = new Uri($"{gameLanguageProvider.Language.PoeTradeApiBaseUrl}search/{settings.LeagueId}");
                 var json = JsonSerializer.Serialize(request, poeTradeClient.Options);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClientProvider.HttpClient.PostAsync(uri, body);
@@ -172,7 +172,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                 {
                     var content = await response.Content.ReadAsStreamAsync();
                     var result = await JsonSerializer.DeserializeAsync<FetchResult<string>>(content, poeTradeClient.Options);
-                    result.Uri = new Uri($"{languageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{result.Id}");
+                    result.Uri = new Uri($"{gameLanguageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{result.Id}");
                     return result;
                 }
                 else
@@ -203,7 +203,7 @@ namespace Sidekick.Business.Apis.Poe.Trade.Search
                     pseudo = string.Join("", stats.Where(x => x.Id.StartsWith("pseudo.")).Select(x => $"&pseudos[]={x.Id}"));
                 }
 
-                var response = await httpClientProvider.HttpClient.GetAsync(languageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId + pseudo);
+                var response = await httpClientProvider.HttpClient.GetAsync(gameLanguageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId + pseudo);
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();

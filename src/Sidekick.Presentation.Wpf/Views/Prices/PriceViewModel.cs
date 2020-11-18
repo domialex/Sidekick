@@ -11,11 +11,11 @@ using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Business.Apis.PoeNinja;
-using Sidekick.Business.Apis.PoePriceInfo.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
+using Sidekick.Infrastructure.PoePriceInfo;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Debounce;
@@ -35,7 +35,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         private readonly ITradeSearchService tradeSearchService;
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticDataService staticDataService;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryRepository itemCategoryRepository;
@@ -47,7 +47,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             ITradeSearchService tradeSearchService,
             IPoeNinjaCache poeNinjaCache,
             IStaticDataService staticDataService,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IPoePriceInfoClient poePriceInfoClient,
             ISidekickSettings settings,
             IItemCategoryRepository itemCategoryRepository,
@@ -58,7 +58,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             this.tradeSearchService = tradeSearchService;
             this.poeNinjaCache = poeNinjaCache;
             this.staticDataService = staticDataService;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.poePriceInfoClient = poePriceInfoClient;
             this.settings = settings;
             this.itemCategoryRepository = itemCategoryRepository;
@@ -240,36 +240,36 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             var propertyCategory2 = new PriceFilterCategory();
 
             // Quality
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Quality), languageProvider.Language.DescriptionQuality, Item.Properties.Quality,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Quality), gameLanguageProvider.Language.DescriptionQuality, Item.Properties.Quality,
                 enabled: Item.Rarity == Rarity.Gem,
                 min: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
 
             // Armour
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), languageProvider.Language.DescriptionArmour, Item.Properties.Armor);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), gameLanguageProvider.Language.DescriptionArmour, Item.Properties.Armor);
             // Evasion
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), languageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), gameLanguageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
             // Energy shield
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.EnergyShield), languageProvider.Language.DescriptionEnergyShield, Item.Properties.EnergyShield);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.EnergyShield), gameLanguageProvider.Language.DescriptionEnergyShield, Item.Properties.EnergyShield);
             // Block
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Block), languageProvider.Language.DescriptionChanceToBlock, Item.Properties.ChanceToBlock,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Block), gameLanguageProvider.Language.DescriptionChanceToBlock, Item.Properties.ChanceToBlock,
                 delta: 1);
 
             // Gem level
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), languageProvider.Language.DescriptionLevel, Item.Properties.GemLevel,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), gameLanguageProvider.Language.DescriptionLevel, Item.Properties.GemLevel,
                 enabled: true,
                 min: Item.Properties.GemLevel);
 
             // Item quantity
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemQuantity), languageProvider.Language.DescriptionItemQuantity, Item.Properties.ItemQuantity);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemQuantity), gameLanguageProvider.Language.DescriptionItemQuantity, Item.Properties.ItemQuantity);
             // Item rarity
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemRarity), languageProvider.Language.DescriptionItemRarity, Item.Properties.ItemRarity);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemRarity), gameLanguageProvider.Language.DescriptionItemRarity, Item.Properties.ItemRarity);
             // Monster pack size
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), languageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), gameLanguageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
             // Blighted
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), languageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), gameLanguageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
                 enabled: Item.Properties.Blighted);
             // Map tier
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), languageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), gameLanguageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
                 enabled: true,
                 min: Item.Properties.MapTier);
 
@@ -280,40 +280,40 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             // Total Dps
             InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.DamagePerSecond), PriceResources.Filters_Dps, Item.Properties.DamagePerSecond);
             // Attacks per second
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.AttacksPerSecond), languageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.AttacksPerSecond), gameLanguageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
                 delta: 0.1);
             // Critical strike chance
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.CriticalStrikeChance), languageProvider.Language.DescriptionCriticalStrikeChance, Item.Properties.CriticalStrikeChance,
+            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.CriticalStrikeChance), gameLanguageProvider.Language.DescriptionCriticalStrikeChance, Item.Properties.CriticalStrikeChance,
                 delta: 1);
 
             // Item level
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), languageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), gameLanguageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
                 enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Rarity != Rarity.Unique,
                 min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
 
             // Corrupted
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), languageProvider.Language.DescriptionCorrupted, Item.Corrupted,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), gameLanguageProvider.Language.DescriptionCorrupted, Item.Corrupted,
                 alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
                 enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique || Item.Rarity == Rarity.Rare) && Item.Corrupted,
                 applyNegative: true);
 
             // Crusader
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), languageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), gameLanguageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
                 enabled: Item.Influences.Crusader);
             // Elder
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), languageProvider.Language.InfluenceElder, Item.Influences.Elder,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), gameLanguageProvider.Language.InfluenceElder, Item.Influences.Elder,
                 enabled: Item.Influences.Elder);
             // Hunter
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.HunterItem), languageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.HunterItem), gameLanguageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
                 enabled: Item.Influences.Hunter);
             // Redeemer
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.RedeemerItem), languageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.RedeemerItem), gameLanguageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
                 enabled: Item.Influences.Redeemer);
             // Shaper
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), languageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), gameLanguageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
                 enabled: Item.Influences.Shaper);
             // Warlord
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), languageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
+            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), gameLanguageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
                 enabled: Item.Influences.Warlord);
 
             if (propertyCategory1.Filters.Any())
@@ -731,7 +731,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                     Results.AddRange(getResult.Result.Select(result => new PriceItem(result)
                     {
                         ImageUrl = new Uri(
-                            languageProvider.Language.PoeCdnBaseUrl,
+                            gameLanguageProvider.Language.PoeCdnBaseUrl,
                             staticDataService.GetImage(result.Listing.Price.Currency)
                         ).AbsoluteUri,
                     }));
