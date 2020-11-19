@@ -4,6 +4,7 @@ using Sidekick.Application;
 using Sidekick.Business;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
+using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 
@@ -17,6 +18,9 @@ namespace Sidekick.Presentation.Wpf
 
                 // Building blocks
                 .AddSidekickLogging()
+                .AddSidekickMapper(
+                    Assembly.Load("Sidekick.Infrastructure"),
+                    Assembly.Load("Sidekick.Persistence"))
                 .AddSidekickMediator(
                     Assembly.Load("Sidekick.Application"),
                     Assembly.Load("Sidekick.Domain"),
@@ -24,9 +28,9 @@ namespace Sidekick.Presentation.Wpf
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Wpf"),
-                    Assembly.Load("Sidekick.Business")
-                )
+                    Assembly.Load("Sidekick.Business"))
 
+                // Layers
                 .AddSidekickApplication()
                 .AddSidekickBusinessServices()
                 .AddSidekickInfrastructure()
@@ -37,7 +41,11 @@ namespace Sidekick.Presentation.Wpf
             services.AddSingleton(application);
             services.AddSingleton(application.Dispatcher);
 
-            return services.BuildServiceProvider();
+            var serviceProvider = services.BuildServiceProvider();
+
+            serviceProvider.UseSidekickMapper();
+
+            return serviceProvider;
         }
     }
 }

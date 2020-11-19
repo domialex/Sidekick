@@ -46,7 +46,7 @@ namespace Sidekick.Mediator.Internal
             catch (Exception e)
             {
                 logger.LogError($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
-                throw;
+                return default;
             }
             finally
             {

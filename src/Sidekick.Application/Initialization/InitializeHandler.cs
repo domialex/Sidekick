@@ -51,38 +51,38 @@ namespace Sidekick.Application.Initialization
 
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
-            // Set the total count of handlers
-            AddCount<LanguageInitializationStarted>();
-            AddCount<DataInitializationStarted>();
-            AddCount<KeybindsInitializationStarted>(request.FirstRun);
-
-            // Report initial progress
-            await ReportProgress();
-
-            // Let everyone know that the initialization process has started
-            await mediator.Publish(new InitializationStarted());
-            await RunStep<LanguageInitializationStarted>();
-
-            // Check for updates
-            if (await mediator.Send(new IsNewVersionAvailableQuery()))
+            try
             {
-                await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
+                // Set the total count of handlers
+                AddCount<LanguageInitializationStarted>();
+                AddCount<DataInitializationStarted>();
+                AddCount<KeybindsInitializationStarted>(request.FirstRun);
+
+                // Report initial progress
+                await ReportProgress();
+
+                // Let everyone know that the initialization process has started
+                await mediator.Publish(new InitializationStarted());
+                await RunStep<LanguageInitializationStarted>();
+
+                // Check for updates
+                if (await mediator.Send(new IsNewVersionAvailableQuery()))
                 {
-                    await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
-                    await mediator.Send(new ShutdownCommand());
-                }));
-            }
+                    await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
+                    {
+                        await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
+                        await mediator.Send(new ShutdownCommand());
+                    }));
+                }
 
-            // Check to see if we should run Setup first before running the rest of the initialization process
-            if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))
-            {
-                await mediator.Send(new SetupCommand());
-                return Unit.Value;
-            }
+                // Check to see if we should run Setup first before running the rest of the initialization process
+                if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))
+                {
+                    await mediator.Send(new SetupCommand());
+                    return Unit.Value;
+                }
 
-            if (request.FirstRun)
-            {
-                try
+                if (request.FirstRun)
                 {
                     var leagues = await mediator.Send(new GetLeaguesQuery(false));
                     var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
@@ -101,20 +101,20 @@ namespace Sidekick.Application.Initialization
                         return Unit.Value;
                     }
                 }
-                catch (Exception)
-                {
-                    await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
-                    await mediator.Send(new ShutdownCommand());
-                    return Unit.Value;
-                }
+
+                await RunStep<DataInitializationStarted>();
+                await RunStep<KeybindsInitializationStarted>(request.FirstRun);
+
+                await mediator.Publish(new InitializationCompleted());
+
+                return Unit.Value;
             }
-
-            await RunStep<DataInitializationStarted>();
-            await RunStep<KeybindsInitializationStarted>(request.FirstRun);
-
-            await mediator.Publish(new InitializationCompleted());
-
-            return Unit.Value;
+            catch (Exception)
+            {
+                await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
+                await mediator.Send(new ShutdownCommand());
+                return Unit.Value;
+            }
         }
 
         private async Task RunStep<TNotification>(bool shouldRun = true)

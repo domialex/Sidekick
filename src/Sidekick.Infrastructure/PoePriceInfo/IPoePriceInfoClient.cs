@@ -1,10 +1,12 @@
-using System.Threading.Tasks;
-using Sidekick.Infrastructure.PoePriceInfo.Models;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace Sidekick.Infrastructure.PoePriceInfo
 {
     public interface IPoePriceInfoClient
     {
-        Task<PriceInfoResult> GetItemPricePrediction(string itemText);
+        JsonSerializerOptions Options { get; }
+
+        HttpClient Client { get; }
     }
 }

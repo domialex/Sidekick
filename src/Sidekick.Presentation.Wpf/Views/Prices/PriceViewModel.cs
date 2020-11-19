@@ -10,12 +10,12 @@ using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
+using Sidekick.Domain.Apis.PoePriceInfo.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Infrastructure.PoeNinja;
-using Sidekick.Infrastructure.PoePriceInfo;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Debounce;
@@ -36,7 +36,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticDataService staticDataService;
         private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly IPoePriceInfoClient poePriceInfoClient;
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryRepository itemCategoryRepository;
         private readonly IMediator mediator;
@@ -48,7 +47,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             IPoeNinjaCache poeNinjaCache,
             IStaticDataService staticDataService,
             IGameLanguageProvider gameLanguageProvider,
-            IPoePriceInfoClient poePriceInfoClient,
             ISidekickSettings settings,
             IItemCategoryRepository itemCategoryRepository,
             IMediator mediator)
@@ -59,7 +57,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             this.poeNinjaCache = poeNinjaCache;
             this.staticDataService = staticDataService;
             this.gameLanguageProvider = gameLanguageProvider;
-            this.poePriceInfoClient = poePriceInfoClient;
             this.settings = settings;
             this.itemCategoryRepository = itemCategoryRepository;
             this.mediator = mediator;
@@ -754,8 +751,8 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             if (!IsPoeNinja)
             {
-                var result = await poePriceInfoClient.GetItemPricePrediction(Item.Text);
-                if (result?.ErrorCode != 0)
+                var result = await mediator.Send(new PredictPriceCommand(Item));
+                if (result == null)
                 {
                     return;
                 }
