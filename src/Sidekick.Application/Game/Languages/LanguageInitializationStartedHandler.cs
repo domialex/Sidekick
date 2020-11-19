@@ -10,7 +10,7 @@ using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Settings;
 using Sidekick.Extensions;
 
-namespace Sidekick.Application.Languages
+namespace Sidekick.Application.Game.Languages
 {
     public class LanguageInitializationStartedHandler : INotificationHandler<LanguageInitializationStarted>
     {

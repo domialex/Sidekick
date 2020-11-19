@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MediatR;
 
-namespace Sidekick.Domain.Leagues
+namespace Sidekick.Domain.Game.Leagues.Queries
 {
     /// <summary>
     /// Query to get a list of currently available leagues

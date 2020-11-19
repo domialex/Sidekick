@@ -1,7 +1,7 @@
 using MediatR;
 using Sidekick.Domain.Game.Items.Models;
 
-namespace Sidekick.Domain.Prices.Commands
+namespace Sidekick.Domain.Trade.Commands
 {
     /// <summary>
     /// Price checks an item

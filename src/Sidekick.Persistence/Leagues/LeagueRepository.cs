@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Game.Leagues;
 
 namespace Sidekick.Persistence.Leagues
 {

@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Prices.Commands;
+using Sidekick.Domain.Trade.Commands;
 using Sidekick.Domain.Views;
 
-namespace Sidekick.Application.Prices
+namespace Sidekick.Application.Trade
 {
     public class PriceCheckItemHandler : ICommandHandler<PriceCheckItemCommand, bool>
     {

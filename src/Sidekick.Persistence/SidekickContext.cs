@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Game.Leagues;
 using Sidekick.Domain.Views;
 using Sidekick.Persistence.Cache;
 using Sidekick.Persistence.ItemCategories;

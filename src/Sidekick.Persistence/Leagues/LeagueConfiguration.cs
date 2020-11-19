@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Game.Leagues;
 
 namespace Sidekick.Persistence.Leagues
 {

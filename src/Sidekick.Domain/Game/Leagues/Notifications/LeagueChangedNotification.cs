@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Sidekick.Domain.Leagues
+namespace Sidekick.Domain.Game.Leagues.Notifications
 {
     /// <summary>
     /// Indicates that the currently selected league has changed

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
 
-namespace Sidekick.Application.Languages
+namespace Sidekick.Application.Game.Languages
 {
     public class SetLanguageHandler : ICommandHandler<SetGameLanguageCommand>
     {

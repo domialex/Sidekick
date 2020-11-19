@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Game.Leagues;
+using Sidekick.Domain.Game.Leagues.Queries;
 
 namespace Sidekick.Infrastructure.PoeApi.Leagues
 {

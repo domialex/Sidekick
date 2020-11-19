@@ -1,4 +1,4 @@
-namespace Sidekick.Domain.Leagues
+namespace Sidekick.Domain.Game.Leagues
 {
     /// <summary>
     /// A Path of Exile league

@@ -4,9 +4,9 @@ using MediatR;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Prices.Commands;
+using Sidekick.Domain.Trade.Commands;
 
-namespace Sidekick.Application.Prices
+namespace Sidekick.Application.Trade
 {
     public class OpenTradePageHandler : ICommandHandler<OpenTradePageCommand, bool>
     {

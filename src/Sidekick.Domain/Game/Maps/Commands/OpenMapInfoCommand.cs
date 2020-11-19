@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Sidekick.Domain.Maps.Commands
+namespace Sidekick.Domain.Game.Maps.Commands
 {
     /// <summary>
     /// Opens the map info view

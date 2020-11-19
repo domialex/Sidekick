@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sidekick.Domain.Leagues
+namespace Sidekick.Domain.Game.Leagues
 {
     /// <summary>
     /// Leagues repository
