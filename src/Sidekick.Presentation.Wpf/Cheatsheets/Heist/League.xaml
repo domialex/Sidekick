@@ -1,0 +1,68 @@
+<UserControl
+    x:Class="Sidekick.Presentation.Wpf.Cheatsheets.Heist.League"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+    xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Cheatsheets.Heist"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Leagues.Heist;assembly=Sidekick.Presentation"
+    loc:Translation.ResourceManager="{x:Static resx:HeistResources.ResourceManager}">
+
+    <Grid Name="Container">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="16" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Column="0" Background="{DynamicResource {x:Static adonisUi:Brushes.Layer3BackgroundBrush}}">
+            <TextBlock
+                Margin="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="Job"
+                TextWrapping="WrapWithOverflow" />
+        </WrapPanel>
+
+        <WrapPanel Grid.Column="1" Background="{DynamicResource {x:Static adonisUi:Brushes.Layer3BackgroundBrush}}">
+            <TextBlock
+                Margin="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="Reward Types"
+                TextWrapping="WrapWithOverflow" />
+        </WrapPanel>
+
+        <WrapPanel Grid.Column="2" Background="{DynamicResource {x:Static adonisUi:Brushes.Layer3BackgroundBrush}}">
+            <TextBlock
+                Margin="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="Allies"
+                TextWrapping="WrapWithOverflow" />
+        </WrapPanel>
+
+        <ScrollViewer
+            Grid.Row="1"
+            Grid.ColumnSpan="4"
+            Margin="0"
+            Padding="0,4,0,0">
+            <ItemsControl ItemsSource="{Binding Path=Model.Jobs}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:Job Model="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

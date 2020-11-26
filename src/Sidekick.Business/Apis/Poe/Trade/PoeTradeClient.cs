@@ -8,22 +8,22 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Business.Apis.Poe.Trade.Data.Items;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Data.Stats;
-using Sidekick.Domain.Languages;
+using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Trade
 {
     public class PoeTradeClient : IPoeTradeClient
     {
         private readonly ILogger logger;
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly HttpClient client;
 
         public PoeTradeClient(ILogger<PoeTradeClient> logger,
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             client = httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
@@ -64,7 +64,7 @@ namespace Sidekick.Business.Apis.Poe.Trade
                 default: throw new ArgumentException("The type to fetch is not recognized by the PoeApiService.");
             }
 
-            var language = useDefaultLanguage ? languageProvider.EnglishLanguage : languageProvider.Language;
+            var language = useDefaultLanguage ? gameLanguageProvider.EnglishLanguage : gameLanguageProvider.Language;
 
             try
             {

@@ -1,0 +1,101 @@
+<UserControl
+    x:Class="Sidekick.Presentation.Wpf.Views.Prices.Sockets"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Sidekick.Presentation.Wpf.Views.Prices"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/crusader-symbol.png"
+                Visibility="{Binding Item.Influences.Crusader, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/elder-symbol.png"
+                Visibility="{Binding Item.Influences.Elder, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/hunter-symbol.png"
+                Visibility="{Binding Item.Influences.Hunter, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/redeemer-symbol.png"
+                Visibility="{Binding Item.Influences.Redeemer, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/shaper-symbol.png"
+                Visibility="{Binding Item.Influences.Shaper, Converter={StaticResource BooleanToVisibility}}" />
+            <Image
+                Width="26"
+                Height="26"
+                Margin="0,4,0,0"
+                Source="/Views/Prices/Images/warlord-symbol.png"
+                Visibility="{Binding Item.Influences.Warlord, Converter={StaticResource BooleanToVisibility}}" />
+        </StackPanel>
+
+        <ItemsControl
+            Grid.Row="1"
+            Grid.Column="0"
+            ItemsSource="{Binding SocketGroups}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="0,4,4,0"
+                        Padding="2,0,4,0"
+                        BorderBrush="Gray"
+                        BorderThickness="1">
+                        <ItemsControl ItemsSource="{Binding}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Ellipse
+                                        Width="16"
+                                        Height="16"
+                                        Margin="2,4,0,4"
+                                        Stroke="{Binding}"
+                                        StrokeThickness="3" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </Grid>
+</UserControl>

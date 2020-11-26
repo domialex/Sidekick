@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Initialization.Commands
 {

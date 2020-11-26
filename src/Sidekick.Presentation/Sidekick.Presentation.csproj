@@ -9,6 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Include="Initialization\InitializationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -16,8 +21,178 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
-    <ProjectReference Include="..\Sidekick.Core\Sidekick.Core.csproj" />
-    <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Localization\ApplicationLogs\ApplicationLogsResources.Designer.cs">
+      <DependentUpon>ApplicationLogsResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Application\ApplicationResources.Designer.cs">
+      <DependentUpon>ApplicationResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Errors\ErrorResources.Designer.cs">
+      <DependentUpon>ErrorResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Initialize\InitializeResources.Designer.cs">
+      <DependentUpon>InitializeResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Leagues\Betrayal\BetrayalResources.Designer.cs">
+      <DependentUpon>BetrayalResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Leagues\Blight\BlightResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BlightResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localization\Leagues\Delve\DelveResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DelveResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localization\Leagues\Heist\HeistResources.Designer.cs">
+      <DependentUpon>HeistResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Leagues\Incursion\IncursionResources.Designer.cs">
+      <DependentUpon>IncursionResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Leagues\LeagueResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LeagueResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localization\Leagues\Metamorph\MetamorphResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MetamorphResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localization\MapInfo\MapInfoResources.Designer.cs">
+      <DependentUpon>MapInfoResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Prices\PriceResources.Designer.cs">
+      <DependentUpon>PriceResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Settings\SettingResources.Designer.cs">
+      <DependentUpon>SettingResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Splash\SplashResources.Designer.cs">
+      <DependentUpon>SplashResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localization\Tray\TrayResources.Designer.cs">
+      <DependentUpon>TrayResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\ApplicationLogs\ApplicationLogsResources.resx">
+      <LastGenOutput>ApplicationLogsResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Application\ApplicationResources.resx">
+      <LastGenOutput>ApplicationResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Errors\ErrorResources.resx">
+      <LastGenOutput>ErrorResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Initialize\InitializeResources.resx">
+      <LastGenOutput>InitializeResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Betrayal\BetrayalResources.resx">
+      <LastGenOutput>BetrayalResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Blight\BlightResources.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>BlightResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Blight\BlightResources.zh-tw.resx">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Delve\DelveResources.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>DelveResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Delve\DelveResources.zh-tw.resx">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Heist\HeistResources.resx">
+      <LastGenOutput>HeistResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Incursion\IncursionResources.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Incursion\IncursionResources.zh-tw.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\LeagueResources.resx">
+      <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\LeagueResources.zh-tw.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Metamorph\MetamorphResources.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>MetamorphResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Leagues\Metamorph\MetamorphResources.zh-tw.resx">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\MapInfo\MapInfoResources.resx">
+      <LastGenOutput>MapInfoResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Prices\PriceResources.resx">
+      <LastGenOutput>PriceResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Settings\SettingResources.resx">
+      <LastGenOutput>SettingResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Splash\SplashResources.resx">
+      <LastGenOutput>SplashResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Tray\TrayResources.resx">
+      <LastGenOutput>TrayResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

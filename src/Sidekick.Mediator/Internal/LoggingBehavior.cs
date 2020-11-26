@@ -30,19 +30,23 @@ namespace Sidekick.Mediator.Internal
 
                 try
                 {
-                    logger.LogInformation($"[Mediator:PROPS] {guid} {JsonSerializer.Serialize(request)}");
+                    var props = JsonSerializer.Serialize(request);
+                    if (props != "{}")
+                    {
+                        logger.LogInformation($"[Mediator:PROPS] {guid} {props}");
+                    }
                 }
                 catch (Exception)
                 {
-                    logger.LogInformation($"[Mediator:ERROR] {guid} Could not serialize the request.");
+                    logger.LogError($"[Mediator:ERROR] {guid} Could not serialize the request.");
                 }
 
                 response = await next();
             }
             catch (Exception e)
             {
-                logger.LogInformation($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
-                throw;
+                logger.LogError($"[Mediator:ERROR] {nameWithGuid} - {e.Message}");
+                return default;
             }
             finally
             {

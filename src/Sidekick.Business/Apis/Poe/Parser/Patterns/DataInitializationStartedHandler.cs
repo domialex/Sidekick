@@ -3,22 +3,22 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Business.Apis.Poe.Models;
+using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Domain.Languages;
 
 namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 {
     public class DataInitializationStartedHandler : INotificationHandler<DataInitializationStarted>
     {
-        private readonly ILanguageProvider languageProvider;
+        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IParserPatterns parserPatterns;
 
         public DataInitializationStartedHandler(
-            ILanguageProvider languageProvider,
+            IGameLanguageProvider gameLanguageProvider,
             IParserPatterns parserPatterns)
         {
-            this.languageProvider = languageProvider;
+            this.gameLanguageProvider = gameLanguageProvider;
             this.parserPatterns = parserPatterns;
         }
 
@@ -38,18 +38,18 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         {
             parserPatterns.Rarity = new Dictionary<Rarity, Regex>
             {
-                { Models.Rarity.Normal, languageProvider.Language.RarityNormal.EndOfLineRegex() },
-                { Models.Rarity.Magic, languageProvider.Language.RarityMagic.EndOfLineRegex() },
-                { Models.Rarity.Rare, languageProvider.Language.RarityRare.EndOfLineRegex() },
-                { Models.Rarity.Unique, languageProvider.Language.RarityUnique.EndOfLineRegex() },
-                { Models.Rarity.Currency, languageProvider.Language.RarityCurrency.EndOfLineRegex() },
-                { Models.Rarity.Gem, languageProvider.Language.RarityGem.EndOfLineRegex() },
-                { Models.Rarity.DivinationCard, languageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
+                { Rarity.Normal, gameLanguageProvider.Language.RarityNormal.EndOfLineRegex() },
+                { Rarity.Magic, gameLanguageProvider.Language.RarityMagic.EndOfLineRegex() },
+                { Rarity.Rare, gameLanguageProvider.Language.RarityRare.EndOfLineRegex() },
+                { Rarity.Unique, gameLanguageProvider.Language.RarityUnique.EndOfLineRegex() },
+                { Rarity.Currency, gameLanguageProvider.Language.RarityCurrency.EndOfLineRegex() },
+                { Rarity.Gem, gameLanguageProvider.Language.RarityGem.EndOfLineRegex() },
+                { Rarity.DivinationCard, gameLanguageProvider.Language.RarityDivinationCard.EndOfLineRegex() }
             };
 
-            parserPatterns.ItemLevel = languageProvider.Language.DescriptionItemLevel.IntFromLineRegex();
-            parserPatterns.Unidentified = languageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
-            parserPatterns.Corrupted = languageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
+            parserPatterns.ItemLevel = gameLanguageProvider.Language.DescriptionItemLevel.IntFromLineRegex();
+            parserPatterns.Unidentified = gameLanguageProvider.Language.DescriptionUnidentified.ToRegex(prefix: "[\\r\\n]");
+            parserPatterns.Corrupted = gameLanguageProvider.Language.DescriptionCorrupted.ToRegex(prefix: "[\\r\\n]");
         }
 
         #endregion Header (Rarity, Name, Type)
@@ -58,25 +58,25 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitProperties()
         {
-            parserPatterns.Armor = languageProvider.Language.DescriptionArmour.ToRegex(prefix: "(?:^|[\\r\\n])", suffix: "[^\\r\\n\\d]*(\\d+)");
+            parserPatterns.Armor = gameLanguageProvider.Language.DescriptionArmour.ToRegex(prefix: "(?:^|[\\r\\n])", suffix: "[^\\r\\n\\d]*(\\d+)");
 
-            parserPatterns.EnergyShield = languageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
-            parserPatterns.Evasion = languageProvider.Language.DescriptionEvasion.IntFromLineRegex();
-            parserPatterns.ChanceToBlock = languageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
-            parserPatterns.Level = languageProvider.Language.DescriptionLevel.IntFromLineRegex();
-            parserPatterns.AttacksPerSecond = languageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
-            parserPatterns.CriticalStrikeChance = languageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
-            parserPatterns.ElementalDamage = languageProvider.Language.DescriptionElementalDamage.LineRegex();
-            parserPatterns.PhysicalDamage = languageProvider.Language.DescriptionPhysicalDamage.LineRegex();
+            parserPatterns.EnergyShield = gameLanguageProvider.Language.DescriptionEnergyShield.IntFromLineRegex();
+            parserPatterns.Evasion = gameLanguageProvider.Language.DescriptionEvasion.IntFromLineRegex();
+            parserPatterns.ChanceToBlock = gameLanguageProvider.Language.DescriptionChanceToBlock.IntFromLineRegex();
+            parserPatterns.Level = gameLanguageProvider.Language.DescriptionLevel.IntFromLineRegex();
+            parserPatterns.AttacksPerSecond = gameLanguageProvider.Language.DescriptionAttacksPerSecond.DecimalFromLineRegex();
+            parserPatterns.CriticalStrikeChance = gameLanguageProvider.Language.DescriptionCriticalStrikeChance.DecimalFromLineRegex();
+            parserPatterns.ElementalDamage = gameLanguageProvider.Language.DescriptionElementalDamage.LineRegex();
+            parserPatterns.PhysicalDamage = gameLanguageProvider.Language.DescriptionPhysicalDamage.LineRegex();
 
-            parserPatterns.Quality = languageProvider.Language.DescriptionQuality.IntFromLineRegex();
-            parserPatterns.AlternateQuality = languageProvider.Language.DescriptionAlternateQuality.ToRegex();
+            parserPatterns.Quality = gameLanguageProvider.Language.DescriptionQuality.IntFromLineRegex();
+            parserPatterns.AlternateQuality = gameLanguageProvider.Language.DescriptionAlternateQuality.ToRegex();
 
-            parserPatterns.MapTier = languageProvider.Language.DescriptionMapTier.IntFromLineRegex();
-            parserPatterns.ItemQuantity = languageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
-            parserPatterns.ItemRarity = languageProvider.Language.DescriptionItemRarity.IntFromLineRegex();
-            parserPatterns.MonsterPackSize = languageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
-            parserPatterns.Blighted = languageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
+            parserPatterns.MapTier = gameLanguageProvider.Language.DescriptionMapTier.IntFromLineRegex();
+            parserPatterns.ItemQuantity = gameLanguageProvider.Language.DescriptionItemQuantity.IntFromLineRegex();
+            parserPatterns.ItemRarity = gameLanguageProvider.Language.DescriptionItemRarity.IntFromLineRegex();
+            parserPatterns.MonsterPackSize = gameLanguageProvider.Language.DescriptionMonsterPackSize.IntFromLineRegex();
+            parserPatterns.Blighted = gameLanguageProvider.Language.PrefixBlighted.ToRegex("[\\ \\r\\n]", "[\\ \\r\\n]");
         }
 
         #endregion Properties (Armour, Evasion, Energy Shield, Quality, Level)
@@ -86,7 +86,7 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
         private void InitSockets()
         {
             // We need 6 capturing groups as it is possible for a 6 socket unlinked item to exist
-            parserPatterns.Socket = languageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
+            parserPatterns.Socket = gameLanguageProvider.Language.DescriptionSockets.ToRegex(suffix: "[^\\r\\n]*?([-RGBWA]+)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)\\ ?([-RGBWA]*)");
         }
 
         #endregion Sockets
@@ -95,12 +95,12 @@ namespace Sidekick.Business.Apis.Poe.Parser.Patterns
 
         private void InitInfluences()
         {
-            parserPatterns.Crusader = languageProvider.Language.InfluenceCrusader.ToRegex(prefix: "[\\r\\n]+");
-            parserPatterns.Elder = languageProvider.Language.InfluenceElder.ToRegex(prefix: "[\\r\\n]+");
-            parserPatterns.Hunter = languageProvider.Language.InfluenceHunter.ToRegex(prefix: "[\\r\\n]+");
-            parserPatterns.Redeemer = languageProvider.Language.InfluenceRedeemer.ToRegex(prefix: "[\\r\\n]+");
-            parserPatterns.Shaper = languageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
-            parserPatterns.Warlord = languageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Crusader = gameLanguageProvider.Language.InfluenceCrusader.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Elder = gameLanguageProvider.Language.InfluenceElder.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Hunter = gameLanguageProvider.Language.InfluenceHunter.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Redeemer = gameLanguageProvider.Language.InfluenceRedeemer.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Shaper = gameLanguageProvider.Language.InfluenceShaper.ToRegex(prefix: "[\\r\\n]+");
+            parserPatterns.Warlord = gameLanguageProvider.Language.InfluenceWarlord.ToRegex(prefix: "[\\r\\n]+");
         }
 
         #endregion Influences

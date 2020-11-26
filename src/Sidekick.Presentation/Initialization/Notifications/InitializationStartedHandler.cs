@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Settings;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Initialization.Notifications
 {

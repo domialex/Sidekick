@@ -1,0 +1,325 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Resources\ExaltedOrb.ico</ApplicationIcon>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Description>A Path of Exile helper that shows item prices using the official Path of Exile Trade API.</Description>
+    <PackageProjectUrl>https://github.com/domialex/Sidekick</PackageProjectUrl>
+    <PackageIcon>ExaltedOrb.png</PackageIcon>
+    <PackageIconUrl />
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Resources\ExaltedOrb.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Cheatsheets\Betrayal\Images\Aisling.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Cameria.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Elreon.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Gravicius.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Guff.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Haku.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Hillock.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\It_That_Fled.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Janus.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Jorgin.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Korell.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Leo.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Riker.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Rin.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Tora.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Vagan.png" />
+    <None Remove="Cheatsheets\Betrayal\Images\Vorici.png" />
+    <None Remove="Cheatsheets\Blight\Images\Amber_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Azure_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Black_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Clear_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Crimson_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Golden_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Opalescent_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Sepia_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Silver_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Teal_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Verdant_Oil.png" />
+    <None Remove="Cheatsheets\Blight\Images\Violet_Oil.png" />
+    <None Remove="Cheatsheets\Heist\HeistAlly.cs~RF204f36a.TMP" />
+    <None Remove="Cheatsheets\Heist\Images\Acrobatics.png" />
+    <None Remove="Cheatsheets\Heist\Images\AdiyahIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\Bruteforce.png" />
+    <None Remove="Cheatsheets\Heist\Images\CounterThaumaturgy.png" />
+    <None Remove="Cheatsheets\Heist\Images\Deception.png" />
+    <None Remove="Cheatsheets\Heist\Images\Demolition.png" />
+    <None Remove="Cheatsheets\Heist\Images\Engineering.png" />
+    <None Remove="Cheatsheets\Heist\Images\GiannaIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardAbyss.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardArmour.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardBlight.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardBreach.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardCurrency.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardDelirium.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardDivination.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardEssences.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardFossils.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardFragments.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardGems.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardGeneric.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardHarbinger.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardLegion.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardMaps.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardMetamorph.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardProphecies.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardTalismans.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardTrinkets.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardUniques.png" />
+    <None Remove="Cheatsheets\Heist\Images\HeistRewardWeapon.png" />
+    <None Remove="Cheatsheets\Heist\Images\HuckIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\IslaIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\KarstIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\KuraiIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\Lockpick.png" />
+    <None Remove="Cheatsheets\Heist\Images\NenetIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\NilesIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\Perception.png" />
+    <None Remove="Cheatsheets\Heist\Images\TibbsIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\TrapDisarmament.png" />
+    <None Remove="Cheatsheets\Heist\Images\TullinaIcon.png" />
+    <None Remove="Cheatsheets\Heist\Images\VinderiIcon.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Abrasive_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Fertile_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Imbued_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Prismatic_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Tempering_Catalyst.png" />
+    <None Remove="Cheatsheets\Metamorph\Images\Turbulent_Catalyst.png" />
+    <None Remove="Views\Prices\Images\crusader-symbol.png" />
+    <None Remove="Views\Prices\Images\elder-symbol.png" />
+    <None Remove="Views\Prices\Images\hunter-symbol.png" />
+    <None Remove="Views\Prices\Images\redeemer-symbol.png" />
+    <None Remove="Views\Prices\Images\shaper-symbol.png" />
+    <None Remove="Views\Prices\Images\warlord-symbol.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="AdonisUI" Version="1.16.0" />
+    <PackageReference Include="AdonisUI.ClassicTheme" Version="1.16.0" />
+    <PackageReference Include="Bindables.Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+    <PackageReference Include="WindowsHook" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
+    <ProjectReference Include="..\Sidekick.Business\Sidekick.Business.csproj" />
+    <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
+    <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
+    <ProjectReference Include="..\Sidekick.Presentation\Sidekick.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\ExaltedOrb.ico" />
+    <Resource Include="Resources\ExaltedOrb.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Aisling.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Cameria.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Elreon.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Gravicius.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Guff.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Haku.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Hillock.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\It_That_Fled.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Janus.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Jorgin.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Korell.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Leo.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Riker.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Rin.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Tora.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Vagan.png" />
+    <Resource Include="Cheatsheets\Betrayal\Images\Vorici.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Amber_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Azure_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Black_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Clear_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Crimson_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Golden_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Opalescent_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Sepia_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Silver_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Teal_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Verdant_Oil.png" />
+    <Resource Include="Cheatsheets\Blight\Images\Violet_Oil.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Acrobatics.png" />
+    <Resource Include="Cheatsheets\Heist\Images\AdiyahIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Bruteforce.png" />
+    <Resource Include="Cheatsheets\Heist\Images\CounterThaumaturgy.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Deception.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Demolition.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Engineering.png" />
+    <Resource Include="Cheatsheets\Heist\Images\GiannaIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardAbyss.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardArmour.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardBlight.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardBreach.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardCurrency.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardDelirium.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardDivination.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardEssences.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardFossils.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardFragments.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardGems.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardGeneric.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardHarbinger.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardLegion.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardMaps.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardMetamorph.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardProphecies.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardTalismans.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardTrinkets.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardUniques.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HeistRewardWeapon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\HuckIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\IslaIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\KarstIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\KuraiIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Lockpick.png" />
+    <Resource Include="Cheatsheets\Heist\Images\NenetIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\NilesIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\Perception.png" />
+    <Resource Include="Cheatsheets\Heist\Images\TibbsIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\TrapDisarmament.png" />
+    <Resource Include="Cheatsheets\Heist\Images\TullinaIcon.png" />
+    <Resource Include="Cheatsheets\Heist\Images\VinderiIcon.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Abrasive_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Fertile_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Imbued_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Intrinsic_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Prismatic_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Tempering_Catalyst.png" />
+    <Resource Include="Cheatsheets\Metamorph\Images\Turbulent_Catalyst.png" />
+    <Resource Include="Views\Prices\Images\crusader-symbol.png" />
+    <Resource Include="Views\Prices\Images\elder-symbol.png" />
+    <Resource Include="Views\Prices\Images\hunter-symbol.png" />
+    <Resource Include="Views\Prices\Images\redeemer-symbol.png" />
+    <Resource Include="Views\Prices\Images\shaper-symbol.png" />
+    <Resource Include="Views\Prices\Images\warlord-symbol.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Errors\AvailableInEnglishError.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Errors\InvalidItemError.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Settings\Tabs\StashTab.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Prices\ItemLineContent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Prices\ItemMod.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Prices\ItemPreview.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Setup\SetupViewModel.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Errors\AvailableInEnglishError.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Errors\InvalidItemError.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Settings\Tabs\StashTab.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SplashScreen\SplashScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\Button.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\GroupBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\TabControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\CheckBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\Label.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\ComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls\TextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Main.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Variables\Fonts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Variables\Spacers.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Cheatsheets\Heist\Ally.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Prices\ItemLineContent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Prices\ItemMod.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Prices\ItemPreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -6,13 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
-using Sidekick.Domain.Leagues;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
@@ -21,20 +20,17 @@ namespace Sidekick.Application.Initialization
 {
     public class InitializeHandler : ICommandHandler<InitializeCommand>
     {
-        private readonly ILogger logger;
         private readonly IStringLocalizer<InitializeHandler> localizer;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly ISidekickSettings settings;
 
         public InitializeHandler(
-            ILogger<InitializeHandler> logger,
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
             ISidekickSettings settings)
         {
-            this.logger = logger;
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
@@ -113,9 +109,8 @@ namespace Sidekick.Application.Initialization
 
                 return Unit.Value;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                logger.LogError($"Initializer Error - {exception.Message}", exception);
                 await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
                 await mediator.Send(new ShutdownCommand());
                 return Unit.Value;
@@ -153,6 +148,5 @@ namespace Sidekick.Application.Initialization
 
             await mediator.Publish(args);
         }
-
     }
 }

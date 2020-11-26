@@ -1,26 +1,28 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Sidekick.Domain.Leagues;
+using Sidekick.Domain.Game.Leagues;
 
 namespace Sidekick.Persistence.Leagues
 {
     public class LeagueRepository : ILeagueRepository
     {
-        private readonly SidekickContext context;
+        private readonly DbContextOptions<SidekickContext> options;
 
-        public LeagueRepository(SidekickContext context)
+        public LeagueRepository(DbContextOptions<SidekickContext> options)
         {
-            this.context = context;
+            this.options = options;
         }
 
         public async Task<List<League>> FindAll()
         {
+            using var context = new SidekickContext(options);
             return await context.Leagues.ToListAsync();
         }
 
         public async Task SaveAll(List<League> leagues)
         {
+            using var context = new SidekickContext(options);
             context.Leagues.RemoveRange(await FindAll());
             context.AddRange(leagues);
             await context.SaveChangesAsync();

@@ -13,6 +13,8 @@ namespace Sidekick.Mediator
 
         Task<Unit> Command(ICommand command, CancellationToken cancellationToken = default);
 
+        Task<TResponse> Command<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default);
+
         Task WhenAll { get; }
     }
 }

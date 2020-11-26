@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Sidekick.Domain.Game.Leagues;
+using Sidekick.Domain.Views;
 using Sidekick.Persistence.Cache;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Persistence.Leagues;
-using Sidekick.Persistence.Windows;
-using Sidekick.Domain.Leagues;
+using Sidekick.Persistence.Views;
 
 namespace Sidekick.Persistence
 {
@@ -20,7 +21,7 @@ namespace Sidekick.Persistence
 
         public DbSet<League> Leagues { get; set; }
 
-        public DbSet<Window> Windows { get; set; }
+        public DbSet<ViewPreference> ViewPreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,7 @@ namespace Sidekick.Persistence
             modelBuilder.HasDefaultSchema("sidekick");
             modelBuilder.ApplyConfiguration(new CacheConfiguration());
             modelBuilder.ApplyConfiguration(new LeagueConfiguration());
+            modelBuilder.ApplyConfiguration(new ViewPreferenceConfiguration());
         }
     }
 }

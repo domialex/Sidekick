@@ -1,0 +1,70 @@
+<UserControl
+    x:Class="Sidekick.Presentation.Wpf.Views.Prices.Filter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Sidekick.Presentation.Wpf.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:loc="clr-namespace:Sidekick.Presentation.Wpf.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:Sidekick.Presentation.Localization.Prices;assembly=Sidekick.Presentation"
+    d:DesignHeight="60"
+    d:DesignWidth="360"
+    loc:Translation.ResourceManager="{x:Static resx:PriceResources.ResourceManager}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+            <converters:IntToVisibilityConverter x:Key="IntToVisibility" />
+            <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
+            <converters:NullableToVisibilityConverter x:Key="NullableToVisibility" />
+            <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibility" />
+            <converters:StringToNullableDoubleConverter x:Key="StringToNullableDouble" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <CheckBox IsChecked="{Binding Item.Enabled}">
+            <TextBlock
+                Name="TextBlock"
+                Margin="{StaticResource SpacerRight}"
+                TextWrapping="Wrap" />
+        </CheckBox>
+        <Grid Grid.Row="2" Visibility="{Binding Item.HasRange, Converter={StaticResource BooleanToVisibility}}">
+            <Grid Margin="20,0,0,0" Visibility="{Binding Item.Enabled, Converter={StaticResource BooleanToVisibility}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                    <ColumnDefinition Width="1*" MinWidth="40" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="0,0,4,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{loc:Loc Filters_Min}" />
+                <TextBox
+                    Grid.Column="1"
+                    Height="25"
+                    MinHeight="0"
+                    Text="{Binding Item.Min, Converter={StaticResource StringToNullableDouble}}" />
+                <TextBlock
+                    Grid.Column="2"
+                    Margin="0,0,4,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{loc:Loc Filters_Max}" />
+                <TextBox
+                    Grid.Column="3"
+                    Height="25"
+                    MinHeight="0"
+                    Text="{Binding Item.Max, Converter={StaticResource StringToNullableDouble}}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

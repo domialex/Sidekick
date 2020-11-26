@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Sidekick.Business.Apis.Poe.Models;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Business.Apis.Poe.Trade.Search.Requests
 {

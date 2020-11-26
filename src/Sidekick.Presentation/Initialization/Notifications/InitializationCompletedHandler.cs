@@ -5,8 +5,8 @@ using Sidekick.Core.Settings;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
-using Sidekick.Localization.Tray;
-using Sidekick.Presentation.Views;
+using Sidekick.Domain.Views;
+using Sidekick.Presentation.Localization.Tray;
 
 namespace Sidekick.Presentation.Initialization.Notifications
 {
@@ -32,7 +32,7 @@ namespace Sidekick.Presentation.Initialization.Notifications
             await Task.Delay(500);
 
             // Show a system notification
-            await mediator.Send(new OpenNotificationCommand(string.Format(TrayResources.Notification_Message, settings.Key_CheckPrices.ToKeybindString(), settings.Key_CloseWindow.ToKeybindString()), true)
+            await mediator.Send(new OpenNotificationCommand(string.Format(TrayResources.Notification_Message, settings.Price_Key_Check.ToKeybindString(), settings.Overlay_Key_Close.ToKeybindString()), true)
             {
                 Title = TrayResources.Notification_Title,
             });
