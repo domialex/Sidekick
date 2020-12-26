@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Apis\PoeNinja\" />
-  </ItemGroup>
-
 </Project>

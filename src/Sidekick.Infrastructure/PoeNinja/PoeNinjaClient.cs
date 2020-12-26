@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoeNinja.Models;
 
 namespace Sidekick.Infrastructure.PoeNinja
@@ -33,9 +34,10 @@ namespace Sidekick.Infrastructure.PoeNinja
         private readonly HttpClient client;
         private readonly ILogger logger;
         private readonly IGameLanguageProvider gameLanguageProvider;
+        private readonly ISidekickSettings settings;
         private readonly JsonSerializerOptions options;
 
-        public string LanguageCode
+        private string LanguageCode
         {
             get
             {
@@ -52,11 +54,12 @@ namespace Sidekick.Infrastructure.PoeNinja
         public PoeNinjaClient(
             IHttpClientFactory httpClientFactory,
             ILogger<PoeNinjaClient> logger,
-            IGameLanguageProvider gameLanguageProvider)
+            IGameLanguageProvider gameLanguageProvider,
+            ISidekickSettings settings)
         {
             this.logger = logger;
             this.gameLanguageProvider = gameLanguageProvider;
-
+            this.settings = settings;
             options = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -69,16 +72,15 @@ namespace Sidekick.Infrastructure.PoeNinja
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
         }
 
-        public async Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType)
+        public async Task<PoeNinjaQueryResult<PoeNinjaItem>> FetchItems(ItemType itemType)
         {
-            var url = new Uri($"{POE_NINJA_API_BASE_URL}itemoverview?league={leagueId}&type={itemType}&language={LanguageCode}");
+            var url = new Uri($"{POE_NINJA_API_BASE_URL}itemoverview?league={settings.LeagueId}&type={itemType}&language={LanguageCode}");
 
             try
             {
                 var response = await client.GetAsync(url);
                 var responseStream = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, options);
-                return result;
+                return await JsonSerializer.DeserializeAsync<PoeNinjaQueryResult<PoeNinjaItem>>(responseStream, options);
             }
             catch (Exception)
             {
@@ -88,9 +90,9 @@ namespace Sidekick.Infrastructure.PoeNinja
             return new PoeNinjaQueryResult<PoeNinjaItem>() { Lines = new List<PoeNinjaItem>() };
         }
 
-        public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency)
+        public async Task<PoeNinjaQueryResult<PoeNinjaCurrency>> FetchCurrencies(CurrencyType currency)
         {
-            var url = new Uri($"{POE_NINJA_API_BASE_URL}currencyoverview?league={leagueId}&type={currency}&language={LanguageCode}");
+            var url = new Uri($"{POE_NINJA_API_BASE_URL}currencyoverview?league={settings.LeagueId}&type={currency}&language={LanguageCode}");
 
             try
             {

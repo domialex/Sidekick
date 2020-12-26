@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Sidekick.Domain.Apis.PoeNinja.Models;
 using Sidekick.Domain.Game.Leagues;
 using Sidekick.Domain.Views;
+using Sidekick.Persistence.Apis.PoeNinja;
 using Sidekick.Persistence.Cache;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Persistence.Leagues;
@@ -21,6 +23,10 @@ namespace Sidekick.Persistence
 
         public DbSet<League> Leagues { get; set; }
 
+        public DbSet<NinjaPrice> NinjaPrices { get; set; }
+
+        public DbSet<NinjaTranslation> NinjaTranslations { get; set; }
+
         public DbSet<ViewPreference> ViewPreferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,6 +35,8 @@ namespace Sidekick.Persistence
             modelBuilder.HasDefaultSchema("sidekick");
             modelBuilder.ApplyConfiguration(new CacheConfiguration());
             modelBuilder.ApplyConfiguration(new LeagueConfiguration());
+            modelBuilder.ApplyConfiguration(new NinjaPriceConfiguration());
+            modelBuilder.ApplyConfiguration(new NinjaTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new ViewPreferenceConfiguration());
         }
     }

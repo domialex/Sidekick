@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-
 namespace Sidekick.Infrastructure.PoeNinja.Models
 {
     public class SparkLine
     {
-        public double TotalChange { get; set; }
+        // public double TotalChange { get; set; }
 
-        public List<double?> Data { get; set; }
+        // public List<double?> Data { get; set; }
     }
 }

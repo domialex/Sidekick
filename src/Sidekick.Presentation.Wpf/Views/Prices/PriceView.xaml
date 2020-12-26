@@ -115,8 +115,8 @@
                             <TextBlock Text="{Binding CountString}" />
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock Text="{Binding PredictionText}" Visibility="{Binding IsPredicted, Converter={StaticResource BooleanToVisibility}}" />
-                    <TextBlock Text="{Binding PoeNinjaText}" Visibility="{Binding IsPoeNinja, Converter={StaticResource BooleanToVisibility}}" />
+                    <TextBlock Text="{Binding PredictionText}" Visibility="{Binding PredictionText, Converter={StaticResource StringToVisibility}}" />
+                    <TextBlock Text="{Binding PoeNinjaText}" Visibility="{Binding PoeNinjaText, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
             </Grid>
         </Grid>

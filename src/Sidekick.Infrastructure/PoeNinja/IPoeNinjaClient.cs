@@ -7,8 +7,8 @@ namespace Sidekick.Infrastructure.PoeNinja
     {
         bool IsSupportingCurrentLanguage { get; }
 
-        Task<PoeNinjaQueryResult<PoeNinjaItem>> QueryItem(string leagueId, ItemType itemType);
+        Task<PoeNinjaQueryResult<PoeNinjaItem>> FetchItems(ItemType itemType);
 
-        Task<PoeNinjaQueryResult<PoeNinjaCurrency>> QueryItem(string leagueId, CurrencyType currency);
+        Task<PoeNinjaQueryResult<PoeNinjaCurrency>> FetchCurrencies(CurrencyType currency);
     }
 }

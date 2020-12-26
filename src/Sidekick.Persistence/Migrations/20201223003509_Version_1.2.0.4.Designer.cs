@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sidekick.Persistence;
 
 namespace Sidekick.Persistence.Migrations
 {
     [DbContext(typeof(SidekickContext))]
-    partial class SidekickContextModelSnapshot : ModelSnapshot
+    [Migration("20201223003509_Version_1.2.0.4")]
+    partial class Version_1204
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,19 +27,13 @@ namespace Sidekick.Persistence.Migrations
                     b.Property<bool>("Corrupted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MapTier")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GemLevel")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTimeOffset>("LastUpdated")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
-                    b.HasKey("Name", "Corrupted", "MapTier", "GemLevel");
+                    b.HasKey("Name", "Corrupted");
 
                     b.ToTable("NinjaPrices");
                 });

@@ -7,7 +7,6 @@ using MediatR;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
-using Sidekick.Domain.Game.Leagues.Notifications;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Keybinds;
@@ -153,8 +152,7 @@ namespace Sidekick.Presentation.Wpf.Settings
             await mediator.Send(new SetGameLanguageCommand(Language_Parser));
             await mediator.Send(new SaveSettingsCommand(this));
 
-            if (languageHasChanged) await ResetCache();
-            else if (leagueHasChanged) await mediator.Publish(new LeagueChangedNotification());
+            if (languageHasChanged || leagueHasChanged) await ResetCache();
         }
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
