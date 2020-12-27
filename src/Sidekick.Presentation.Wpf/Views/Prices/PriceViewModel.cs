@@ -763,14 +763,14 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             if (string.IsNullOrEmpty(PoeNinjaText))
             {
                 var result = await mediator.Send(new GetPricePredictionQuery(Item));
-                if (result == null)
+                if (result == null || (result.Min == 0 && result.Max == 0))
                 {
                     return;
                 }
 
                 PredictionText = string.Format(
                     PriceResources.PredictionString,
-                    $"{result.Min?.ToString("N1")}-{result.Max?.ToString("N1")} {result.Currency}",
+                    $"{result.Min.ToString("N1")}-{result.Max.ToString("N1")} {result.Currency}",
                     result.ConfidenceScore.ToString("N1"));
             }
         }

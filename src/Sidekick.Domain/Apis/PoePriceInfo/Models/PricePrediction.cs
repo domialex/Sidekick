@@ -8,12 +8,12 @@ namespace Sidekick.Domain.Apis.PoePriceInfo.Models
         /// <summary>
         /// The minimum estimated value of the item
         /// </summary>
-        public double? Min { get; set; }
+        public double Min { get; set; }
 
         /// <summary>
         /// The maximum estimated value of the item
         /// </summary>
-        public double? Max { get; set; }
+        public double Max { get; set; }
 
         /// <summary>
         /// The currency in which the item is evaluated

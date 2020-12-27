@@ -29,7 +29,7 @@ namespace Sidekick.Infrastructure.PoeNinja
         {
             var cacheResult = await repository.Find(request.Item.NameLine, request.Item.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
 
-            if (cacheResult.LastUpdated.AddHours(2) > DateTimeOffset.Now)
+            if (cacheResult != null && cacheResult.LastUpdated.AddHours(2) > DateTimeOffset.Now)
             {
                 return cacheResult;
             }
@@ -70,11 +70,14 @@ namespace Sidekick.Infrastructure.PoeNinja
                     case Category.DivinationCard: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.DivinationCard)); break;
                     case Category.Map: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Map)); break;
                     case Category.Gem: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.SkillGem)); break;
-                    default:
-                        fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Prophecy));
-                        fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Beast));
-                        break;
+                    case Category.Prophecy: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Prophecy)); break;
+                    case Category.ItemisedMonster: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Beast)); break;
                 }
+            }
+
+            if (fetchCurrencies.Count == 0 && fetchItems.Count == 0)
+            {
+                return null;
             }
 
             var itemResults = await Task.WhenAll(fetchItems);
