@@ -327,6 +327,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade.Search
                     Currency = result.Listing.Price.Currency,
                     Date = result.Listing.Indexed,
                     Whisper = result.Listing.Whisper,
+                    Note = result.Item.Note,
                 },
 
                 Corrupted = result.Item.Corrupted,
@@ -339,11 +340,10 @@ namespace Sidekick.Infrastructure.PoeApi.Trade.Search
                 Type = result.Item.TypeLine,
                 TypeLine = result.Item.TypeLine,
 
-                Icon = result.Item.Icon,
-                Note = result.Item.Note,
+                Image = result.Item.Icon,
 
-                PropertyTexts = ParseLineContents(result.Item.Properties),
-                Requirements = ParseLineContents(result.Item.Requirements),
+                RequirementContents = ParseLineContents(result.Item.Requirements),
+                PropertyContents = ParseLineContents(result.Item.Properties),
                 Sockets = ParseSockets(result.Item.Sockets),
 
                 Properties = new Properties()
@@ -427,7 +427,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade.Search
                     var values = new List<LineContentValue>();
                     foreach (var value in line.Values)
                     {
-                        if (line.Values.Count != 2)
+                        if (value.Count != 2)
                         {
                             continue;
                         }

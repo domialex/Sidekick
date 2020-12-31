@@ -8,6 +8,7 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade;
+using Sidekick.Domain.Game.Trade.Commands;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Game.Trade

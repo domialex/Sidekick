@@ -15,5 +15,7 @@ namespace Sidekick.Domain.Game.Trade.Models
         public string Currency { get; set; }
 
         public string Whisper { get; set; }
+
+        public string Note { get; set; }
     }
 }

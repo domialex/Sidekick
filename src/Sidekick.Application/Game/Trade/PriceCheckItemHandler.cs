@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Items.Commands;
+using Sidekick.Domain.Game.Trade.Commands;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Game.Trade

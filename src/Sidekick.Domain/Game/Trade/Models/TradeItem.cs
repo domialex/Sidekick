@@ -8,9 +8,9 @@ namespace Sidekick.Domain.Game.Trade.Models
         public string Id { get; set; }
         public TradePrice Price { get; set; }
 
-        public string Icon { get; set; }
-        public string Note { get; set; }
-        public List<LineContent> PropertyTexts { get; set; }
-        public List<LineContent> Requirements { get; set; }
+        public string Image { get; set; }
+
+        public List<LineContent> PropertyContents { get; set; }
+        public List<LineContent> RequirementContents { get; set; }
     }
 }

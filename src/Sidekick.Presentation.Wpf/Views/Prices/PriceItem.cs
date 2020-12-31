@@ -13,9 +13,9 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         {
             Item = result;
 
-            if (Item.Requirements != null)
+            if (Item.RequirementContents != null)
             {
-                var requirementValues = string.Join(", ", Item.Requirements.Select(x => x.Text.Replace(":", "")));
+                var requirementValues = string.Join(", ", Item.RequirementContents.Select(x => x.Text.Replace(":", "")));
                 var requires = new LineContent()
                 {
                     Text = $"{PriceResources.Requires} {requirementValues}",
@@ -29,18 +29,18 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                     }
                 };
 
-                Item.Requirements.Clear();
-                Item.Requirements.Add(requires);
+                Item.RequirementContents.Clear();
+                Item.RequirementContents.Add(requires);
             }
 
             if (Item.ItemLevel > 0)
             {
-                if (Item.Requirements == null)
+                if (Item.RequirementContents == null)
                 {
-                    Item.Requirements = new List<LineContent>();
+                    Item.RequirementContents = new List<LineContent>();
                 }
 
-                Item.Requirements = Item.Requirements.Prepend(new LineContent()
+                Item.RequirementContents = Item.RequirementContents.Prepend(new LineContent()
                 {
                     Text = $"{PriceResources.ItemLevel}: {Item.ItemLevel}",
                     Values = new List<LineContentValue>
