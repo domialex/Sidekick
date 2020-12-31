@@ -90,6 +90,11 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, arg, ref task);
             ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, arg, ref task);
 
+            foreach (var customChat in settings.Custom_Chat_Settings)
+            {
+                ExecuteCustomChat(customChat, arg, ref task);
+            }
+
             if (task == null)
             {
                 Enabled = true;
@@ -106,6 +111,18 @@ namespace Sidekick.Application.Keybinds
             return task != null;
         }
 
+        private void ExecuteCustomChat(CustomChatSetting customChatSetting, string input, ref Task<bool> returnTask)
+        {
+            if (input == customChatSetting.Key)
+            {
+                logger.LogInformation($"Keybind detected: {customChatSetting.Key}! Executing the custom chat command '{customChatSetting.ChatCommand}'");
+
+                var task = mediator.Send(new CustomChatCommand(customChatSetting.ChatCommand));
+
+                GetKeybindTask(customChatSetting.Key, input, task);
+                returnTask = task;
+            }
+        }
 
         private void ExecuteKeybind<TCommand>(string keybind, string input, ref Task<bool> returnTask)
             where TCommand : ICommand<bool>, new()
@@ -116,22 +133,26 @@ namespace Sidekick.Application.Keybinds
 
                 var task = mediator.Send(new TCommand());
 
-                // We need to make sure some key combinations make it into the game no matter what
-                if (task != null && input == keybind)
-                {
-                    Task.Run(async () =>
-                    {
-                        if (!await task)
-                        {
-                            Enabled = false;
-                            keybindsProvider.PressKey(keybind);
-                            await Task.Delay(200);
-                            Enabled = true;
-                        }
-                    });
-                }
-
+                GetKeybindTask(keybind, input, task);
                 returnTask = task;
+            }
+        }
+
+        private void GetKeybindTask(string keybind, string input, Task<bool> task)
+        {
+            // We need to make sure some key combinations make it into the game no matter what
+            if (task != null && input == keybind)
+            {
+                Task.Run(async () =>
+                {
+                    if (!await task)
+                    {
+                        Enabled = false;
+                        keybindsProvider.PressKey(keybind);
+                        await Task.Delay(200);
+                        Enabled = true;
+                    }
+                });
             }
         }
 

@@ -178,6 +178,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom Keybinds.
+        /// </summary>
+        public static string Group_Custom_Keybinds {
+            get {
+                return ResourceManager.GetString("Group_Custom_Keybinds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keybindings.
         /// </summary>
         public static string Group_Keybinds {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +55,9 @@ namespace Sidekick.Presentation.Wpf.Settings
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName[1..], x.Name));
             gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
+            foreach (var setting in Custom_Chat_Settings)
+                CustomChatSettings.Add(new CustomChatModel { ChatCommand = setting.ChatCommand, Key = setting.Key });
+
             keybindsProvider.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
 
@@ -63,6 +67,8 @@ namespace Sidekick.Presentation.Wpf.Settings
             leagues.ForEach(x => LeagueOptions.Add(x.Id, x.Text));
         }
 
+        #region Settings
+
         public ObservableDictionary<string, string> WikiOptions { get; private set; } = new ObservableDictionary<string, string>();
 
         public ObservableDictionary<string, string> LeagueOptions { get; private set; } = new ObservableDictionary<string, string>();
@@ -71,7 +77,13 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public ObservableDictionary<string, string> ParserLanguageOptions { get; private set; } = new ObservableDictionary<string, string>();
 
+        public ObservableCollection<CustomChatModel> CustomChatSettings { get; private set; } = new ObservableCollection<CustomChatModel>();
+
         public string CurrentKey { get; set; }
+
+        public CustomChatModel CurrentCustomChat { get; set; }
+
+        public bool SettingCustom { get; set; }
 
         public List<string> Price_Mods_Accessory { get; set; }
 
@@ -137,6 +149,10 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public WikiSetting Wiki_Preferred { get; set; }
 
+        public List<CustomChatSetting> Custom_Chat_Settings { get; set; } = new List<CustomChatSetting>();
+
+        #endregion
+
         // This is called when CurrentKey changes, thanks to Fody
         public void OnCurrentKeyChanged()
         {
@@ -147,6 +163,10 @@ namespace Sidekick.Presentation.Wpf.Settings
         {
             var leagueHasChanged = LeagueId != sidekickSettings.LeagueId;
             var languageHasChanged = gameLanguageProvider.Current.LanguageCode != Language_Parser;
+
+            Custom_Chat_Settings.Clear();
+            foreach (var setting in CustomChatSettings)
+                Custom_Chat_Settings.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
 
             uiLanguageProvider.SetLanguage(Language_UI);
             await mediator.Send(new SetGameLanguageCommand(Language_Parser));
@@ -159,34 +179,58 @@ namespace Sidekick.Presentation.Wpf.Settings
         {
             return GetType()
                 .GetProperties()
-                .Any(x => x.Name != ignoreKey && x.GetValue(this).ToString() == keybind);
+                .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
+                || Custom_Chat_Settings.Any(x => x.Key == keybind);
         }
 
         private bool NativeKeyboard_OnKeyDown(string input)
         {
+            if (SettingCustom)
+            {
+                if (CurrentCustomChat == null)
+                {
+                    SettingCustom = false;
+                    return false;
+                }
+
+                if (input == "Escape")
+                {
+                    SettingCustom = false;
+                    return true;
+                }
+
+                if (!IsKeybindUsed(input, CurrentCustomChat.Key))
+                {
+                    CurrentCustomChat.Key = input;
+                }
+
+                SettingCustom = false;
+                return true;
+            }
+
             if (string.IsNullOrEmpty(CurrentKey))
             {
                 return false;
             }
-
+            
             if (input == "Escape")
             {
                 CurrentKey = null;
                 return true;
             }
-
+            
             if (!IsKeybindUsed(input, CurrentKey))
             {
                 var property = GetType()
                     .GetProperties()
                     .FirstOrDefault(x => x.Name == CurrentKey);
-
+            
                 if (property != default)
                 {
                     property.SetValue(this, input);
                 }
             }
-
+            
             CurrentKey = null;
             return true;
         }
@@ -228,5 +272,17 @@ namespace Sidekick.Presentation.Wpf.Settings
             await mediator.Send(new ClearCacheCommand());
             await mediator.Send(new InitializeCommand(false));
         }
+
+        #region Custom Commands
+
+        public void NewCommand()
+        {
+            if (!CustomChatSettings.Any(x => x.ChatCommand == "New Command"))
+            {
+                CustomChatSettings.Add(new CustomChatModel { ChatCommand = "New Command", Key = "" });  
+            }
+        }
+
+        #endregion
     }
 }
