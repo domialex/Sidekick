@@ -11,8 +11,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
-    mc:Ignorable="d"
-    Loaded="UserControl_Loaded">
+    mc:Ignorable="d">
     <ScrollViewer x:Name="ScrollViewer">
         <StackPanel>
             <GroupBox Header="{loc:Loc Group_Keybinds}">
@@ -33,7 +32,7 @@
             </GroupBox>
             <GroupBox Header="{loc:Loc Group_Custom_Keybinds}">
                 <StackPanel>
-                    <ItemsControl Name="icCustomCommands" >
+                    <ItemsControl Name="icCustomCommands" ItemsSource="{Binding Path=ViewModel.CustomChatSettings}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <controls:CustomKeybindEditor

@@ -1,6 +1,9 @@
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using AutoMapper;
 using Bindables;
+using Sidekick.Domain.Settings;
 
 namespace Sidekick.Presentation.Wpf.Settings.Tabs
 {
@@ -21,11 +24,6 @@ namespace Sidekick.Presentation.Wpf.Settings.Tabs
         private void NewCommand_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.NewCommand();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            icCustomCommands.ItemsSource = ViewModel.Custom_Chat_Settings;
         }
     }
 }

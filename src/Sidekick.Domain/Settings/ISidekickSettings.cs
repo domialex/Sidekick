@@ -47,6 +47,6 @@ namespace Sidekick.Domain.Settings
         string Wiki_Key_Open { get; }
         WikiSetting Wiki_Preferred { get; }
 
-        ObservableCollection<CustomChatSetting> Custom_Chat_Settings { get; }
+        List<CustomChatSetting> Custom_Chat_Settings { get; }
     }
 }

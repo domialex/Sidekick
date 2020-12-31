@@ -23,7 +23,7 @@ namespace Sidekick.Presentation.Wpf.Settings.Controls
     [DependencyProperty]
     public partial class CustomKeybindEditor : UserControl
     {
-        public CustomChatSetting CustomChat { get; set; }
+        public CustomChatModel CustomChat { get; set; }
 
         public SettingsViewModel ViewModel { get; set; }
 
@@ -72,7 +72,7 @@ namespace Sidekick.Presentation.Wpf.Settings.Controls
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Custom_Chat_Settings.Remove(CustomChat);
+            ViewModel.CustomChatSettings.Remove(CustomChat);
         }
     }
 }
