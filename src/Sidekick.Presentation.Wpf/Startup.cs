@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application;
-using Sidekick.Business;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
 using Sidekick.Mapper;
@@ -27,12 +26,10 @@ namespace Sidekick.Presentation.Wpf
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Wpf"),
-                    Assembly.Load("Sidekick.Business"))
+                    Assembly.Load("Sidekick.Presentation.Wpf"))
 
                 // Layers
                 .AddSidekickApplication()
-                .AddSidekickBusinessServices()
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
                 .AddSidekickPresentation()

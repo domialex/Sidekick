@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Business.Apis.Poe.Trade.Search.Results;
+using Sidekick.Domain.Game.Trade.Models;
 using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Extensions;
 
@@ -15,16 +15,16 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             if (Item.Requirements != null)
             {
+                var requirementValues = string.Join(", ", Item.Requirements.Select(x => x.Text.Replace(":", "")));
                 var requires = new LineContent()
                 {
-                    DisplayMode = -1,
-                    Name = PriceResources.Requires,
+                    Text = $"{PriceResources.Requires} {requirementValues}",
                     Values = new List<LineContentValue>
                     {
                         new LineContentValue()
                         {
                             Type = LineContentType.Simple,
-                            Value = string.Join(", ", Item.Requirements.Select(x => { if (x.DisplayMode == 0) x.DisplayMode = -1; return x.Parsed; })),
+                            Value = requirementValues,
                         }
                     }
                 };
@@ -40,10 +40,9 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                     Item.Requirements = new List<LineContent>();
                 }
 
-                Item.Requirements.Add(new LineContent()
+                Item.Requirements = Item.Requirements.Prepend(new LineContent()
                 {
-                    DisplayMode = 0,
-                    Name = PriceResources.ItemLevel,
+                    Text = $"{PriceResources.ItemLevel}: {Item.ItemLevel}",
                     Values = new List<LineContentValue>
                     {
                         new LineContentValue()
@@ -52,13 +51,8 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                             Value = Item.ItemLevel.ToString(),
                         }
                     },
-                    Order = -1,
-                });
-            }
-
-            if (Item.Requirements != null)
-            {
-                Item.Requirements = Item.Requirements.OrderBy(x => x.Order).ToList();
+                })
+                .ToList();
             }
         }
 
@@ -70,16 +64,16 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         {
             get
             {
-                if (Item.Listing.Price == null)
+                if (Item.Price == null)
                 {
                     return null;
                 }
 
-                if (Item.Listing.Price.Amount % 1 == 0)
+                if (Item.Price.Amount % 1 == 0)
                 {
-                    return Item.Listing.Price.Amount.ToString("N0");
+                    return Item.Price.Amount.ToString("N0");
                 }
-                return Item.Listing.Price.Amount.ToString("N2");
+                return Item.Price.Amount.ToString("N2");
             }
         }
         public string ImageUrl { get; set; }
@@ -87,7 +81,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         {
             get
             {
-                var span = DateTimeOffset.Now - Item.Listing.Indexed;
+                var span = DateTimeOffset.Now - Item.Price.Date;
 
                 if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
                 if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);

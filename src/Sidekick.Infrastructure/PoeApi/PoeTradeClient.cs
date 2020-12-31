@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,7 +12,6 @@ namespace Sidekick.Infrastructure.PoeApi
     {
         private readonly ILogger logger;
         private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly HttpClient client;
 
         public PoeTradeClient(
             ILogger<PoeTradeClient> logger,
@@ -22,9 +20,9 @@ namespace Sidekick.Infrastructure.PoeApi
         {
             this.logger = logger;
             this.gameLanguageProvider = gameLanguageProvider;
-            client = httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
-            client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
+            HttpClient = httpClientFactory.CreateClient();
+            HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
+            HttpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
 
             Options = new JsonSerializerOptions()
             {
@@ -36,17 +34,18 @@ namespace Sidekick.Infrastructure.PoeApi
 
         public JsonSerializerOptions Options { get; }
 
-        public async Task<List<TReturn>> Fetch<TReturn>(string path, bool useDefaultLanguage = false)
+        public HttpClient HttpClient { get; set; }
+
+        public async Task<FetchResult<TReturn>> Fetch<TReturn>(string path, bool useDefaultLanguage = false)
         {
             var name = typeof(TReturn).Name;
             var language = useDefaultLanguage ? gameLanguageProvider.EnglishLanguage : gameLanguageProvider.Language;
 
             try
             {
-                var response = await client.GetAsync(language.PoeTradeApiBaseUrl + path);
+                var response = await HttpClient.GetAsync(language.PoeTradeApiBaseUrl + path);
                 var content = await response.Content.ReadAsStreamAsync();
-                var result = await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
-                return result.Result;
+                return await JsonSerializer.DeserializeAsync<FetchResult<TReturn>>(content, Options);
             }
             catch (Exception)
             {

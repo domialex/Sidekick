@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
@@ -24,17 +25,20 @@ namespace Sidekick.Application.Initialization
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly ISidekickSettings settings;
+        private readonly ILogger<InitializeHandler> logger;
 
         public InitializeHandler(
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
-            ISidekickSettings settings)
+            ISidekickSettings settings,
+            ILogger<InitializeHandler> logger)
         {
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.settings = settings;
+            this.logger = logger;
         }
 
         private int Count = 0;
@@ -109,8 +113,9 @@ namespace Sidekick.Application.Initialization
 
                 return Unit.Value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                logger.LogError(ex.Message);
                 await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
                 await mediator.Send(new ShutdownCommand());
                 return Unit.Value;
