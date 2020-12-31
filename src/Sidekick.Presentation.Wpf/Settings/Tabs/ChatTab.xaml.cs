@@ -17,5 +17,15 @@ namespace Sidekick.Presentation.Wpf.Settings.Tabs
         }
 
         public SettingsViewModel ViewModel { get; set; }
+
+        private void NewCommand_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.NewCommand();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            icCustomCommands.ItemsSource = ViewModel.Custom_Chat_Settings;
+        }
     }
 }

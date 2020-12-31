@@ -11,7 +11,8 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     loc:Translation.ResourceManager="{x:Static resx:SettingResources.ResourceManager}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="UserControl_Loaded">
     <ScrollViewer x:Name="ScrollViewer">
         <StackPanel>
             <GroupBox Header="{loc:Loc Group_Keybinds}">
@@ -28,6 +29,20 @@
                         Key="Chat_Key_Exit"
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Chat_Key_Exit}" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="{loc:Loc Group_Custom_Keybinds}">
+                <StackPanel>
+                    <ItemsControl Name="icCustomCommands" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <controls:CustomKeybindEditor
+                                    ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}"
+                                    CustomChat="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button Content="Add New" Click="NewCommand_Click"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

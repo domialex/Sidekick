@@ -237,4 +237,7 @@
   <data name="Map_Dangerous" xml:space="preserve">
     <value>Dangerous Modifiers</value>
   </data>
+  <data name="Group_Custom_Keybinds" xml:space="preserve">
+    <value>Custom Keybinds</value>
+  </data>
 </root>
