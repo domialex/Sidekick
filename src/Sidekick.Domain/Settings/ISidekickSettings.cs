@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Sidekick.Domain.Settings
 {
@@ -39,6 +38,7 @@ namespace Sidekick.Domain.Settings
         string Chat_Key_Exit { get; }
         string Chat_Key_Hideout { get; }
         string Chat_Key_LeaveParty { get; }
+        List<CustomChatSetting> Chat_CustomCommands { get; }
 
         string Stash_Key_Left { get; }
         string Stash_Key_Right { get; }
@@ -46,7 +46,5 @@ namespace Sidekick.Domain.Settings
 
         string Wiki_Key_Open { get; }
         WikiSetting Wiki_Preferred { get; }
-
-        List<CustomChatSetting> Custom_Chat_Settings { get; }
     }
 }

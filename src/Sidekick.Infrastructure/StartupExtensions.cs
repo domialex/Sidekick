@@ -9,7 +9,7 @@ using Sidekick.Infrastructure.PoeApi.Items.Metadatas;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers;
 using Sidekick.Infrastructure.PoeApi.Items.Pseudo;
 using Sidekick.Infrastructure.PoeApi.Items.Static;
-using Sidekick.Infrastructure.PoeApi.Trade.Search;
+using Sidekick.Infrastructure.PoeApi.Trade;
 using Sidekick.Infrastructure.PoeNinja;
 using Sidekick.Infrastructure.PoePriceInfo;
 

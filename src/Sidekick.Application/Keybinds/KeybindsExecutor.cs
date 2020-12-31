@@ -90,7 +90,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, arg, ref task);
             ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, arg, ref task);
 
-            foreach (var customChat in settings.Custom_Chat_Settings)
+            foreach (var customChat in settings.Chat_CustomCommands)
             {
                 ExecuteCustomChat(customChat, arg, ref task);
             }

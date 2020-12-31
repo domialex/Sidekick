@@ -65,6 +65,6 @@ namespace Sidekick.Application.Settings
 
         public string Stash_Key_Right { get; set; } = "";
 
-        public List<CustomChatSetting> Custom_Chat_Settings { get; set; } = new List<CustomChatSetting>();
+        public List<CustomChatSetting> Chat_CustomCommands { get; set; } = new List<CustomChatSetting>();
     }
 }

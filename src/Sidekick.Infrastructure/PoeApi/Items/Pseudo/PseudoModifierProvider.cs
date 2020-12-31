@@ -477,7 +477,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Pseudo
             FillPseudo(ref pseudo, modifiers.Enchant);
             FillPseudo(ref pseudo, modifiers.Crafted);
 
-            modifiers.Pseudo.ForEach(x =>
+            pseudo.ForEach(x =>
             {
                 x.Text = ParseHashPattern.Replace(x.Text, ((int)x.Values[0]).ToString(), 1);
             });
