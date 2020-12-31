@@ -11,8 +11,8 @@ namespace Sidekick.Infrastructure.PoeNinja.Models
         DivinationCard,
         Prophecy,
         SkillGem,
-        //BaseType, // This is ~13mb of raw data, in memory it eats ~40mb.
-        //HelmetEnchant,
+        // BaseType, // This is ~13mb of raw data, in memory it eats ~40mb.
+        // HelmetEnchant,
         UniqueMap,
         Map,
         UniqueJewel,

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sidekick.Persistence;
 
 namespace Sidekick.Persistence.Migrations
 {
     [DbContext(typeof(SidekickContext))]
-    partial class SidekickContextModelSnapshot : ModelSnapshot
+    [Migration("20201223005745_Version_1.2.0.5")]
+    partial class Version_1205
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

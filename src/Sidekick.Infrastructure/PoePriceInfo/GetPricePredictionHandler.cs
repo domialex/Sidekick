@@ -5,20 +5,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Sidekick.Domain.Apis.PoePriceInfo.Commands;
+using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Apis.PoePriceInfo.Models;
 using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoePriceInfo.Models;
 
 namespace Sidekick.Infrastructure.PoePriceInfo
 {
-    public class PredictPriceHandler : IQueryHandler<PredictPriceCommand, PricePrediction>
+    public class GetPricePredictionHandler : IQueryHandler<GetPricePredictionQuery, PricePrediction>
     {
         private readonly IPoePriceInfoClient client;
         private readonly ISidekickSettings settings;
         private readonly IMapper mapper;
 
-        public PredictPriceHandler(
+        public GetPricePredictionHandler(
             IPoePriceInfoClient client,
             ISidekickSettings settings,
             IMapper mapper)
@@ -28,7 +28,7 @@ namespace Sidekick.Infrastructure.PoePriceInfo
             this.mapper = mapper;
         }
 
-        public async Task<PricePrediction> Handle(PredictPriceCommand request, CancellationToken cancellationToken)
+        public async Task<PricePrediction> Handle(GetPricePredictionQuery request, CancellationToken cancellationToken)
         {
             var encodedItem = Convert.ToBase64String(Encoding.UTF8.GetBytes(request.Item.Text));
             var response = await client.Client.GetAsync("?l=" + settings.LeagueId + "&i=" + encodedItem);

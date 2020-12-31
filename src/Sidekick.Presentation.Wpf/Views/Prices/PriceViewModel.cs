@@ -10,12 +10,12 @@ using Sidekick.Business.Apis.Poe.Trade;
 using Sidekick.Business.Apis.Poe.Trade.Data.Static;
 using Sidekick.Business.Apis.Poe.Trade.Search;
 using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
-using Sidekick.Domain.Apis.PoePriceInfo.Commands;
+using Sidekick.Domain.Apis.PoeNinja.Queries;
+using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
-using Sidekick.Infrastructure.PoeNinja;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Wpf.Debounce;
@@ -33,7 +33,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         private readonly ILogger logger;
         private readonly IDebouncer debouncer;
         private readonly ITradeSearchService tradeSearchService;
-        private readonly IPoeNinjaCache poeNinjaCache;
         private readonly IStaticDataService staticDataService;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings settings;
@@ -44,7 +43,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             ILogger<PriceViewModel> logger,
             IDebouncer debouncer,
             ITradeSearchService tradeSearchService,
-            IPoeNinjaCache poeNinjaCache,
             IStaticDataService staticDataService,
             IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings settings,
@@ -54,7 +52,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             this.logger = logger;
             this.debouncer = debouncer;
             this.tradeSearchService = tradeSearchService;
-            this.poeNinjaCache = poeNinjaCache;
             this.staticDataService = staticDataService;
             this.gameLanguageProvider = gameLanguageProvider;
             this.settings = settings;
@@ -208,11 +205,11 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             await UpdateQuery();
 
-            GetPoeNinjaPrice();
+            await GetPoeNinjaPrice();
 
             if (settings.Price_Prediction_Enable)
             {
-                _ = GetPredictionPrice();
+                await GetPredictionPrice();
             }
         }
 
@@ -742,41 +739,39 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             }
         }
 
-        public bool IsPredicted => !string.IsNullOrEmpty(PredictionText);
+        public string PoeNinjaText { get; private set; }
+
+        private async Task GetPoeNinjaPrice()
+        {
+            PoeNinjaText = string.Empty;
+
+            var poeNinjaPrice = await mediator.Send(new GetPriceFromNinjaQuery(Item));
+            if (poeNinjaPrice != null)
+            {
+                PoeNinjaText = string.Format(PriceResources.PoeNinjaString,
+                                             poeNinjaPrice.Price.ToString("N3"),
+                                             poeNinjaPrice.LastUpdated.ToString("t"));
+            }
+        }
+
         public string PredictionText { get; private set; }
 
         private async Task GetPredictionPrice()
         {
             PredictionText = string.Empty;
 
-            if (!IsPoeNinja)
+            if (string.IsNullOrEmpty(PoeNinjaText))
             {
-                var result = await mediator.Send(new PredictPriceCommand(Item));
-                if (result == null)
+                var result = await mediator.Send(new GetPricePredictionQuery(Item));
+                if (result == null || (result.Min == 0 && result.Max == 0))
                 {
                     return;
                 }
 
                 PredictionText = string.Format(
                     PriceResources.PredictionString,
-                    $"{result.Min?.ToString("N1")}-{result.Max?.ToString("N1")} {result.Currency}",
+                    $"{result.Min.ToString("N1")}-{result.Max.ToString("N1")} {result.Currency}",
                     result.ConfidenceScore.ToString("N1"));
-            }
-        }
-
-        public bool IsPoeNinja => !string.IsNullOrEmpty(PoeNinjaText);
-        public string PoeNinjaText { get; private set; }
-
-        private void GetPoeNinjaPrice()
-        {
-            PoeNinjaText = string.Empty;
-
-            var poeNinjaItemPriceInChaos = poeNinjaCache.GetItemPrice(Item);
-            if (poeNinjaItemPriceInChaos != null)
-            {
-                PoeNinjaText = string.Format(PriceResources.PoeNinjaString,
-                                             poeNinjaItemPriceInChaos.Value.ToString("N3"),
-                                             poeNinjaCache.LastRefreshTimestamp.Value.ToString("t"));
             }
         }
 

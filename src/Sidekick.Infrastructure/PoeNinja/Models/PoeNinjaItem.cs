@@ -1,6 +1,6 @@
 namespace Sidekick.Infrastructure.PoeNinja.Models
 {
-    public class PoeNinjaItem : PoeNinjaResult
+    public class PoeNinjaItem
     {
         //public int Id { get; set; }
 
@@ -10,7 +10,7 @@ namespace Sidekick.Infrastructure.PoeNinja.Models
 
         public int MapTier { get; set; }
 
-        public int LevelRequired { get; set; }
+        //public int LevelRequired { get; set; }
 
         //public string BaseType { get; set; }
 

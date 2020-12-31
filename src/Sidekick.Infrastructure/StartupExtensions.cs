@@ -14,7 +14,6 @@ namespace Sidekick.Infrastructure
             services.AddTransient<IGithubClient, GithubClient>();
             services.AddTransient<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddTransient<IPoeNinjaClient, PoeNinjaClient>();
-            services.AddSingleton<IPoeNinjaCache, PoeNinjaCache>();
 
             return services;
         }
