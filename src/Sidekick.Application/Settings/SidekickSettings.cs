@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Settings
@@ -63,5 +64,7 @@ namespace Sidekick.Application.Settings
         public string Stash_Key_Left { get; set; } = "";
 
         public string Stash_Key_Right { get; set; } = "";
+
+        public List<CustomChatSetting> Custom_Chat_Settings { get; set; } = new List<CustomChatSetting>();
     }
 }
