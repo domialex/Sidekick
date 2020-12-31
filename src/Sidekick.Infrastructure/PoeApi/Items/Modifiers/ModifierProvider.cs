@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -242,7 +243,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             {
                 for (var index = 1; index < result.Groups.Count; index++)
                 {
-                    if (double.TryParse(result.Groups[index].Value, out var parsedValue))
+                    if (double.TryParse(result.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
                     {
                         var modifierText = modifier.Text;
                         if (negative)
