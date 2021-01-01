@@ -151,7 +151,7 @@ namespace Sidekick.Presentation.Localization.Leagues {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Leagues.
+        ///   Looks up a localized string similar to Cheatsheets.
         /// </summary>
         public static string Title {
             get {

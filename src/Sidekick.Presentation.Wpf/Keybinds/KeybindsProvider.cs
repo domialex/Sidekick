@@ -136,7 +136,7 @@ namespace Sidekick.Presentation.Wpf.Keybinds
                 .Replace("PageUp", "{Pgup}")
                 .Replace("PrintScreen", "{PrtSc}")
                 .Replace("ScrollLock", "{ScrollLock}")
-                .Replace("Space", "{Space}")
+                .Replace("Space", " ")
                 .Replace("ScrollLock", "{ScrollLock}")
                 .Replace("Tab", "{Tab}")
                 .Replace("F1", "{F1}")

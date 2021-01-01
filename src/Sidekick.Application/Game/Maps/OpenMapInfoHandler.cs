@@ -27,7 +27,7 @@ namespace Sidekick.Application.Game.Maps
 
         public async Task<bool> Handle(OpenMapInfoCommand request, CancellationToken cancellationToken)
         {
-            await mediator.Send(new CloseViewCommand());
+            await mediator.Send(new CloseMapViewCommand());
 
             // Close previously opened map views
             viewLocator.Close(View.ParserError);

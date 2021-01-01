@@ -3,9 +3,9 @@ using MediatR;
 namespace Sidekick.Domain.Views.Commands
 {
     /// <summary>
-    /// Close all opened views
+    /// Close the map view
     /// </summary>
-    public class CloseViewCommand : ICommand<bool>
+    public class CloseMapViewCommand : ICommand<bool>
     {
     }
 }
