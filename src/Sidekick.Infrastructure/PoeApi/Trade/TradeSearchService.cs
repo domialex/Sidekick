@@ -421,7 +421,6 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
         private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
             return lines?
-                .OrderBy(x => x.Order)
                 .Select(line =>
                 {
                     var values = new List<LineContentValue>();
