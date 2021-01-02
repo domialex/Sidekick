@@ -14,6 +14,7 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers.Models;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Domain.Game.Trade.Models;
+using Sidekick.Domain.Game.Trade.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Persistence.ItemCategories;
@@ -560,6 +561,8 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             return null;
         }
 
+        public Uri Uri { get; set; }
+
         public int UpdateCountdown { get; private set; }
 
         public void UpdateDebounce()
@@ -630,6 +633,15 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             {
                 await LoadMoreData();
                 await LoadMoreData();
+            }
+
+            if (!string.IsNullOrEmpty(QueryResult.Id))
+            {
+                Uri = await mediator.Send(new GetTradeUriQuery(Item, QueryResult.Id));
+            }
+            else
+            {
+                Uri = null;
             }
 
             UpdateCountString();
