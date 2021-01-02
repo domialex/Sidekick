@@ -153,10 +153,13 @@
   <data name="Language_UI" xml:space="preserve">
     <value>Langue de l'interface</value>
   </data>
+  <data name="Map_CloseWithMouse" xml:space="preserve">
+    <value>Fermer la fenêtre avec la souris</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Overlay_CloseWithMouse" xml:space="preserve">
+  <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
   </data>
   <data name="Stash_EnableCtrlScroll" xml:space="preserve">

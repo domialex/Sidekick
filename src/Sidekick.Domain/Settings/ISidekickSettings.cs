@@ -16,11 +16,10 @@ namespace Sidekick.Domain.Settings
         string Key_OpenSettings { get; }
         bool ShowSplashScreen { get; }
 
-        bool Overlay_CloseWithMouse { get; }
-        string Overlay_Key_Close { get; }
-
+        bool Price_CloseWithMouse { get; }
         string Price_Key_Check { get; }
         string Price_Key_OpenSearch { get; }
+        string Price_Key_Close { get; }
         bool Price_Prediction_Enable { get; }
         List<string> Price_Mods_Accessory { get; }
         List<string> Price_Mods_Armour { get; }
@@ -29,6 +28,8 @@ namespace Sidekick.Domain.Settings
         List<string> Price_Mods_Map { get; }
         List<string> Price_Mods_Weapon { get; }
 
+        bool Map_CloseWithMouse { get; }
+        string Map_Key_Close { get; }
         string Map_Key_Check { get; }
         string Map_Dangerous_Regex { get; }
 

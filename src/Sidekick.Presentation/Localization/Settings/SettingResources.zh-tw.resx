@@ -168,17 +168,23 @@
   <data name="Language_UI" xml:space="preserve">
     <value>介面語言</value>
   </data>
+  <data name="Map_CloseWithMouse" xml:space="preserve">
+    <value>滑鼠點擊時關閉視窗</value>
+  </data>
+  <data name="Map_Key_Close" xml:space="preserve">
+    <value>關閉視窗</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>確定</value>
   </data>
-  <data name="Overlay_CloseWithMouse" xml:space="preserve">
+  <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
-  </data>
-  <data name="Overlay_Key_Close" xml:space="preserve">
-    <value>關閉視窗</value>
   </data>
   <data name="Price_Key_Check" xml:space="preserve">
     <value>查詢價錢</value>
+  </data>
+  <data name="Price_Key_Close" xml:space="preserve">
+    <value>關閉視窗</value>
   </data>
   <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>在瀏覽器中開啟查詢結果</value>

@@ -25,16 +25,16 @@
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Price_Key_OpenSearch}" />
                     <controls:KeybindEditor
-                        Key="Overlay_Key_Close"
+                        Key="Price_Key_Close"
                         ViewModel="{Binding Path=ViewModel}"
-                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
+                        Value="{Binding Path=ViewModel.Price_Key_Close}" />
                 </StackPanel>
             </GroupBox>
 
             <GroupBox Header="{loc:Loc Group_Other}">
                 <StackPanel>
                     <CheckBox Content="{loc:Loc Price_Prediction_Enable}" IsChecked="{Binding Path=ViewModel.Price_Prediction_Enable}" />
-                    <CheckBox Content="{loc:Loc Overlay_CloseWithMouse}" IsChecked="{Binding Path=ViewModel.Overlay_CloseWithMouse}" />
+                    <CheckBox Content="{loc:Loc Price_CloseWithMouse}" IsChecked="{Binding Path=ViewModel.Price_CloseWithMouse}" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>

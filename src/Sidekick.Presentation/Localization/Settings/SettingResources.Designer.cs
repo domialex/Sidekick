@@ -259,6 +259,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Overlay with Mouse Click.
+        /// </summary>
+        public static string Map_CloseWithMouse {
+            get {
+                return ResourceManager.GetString("Map_CloseWithMouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dangerous Modifiers.
         /// </summary>
         public static string Map_Dangerous {
@@ -286,29 +295,20 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Window.
+        /// </summary>
+        public static string Map_Key_Close {
+            get {
+                return ResourceManager.GetString("Map_Key_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close Overlay with Mouse Click.
-        /// </summary>
-        public static string Overlay_CloseWithMouse {
-            get {
-                return ResourceManager.GetString("Overlay_CloseWithMouse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close Window.
-        /// </summary>
-        public static string Overlay_Key_Close {
-            get {
-                return ResourceManager.GetString("Overlay_Key_Close", resourceCulture);
             }
         }
         
@@ -322,11 +322,29 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close Overlay with Mouse Click.
+        /// </summary>
+        public static string Price_CloseWithMouse {
+            get {
+                return ResourceManager.GetString("Price_CloseWithMouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check Prices.
         /// </summary>
         public static string Price_Key_Check {
             get {
                 return ResourceManager.GetString("Price_Key_Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Window.
+        /// </summary>
+        public static string Price_Key_Close {
+            get {
+                return ResourceManager.GetString("Price_Key_Close", resourceCulture);
             }
         }
         

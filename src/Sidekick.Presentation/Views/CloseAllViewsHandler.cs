@@ -9,16 +9,16 @@ namespace Sidekick.Presentation.Views.Commands
     /// <summary>
     /// Close all opened views
     /// </summary>
-    public class CloseViewHandler : ICommandHandler<CloseViewCommand, bool>
+    public class CloseAllViewHandler : ICommandHandler<CloseAllViewCommand, bool>
     {
         private readonly IViewLocator viewLocator;
 
-        public CloseViewHandler(IViewLocator viewLocator)
+        public CloseAllViewHandler(IViewLocator viewLocator)
         {
             this.viewLocator = viewLocator;
         }
 
-        public Task<bool> Handle(CloseViewCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(CloseAllViewCommand request, CancellationToken cancellationToken)
         {
             var result = viewLocator.IsAnyOpened();
 

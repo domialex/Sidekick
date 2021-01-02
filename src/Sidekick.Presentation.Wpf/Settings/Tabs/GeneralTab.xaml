@@ -87,10 +87,6 @@
                         Key="Key_FindItems"
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Key_FindItems}" />
-                    <controls:KeybindEditor
-                        Key="Overlay_Key_Close"
-                        ViewModel="{Binding Path=ViewModel}"
-                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>

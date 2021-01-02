@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -74,8 +75,9 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, arg, ref task);
 
             // View commands
-            ExecuteKeybind<CloseViewCommand>("Escape", arg, ref task);
-            ExecuteKeybind<CloseViewCommand>(settings.Overlay_Key_Close, arg, ref task);
+            ExecuteKeybind<CloseAllViewCommand>("Escape", arg, ref task);
+            ExecuteKeybind<ClosePriceViewCommand>(settings.Price_Key_Close, arg, ref task);
+            ExecuteKeybind<CloseMapViewCommand>(settings.Map_Key_Close, arg, ref task);
             ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, arg, ref task);
             ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task);
             ExecuteKeybind<OpenMapInfoCommand>(settings.Map_Key_Check, arg, ref task);
@@ -134,7 +136,19 @@ namespace Sidekick.Application.Keybinds
                 var task = mediator.Send(new TCommand());
 
                 GetKeybindTask(keybind, input, task);
-                returnTask = task;
+                if (returnTask == null)
+                {
+                    returnTask = task;
+                }
+                else
+                {
+                    var existingTask = returnTask;
+                    returnTask = Task.Run(async () =>
+                    {
+                        var result = await Task.WhenAll(task, existingTask);
+                        return result.Any(x => x);
+                    });
+                }
             }
         }
 
