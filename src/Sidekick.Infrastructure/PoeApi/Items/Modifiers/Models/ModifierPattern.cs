@@ -15,5 +15,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models
         public Regex AdditionalProjectilePattern { get; set; }
 
         public List<ModifierOptionParse> Options { get; set; }
+
+        public List<AlternateModifier> AlternateModifiers { get; set; }
     }
 }

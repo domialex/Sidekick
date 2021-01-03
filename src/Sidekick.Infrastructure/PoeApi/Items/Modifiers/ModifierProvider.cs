@@ -9,6 +9,7 @@ using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Modifiers.Models;
+using Sidekick.Domain.Game.StatTranslations;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
 
 namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
@@ -19,6 +20,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheRepository cacheRepository;
         private readonly IPoeTradeClient poeTradeClient;
+        private readonly IAlternateStatProvider statTranslationProvider;
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
 
@@ -26,12 +28,14 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             IPseudoModifierProvider pseudoModifierProvider,
             IGameLanguageProvider gameLanguageProvider,
             ICacheRepository cacheRepository,
-            IPoeTradeClient poeTradeClient)
+            IPoeTradeClient poeTradeClient,
+            IAlternateStatProvider statTranslationProvider)
         {
             this.pseudoModifierProvider = pseudoModifierProvider;
             this.gameLanguageProvider = gameLanguageProvider;
             this.cacheRepository = cacheRepository;
             this.poeTradeClient = poeTradeClient;
+            this.statTranslationProvider = statTranslationProvider;
         }
 
         public List<ModifierPattern> PseudoPatterns { get; set; }
@@ -108,6 +112,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                             Text = entry.Text,
                             Type = entry.Type,
                         },
+                        AlternateModifiers = new List<AlternateModifier>()
                     };
 
                     pattern = Regex.Escape(entry.Text);
@@ -172,6 +177,25 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                     }
 
                     modifier.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
+
+                    var alternateStats = statTranslationProvider.GetAlternateStats(entry.Text);
+
+                    foreach (var stat in alternateStats)
+                    {
+                        var altPattern = Regex.Escape(stat.Text);
+                        altPattern = parenthesesPattern.Replace(altPattern, "(?:$1)?");
+                        altPattern = NewLinePattern.Replace(altPattern, "\\n");
+                        altPattern = hashPattern.Replace(altPattern, "([-+\\d,\\.]+)");
+
+                        var alternateModifier = new AlternateModifier
+                        {
+                            Stat = stat,
+                            Pattern = new Regex($"(?:^|\\n){altPattern}{suffix}", RegexOptions.None)
+                        };
+
+                        modifier.AlternateModifiers.Add(alternateModifier);
+                    }
+
                     patterns.Add(modifier);
                 }
             }
@@ -205,28 +229,100 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         {
             var unorderedMods = new List<Modifier>();
 
-            foreach (var data in patterns
-                .AsParallel()
-                .Where(x => x.Pattern != null && x.Pattern.IsMatch(text)))
+            foreach (var data in patterns)
             {
-                ParseMod(unorderedMods, text, data, data.Pattern.Match(text));
-            }
-
-            foreach (var data in patterns
-                .AsParallel()
-                .Where(x => x.NegativePattern != null && x.NegativePattern.IsMatch(text)))
-            {
-                ParseMod(unorderedMods, text, data, data.NegativePattern.Match(text), true);
-            }
-
-            foreach (var data in patterns
-                .AsParallel()
-                .Where(x => x.AdditionalProjectilePattern != null && x.AdditionalProjectilePattern.IsMatch(text)))
-            {
-                ParseMod(unorderedMods, text, data, data.AdditionalProjectilePattern.Match(text));
+                if (data.Pattern.IsMatch(text))
+                {
+                    ParseMod(unorderedMods, text, data, data.Pattern.Match(text));
+                }
+                else
+                {
+                    if (data.AlternateModifiers.Count > 0)
+                    {
+                        foreach (var alternateModifier in data.AlternateModifiers)
+                        {
+                            if (alternateModifier.Pattern.IsMatch(text))
+                            {
+                                ParseAlternateMod(unorderedMods, text, alternateModifier, data, alternateModifier.Pattern.Match(text));
+                            }
+                        }
+                    }
+                }
             }
 
             unorderedMods.OrderBy(x => x.Index).ToList().ForEach(x => mods.Add(x));
+        }
+
+        private void ParseAlternateMod(List<Modifier> mods, string text, AlternateModifier alternateModifier, ModifierPattern data, Match result)
+        {
+            var modifier = new Modifier()
+            {
+                Index = result.Index,
+                Id = data.Metadata.Id,
+                Text = data.Metadata.Text,
+                Category = !data.Metadata.Id.StartsWith("explicit") ? data.Metadata.Category : null,
+            };
+
+            if (result.Groups.Count > 1)
+            {
+                for (var index = 1; index < result.Groups.Count; index++)
+                {
+                    if (double.TryParse(result.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
+                    {
+                        for (int i = 0; i < alternateModifier.Stat.Conditions.Count; i++)
+                        {
+                            var condition = alternateModifier.Stat.Conditions[i];
+                            string handler = "";
+
+                            if (alternateModifier.Stat.IndexHandlers.Count > i + 1)
+                                handler = alternateModifier.Stat.IndexHandlers[i][0];
+
+                            var negate = handler == "negate";
+                            parsedValue *= (negate ? -1 : 1);
+
+                            if ((condition.Min != null && condition.Max != null && parsedValue >= condition.Min && parsedValue <= condition.Max) ||
+                                (condition.Min != null && condition.Max == null && parsedValue >= condition.Min) ||
+                                (condition.Min == null && condition.Max != null && parsedValue <= condition.Max))
+                            {
+                                modifier.Values.Add(parsedValue);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+            else if (alternateModifier.Stat.Conditions.Count == 1)
+            {
+                var condition = alternateModifier.Stat.Conditions[0];
+
+                var negate = condition.Negated == null ? false : condition.Negated.Value;
+
+                if (condition.Min != null && condition.Max == null)
+                    modifier.Values.Add(condition.Min.Value * (negate ? -1 : 1));
+                else if (condition.Min == null && condition.Max != null)
+                    modifier.Values.Add(condition.Max.Value * (negate ? -1 : 1));
+                else if (condition.Min != null && condition.Max != null && condition.Min == condition.Max)
+                    modifier.Values.Add(condition.Min.Value * (negate ? -1 : 1));
+            }
+
+            if (data.Options?.Any() == true)
+            {
+                var optionMod = data.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
+                if (optionMod == null)
+                {
+                    return;
+                }
+                modifier.OptionValue = new ModifierOption()
+                {
+                    Text = optionMod.Text,
+                };
+                modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
+            }
+
+            modifier.Text = modifier.Text.Replace("+-", "-");
+
+            mods.Add(modifier);
         }
 
         private void ParseMod(List<Modifier> mods, string text, ModifierPattern data, Match result, bool negative = false)
