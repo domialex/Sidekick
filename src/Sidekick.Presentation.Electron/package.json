@@ -9,8 +9,8 @@
     "build": {
         "extraFiles": [
             {
-                "from": "./build/Sidekick.Console",
-                "to": "Sidekick.Console",
+                "from": "./build/Sidekick.Presentation.ElectronProgram",
+                "to": "Sidekick.Presentation.ElectronProgram",
                 "filter": [
                     "**/*"
                 ]
@@ -27,7 +27,7 @@
         "dist": "yarn build-sidekick-console && yarn compile && yarn generate-icons && electron-builder",
         "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
         "generate-icons": "electron-icon-builder --input=./static/icon.png --output=build --flatten",
-        "build-sidekick-console": "dotnet publish ../Sidekick.Console -r win-x64 -c Release --self-contained -o ../Sidekick.Electron/build/Sidekick.Console",
+        "build-sidekick-console": "dotnet publish ../Sidekick.Presentation.ElectronProgram -r win-x64 -c Release --self-contained -o ../Sidekick.Electron/build/Sidekick.Presentation.ElectronProgram",
         "robotjs:rebuild": "npm rebuild --runtime=electron --target=10.0.0 --disturl=https://atom.io/download/atom-shell --abi=82",
         "postinstall": "patch-package && electron-builder install-app-deps",
         "postuninstall": "electron-builder install-app-deps"

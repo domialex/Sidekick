@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Mapper", "src\Sidekick.Mapper\Sidekick.Mapper.csproj", "{8E09D8B1-46A3-438F-B1F3-DE3305521299}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.ElectronProgram", "src\Sidekick.Presentation.ElectronProgram\Sidekick.Presentation.ElectronProgram.csproj", "{ECE2B42F-5E64-4EEF-83A0-56964F4D0B37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE2B42F-5E64-4EEF-83A0-56964F4D0B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE2B42F-5E64-4EEF-83A0-56964F4D0B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE2B42F-5E64-4EEF-83A0-56964F4D0B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE2B42F-5E64-4EEF-83A0-56964F4D0B37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
