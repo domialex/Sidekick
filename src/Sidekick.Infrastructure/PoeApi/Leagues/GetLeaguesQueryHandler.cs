@@ -31,9 +31,9 @@ namespace Sidekick.Infrastructure.PoeApi.Leagues
                 }
             }
 
-            var leagues = await poeTradeClient.Fetch<League>("data/leagues");
-            await leagueRepository.SaveAll(leagues);
-            return leagues;
+            var result = await poeTradeClient.Fetch<League>("data/leagues");
+            await leagueRepository.SaveAll(result.Result);
+            return result.Result;
         }
     }
 }

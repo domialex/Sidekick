@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Presentation.Wpf.Views.Prices
 {
@@ -55,14 +55,14 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                         Foreground = Brushes.LightBlue,
                         FontWeight = FontWeight.FromOpenTypeWeight(700),
                     });
-                    text = text.Substring(highlightMatches[index].Length);
+                    text = text[highlightMatches[index].Length..];
                     index += highlightMatches[index].Length;
                     continue;
                 }
 
                 var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderBy(x => x).FirstOrDefault();
                 itemMod.TextBlock.Inlines.Add(text.Substring(0, nextIndex == default ? text.Length : nextIndex - index));
-                text = text.Substring(nextIndex == default ? text.Length : nextIndex - index);
+                text = text[(nextIndex == default ? text.Length : nextIndex - index)..];
                 index += nextIndex - index;
             }
         }

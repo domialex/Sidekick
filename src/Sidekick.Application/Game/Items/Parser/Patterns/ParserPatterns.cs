@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Sidekick.Domain.Game.Items.Models;
@@ -69,7 +70,7 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
             {
                 var match = regex.Match(input);
 
-                if (match.Success && double.TryParse(match.Groups[1].Value.Replace(",", "."), out var result))
+                if (match.Success && double.TryParse(match.Groups[1].Value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var result))
                 {
                     return result;
                 }
@@ -91,8 +92,8 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
                         .Select(x => x.Value.Split("-"))
                         .Sum(split =>
                         {
-                            if (double.TryParse(split[0], out var minValue)
-                             && double.TryParse(split[1], out var maxValue))
+                            if (double.TryParse(split[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var minValue)
+                             && double.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var maxValue))
                             {
                                 return (minValue + maxValue) / 2d;
                             }

@@ -17,7 +17,8 @@ namespace Sidekick.Presentation.Wpf.Views
         {
             Topmost = true;
 
-            if (settings.Overlay_CloseWithMouse)
+            if ((id == View.Price && settings.Price_CloseWithMouse)
+                || (id == View.Map && settings.Map_CloseWithMouse))
             {
                 Deactivated += BaseBorderlessWindow_Deactivated;
             }

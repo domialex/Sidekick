@@ -22,7 +22,7 @@ namespace Sidekick.Presentation.Wpf.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var stringValue = value.ToString();
-            if (double.TryParse(stringValue, out var doubleValue))
+            if (double.TryParse(stringValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var doubleValue))
             {
                 return doubleValue;
             }

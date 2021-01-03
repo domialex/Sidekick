@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Sidekick.Domain.Game.Items.Metadatas.Models;
+using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Domain.Game.Items.Models
 {
-    public class Item
+    public class Item : IItemMetadata
     {
         public string Name { get; set; }
 
@@ -15,13 +16,10 @@ namespace Sidekick.Domain.Game.Items.Models
 
         public bool Identified { get; set; }
 
-        [JsonPropertyName("ilvl")]
         public int ItemLevel { get; set; }
 
-        [JsonPropertyName("frameType")]
         public Rarity Rarity { get; set; }
 
-        [JsonIgnore]
         public Category Category { get; set; }
 
         public bool Corrupted { get; set; }
@@ -32,7 +30,7 @@ namespace Sidekick.Domain.Game.Items.Models
 
         public List<Socket> Sockets { get; set; } = new List<Socket>();
 
-        public Modifiers Modifiers { get; set; } = new Modifiers();
+        public ItemModifiers Modifiers { get; set; } = new ItemModifiers();
 
         public string Text { get; set; }
     }

@@ -17,6 +17,7 @@
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <converters:StringToVisibilityConverter x:Key="StringToVisibility" />
+            <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
             <converters:ReverseStringToVisibilityConverter x:Key="ReverseStringToVisibility" />
             <converters:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibility" />
         </ResourceDictionary>
@@ -60,7 +61,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="5*"
-                        Binding="{Binding Path=Item.Listing.Account.Name}"
+                        Binding="{Binding Path=Item.Price.AccountName}"
                         Header="{loc:Loc OverlayAccountName}" />
                     <DataGridTemplateColumn
                         Width="1*"
@@ -71,12 +72,12 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Amount}" />
                                     <TextBlock Text=" " />
-                                    <TextBlock Text="{Binding Item.Listing.Price.Currency}" Visibility="{Binding ImageUrl, Converter={StaticResource ReverseStringToVisibility}}" />
+                                    <TextBlock Text="{Binding Item.Price.Currency}" Visibility="{Binding ImageUrl, Converter={StaticResource ReverseStringToVisibility}}" />
                                     <Image
                                         Height="20"
                                         VerticalAlignment="Center"
                                         Source="{Binding ImageUrl}"
-                                        ToolTip="{Binding Item.Listing.Price.Currency}"
+                                        ToolTip="{Binding Item.Price.Currency}"
                                         Visibility="{Binding ImageUrl, Converter={StaticResource StringToVisibility}}" />
                                 </StackPanel>
                             </DataTemplate>
@@ -110,7 +111,7 @@
                     Visibility="{Binding IsFetching, Converter={StaticResource BooleanToVisibility}}" />
 
                 <StackPanel VerticalAlignment="Center" Visibility="{Binding IsFetching, Converter={StaticResource ReverseBooleanToVisibility}}">
-                    <TextBlock>
+                    <TextBlock Visibility="{Binding Uri, Converter={StaticResource NullableToVisibilityConverter}}">
                         <Hyperlink NavigateUri="{Binding Uri}" RequestNavigate="OpenLink">
                             <TextBlock Text="{Binding CountString}" />
                         </Hyperlink>

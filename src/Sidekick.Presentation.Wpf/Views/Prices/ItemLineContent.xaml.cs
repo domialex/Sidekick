@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Bindables;
-using Sidekick.Business.Apis.Poe.Trade.Search.Results;
+using Sidekick.Domain.Game.Trade.Models;
 
 namespace Sidekick.Presentation.Wpf.Views.Prices
 {
@@ -33,7 +33,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             var itemProperty = (ItemLineContent)dependencyObject;
 
             var highlightMatches = new Dictionary<int, (string Value, LineContentType Type)>();
-            var text = itemProperty.Property.Parsed;
+            var text = itemProperty.Property.Text;
 
             foreach (var value in itemProperty.Property.Values)
             {
@@ -70,14 +70,14 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                             break;
                     }
                     itemProperty.TextBlock.Inlines.Add(run);
-                    text = text.Substring(highlightMatches[index].Value.Length);
+                    text = text[highlightMatches[index].Value.Length..];
                     index += highlightMatches[index].Value.Length;
                     continue;
                 }
 
                 var nextIndex = highlightMatches.Keys.Where(x => x > index).OrderBy(x => x).FirstOrDefault();
                 itemProperty.TextBlock.Inlines.Add(text.Substring(0, nextIndex == default ? text.Length : nextIndex - index));
-                text = text.Substring(nextIndex == default ? text.Length : nextIndex - index);
+                text = text[(nextIndex == default ? text.Length : nextIndex - index)..];
                 index += nextIndex - index;
             }
         }

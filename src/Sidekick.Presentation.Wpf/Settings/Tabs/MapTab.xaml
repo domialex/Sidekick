@@ -21,9 +21,9 @@
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Map_Key_Check}" />
                     <controls:KeybindEditor
-                        Key="Overlay_Key_Close"
+                        Key="Map_Key_Close"
                         ViewModel="{Binding Path=ViewModel}"
-                        Value="{Binding Path=ViewModel.Overlay_Key_Close}" />
+                        Value="{Binding Path=ViewModel.Map_Key_Close}" />
                 </StackPanel>
             </GroupBox>
 
@@ -42,7 +42,7 @@
 
             <GroupBox Header="{loc:Loc Group_Other}">
                 <StackPanel>
-                    <CheckBox Content="{loc:Loc Overlay_CloseWithMouse}" IsChecked="{Binding Path=ViewModel.Overlay_CloseWithMouse}" />
+                    <CheckBox Content="{loc:Loc Map_CloseWithMouse}" IsChecked="{Binding Path=ViewModel.Map_CloseWithMouse}" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>

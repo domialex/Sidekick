@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Sidekick.Domain.Settings
 {
@@ -17,11 +16,10 @@ namespace Sidekick.Domain.Settings
         string Key_OpenSettings { get; }
         bool ShowSplashScreen { get; }
 
-        bool Overlay_CloseWithMouse { get; }
-        string Overlay_Key_Close { get; }
-
+        bool Price_CloseWithMouse { get; }
         string Price_Key_Check { get; }
         string Price_Key_OpenSearch { get; }
+        string Price_Key_Close { get; }
         bool Price_Prediction_Enable { get; }
         List<string> Price_Mods_Accessory { get; }
         List<string> Price_Mods_Armour { get; }
@@ -30,6 +28,8 @@ namespace Sidekick.Domain.Settings
         List<string> Price_Mods_Map { get; }
         List<string> Price_Mods_Weapon { get; }
 
+        bool Map_CloseWithMouse { get; }
+        string Map_Key_Close { get; }
         string Map_Key_Check { get; }
         string Map_Dangerous_Regex { get; }
 
@@ -39,6 +39,7 @@ namespace Sidekick.Domain.Settings
         string Chat_Key_Exit { get; }
         string Chat_Key_Hideout { get; }
         string Chat_Key_LeaveParty { get; }
+        List<CustomChatSetting> Chat_CustomCommands { get; }
 
         string Stash_Key_Left { get; }
         string Stash_Key_Right { get; }
@@ -46,7 +47,5 @@ namespace Sidekick.Domain.Settings
 
         string Wiki_Key_Open { get; }
         WikiSetting Wiki_Preferred { get; }
-
-        List<CustomChatSetting> Custom_Chat_Settings { get; }
     }
 }

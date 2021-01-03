@@ -15,6 +15,7 @@ namespace Sidekick.Domain.Game.Items.Models
         Leaguestone = 10,
         Prophecy = 11,
         ItemisedMonster = 12,
-        Watchstone = 13
+        Watchstone = 13,
+        Contract = 14,
     }
 }

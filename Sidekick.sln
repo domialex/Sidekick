@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Business", "src\Sidekick.Business\Sidekick.Business.csproj", "{E14E16C1-3570-4886-9732-C942EFAE46E0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B4E782B6-CF03-4448-81D1-3E308D20BF2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Business.Tests", "tests\Sidekick.Business.Tests\Sidekick.Business.Tests.csproj", "{CB17F2BF-322A-4EAE-9877-BB6B42C883A2}"
@@ -45,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Wpf",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application.Tests", "tests\Sidekick.Application.Tests\Sidekick.Application.Tests.csproj", "{279A17F4-9C1A-4DAF-B77F-E8E43E64793D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Mapper", "src\Sidekick.Mapper\Sidekick.Mapper.csproj", "{8E09D8B1-46A3-438F-B1F3-DE3305521299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Mapper", "src\Sidekick.Mapper\Sidekick.Mapper.csproj", "{8E09D8B1-46A3-438F-B1F3-DE3305521299}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +51,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E14E16C1-3570-4886-9732-C942EFAE46E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB17F2BF-322A-4EAE-9877-BB6B42C883A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB17F2BF-322A-4EAE-9877-BB6B42C883A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB17F2BF-322A-4EAE-9877-BB6B42C883A2}.Release|Any CPU.ActiveCfg = Release|Any CPU

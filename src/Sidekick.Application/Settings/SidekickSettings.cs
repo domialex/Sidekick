@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Settings
@@ -22,7 +21,9 @@ namespace Sidekick.Application.Settings
 
         public bool RetainClipboard { get; set; } = true;
 
-        public bool Overlay_CloseWithMouse { get; set; } = true;
+        public bool Price_CloseWithMouse { get; set; } = true;
+
+        public bool Map_CloseWithMouse { get; set; } = true;
 
         public bool Stash_EnableCtrlScroll { get; set; } = true;
 
@@ -39,7 +40,9 @@ namespace Sidekick.Application.Settings
         public List<string> Price_Mods_Map { get; set; } = new List<string>();
         public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
 
-        public string Overlay_Key_Close { get; set; } = "Space";
+        public string Map_Key_Close { get; set; } = "Space";
+
+        public string Price_Key_Close { get; set; } = "Space";
 
         public string Price_Key_Check { get; set; } = "Ctrl+D";
 
@@ -65,6 +68,6 @@ namespace Sidekick.Application.Settings
 
         public string Stash_Key_Right { get; set; } = "";
 
-        public List<CustomChatSetting> Custom_Chat_Settings { get; set; } = new List<CustomChatSetting>();
+        public List<CustomChatSetting> Chat_CustomCommands { get; set; } = new List<CustomChatSetting>();
     }
 }

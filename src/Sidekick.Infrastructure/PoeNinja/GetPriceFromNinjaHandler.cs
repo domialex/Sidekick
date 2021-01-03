@@ -99,6 +99,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             var currencyResults = await Task.WhenAll(fetchCurrencies);
             var currencies = currencyResults
                 .SelectMany(x => x.Lines)
+                .Where(x => x.Receive != null)
                 .Select(x => new NinjaPrice()
                 {
                     Corrupted = false,

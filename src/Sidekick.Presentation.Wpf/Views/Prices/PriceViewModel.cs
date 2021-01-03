@@ -6,14 +6,15 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Business.Apis.Poe.Trade;
-using Sidekick.Business.Apis.Poe.Trade.Data.Static;
-using Sidekick.Business.Apis.Poe.Trade.Search;
-using Sidekick.Business.Apis.Poe.Trade.Search.Filters;
 using Sidekick.Domain.Apis.PoeNinja.Queries;
 using Sidekick.Domain.Apis.PoePriceInfo.Queries;
+using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Modifiers.Models;
+using Sidekick.Domain.Game.Trade;
+using Sidekick.Domain.Game.Trade.Models;
+using Sidekick.Domain.Game.Trade.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Persistence.ItemCategories;
@@ -33,7 +34,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         private readonly ILogger logger;
         private readonly IDebouncer debouncer;
         private readonly ITradeSearchService tradeSearchService;
-        private readonly IStaticDataService staticDataService;
+        private readonly IItemStaticDataProvider itemStaticDataProvider;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryRepository itemCategoryRepository;
@@ -43,7 +44,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             ILogger<PriceViewModel> logger,
             IDebouncer debouncer,
             ITradeSearchService tradeSearchService,
-            IStaticDataService staticDataService,
+            IItemStaticDataProvider itemStaticDataProvider,
             IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings settings,
             IItemCategoryRepository itemCategoryRepository,
@@ -52,7 +53,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             this.logger = logger;
             this.debouncer = debouncer;
             this.tradeSearchService = tradeSearchService;
-            this.staticDataService = staticDataService;
+            this.itemStaticDataProvider = itemStaticDataProvider;
             this.gameLanguageProvider = gameLanguageProvider;
             this.settings = settings;
             this.itemCategoryRepository = itemCategoryRepository;
@@ -66,8 +67,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         public string ItemColor => Item?.GetColor();
 
         public ObservableList<PriceItem> Results { get; private set; }
-
-        public Uri Uri => QueryResult?.Uri;
 
         public bool IsError { get; private set; }
         public bool IsFetching { get; private set; }
@@ -234,80 +233,79 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             var propertyCategory2 = new PriceFilterCategory();
 
             // Quality
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Quality), gameLanguageProvider.Language.DescriptionQuality, Item.Properties.Quality,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Misc_Quality, gameLanguageProvider.Language.DescriptionQuality, Item.Properties.Quality,
                 enabled: Item.Rarity == Rarity.Gem,
                 min: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
 
             // Armour
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Armor), gameLanguageProvider.Language.DescriptionArmour, Item.Properties.Armor);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Armour_Armour, gameLanguageProvider.Language.DescriptionArmour, Item.Properties.Armor);
             // Evasion
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Evasion), gameLanguageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Armour_Evasion, gameLanguageProvider.Language.DescriptionEvasion, Item.Properties.Evasion);
             // Energy shield
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.EnergyShield), gameLanguageProvider.Language.DescriptionEnergyShield, Item.Properties.EnergyShield);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Armour_EnergyShield, gameLanguageProvider.Language.DescriptionEnergyShield, Item.Properties.EnergyShield);
             // Block
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.ArmourFilters), nameof(ArmorFilter.Block), gameLanguageProvider.Language.DescriptionChanceToBlock, Item.Properties.ChanceToBlock,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Armour_Block, gameLanguageProvider.Language.DescriptionChanceToBlock, Item.Properties.ChanceToBlock,
                 delta: 1);
 
             // Gem level
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.GemLevel), gameLanguageProvider.Language.DescriptionLevel, Item.Properties.GemLevel,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Misc_GemLevel, gameLanguageProvider.Language.DescriptionLevel, Item.Properties.GemLevel,
                 enabled: true,
                 min: Item.Properties.GemLevel);
 
             // Item quantity
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemQuantity), gameLanguageProvider.Language.DescriptionItemQuantity, Item.Properties.ItemQuantity);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Map_ItemQuantity, gameLanguageProvider.Language.DescriptionItemQuantity, Item.Properties.ItemQuantity);
             // Item rarity
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.ItemRarity), gameLanguageProvider.Language.DescriptionItemRarity, Item.Properties.ItemRarity);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Map_ItemRarity, gameLanguageProvider.Language.DescriptionItemRarity, Item.Properties.ItemRarity);
             // Monster pack size
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MonsterPackSize), gameLanguageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Map_MonsterPackSize, gameLanguageProvider.Language.DescriptionMonsterPackSize, Item.Properties.MonsterPackSize);
             // Blighted
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.Blighted), gameLanguageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Map_Blighted, gameLanguageProvider.Language.PrefixBlighted, Item.Properties.Blighted,
                 enabled: Item.Properties.Blighted);
             // Map tier
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.MapFilters), nameof(MapFilter.MapTier), gameLanguageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Map_Tier, gameLanguageProvider.Language.DescriptionMapTier, Item.Properties.MapTier,
                 enabled: true,
                 min: Item.Properties.MapTier);
 
             // Physical Dps
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.PhysicalDps), PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_PhysicalDps, PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
             // Elemental Dps
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.ElementalDps), PriceResources.Filters_EDps, Item.Properties.ElementalDps);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_ElementalDps, PriceResources.Filters_EDps, Item.Properties.ElementalDps);
             // Total Dps
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.DamagePerSecond), PriceResources.Filters_Dps, Item.Properties.DamagePerSecond);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_Dps, PriceResources.Filters_Dps, Item.Properties.DamagePerSecond);
             // Attacks per second
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.AttacksPerSecond), gameLanguageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_AttacksPerSecond, gameLanguageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
                 delta: 0.1);
             // Critical strike chance
-            InitializeFilter(propertyCategory1, nameof(SearchFilters.WeaponFilters), nameof(WeaponFilter.CriticalStrikeChance), gameLanguageProvider.Language.DescriptionCriticalStrikeChance, Item.Properties.CriticalStrikeChance,
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_CriticalStrikeChance, gameLanguageProvider.Language.DescriptionCriticalStrikeChance, Item.Properties.CriticalStrikeChance,
                 delta: 1);
 
             // Item level
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ItemLevel), gameLanguageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_ItemLevel, gameLanguageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
                 enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Rarity != Rarity.Unique,
                 min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
 
             // Corrupted
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.Corrupted), gameLanguageProvider.Language.DescriptionCorrupted, Item.Corrupted,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_Corrupted, gameLanguageProvider.Language.DescriptionCorrupted, Item.Corrupted,
                 alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
-                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique || Item.Rarity == Rarity.Rare) && Item.Corrupted,
-                applyNegative: true);
+                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique || Item.Rarity == Rarity.Rare) && Item.Corrupted);
 
             // Crusader
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.CrusaderItem), gameLanguageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Crusader, gameLanguageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
                 enabled: Item.Influences.Crusader);
             // Elder
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ElderItem), gameLanguageProvider.Language.InfluenceElder, Item.Influences.Elder,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Elder, gameLanguageProvider.Language.InfluenceElder, Item.Influences.Elder,
                 enabled: Item.Influences.Elder);
             // Hunter
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.HunterItem), gameLanguageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Hunter, gameLanguageProvider.Language.InfluenceHunter, Item.Influences.Hunter,
                 enabled: Item.Influences.Hunter);
             // Redeemer
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.RedeemerItem), gameLanguageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Redeemer, gameLanguageProvider.Language.InfluenceRedeemer, Item.Influences.Redeemer,
                 enabled: Item.Influences.Redeemer);
             // Shaper
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.ShaperItem), gameLanguageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Shaper, gameLanguageProvider.Language.InfluenceShaper, Item.Influences.Shaper,
                 enabled: Item.Influences.Shaper);
             // Warlord
-            InitializeFilter(propertyCategory2, nameof(SearchFilters.MiscFilters), nameof(MiscFilter.WarlordItem), gameLanguageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Warlord, gameLanguageProvider.Language.InfluenceWarlord, Item.Influences.Warlord,
                 enabled: Item.Influences.Warlord);
 
             if (propertyCategory1.Filters.Any())
@@ -321,12 +319,12 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             }
 
             // Modifiers
-            InitializeMods(Item.Modifiers.Pseudo);
-            InitializeMods(Item.Modifiers.Enchant, false);
-            InitializeMods(Item.Modifiers.Implicit);
-            InitializeMods(Item.Modifiers.Explicit);
-            InitializeMods(Item.Modifiers.Crafted);
-            InitializeMods(Item.Modifiers.Fractured);
+            InitializeModifierFilters(Item.Modifiers.Pseudo);
+            InitializeModifierFilters(Item.Modifiers.Enchant, false);
+            InitializeModifierFilters(Item.Modifiers.Implicit);
+            InitializeModifierFilters(Item.Modifiers.Explicit);
+            InitializeModifierFilters(Item.Modifiers.Crafted);
+            InitializeModifierFilters(Item.Modifiers.Fractured);
 
             if (Filters.Count == 0)
             {
@@ -334,7 +332,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             }
         }
 
-        private void InitializeMods(List<Modifier> modifiers, bool normalizeValues = true)
+        private void InitializeModifierFilters(List<Modifier> modifiers, bool normalizeValues = true)
         {
             if (modifiers.Count == 0)
             {
@@ -363,8 +361,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
                 if (modifier.OptionValue != null)
                 {
-                    InitializeFilter(category,
-                                     nameof(StatFilter),
+                    InitializeModifierFilter(category,
                                      modifier.Id,
                                      !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                      modifier.OptionValue,
@@ -374,8 +371,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 }
                 else
                 {
-                    InitializeFilter(category,
-                                     nameof(StatFilter),
+                    InitializeModifierFilter(category,
                                      modifier.Id,
                                      !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                      modifier.Values,
@@ -393,8 +389,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
         private static readonly Regex LabelValues = new Regex("(\\#)");
 
-        private void InitializeFilter<T>(PriceFilterCategory category,
-                                         string type,
+        private void InitializeModifierFilter<T>(PriceFilterCategory category,
                                          string id,
                                          string label,
                                          T value,
@@ -402,12 +397,66 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                                          bool enabled = false,
                                          double? min = null,
                                          double? max = null,
-                                         bool alwaysIncluded = false,
-                                         bool normalizeValues = true,
-                                         bool applyNegative = false)
+                                         bool normalizeValues = true)
         {
             ModifierOption option = null;
 
+            if (value is List<double> groupValue)
+            {
+                var itemValue = groupValue.OrderBy(x => x).FirstOrDefault();
+
+                if (itemValue >= 0)
+                {
+                    min = itemValue;
+                    if (normalizeValues)
+                    {
+                        min = NormalizeMinValue(min, delta);
+                    }
+                }
+                else
+                {
+                    max = itemValue;
+                    if (normalizeValues)
+                    {
+                        max = NormalizeMaxValue(max, delta);
+                    }
+                }
+
+                if (!groupValue.Any())
+                {
+                    min = null;
+                    max = null;
+                }
+            }
+
+            var priceFilter = new PriceFilter()
+            {
+                Enabled = enabled,
+                PropertyType = null,
+                Id = id,
+                Text = label,
+                Min = min,
+                Max = max,
+                HasRange = min.HasValue || max.HasValue,
+                Option = option,
+            };
+
+            priceFilter.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { UpdateDebounce(); };
+
+            category.Filters.Add(priceFilter);
+        }
+
+        private void InitializePropertyFilter<T>(PriceFilterCategory category,
+                                         PropertyFilterType type,
+                                         string label,
+                                         T value,
+                                         double delta = 5,
+                                         bool enabled = false,
+                                         double? min = null,
+                                         double? max = null,
+                                         bool alwaysIncluded = false,
+                                         bool normalizeValues = true)
+        {
             if (value is bool boolValue)
             {
                 if (!boolValue && !alwaysIncluded)
@@ -453,51 +502,16 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                     label += $": {doubleValue:0.00}";
                 }
             }
-            else if (value is List<double> groupValue)
-            {
-                var itemValue = groupValue.OrderBy(x => x).FirstOrDefault();
-
-                if (itemValue >= 0)
-                {
-                    min = itemValue;
-                    if (normalizeValues)
-                    {
-                        min = NormalizeMinValue(min, delta);
-                    }
-                }
-                else
-                {
-                    max = itemValue;
-                    if (normalizeValues)
-                    {
-                        max = NormalizeMaxValue(max, delta);
-                    }
-                }
-
-                if (!groupValue.Any())
-                {
-                    min = null;
-                    max = null;
-                }
-            }
-            else if (value is ModifierOption modifierOption)
-            {
-                option = modifierOption;
-                min = null;
-                max = null;
-            }
 
             var priceFilter = new PriceFilter()
             {
                 Enabled = enabled,
-                Type = type,
-                Id = id,
+                PropertyType = type,
                 Text = label,
                 Min = min,
                 Max = max,
                 HasRange = min.HasValue || max.HasValue,
-                ApplyNegative = applyNegative,
-                Option = option,
+                Option = null,
             };
 
             priceFilter.PropertyChanged += (object sender, PropertyChangedEventArgs e) => { UpdateDebounce(); };
@@ -505,7 +519,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             category.Filters.Add(priceFilter);
         }
 
-        private FetchResult<string> QueryResult { get; set; }
+        private TradeSearchResult<string> QueryResult { get; set; }
 
         /// <summary>
         /// Smallest positive value between a -5 delta or 90%.
@@ -547,6 +561,8 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             return null;
         }
 
+        public Uri Uri { get; set; }
+
         public int UpdateCountdown { get; private set; }
 
         public void UpdateDebounce()
@@ -578,7 +594,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                     _ => new List<string>(),
                 };
 
-                foreach (var filter in Filters.SelectMany(x => x.Filters).Where(x => x.Type == nameof(StatFilter)))
+                foreach (var filter in Filters.SelectMany(x => x.Filters))
                 {
                     if (settingMods.Contains(filter.Id))
                     {
@@ -600,13 +616,13 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
             }
 
             IsFetching = true;
-            if (Item.Rarity == Rarity.Currency && staticDataService.GetId(Item) != null)
+            if (Item.Rarity == Rarity.Currency && itemStaticDataProvider.GetId(Item) != null)
             {
                 QueryResult = await tradeSearchService.SearchBulk(Item);
             }
             else
             {
-                QueryResult = await tradeSearchService.Search(Item, GetFilters(), GetStats());
+                QueryResult = await tradeSearchService.Search(Item, GetPropertyFilters(), GetModifierFilters());
             }
             IsFetching = false;
             if (QueryResult == null)
@@ -619,86 +635,47 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 await LoadMoreData();
             }
 
+            if (!string.IsNullOrEmpty(QueryResult.Id))
+            {
+                Uri = await mediator.Send(new GetTradeUriQuery(Item, QueryResult.Id));
+            }
+            else
+            {
+                Uri = null;
+            }
+
             UpdateCountString();
         }
 
-        private List<StatFilter> GetStats()
+        private List<PropertyFilter> GetPropertyFilters()
         {
             return Filters?
                 .SelectMany(x => x.Filters)
-                .Where(x => x.Type == nameof(StatFilter))
-                .Where(x => x.Enabled)
-                .Select(x => new StatFilter()
+                .Where(x => x.PropertyType.HasValue)
+                .Select(x => new PropertyFilter()
                 {
-                    Disabled = !x.Enabled,
-                    Id = x.Id,
-                    Value = new SearchFilterValue()
-                    {
-                        Max = x.Max,
-                        Min = x.Min,
-                        Option = x.Option?.Value,
-                    }
+                    Enabled = x.Enabled,
+                    Max = x.Max,
+                    Min = x.Min,
+                    Type = x.PropertyType.Value,
                 })
                 .ToList();
         }
 
-        private SearchFilters GetFilters()
+        private List<ModifierFilter> GetModifierFilters()
         {
-            var filters = Filters?
-                .SelectMany(x => x.Filters);
-
-            if (filters == null)
-            {
-                return null;
-            }
-
-            var searchFilters = new SearchFilters();
-
-            foreach (var filter in filters)
-            {
-                var property = searchFilters.GetType().GetProperty(filter.Type);
-                if (property == null)
+            return Filters?
+                .SelectMany(x => x.Filters)
+                .Where(x => !x.PropertyType.HasValue)
+                .Where(x => x.Enabled)
+                .Select(x => new ModifierFilter()
                 {
-                    continue;
-                }
-
-                var typeObject = property.GetValue(searchFilters);
-                property = typeObject.GetType().GetProperty("Filters");
-                if (property == null)
-                {
-                    continue;
-                }
-
-                var filtersObject = property.GetValue(typeObject);
-                property = filtersObject.GetType().GetProperty(filter.Id);
-                if (property == null)
-                {
-                    continue;
-                }
-
-                if (property.PropertyType == typeof(SearchFilterOption) && (filter.Enabled || filter.ApplyNegative))
-                {
-                    property.SetValue(filtersObject, new SearchFilterOption(filter.Enabled ? "true" : "false"));
-                }
-                else if (property.PropertyType == typeof(SearchFilterValue))
-                {
-                    if (!filter.Enabled)
-                    {
-                        continue;
-                    }
-                    var valueObject = new SearchFilterValue
-                    {
-                        Max = filter.Max,
-                        Min = filter.Min,
-                        Option = filter.Option?.Value,
-                    };
-                    property.SetValue(filtersObject, valueObject);
-                }
-            }
-
-            searchFilters.TypeFilters.Filters.Category = new SearchFilterOption(SelectedCategory);
-
-            return searchFilters;
+                    Id = x.Id,
+                    Max = x.Max,
+                    Min = x.Min,
+                    Value = x.Option?.Value,
+                })
+                .ToList();
         }
 
         public async Task LoadMoreData()
@@ -717,17 +694,14 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 }
 
                 IsFetching = true;
-                var getResult = await tradeSearchService.GetResults(QueryResult.Id, ids, GetStats());
+                var result = await tradeSearchService.GetResults(QueryResult.Id, ids, GetModifierFilters());
                 IsFetching = false;
 
-                if (getResult != null && getResult.Result.Any())
+                if (result != null && result.Any())
                 {
-                    Results.AddRange(getResult.Result.Select(result => new PriceItem(result)
+                    Results.AddRange(result.Select(x => new PriceItem(x)
                     {
-                        ImageUrl = new Uri(
-                            gameLanguageProvider.Language.PoeCdnBaseUrl,
-                            staticDataService.GetImage(result.Listing.Price.Currency)
-                        ).AbsoluteUri,
+                        ImageUrl = new Uri($"{gameLanguageProvider.Language.PoeCdnBaseUrl}{itemStaticDataProvider.GetImage(x.Price.Currency)}").AbsoluteUri,
                     }));
                 }
 
@@ -770,7 +744,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
                 PredictionText = string.Format(
                     PriceResources.PredictionString,
-                    $"{result.Min.ToString("N1")}-{result.Max.ToString("N1")} {result.Currency}",
+                    $"{result.Min:N1}-{result.Max:N1} {result.Currency}",
                     result.ConfidenceScore.ToString("N1"));
             }
         }

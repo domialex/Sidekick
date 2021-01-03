@@ -55,7 +55,7 @@ namespace Sidekick.Presentation.Wpf.Settings
             uiLanguageProvider.AvailableLanguages.ForEach(x => UILanguageOptions.Add(x.NativeName.First().ToString().ToUpper() + x.NativeName[1..], x.Name));
             gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
 
-            foreach (var setting in Custom_Chat_Settings)
+            foreach (var setting in Chat_CustomCommands)
                 CustomChatSettings.Add(new CustomChatModel { ChatCommand = setting.ChatCommand, Key = setting.Key });
 
             keybindsProvider.OnKeyDown += NativeKeyboard_OnKeyDown;
@@ -91,7 +91,9 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Character_Name { get; set; }
 
-        public bool Overlay_CloseWithMouse { get; set; }
+        public bool Price_CloseWithMouse { get; set; }
+
+        public bool Map_CloseWithMouse { get; set; }
 
         public string Map_Dangerous_Regex { get; set; }
 
@@ -105,7 +107,9 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Price_Key_Check { get; set; }
 
-        public string Overlay_Key_Close { get; set; }
+        public string Price_Key_Close { get; set; }
+
+        public string Map_Key_Close { get; set; }
 
         public string Chat_Key_Exit { get; set; }
 
@@ -149,7 +153,7 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public WikiSetting Wiki_Preferred { get; set; }
 
-        public List<CustomChatSetting> Custom_Chat_Settings { get; set; } = new List<CustomChatSetting>();
+        public List<CustomChatSetting> Chat_CustomCommands { get; set; } = new List<CustomChatSetting>();
 
         #endregion
 
@@ -164,9 +168,9 @@ namespace Sidekick.Presentation.Wpf.Settings
             var leagueHasChanged = LeagueId != sidekickSettings.LeagueId;
             var languageHasChanged = gameLanguageProvider.Current.LanguageCode != Language_Parser;
 
-            Custom_Chat_Settings.Clear();
+            Chat_CustomCommands.Clear();
             foreach (var setting in CustomChatSettings)
-                Custom_Chat_Settings.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
+                Chat_CustomCommands.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
 
             uiLanguageProvider.SetLanguage(Language_UI);
             await mediator.Send(new SetGameLanguageCommand(Language_Parser));
@@ -177,10 +181,16 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
         {
+            // Allow close commands to have the same keybinds
+            if (ignoreKey == nameof(ISidekickSettings.Price_Key_Close) || ignoreKey == nameof(ISidekickSettings.Map_Key_Close))
+            {
+                return false;
+            }
+
             return GetType()
                 .GetProperties()
                 .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
-                || Custom_Chat_Settings.Any(x => x.Key == keybind);
+                    || Chat_CustomCommands.Any(x => x.Key == keybind);
         }
 
         private bool NativeKeyboard_OnKeyDown(string input)
@@ -212,25 +222,25 @@ namespace Sidekick.Presentation.Wpf.Settings
             {
                 return false;
             }
-            
+
             if (input == "Escape")
             {
                 CurrentKey = null;
                 return true;
             }
-            
+
             if (!IsKeybindUsed(input, CurrentKey))
             {
                 var property = GetType()
                     .GetProperties()
                     .FirstOrDefault(x => x.Name == CurrentKey);
-            
+
                 if (property != default)
                 {
                     property.SetValue(this, input);
                 }
             }
-            
+
             CurrentKey = null;
             return true;
         }
@@ -279,7 +289,7 @@ namespace Sidekick.Presentation.Wpf.Settings
         {
             if (!CustomChatSettings.Any(x => x.ChatCommand == "New Command"))
             {
-                CustomChatSettings.Add(new CustomChatModel { ChatCommand = "New Command", Key = "" });  
+                CustomChatSettings.Add(new CustomChatModel { ChatCommand = "New Command", Key = "" });
             }
         }
 

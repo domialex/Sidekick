@@ -6,7 +6,7 @@ namespace Sidekick.Application.Game.Items.Parser.Tokenizers
 {
     public class ItemNameTokenizer
     {
-        private Dictionary<ItemNameTokenType, Regex> _tokenDefs;
+        private readonly Dictionary<ItemNameTokenType, Regex> _tokenDefs;
 
         public ItemNameTokenizer()
         {
@@ -38,7 +38,7 @@ namespace Sidekick.Application.Game.Items.Parser.Tokenizers
                     }
                     else
                     {
-                        throw new System.Exception("Failed to parse item name");
+                        throw new KeyNotFoundException("Failed to parse item name");
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace Sidekick.Application.Game.Items.Parser.Tokenizers
                 if (match.Success)
                 {
                     if (match.Length != input.Length)
-                        input = input.Substring(match.Length);
+                        input = input[match.Length..];
                     else
                         input = string.Empty;
 

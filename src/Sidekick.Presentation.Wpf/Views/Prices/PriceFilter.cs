@@ -1,5 +1,6 @@
 using System.ComponentModel;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Domain.Game.Modifiers.Models;
+using Sidekick.Domain.Game.Trade.Models;
 
 namespace Sidekick.Presentation.Wpf.Views.Prices
 {
@@ -9,7 +10,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         public event PropertyChangedEventHandler PropertyChanged;
 #pragma warning restore 67
 
-        public string Type { get; set; }
+        public PropertyFilterType? PropertyType { get; set; }
 
         public bool Enabled { get; set; }
 
@@ -22,8 +23,6 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
         public double? Min { get; set; }
 
         public double? Max { get; set; }
-
-        public bool ApplyNegative { get; set; }
 
         public ModifierOption Option { get; set; }
     }
