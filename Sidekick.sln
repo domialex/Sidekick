@@ -45,6 +45,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Mapper", "src\Sidekick.Mapper\Sidekick.Mapper.csproj", "{8E09D8B1-46A3-438F-B1F3-DE3305521299}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor", "src\Sidekick.Presentation.Blazor\Sidekick.Presentation.Blazor.csproj", "{361C0444-11F7-4EDC-A30E-C1F529C2EB79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor.Electron", "src\Sidekick.Presentation.Blazor.Electron\Sidekick.Presentation.Blazor.Electron.csproj", "{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +111,14 @@ Global
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

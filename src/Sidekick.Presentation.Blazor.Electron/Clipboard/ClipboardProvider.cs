@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using ElectronNET.API;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Settings;
@@ -20,6 +21,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Clipboard
 
         public async Task<string> Copy()
         {
+            if (!HybridSupport.IsElectronActive)
+            {
+                return default;
+            }
+
             var clipboardText = string.Empty;
 
             if (settings.RetainClipboard)
@@ -51,11 +57,21 @@ namespace Sidekick.Presentation.Blazor.Electron.Clipboard
 
         public Task<string> GetText()
         {
+            if (!HybridSupport.IsElectronActive)
+            {
+                return default;
+            }
+
             return ElectronNET.API.Electron.Clipboard.ReadTextAsync();
         }
 
         public Task SetText(string text)
         {
+            if (!HybridSupport.IsElectronActive)
+            {
+                return default;
+            }
+
             if (text == null)
             {
                 text = string.Empty;

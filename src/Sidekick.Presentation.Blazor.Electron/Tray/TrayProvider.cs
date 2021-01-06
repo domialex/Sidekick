@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Sidekick.Presentation.Localization.Tray;
@@ -17,6 +18,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
         public Task Initialize()
         {
+            if (!HybridSupport.IsElectronActive)
+            {
+                return default;
+            }
+
             var menuItems = new List<MenuItem>
             {
                 new MenuItem
