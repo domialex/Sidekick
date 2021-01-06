@@ -1,0 +1,42 @@
+{
+  "executable": "Sidekick.Presentation.Blazor",
+  "splashscreen": {
+    "imageFile": "/Assets/Splashscreen.png"
+  },
+  "name": "Sidekick.Presentation.Blazor",
+  "author": "",
+  "singleInstance": false,
+  "build": {
+    "appId": "com.Sidekick.Presentation.Blazor.app",
+    "productName": "Sidekick.Presentation.Blazor",
+    "copyright": "Copyright © 2020",
+    "buildVersion": "2.0.0",
+    "compression": "maximum",
+    "win": {
+      "icon": "Assets/ExaltedOrb.ico"
+    },
+    "directories": {
+      "output": "../../../bin/Desktop",
+      "buildResources": "Assets"
+    },
+    "extraResources": [
+      {
+        "from": "./bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "from": "../Sidekick.Presentation.Blazor.Electron/ElectronHostHook/node_modules",
+        "to": "ElectronHostHook/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "**/*"
+    ]
+  }
+}
