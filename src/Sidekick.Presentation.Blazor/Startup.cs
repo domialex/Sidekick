@@ -84,7 +84,7 @@ namespace Sidekick.Presentation.Blazor
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            app.UseSidekickPresentationBlazorElectron(serviceProvider);
+            app.UseSidekickPresentationBlazorElectron(serviceProvider, env);
         }
     }
 }

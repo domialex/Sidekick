@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @namespace Sidekick.Presentation.Blazor.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
@@ -12,9 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sidekick.Presentation.Blazor</title>
     <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
-    <link href="Sidekick.Presentation.Blazor.styles.css" rel="stylesheet" />
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
@@ -31,5 +29,12 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="js/dependencies.js"></script>
+    <script src="js/build.js"></script>
+
+    @if (ElectronNET.API.HybridSupport.IsElectronActive)
+    {
+        <script src="js/electron.js"></script>
+    }
 </body>
 </html>

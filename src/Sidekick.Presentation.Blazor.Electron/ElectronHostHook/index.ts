@@ -8,7 +8,6 @@ export class HookService extends Connector {
     }
 
     onHostReady(): void {
-        // execute your own JavaScript Host logic here
     }
 }
 

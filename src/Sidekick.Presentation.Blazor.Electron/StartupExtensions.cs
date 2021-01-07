@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Keybinds;
@@ -30,18 +31,18 @@ namespace Sidekick.Presentation.Blazor.Electron
             return services;
         }
 
-        public static void UseSidekickPresentationBlazorElectron(this IApplicationBuilder _, IServiceProvider serviceProvider)
+        public static void UseSidekickPresentationBlazorElectron(this IApplicationBuilder _, IServiceProvider serviceProvider, IWebHostEnvironment webHostEnvironment)
         {
-            var trayProvider = serviceProvider.GetService<TrayProvider>();
-            Task.Run(trayProvider.Initialize);
-
             if (HybridSupport.IsElectronActive)
             {
-                ElectronBootstrap();
+                var trayProvider = serviceProvider.GetService<TrayProvider>();
+                Task.Run(trayProvider.Initialize);
+
+                ElectronBootstrap(webHostEnvironment);
             }
         }
 
-        private static async void ElectronBootstrap()
+        private static async void ElectronBootstrap(IWebHostEnvironment webHostEnvironment)
         {
             ElectronNET.API.Electron.WindowManager.IsQuitOnWindowAllClosed = true;
 
@@ -49,14 +50,28 @@ namespace Sidekick.Presentation.Blazor.Electron
             {
                 Width = 1152,
                 Height = 940,
-                Show = false,
                 Frame = false,
+                Show = false,
+                Transparent = true,
+                WebPreferences = new WebPreferences()
+                {
+                    NodeIntegration = true,
+                    // Preload = $"{webHostEnvironment.WebRootPath}js/electron.js",
+                }
             });
 
             await browserWindow.WebContents.Session.ClearCacheAsync();
 
             browserWindow.OnReadyToShow += () => browserWindow.Show();
             browserWindow.SetTitle("Sidekick");
+
+            ElectronNET.API.Electron.IpcMain.On("ping", (args) =>
+            {
+                foreach (var window in ElectronNET.API.Electron.WindowManager.BrowserWindows)
+                {
+                    ElectronNET.API.Electron.IpcMain.Send(window, "pong");
+                }
+            });
         }
     }
 }

@@ -14,4 +14,7 @@
     <ProjectReference Include="..\Sidekick.Presentation.Blazor.Electron\Sidekick.Presentation.Blazor.Electron.csproj" />
     <ProjectReference Include="..\Sidekick.Presentation\Sidekick.Presentation.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
 </Project>
