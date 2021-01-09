@@ -420,6 +420,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
         private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
+            if (lines == null)
+                return null;
+
             return lines
                 .OrderBy(x => x.Order)
                 .Select(line =>
