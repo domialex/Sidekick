@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Domain.Game.StatTranslations
+namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models
 {
-    public class StatTranslation
+    public class ModifierTranslation
     {
         [JsonPropertyName("English")]
-        public List<Stat> Stats { get; set; }
+        public List<Translation> Stats { get; set; }
     }
 
-    public class Stat
+    public class Translation
     {
         [JsonPropertyName("condition")]
         public List<Condition> Conditions { get; set; }

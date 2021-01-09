@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
 
-namespace Sidekick.Domain.Game.StatTranslations
+namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 {
-    public class AlternateStatProvider : IAlternateStatProvider
+    public class AlternateModifierProvider : IAlternateModifierProvider
     {
-        public AlternateStatProvider()
+        public AlternateModifierProvider()
         {
-            Translations = new List<StatTranslation>();
+            Translations = new List<ModifierTranslation>();
+        }
 
-            var assembly = this.GetType().GetTypeInfo().Assembly;
-            using Stream resource = assembly.GetManifestResourceStream("Sidekick.Domain.Game.StatTranslations.stat_translations.min.json");
+        public async Task Initialize()
+        {
+            var assembly = GetType().GetTypeInfo().Assembly;
+            using var stream = assembly.GetManifestResourceStream("Sidekick.Infrastructure.PoeApi.Items.Modifiers.stat_translations.min.json");
 
-            using var stream = new StreamReader(resource);
-            var data = stream.ReadToEnd();
-            Translations = JsonSerializer.Deserialize<List<StatTranslation>>(data);
+            Translations = await JsonSerializer.DeserializeAsync<List<ModifierTranslation>>(stream);
 
             foreach (var translation in Translations)
                 CleanTranslation(translation);
@@ -29,11 +30,11 @@ namespace Sidekick.Domain.Game.StatTranslations
             Translations = Translations.Where(x => x.Stats.Any(y => y.Conditions != null && y.Conditions.Count >= 1)).ToList();
         }
 
-        public List<StatTranslation> Translations { get; private set; }
+        public List<ModifierTranslation> Translations { get; private set; }
 
-        public List<Stat> GetAlternateStats(string text)
+        public List<Translation> GetAlternateStats(string text)
         {
-            var alternates = new List<Stat>();
+            var alternates = new List<Translation>();
             var stats = Translations.Where(x => x.Stats.Any(y => y.Text == text)).SelectMany(z => z.Stats).Distinct().ToList();
 
             foreach (var stat in stats)
@@ -45,7 +46,7 @@ namespace Sidekick.Domain.Game.StatTranslations
             return alternates;
         }
 
-        private void CleanTranslation(StatTranslation translation)
+        private void CleanTranslation(ModifierTranslation translation)
         {
             foreach (var stat in translation.Stats)
             {

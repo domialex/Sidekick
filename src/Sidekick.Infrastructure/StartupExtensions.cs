@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Modifiers;
-using Sidekick.Domain.Game.StatTranslations;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Infrastructure.Github;
 using Sidekick.Infrastructure.PoeApi;
@@ -32,7 +31,7 @@ namespace Sidekick.Infrastructure
             services.AddSingleton<IModifierProvider, ModifierProvider>();
             services.AddSingleton<IPseudoModifierProvider, PseudoModifierProvider>();
             services.AddSingleton<IItemStaticDataProvider, ItemStaticDataProvider>();
-            services.AddSingleton<IAlternateStatProvider, AlternateStatProvider>();
+            services.AddSingleton<IAlternateModifierProvider, AlternateModifierProvider>();
 
             return services;
         }

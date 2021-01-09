@@ -9,7 +9,6 @@ using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Modifiers.Models;
-using Sidekick.Domain.Game.StatTranslations;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
 
 namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
@@ -20,7 +19,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheRepository cacheRepository;
         private readonly IPoeTradeClient poeTradeClient;
-        private readonly IAlternateStatProvider statTranslationProvider;
+        private readonly IAlternateModifierProvider alternateModifierProvider;
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
 
@@ -29,13 +28,13 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             IGameLanguageProvider gameLanguageProvider,
             ICacheRepository cacheRepository,
             IPoeTradeClient poeTradeClient,
-            IAlternateStatProvider statTranslationProvider)
+            IAlternateModifierProvider alternateModifierProvider)
         {
             this.pseudoModifierProvider = pseudoModifierProvider;
             this.gameLanguageProvider = gameLanguageProvider;
             this.cacheRepository = cacheRepository;
             this.poeTradeClient = poeTradeClient;
-            this.statTranslationProvider = statTranslationProvider;
+            this.alternateModifierProvider = alternateModifierProvider;
         }
 
         public List<ModifierPattern> PseudoPatterns { get; set; }
@@ -47,11 +46,11 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         public List<ModifierPattern> FracturedPatterns { get; set; }
 
         public Regex NewLinePattern { get; set; } = new Regex("(?:\\\\)*[\\r\\n]+");
-        public Regex IncreasedPattern { get; set; }
-        public Regex AdditionalProjectilePattern { get; set; }
 
         public async Task Initialize()
         {
+            await alternateModifierProvider.Initialize();
+
             var result = await cacheRepository.GetOrSet(
                 "Sidekick.Infrastructure.PoeApi.Items.Modifiers.ModifierProvider.Initialize",
                 () => poeTradeClient.Fetch<ApiCategory>("data/stats"));
@@ -64,16 +63,9 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             CraftedPatterns = new List<ModifierPattern>();
             VeiledPatterns = new List<ModifierPattern>();
             FracturedPatterns = new List<ModifierPattern>();
-            IncreasedPattern = new Regex(gameLanguageProvider.Language.ModifierIncreased);
 
             var hashPattern = new Regex("\\\\#");
             var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
-
-            var additionalProjectileEscaped = Regex.Escape(gameLanguageProvider.Language.AdditionalProjectile);
-            var additionalProjectiles = hashPattern.Replace(Regex.Escape(gameLanguageProvider.Language.AdditionalProjectiles), "([-+\\d,\\.]+)");
-
-            // We need to ignore the case here, there are some mistakes in the data of the game.
-            AdditionalProjectilePattern = new Regex(gameLanguageProvider.Language.AdditionalProjectile, RegexOptions.IgnoreCase);
 
             foreach (var category in categories)
             {
@@ -164,21 +156,9 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                         pattern = hashPattern.Replace(pattern, "(.*)");
                     }
 
-                    if (IncreasedPattern.IsMatch(pattern))
-                    {
-                        var negativePattern = IncreasedPattern.Replace(pattern, gameLanguageProvider.Language.ModifierReduced);
-                        modifier.NegativePattern = new Regex($"(?:^|\\n){negativePattern}{suffix}", RegexOptions.None);
-                    }
-
-                    if (AdditionalProjectilePattern.IsMatch(entry.Text))
-                    {
-                        var additionalProjectilePattern = pattern.Replace(additionalProjectileEscaped, additionalProjectiles, System.StringComparison.OrdinalIgnoreCase);
-                        modifier.AdditionalProjectilePattern = new Regex($"(?:^|\\n){additionalProjectilePattern}{suffix}", RegexOptions.IgnoreCase);
-                    }
-
                     modifier.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
 
-                    var alternateStats = statTranslationProvider.GetAlternateStats(entry.Text);
+                    var alternateStats = alternateModifierProvider.GetAlternateStats(entry.Text);
 
                     foreach (var stat in alternateStats)
                     {
@@ -345,7 +325,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                         if (negative)
                         {
                             parsedValue *= -1;
-                            modifierText = IncreasedPattern.Replace(modifierText, gameLanguageProvider.Language.ModifierReduced);
                         }
 
                         modifier.Values.Add(parsedValue);
@@ -446,11 +425,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             }
 
             if (pattern.Pattern != null && pattern.Pattern.IsMatch(text))
-            {
-                return true;
-            }
-
-            if (pattern.NegativePattern != null && pattern.NegativePattern.IsMatch(text))
             {
                 return true;
             }
