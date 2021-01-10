@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using Sidekick.Domain.Clipboard;
-using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 
-namespace Sidekick.Application.Clipboard
+namespace Sidekick.Platform.Clipboard
 {
     public class ClipboardProvider : IClipboardProvider
     {

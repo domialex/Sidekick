@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Process;
-using Sidekick.Domain.Settings;
+using Sidekick.Domain.Platforms;
 using WindowsHook;
 
-namespace Sidekick.Presentation.Wpf.Keybinds
+namespace Sidekick.Platform.Keybinds
 {
     public class KeybindsProvider : IKeybindsProvider, IDisposable
     {
@@ -24,33 +22,24 @@ namespace Sidekick.Presentation.Wpf.Keybinds
             WindowsHook.Keys.LMenu,
             WindowsHook.Keys.RMenu,
         };
-        private readonly INativeProcess nativeProcess;
-        private readonly ISidekickSettings settings;
 
-        public KeybindsProvider(
-            INativeProcess nativeProcess,
-            ISidekickSettings settings)
+        public KeybindsProvider()
         {
-            this.nativeProcess = nativeProcess;
-            this.settings = settings;
         }
 
         public IKeyboardMouseEvents Hook { get; private set; }
 
         public event Func<string, bool> OnKeyDown;
-        public event Func<bool> OnScrollDown;
-        public event Func<bool> OnScrollUp;
 
         public void Initialize()
         {
             Hook = WindowsHook.Hook.GlobalEvents();
             Hook.KeyDown += Hook_KeyDown;
-            Hook.MouseWheelExt += Hook_MouseWheelExt;
         }
 
         private void Hook_KeyDown(object sender, WindowsHook.KeyEventArgs e)
         {
-            if ((!nativeProcess.IsPathOfExileInFocus && !nativeProcess.IsSidekickInFocus) || KEYS_INVALID.Contains(e.KeyCode))
+            if (KEYS_INVALID.Contains(e.KeyCode))
             {
                 return;
             }
@@ -85,24 +74,7 @@ namespace Sidekick.Presentation.Wpf.Keybinds
             e.Handled = OnKeyDown?.Invoke(str.ToString()) ?? false;
         }
 
-        private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
-        {
-            if (!nativeProcess.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !IsCtrlPressed())
-            {
-                return;
-            }
-
-            if (e.Delta > 0)
-            {
-                e.Handled = OnScrollUp?.Invoke() ?? false;
-            }
-            else
-            {
-                e.Handled = OnScrollDown?.Invoke() ?? false;
-            }
-        }
-
-        private static bool IsCtrlPressed()
+        public bool IsCtrlPressed()
         {
             return Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_CONTROL)
                 || Keyboard.IsKeyPressed(Keyboard.VirtualKeyStates.VK_LCONTROL)
@@ -172,7 +144,6 @@ namespace Sidekick.Presentation.Wpf.Keybinds
             if (Hook != null) // Hook will be null if auto update was successful
             {
                 Hook.KeyDown -= Hook_KeyDown;
-                Hook.MouseWheelExt -= Hook_MouseWheelExt;
                 Hook.Dispose();
             }
         }

@@ -6,6 +6,7 @@ using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
+using Sidekick.Platform;
 
 namespace Sidekick.Presentation.Wpf
 {
@@ -32,6 +33,7 @@ namespace Sidekick.Presentation.Wpf
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
+                .AddSidekickPlatform()
                 .AddSidekickPresentation()
                 .AddSidekickPresentationWpf();
 

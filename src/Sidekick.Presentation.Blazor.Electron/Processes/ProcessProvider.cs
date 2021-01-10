@@ -5,7 +5,7 @@ using Sidekick.Domain.Process;
 
 namespace Sidekick.Presentation.Blazor.Electron.Processes
 {
-    public class ProcessProvider : INativeProcess
+    public class ProcessProvider : IProcessProvider
     {
         public Mutex Mutex { get; set; }
 

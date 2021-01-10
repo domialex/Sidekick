@@ -1,9 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Chat.Commands;
-using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Game.Chat.Commands

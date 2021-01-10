@@ -11,12 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Process;
-using Sidekick.Presentation.Wpf.Extensions;
+using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Presentation.Wpf.Natives
+namespace Sidekick.Platform.Processes
 {
-    public class NativeProcess : INativeProcess
+    public class ProcessProvider : IProcessProvider
     {
         #region DllImport
         [DllImport("user32.dll")]
@@ -66,7 +65,7 @@ namespace Sidekick.Presentation.Wpf.Natives
 
         private readonly ILogger logger;
 
-        public NativeProcess(ILogger<NativeProcess> logger)
+        public ProcessProvider(ILogger<ProcessProvider> logger)
         {
             this.logger = logger;
         }
@@ -85,22 +84,22 @@ namespace Sidekick.Presentation.Wpf.Natives
                     return false;
                 }
 
-                var procId = Process.GetCurrentProcess().Id;
+                var procId = Environment.ProcessId;
                 GetWindowThreadProcessId(activatedHandle, out var activeProcId);
 
                 return activeProcId == procId;
             }
         }
 
-        private string ActiveWindowTitle => GetActiveWindowProcess()?.MainWindowTitle;
+        private static string ActiveWindowTitle => GetActiveWindowProcess()?.MainWindowTitle;
 
-        private Process GetActiveWindowProcess()
+        private static Process GetActiveWindowProcess()
         {
             GetWindowThreadProcessId(GetForegroundWindow(), out var processID);
             return Process.GetProcessById(processID);
         }
 
-        private Process GetPathOfExileProcess()
+        private static Process GetPathOfExileProcess()
         {
             foreach (var processName in PossibleProcessNames)
             {
@@ -113,24 +112,13 @@ namespace Sidekick.Presentation.Wpf.Natives
 
             return null;
         }
-        /*
-        public float ActiveWindowDpi
-        {
-            get
-            {
-                using var g = Graphics.FromHwnd(GetForegroundWindow());
-                return g.DpiX;
-            }
-        }
 
-        public Rectangle GetScreenDimensions()
-        {
-            return GetWindowRect(GetForegroundWindow(), out var rectangle) ? rectangle : default;
-        }
-        */
         public async Task CheckPermission()
         {
-            await WaitForPathOfExileFocus();
+            while (!IsPathOfExileInFocus)
+            {
+                await Task.Delay(1000);
+            }
 
             if (!IsUserRunAsAdmin() && IsPathOfExileRunAsAdmin())
             {
@@ -139,14 +127,6 @@ namespace Sidekick.Presentation.Wpf.Natives
             else
             {
                 logger.LogInformation("Permission Sufficient.");
-            }
-        }
-
-        private async Task WaitForPathOfExileFocus()
-        {
-            while (!IsPathOfExileInFocus)
-            {
-                await Task.Delay(1000);
             }
         }
 
@@ -186,7 +166,7 @@ namespace Sidekick.Presentation.Wpf.Natives
             }
         }
 
-        private bool IsUserRunAsAdmin()
+        private static bool IsUserRunAsAdmin()
         {
             var info = WindowsIdentity.GetCurrent();
             var principle = new WindowsPrincipal(info);

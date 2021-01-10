@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sidekick.Domain.Process
+namespace Sidekick.Domain.Platforms
 {
-    public interface INativeProcess
+    public interface IProcessProvider
     {
         Mutex Mutex { get; set; }
         bool IsPathOfExileInFocus { get; }

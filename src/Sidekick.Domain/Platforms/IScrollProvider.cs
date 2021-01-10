@@ -1,21 +1,16 @@
 using System;
 
-namespace Sidekick.Domain.Keybinds
+namespace Sidekick.Domain.Platforms
 {
     /// <summary>
     /// Service providing keybind functions
     /// </summary>
-    public interface IKeybindsProvider
+    public interface IScrollProvider
     {
         /// <summary>
         /// Initialize the provider
         /// </summary>
         void Initialize();
-
-        /// <summary>
-        /// Event that indicates that a key was pressed
-        /// </summary>
-        event Func<string, bool> OnKeyDown;
 
         /// <summary>
         /// Event that indicates a scroll down input occured
@@ -26,11 +21,5 @@ namespace Sidekick.Domain.Keybinds
         /// Event that indicates a scroll up input occured
         /// </summary>
         event Func<bool> OnScrollUp;
-
-        /// <summary>
-        /// Command to send keystrokes to the system
-        /// </summary>
-        /// <param name="keys">The keys to send</param>
-        void PressKey(string keys);
     }
 }

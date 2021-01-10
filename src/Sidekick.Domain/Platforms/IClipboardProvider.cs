@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Sidekick.Domain.Clipboard
+namespace Sidekick.Domain.Platforms
 {
     public interface IClipboardProvider
     {

@@ -3,30 +3,34 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Process;
+using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Application.Keybinds
+namespace Sidekick.Platform
 {
-    public class KeybindsInitializationStartedHandler : INotificationHandler<KeybindsInitializationStarted>
+    public class PlatformInitializationStartedHandler : INotificationHandler<KeybindsInitializationStarted>
     {
-        private readonly INativeProcess nativeProcess;
+        private readonly IProcessProvider processProvider;
         private readonly IKeybindsProvider keybindsProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
+        private readonly IScrollProvider scrollProvider;
 
-        public KeybindsInitializationStartedHandler(
-            INativeProcess nativeProcess,
+        public PlatformInitializationStartedHandler(
+            IProcessProvider processProvider,
             IKeybindsProvider keybindsProvider,
-            IKeybindsExecutor keybindsExecutor)
+            IKeybindsExecutor keybindsExecutor,
+            IScrollProvider scrollProvider)
         {
-            this.nativeProcess = nativeProcess;
+            this.processProvider = processProvider;
             this.keybindsProvider = keybindsProvider;
             this.keybindsExecutor = keybindsExecutor;
+            this.scrollProvider = scrollProvider;
         }
 
         public Task Handle(KeybindsInitializationStarted notification, CancellationToken cancellationToken)
         {
-            Task.Run(nativeProcess.CheckPermission);
+            Task.Run(processProvider.CheckPermission, cancellationToken);
             keybindsProvider.Initialize();
+            scrollProvider.Initialize();
             keybindsExecutor.Initialize();
 
             return Unit.Task;

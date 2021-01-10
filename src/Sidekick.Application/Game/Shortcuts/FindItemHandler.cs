@@ -1,10 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Clipboard;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Shortcuts.Commands;
-using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Game.Shortcuts
 {
