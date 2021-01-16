@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Sidekick.Platform.Keybinds
+namespace Sidekick.Platform.Windows.Keybinds
 {
     /// <summary>
     /// https://www.pinvoke.net/default.aspx/user32.getkeyboardstate

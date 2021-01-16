@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Platform.Processes
+namespace Sidekick.Platform.Windows.Processes
 {
     public class ProcessProvider : IProcessProvider
     {

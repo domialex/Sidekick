@@ -2,9 +2,9 @@ using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Platforms;
 using Sidekick.Platform.Clipboard;
-using Sidekick.Platform.Keybinds;
-using Sidekick.Platform.Processes;
-using Sidekick.Platform.Scroll;
+using Sidekick.Platform.Windows.Keybinds;
+using Sidekick.Platform.Windows.Processes;
+using Sidekick.Platform.Windows.Scroll;
 
 namespace Sidekick.Platform
 {

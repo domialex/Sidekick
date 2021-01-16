@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using Sidekick.Domain.Platforms;
 using WindowsHook;
 
-namespace Sidekick.Platform.Keybinds
+namespace Sidekick.Platform.Windows.Keybinds
 {
     public class KeybindsProvider : IKeybindsProvider, IDisposable
     {

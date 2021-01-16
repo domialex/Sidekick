@@ -2,7 +2,7 @@ using System;
 using Sidekick.Domain.Platforms;
 using WindowsHook;
 
-namespace Sidekick.Platform.Scroll
+namespace Sidekick.Platform.Windows.Scroll
 {
     public class ScrollProvider : IScrollProvider, IDisposable
     {

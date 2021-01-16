@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <RootNamespace>Sidekick.Platform</RootNamespace>
+    <RootNamespace>Sidekick.Platform.Windows</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Sidekick.Platform.Processes
+namespace Sidekick.Platform.Windows.Processes
 {
     public static class ProcessExtensions
     {
