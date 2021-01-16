@@ -16,6 +16,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <SignAssembly>false</SignAssembly>
     <DelaySign>false</DelaySign>
+    <AssemblyName>Sidekick</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
