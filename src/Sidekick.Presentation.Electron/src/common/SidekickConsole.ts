@@ -5,7 +5,7 @@ import { isDevelopment } from './Utils';
 export let connection: Connection | undefined;
 
 /**
- * Launch and connect to the `Sidekick.Console` application.
+ * Launch and connect to the `Sidekick.Presentation.ElectronProgram` application.
  */
 export function connect() {
     if (connection !== undefined) {
@@ -13,8 +13,8 @@ export function connect() {
     }
 
     connection = isDevelopment
-        ? new ConnectionBuilder().connectTo('dotnet', 'run', '--project', '../Sidekick.Console').build()
-        : new ConnectionBuilder().connectTo('./Sidekick.Console/Sidekick.Console.exe').build();
+        ? new ConnectionBuilder().connectTo('dotnet', 'run', '--project', '../Sidekick.Presentation.ElectronProgram').build()
+        : new ConnectionBuilder().connectTo('./Sidekick.Presentation.ElectronProgram/Sidekick.Presentation.ElectronProgram.exe').build();
 
     connection.onDisconnect = () => {
         console.log('TODO');

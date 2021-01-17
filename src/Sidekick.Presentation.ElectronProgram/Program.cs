@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,8 @@ using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
-using Sidekick.Presentation;
 
-namespace Sidekick.Console
+namespace Sidekick.Presentation.ElectronProgram
 {
     public static class Program
     {
@@ -33,6 +33,9 @@ namespace Sidekick.Console
                 await mediator.Send(new InitializeCommand(true));
 
                 var connection = new ConnectionBuilder().UsingEncoding(Encoding.UTF8).Build();
+
+                var item = await mediator.Send(new ParseItemCommand(TestItem));
+                Console.WriteLine(item.Name);
 
                 connection.OnAsync<string, Item>("parse-item", async itemText =>
                 {
@@ -65,15 +68,12 @@ namespace Sidekick.Console
                     Assembly.Load("Sidekick.Application"),
                     Assembly.Load("Sidekick.Domain"),
                     Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"),
-                    Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Wpf"))
+                    Assembly.Load("Sidekick.Persistence"))
 
                 // Layers
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
-                .AddSidekickPersistence()
-                .AddSidekickPresentation();
+                .AddSidekickPersistence();
 
             var serviceProvider = services.BuildServiceProvider();
 
@@ -81,5 +81,34 @@ namespace Sidekick.Console
 
             return serviceProvider;
         }
+
+        private static string TestItem = @"Rarity: Unique
+Starkonja's Head
+Silken Hood
+--------
+Quality: +20% (augmented)
+Evasion Rating: 810 (augmented)
+--------
+Requirements:
+Level: 70
+Dex: 138
+Int: 140
+--------
+Sockets: G-G-B-B 
+--------
+Item Level: 61
+--------
+Elemental Hit deals 40% increased Damage
+--------
++67 to Dexterity
+50% reduced Damage when on Low Life
+10% increased Attack Speed
+25% increased Global Critical Strike Chance
+114% increased Evasion Rating
++99 to maximum Life
+150% increased Global Evasion Rating when on Low Life
+--------
+There was no hero made out of Starkonja's death,
+but merely a long sleep made eternal.";
     }
 }
