@@ -133,6 +133,15 @@ namespace Sidekick.Presentation.Localization.Settings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reply to last whisper.
+        /// </summary>
+        public static string Chat_Key_ReplyToLastWhisper {
+            get {
+                return ResourceManager.GetString("Chat_Key_ReplyToLastWhisper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cheatsheets.
         /// </summary>
         public static string Cheatsheets {

@@ -73,6 +73,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, arg, ref task);
             ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, arg, ref task);
             ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, arg, ref task);
+            ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, arg, ref task);
 
             // View commands
             ExecuteKeybind<CloseAllViewCommand>("Escape", arg, ref task);

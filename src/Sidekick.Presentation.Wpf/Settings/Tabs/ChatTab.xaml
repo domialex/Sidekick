@@ -21,6 +21,10 @@
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Chat_Key_Hideout}" />
                     <controls:KeybindEditor
+                        Key="Chat_Key_ReplyToLastWhisper"
+                        ViewModel="{Binding Path=ViewModel}"
+                        Value="{Binding Path=ViewModel.Chat_Key_ReplyToLastWhisper}" />
+                    <controls:KeybindEditor
                         Key="Chat_Key_LeaveParty"
                         ViewModel="{Binding Path=ViewModel}"
                         Value="{Binding Path=ViewModel.Chat_Key_LeaveParty}" />
@@ -35,13 +39,11 @@
                     <ItemsControl Name="icCustomCommands" ItemsSource="{Binding Path=ViewModel.CustomChatSettings}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <controls:CustomKeybindEditor
-                                    ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}"
-                                    CustomChat="{Binding}"/>
+                                <controls:CustomKeybindEditor CustomChat="{Binding}" ViewModel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Button Content="Add New" Click="NewCommand_Click"/>
+                    <Button Click="NewCommand_Click" Content="Add New" />
                 </StackPanel>
             </GroupBox>
         </StackPanel>
