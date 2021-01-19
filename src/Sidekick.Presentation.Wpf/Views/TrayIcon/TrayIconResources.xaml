@@ -26,6 +26,7 @@
                     <MenuItem Command="{Binding DebugPriceCheckCommand8}" Header="Gem - Vaal Double Strike" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand9}" Header="Divination - The Saint's Treasure" />
                     <MenuItem Command="{Binding DebugPriceCheckCommand10}" Header="Contract - Underbelly" />
+                    <MenuItem Command="{Binding DebugPriceCheckCommand11}" Header="Unique - Doedre's Elixir" />
                 </MenuItem>
                 <MenuItem Command="{Binding DebugLeagueOverlayCommand}" Header="DEBUG - League Overlay" />
                 <MenuItem Command="{Binding DebugCrashCommand}" Header="DEBUG - Crash" />
