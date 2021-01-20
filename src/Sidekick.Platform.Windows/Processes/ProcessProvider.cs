@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security.Principal;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Platforms;
 
@@ -113,6 +109,7 @@ namespace Sidekick.Platform.Windows.Processes
             return null;
         }
 
+        /*
         public async Task CheckPermission()
         {
             while (!IsPathOfExileInFocus)
@@ -209,5 +206,6 @@ namespace Sidekick.Platform.Windows.Processes
 
             return result;
         }
+        */
     }
 }

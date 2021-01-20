@@ -28,7 +28,7 @@ namespace Sidekick.Platform
 
         public Task Handle(KeybindsInitializationStarted notification, CancellationToken cancellationToken)
         {
-            Task.Run(processProvider.CheckPermission, cancellationToken);
+            // Task.Run(processProvider.CheckPermission, cancellationToken);
             keybindsProvider.Initialize();
             scrollProvider.Initialize();
             keybindsExecutor.Initialize();

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Sidekick.Domain.Platforms;
 using WindowsHook;
 
@@ -22,10 +23,6 @@ namespace Sidekick.Platform.Windows.Keybinds
             WindowsHook.Keys.LMenu,
             WindowsHook.Keys.RMenu,
         };
-
-        public KeybindsProvider()
-        {
-        }
 
         public IKeyboardMouseEvents Hook { get; private set; }
 
@@ -130,7 +127,15 @@ namespace Sidekick.Platform.Windows.Keybinds
                 .Replace("Copy", "^{c}")
                 .Replace("Paste", "^{v}");
             sendKeyStr = SendKeyReplace.Replace(sendKeyStr, "{$1}");
-            SendKeys.SendWait(sendKeyStr);
+
+            var sendKeysPath = Path.Combine(Directory.GetCurrentDirectory(), "sendkeys/Sidekick.Platform.Windows.SendKeys.exe");
+
+            Process.Start(new ProcessStartInfo(sendKeysPath, sendKeyStr)
+            {
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+            });
         }
 
         public void Dispose()

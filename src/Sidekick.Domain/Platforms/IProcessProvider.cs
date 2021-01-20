@@ -1,5 +1,4 @@
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Sidekick.Domain.Platforms
 {
@@ -8,7 +7,7 @@ namespace Sidekick.Domain.Platforms
         Mutex Mutex { get; set; }
         bool IsPathOfExileInFocus { get; }
         bool IsSidekickInFocus { get; }
-        Task CheckPermission();
+        // Task CheckPermission();
         string ClientLogPath { get; }
     }
 }

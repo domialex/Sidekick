@@ -17,4 +17,7 @@
   <ItemGroup>
     <Folder Include="Scripts\" />
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="Xcopy /Y /E /I &quot;$(SolutionDir)src\Sidekick.Platform.Windows.SendKeys\bin\Release\net5.0-windows&quot; &quot;$(TargetDir)sendkeys&quot;" />
+  </Target>
 </Project>
