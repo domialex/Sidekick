@@ -246,4 +246,7 @@
   <data name="Map_Key_Close" xml:space="preserve">
     <value>Close Window</value>
   </data>
+  <data name="Chat_Key_ReplyToLastWhisper" xml:space="preserve">
+    <value>Reply to last whisper</value>
+  </data>
 </root>

@@ -304,6 +304,37 @@ Give this Contract to Adiyah in the Rogue Harbour to embark on the Heist.
             await mediator.Send(new PriceCheckItemCommand(item));
         });
 
+        public System.Windows.Input.ICommand DebugPriceCheckCommand11 => new RelayCommand(async _ =>
+        {
+            var item = await mediator.Send(new ParseItemCommand(@"Rarity: Unique
+Doedre's Elixir
+Greater Mana Flask
+--------
+Recovers 120 Mana over 4.0 Seconds
+Consumes 21 (augmented) of 36 Charges on use
+Currently has 0 Charges
+--------
+Requirements:
+Level: 12
+--------
+Item Level: 74
+--------
+144% increased Charges used
+Removes 20% of your maximum Energy Shield on use
+You take 10% of your maximum Life as Chaos Damage on use
+You gain a Power Charge on use
+You gain a Frenzy Charge on use
+You gain an Endurance Charge on use
+--------
+Doedre Darktongue knew the Way of the Thaumaturge.
+In order to receive, one must give... without hesitation.
+--------
+Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.
+"));
+
+            await mediator.Send(new PriceCheckItemCommand(item));
+        });
+
         #endregion
     }
 }

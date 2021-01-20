@@ -66,7 +66,8 @@ namespace Sidekick.Platform.Windows.Keybinds
                 .Replace("Back", "Backspace")
                 .Replace("Capital", "CapsLock")
                 .Replace("Next", "PageDown")
-                .Replace("Pause", "Break");
+                .Replace("Pause", "Break")
+                .Replace("Return", "Enter");
 
             e.Handled = OnKeyDown?.Invoke(str.ToString()) ?? false;
         }

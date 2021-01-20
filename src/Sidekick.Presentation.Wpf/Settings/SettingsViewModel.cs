@@ -118,6 +118,8 @@ namespace Sidekick.Presentation.Wpf.Settings
 
         public string Chat_Key_Hideout { get; set; }
 
+        public string Chat_Key_ReplyToLastWhisper { get; set; }
+
         public string Chat_Key_LeaveParty { get; set; }
 
         public string Map_Key_Check { get; set; }

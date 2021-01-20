@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using System.Windows;
-using Bindables;
 using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Presentation.Wpf.Views.MapInfo
@@ -9,7 +7,6 @@ namespace Sidekick.Presentation.Wpf.Views.MapInfo
     /// <summary>
     /// Interaction logic for MapInfoView.xaml
     /// </summary>
-    [DependencyProperty]
     public partial class MapInfoView : BaseOverlay
     {
         private readonly MapInfoViewModel viewModel;

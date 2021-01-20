@@ -6,17 +6,17 @@ using Sidekick.Domain.Game.GameLogs.Queries;
 
 namespace Sidekick.Application.Game.Chat
 {
-    public class ReplyToLatestWhisperHandler : ICommandHandler<LeavePartyCommand, bool>
+    public class ReplyToLastWhisperHandler : ICommandHandler<ReplyToLastWhisperCommand, bool>
     {
         private readonly IMediator mediator;
 
-        public ReplyToLatestWhisperHandler(
+        public ReplyToLastWhisperHandler(
             IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        public async Task<bool> Handle(LeavePartyCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ReplyToLastWhisperCommand request, CancellationToken cancellationToken)
         {
             var characterName = await mediator.Send(new GetLatestWhisperCharacterNameQuery());
             if (!string.IsNullOrEmpty(characterName))

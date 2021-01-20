@@ -90,6 +90,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, arg, ref task, true);
             ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, arg, ref task, true);
             ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, arg, ref task, true);
+            ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, arg, ref task, true);
 
             // View commands
             ExecuteKeybind<CloseAllViewCommand>("Escape", arg, ref task, false);
@@ -120,9 +121,18 @@ namespace Sidekick.Application.Keybinds
             }
             else
             {
+                // We need to make sure some key combinations make it into the game no matter what
                 Task.Run(async () =>
                 {
-                    await task;
+                    var result = await task;
+
+                    if (!result)
+                    {
+                        Enabled = false;
+                        keybindsProvider.PressKey(arg);
+                        await Task.Delay(200);
+                    }
+
                     Enabled = true;
                 });
             }
@@ -141,10 +151,7 @@ namespace Sidekick.Application.Keybinds
             {
                 logger.LogInformation($"Keybind detected: {customChatSetting.Key}! Executing the custom chat command '{customChatSetting.ChatCommand}'");
 
-                var task = mediator.Send(new CustomChatCommand(customChatSetting.ChatCommand));
-
-                GetKeybindTask(customChatSetting.Key, input, task);
-                returnTask = task;
+                returnTask = mediator.Send(new CustomChatCommand(customChatSetting.ChatCommand));
             }
         }
 
@@ -162,7 +169,6 @@ namespace Sidekick.Application.Keybinds
 
                 var task = mediator.Send(new TCommand());
 
-                GetKeybindTask(keybind, input, task);
                 if (returnTask == null)
                 {
                     returnTask = task;
@@ -176,24 +182,6 @@ namespace Sidekick.Application.Keybinds
                         return result.Any(x => x);
                     });
                 }
-            }
-        }
-
-        private void GetKeybindTask(string keybind, string input, Task<bool> task)
-        {
-            // We need to make sure some key combinations make it into the game no matter what
-            if (task != null && input == keybind)
-            {
-                Task.Run(async () =>
-                {
-                    if (!await task)
-                    {
-                        Enabled = false;
-                        keybindsProvider.PressKey(keybind);
-                        await Task.Delay(200);
-                        Enabled = true;
-                    }
-                });
             }
         }
 

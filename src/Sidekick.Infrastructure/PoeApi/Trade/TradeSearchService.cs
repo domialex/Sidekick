@@ -277,6 +277,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 {
                     Disabled = false,
                     Id = x.Id,
+                    Value = new SearchFilterValue(x),
                 })
             });
         }

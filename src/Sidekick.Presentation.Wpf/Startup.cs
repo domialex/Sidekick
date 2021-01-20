@@ -28,7 +28,7 @@ namespace Sidekick.Presentation.Wpf
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Wpf"))
+                    Assembly.Load("Sidekick"))
 
                 // Layers
                 .AddSidekickApplication()
