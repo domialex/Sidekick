@@ -17,8 +17,11 @@ namespace Sidekick.Platform.Windows.Scroll
 
         public void Initialize()
         {
+            // Not supported in debug
+#if !DEBUG
             Hook = WindowsHook.Hook.GlobalEvents();
-            // Hook.MouseWheelExt += Hook_MouseWheelExt;
+            Hook.MouseWheelExt += Hook_MouseWheelExt;
+#endif
         }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
@@ -41,11 +44,13 @@ namespace Sidekick.Platform.Windows.Scroll
 
         protected virtual void Dispose(bool disposing)
         {
+#if !DEBUG
             if (Hook != null) // Hook will be null if auto update was successful
             {
-                // Hook.MouseWheelExt -= Hook_MouseWheelExt;
+                Hook.MouseWheelExt -= Hook_MouseWheelExt;
                 Hook.Dispose();
             }
+#endif
         }
     }
 }

@@ -129,8 +129,7 @@ namespace Sidekick.Application.Keybinds
                     if (!result)
                     {
                         Enabled = false;
-                        keybindsProvider.PressKey(arg);
-                        await Task.Delay(200);
+                        await keybindsProvider.PressKey(arg);
                     }
 
                     Enabled = true;

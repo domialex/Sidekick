@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Platforms;
 using WindowsHook;
 
@@ -23,6 +25,11 @@ namespace Sidekick.Platform.Windows.Keybinds
             WindowsHook.Keys.LMenu,
             WindowsHook.Keys.RMenu,
         };
+
+        public KeybindsProvider(ILogger<KeybindsProvider> logger)
+        {
+            this.logger = logger;
+        }
 
         public IKeyboardMouseEvents Hook { get; private set; }
 
@@ -80,63 +87,75 @@ namespace Sidekick.Platform.Windows.Keybinds
         }
 
         private static readonly Regex SendKeyReplace = new Regex("([a-zA-Z]+(?![^{]*\\}))");
-        public void PressKey(string keys)
+        private readonly ILogger<KeybindsProvider> logger;
+
+        public Task PressKey(params string[] keys)
         {
-            var sendKeyStr = keys
-                .Replace("Shift+", "+")
-                .Replace("Ctrl+", "^")
-                .Replace("Alt+", "%")
-                .Replace("Up", "{Up}")
-                .Replace("Down", "{Down}")
-                .Replace("Right", "{Right}")
-                .Replace("Left", "{Left}")
-                .Replace("Backspace", "{Backspace}")
-                .Replace("Break", "{Break}")
-                .Replace("CapsLock", "{CapsLock}")
-                .Replace("Delete", "{Delete}")
-                .Replace("End", "{End}")
-                .Replace("Enter", "{Enter}")
-                .Replace("Esc", "{Esc}")
-                .Replace("{Esc}ape", "{Esc}") // Fix for when the Escape key is sent instead of simply Esc.
-                .Replace("Help", "{Help}")
-                .Replace("Home", "{Home}")
-                .Replace("Insert", "{Insert}")
-                .Replace("NumLock", "{NumLock}")
-                .Replace("PageDown", "{Pgdn}")
-                .Replace("PageUp", "{Pgup}")
-                .Replace("PrintScreen", "{PrtSc}")
-                .Replace("ScrollLock", "{ScrollLock}")
-                .Replace("Space", " ")
-                .Replace("ScrollLock", "{ScrollLock}")
-                .Replace("Tab", "{Tab}")
-                .Replace("F1", "{F1}")
-                .Replace("F2", "{F2}")
-                .Replace("F3", "{F3}")
-                .Replace("F4", "{F4}")
-                .Replace("F5", "{F5}")
-                .Replace("F6", "{F6}")
-                .Replace("F7", "{F7}")
-                .Replace("F8", "{F8}")
-                .Replace("F9", "{F9}")
-                .Replace("F10", "{F10}")
-                .Replace("F11", "{F11}")
-                .Replace("F12", "{F12}")
-                .Replace("F13", "{F13}")
-                .Replace("F14", "{F14}")
-                .Replace("F15", "{F15}")
-                .Replace("F16", "{F16}")
-                .Replace("Copy", "^{c}")
-                .Replace("Paste", "^{v}");
+            var sendKeyStr = "";
+
+            foreach (var key in keys)
+            {
+                sendKeyStr += key
+                    .Replace("Shift+", "+")
+                    .Replace("Ctrl+", "^")
+                    .Replace("Alt+", "%")
+                    .Replace("Up", "{Up}")
+                    .Replace("Down", "{Down}")
+                    .Replace("Right", "{Right}")
+                    .Replace("Left", "{Left}")
+                    .Replace("Backspace", "{Backspace}")
+                    .Replace("Break", "{Break}")
+                    .Replace("CapsLock", "{CapsLock}")
+                    .Replace("Delete", "{Delete}")
+                    .Replace("End", "{End}")
+                    .Replace("Enter", "{Enter}")
+                    .Replace("Esc", "{Esc}")
+                    .Replace("{Esc}ape", "{Esc}") // Fix for when the Escape key is sent instead of simply Esc.
+                    .Replace("Help", "{Help}")
+                    .Replace("Home", "{Home}")
+                    .Replace("Insert", "{Insert}")
+                    .Replace("NumLock", "{NumLock}")
+                    .Replace("PageDown", "{Pgdn}")
+                    .Replace("PageUp", "{Pgup}")
+                    .Replace("PrintScreen", "{PrtSc}")
+                    .Replace("ScrollLock", "{ScrollLock}")
+                    .Replace("Space", " ")
+                    .Replace("ScrollLock", "{ScrollLock}")
+                    .Replace("Tab", "{Tab}")
+                    .Replace("F1", "{F1}")
+                    .Replace("F2", "{F2}")
+                    .Replace("F3", "{F3}")
+                    .Replace("F4", "{F4}")
+                    .Replace("F5", "{F5}")
+                    .Replace("F6", "{F6}")
+                    .Replace("F7", "{F7}")
+                    .Replace("F8", "{F8}")
+                    .Replace("F9", "{F9}")
+                    .Replace("F10", "{F10}")
+                    .Replace("F11", "{F11}")
+                    .Replace("F12", "{F12}")
+                    .Replace("F13", "{F13}")
+                    .Replace("F14", "{F14}")
+                    .Replace("F15", "{F15}")
+                    .Replace("F16", "{F16}")
+                    .Replace("Copy", "^{c}")
+                    .Replace("Paste", "^{v}");
+            }
+
             sendKeyStr = SendKeyReplace.Replace(sendKeyStr, "{$1}");
 
             var sendKeysPath = Path.Combine(Directory.GetCurrentDirectory(), "sendkeys/Sidekick.Platform.Windows.SendKeys.exe");
 
-            Process.Start(new ProcessStartInfo(sendKeysPath, sendKeyStr)
+            logger.LogInformation("[Keybinds] Sending " + sendKeyStr);
+
+            Process.Start(new ProcessStartInfo(sendKeysPath, $"\"{sendKeyStr}\"")
             {
                 UseShellExecute = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 CreateNoWindow = true,
             });
+
+            return Task.Delay(400);
         }
 
         public void Dispose()

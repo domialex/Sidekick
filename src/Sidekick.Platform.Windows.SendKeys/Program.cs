@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Sidekick.Platform.Windows.SendKeys
 {
@@ -20,20 +21,20 @@ namespace Sidekick.Platform.Windows.SendKeys
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static async void Main(string[] args)
         {
             var pid = -1;
-            var keysToSend = "";
+            var keys = "";
 
             for (var i = 0; i < args.Length; i++)
             {
                 if (args[i].StartsWith("-pid:", StringComparison.Ordinal))
                 {
-                    int.TryParse(args[i][5..], out pid);
+                    pid = int.Parse(args[i][5..]);
                 }
                 else
                 {
-                    keysToSend = args[i];
+                    keys = args[i];
                 }
             }
 
@@ -60,7 +61,18 @@ namespace Sidekick.Platform.Windows.SendKeys
                 }
             }
 
-            System.Windows.Forms.SendKeys.SendWait(keysToSend);
+            foreach (var key in keys.Split('}'))
+            {
+                if (key.Contains('{', StringComparison.Ordinal))
+                {
+                    System.Windows.Forms.SendKeys.Send(key + "}");
+                }
+                else
+                {
+                    System.Windows.Forms.SendKeys.Send(key);
+                }
+                await Task.Delay(100);
+            }
         }
 
         private static void WriteError(string message)

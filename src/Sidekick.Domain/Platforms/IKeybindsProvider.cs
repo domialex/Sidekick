@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Sidekick.Domain.Platforms
 {
@@ -27,6 +28,6 @@ namespace Sidekick.Domain.Platforms
         /// Command to send keystrokes to the system
         /// </summary>
         /// <param name="keys">The keys to send</param>
-        void PressKey(string keys);
+        Task PressKey(params string[] keys);
     }
 }

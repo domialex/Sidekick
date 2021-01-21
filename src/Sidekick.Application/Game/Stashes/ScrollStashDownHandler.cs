@@ -16,10 +16,10 @@ namespace Sidekick.Application.Game.Stashes
             this.keybindsProvider = keybindsProvider;
         }
 
-        public Task<bool> Handle(ScrollStashDownCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ScrollStashDownCommand request, CancellationToken cancellationToken)
         {
-            keybindsProvider.PressKey("Right");
-            return Task.FromResult(true);
+            await keybindsProvider.PressKey("Right");
+            return true;
         }
     }
 }

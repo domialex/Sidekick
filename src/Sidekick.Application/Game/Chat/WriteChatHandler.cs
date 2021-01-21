@@ -33,14 +33,7 @@ namespace Sidekick.Application.Game.Chat.Commands
 
             await clipboard.SetText(request.Message);
 
-            keybindsProvider.PressKey("Enter");
-            keybindsProvider.PressKey("Ctrl+A");
-            keybindsProvider.PressKey("Paste");
-            keybindsProvider.PressKey("Enter");
-            keybindsProvider.PressKey("Enter");
-            keybindsProvider.PressKey("Up");
-            keybindsProvider.PressKey("Up");
-            keybindsProvider.PressKey("Esc");
+            await keybindsProvider.PressKey("Enter", "Ctrl+A", "Paste", "Enter", "Enter", "Up", "Up", "Esc");
 
             if (settings.RetainClipboard)
             {

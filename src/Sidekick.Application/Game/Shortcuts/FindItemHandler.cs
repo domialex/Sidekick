@@ -34,10 +34,7 @@ namespace Sidekick.Application.Game.Shortcuts
 
                 await clipboardProvider.SetText(item.Name);
 
-                keybindsProvider.PressKey("Ctrl+F");
-                keybindsProvider.PressKey("Ctrl+A");
-                keybindsProvider.PressKey("Paste");
-                keybindsProvider.PressKey("Enter");
+                await keybindsProvider.PressKey("Ctrl+F", "Ctrl+A", "Paste", "Enter");
 
                 await Task.Delay(100);
                 await clipboardProvider.SetText(clipboardContents);
