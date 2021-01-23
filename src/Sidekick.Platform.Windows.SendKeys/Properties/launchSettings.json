@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Sidekick.Platform.Windows.SendKeys": {
-      "commandName": "Project",
-      "commandLineArgs": "\"test 1\""
-    }
-  }
-}

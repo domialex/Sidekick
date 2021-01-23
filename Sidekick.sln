@@ -57,7 +57,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Platform", "src\Si
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{5410FE74-2670-4397-9E60-0D29AE6B5E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Platform.Windows.SendKeys", "src\Sidekick.Platform.Windows.SendKeys\Sidekick.Platform.Windows.SendKeys.csproj", "{207C3D13-A8FE-4950-B63C-A560C36E4BFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Platform.Windows.SendKeys", "src\Sidekick.Platform.Windows.SendKeys\Sidekick.Platform.Windows.SendKeys.csproj", "{207C3D13-A8FE-4950-B63C-A560C36E4BFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SendInput", "SendInput", "{5C13B9AF-ABCB-49D5-96F8-BC71B036DE92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{42ACD293-2300-4599-A861-0FB1A5C84FE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GregsStack.InputSimulatorStandard", "lib\InputSimulatorStandard\src\GregsStack.InputSimulatorStandard\GregsStack.InputSimulatorStandard.csproj", "{CD853F77-81F5-4670-9FA6-51530E1812C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GregsStack.InputSimulatorStandard.Tests", "lib\InputSimulatorStandard\tests\GregsStack.InputSimulatorStandard.Tests\GregsStack.InputSimulatorStandard.Tests.csproj", "{88D66376-964B-46F3-8BD7-4769EA0CD577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +149,14 @@ Global
 		{207C3D13-A8FE-4950-B63C-A560C36E4BFD}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{207C3D13-A8FE-4950-B63C-A560C36E4BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{207C3D13-A8FE-4950-B63C-A560C36E4BFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD853F77-81F5-4670-9FA6-51530E1812C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD853F77-81F5-4670-9FA6-51530E1812C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD853F77-81F5-4670-9FA6-51530E1812C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD853F77-81F5-4670-9FA6-51530E1812C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +174,9 @@ Global
 		{243A7096-6057-4F7E-8813-30C6A03B03A8} = {FE50D09B-DA05-42C4-9A8C-014EC3A24B25}
 		{5410FE74-2670-4397-9E60-0D29AE6B5E7C} = {FE50D09B-DA05-42C4-9A8C-014EC3A24B25}
 		{207C3D13-A8FE-4950-B63C-A560C36E4BFD} = {5410FE74-2670-4397-9E60-0D29AE6B5E7C}
+		{5C13B9AF-ABCB-49D5-96F8-BC71B036DE92} = {42ACD293-2300-4599-A861-0FB1A5C84FE5}
+		{CD853F77-81F5-4670-9FA6-51530E1812C0} = {5C13B9AF-ABCB-49D5-96F8-BC71B036DE92}
+		{88D66376-964B-46F3-8BD7-4769EA0CD577} = {5C13B9AF-ABCB-49D5-96F8-BC71B036DE92}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B5631D-95B3-4007-BE6B-C9BBE799D014}
