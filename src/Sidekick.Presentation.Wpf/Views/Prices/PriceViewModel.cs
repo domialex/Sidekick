@@ -635,7 +635,7 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
                 await LoadMoreData();
             }
 
-            if (!string.IsNullOrEmpty(QueryResult.Id))
+            if (!string.IsNullOrEmpty(QueryResult?.Id))
             {
                 Uri = await mediator.Send(new GetTradeUriQuery(Item, QueryResult.Id));
             }

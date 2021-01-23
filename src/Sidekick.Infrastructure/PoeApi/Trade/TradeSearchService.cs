@@ -324,8 +324,8 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 {
                     AccountCharacter = result.Listing.Account.LastCharacterName,
                     AccountName = result.Listing.Account.Name,
-                    Amount = result.Listing.Price.Amount,
-                    Currency = result.Listing.Price.Currency,
+                    Amount = result.Listing.Price?.Amount ?? -1,
+                    Currency = result.Listing.Price?.Currency ?? "",
                     Date = result.Listing.Indexed,
                     Whisper = result.Listing.Whisper,
                     Note = result.Item.Note,
