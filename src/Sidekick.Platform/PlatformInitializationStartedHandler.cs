@@ -13,17 +13,23 @@ namespace Sidekick.Platform
         private readonly IKeyboardProvider keybindsProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IScrollProvider scrollProvider;
+        private readonly IMouseProvider mouseProvider;
+        private readonly IScreenProvider screenProvider;
 
         public PlatformInitializationStartedHandler(
             IProcessProvider processProvider,
             IKeyboardProvider keybindsProvider,
             IKeybindsExecutor keybindsExecutor,
-            IScrollProvider scrollProvider)
+            IScrollProvider scrollProvider,
+            IMouseProvider mouseProvider,
+            IScreenProvider screenProvider)
         {
             this.processProvider = processProvider;
             this.keybindsProvider = keybindsProvider;
             this.keybindsExecutor = keybindsExecutor;
             this.scrollProvider = scrollProvider;
+            this.mouseProvider = mouseProvider;
+            this.screenProvider = screenProvider;
         }
 
         public Task Handle(KeybindsInitializationStarted notification, CancellationToken cancellationToken)
@@ -32,6 +38,8 @@ namespace Sidekick.Platform
             keybindsProvider.Initialize();
             scrollProvider.Initialize();
             keybindsExecutor.Initialize();
+            mouseProvider.Initialize();
+            screenProvider.Initialize();
 
             return Unit.Task;
         }
