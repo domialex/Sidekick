@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Platforms;
 using Sidekick.Platform.Clipboard;
-using Sidekick.Platform.Windows.Keybinds;
+using Sidekick.Platform.Windows.Keyboards;
 using Sidekick.Platform.Windows.Processes;
 using Sidekick.Platform.Windows.Scroll;
 
@@ -17,7 +17,7 @@ namespace Sidekick.Platform
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 services.AddSingleton<IProcessProvider, ProcessProvider>();
-                services.AddSingleton<IKeyboardProvider, KeybindsProvider>();
+                services.AddSingleton<IKeyboardProvider, KeyboardProvider>();
                 services.AddSingleton<IScrollProvider, ScrollProvider>();
             }
 
