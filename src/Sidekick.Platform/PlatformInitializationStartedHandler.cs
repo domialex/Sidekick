@@ -10,13 +10,13 @@ namespace Sidekick.Platform
     public class PlatformInitializationStartedHandler : INotificationHandler<KeybindsInitializationStarted>
     {
         private readonly IProcessProvider processProvider;
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keybindsProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IScrollProvider scrollProvider;
 
         public PlatformInitializationStartedHandler(
             IProcessProvider processProvider,
-            IKeybindsProvider keybindsProvider,
+            IKeyboardProvider keybindsProvider,
             IKeybindsExecutor keybindsExecutor,
             IScrollProvider scrollProvider)
         {

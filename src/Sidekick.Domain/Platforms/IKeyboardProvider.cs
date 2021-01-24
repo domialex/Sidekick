@@ -6,7 +6,7 @@ namespace Sidekick.Domain.Platforms
     /// <summary>
     /// Service providing keybind functions
     /// </summary>
-    public interface IKeybindsProvider
+    public interface IKeyboardProvider
     {
         /// <summary>
         /// Initialize the provider

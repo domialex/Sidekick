@@ -8,17 +8,17 @@ namespace Sidekick.Application.Game.Stashes
 {
     public class ScrollStashDownHandler : ICommandHandler<ScrollStashDownCommand, bool>
     {
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keyboard;
 
         public ScrollStashDownHandler(
-            IKeybindsProvider keybindsProvider)
+            IKeyboardProvider keyboard)
         {
-            this.keybindsProvider = keybindsProvider;
+            this.keyboard = keyboard;
         }
 
         public async Task<bool> Handle(ScrollStashDownCommand request, CancellationToken cancellationToken)
         {
-            await keybindsProvider.PressKey("Right");
+            await keyboard.PressKey("Right");
             return true;
         }
     }

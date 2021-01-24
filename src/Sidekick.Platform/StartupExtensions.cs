@@ -17,7 +17,7 @@ namespace Sidekick.Platform
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 services.AddSingleton<IProcessProvider, ProcessProvider>();
-                services.AddSingleton<IKeybindsProvider, KeybindsProvider>();
+                services.AddSingleton<IKeyboardProvider, KeybindsProvider>();
                 services.AddSingleton<IScrollProvider, ScrollProvider>();
             }
 

@@ -11,16 +11,16 @@ namespace Sidekick.Application.Game.Chat.Commands
     {
         private readonly ISidekickSettings settings;
         private readonly IClipboardProvider clipboard;
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keyboard;
 
         public StartWritingChatHandler(
             ISidekickSettings settings,
             IClipboardProvider clipboard,
-            IKeybindsProvider keybindsProvider)
+            IKeyboardProvider keyboard)
         {
             this.settings = settings;
             this.clipboard = clipboard;
-            this.keybindsProvider = keybindsProvider;
+            this.keyboard = keyboard;
         }
 
         public async Task<Unit> Handle(StartWritingChatCommand request, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ namespace Sidekick.Application.Game.Chat.Commands
 
             await clipboard.SetText(request.Message);
 
-            await keybindsProvider.PressKey("Enter", "Ctrl+A", "Paste");
+            await keyboard.PressKey("Enter", "Ctrl+A", "Paste");
 
             if (settings.RetainClipboard)
             {

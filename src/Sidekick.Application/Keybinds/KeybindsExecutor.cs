@@ -21,7 +21,7 @@ namespace Sidekick.Application.Keybinds
     public class KeybindsExecutor : IKeybindsExecutor, IDisposable
     {
         private readonly ILogger<KeybindsExecutor> logger;
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keyboard;
         private readonly IMediator mediator;
         private readonly ISidekickSettings settings;
         private readonly IProcessProvider processProvider;
@@ -29,14 +29,14 @@ namespace Sidekick.Application.Keybinds
 
         public KeybindsExecutor(
             ILogger<KeybindsExecutor> logger,
-            IKeybindsProvider keybindsProvider,
+            IKeyboardProvider keyboard,
             IMediator mediator,
             ISidekickSettings settings,
             IProcessProvider processProvider,
             IScrollProvider scrollProvider)
         {
             this.logger = logger;
-            this.keybindsProvider = keybindsProvider;
+            this.keyboard = keyboard;
             this.mediator = mediator;
             this.settings = settings;
             this.processProvider = processProvider;
@@ -47,7 +47,7 @@ namespace Sidekick.Application.Keybinds
 
         public void Initialize()
         {
-            keybindsProvider.OnKeyDown += KeybindsProvider_OnKeyDown;
+            keyboard.OnKeyDown += KeybindsProvider_OnKeyDown;
             scrollProvider.OnScrollDown += KeybindsProvider_OnScrollDown;
             scrollProvider.OnScrollUp += KeybindsProvider_OnScrollUp;
             Enabled = true;
@@ -55,7 +55,7 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnScrollUp()
         {
-            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keybindsProvider.IsCtrlPressed())
+            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
             {
                 return false;
             }
@@ -66,7 +66,7 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnScrollDown()
         {
-            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keybindsProvider.IsCtrlPressed())
+            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
             {
                 return false;
             }
@@ -129,7 +129,7 @@ namespace Sidekick.Application.Keybinds
                     if (!result)
                     {
                         Enabled = false;
-                        await keybindsProvider.PressKey(arg);
+                        await keyboard.PressKey(arg);
                     }
 
                     Enabled = true;
@@ -192,7 +192,7 @@ namespace Sidekick.Application.Keybinds
 
         protected virtual void Dispose(bool disposing)
         {
-            keybindsProvider.OnKeyDown -= KeybindsProvider_OnKeyDown;
+            keyboard.OnKeyDown -= KeybindsProvider_OnKeyDown;
             scrollProvider.OnScrollDown -= KeybindsProvider_OnScrollDown;
             scrollProvider.OnScrollUp -= KeybindsProvider_OnScrollUp;
         }

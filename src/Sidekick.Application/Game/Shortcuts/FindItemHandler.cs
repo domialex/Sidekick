@@ -9,16 +9,16 @@ namespace Sidekick.Application.Game.Shortcuts
 {
     public class FindItemHandler : ICommandHandler<FindItemCommand, bool>
     {
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keyboard;
         private readonly IClipboardProvider clipboardProvider;
         private readonly IMediator mediator;
 
         public FindItemHandler(
-            IKeybindsProvider keybindsProvider,
+            IKeyboardProvider keyboard,
             IClipboardProvider clipboardProvider,
             IMediator mediator)
         {
-            this.keybindsProvider = keybindsProvider;
+            this.keyboard = keyboard;
             this.clipboardProvider = clipboardProvider;
             this.mediator = mediator;
         }
@@ -34,7 +34,7 @@ namespace Sidekick.Application.Game.Shortcuts
 
                 await clipboardProvider.SetText(item.Name);
 
-                await keybindsProvider.PressKey("Ctrl+F", "Ctrl+A", "Paste", "Enter");
+                await keyboard.PressKey("Ctrl+F", "Ctrl+A", "Paste", "Enter");
 
                 await Task.Delay(100);
                 await clipboardProvider.SetText(clipboardContents);

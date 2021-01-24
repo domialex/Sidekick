@@ -7,14 +7,14 @@ namespace Sidekick.Platform.Clipboard
     public class ClipboardProvider : IClipboardProvider
     {
         private readonly ISidekickSettings settings;
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keyboard;
 
         public ClipboardProvider(
             ISidekickSettings settings,
-            IKeybindsProvider keybindsProvider)
+            IKeyboardProvider keyboard)
         {
             this.settings = settings;
-            this.keybindsProvider = keybindsProvider;
+            this.keyboard = keyboard;
         }
 
         public async Task<string> Copy()
@@ -32,7 +32,7 @@ namespace Sidekick.Platform.Clipboard
 
             await SetText(string.Empty);
 
-            await keybindsProvider.PressKey("Copy");
+            await keyboard.PressKey("Copy");
 
             await Task.Delay(100);
 
