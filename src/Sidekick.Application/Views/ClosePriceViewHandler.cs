@@ -4,7 +4,7 @@ using MediatR;
 using Sidekick.Domain.Views;
 using Sidekick.Domain.Views.Commands;
 
-namespace Sidekick.Presentation.Views.Commands
+namespace Sidekick.Application.Views
 {
     public class ClosePriceViewHandler : ICommandHandler<ClosePriceViewCommand, bool>
     {

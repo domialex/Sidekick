@@ -7,7 +7,7 @@ using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Platform
 {
-    public class PlatformInitializationStartedHandler : INotificationHandler<KeybindsInitializationStarted>
+    public class PlatformInitializationStartedHandler : INotificationHandler<PlatformInitializationStarted>
     {
         private readonly IProcessProvider processProvider;
         private readonly IKeyboardProvider keybindsProvider;
@@ -32,7 +32,7 @@ namespace Sidekick.Platform
             this.screenProvider = screenProvider;
         }
 
-        public Task Handle(KeybindsInitializationStarted notification, CancellationToken cancellationToken)
+        public Task Handle(PlatformInitializationStarted notification, CancellationToken cancellationToken)
         {
             // Task.Run(processProvider.CheckPermission, cancellationToken);
             keybindsProvider.Initialize();

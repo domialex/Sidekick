@@ -4,11 +4,8 @@ using MediatR;
 using Sidekick.Domain.Views;
 using Sidekick.Domain.Views.Commands;
 
-namespace Sidekick.Presentation.Views.Commands
+namespace Sidekick.Application.Views
 {
-    /// <summary>
-    /// Close all opened views
-    /// </summary>
     public class CloseAllViewHandler : ICommandHandler<CloseAllViewCommand, bool>
     {
         private readonly IViewLocator viewLocator;

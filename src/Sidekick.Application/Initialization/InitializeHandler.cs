@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
@@ -16,6 +17,7 @@ using Sidekick.Domain.Initialization.Queries;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
+using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Initialization
 {
@@ -26,19 +28,22 @@ namespace Sidekick.Application.Initialization
         private readonly ServiceFactory serviceFactory;
         private readonly ISidekickSettings settings;
         private readonly ILogger<InitializeHandler> logger;
+        private readonly IViewLocator viewLocator;
 
         public InitializeHandler(
             IStringLocalizer<InitializeHandler> localizer,
             IMediator mediator,
             ServiceFactory serviceFactory,
             ISidekickSettings settings,
-            ILogger<InitializeHandler> logger)
+            ILogger<InitializeHandler> logger,
+            IViewLocator viewLocator)
         {
             this.localizer = localizer;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.settings = settings;
             this.logger = logger;
+            this.viewLocator = viewLocator;
         }
 
         private int Count = 0;
@@ -65,8 +70,14 @@ namespace Sidekick.Application.Initialization
                 // Report initial progress
                 await ReportProgress();
 
-                // Let everyone know that the initialization process has started
-                await mediator.Publish(new InitializationStarted());
+                // Open a clean view of the initialization
+                viewLocator.Close(View.Settings);
+                viewLocator.Close(View.Setup);
+                if (settings.ShowSplashScreen && !viewLocator.IsOpened(View.Initialization))
+                {
+                    viewLocator.Open(View.Initialization);
+                }
+
                 await RunStep<LanguageInitializationStarted>();
 
                 // Check for updates
@@ -109,7 +120,16 @@ namespace Sidekick.Application.Initialization
                 await RunStep<DataInitializationStarted>();
                 await RunStep<KeybindsInitializationStarted>(request.FirstRun);
 
-                await mediator.Publish(new InitializationCompleted());
+                // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
+                await Task.Delay(500);
+
+                // Show a system notification
+                await mediator.Send(new OpenNotificationCommand(string.Format(localizer["Notification_Message"], settings.Price_Key_Check.ToKeybindString(), settings.Price_Key_Close.ToKeybindString()), true)
+                {
+                    Title = localizer["Notification_Title"],
+                });
+
+                viewLocator.Close(View.Initialization);
 
                 return Unit.Value;
             }

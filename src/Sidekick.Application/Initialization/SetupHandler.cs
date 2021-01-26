@@ -4,7 +4,7 @@ using MediatR;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Views;
 
-namespace Sidekick.Presentation.Initialization.Commands
+namespace Sidekick.Application.Initialization
 {
     public class SetupHandler : ICommandHandler<SetupCommand>
     {
