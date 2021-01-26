@@ -32,9 +32,6 @@
     <script src="js/dependencies.js"></script>
     <script src="js/build.js"></script>
 
-    @if (ElectronNET.API.HybridSupport.IsElectronActive)
-    {
-        <script src="js/electron.js"></script>
-    }
+    <component type="typeof(Sidekick.Presentation.Blazor.Electron.Components.Script)" render-mode="Static" />
 </body>
 </html>

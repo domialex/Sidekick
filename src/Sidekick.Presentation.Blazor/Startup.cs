@@ -11,7 +11,6 @@ using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
-using Sidekick.Presentation.Blazor.Data;
 using Sidekick.Presentation.Blazor.Electron;
 
 namespace Sidekick.Presentation.Blazor
@@ -31,7 +30,6 @@ namespace Sidekick.Presentation.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
             services
                 // Common
@@ -73,7 +71,7 @@ namespace Sidekick.Presentation.Blazor
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
