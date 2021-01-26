@@ -32,16 +32,14 @@ namespace Sidekick.Platform
             this.screenProvider = screenProvider;
         }
 
-        public Task Handle(PlatformInitializationStarted notification, CancellationToken cancellationToken)
+        public async Task Handle(PlatformInitializationStarted notification, CancellationToken cancellationToken)
         {
-            // Task.Run(processProvider.CheckPermission, cancellationToken);
+            await processProvider.Initialize(cancellationToken);
             keybindsProvider.Initialize();
             scrollProvider.Initialize();
-            keybindsExecutor.Initialize();
             mouseProvider.Initialize();
             screenProvider.Initialize();
-
-            return Unit.Task;
+            keybindsExecutor.Initialize();
         }
     }
 }

@@ -1,13 +1,13 @@
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Sidekick.Domain.Platforms
 {
     public interface IProcessProvider
     {
-        Mutex Mutex { get; set; }
+        Task Initialize(CancellationToken cancellationToken);
         bool IsPathOfExileInFocus { get; }
         bool IsSidekickInFocus { get; }
-        // Task CheckPermission();
         string ClientLogPath { get; }
     }
 }

@@ -63,9 +63,9 @@ namespace Sidekick.Application.Initialization
             try
             {
                 // Set the total count of handlers
+                AddCount<PlatformInitializationStarted>(request.FirstRun);
                 AddCount<LanguageInitializationStarted>();
                 AddCount<DataInitializationStarted>();
-                AddCount<KeybindsInitializationStarted>(request.FirstRun);
 
                 // Report initial progress
                 await ReportProgress();
@@ -118,7 +118,7 @@ namespace Sidekick.Application.Initialization
                 }
 
                 await RunStep<DataInitializationStarted>();
-                await RunStep<KeybindsInitializationStarted>(request.FirstRun);
+                await RunStep<PlatformInitializationStarted>(request.FirstRun);
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
                 await Task.Delay(500);

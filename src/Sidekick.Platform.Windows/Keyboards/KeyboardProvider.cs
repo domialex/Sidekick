@@ -197,12 +197,10 @@ namespace Sidekick.Platform.Windows.Keyboards
             }
         }
 
-        public bool IsCtrlPressed()
-        {
-            return Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL)
-                || Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL)
-                || Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
-        }
+        public bool IsCtrlPressed() =>
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
 
         public Task PressKey(params string[] keys)
         {

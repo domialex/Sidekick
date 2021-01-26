@@ -5,14 +5,20 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Platform.Windows.Processes
 {
     public class ProcessProvider : IProcessProvider
     {
+
         #region DllImport
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
@@ -33,6 +39,7 @@ namespace Sidekick.Platform.Windows.Processes
         private static extern bool CloseHandle(IntPtr hObject);
         #endregion
 
+        private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
         private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
 
@@ -60,13 +67,33 @@ namespace Sidekick.Platform.Windows.Processes
         private const int TOKEN_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | TOKEN_ASSIGN_PRIMARY | TOKEN_DUPLICATE | TOKEN_IMPERSONATE | TOKEN_QUERY | TOKEN_QUERY_SOURCE | TOKEN_ADJUST_PRIVILEGES | TOKEN_ADJUST_GROUPS | TOKEN_ADJUST_SESSIONID | TOKEN_ADJUST_DEFAULT;
 
         private readonly ILogger logger;
+        private readonly IMediator mediator;
+        private readonly IStringLocalizer<ProcessProvider> localizer;
 
-        public ProcessProvider(ILogger<ProcessProvider> logger)
+        public ProcessProvider(
+            ILogger<ProcessProvider> logger,
+            IMediator mediator,
+            IStringLocalizer<ProcessProvider> localizer)
         {
             this.logger = logger;
+            this.mediator = mediator;
+            this.localizer = localizer;
         }
 
-        public Mutex Mutex { get; set; }
+        public async Task Initialize(CancellationToken cancellationToken)
+        {
+            Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
+
+            _ = Task.Run(CheckPermission, cancellationToken);
+
+            if (!instanceResult)
+            {
+                await mediator.Send(new OpenNotificationCommand(localizer["AlreadyRunningText"]));
+                Environment.Exit(Environment.ExitCode);
+            }
+        }
+
+        private Mutex Mutex { get; set; }
 
         public bool IsPathOfExileInFocus => ActiveWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
 
@@ -109,58 +136,46 @@ namespace Sidekick.Platform.Windows.Processes
             return null;
         }
 
-        /*
-        public async Task CheckPermission()
+        private async Task CheckPermission()
         {
             while (!IsPathOfExileInFocus)
             {
                 await Task.Delay(1000);
             }
 
-            if (!IsUserRunAsAdmin() && IsPathOfExileRunAsAdmin())
+            if (!IsUserRunAsAdmin() && await IsPathOfExileRunAsAdmin())
             {
-                RestartAsAdmin();
-            }
-            else
-            {
-                logger.LogInformation("Permission Sufficient.");
+                await RestartAsAdmin();
             }
         }
 
-        private void RestartAsAdmin()
+        private async Task RestartAsAdmin()
         {
-            var message = "This application must be run as administrator.";
-            logger.LogError(message);
+            logger.LogError(localizer["RestartText"]);
 
-            if (MessageBox.Show(message + "\nClick Yes will restart as administrator automatically.", "Sidekick", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                Mutex?.Close();
-                try
+            await mediator.Send(new OpenConfirmNotificationCommand(localizer["RestartText"],
+                onYes: async () =>
                 {
-                    using var p = new Process();
-                    p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
-                    p.StartInfo.UseShellExecute = true;
-                    p.StartInfo.Verb = "runas";
-                    p.Start();
-                }
-                catch (Win32Exception e)
-                {
-                    const int ERROR_CANCELLED = 1223; //The operation was canceled by the user.
-
-                    if (e.NativeErrorCode == ERROR_CANCELLED)
-                        MessageBox.Show("This application must be run as administrator.");
-                    else
-                        throw;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                }
-                finally
-                {
-                    Environment.Exit(Environment.ExitCode);
-                }
-            }
+                    Mutex?.Close();
+                    try
+                    {
+                        using var p = new Process();
+                        p.StartInfo.FileName = "Sidekick.exe";
+                        // p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
+                        p.StartInfo.UseShellExecute = true;
+                        p.StartInfo.Verb = "runas";
+                        p.Start();
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError(e, localizer["AdminError"]);
+                        await mediator.Send(new OpenNotificationCommand(localizer["AdminError"]));
+                    }
+                    finally
+                    {
+                        Environment.Exit(Environment.ExitCode);
+                    }
+                }));
         }
 
         private static bool IsUserRunAsAdmin()
@@ -170,7 +185,7 @@ namespace Sidekick.Platform.Windows.Processes
             return principle.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        private bool IsPathOfExileRunAsAdmin()
+        private async Task<bool> IsPathOfExileRunAsAdmin()
         {
             var result = false;
             try
@@ -201,11 +216,10 @@ namespace Sidekick.Platform.Windows.Processes
             catch (Exception e)
             {
                 logger.LogError(e, e.Message);
-                RestartAsAdmin();
+                await RestartAsAdmin();
             }
 
             return result;
         }
-        */
     }
 }
