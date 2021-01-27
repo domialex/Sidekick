@@ -11,6 +11,7 @@ using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
@@ -28,7 +29,7 @@ namespace Sidekick.Presentation.Wpf.Settings
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings sidekickSettings;
-        private readonly IKeybindsProvider keybindsProvider;
+        private readonly IKeyboardProvider keybindsProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IMediator mediator;
         private bool isDisposed;
@@ -37,7 +38,7 @@ namespace Sidekick.Presentation.Wpf.Settings
             IUILanguageProvider uiLanguageProvider,
             IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings sidekickSettings,
-            IKeybindsProvider keybindsProvider,
+            IKeyboardProvider keybindsProvider,
             IKeybindsExecutor keybindsExecutor,
             IMediator mediator)
         {

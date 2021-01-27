@@ -1,14 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Process;
 using Sidekick.Domain.Views;
 using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
 using Sidekick.Presentation.Wpf.Debounce;
 using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
-using Sidekick.Presentation.Wpf.Keybinds;
-using Sidekick.Presentation.Wpf.Natives;
 using Sidekick.Presentation.Wpf.Settings;
 using Sidekick.Presentation.Wpf.Setup;
 using Sidekick.Presentation.Wpf.Views;
@@ -54,9 +50,7 @@ namespace Sidekick.Presentation.Wpf
             services.AddScoped<SetupView>();
             services.AddScoped<SetupViewModel>();
 
-            services.AddSingleton<INativeProcess, NativeProcess>();
             services.AddSingleton<TrayIconViewModel>();
-            services.AddSingleton<IKeybindsProvider, KeybindsProvider>();
 
             services.AddSingleton<IViewLocator, ViewLocator>();
 

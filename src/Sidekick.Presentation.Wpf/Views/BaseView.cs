@@ -2,14 +2,13 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Threading;
 using AdonisUI.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
-using MyCursor = System.Windows.Forms.Cursor;
 
 namespace Sidekick.Presentation.Wpf.Views
 {
@@ -18,15 +17,19 @@ namespace Sidekick.Presentation.Wpf.Views
         protected readonly ISidekickSettings settings;
         protected readonly IViewPreferenceRepository viewPreferenceRepository;
         protected readonly ILogger logger;
+        protected readonly IMouseProvider mouseProvider;
+        protected readonly IScreenProvider screenProvider;
 
         protected BaseView()
         {
             // An empty constructor is necessary for the designer to show a preview
         }
 
-        protected BaseView(Domain.Views.View view, IServiceProvider serviceProvider)
+        protected BaseView(View view, IServiceProvider serviceProvider)
         {
             settings = serviceProvider.GetService<ISidekickSettings>();
+            mouseProvider = serviceProvider.GetService<IMouseProvider>();
+            screenProvider = serviceProvider.GetService<IScreenProvider>();
             viewPreferenceRepository = serviceProvider.GetService<IViewPreferenceRepository>();
             logger = serviceProvider.GetService<ILogger<BaseView>>();
 
@@ -161,8 +164,6 @@ namespace Sidekick.Presentation.Wpf.Views
 
             if (y > 1) { y /= 100; }
 
-            logger.LogInformation($"Positioning Info: SetTopPercent({y}, {source})");
-
             if (source == LocationSource.Center)
             {
                 y -= GetHeightPercent() / 2;
@@ -172,17 +173,8 @@ namespace Sidekick.Presentation.Wpf.Views
                 y -= GetHeightPercent();
             }
 
-            logger.LogInformation($"Positioning Info: SetTopPercent: y = {y}");
-            logger.LogInformation($"Positioning Info: SetTopPercent: ActualHeight = {ActualHeight}");
-            logger.LogInformation($"Positioning Info: SetTopPercent: GetHeightPercent() = {GetHeightPercent()}");
-
-            var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
-
+            var screenRect = screenProvider.GetBounds();
             var desiredY = screenRect.Y + (screenRect.Height * y);
-
-            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Height = {screenRect.Height}");
-            logger.LogInformation($"Positioning Info: SetTopPercent: Screen.Bounds.Y = {screenRect.Y}");
-            logger.LogInformation($"Positioning Info: SetTopPercent: Top = {desiredY}");
 
             TopLocationSource = source;
             Top = (int)desiredY;
@@ -200,8 +192,6 @@ namespace Sidekick.Presentation.Wpf.Views
 
             if (x > 1) { x /= 100; }
 
-            logger.LogInformation($"Positioning Info: SetLeftPercent({x}, {source})");
-
             if (source == LocationSource.Center)
             {
                 x -= GetWidthPercent() / 2;
@@ -211,17 +201,8 @@ namespace Sidekick.Presentation.Wpf.Views
                 x -= GetWidthPercent();
             }
 
-            logger.LogInformation($"Positioning Info: SetLeftPercent: x = {x}");
-            logger.LogInformation($"Positioning Info: SetLeftPercent: ActualWidth = {ActualWidth}");
-            logger.LogInformation($"Positioning Info: SetLeftPercent: GetWidthPercent() = {GetWidthPercent()}");
-
-            var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
-
+            var screenRect = screenProvider.GetBounds();
             var desiredX = screenRect.X + (screenRect.Width * x);
-
-            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.Width = {screenRect.Width}");
-            logger.LogInformation($"Positioning Info: SetLeftPercent: Screen.Bounds.X = {screenRect.X}");
-            logger.LogInformation($"Positioning Info: SetLeftPercent: Left = {desiredX}");
 
             LeftLocationSource = source;
             Left = (int)desiredX;
@@ -238,7 +219,7 @@ namespace Sidekick.Presentation.Wpf.Views
 
             if (IsVisible)
             {
-                var screenRect = Screen.FromPoint(MyCursor.Position).Bounds;
+                var screenRect = screenProvider.GetBounds();
 
                 // Is off to the right
                 if (Left + GetWidth() > screenRect.X + screenRect.Width)
@@ -268,7 +249,7 @@ namespace Sidekick.Presentation.Wpf.Views
         private void EnsureBounds(object sender, DependencyPropertyChangedEventArgs e) => EnsureBounds();
         private void EnsureBounds(object sender, EventArgs e) => EnsureBounds();
 
-        protected double GetWidth()
+        private double GetWidth()
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -278,18 +259,18 @@ namespace Sidekick.Presentation.Wpf.Views
             return ActualWidth;
         }
 
-        protected double GetWidthPercent()
+        private double GetWidthPercent()
         {
             if (!Dispatcher.CheckAccess())
             {
                 return Dispatcher.Invoke(() => GetWidthPercent());
             }
 
-            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
-            return ActualWidth / screen.Width;
+            var screenRect = screenProvider.GetBounds();
+            return ActualWidth / screenRect.Width;
         }
 
-        protected double GetHeight()
+        private double GetHeight()
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -299,18 +280,18 @@ namespace Sidekick.Presentation.Wpf.Views
             return ActualHeight;
         }
 
-        protected double GetHeightPercent()
+        private double GetHeightPercent()
         {
             if (!Dispatcher.CheckAccess())
             {
                 return Dispatcher.Invoke(() => GetHeightPercent());
             }
 
-            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
-            return ActualHeight / screen.Height;
+            var screenRect = screenProvider.GetBounds();
+            return ActualHeight / screenRect.Height;
         }
 
-        protected void SetWidth(double width)
+        private void SetWidth(double width)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -321,7 +302,7 @@ namespace Sidekick.Presentation.Wpf.Views
             Width = width;
         }
 
-        protected void SetHeight(double height)
+        private void SetHeight(double height)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -339,9 +320,10 @@ namespace Sidekick.Presentation.Wpf.Views
                 return Dispatcher.Invoke(() => GetMouseXPercent());
             }
 
-            var screen = Screen.FromPoint(MyCursor.Position).Bounds;
+            var mousePosition = mouseProvider.GetPosition();
+            var screenRect = screenProvider.GetBounds();
 
-            return (double)(MyCursor.Position.X - screen.X) / screen.Width;
+            return (double)(mousePosition.X - screenRect.X) / screenRect.Width;
         }
 
         protected void MoveX(double x)
