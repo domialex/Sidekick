@@ -18,11 +18,11 @@ namespace Sidekick.Platform.Windows.Scroll
 
         public void Initialize()
         {
-            if (!Debugger.IsAttached)
-            {
-                Hook = WindowsHook.Hook.GlobalEvents();
-                Hook.MouseWheelExt += Hook_MouseWheelExt;
-            }
+            //if (!Debugger.IsAttached)
+            //{
+            //    Hook = WindowsHook.Hook.GlobalEvents();
+            //    Hook.MouseWheelExt += Hook_MouseWheelExt;
+            //}
         }
 
         private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
