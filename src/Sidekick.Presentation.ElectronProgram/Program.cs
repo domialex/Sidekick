@@ -6,17 +6,20 @@ using ElectronCgi.DotNet;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application;
+using Sidekick.Application.Settings;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Domain.Game.Trade.Models;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
+using Sidekick.Platform;
 
 namespace Sidekick.Presentation.ElectronProgram
 {
@@ -29,6 +32,13 @@ namespace Sidekick.Presentation.ElectronProgram
                 var serviceProvider = InitializeServices();
 
                 var mediator = serviceProvider.GetRequiredService<IMediator>();
+
+                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+                {
+                    LeagueId = "Ritual",
+                    Language_Parser = "en",
+                    Language_UI = "en",
+                }));
 
                 await mediator.Send(new InitializeCommand(true));
 
@@ -68,12 +78,18 @@ namespace Sidekick.Presentation.ElectronProgram
                     Assembly.Load("Sidekick.Application"),
                     Assembly.Load("Sidekick.Domain"),
                     Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"))
+                    Assembly.Load("Sidekick.Persistence"),
+                    Assembly.Load("Sidekick.Platform"),
+                    Assembly.Load("Sidekick.Presentation"),
+                    Assembly.Load("Sidekick.Presentation.ElectronProgram"))
 
                 // Layers
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
-                .AddSidekickPersistence();
+                .AddSidekickPersistence()
+                .AddSidekickPlatform()
+                .AddSidekickPresentation()
+                .AddSidekickPresentationElectron();
 
             var serviceProvider = services.BuildServiceProvider();
 
