@@ -11,6 +11,7 @@ using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
+using Sidekick.Platform;
 using Sidekick.Presentation.Blazor.Electron;
 
 namespace Sidekick.Presentation.Blazor
@@ -50,6 +51,7 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
+                .AddSidekickPlatform()
                 .AddSidekickPresentation()
                 .AddSidekickPresentationBlazorElectron();
 
@@ -82,7 +84,7 @@ namespace Sidekick.Presentation.Blazor
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            app.UseSidekickPresentationBlazorElectron(serviceProvider, env);
+            app.UseSidekickPresentationBlazorElectron(serviceProvider);
         }
     }
 }

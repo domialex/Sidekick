@@ -23,9 +23,10 @@ namespace Sidekick.Presentation.Wpf.Views
 
         public List<ViewInstance> Views { get; set; }
 
-        public void Open(View view, params object[] args)
+        public Task Open(View view, params object[] args)
         {
             Views.Add(new ViewInstance(this, serviceProvider, view, args));
+            return Task.CompletedTask;
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View.View == view && x.View.IsVisible);

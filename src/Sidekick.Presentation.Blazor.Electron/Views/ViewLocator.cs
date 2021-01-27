@@ -1,31 +1,84 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ElectronNET.API.Entities;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
-        public ViewLocator()
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public ViewLocator(IWebHostEnvironment webHostEnvironment)
         {
+            this.webHostEnvironment = webHostEnvironment;
         }
 
-        public void Open(View view, params object[] args)
+        private bool FirstView = true;
+
+        private List<SidekickView> Views { get; set; } = new List<SidekickView>();
+
+        public async Task Open(View view, params object[] args)
         {
-            throw new NotImplementedException();
+            var browserWindow = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Width = 1152,
+                Height = 940,
+                Frame = false,
+                Show = false,
+                Transparent = true,
+                Fullscreenable = false,
+                WebPreferences = new WebPreferences()
+                {
+                    NodeIntegration = false,
+                }
+            }, "http://localhost:8001/about");
+
+            if (webHostEnvironment.IsDevelopment())
+            {
+                browserWindow.WebContents.OpenDevTools();
+            }
+
+            if (FirstView)
+            {
+                FirstView = false;
+                await browserWindow.WebContents.Session.ClearCacheAsync();
+            }
+
+            browserWindow.OnReadyToShow += () => browserWindow.Show();
+            browserWindow.SetTitle("Sidekick");
+
+            Views.Add(new SidekickView()
+            {
+                Browser = browserWindow,
+                View = view,
+            });
         }
 
-        public bool IsOpened(View view) => throw new NotImplementedException();
+        public bool IsOpened(View view) => Views.Any(x => x.View == view);
 
-        public bool IsAnyOpened() => throw new NotImplementedException();
+        public bool IsAnyOpened() => Views.Any();
 
         public void CloseAll()
         {
-            throw new NotImplementedException();
+            foreach (var instance in Views)
+            {
+                instance.Browser.Close();
+                Views.Remove(instance);
+            }
         }
 
         public void Close(View view)
         {
-            throw new NotImplementedException();
+            foreach (var instance in Views.Where(x => x.View == view))
+            {
+                instance.Browser.Close();
+                Views.Remove(instance);
+            }
         }
 
         public void Dispose()

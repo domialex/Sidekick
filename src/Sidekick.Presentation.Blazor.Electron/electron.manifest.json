@@ -3,12 +3,12 @@
   "splashscreen": {
     "imageFile": "/Assets/Splashscreen.png"
   },
-  "name": "Sidekick.Presentation.Blazor",
+  "name": "Sidekick",
   "author": "",
   "singleInstance": false,
   "build": {
     "appId": "com.Sidekick.Presentation.Blazor.app",
-    "productName": "Sidekick.Presentation.Blazor",
+    "productName": "Sidekick",
     "copyright": "Copyright © 2020",
     "buildVersion": "2.0.0",
     "compression": "maximum",
