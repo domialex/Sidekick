@@ -5,24 +5,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Game.GameLogs.Queries;
-using Sidekick.Domain.Process;
+using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Game.GameLogs
 {
     public class GetLatestWhisperCharacterNameHandler : IQueryHandler<GetLatestWhisperCharacterNameQuery, string>
     {
-        private readonly INativeProcess nativeProcess;
+        private readonly IProcessProvider processProvider;
 
         public GetLatestWhisperCharacterNameHandler(
-            INativeProcess nativeProcess)
+            IProcessProvider processProvider)
         {
-            this.nativeProcess = nativeProcess;
+            this.processProvider = processProvider;
         }
 
         public Task<string> Handle(GetLatestWhisperCharacterNameQuery request, CancellationToken cancellationToken)
         {
-            var clientLogFile = nativeProcess?.ClientLogPath;
-            if (clientLogFile == null || !nativeProcess.IsPathOfExileInFocus)
+            var clientLogFile = processProvider?.ClientLogPath;
+            if (clientLogFile == null || !processProvider.IsPathOfExileInFocus)
             {
                 return Task.FromResult<string>(null);
             }

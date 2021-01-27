@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,9 +8,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Process;
 using Sidekick.Presentation.Localization.Application;
-using Sidekick.Presentation.Localization.Splash;
 using Sidekick.Presentation.Wpf.Views.TrayIcon;
 
 // Enables debug specific markup in XAML
@@ -27,11 +24,8 @@ namespace Sidekick.Presentation.Wpf
     /// </summary>
     public partial class App : System.Windows.Application
     {
-        private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
-
         private ServiceProvider serviceProvider;
         private ILogger logger;
-        private INativeProcess nativeProcess;
         private IMediator mediator;
         public TaskbarIcon TrayIcon { get; set; }
 
@@ -50,13 +44,10 @@ namespace Sidekick.Presentation.Wpf
             serviceProvider = Wpf.Startup.InitializeServices(this);
 
             logger = serviceProvider.GetRequiredService<ILogger<App>>();
-            nativeProcess = serviceProvider.GetRequiredService<INativeProcess>();
             mediator = serviceProvider.GetRequiredService<IMediator>();
 
             TrayIcon = (TaskbarIcon)FindResource("TrayIcon");
             TrayIcon.DataContext = serviceProvider.GetRequiredService<TrayIconViewModel>();
-
-            EnsureSingleInstance();
 
             MainWindow.Close();
             await mediator.Send(new InitializeCommand(true));
@@ -67,16 +58,6 @@ namespace Sidekick.Presentation.Wpf
             TrayIcon?.Dispose();
             serviceProvider?.Dispose();
             base.OnExit(e);
-        }
-
-        private void EnsureSingleInstance()
-        {
-            nativeProcess.Mutex = new Mutex(true, APPLICATION_PROCESS_GUID, out var instanceResult);
-            if (!instanceResult)
-            {
-                AdonisUI.Controls.MessageBox.Show(SplashResources.AlreadyRunningText, SplashResources.AlreadyRunningTitle, AdonisUI.Controls.MessageBoxButton.OK, AdonisUI.Controls.MessageBoxImage.Error);
-                Current.Shutdown();
-            }
         }
 
         private void AttachErrorHandlers()
