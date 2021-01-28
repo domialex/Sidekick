@@ -1,0 +1,66 @@
+@page "/About"
+@using MediatR;
+@using Sidekick.Domain.App.Commands; 
+@inject IMediator Mediator
+
+<h1>About Page</h1>
+<MudList Clickable="true">
+    <MudListItem Text="Inbox" Icon="@Icons.Material.Inbox" />
+    <MudListItem Text="Sent" Icon="@Icons.Material.Send" />
+    <MudDivider />
+    <MudListItem Text="Trash" />
+    <MudListItem Text="Spam" />
+</MudList>
+<MudLink @onclick="@(e => Hyperlink_RequestNavigate(new Uri("https://www.google.com")))">Mediator Link</MudLink>
+@*<p>Current count: @currentCount</p>
+
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>*@
+
+@code {
+
+    //Sidekick.Presentation.Blazor.Electron.Views.
+
+    //[DependencyProperty]
+    //public partial class AboutView : BaseView, ISidekickView
+    //{
+    //    private readonly IMediator mediator;
+
+    //    public AboutView(
+    //        IServiceProvider serviceProvider,
+    //        IMediator mediator)
+    //        : base(Domain.Views.View.About, serviceProvider)
+    //    {
+    //        DataContext = this;
+
+    //        InitializeComponent();
+
+    //        var assembly = Assembly.GetExecutingAssembly();
+    //        var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+    //        VersionNumber = fileVersionInfo.ProductVersion;
+
+    //        try
+    //        {
+    //            OperatingSystem = Environment.OSVersion.VersionString;
+    //            EnvironmentVersion = Environment.Version.ToString();
+    //        }
+    //        catch (Exception)
+    //        {
+    //            // Getting the operating system can fail
+    //        }
+
+    //        this.mediator = mediator;
+    //    }
+
+    //    public string VersionNumber { get; private set; }
+    //    public string OperatingSystem { get; private set; }
+    //    public string EnvironmentVersion { get; private set; }
+
+    private async Task Hyperlink_RequestNavigate(Uri uri)
+    {
+        Console.WriteLine("debug");
+        await Mediator.Send(new OpenBrowserCommand(uri));
+
+    }
+}
+
+}

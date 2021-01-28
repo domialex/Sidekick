@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +37,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 {
                     NodeIntegration = false,
                 }
-            });
+            }, $"http://localhost:{BridgeSettings.WebPort}/{view}");
 
             if (webHostEnvironment.IsDevelopment())
             {

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Sidekick.Domain.Views;
 
-namespace Sidekick.Presentation.Wpf.Views
+namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public interface ISidekickView
     {
