@@ -13,6 +13,8 @@ using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
 using Sidekick.Presentation.Blazor.Electron;
+using MudBlazor;
+using MudBlazor.Services;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -53,7 +55,10 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
                 .AddSidekickPresentation()
-                .AddSidekickPresentationBlazorElectron();
+                .AddSidekickPresentationBlazorElectron()
+                .AddMudBlazorDialog()
+                .AddMudBlazorSnackbar()
+                .AddMudBlazorResizeListener();
 
         }
 

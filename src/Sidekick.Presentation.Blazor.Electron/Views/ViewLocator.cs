@@ -6,6 +6,7 @@ using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Sidekick.Domain.Views;
+using ElectronNET.API;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
@@ -36,7 +37,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 {
                     NodeIntegration = false,
                 }
-            }, "http://localhost:8001/about");
+            }, $"http://localhost:{BridgeSettings.WebPort}/{view}");
 
             if (webHostEnvironment.IsDevelopment())
             {
@@ -74,7 +75,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         public void Close(View view)
         {
-            foreach (var instance in Views.Where(x => x.View == view))
+            foreach (var instance in  Views.Where(x => x.View == view))
             {
                 instance.Browser.Close();
                 Views.Remove(instance);

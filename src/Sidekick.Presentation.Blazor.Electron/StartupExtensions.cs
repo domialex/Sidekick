@@ -7,6 +7,7 @@ using Sidekick.Domain.Views;
 using Sidekick.Presentation.Blazor.Electron.Tray;
 using Sidekick.Presentation.Blazor.Electron.Views;
 
+
 namespace Sidekick.Presentation.Blazor.Electron
 {
     public static class StartupExtensions
@@ -15,7 +16,6 @@ namespace Sidekick.Presentation.Blazor.Electron
         {
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<IViewLocator, ViewLocator>();
-
             return services;
         }
 
@@ -28,9 +28,6 @@ namespace Sidekick.Presentation.Blazor.Electron
 
                 ElectronBootstrap();
             }
-
-            var viewLocator = serviceProvider.GetService<IViewLocator>();
-            viewLocator.Open(View.About);
         }
 
         private static void ElectronBootstrap()

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="11.5.1" />
+    <PackageReference Include="MudBlazor" Version="1.2.4" />
   </ItemGroup>
 
   <ItemGroup>
