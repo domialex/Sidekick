@@ -43,14 +43,14 @@ namespace Sidekick.Application.Wikis
             if (item == null)
             {
                 // If the item can't be parsed, show an error
-                viewLocator.Open(View.ParserError);
+                await viewLocator.Open(View.ParserError);
                 return false;
             }
 
             if (!gameLanguageProvider.IsEnglish)
             {
                 // Only available for english language
-                viewLocator.Open(View.AvailableInEnglishError);
+                await viewLocator.Open(View.AvailableInEnglishError);
                 return false;
             }
 
@@ -58,7 +58,7 @@ namespace Sidekick.Application.Wikis
             {
                 // Most items will open the basetype wiki link.
                 // Does not work for unique items that are not identified.
-                viewLocator.Open(View.InvalidItemError);
+                await viewLocator.Open(View.InvalidItemError);
                 return false;
             }
 

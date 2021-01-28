@@ -41,12 +41,12 @@ namespace Sidekick.Application.Game.Trade
             if (item == null)
             {
                 // If the item can't be parsed, show an error
-                viewLocator.Open(View.ParserError);
+                await viewLocator.Open(View.ParserError);
             }
             else
             {
                 // If the item can be parsed, show the view
-                viewLocator.Open(View.Price, item);
+                await viewLocator.Open(View.Price, item);
             }
 
             return true;

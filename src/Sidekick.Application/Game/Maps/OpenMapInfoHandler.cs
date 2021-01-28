@@ -39,17 +39,17 @@ namespace Sidekick.Application.Game.Maps
             if (item == null)
             {
                 // If the item can't be parsed, show an error
-                viewLocator.Open(View.ParserError);
+                await viewLocator.Open(View.ParserError);
             }
             else if (item.Properties.MapTier == 0)
             {
                 // If the item is not a map
-                viewLocator.Open(View.InvalidItemError);
+                await viewLocator.Open(View.InvalidItemError);
             }
             else
             {
                 // If the item can be parsed, show the view
-                viewLocator.Open(View.Map, item);
+                await viewLocator.Open(View.Map, item);
             }
 
             return true;

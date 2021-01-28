@@ -1,7 +1,8 @@
+using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Sidekick.Presentation.Blazor
+namespace Sidekick.Presentation.Blazor.Electron
 {
     public static class Program
     {
@@ -14,7 +15,9 @@ namespace Sidekick.Presentation.Blazor
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseElectron(args)
+                        .UseStartup<Startup>();
                 });
     }
 }

@@ -1,13 +1,13 @@
 {
-  "executable": "Sidekick.Presentation.Blazor",
+  "executable": "Sidekick.Presentation.Blazor.Electron",
   "splashscreen": {
     "imageFile": "/Assets/Splashscreen.png"
   },
-  "name": "Sidekick",
+  "name": "Sidekick.Presentation.Blazor.Electron",
   "author": "",
-  "singleInstance": false,
+  "singleInstance": true,
   "build": {
-    "appId": "com.Sidekick.Presentation.Blazor.app",
+    "appId": "com.Sidekick.Presentation.Blazor.Electron.app",
     "productName": "Sidekick",
     "copyright": "Copyright © 2020",
     "buildVersion": "2.0.0",
@@ -16,25 +16,20 @@
       "icon": "Assets/ExaltedOrb.ico"
     },
     "directories": {
-      "output": "../../../bin/Desktop",
-      "buildResources": "Assets"
+      "output": "../../../bin/Desktop"
     },
     "extraResources": [
       {
         "from": "./bin",
         "to": "bin",
-        "filter": [
-          "**/*"
-        ]
+        "filter": [ "**/*" ]
       }
     ],
     "files": [
       {
-        "from": "../Sidekick.Presentation.Blazor.Electron/ElectronHostHook/node_modules",
+        "from": "./ElectronHostHook/node_modules",
         "to": "ElectronHostHook/node_modules",
-        "filter": [
-          "**/*"
-        ]
+        "filter": [ "**/*" ]
       },
       "**/*"
     ]

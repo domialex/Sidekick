@@ -1,14 +1,23 @@
 using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sidekick.Application;
+using Sidekick.Domain.Views;
+using Sidekick.Infrastructure;
+using Sidekick.Logging;
 using Sidekick.Mapper;
-using MudBlazor;
-using MudBlazor.Services;
+using Sidekick.Mediator;
+using Sidekick.Persistence;
+using Sidekick.Platform;
+using Sidekick.Presentation.Blazor.Electron.Tray;
+using Sidekick.Presentation.Blazor.Electron.Views;
 
-namespace Sidekick.Presentation.Blazor
+namespace Sidekick.Presentation.Blazor.Electron
 {
     public class Startup
     {
@@ -25,7 +34,7 @@ namespace Sidekick.Presentation.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            /*
+
             services
                 // Common
                 .AddSidekickLogging()
@@ -38,23 +47,22 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Blazor"))
+                    Assembly.Load("Sidekick.Presentation.Blazor"),
+                    Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
 
                 // Layers
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation()
-                .AddSidekickPresentationBlazorElectron()
-                .AddMudBlazorDialog()
-                .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener();
-            */
+                .AddSidekickPresentation();
+
+            services.AddSingleton<TrayProvider>();
+            services.AddSingleton<IViewLocator, ViewLocator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, TrayProvider trayProvider, IViewLocator viewLocator)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -78,6 +86,14 @@ namespace Sidekick.Presentation.Blazor
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
+            });
+
+            // Electron stuff
+            ElectronNET.API.Electron.WindowManager.IsQuitOnWindowAllClosed = false;
+            Task.Run(async () =>
+            {
+                trayProvider.Initialize();
+                await viewLocator.Open(View.About);
             });
         }
     }
