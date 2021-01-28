@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using Sidekick.Presentation.Localization.Tray;
 
 namespace Sidekick.Presentation.Blazor.Electron.Tray
@@ -10,20 +10,20 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
     public class TrayProvider
     {
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ILogger<TrayProvider> logger;
 
-        public TrayProvider(IWebHostEnvironment webHostEnvironment)
+        public TrayProvider(IWebHostEnvironment webHostEnvironment,
+            ILogger<TrayProvider> logger)
         {
             this.webHostEnvironment = webHostEnvironment;
+            this.logger = logger;
         }
 
-        public Task Initialize()
+        public void Initialize()
         {
-            if (!HybridSupport.IsElectronActive)
+            try
             {
-                return default;
-            }
-
-            var menuItems = new List<MenuItem>
+                var menuItems = new List<MenuItem>
             {
                 new MenuItem
                 {
@@ -32,10 +32,13 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                 }
             };
 
-            ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png", menuItems.ToArray());
-            ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);
-
-            return Task.CompletedTask;
+                ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png", menuItems.ToArray());
+                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Exception while initializing the tray.", e);
+            }
         }
     }
 }

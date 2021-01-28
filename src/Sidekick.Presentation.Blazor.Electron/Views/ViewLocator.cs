@@ -36,7 +36,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 {
                     NodeIntegration = false,
                 }
-            }, "http://localhost:8001/about");
+            });
 
             if (webHostEnvironment.IsDevelopment())
             {
