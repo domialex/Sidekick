@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Views;
 using Sidekick.Presentation.Localization.Tray;
 
 namespace Sidekick.Presentation.Blazor.Electron.Tray
@@ -14,11 +15,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
         private readonly ILogger<TrayProvider> logger;
         private readonly IViewLocator viewLocator;
 
-        public TrayProvider(IWebHostEnvironment webHostEnvironment,
-            ILogger<TrayProvider> logger
+        public TrayProvider(
+            IWebHostEnvironment webHostEnvironment,
+            ILogger<TrayProvider> logger,
 			IServiceProvider serviceProvider, 
-IViewLocator viewLocator)
-        {
+            IViewLocator viewLocator
+        ){
             this.webHostEnvironment = webHostEnvironment;
             this.logger = logger;
             this.serviceProvider = serviceProvider;
