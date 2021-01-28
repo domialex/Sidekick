@@ -11,39 +11,38 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
     public class TrayProvider
     {
         private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly IServiceProvider serviceProvider;
         private readonly ILogger<TrayProvider> logger;
         private readonly IViewLocator viewLocator;
 
         public TrayProvider(
             IWebHostEnvironment webHostEnvironment,
             ILogger<TrayProvider> logger,
-			IServiceProvider serviceProvider, 
             IViewLocator viewLocator
-        ){
+        )
+        {
             this.webHostEnvironment = webHostEnvironment;
             this.logger = logger;
-            this.serviceProvider = serviceProvider;
-            this.viewLocator = viewLocator;        }
+            this.viewLocator = viewLocator;
+        }
 
         public void Initialize()
         {
             try
             {
                 var menuItems = new List<MenuItem>
-            {
-                new MenuItem
                 {
-                    Label = "About",
-                    Click = () => { viewLocator.Open(View.About); }
-                },
+                    new MenuItem
+                    {
+                        Label = "About",
+                        Click = () => { viewLocator.Open(View.About); }
+                    },
 
-                new MenuItem
-                {
-                    Label = TrayResources.Exit,
-                    Click = () => ElectronNET.API.Electron.App.Quit()
-                }
-            };
+                    new MenuItem
+                    {
+                        Label = TrayResources.Exit,
+                        Click = () => ElectronNET.API.Electron.App.Quit()
+                    }
+                };
 
                 ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png", menuItems.ToArray());
                 ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);

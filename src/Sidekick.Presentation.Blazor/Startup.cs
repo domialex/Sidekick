@@ -1,12 +1,19 @@
 using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sidekick.Mapper;
 using MudBlazor;
 using MudBlazor.Services;
+using Sidekick.Application;
+using Sidekick.Infrastructure;
+using Sidekick.Logging;
+using Sidekick.Mapper;
+using Sidekick.Mediator;
+using Sidekick.Persistence;
+using Sidekick.Platform;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -25,7 +32,7 @@ namespace Sidekick.Presentation.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            /*
+
             services
                 // Common
                 .AddSidekickLogging()
@@ -45,12 +52,12 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation()
-                .AddSidekickPresentationBlazorElectron()
+                .AddSidekickPresentation();
+
+            services
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
                 .AddMudBlazorResizeListener();
-            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
