@@ -75,7 +75,7 @@ namespace Sidekick.Application.Initialization
                 viewLocator.Close(View.Setup);
                 if (settings.ShowSplashScreen && !viewLocator.IsOpened(View.Initialization))
                 {
-                    viewLocator.Open(View.Initialization);
+                    await viewLocator.Open(View.Initialization);
                 }
 
                 await RunStep<LanguageInitializationStarted>();
