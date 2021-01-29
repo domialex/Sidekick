@@ -239,6 +239,11 @@ namespace Sidekick.Platform.Windows.Keyboards
                     }
                 }
 
+                if (keyCodes.Count == 0)
+                {
+                    continue;
+                }
+
                 if (modifiedCodes.Count > 0)
                 {
                     Simulator.Keyboard.ModifiedKeyStroke(modifiedCodes, keyCodes);

@@ -103,8 +103,16 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 View.About => await CreateView("/about", 800, 600, preferences),
                 View.Settings => await CreateView("/settings", 800, 600, preferences),
-                _ => throw new NotSupportedException("View is not supported"),
+                View.Price => await CreateView("/settings", 800, 600, preferences),
+                View.Setup => await CreateView("/about", 800, 600, preferences),
+                View.Initialization => await CreateView("/about", 800, 600, preferences),
+                _ => null,
             };
+
+            if (browserWindow == null)
+            {
+                return;
+            }
 
             if (webHostEnvironment.IsDevelopment())
             {

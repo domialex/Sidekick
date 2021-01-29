@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,12 +10,17 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
 using Sidekick.Application;
+using Sidekick.Application.Settings;
+using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Settings.Commands;
+using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
+using Sidekick.Presentation.Blazor.Mocks;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -44,6 +51,7 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Domain"),
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
+                    Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Blazor"))
 
@@ -58,10 +66,12 @@ namespace Sidekick.Presentation.Blazor
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
                 .AddMudBlazorResizeListener();
+
+            services.AddSingleton<IViewLocator, ViewLocator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -86,6 +96,19 @@ namespace Sidekick.Presentation.Blazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            Task.Run(async () =>
+            {
+                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+                {
+                    LeagueId = "Ritual",
+                    Language_Parser = "en",
+                    Language_UI = "en",
+                }));
+
+                await mediator.Send(new InitializeCommand(true));
+            });
+
         }
     }
 }
