@@ -40,24 +40,11 @@ function cssBuild() {
 const cssWatch = () => watch('./Styles/**/*.scss', cssBuild);
 
 function jsDependencies() {
+    return;
     return src([
-        './node_modules/jquery/dist/jquery.min.js',
-        './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
     ])
     .pipe(plumber())
     .pipe(concat('dependencies.js'))
-    .pipe(babel({
-        presets: ["@babel/preset-env"]
-    }))
-    .pipe(dest('./wwwroot/js'));
-}
-
-function jsElectron() {
-    return src([
-        '../Sidekick.Presentation.Blazor.Electron/Scripts/**/*.js',
-    ])
-    .pipe(plumber())
-    .pipe(concat('electron.js'))
     .pipe(babel({
         presets: ["@babel/preset-env"]
     }))
@@ -76,9 +63,9 @@ function jsBuild() {
         .pipe(dest('./wwwroot/js'));
 }
 
-const jsWatch = () => watch('./Scripts/**/*.js', series(jsDependencies, jsBuild, jsElectron));
+const jsWatch = () => watch('./Scripts/**/*.js', series(jsDependencies, jsBuild));
 
 task('css.build', cssBuild);
-task('js.build', series(jsDependencies, jsBuild, jsElectron));
+task('js.build', series(jsDependencies, jsBuild));
 task('_build', series('css.build', 'js.build'));
 task('_develop', parallel('_build', cssWatch, jsWatch));

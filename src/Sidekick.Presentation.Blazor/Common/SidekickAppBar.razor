@@ -1,0 +1,22 @@
+@using Sidekick.Domain.Views
+
+<MudAppBar Color="Color.Primary" Fixed="false">
+    @if (!string.IsNullOrEmpty(Title))
+    {
+        <div>@Title</div>
+    }
+    <MudAppBarSpacer />
+    <MudIconButton Icon="@Icons.Material.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+</MudAppBar>
+
+@code {
+    [Inject] private IViewLocator ViewLocator { get; set; }
+
+    [Parameter] public string Title { get; set; }
+    [Parameter] public View View { get; set; }
+
+    public void Close()
+    {
+        ViewLocator.Close(View);
+    }
+}

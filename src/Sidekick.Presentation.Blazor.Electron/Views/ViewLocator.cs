@@ -102,6 +102,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var browserWindow = view switch
             {
                 View.About => await CreateView("/about", 800, 600, preferences),
+                View.Settings => await CreateView("/settings", 800, 600, preferences),
                 _ => throw new NotSupportedException("View is not supported"),
             };
 
@@ -132,8 +133,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             foreach (var instance in Views)
             {
                 instance.Browser.Close();
-                Views.Remove(instance);
             }
+
+            Views.Clear();
         }
 
         public void Close(View view)
@@ -141,8 +143,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             foreach (var instance in Views.Where(x => x.View == view))
             {
                 instance.Browser.Close();
-                Views.Remove(instance);
             }
+
+            Views.RemoveAll(x => x.View == view);
         }
 
         public void Dispose()
