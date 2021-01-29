@@ -16,10 +16,10 @@ namespace Sidekick.Persistence
     {
         public static IServiceCollection AddSidekickPersistence(this IServiceCollection services)
         {
-            services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=Sidekick_database.db"));
+            services.AddDbContextPool<SidekickContext>(options => options.UseSqlite("Filename=data.db"));
 
             var builder = new DbContextOptionsBuilder<SidekickContext>();
-            builder.UseSqlite("Filename=Sidekick_database.db");
+            builder.UseSqlite("Filename=data.db");
             var context = new SidekickContext(builder.Options);
             context.Database.Migrate();
 

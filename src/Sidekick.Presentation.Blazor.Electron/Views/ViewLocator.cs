@@ -6,38 +6,104 @@ using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Views;
+using Sidekick.Presentation.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IWebHostEnvironment webHostEnvironment;
+        public readonly IViewPreferenceRepository viewPreferenceRepository;
+        public readonly IDebouncer debouncer;
+        public readonly ILogger<ViewLocator> logger;
 
-        public ViewLocator(IWebHostEnvironment webHostEnvironment)
+        public ViewLocator(IWebHostEnvironment webHostEnvironment,
+            IViewPreferenceRepository viewPreferenceRepository,
+            IDebouncer debouncer,
+            ILogger<ViewLocator> logger)
         {
             this.webHostEnvironment = webHostEnvironment;
+            this.viewPreferenceRepository = viewPreferenceRepository;
+            this.debouncer = debouncer;
+            this.logger = logger;
         }
 
         private bool FirstView = true;
 
-        private List<SidekickView> Views { get; set; } = new List<SidekickView>();
+        internal List<SidekickView> Views { get; set; } = new List<SidekickView>();
 
-        public async Task Open(View view, params object[] args)
+        private static async Task<BrowserWindow> CreateView(string path, int minWidth, int minHeight, ViewPreference preferences)
         {
-            var browserWindow = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
-                Width = 1152,
-                Height = 940,
+                Width = preferences?.Width ?? minWidth,
+                Height = preferences?.Height ?? minHeight,
+                AcceptFirstMouse = true,
+                AlwaysOnTop = false,
+                Center = true,
                 Frame = false,
-                Show = false,
-                Transparent = true,
                 Fullscreenable = false,
+                HasShadow = true,
+                Icon = "/Assets/ExaltedOrb.ico",
+                Maximizable = true,
+                Minimizable = true,
+                MinHeight = minHeight,
+                MinWidth = minWidth,
+                Resizable = true,
+                Show = false,
+                SkipTaskbar = false,
+                Transparent = false,
                 WebPreferences = new WebPreferences()
                 {
                     NodeIntegration = false,
                 }
-            }, $"http://localhost:{BridgeSettings.WebPort}/{view}");
+            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+        }
+
+        private static async Task<BrowserWindow> CreateOverlay(string path, int minWidth, int minHeight, ViewPreference preferences)
+        {
+            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Width = preferences?.Width ?? minWidth,
+                Height = preferences?.Height ?? minHeight,
+                AcceptFirstMouse = true,
+                AlwaysOnTop = true,
+                Center = true,
+                Frame = false,
+                Fullscreenable = false,
+                HasShadow = false,
+                Icon = "Assets/ExaltedOrb.ico",
+                Maximizable = false,
+                Minimizable = false,
+                MinHeight = minHeight,
+                MinWidth = minWidth,
+                Resizable = true,
+                Show = false,
+                SkipTaskbar = true,
+                Transparent = true,
+                WebPreferences = new WebPreferences()
+                {
+                    NodeIntegration = false,
+                }
+            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+        }
+
+        public async Task Open(View view, params object[] args)
+        {
+            if (IsOpened(view))
+            {
+                Close(view);
+            }
+
+            var preferences = await viewPreferenceRepository.Get(view);
+
+            var browserWindow = view switch
+            {
+                View.About => await CreateView("/about", 800, 600, preferences),
+                _ => throw new NotSupportedException("View is not supported"),
+            };
 
             if (webHostEnvironment.IsDevelopment())
             {
@@ -50,14 +116,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 await browserWindow.WebContents.Session.ClearCacheAsync();
             }
 
-            browserWindow.OnReadyToShow += () => browserWindow.Show();
             browserWindow.SetTitle("Sidekick");
 
-            Views.Add(new SidekickView()
-            {
-                Browser = browserWindow,
-                View = view,
-            });
+            var sidekickView = new SidekickView(this, view, browserWindow);
+
+            Views.Add(sidekickView);
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View == view);

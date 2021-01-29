@@ -91,7 +91,7 @@ namespace Sidekick.Presentation.Wpf.Views
             {
                 try
                 {
-                    await viewPreferenceRepository.SaveSize(View, GetWidth(), GetHeight());
+                    await viewPreferenceRepository.SaveSize(View, (int)GetWidth(), (int)GetHeight());
                 }
                 catch (ObjectDisposedException)
                 {

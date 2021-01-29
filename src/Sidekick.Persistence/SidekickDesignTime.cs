@@ -8,7 +8,7 @@ namespace Sidekick.Persistence
         public SidekickContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<SidekickContext>();
-            builder.UseSqlite("Filename=Sidekick.db");
+            builder.UseSqlite("Filename=data.db");
             return new SidekickContext(builder.Options);
         }
     }

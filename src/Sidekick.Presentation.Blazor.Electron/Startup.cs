@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -69,7 +70,7 @@ namespace Sidekick.Presentation.Blazor.Electron
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, TrayProvider trayProvider, IViewLocator viewLocator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, TrayProvider trayProvider)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -100,7 +101,24 @@ namespace Sidekick.Presentation.Blazor.Electron
             Task.Run(async () =>
             {
                 trayProvider.Initialize();
-                await viewLocator.Open(View.About);
+                var browserWindow = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+                {
+                    Width = 1,
+                    Height = 1,
+                    Frame = false,
+                    Show = true,
+                    Transparent = true,
+                    Fullscreenable = false,
+                    Minimizable = false,
+                    Maximizable = false,
+                    SkipTaskbar = true,
+                    WebPreferences = new WebPreferences()
+                    {
+                        NodeIntegration = false,
+                    }
+                });
+                await Task.Delay(50);
+                browserWindow.Close();
             });
         }
     }

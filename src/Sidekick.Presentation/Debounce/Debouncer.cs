@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sidekick.Presentation.Wpf.Debounce
+namespace Sidekick.Presentation.Debounce
 {
     public class Debouncer : IDebouncer
     {

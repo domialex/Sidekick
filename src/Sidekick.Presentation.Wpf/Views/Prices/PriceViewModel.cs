@@ -18,8 +18,8 @@ using Sidekick.Domain.Game.Trade.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Persistence.ItemCategories;
+using Sidekick.Presentation.Debounce;
 using Sidekick.Presentation.Localization.Prices;
-using Sidekick.Presentation.Wpf.Debounce;
 using Sidekick.Presentation.Wpf.Extensions;
 using Sidekick.Presentation.Wpf.Helpers;
 

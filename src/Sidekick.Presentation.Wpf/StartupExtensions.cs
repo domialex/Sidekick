@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Views;
 using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
-using Sidekick.Presentation.Wpf.Debounce;
 using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
 using Sidekick.Presentation.Wpf.Settings;
@@ -19,8 +18,6 @@ namespace Sidekick.Presentation.Wpf
     {
         public static IServiceCollection AddSidekickPresentationWpf(this IServiceCollection services)
         {
-            services.AddSingleton<IDebouncer, Debouncer>();
-
             services.AddScoped<AboutView>();
 
             services.AddScoped<ApplicationLogsView>();

@@ -16,19 +16,19 @@ namespace Sidekick.Persistence.Views
         public async Task<ViewPreference> Get(View id)
         {
             using var context = new SidekickContext(options);
-            return await context.ViewPreferences.FindAsync(id.ToString());
+            return await context.ViewPreferences.FindAsync(id);
         }
 
-        public async Task SaveSize(View id, double width, double height)
+        public async Task SaveSize(View id, int width, int height)
         {
             using var context = new SidekickContext(options);
-            var preference = await context.ViewPreferences.FindAsync(id.ToString());
+            var preference = await context.ViewPreferences.FindAsync(id);
 
             if (preference == null)
             {
                 preference = new ViewPreference()
                 {
-                    Id = id.ToString(),
+                    Id = id,
                 };
                 context.ViewPreferences.Add(preference);
             }

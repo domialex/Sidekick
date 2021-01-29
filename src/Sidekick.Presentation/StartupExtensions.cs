@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Presentation.Debounce;
 using Sidekick.Presentation.Localization;
 
 namespace Sidekick.Presentation
@@ -9,6 +10,7 @@ namespace Sidekick.Presentation
         {
             services.AddLocalization();
             services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
+            services.AddSingleton<IDebouncer, Debouncer>();
 
             return services;
         }

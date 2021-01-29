@@ -15,7 +15,7 @@ namespace Sidekick.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("sidekick")
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("Sidekick.Domain.Apis.PoeNinja.Models.NinjaPrice", b =>
                 {
@@ -70,14 +70,14 @@ namespace Sidekick.Persistence.Migrations
 
             modelBuilder.Entity("Sidekick.Domain.Views.ViewPreference", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<double>("Height")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Height")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<double>("Width")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Width")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
