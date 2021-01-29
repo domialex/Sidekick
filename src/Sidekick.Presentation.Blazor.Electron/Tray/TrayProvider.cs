@@ -44,6 +44,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
                     new MenuItem
                     {
+                        Label = "Settings",
+                        Click = () => { viewLocator.Open(View.Settings); }
+                    },
+
+                    new MenuItem
+                    {
                         Label = TrayResources.Exit,
                         Click = () => ElectronNET.API.Electron.App.Quit()
                     }

@@ -19,9 +19,5 @@
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "sass": "^1.32.0"
-  },
-  "dependencies": {
-    "bootstrap": "^5.0.0-beta1",
-    "jquery": "^3.5.1"
   }
 }
