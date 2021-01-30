@@ -1,11 +1,9 @@
 @page "/settings"
 
-<MudLayout>
-    <SidekickAppBar Title="@Localizer["Title"]" View="Sidekick.Domain.Views.View.Settings"></SidekickAppBar>
-
-    <h1>Settings</h1>
-</MudLayout>
+<SettingsLayout>
+    <p>Bonjour</p>
+</SettingsLayout>
 
 @code {
-    [Inject] private IStringLocalizer<Settings> Localizer { get; set; }
+    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
 }
