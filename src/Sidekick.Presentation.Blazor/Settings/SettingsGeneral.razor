@@ -1,0 +1,62 @@
+@page "/settings"
+
+<SettingsLayout>
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Language_Title]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudSelect T="string"
+                       Label="@Localizer[SettingsResources.Language_UI]"
+                       Variant="Variant.Filled"
+                       @bind-Value="ViewModel.Language_UI">
+                @foreach (var option in ViewModel.UILanguageOptions)
+                {
+                    <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect T="string"
+                       Label="@Localizer[SettingsResources.Language_Parser]"
+                       Variant="Variant.Filled" @bind-Value="ViewModel.Language_Parser">
+                @foreach (var option in ViewModel.ParserLanguageOptions)
+                {
+                    <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+                }
+            </MudSelect>
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="mt-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Character_Title]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudSelect T="string"
+                       Label="@Localizer[SettingsResources.Character_League]"
+                       Variant="Variant.Filled"
+                       @bind-Value="ViewModel.LeagueId">
+                @foreach (var option in ViewModel.LeagueOptions)
+                {
+                    <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+                }
+            </MudSelect>
+            <MudTextField Label="@Localizer[SettingsResources.Character_Name]"
+                          Variant="Variant.Filled"
+                          @bind-Value="ViewModel.Character_Name" />
+        </MudCardContent>
+    </MudCard>
+</SettingsLayout>
+
+@code {
+    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Initialize();
+        await base.OnInitializedAsync();
+    }
+}

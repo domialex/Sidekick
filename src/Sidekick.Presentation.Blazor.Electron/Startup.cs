@@ -63,7 +63,8 @@ namespace Sidekick.Presentation.Blazor.Electron
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation();
+                .AddSidekickPresentation()
+                .AddSidekickPresentationBlazor();
 
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<IViewLocator, ViewLocator>();
@@ -128,10 +129,8 @@ namespace Sidekick.Presentation.Blazor.Electron
                 });
                 await Task.Delay(50);
                 browserWindow.Close();
-            });
 
-            Task.Run(async () =>
-            {
+                // Initialize Sidekick
                 await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
                 {
                     LeagueId = "Ritual",

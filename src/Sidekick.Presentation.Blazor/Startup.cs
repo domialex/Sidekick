@@ -60,7 +60,8 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickInfrastructure()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation();
+                .AddSidekickPresentation()
+                .AddSidekickPresentationBlazor();
 
             services
                 .AddMudBlazorDialog()
