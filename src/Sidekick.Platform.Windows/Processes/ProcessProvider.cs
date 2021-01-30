@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
 
@@ -89,7 +90,8 @@ namespace Sidekick.Platform.Windows.Processes
             if (!instanceResult)
             {
                 await mediator.Send(new OpenNotificationCommand(localizer["AlreadyRunningText"]));
-                Environment.Exit(Environment.ExitCode);
+                await Task.Delay(5000);
+                await mediator.Send(new ShutdownCommand());
             }
         }
 
@@ -170,10 +172,11 @@ namespace Sidekick.Platform.Windows.Processes
                     {
                         logger.LogError(e, localizer["AdminError"]);
                         await mediator.Send(new OpenNotificationCommand(localizer["AdminError"]));
+                        await Task.Delay(5000);
                     }
                     finally
                     {
-                        Environment.Exit(Environment.ExitCode);
+                        await mediator.Send(new ShutdownCommand());
                     }
                 }));
         }
