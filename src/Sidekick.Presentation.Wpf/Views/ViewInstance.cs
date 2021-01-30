@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
@@ -39,8 +40,11 @@ namespace Sidekick.Presentation.Wpf.Views
 
         public ViewInstance(ViewLocator viewLocator, IServiceProvider serviceProvider, View view, params object[] args)
         {
+            this.viewLocator = viewLocator;
+
             var logger = serviceProvider.GetRequiredService<ILogger<ViewInstance>>();
             var settings = serviceProvider.GetRequiredService<ISidekickSettings>();
+            var dispatcher = serviceProvider.GetRequiredService<Dispatcher>();
 
             if (!ViewTypes.ContainsKey(view))
             {
@@ -48,28 +52,30 @@ namespace Sidekick.Presentation.Wpf.Views
                 return;
             }
 
-            this.viewLocator = viewLocator;
-            Scope = serviceProvider.CreateScope();
-
-            // Still needed for localization of league overlay models
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
-
-            // View initialization and show
-            View = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
-            View.Closed += View_Closed;
-
-            Task.Run(async () =>
+            dispatcher.Invoke(() =>
             {
-                try
+                Scope = serviceProvider.CreateScope();
+
+                // Still needed for localization of league overlay models
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(settings.Language_UI);
+
+                // View initialization and show
+                View = (ISidekickView)Scope.ServiceProvider.GetRequiredService(ViewTypes[view]);
+                View.Closed += View_Closed;
+
+                Task.Run(async () =>
                 {
-                    await View.Open(args);
-                }
-                catch (Exception e)
-                {
-                    logger.LogError(e, $"The view {view} could not be opened. {e.Message}");
-                    Dispose();
-                }
+                    try
+                    {
+                        await View.Open(args);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError(e, $"The view {view} could not be opened. {e.Message}");
+                        Dispose();
+                    }
+                });
             });
         }
 

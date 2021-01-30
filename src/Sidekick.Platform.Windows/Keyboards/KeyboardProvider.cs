@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using GregsStack.InputSimulatorStandard;
 using GregsStack.InputSimulatorStandard.Native;
 using Microsoft.Extensions.Logging;
+using NeatInput.Windows;
+using NeatInput.Windows.Events;
+using NeatInput.Windows.Processing.Keyboard.Enums;
 using Sidekick.Domain.Platforms;
-using WindowsHook;
 
 namespace Sidekick.Platform.Windows.Keyboards
 {
-    public class KeyboardProvider : IKeyboardProvider, IDisposable
+    public class KeyboardProvider : IKeyboardProvider, IDisposable, IKeyboardEventReceiver
     {
         private static readonly List<Key> ValidKeys = new List<Key>()
         {
@@ -143,33 +145,32 @@ namespace Sidekick.Platform.Windows.Keyboards
 
         private readonly ILogger<KeyboardProvider> logger;
 
-        private static InputSimulator Simulator { get; set; }
+        private InputSimulator Simulator { get; set; }
+        private InputSource InputSource { get; set; }
 
         public KeyboardProvider(ILogger<KeyboardProvider> logger)
         {
             this.logger = logger;
         }
 
-        public IKeyboardMouseEvents Hook { get; private set; }
-
         public event Func<string, bool> OnKeyDown;
 
         public void Initialize()
         {
-            Hook = WindowsHook.Hook.GlobalEvents();
-            Hook.KeyDown += Hook_KeyDown;
+            InputSource = new InputSource(this);
+            InputSource.Listen();
 
             Simulator = new InputSimulator();
         }
 
-        private void Hook_KeyDown(object sender, KeyEventArgs e)
+        public void Receive(KeyboardEvent @event)
         {
-            if (!ValidKeys.Any(x => x.HookKey == e.KeyCode))
+            if (@event.State == KeyStates.Up || !ValidKeys.Any(x => x.HookKey == @event.Key))
             {
                 return;
             }
 
-            var key = ValidKeys.Find(x => x.HookKey == e.KeyCode);
+            var key = ValidKeys.Find(x => x.HookKey == @event.Key);
             if (ModifierKeys.IsMatch(key.StringValue))
             {
                 return;
@@ -177,30 +178,41 @@ namespace Sidekick.Platform.Windows.Keyboards
 
             // Transfer the event key to a string to compare to settings
             var str = new StringBuilder();
-            if (e.Modifiers.HasFlag(Keys.Control))
+            if (IsCtrlPressed())
             {
                 str.Append($"{ValidKeys.Find(x => x.HookKey == Keys.ControlKey).StringValue }+");
             }
-            if (e.Modifiers.HasFlag(Keys.Shift))
+            if (IsShiftPressed())
             {
                 str.Append($"{ValidKeys.Find(x => x.HookKey == Keys.ShiftKey).StringValue }+");
             }
-            if (e.Modifiers.HasFlag(Keys.Alt))
+            if (IsAltPressed())
             {
                 str.Append($"{ValidKeys.Find(x => x.HookKey == Keys.Menu).StringValue }+");
             }
 
-            if (ValidKeys.Any(x => x.HookKey == e.KeyCode))
+            if (ValidKeys.Any(x => x.HookKey == @event.Key))
             {
                 str.Append(key.StringValue);
-                e.Handled = OnKeyDown?.Invoke(str.ToString()) ?? false;
             }
+
+            OnKeyDown?.Invoke(str.ToString());
         }
 
         public bool IsCtrlPressed() =>
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
+
+        public bool IsShiftPressed() =>
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LSHIFT) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RSHIFT);
+
+        public bool IsAltPressed() =>
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LMENU) ||
+            Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RMENU);
 
         public Task PressKey(params string[] keys)
         {
@@ -265,10 +277,9 @@ namespace Sidekick.Platform.Windows.Keyboards
 
         protected virtual void Dispose(bool disposing)
         {
-            if (Hook != null) // Hook will be null if auto update was successful
+            if (InputSource != null)
             {
-                Hook.KeyDown -= Hook_KeyDown;
-                Hook.Dispose();
+                InputSource.Dispose();
             }
         }
     }

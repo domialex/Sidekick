@@ -8,13 +8,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MudBlazor;
 using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
@@ -81,9 +79,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             IWebHostEnvironment env,
             IServiceProvider serviceProvider,
             TrayProvider trayProvider,
-            IMediator mediator,
-            IKeyboardProvider keyboardProvider,
-            ILogger<Startup> logger)
+            IMediator mediator)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -145,24 +141,6 @@ namespace Sidekick.Presentation.Blazor.Electron
 
                 await mediator.Send(new InitializeCommand(true));
             });
-
-            /* For testing purposes
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Task.Delay(5000);
-                    keyboardProvider.Initialize();
-                    await keyboardProvider.PressKey("A", "B", "C", "D", "E");
-                }
-                catch (Exception e)
-                {
-                    logger.LogError("Bad keybind", e);
-                    logger.LogError(e.Message);
-                    logger.LogError(e.StackTrace);
-                }
-            });
-            */
         }
     }
 }

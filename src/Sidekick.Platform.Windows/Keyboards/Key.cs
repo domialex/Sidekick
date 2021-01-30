@@ -1,5 +1,5 @@
 using GregsStack.InputSimulatorStandard.Native;
-using WindowsHook;
+using NeatInput.Windows.Processing.Keyboard.Enums;
 
 namespace Sidekick.Platform.Windows.Keyboards
 {

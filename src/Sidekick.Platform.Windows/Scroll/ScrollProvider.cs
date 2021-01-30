@@ -1,40 +1,29 @@
 using System;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using NeatInput.Windows;
+using NeatInput.Windows.Events;
 using Sidekick.Domain.Platforms;
-using WindowsHook;
 
 namespace Sidekick.Platform.Windows.Scroll
 {
-    public class ScrollProvider : IScrollProvider, IDisposable
+    public class ScrollProvider : IScrollProvider, IDisposable, IMouseEventReceiver
     {
-        public ScrollProvider()
-        {
-        }
+        private readonly ILogger<ScrollProvider> logger;
 
-        public IKeyboardMouseEvents Hook { get; private set; }
+        private InputSource InputSource { get; set; }
+
+        public ScrollProvider(ILogger<ScrollProvider> logger)
+        {
+            this.logger = logger;
+        }
 
         public event Func<bool> OnScrollDown;
         public event Func<bool> OnScrollUp;
 
         public void Initialize()
         {
-            if (!Debugger.IsAttached)
-            {
-                Hook = WindowsHook.Hook.GlobalEvents();
-                Hook.MouseWheelExt += Hook_MouseWheelExt;
-            }
-        }
-
-        private void Hook_MouseWheelExt(object sender, MouseEventExtArgs e)
-        {
-            if (e.Delta > 0)
-            {
-                e.Handled = OnScrollUp?.Invoke() ?? false;
-            }
-            else
-            {
-                e.Handled = OnScrollDown?.Invoke() ?? false;
-            }
+            InputSource = new InputSource(this);
+            InputSource.Listen();
         }
 
         public void Dispose()
@@ -45,11 +34,15 @@ namespace Sidekick.Platform.Windows.Scroll
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!Debugger.IsAttached && Hook != null) // Hook will be null if auto update was successful
+            if (InputSource != null)
             {
-                Hook.MouseWheelExt -= Hook_MouseWheelExt;
-                Hook.Dispose();
+                InputSource.Dispose();
             }
+        }
+
+        public void Receive(MouseEvent @event)
+        {
+            // TODO
         }
     }
 }
