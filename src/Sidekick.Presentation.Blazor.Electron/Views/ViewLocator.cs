@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Views;
+using Sidekick.Extensions;
 using Sidekick.Presentation.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
@@ -99,13 +102,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             var preferences = await viewPreferenceRepository.Get(view);
 
+            var pathArgs = new StringBuilder();
+            foreach (var arg in args)
+            {
+                pathArgs.Append($"/{JsonSerializer.Serialize(arg).EncodeBase64()}");
+            }
+
             var browserWindow = view switch
             {
-                View.About => await CreateView("/about", 800, 600, preferences),
-                View.Settings => await CreateView("/settings", 800, 600, preferences),
-                View.Price => await CreateView("/settings", 800, 600, preferences),
-                View.Setup => await CreateView("/about", 800, 600, preferences),
-                View.Initialization => await CreateView("/about", 800, 600, preferences),
+                View.About => await CreateView($"/about{pathArgs}", 800, 600, preferences),
+                View.Settings => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
+                View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
+                View.Setup => await CreateView($"/about{pathArgs}", 800, 600, preferences),
+                View.Initialization => await CreateView($"/about{pathArgs}", 800, 600, preferences),
                 _ => null,
             };
 
