@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using NeatInput.Windows;
 using NeatInput.Windows.Events;
@@ -22,8 +23,15 @@ namespace Sidekick.Platform.Windows.Scroll
 
         public void Initialize()
         {
-            InputSource = new InputSource(this);
-            InputSource.Listen();
+            if (!Debugger.IsAttached)
+            {
+                InputSource = new InputSource(this);
+                InputSource.Listen();
+            }
+
+#if DEBUG
+            Dispose(true);
+#endif
         }
 
         public void Dispose()
