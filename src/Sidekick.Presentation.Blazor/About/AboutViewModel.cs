@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,7 +10,7 @@ namespace Sidekick.Presentation.Blazor.About
     public class AboutViewModel : IDisposable
     {
         private readonly IMediator mediator;
-        private readonly ILogger logger;
+        private readonly ILogger<AboutViewModel> logger;
         public string VersionNumber { get; private set; }
         public string OperatingSystem { get; private set; }
         public string EnvironmentVersion { get; private set; }
@@ -43,17 +41,14 @@ namespace Sidekick.Presentation.Blazor.About
         {
             { "MudBlazor", "https://github.com/Garderoben/MudBlazor" },
             { "AutoFixture", "https://github.com/AutoFixture/AutoFixture" },
-            { "Bindables", "https://github.com/yusuf-gunaydin/Bindables" },
             { "Fluent Assertions", "https://fluentassertions.com" },
-            { "Fody", "https://github.com/Fody/Fody" },
             { "Microsoft - ASP.NET", "https://asp.net" },
+            { "NeatInput", "https://github.com/LegendaryB/NeatInput" },
             { "NUnit", "https://nunit.org" },
-            { "PropertyChanged", "https://github.com/Fody/PropertyChanged" },
             { "Serilog", "https://serilog.net" },
             { "TextCopy", "https://github.com/CopyText/TextCopy" },
-            { "WindowsHook", "https://github.com/topstarai/WindowsHook" }
         };
-        public AboutViewModel(IMediator mediator, ILogger logger)
+        public AboutViewModel(IMediator mediator, ILogger<AboutViewModel> logger)
         {
             this.mediator = mediator;
             this.logger = logger;

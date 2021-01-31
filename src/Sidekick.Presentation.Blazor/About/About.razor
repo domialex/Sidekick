@@ -2,57 +2,59 @@
 
 <MudLayout>
     <SidekickAppBar Title="@Localizer[AboutResources.Title]" View="View.About"></SidekickAppBar>
-    <MudContainer Class="py-6">
+    <MudMainContent>
+        <MudContainer Class="py-6">
 
-        <MudText Typo="Typo.h4">SideKick - @ViewModel.VersionNumber</MudText>
-        <MudText>@Localizer[AboutResources.Operating_System] - @ViewModel.OperatingSystem</MudText>
-        <MudText>@Localizer[AboutResources.Environment_Versions] - @ViewModel.EnvironmentVersion</MudText>
-        <MudDivider Class="my-1 mt-1" />
-        <MudText>@Localizer[AboutResources.Project_Page] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
-        <MudText>@Localizer[AboutResources.Bug_Reports] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+            <MudText Typo="Typo.h4">SideKick - @ViewModel.VersionNumber</MudText>
+            <MudText>@Localizer[AboutResources.Operating_System] - @ViewModel.OperatingSystem</MudText>
+            <MudText>@Localizer[AboutResources.Environment_Versions] - @ViewModel.EnvironmentVersion</MudText>
+            <MudDivider Class="my-1 mt-1" />
+            <MudText>@Localizer[AboutResources.Project_Page] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+            <MudText>@Localizer[AboutResources.Bug_Reports] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
 
-        <MudCard  Class="mt-4">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Contributors]</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                @foreach (var contributor in ViewModel.Contributors)
-                {
-                    <MudText>@contributor.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(@contributor.Value)))">@contributor.Value</MudLink></MudText>
-                }
-            </MudCardContent>
-        </MudCard>
+            <MudCard Class="mt-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Contributors]</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    @foreach (var contributor in ViewModel.Contributors)
+                    {
+                        <MudText>@contributor.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(@contributor.Value)))">@contributor.Value</MudLink></MudText>
+                    }
+                </MudCardContent>
+            </MudCard>
 
-        <MudCard  Class="mt-4">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Translators]</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                @foreach (var translator in ViewModel.Translators)
-                {
-                    <MudText>@translator.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(translator.Value)))">@translator.Value</MudLink></MudText>
-                }
-            </MudCardContent>
-        </MudCard>
+            <MudCard Class="mt-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Translators]</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    @foreach (var translator in ViewModel.Translators)
+                    {
+                        <MudText>@translator.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(translator.Value)))">@translator.Value</MudLink></MudText>
+                    }
+                </MudCardContent>
+            </MudCard>
 
-        <MudCard  Class="mt-4">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Third_Parties]</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                @foreach (var thirdparty in ViewModel.ThirdParties)
-                {
-                    <MudText>@thirdparty.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(thirdparty.Value)))">@thirdparty.Value</MudLink></MudText>
-                }
-            </MudCardContent>
-        </MudCard>
-    </MudContainer>
+            <MudCard Class="mt-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Third_Parties]</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    @foreach (var thirdparty in ViewModel.ThirdParties)
+                    {
+                        <MudText>@thirdparty.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(thirdparty.Value)))">@thirdparty.Value</MudLink></MudText>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudContainer>
+    </MudMainContent>
 </MudLayout>
 
 @code {
