@@ -25,11 +25,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
             this.viewLocator = viewLocator;
         }
 
-        public void AboutView()
-        {
-            viewLocator.Open(View.About);
-        }
-
         public void Initialize()
         {
             try
@@ -39,7 +34,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                     new MenuItem
                     {
                         Label = "About",
-                        Click = () => { AboutView(); }
+                        Click = () => { viewLocator.Open(View.About); }
                     },
 
                     new MenuItem
