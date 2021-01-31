@@ -206,7 +206,7 @@ namespace Sidekick.Presentation.Wpf.Settings
                     return false;
                 }
 
-                if (args.Key == "Escape")
+                if (args.Key == "Esc")
                 {
                     SettingCustom = false;
                     return true;
@@ -226,7 +226,7 @@ namespace Sidekick.Presentation.Wpf.Settings
                 return false;
             }
 
-            if (args.Key == "Escape")
+            if (args.Key == "Esc")
             {
                 CurrentKey = null;
                 return true;

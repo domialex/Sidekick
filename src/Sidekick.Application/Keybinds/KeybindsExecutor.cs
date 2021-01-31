@@ -93,7 +93,7 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, args, ref task, true);
 
             // View commands
-            ExecuteKeybind<CloseAllViewCommand>("Escape", args, ref task, false);
+            ExecuteKeybind<CloseAllViewCommand>("Esc", args, ref task, false);
             ExecuteKeybind<ClosePriceViewCommand>(settings.Price_Key_Close, args, ref task, false);
             ExecuteKeybind<CloseMapViewCommand>(settings.Map_Key_Close, args, ref task, false);
             ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, args, ref task, true);

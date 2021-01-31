@@ -59,6 +59,27 @@
                            @bind-Value="ViewModel.Cheatsheets_Key_Open" />
         </MudCardContent>
     </MudCard>
+    <MudCard Class="mt-6">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Other]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <div>
+                <MudCheckBox Label="@Localizer[SettingsResources.General_ShowSplashScreen]"
+                             @bind-Checked="@ViewModel.ShowSplashScreen"></MudCheckBox>
+            </div>
+            <div>
+                <MudCheckBox Label="@Localizer[SettingsResources.General_RetainClipboard]"
+                             @bind-Checked="@ViewModel.RetainClipboard"></MudCheckBox>
+            </div>
+            <KeybindEditor Label="@Localizer[SettingsResources.Key_OpenSettings]"
+                           @bind-Value="ViewModel.Key_OpenSettings" />
+            <KeybindEditor Label="@Localizer[SettingsResources.Key_FindItems]"
+                           @bind-Value="ViewModel.Key_FindItems" />
+        </MudCardContent>
+    </MudCard>
 </SettingsLayout>
 
 @code {
