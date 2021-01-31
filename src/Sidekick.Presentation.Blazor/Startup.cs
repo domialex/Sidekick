@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MudBlazor;
 using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Application.Settings;
@@ -64,9 +63,11 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickPresentationBlazor();
 
             services
+                .AddMudServices()
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener();
+                .AddMudBlazorResizeListener()
+                .AddMudBlazorDom();
 
             services.AddSingleton<IViewLocator, ViewLocator>();
         }

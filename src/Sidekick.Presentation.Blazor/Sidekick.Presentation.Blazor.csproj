@@ -16,7 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MudBlazor" Version="1.2.4" />
+    <PackageReference Include="MudBlazor" Version="1.2.4.12-dev" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />

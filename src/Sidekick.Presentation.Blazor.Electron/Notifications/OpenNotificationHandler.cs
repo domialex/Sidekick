@@ -9,6 +9,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Notifications
     {
         public Task<Unit> Handle(OpenNotificationCommand request, CancellationToken cancellationToken)
         {
+            ElectronNET.API.Electron.Notification.Show(new ElectronNET.API.Entities.NotificationOptions(request.Title, request.Message));
             return Unit.Task;
         }
     }

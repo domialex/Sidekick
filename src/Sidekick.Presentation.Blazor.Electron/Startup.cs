@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MudBlazor;
 using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Application.Settings;
@@ -55,7 +54,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
 
                 // Layers
@@ -70,9 +68,11 @@ namespace Sidekick.Presentation.Blazor.Electron
             services.AddSingleton<IViewLocator, ViewLocator>();
 
             services
+                .AddMudServices()
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener();
+                .AddMudBlazorResizeListener()
+                .AddMudBlazorDom();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

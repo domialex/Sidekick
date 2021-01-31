@@ -1,12 +1,12 @@
 @using Sidekick.Domain.Views
 
-<MudAppBar Color="Color.Primary" Fixed="false">
+<MudAppBar Color="Color.Primary">
     @if (!string.IsNullOrEmpty(Title))
     {
-        <div>@Title</div>
+        <MudText Typo="Typo.body1">@Title</MudText>
     }
     <MudAppBarSpacer />
-    <MudIconButton Icon="@Icons.Material.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+    <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
 </MudAppBar>
 
 @code {
