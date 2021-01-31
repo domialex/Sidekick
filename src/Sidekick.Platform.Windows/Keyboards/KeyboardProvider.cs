@@ -147,6 +147,7 @@ namespace Sidekick.Platform.Windows.Keyboards
 
         private InputSimulator Simulator { get; set; }
         private InputSource InputSource { get; set; }
+        private bool Enabled { get; set; }
 
         public KeyboardProvider(ILogger<KeyboardProvider> logger)
         {
@@ -161,11 +162,13 @@ namespace Sidekick.Platform.Windows.Keyboards
             InputSource.Listen();
 
             Simulator = new InputSimulator();
+
+            Enabled = true;
         }
 
         public void Receive(KeyboardEvent @event)
         {
-            if (@event.State == KeyStates.Up || !ValidKeys.Any(x => x.HookKey == @event.Key))
+            if (!Enabled || @event.State == KeyStates.Up || !ValidKeys.Any(x => x.HookKey == @event.Key))
             {
                 return;
             }
@@ -216,6 +219,8 @@ namespace Sidekick.Platform.Windows.Keyboards
 
         public Task PressKey(params string[] keys)
         {
+            Enabled = false;
+
             foreach (var stroke in keys)
             {
                 logger.LogInformation("[Keybinds] Sending " + stroke);
@@ -265,6 +270,8 @@ namespace Sidekick.Platform.Windows.Keyboards
                     Simulator.Keyboard.KeyPress(keyCodes.ToArray());
                 }
             }
+
+            Enabled = true;
 
             return Task.CompletedTask;
         }
