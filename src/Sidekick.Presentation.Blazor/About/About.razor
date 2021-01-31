@@ -1,67 +1,63 @@
 @page "/about"
-@using MediatR;
-@using Sidekick.Domain.App.Commands;
-@inject IMediator Mediator
 
 <MudLayout>
-    <h1>About Page</h1>
-    <MudList Clickable="true">
-        <MudListItem Text="Inbox" Icon="@Icons.Material.Inbox" />
-        <MudListItem Text="Sent" Icon="@Icons.Material.Send" />
-        <MudDivider />
-        <MudListItem Text="Trash" />
-        <MudListItem Text="Spam" />
-    </MudList>
-    <MudLink @onclick="@(e => Hyperlink_RequestNavigate(new Uri("https://www.google.com")))">Mediator Link</MudLink>
+    <SidekickAppBar Title="@Localizer[AboutResources.Title]" View="View.About"></SidekickAppBar>
+    <MudContainer Class="py-6">
+
+        <MudText Typo="Typo.h4">SideKick - @ViewModel.VersionNumber</MudText>
+        <MudText>@Localizer[AboutResources.Operating_System] - @ViewModel.OperatingSystem</MudText>
+        <MudText>@Localizer[AboutResources.Environment_Versions] - @ViewModel.EnvironmentVersion</MudText>
+        <MudDivider Class="my-1 mt-1" />
+        <MudText>@Localizer[AboutResources.Project_Page] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+        <MudText>@Localizer[AboutResources.Bug_Reports] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+
+        <MudCard  Class="mt-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Contributors]</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                @foreach (var contributor in ViewModel.Contributors)
+                {
+                    <MudText>@contributor.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(@contributor.Value)))">@contributor.Value</MudLink></MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+
+        <MudCard  Class="mt-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Translators]</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                @foreach (var translator in ViewModel.Translators)
+                {
+                    <MudText>@translator.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(translator.Value)))">@translator.Value</MudLink></MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+
+        <MudCard  Class="mt-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@Localizer[AboutResources.Third_Parties]</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                @foreach (var thirdparty in ViewModel.ThirdParties)
+                {
+                    <MudText>@thirdparty.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(thirdparty.Value)))">@thirdparty.Value</MudLink></MudText>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudContainer>
 </MudLayout>
-
-@*<p>Current count: @currentCount</p>
-
-    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>*@
 
 @code {
 
-    //Sidekick.Presentation.Blazor.Electron.Views.
+    [Inject] private IStringLocalizer<AboutResources> Localizer { get; set; }
+    [Inject] private AboutViewModel ViewModel { get; set; }
 
-    //[DependencyProperty]
-    //public partial class AboutView : BaseView, ISidekickView
-    //{
-    //    private readonly IMediator mediator;
-
-    //    public AboutView(
-    //        IServiceProvider serviceProvider,
-    //        IMediator mediator)
-    //        : base(Domain.Views.View.About, serviceProvider)
-    //    {
-    //        DataContext = this;
-
-    //        InitializeComponent();
-
-    //        var assembly = Assembly.GetExecutingAssembly();
-    //        var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-    //        VersionNumber = fileVersionInfo.ProductVersion;
-
-    //        try
-    //        {
-    //            OperatingSystem = Environment.OSVersion.VersionString;
-    //            EnvironmentVersion = Environment.Version.ToString();
-    //        }
-    //        catch (Exception)
-    //        {
-    //            // Getting the operating system can fail
-    //        }
-
-    //        this.mediator = mediator;
-    //    }
-
-    //    public string VersionNumber { get; private set; }
-    //    public string OperatingSystem { get; private set; }
-    //    public string EnvironmentVersion { get; private set; }
-
-    private async Task Hyperlink_RequestNavigate(Uri uri)
-    {
-        Console.WriteLine("debug");
-        await Mediator.Send(new OpenBrowserCommand(uri));
-
-    }
 }
