@@ -75,7 +75,7 @@ namespace Sidekick.Application.Keybinds
             return true;
         }
 
-        private bool KeybindsProvider_OnKeyDown(string arg)
+        private bool KeybindsProvider_OnKeyDown(KeyDownArgs args)
         {
             if (!Enabled || (!processProvider.IsPathOfExileInFocus && !processProvider.IsSidekickInFocus))
             {
@@ -87,32 +87,32 @@ namespace Sidekick.Application.Keybinds
             Task<bool> task = null;
 
             // Chat commands
-            ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, arg, ref task, true);
-            ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, arg, ref task, true);
-            ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, arg, ref task, true);
-            ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, arg, ref task, true);
+            ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, args, ref task, true);
+            ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, args, ref task, true);
+            ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, args, ref task, true);
+            ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, args, ref task, true);
 
             // View commands
-            ExecuteKeybind<CloseAllViewCommand>("Escape", arg, ref task, false);
-            ExecuteKeybind<ClosePriceViewCommand>(settings.Price_Key_Close, arg, ref task, false);
-            ExecuteKeybind<CloseMapViewCommand>(settings.Map_Key_Close, arg, ref task, false);
-            ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, arg, ref task, true);
-            ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, arg, ref task, true);
-            ExecuteKeybind<OpenMapInfoCommand>(settings.Map_Key_Check, arg, ref task, true);
-            ExecuteKeybind<PriceCheckItemCommand>(settings.Price_Key_Check, arg, ref task, true);
+            ExecuteKeybind<CloseAllViewCommand>("Escape", args, ref task, false);
+            ExecuteKeybind<ClosePriceViewCommand>(settings.Price_Key_Close, args, ref task, false);
+            ExecuteKeybind<CloseMapViewCommand>(settings.Map_Key_Close, args, ref task, false);
+            ExecuteKeybind<ToggleCheatsheetsCommand>(settings.Cheatsheets_Key_Open, args, ref task, true);
+            ExecuteKeybind<OpenSettingsCommand>(settings.Key_OpenSettings, args, ref task, true);
+            ExecuteKeybind<OpenMapInfoCommand>(settings.Map_Key_Check, args, ref task, true);
+            ExecuteKeybind<PriceCheckItemCommand>(settings.Price_Key_Check, args, ref task, true);
 
             // Webpages
-            ExecuteKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open, arg, ref task, true);
-            ExecuteKeybind<OpenTradePageCommand>(settings.Price_Key_OpenSearch, arg, ref task, true);
+            ExecuteKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open, args, ref task, true);
+            ExecuteKeybind<OpenTradePageCommand>(settings.Price_Key_OpenSearch, args, ref task, true);
 
             // Game commands
-            ExecuteKeybind<ScrollStashUpCommand>(settings.Stash_Key_Left, arg, ref task, true);
-            ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, arg, ref task, true);
-            ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, arg, ref task, true);
+            ExecuteKeybind<ScrollStashUpCommand>(settings.Stash_Key_Left, args, ref task, true);
+            ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, args, ref task, true);
+            ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, args, ref task, true);
 
             foreach (var customChat in settings.Chat_CustomCommands)
             {
-                ExecuteCustomChat(customChat, arg, ref task);
+                ExecuteCustomChat(customChat, args, ref task);
             }
 
             if (task == null)
@@ -126,10 +126,10 @@ namespace Sidekick.Application.Keybinds
                 {
                     var result = await task;
 
-                    if (!result)
+                    if (!result && args.Intercepted)
                     {
                         Enabled = false;
-                        await keyboard.PressKey(arg);
+                        await keyboard.PressKey(args.Key);
                     }
 
                     Enabled = true;
@@ -139,14 +139,14 @@ namespace Sidekick.Application.Keybinds
             return task != null;
         }
 
-        private void ExecuteCustomChat(CustomChatSetting customChatSetting, string input, ref Task<bool> returnTask)
+        private void ExecuteCustomChat(CustomChatSetting customChatSetting, KeyDownArgs args, ref Task<bool> returnTask)
         {
             if (!processProvider.IsPathOfExileInFocus)
             {
                 return;
             }
 
-            if (input == customChatSetting.Key)
+            if (args.Key == customChatSetting.Key)
             {
                 logger.LogInformation($"Keybind detected: {customChatSetting.Key}! Executing the custom chat command '{customChatSetting.ChatCommand}'");
 
@@ -154,7 +154,7 @@ namespace Sidekick.Application.Keybinds
             }
         }
 
-        private void ExecuteKeybind<TCommand>(string keybind, string input, ref Task<bool> returnTask, bool requireGameInFocus)
+        private void ExecuteKeybind<TCommand>(string keybind, KeyDownArgs args, ref Task<bool> returnTask, bool requireGameInFocus)
             where TCommand : ICommand<bool>, new()
         {
             if (requireGameInFocus && !processProvider.IsPathOfExileInFocus)
@@ -162,7 +162,7 @@ namespace Sidekick.Application.Keybinds
                 return;
             }
 
-            if (input == keybind)
+            if (args.Key == keybind)
             {
                 logger.LogInformation($"Keybind detected: {keybind}! Executing the command {typeof(TCommand).Name}.");
 

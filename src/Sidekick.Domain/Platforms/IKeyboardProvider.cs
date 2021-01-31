@@ -16,7 +16,7 @@ namespace Sidekick.Domain.Platforms
         /// <summary>
         /// Event that indicates that a key was pressed
         /// </summary>
-        event Func<string, bool> OnKeyDown;
+        event Func<KeyDownArgs, bool> OnKeyDown;
 
         /// <summary>
         /// Gets the state of the Ctrl key.

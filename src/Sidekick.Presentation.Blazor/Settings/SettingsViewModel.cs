@@ -198,7 +198,7 @@ namespace Sidekick.Presentation.Blazor.Settings
                     || Chat_CustomCommands.Any(x => x.Key == keybind);
         }
 
-        private bool NativeKeyboard_OnKeyDown(string input)
+        private bool NativeKeyboard_OnKeyDown(KeyDownArgs args)
         {/*
             if (SettingCustom)
             {
@@ -228,13 +228,13 @@ namespace Sidekick.Presentation.Blazor.Settings
                 return false;
             }
 
-            if (input == "Escape")
+            if (args.Key == "Escape")
             {
                 CurrentKey = null;
                 return true;
             }
 
-            if (!IsKeybindUsed(input, CurrentKey))
+            if (!IsKeybindUsed(args.Key, CurrentKey))
             {
                 var property = GetType()
                     .GetProperties()
@@ -242,7 +242,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
                 if (property != default)
                 {
-                    property.SetValue(this, input);
+                    property.SetValue(this, args.Key);
                 }
             }
 

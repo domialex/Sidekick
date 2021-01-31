@@ -153,7 +153,7 @@ namespace Sidekick.Platform.Windows.Keyboards
             this.logger = logger;
         }
 
-        public event Func<string, bool> OnKeyDown;
+        public event Func<KeyDownArgs, bool> OnKeyDown;
 
         public void Initialize()
         {
@@ -196,7 +196,7 @@ namespace Sidekick.Platform.Windows.Keyboards
                 str.Append(key.StringValue);
             }
 
-            OnKeyDown?.Invoke(str.ToString());
+            OnKeyDown?.Invoke(new KeyDownArgs(str.ToString(), false));
         }
 
         public bool IsCtrlPressed() =>
