@@ -1,0 +1,98 @@
+@using Sidekick.Domain.Keybinds
+@using Sidekick.Domain.Platforms
+
+<div class="d-flex align-center">
+    <div class="flex-grow-1 pr-4">
+        <MudField Label="@Label"
+                  Variant="Variant.Filled"
+                  Class="@Class"
+                  @onclick="Click">
+            @if (Active)
+            {
+                <MudText>@Localizer[SettingsResources.Key_Active]</MudText>
+            }
+            else if (string.IsNullOrEmpty(Value))
+            {
+                <MudText>@Localizer[SettingsResources.Key_Unset]</MudText>
+            }
+            else
+            {
+                <MudText>@Value</MudText>
+            }
+        </MudField>
+    </div>
+    <div class="flex-grow-0">
+        <MudIconButton Icon="@Icons.Filled.Delete"
+                       @onclick="Delete"></MudIconButton>
+    </div>
+</div>
+
+@implements IDisposable
+@code {
+    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+    [Inject] private IKeyboardProvider Keyboard { get; set; }
+    [Inject] private IKeybindsExecutor Keybinds { get; set; }
+
+    [Parameter] public string Label { get; set; }
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    private Guid Id { get; } = Guid.NewGuid();
+    private bool Active => ViewModel.CurrentKey == Id;
+    private string Class => Active ? "mud-info" : null;
+
+    protected override void OnInitialized()
+    {
+        Keyboard.OnKeyDown += OnKeyDown;
+        base.OnInitialized();
+    }
+
+    public void Click()
+    {
+        if (ViewModel.CurrentKey == Id)
+        {
+            ViewModel.CurrentKey = null;
+            Keybinds.Enabled = true;
+        }
+        else
+        {
+            ViewModel.CurrentKey = Id;
+            Keybinds.Enabled = false;
+        }
+    }
+
+    private bool OnKeyDown(KeyDownArgs args)
+    {
+        if (!Active)
+        {
+            return false;
+        }
+
+        this.InvokeAsync(async () =>
+        {
+
+            if (args.Key != "Escape")
+            {
+                await ValueChanged.InvokeAsync(args.Key);
+            }
+
+            ViewModel.CurrentKey = null;
+            Keybinds.Enabled = true;
+            StateHasChanged();
+        });
+        return true;
+    }
+
+    public async Task Delete()
+    {
+        ViewModel.CurrentKey = null;
+        Keybinds.Enabled = true;
+        await ValueChanged.InvokeAsync("");
+    }
+
+    public void Dispose()
+    {
+        Keyboard.OnKeyDown -= OnKeyDown;
+    }
+}

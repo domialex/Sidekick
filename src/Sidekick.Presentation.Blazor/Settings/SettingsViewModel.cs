@@ -8,8 +8,6 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
@@ -17,29 +15,22 @@ using Sidekick.Presentation.Localization;
 
 namespace Sidekick.Presentation.Blazor.Settings
 {
-    public class SettingsViewModel : IDisposable, ISidekickSettings
+    public class SettingsViewModel : ISidekickSettings
     {
         private readonly IUILanguageProvider uiLanguageProvider;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings sidekickSettings;
-        private readonly IKeyboardProvider keybindsProvider;
-        private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IMediator mediator;
-        private bool isDisposed;
 
         public SettingsViewModel(
             IUILanguageProvider uiLanguageProvider,
             IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings sidekickSettings,
-            IKeyboardProvider keybindsProvider,
-            IKeybindsExecutor keybindsExecutor,
             IMediator mediator)
         {
             this.uiLanguageProvider = uiLanguageProvider;
             this.gameLanguageProvider = gameLanguageProvider;
             this.sidekickSettings = sidekickSettings;
-            this.keybindsProvider = keybindsProvider;
-            this.keybindsExecutor = keybindsExecutor;
             this.mediator = mediator;
 
             gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
@@ -47,7 +38,6 @@ namespace Sidekick.Presentation.Blazor.Settings
             foreach (var setting in Chat_CustomCommands)
                 CustomChatSettings.Add(new CustomChatModel { ChatCommand = setting.ChatCommand, Key = setting.Key });
             */
-            keybindsProvider.OnKeyDown += NativeKeyboard_OnKeyDown;
         }
 
         public async Task Initialize()
@@ -82,7 +72,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         // public Dictionary<CustomChatModel> CustomChatSettings { get; private set; }
 
-        public string CurrentKey { get; set; }
+        public Guid? CurrentKey { get; set; }
 
         // public CustomChatModel CurrentCustomChat { get; set; }
 
@@ -162,12 +152,6 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         #endregion
 
-        // This is called when CurrentKey changes, thanks to Fody
-        public void OnCurrentKeyChanged()
-        {
-            keybindsExecutor.Enabled = string.IsNullOrEmpty(CurrentKey);
-        }
-
         public async Task Save()
         {
             var leagueHasChanged = LeagueId != sidekickSettings.LeagueId;
@@ -196,90 +180,6 @@ namespace Sidekick.Presentation.Blazor.Settings
                 .GetProperties()
                 .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
                     || Chat_CustomCommands.Any(x => x.Key == keybind);
-        }
-
-        private bool NativeKeyboard_OnKeyDown(KeyDownArgs args)
-        {/*
-            if (SettingCustom)
-            {
-                if (CurrentCustomChat == null)
-                {
-                    SettingCustom = false;
-                    return false;
-                }
-
-                if (input == "Escape")
-                {
-                    SettingCustom = false;
-                    return true;
-                }
-
-                if (!IsKeybindUsed(input, CurrentCustomChat.Key))
-                {
-                    CurrentCustomChat.Key = input;
-                }
-
-                SettingCustom = false;
-                return true;
-            }
-            */
-            if (string.IsNullOrEmpty(CurrentKey))
-            {
-                return false;
-            }
-
-            if (args.Key == "Escape")
-            {
-                CurrentKey = null;
-                return true;
-            }
-
-            if (!IsKeybindUsed(args.Key, CurrentKey))
-            {
-                var property = GetType()
-                    .GetProperties()
-                    .FirstOrDefault(x => x.Name == CurrentKey);
-
-                if (property != default)
-                {
-                    property.SetValue(this, args.Key);
-                }
-            }
-
-            CurrentKey = null;
-            return true;
-        }
-
-        public void Clear(string key)
-        {
-            var property = GetType()
-                .GetProperties()
-                .FirstOrDefault(x => x.Name == key);
-            if (property != default)
-            {
-                property.SetValue(this, string.Empty);
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (isDisposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                keybindsProvider.OnKeyDown -= NativeKeyboard_OnKeyDown;
-            }
-
-            isDisposed = true;
         }
 
         public async Task ResetCache()

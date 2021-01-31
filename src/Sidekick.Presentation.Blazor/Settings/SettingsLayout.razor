@@ -1,28 +1,24 @@
 <MudLayout>
     <SidekickAppBar Title="@Localizer[SettingsResources.Title]" View="View.Settings"></SidekickAppBar>
 
-    <MudContainer>
-        <MudGrid>
-            <MudItem xs="3" Class="py-5">
-                <MudNavMenu>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings">@Localizer[SettingsResources.General]</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings/price">@Localizer[SettingsResources.Price]</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings/map">@Localizer[SettingsResources.Map]</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings/wiki">@Localizer[SettingsResources.Wiki]</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings/chat">@Localizer[SettingsResources.Chat]</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="/settings/stash">@Localizer[SettingsResources.Stash]</MudNavLink>
-                </MudNavMenu>
-            </MudItem>
+    <MudDrawer ClipMode="DrawerClipMode.Always"
+               Open="true"
+               Variant="DrawerVariant.Persistent">
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings">@Localizer[SettingsResources.General]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/price">@Localizer[SettingsResources.Price]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/map">@Localizer[SettingsResources.Map]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/wiki">@Localizer[SettingsResources.Wiki]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/chat">@Localizer[SettingsResources.Chat]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/stash">@Localizer[SettingsResources.Stash]</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
 
-            <MudItem xs="9">
-                <MudMainContent>
-                    <MudContainer>
-                        @ChildContent
-                    </MudContainer>
-                </MudMainContent>
-            </MudItem>
-        </MudGrid>
-    </MudContainer>
+    <MudMainContent Class="mud-main-drawer-open-persistent-left">
+        <MudContainer Class="py-6">
+            @ChildContent
+        </MudContainer>
+    </MudMainContent>
 </MudLayout>
 
 @code {

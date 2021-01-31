@@ -21,8 +21,10 @@ namespace Sidekick.Presentation.Blazor.Settings
         public const string Group_Custom_Keybinds = "Group_Custom_Keybinds";
         public const string Group_Keybinds = "Group_Keybinds";
         public const string Group_Other = "Group_Other";
+        public const string Key_Active = "Key_Active";
         public const string Key_FindItems = "Key_FindItems";
         public const string Key_OpenSettings = "Key_OpenSettings";
+        public const string Key_Unset = "Key_Unset";
         public const string Language_Parser = "Language_Parser";
         public const string Language_Title = "Language_Title";
         public const string Language_UI = "Language_UI";
