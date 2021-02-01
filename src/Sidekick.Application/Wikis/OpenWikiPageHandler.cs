@@ -9,6 +9,7 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
+using Sidekick.Domain.Wikis;
 using Sidekick.Domain.Wikis.Commands;
 
 namespace Sidekick.Application.Wikis

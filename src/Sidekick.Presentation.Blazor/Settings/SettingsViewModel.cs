@@ -7,6 +7,7 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings;
+using Sidekick.Domain.Wikis;
 using Sidekick.Extensions;
 
 namespace Sidekick.Presentation.Blazor.Settings
@@ -17,6 +18,8 @@ namespace Sidekick.Presentation.Blazor.Settings
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ISidekickSettings sidekickSettings;
         private readonly IMediator mediator;
+
+        private bool Initialized = false;
 
         public SettingsViewModel(
             IUILanguageProvider uiLanguageProvider,
@@ -38,12 +41,18 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public async Task Initialize()
         {
+            if (Initialized)
+            {
+                return;
+            }
+            Initialized = true;
+
             sidekickSettings.CopyValuesTo(this);
 
-            WikiOptions = new Dictionary<string, string>()
+            WikiOptions = new Dictionary<WikiSetting, string>()
             {
-                { "POE Wiki", WikiSetting.PoeWiki.ToString() },
-                { "POE Db", WikiSetting.PoeDb.ToString() },
+                { WikiSetting.PoeWiki, "POE Wiki" },
+                { WikiSetting.PoeDb, "POE Db" },
             };
 
             ParserLanguageOptions = gameLanguageProvider.AvailableLanguages
@@ -58,7 +67,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         #region Settings
 
-        public Dictionary<string, string> WikiOptions { get; private set; }
+        public Dictionary<WikiSetting, string> WikiOptions { get; private set; }
 
         public Dictionary<string, string> LeagueOptions { get; private set; }
 

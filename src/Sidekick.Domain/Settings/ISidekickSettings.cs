@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sidekick.Domain.Wikis;
 
 namespace Sidekick.Domain.Settings
 {

@@ -1,4 +1,4 @@
-namespace Sidekick.Domain.Settings
+namespace Sidekick.Domain.Wikis
 {
     /// <summary>
     /// Identifies the type of wiki

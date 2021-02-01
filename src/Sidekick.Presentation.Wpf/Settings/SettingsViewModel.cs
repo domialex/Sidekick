@@ -13,6 +13,7 @@ using Sidekick.Domain.Localization;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
+using Sidekick.Domain.Wikis;
 using Sidekick.Extensions;
 using Sidekick.Presentation.Wpf.Helpers;
 

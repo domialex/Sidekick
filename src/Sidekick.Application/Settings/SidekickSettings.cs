@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sidekick.Domain.Settings;
+using Sidekick.Domain.Wikis;
 
 namespace Sidekick.Application.Settings
 {

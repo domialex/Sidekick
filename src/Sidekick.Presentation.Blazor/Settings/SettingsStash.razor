@@ -1,9 +1,41 @@
 @page "/settings/stash"
 
 <SettingsLayout>
-    <p>Stash</p>
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Keybinds]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <KeybindEditor Label="@Localizer[SettingsResources.Stash_Key_Left]"
+                           @bind-Value="ViewModel.Stash_Key_Left" />
+            <KeybindEditor Label="@Localizer[SettingsResources.Stash_Key_Right]"
+                           @bind-Value="ViewModel.Stash_Key_Right" />
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="mt-6">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Other]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <div>
+                <MudCheckBox Label="@Localizer[SettingsResources.Stash_EnableCtrlScroll]"
+                             @bind-Checked="@ViewModel.Stash_EnableCtrlScroll"></MudCheckBox>
+            </div>
+        </MudCardContent>
+    </MudCard>
 </SettingsLayout>
 
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Initialize();
+        await base.OnInitializedAsync();
+    }
 }

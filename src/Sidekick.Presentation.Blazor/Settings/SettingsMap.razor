@@ -1,9 +1,53 @@
 @page "/settings/map"
 
 <SettingsLayout>
-    <p>Map</p>
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Keybinds]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <KeybindEditor Label="@Localizer[SettingsResources.Map_Key_Check]"
+                           @bind-Value="ViewModel.Map_Key_Check" />
+            <KeybindEditor Label="@Localizer[SettingsResources.Map_Key_Close]"
+                           @bind-Value="ViewModel.Map_Key_Close" />
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="mt-6">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Map_Dangerous]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudTextField Label="@Localizer[SettingsResources.Map_Dangerous_Regex]"
+                          Variant="Variant.Filled"
+                          @bind-Value="ViewModel.Map_Dangerous_Regex" />
+        </MudCardContent>
+    </MudCard>
+    <MudCard Class="mt-6">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Other]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <div>
+                <MudCheckBox Label="@Localizer[SettingsResources.Map_CloseWithMouse]"
+                             @bind-Checked="@ViewModel.Map_CloseWithMouse"></MudCheckBox>
+            </div>
+        </MudCardContent>
+    </MudCard>
 </SettingsLayout>
 
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Initialize();
+        await base.OnInitializedAsync();
+    }
 }
