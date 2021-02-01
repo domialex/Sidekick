@@ -1,3 +1,6 @@
+@using Sidekick.Domain.Cache.Commands
+@using Sidekick.Domain.Settings.Commands
+
 <MudLayout>
     <SidekickAppBar Title="@Localizer[SettingsResources.Title]" View="View.Settings"></SidekickAppBar>
 
@@ -18,12 +21,48 @@
     <MudMainContent>
         <MudContainer Class="py-6">
             @ChildContent
+
+            <div class="pt-6 d-flex">
+                <div class="flex-grow-1">
+                    <MudButton Variant="Variant.Text"
+                               @onclick="ResetCache">
+                        @Localizer[SettingsResources.ResetCache]
+                    </MudButton>
+                </div>
+                <div class="flex-grow-0">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               @onclick="Save">
+                        @Localizer[SettingsResources.Save]
+                    </MudButton>
+                </div>
+            </div>
         </MudContainer>
     </MudMainContent>
 </MudLayout>
 
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+    [Inject] private IViewLocator ViewLocator { get; set; }
 
     [Parameter] public RenderFragment ChildContent { get; set; }
+
+    public async Task Save()
+    {
+        /*
+                    Chat_CustomCommands.Clear();
+        foreach (var setting in CustomChatSettings)
+                        Chat_CustomCommands.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
+        */
+        await Mediator.Send(new SaveSettingsCommand(ViewModel));
+        ViewLocator.Close(View.Settings);
+    }
+
+    public async Task ResetCache()
+    {
+        await Mediator.Send(new ClearCacheCommand());
+        ViewLocator.Close(View.Settings);
+    }
 }

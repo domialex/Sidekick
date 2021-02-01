@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Domain.Localization;
 using Sidekick.Presentation.Debounce;
 using Sidekick.Presentation.Localization;
 

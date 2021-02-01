@@ -156,11 +156,11 @@
   <data name="Map_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
-  </data>
   <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sauvegarder</value>
   </data>
   <data name="Stash_EnableCtrlScroll" xml:space="preserve">
     <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>

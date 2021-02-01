@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings;
 
 namespace Sidekick.Presentation.Localization

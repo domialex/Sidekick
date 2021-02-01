@@ -3,6 +3,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Languages.Commands;
+using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 
@@ -11,15 +16,31 @@ namespace Sidekick.Application.Settings
     public class SaveSettingsHandler : ICommandHandler<SaveSettingsCommand>
     {
         internal const string FileName = "Sidekick_settings.json";
+        private readonly IMediator mediator;
         private readonly SidekickSettings settings;
+        private readonly IGameLanguageProvider gameLanguageProvider;
+        private readonly IUILanguageProvider uiLanguageProvider;
 
-        public SaveSettingsHandler(SidekickSettings settings)
+        public SaveSettingsHandler(
+            IMediator mediator,
+            SidekickSettings settings,
+            IGameLanguageProvider gameLanguageProvider,
+            IUILanguageProvider uiLanguageProvider)
         {
+            this.mediator = mediator;
             this.settings = settings;
+            this.gameLanguageProvider = gameLanguageProvider;
+            this.uiLanguageProvider = uiLanguageProvider;
         }
 
-        public Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
         {
+            var leagueHasChanged = request.Settings.LeagueId != settings.LeagueId;
+            var languageHasChanged = gameLanguageProvider.Current.LanguageCode != request.Settings.Language_Parser;
+
+            uiLanguageProvider.SetLanguage(request.Settings.Language_UI);
+            await mediator.Send(new SetGameLanguageCommand(request.Settings.Language_Parser));
+
             request.Settings.CopyValuesTo(settings);
 
             var json = JsonSerializer.Serialize(settings);
@@ -49,7 +70,7 @@ namespace Sidekick.Application.Settings
             }
             else
             {
-                return Unit.Task;
+                return Unit.Value;
             }
 
             foreach (var property in root.EnumerateObject())
@@ -70,7 +91,12 @@ namespace Sidekick.Application.Settings
                 File.Delete(filePath);
             }
 
-            return Unit.Task;
+            if (languageHasChanged || leagueHasChanged)
+            {
+                await mediator.Send(new ClearCacheCommand());
+            }
+
+            return Unit.Value;
         }
     }
 }

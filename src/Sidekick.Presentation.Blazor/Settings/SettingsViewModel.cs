@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Languages;
-using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
-using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Localization;
 
 namespace Sidekick.Presentation.Blazor.Settings
 {
@@ -152,22 +148,6 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         #endregion
 
-        public async Task Save()
-        {
-            var leagueHasChanged = LeagueId != sidekickSettings.LeagueId;
-            var languageHasChanged = gameLanguageProvider.Current.LanguageCode != Language_Parser;
-            /*
-                        Chat_CustomCommands.Clear();
-            foreach (var setting in CustomChatSettings)
-                            Chat_CustomCommands.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
-            */
-            uiLanguageProvider.SetLanguage(Language_UI);
-            await mediator.Send(new SetGameLanguageCommand(Language_Parser));
-            await mediator.Send(new SaveSettingsCommand(this));
-
-            if (languageHasChanged || leagueHasChanged) await ResetCache();
-        }
-
         public bool IsKeybindUsed(string keybind, string ignoreKey = null)
         {
             // Allow close commands to have the same keybinds
@@ -180,12 +160,6 @@ namespace Sidekick.Presentation.Blazor.Settings
                 .GetProperties()
                 .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
                     || Chat_CustomCommands.Any(x => x.Key == keybind);
-        }
-
-        public async Task ResetCache()
-        {
-            await mediator.Send(new ClearCacheCommand());
-            await mediator.Send(new InitializeCommand(false));
         }
 
         #region Custom Commands

@@ -34,7 +34,6 @@ namespace Sidekick.Presentation.Blazor.Settings
         public const string Map_Dangerous_Regex = "Map_Dangerous_Regex";
         public const string Map_Key_Check = "Map_Key_Check";
         public const string Map_Key_Close = "Map_Key_Close";
-        public const string Ok = "Ok";
         public const string Price = "Price";
         public const string Price_CloseWithMouse = "Price_CloseWithMouse";
         public const string Price_Key_Check = "Price_Key_Check";
@@ -42,6 +41,7 @@ namespace Sidekick.Presentation.Blazor.Settings
         public const string Price_Key_OpenSearch = "Price_Key_OpenSearch";
         public const string Price_Prediction_Enable = "Price_Prediction_Enable";
         public const string ResetCache = "ResetCache";
+        public const string Save = "Save";
         public const string Stash = "Stash";
         public const string Stash_EnableCtrlScroll = "Stash_EnableCtrlScroll";
         public const string Stash_Key_Left = "Stash_Key_Left";

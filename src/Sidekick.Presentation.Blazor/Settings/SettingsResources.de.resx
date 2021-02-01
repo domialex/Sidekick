@@ -165,9 +165,6 @@
   <data name="Map_Key_Close" xml:space="preserve">
     <value>Fenster schließen</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
-  </data>
   <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>Schließe Overlay per Mausklick</value>
   </data>
@@ -179,6 +176,9 @@
   </data>
   <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>Öffne Suche</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="Stash_EnableCtrlScroll" xml:space="preserve">
     <value>Aktiviere Registerwechsel mit Strg + Mausrad</value>

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Sidekick.Presentation.Localization
+namespace Sidekick.Domain.Localization
 {
     public interface IUILanguageProvider
     {

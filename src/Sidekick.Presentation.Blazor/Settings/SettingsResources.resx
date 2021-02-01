@@ -207,9 +207,6 @@
   <data name="Map_Key_Close" xml:space="preserve">
     <value>Close Window</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
-  </data>
   <data name="Price" xml:space="preserve">
     <value>Price Information</value>
   </data>
@@ -230,6 +227,9 @@
   </data>
   <data name="ResetCache" xml:space="preserve">
     <value>Reset Cache</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="Stash" xml:space="preserve">
     <value>Stash Commands</value>

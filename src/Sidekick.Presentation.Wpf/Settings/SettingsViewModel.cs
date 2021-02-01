@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Languages;
-using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
-using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Keybinds;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Localization;
 using Sidekick.Presentation.Wpf.Helpers;
 
 namespace Sidekick.Presentation.Wpf.Settings
@@ -175,8 +173,6 @@ namespace Sidekick.Presentation.Wpf.Settings
             foreach (var setting in CustomChatSettings)
                 Chat_CustomCommands.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
 
-            uiLanguageProvider.SetLanguage(Language_UI);
-            await mediator.Send(new SetGameLanguageCommand(Language_Parser));
             await mediator.Send(new SaveSettingsCommand(this));
 
             if (languageHasChanged || leagueHasChanged) await ResetCache();
@@ -283,7 +279,6 @@ namespace Sidekick.Presentation.Wpf.Settings
         public async Task ResetCache()
         {
             await mediator.Send(new ClearCacheCommand());
-            await mediator.Send(new InitializeCommand(false));
         }
 
         #region Custom Commands

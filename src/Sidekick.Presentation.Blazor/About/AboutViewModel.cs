@@ -10,7 +10,6 @@ namespace Sidekick.Presentation.Blazor.About
     public class AboutViewModel : IDisposable
     {
         private readonly IMediator mediator;
-        private readonly ILogger<AboutViewModel> logger;
         public string VersionNumber { get; private set; }
         public string OperatingSystem { get; private set; }
         public string EnvironmentVersion { get; private set; }
@@ -40,18 +39,15 @@ namespace Sidekick.Presentation.Blazor.About
         public Dictionary<string, string> ThirdParties { get; private set; } = new Dictionary<string, string>()
         {
             { "MudBlazor", "https://github.com/Garderoben/MudBlazor" },
-            { "AutoFixture", "https://github.com/AutoFixture/AutoFixture" },
             { "Fluent Assertions", "https://fluentassertions.com" },
             { "Microsoft - ASP.NET", "https://asp.net" },
             { "NeatInput", "https://github.com/LegendaryB/NeatInput" },
-            { "NUnit", "https://nunit.org" },
             { "Serilog", "https://serilog.net" },
             { "TextCopy", "https://github.com/CopyText/TextCopy" },
         };
         public AboutViewModel(IMediator mediator, ILogger<AboutViewModel> logger)
         {
             this.mediator = mediator;
-            this.logger = logger;
 
             VersionNumber = GetType().Assembly.GetName().Version.ToString();
 

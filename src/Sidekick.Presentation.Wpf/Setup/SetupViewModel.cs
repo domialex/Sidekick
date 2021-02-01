@@ -12,10 +12,10 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Localization;
 using Sidekick.Presentation.Wpf.Helpers;
 
 namespace Sidekick.Presentation.Wpf.Setup
@@ -90,8 +90,6 @@ namespace Sidekick.Presentation.Wpf.Setup
             sidekickSettings.CopyValuesTo(newSettings);
             this.CopyValuesTo(newSettings);
 
-            uiLanguageProvider.SetLanguage(Language_UI);
-            await mediator.Send(new SetGameLanguageCommand(Language_Parser));
             await mediator.Send(new SaveSettingsCommand(newSettings));
             await mediator.Send(new InitializeCommand(true));
         }

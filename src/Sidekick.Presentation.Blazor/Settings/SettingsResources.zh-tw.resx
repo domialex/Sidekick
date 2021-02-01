@@ -174,9 +174,6 @@
   <data name="Map_Key_Close" xml:space="preserve">
     <value>關閉視窗</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>確定</value>
-  </data>
   <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
@@ -191,6 +188,9 @@
   </data>
   <data name="Price_Prediction_Enable" xml:space="preserve">
     <value>啟用價錢預測</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>確定</value>
   </data>
   <data name="Stash_EnableCtrlScroll" xml:space="preserve">
     <value>Ctrl+滾輪滾動倉庫標籤</value>
