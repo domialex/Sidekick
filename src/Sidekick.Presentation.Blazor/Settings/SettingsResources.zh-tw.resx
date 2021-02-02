@@ -135,9 +135,6 @@
   <data name="Chat_Key_Hideout" xml:space="preserve">
     <value>回到藏身處</value>
   </data>
-  <data name="Chat_Key_LeaveParty" xml:space="preserve">
-    <value>離開組隊</value>
-  </data>
   <data name="Cheatsheets_Key_Open" xml:space="preserve">
     <value>聯盟機制小幫手</value>
   </data>

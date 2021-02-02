@@ -12,7 +12,6 @@ using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
 using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
-using Sidekick.Presentation.Wpf.Settings;
 using Sidekick.Presentation.Wpf.Setup;
 using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
 using Sidekick.Presentation.Wpf.Views.MapInfo;
@@ -32,7 +31,6 @@ namespace Sidekick.Presentation.Wpf.Views
             { Domain.Views.View.Logs, typeof(ApplicationLogsView) },
             { Domain.Views.View.ParserError, typeof(ParserError) },
             { Domain.Views.View.Price, typeof(PriceView) },
-            { Domain.Views.View.Settings, typeof(SettingsView) },
             { Domain.Views.View.Setup, typeof(SetupView) },
         };
 

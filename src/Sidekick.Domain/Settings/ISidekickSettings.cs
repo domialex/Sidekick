@@ -37,11 +37,7 @@ namespace Sidekick.Domain.Settings
         string Cheatsheets_Key_Open { get; }
         int Cheatsheets_SelectedIndex { get; }
 
-        string Chat_Key_Exit { get; }
-        string Chat_Key_Hideout { get; }
-        string Chat_Key_LeaveParty { get; }
-        string Chat_Key_ReplyToLastWhisper { get; }
-        List<CustomChatSetting> Chat_CustomCommands { get; }
+        List<ChatSetting> Chat_Commands { get; }
 
         string Stash_Key_Left { get; }
         string Stash_Key_Right { get; }

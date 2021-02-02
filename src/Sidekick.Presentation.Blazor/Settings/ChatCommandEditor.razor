@@ -1,0 +1,54 @@
+@using Sidekick.Domain.Settings
+
+<MudCard Class="mb-6">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">@Title</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton OnClick="OnRemove"
+                           Icon="@Icons.Filled.Delete"
+                           Color="Color.Error"></MudIconButton>
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <KeybindEditor Label="@Localizer[SettingsResources.Chat_Keybind]"
+                       @bind-Value="ChatSetting.Key" />
+        <MudTextField Label="@Localizer[SettingsResources.Chat_Command]"
+                      Variant="Variant.Filled"
+                      @bind-Value="ChatSetting.Command" />
+        <MudCheckBox Label="@Localizer[SettingsResources.Chat_Submit]"
+                     @bind-Checked="ChatSetting.Submit" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+
+    [Parameter] public ChatSetting ChatSetting { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnRemove { get; set; }
+
+    private string Title
+    {
+        get
+        {
+            if (ChatSetting.Command.StartsWith("@"))
+            {
+                return Localizer[SettingsResources.Chat_Whisper];
+            }
+            else if (ChatSetting.Command.StartsWith("/kick"))
+            {
+                return Localizer[SettingsResources.Chat_Kick];
+            }
+            else if (ChatSetting.Command.StartsWith("/exit"))
+            {
+                return Localizer[SettingsResources.Chat_Exit];
+            }
+            else if (ChatSetting.Command.StartsWith("/hideout"))
+            {
+                return Localizer[SettingsResources.Chat_Hideout];
+            }
+            return Localizer[SettingsResources.Chat_Custom];
+        }
+    }
+}

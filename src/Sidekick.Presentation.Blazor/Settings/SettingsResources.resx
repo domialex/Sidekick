@@ -132,17 +132,50 @@
   <data name="Chat" xml:space="preserve">
     <value>Chat Commands</value>
   </data>
-  <data name="Chat_Key_Exit" xml:space="preserve">
-    <value>Exit to Character Selection</value>
+  <data name="Chat_Add" xml:space="preserve">
+    <value>Add a new command</value>
   </data>
-  <data name="Chat_Key_Hideout" xml:space="preserve">
+  <data name="Chat_Command" xml:space="preserve">
+    <value>Chat Command</value>
+  </data>
+  <data name="Chat_Commands" xml:space="preserve">
+    <value>Common Commands</value>
+  </data>
+  <data name="Chat_Commands_Exit" xml:space="preserve">
+    <value>/exit - Exit to character screen</value>
+  </data>
+  <data name="Chat_Commands_Hideout" xml:space="preserve">
+    <value>/hideout - Go to your hideout</value>
+  </data>
+  <data name="Chat_Custom" xml:space="preserve">
+    <value>Custom Command</value>
+  </data>
+  <data name="Chat_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Chat_Hideout" xml:space="preserve">
     <value>Go to Hideout</value>
   </data>
-  <data name="Chat_Key_LeaveParty" xml:space="preserve">
-    <value>Leave Party</value>
+  <data name="Chat_Keybind" xml:space="preserve">
+    <value>Keybind</value>
   </data>
-  <data name="Chat_Key_ReplyToLastWhisper" xml:space="preserve">
-    <value>Reply to last whisper</value>
+  <data name="Chat_Kick" xml:space="preserve">
+    <value>Kick from party</value>
+  </data>
+  <data name="Chat_Submit" xml:space="preserve">
+    <value>Submit the command</value>
+  </data>
+  <data name="Chat_Whisper" xml:space="preserve">
+    <value>Whisper</value>
+  </data>
+  <data name="Chat_Wildcard" xml:space="preserve">
+    <value>Wildcards</value>
+  </data>
+  <data name="Chat_Wildcard_LastWhisper_CharacterName" xml:space="preserve">
+    <value>{LastWhisper.CharacterName} - Character name of the last whisper message you received.</value>
+  </data>
+  <data name="Chat_Wildcard_Me_CharacterName" xml:space="preserve">
+    <value>{Me.CharacterName} - Your own character name.</value>
   </data>
   <data name="Cheatsheets" xml:space="preserve">
     <value>Cheatsheets</value>

@@ -49,6 +49,13 @@ namespace Sidekick.Presentation.Blazor.Settings
 
             sidekickSettings.CopyValuesTo(this);
 
+            // Make sure to copy by value for the chat commands. Without doing this,
+            // changing the chat commands but not saving would still modify the sidekick settings.
+            // We do not want that.
+            Chat_Commands = sidekickSettings.Chat_Commands
+                .Select(x => new ChatSetting(x.Key, x.Command, x.Submit))
+                .ToList();
+
             WikiOptions = new Dictionary<WikiSetting, string>()
             {
                 { WikiSetting.PoeWiki, "POE Wiki" },
@@ -75,11 +82,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public Dictionary<string, string> ParserLanguageOptions { get; private set; } = new Dictionary<string, string>();
 
-        // public Dictionary<CustomChatModel> CustomChatSettings { get; private set; }
-
         public Guid? CurrentKey { get; set; }
-
-        // public CustomChatModel CurrentCustomChat { get; set; }
 
         public bool SettingCustom { get; set; }
 
@@ -153,7 +156,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public WikiSetting Wiki_Preferred { get; set; }
 
-        public List<CustomChatSetting> Chat_CustomCommands { get; set; } = new List<CustomChatSetting>();
+        public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>();
 
         #endregion
 
@@ -168,19 +171,7 @@ namespace Sidekick.Presentation.Blazor.Settings
             return GetType()
                 .GetProperties()
                 .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
-                    || Chat_CustomCommands.Any(x => x.Key == keybind);
+                    || Chat_Commands.Any(x => x.Key == keybind);
         }
-
-        #region Custom Commands
-        /*
-        public void NewCommand()
-        {
-            if (!CustomChatSettings.Any(x => x.ChatCommand == "New Command"))
-            {
-                CustomChatSettings.Add(new CustomChatModel { ChatCommand = "New Command", Key = "" });
-            }
-        }
-        */
-        #endregion
     }
 }

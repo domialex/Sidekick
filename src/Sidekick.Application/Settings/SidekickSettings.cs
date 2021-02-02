@@ -49,15 +49,9 @@ namespace Sidekick.Application.Settings
 
         public string Map_Key_Check { get; set; } = "Ctrl+X";
 
-        public string Chat_Key_Hideout { get; set; } = "F5";
-
-        public string Chat_Key_ReplyToLastWhisper { get; set; } = "Ctrl+Enter";
-
         public string Wiki_Key_Open { get; set; } = "Alt+W";
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
-
-        public string Chat_Key_LeaveParty { get; set; } = "F4";
 
         public string Price_Key_OpenSearch { get; set; } = "Alt+Q";
 
@@ -65,12 +59,16 @@ namespace Sidekick.Application.Settings
 
         public string Cheatsheets_Key_Open { get; set; } = "F6";
 
-        public string Chat_Key_Exit { get; set; } = "Ctrl+Shift+X";
-
         public string Stash_Key_Left { get; set; } = "";
 
         public string Stash_Key_Right { get; set; } = "";
 
-        public List<CustomChatSetting> Chat_CustomCommands { get; set; } = new List<CustomChatSetting>();
+        public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>()
+        {
+            new ChatSetting("F5", "/hideout", true),
+            new ChatSetting("F4", "/kick {Me.CharacterName}", true),
+            new ChatSetting("Ctrl+Enter", "@{LastWhisper.CharacterName} ", false),
+            new ChatSetting("F12", "/exit", true),
+        };
     }
 }

@@ -245,9 +245,6 @@
     <Compile Update="Errors\InvalidItemError.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Settings\Tabs\StashTab.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\Prices\ItemLineContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -269,10 +266,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Errors\InvalidItemError.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Settings\Tabs\StashTab.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

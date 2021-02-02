@@ -86,12 +86,6 @@ namespace Sidekick.Application.Keybinds
 
             Task<bool> task = null;
 
-            // Chat commands
-            ExecuteKeybind<ExitToCharacterSelectionCommand>(settings.Chat_Key_Exit, args, ref task, true);
-            ExecuteKeybind<GoToHideoutCommand>(settings.Chat_Key_Hideout, args, ref task, true);
-            ExecuteKeybind<LeavePartyCommand>(settings.Chat_Key_LeaveParty, args, ref task, true);
-            ExecuteKeybind<ReplyToLastWhisperCommand>(settings.Chat_Key_ReplyToLastWhisper, args, ref task, true);
-
             // View commands
             ExecuteKeybind<CloseAllViewCommand>("Esc", args, ref task, false);
             ExecuteKeybind<ClosePriceViewCommand>(settings.Price_Key_Close, args, ref task, false);
@@ -110,9 +104,10 @@ namespace Sidekick.Application.Keybinds
             ExecuteKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right, args, ref task, true);
             ExecuteKeybind<FindItemCommand>(settings.Key_FindItems, args, ref task, true);
 
-            foreach (var customChat in settings.Chat_CustomCommands)
+            // Chat commands
+            foreach (var customChat in settings.Chat_Commands)
             {
-                ExecuteCustomChat(customChat, args, ref task);
+                ExecuteChat(customChat, args, ref task);
             }
 
             if (task == null)
@@ -139,18 +134,18 @@ namespace Sidekick.Application.Keybinds
             return task != null;
         }
 
-        private void ExecuteCustomChat(CustomChatSetting customChatSetting, KeyDownArgs args, ref Task<bool> returnTask)
+        private void ExecuteChat(ChatSetting chatSetting, KeyDownArgs args, ref Task<bool> returnTask)
         {
             if (!processProvider.IsPathOfExileInFocus)
             {
                 return;
             }
 
-            if (args.Key == customChatSetting.Key)
+            if (args.Key == chatSetting.Key)
             {
-                logger.LogInformation($"Keybind detected: {customChatSetting.Key}! Executing the custom chat command '{customChatSetting.ChatCommand}'");
+                logger.LogInformation($"Keybind detected: {chatSetting.Key}! Executing the custom chat command '{chatSetting.Command}'");
 
-                returnTask = mediator.Send(new CustomChatCommand(customChatSetting.ChatCommand));
+                returnTask = mediator.Send(new ChatCommand(chatSetting.Command, chatSetting.Submit));
             }
         }
 
