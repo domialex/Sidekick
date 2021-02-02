@@ -33,10 +33,6 @@ namespace Sidekick.Presentation.Blazor.Settings
             this.mediator = mediator;
 
             gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
-            /*
-            foreach (var setting in Chat_CustomCommands)
-                CustomChatSettings.Add(new CustomChatModel { ChatCommand = setting.ChatCommand, Key = setting.Key });
-            */
         }
 
         public async Task Initialize()
@@ -72,8 +68,6 @@ namespace Sidekick.Presentation.Blazor.Settings
             LeagueOptions = leagues.ToDictionary(x => x.Id, x => x.Text);
         }
 
-        #region Settings
-
         public Dictionary<WikiSetting, string> WikiOptions { get; private set; }
 
         public Dictionary<string, string> LeagueOptions { get; private set; }
@@ -83,8 +77,6 @@ namespace Sidekick.Presentation.Blazor.Settings
         public Dictionary<string, string> ParserLanguageOptions { get; private set; } = new Dictionary<string, string>();
 
         public Guid? CurrentKey { get; set; }
-
-        public bool SettingCustom { get; set; }
 
         public List<string> Price_Mods_Accessory { get; set; }
 
@@ -157,21 +149,5 @@ namespace Sidekick.Presentation.Blazor.Settings
         public WikiSetting Wiki_Preferred { get; set; }
 
         public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>();
-
-        #endregion
-
-        public bool IsKeybindUsed(string keybind, string ignoreKey = null)
-        {
-            // Allow close commands to have the same keybinds
-            if (ignoreKey == nameof(ISidekickSettings.Price_Key_Close) || ignoreKey == nameof(ISidekickSettings.Map_Key_Close))
-            {
-                return false;
-            }
-
-            return GetType()
-                .GetProperties()
-                .Any(x => x.Name != ignoreKey && x.GetValue(this)?.ToString() == keybind)
-                    || Chat_Commands.Any(x => x.Key == keybind);
-        }
     }
 }
