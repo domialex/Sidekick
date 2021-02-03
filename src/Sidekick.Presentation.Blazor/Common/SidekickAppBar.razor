@@ -1,13 +1,15 @@
 @using Sidekick.Domain.Views
 
-<MudAppBar Color="Color.Primary">
-    @if (!string.IsNullOrEmpty(Title))
-    {
-        <MudText Typo="Typo.body1">@Title</MudText>
-    }
-    <MudAppBarSpacer />
-    <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
-</MudAppBar>
+<div class="application-nav-bar">
+    <MudAppBar Color="Color.Primary">
+        @if (!string.IsNullOrEmpty(Title))
+        {
+            <MudText Typo="Typo.body1">@Title</MudText>
+        }
+        <MudAppBarSpacer />
+        <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+    </MudAppBar>
+</div>
 
 @code {
     [Inject] private IViewLocator ViewLocator { get; set; }

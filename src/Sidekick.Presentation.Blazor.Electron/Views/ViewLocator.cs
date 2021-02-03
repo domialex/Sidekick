@@ -57,7 +57,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Resizable = true,
                 Show = false,
                 SkipTaskbar = false,
-                Transparent = false,
+                Transparent = true,
                 WebPreferences = new WebPreferences()
                 {
                     NodeIntegration = false,
