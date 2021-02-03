@@ -1,0 +1,1 @@
+::deep.mudblazor-container{height:100%;}::deep.mudblazor-container .mud-main-content{height:calc(100% - var(--mud-appbar-min-height));overflow-y:auto;margin-top:var(--mud-appbar-min-height);padding-top:0;}
