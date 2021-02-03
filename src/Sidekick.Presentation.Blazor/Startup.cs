@@ -110,7 +110,6 @@ namespace Sidekick.Presentation.Blazor
 
                 await mediator.Send(new InitializeCommand(true));
             });
-
         }
     }
 }
