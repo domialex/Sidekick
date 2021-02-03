@@ -1,0 +1,31 @@
+@page "/map/{encodedItem}"
+
+<MudLayout>
+    <SidekickAppBar Title="@Localizer[MapInfoResources.Title]" View="View.Map"></SidekickAppBar>
+    <MudMainContent>
+        <MudContainer Class="py-6">
+            @if (ViewModel.IsSafe)
+            {
+                <MudText Color="Color.Success">@Localizer[MapInfoResources.Is_Safe]</MudText>
+            }
+            @foreach (String dangerousMod in ViewModel.DangerousMapMods)
+            {
+
+                <MudText Color="Color.Error">@dangerousMod</MudText>
+            }
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+
+    [Parameter] public string EncodedItem { get; set; }
+    [Inject] private IStringLocalizer<MapInfoResources> Localizer { get; set; }
+    [Inject] private MapInfoModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel.Initialize(EncodedItem);
+    }
+}
