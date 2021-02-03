@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
@@ -67,7 +68,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         private static async Task<BrowserWindow> CreateOverlay(string path, int minWidth, int minHeight, ViewPreference preferences)
         {
-            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            var window =  await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
                 Width = preferences?.Width ?? minWidth,
                 Height = preferences?.Height ?? minHeight,
@@ -91,6 +92,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                     NodeIntegration = false,
                 }
             }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+
+            return window;
         }
 
         public async Task Open(View view, params object[] args)
@@ -105,7 +108,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var pathArgs = new StringBuilder();
             foreach (var arg in args)
             {
-                pathArgs.Append($"/{JsonSerializer.Serialize(arg).EncodeBase64()}");
+                pathArgs.Append($"/{HttpUtility.UrlEncode(JsonSerializer.Serialize(arg).EncodeBase64())}");
             }
 
             var browserWindow = view switch
@@ -115,6 +118,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
                 View.Setup => await CreateView($"/about{pathArgs}", 800, 600, preferences),
                 View.Initialization => await CreateView($"/about{pathArgs}", 800, 600, preferences),
+                View.Map => await CreateOverlay($"/map{pathArgs}", 400, 200, preferences),
                 _ => null,
             };
 

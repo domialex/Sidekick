@@ -111,24 +111,6 @@ namespace Sidekick.Presentation.Blazor.Electron
             Task.Run(async () =>
             {
                 trayProvider.Initialize();
-                var browserWindow = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
-                {
-                    Width = 1,
-                    Height = 1,
-                    Frame = false,
-                    Show = true,
-                    Transparent = true,
-                    Fullscreenable = false,
-                    Minimizable = false,
-                    Maximizable = false,
-                    SkipTaskbar = true,
-                    WebPreferences = new WebPreferences()
-                    {
-                        NodeIntegration = false,
-                    }
-                });
-                await Task.Delay(50);
-                browserWindow.Close();
 
                 // Initialize Sidekick
                 await mediator.Send(new SaveSettingsCommand(new SidekickSettings()

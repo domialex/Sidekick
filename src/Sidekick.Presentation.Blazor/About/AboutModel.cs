@@ -7,7 +7,7 @@ using Sidekick.Domain.App.Commands;
 
 namespace Sidekick.Presentation.Blazor.About
 {
-    public class AboutViewModel : IDisposable
+    public class AboutModel : IDisposable
     {
         private readonly IMediator mediator;
         public string VersionNumber { get; private set; }
@@ -45,7 +45,7 @@ namespace Sidekick.Presentation.Blazor.About
             { "Serilog", "https://serilog.net" },
             { "TextCopy", "https://github.com/CopyText/TextCopy" },
         };
-        public AboutViewModel(IMediator mediator, ILogger<AboutViewModel> logger)
+        public AboutModel(IMediator mediator, ILogger<AboutModel> logger)
         {
             this.mediator = mediator;
 
