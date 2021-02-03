@@ -16,6 +16,7 @@
     <PackageReference Include="MudBlazor" Version="1.2.4.13-dev" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Extensions\Sidekick.Extensions.csproj" />
     <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
     <ProjectReference Include="..\Sidekick.Platform\Sidekick.Platform.csproj" />

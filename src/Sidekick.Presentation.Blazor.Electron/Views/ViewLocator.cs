@@ -108,7 +108,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var pathArgs = new StringBuilder();
             foreach (var arg in args)
             {
-                pathArgs.Append($"/{HttpUtility.UrlEncode(JsonSerializer.Serialize(arg).EncodeBase64())}");
+                pathArgs.Append($"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}");
             }
 
             var browserWindow = view switch
@@ -118,7 +118,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
                 View.Setup => await CreateView($"/about{pathArgs}", 800, 600, preferences),
                 View.Initialization => await CreateView($"/about{pathArgs}", 800, 600, preferences),
-                View.Map => await CreateOverlay($"/map{pathArgs}", 400, 200, preferences),
+                View.Map => await CreateOverlay($"/map{pathArgs}", 500, 250, preferences),
                 _ => null,
             };
 

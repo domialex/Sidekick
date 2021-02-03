@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Settings;
 using System.Linq;
+using Sidekick.Extensions;
+using System.Text.Json;
 
 namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
 {
@@ -16,16 +18,21 @@ namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
                 settings.Map_Dangerous_Regex,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            DangerousMapMods = new List<DangerousMapModModel>();
+            DangerousMapMods = new List<String>();
             NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
         }
 
         public Item Item { get; private set; }
         public bool IsSafe { get; private set; }
-        public List<DangerousMapModModel> DangerousMapMods { get; private set; }
+        public List<String> DangerousMapMods { get; private set; }
 
         private Regex DangerousModsRegex { get; set; }
         private Regex NewLinePattern { get; set; }
+
+        public void Initialize(string encodedItem)
+        {
+            this.Initialize(JsonSerializer.Deserialize<Item>(encodedItem.DecodeUrl().DecodeBase64()));
+        }
 
         public void Initialize(Item item)
         {
@@ -34,7 +41,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
             foreach (var matchingLine in NewLinePattern.Split(Item.Text)
                 .Where(line => DangerousModsRegex.IsMatch(line)))
             {
-                DangerousMapMods.Add(new DangerousMapModModel(matchingLine, "#ff2222"));
+                DangerousMapMods.Add(matchingLine);
             }
             IsSafe = DangerousMapMods.Count == 0;
         }

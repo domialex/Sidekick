@@ -6,12 +6,12 @@
         <MudContainer Class="py-6">
             @if (ViewModel.IsSafe)
             {
-                <MudText Style="color: #00FF00">@Localizer[MapInfoResources.Is_Safe]</MudText>
+                <MudText Color="Color.Success">@Localizer[MapInfoResources.Is_Safe]</MudText>
             }
-            @foreach (DangerousMapModModel dangerousMod in ViewModel.DangerousMapMods)
+            @foreach (String dangerousMod in ViewModel.DangerousMapMods)
             {
-                string color = $"color: {dangerousMod.Color}";
-                <MudText Style="@color">@dangerousMod.Modifier</MudText>
+
+                <MudText Color="Color.Error">@dangerousMod</MudText>
             }
         </MudContainer>
     </MudMainContent>
@@ -26,15 +26,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-
-        string UrlDecoded = System.Web.HttpUtility.UrlDecode(EncodedItem);
-
-        byte[] Base64Decoded = Convert.FromBase64String(UrlDecoded);
-
-        string JsonString = System.Text.Encoding.UTF8.GetString(Base64Decoded);
-
-        Sidekick.Domain.Game.Items.Models.Item item = System.Text.Json.JsonSerializer.Deserialize<Sidekick.Domain.Game.Items.Models.Item>(JsonString);
-
-        ViewModel.Initialize(item);
+        ViewModel.Initialize(EncodedItem);
     }
 }
