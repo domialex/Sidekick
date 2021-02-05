@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Notifications.Commands;
 
-namespace Sidekick.Presentation.Blazor.Mocks
+namespace Sidekick.Presentation.Blazor.Mock
 {
     public class OpenConfirmNotificationHandler : ICommandHandler<OpenConfirmNotificationCommand>
     {

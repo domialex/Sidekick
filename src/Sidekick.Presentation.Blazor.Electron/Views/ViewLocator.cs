@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Presentation.Debounce;
@@ -22,16 +22,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         public readonly IViewPreferenceRepository viewPreferenceRepository;
         public readonly IDebouncer debouncer;
         public readonly ILogger<ViewLocator> logger;
+        private readonly ISidekickSettings settings;
 
         public ViewLocator(IWebHostEnvironment webHostEnvironment,
             IViewPreferenceRepository viewPreferenceRepository,
             IDebouncer debouncer,
-            ILogger<ViewLocator> logger)
+            ILogger<ViewLocator> logger,
+            ISidekickSettings settings)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.viewPreferenceRepository = viewPreferenceRepository;
             this.debouncer = debouncer;
             this.logger = logger;
+            this.settings = settings;
         }
 
         private bool FirstView = true;
@@ -66,9 +69,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }, $"http://localhost:{BridgeSettings.WebPort}{path}");
         }
 
-        private static async Task<BrowserWindow> CreateOverlay(string path, int minWidth, int minHeight, ViewPreference preferences)
+        private static async Task<BrowserWindow> CreateModal(string path, int minWidth, int minHeight, ViewPreference preferences)
         {
-            var window =  await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
                 Width = preferences?.Width ?? minWidth,
                 Height = preferences?.Height ?? minHeight,
@@ -77,7 +80,35 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
-                HasShadow = false,
+                HasShadow = true,
+                // Icon = "/Assets/ExaltedOrb.ico",
+                Maximizable = false,
+                Minimizable = false,
+                MinHeight = minHeight,
+                MinWidth = minWidth,
+                Resizable = false,
+                Show = false,
+                SkipTaskbar = true,
+                Transparent = true,
+                WebPreferences = new WebPreferences()
+                {
+                    NodeIntegration = false,
+                }
+            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+        }
+
+        private static async Task<BrowserWindow> CreateOverlay(string path, int minWidth, int minHeight, ViewPreference preferences)
+        {
+            var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Width = preferences?.Width ?? minWidth,
+                Height = preferences?.Height ?? minHeight,
+                AcceptFirstMouse = true,
+                AlwaysOnTop = true,
+                Center = true,
+                Frame = false,
+                Fullscreenable = false,
+                HasShadow = true,
                 // Icon = "Assets/ExaltedOrb.ico",
                 Maximizable = false,
                 Minimizable = false,
@@ -103,6 +134,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Close(view);
             }
 
+            if (view == View.Initialization && !settings.ShowSplashScreen)
+            {
+                return;
+            }
+
             var preferences = await viewPreferenceRepository.Get(view);
 
             var pathArgs = new StringBuilder();
@@ -117,7 +153,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Settings => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
                 View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
                 View.Setup => await CreateView($"/about{pathArgs}", 800, 600, preferences),
-                View.Initialization => await CreateView($"/about{pathArgs}", 800, 600, preferences),
+                View.Initialization => await CreateModal($"/initialization{pathArgs}", 400, 215, preferences),
                 View.Map => await CreateOverlay($"/map{pathArgs}", 500, 250, preferences),
                 _ => null,
             };

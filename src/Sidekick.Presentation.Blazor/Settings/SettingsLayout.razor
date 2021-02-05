@@ -1,7 +1,7 @@
 @using Sidekick.Domain.Cache.Commands
 @using Sidekick.Domain.Settings.Commands
 
-<MudLayout>
+<SidekickLayout>
     <SidekickAppBar Title="@Localizer[SettingsResources.Title]" View="View.Settings"></SidekickAppBar>
 
     <MudDrawer ClipMode="DrawerClipMode.Always"
@@ -39,7 +39,7 @@
             </div>
         </MudContainer>
     </MudMainContent>
-</MudLayout>
+</SidekickLayout>
 
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }

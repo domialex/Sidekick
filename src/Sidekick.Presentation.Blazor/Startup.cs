@@ -12,14 +12,13 @@ using Sidekick.Application;
 using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Settings.Commands;
-using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
-using Sidekick.Presentation.Blazor.Mocks;
+using Sidekick.Presentation.Blazor.Mock;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -52,7 +51,8 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
-                    Assembly.Load("Sidekick.Presentation.Blazor"))
+                    Assembly.Load("Sidekick.Presentation.Blazor"),
+                    Assembly.Load("Sidekick.Presentation.Blazor.Mock"))
 
                 // Layers
                 .AddSidekickApplication()
@@ -60,7 +60,8 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
                 .AddSidekickPresentation()
-                .AddSidekickPresentationBlazor();
+                .AddSidekickPresentationBlazor()
+                .AddSidekickPresentationBlazorMock();
 
             services
                 .AddMudServices()
@@ -68,8 +69,6 @@ namespace Sidekick.Presentation.Blazor
                 .AddMudBlazorSnackbar()
                 .AddMudBlazorResizeListener()
                 .AddMudBlazorDom();
-
-            services.AddSingleton<IViewLocator, ViewLocator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

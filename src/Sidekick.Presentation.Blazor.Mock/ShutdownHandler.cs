@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
 
-namespace Sidekick.Presentation.Blazor.Mocks
+namespace Sidekick.Presentation.Blazor.Mock
 {
     public class ShutdownHandler : ICommandHandler<ShutdownCommand>
     {

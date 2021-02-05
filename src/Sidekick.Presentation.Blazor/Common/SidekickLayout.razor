@@ -1,0 +1,10 @@
+
+<div class="mudblazor-container">
+    <MudLayout>
+        @ChildContent
+    </MudLayout>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

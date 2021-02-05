@@ -54,6 +54,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
+                    Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
 
                 // Layers

@@ -62,6 +62,9 @@ namespace Sidekick.Application.Initialization
         {
             try
             {
+                Completed = 0;
+                Count = 0;
+
                 // Set the total count of handlers
                 AddCount<PlatformInitializationStarted>(request.FirstRun);
                 AddCount<LanguageInitializationStarted>();
@@ -121,6 +124,7 @@ namespace Sidekick.Application.Initialization
                 await RunStep<PlatformInitializationStarted>(request.FirstRun);
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
+                await ReportProgress();
                 await Task.Delay(500);
 
                 // Show a system notification
@@ -159,12 +163,12 @@ namespace Sidekick.Application.Initialization
 
         private async Task ReportProgress()
         {
-            var percentage = Count == 0 ? 0 : (Completed) * 100 / (Count);
-
-            var args = new InitializationProgressed(percentage);
-            if (percentage >= 100)
+            var args = new InitializationProgressed(Count == 0 ? 0 : (Completed) * 100 / (Count));
+            if (args.Percentage >= 100)
             {
                 args.Title = localizer["Ready"];
+                args.Percentage = 100;
+                logger.LogError($"PROGRESS {args.Percentage} {args.Title}");
             }
             else
             {

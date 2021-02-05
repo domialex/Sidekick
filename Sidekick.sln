@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GregsStack.InputSimulatorSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GregsStack.InputSimulatorStandard.Tests", "lib\InputSimulatorStandard\tests\GregsStack.InputSimulatorStandard.Tests\GregsStack.InputSimulatorStandard.Tests.csproj", "{88D66376-964B-46F3-8BD7-4769EA0CD577}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Presentation.Blazor.Mock", "src\Sidekick.Presentation.Blazor.Mock\Sidekick.Presentation.Blazor.Mock.csproj", "{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88D66376-964B-46F3-8BD7-4769EA0CD577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
