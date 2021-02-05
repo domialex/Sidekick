@@ -16,6 +16,20 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             Browser.OnReadyToShow += Browser_OnReadyToShow;
             Browser.OnResize += Browser_OnResize;
             Browser.OnClosed += Browser_OnClosed;
+            Browser.OnBlur += Browser_OnBlur;
+        }
+
+        private void Browser_OnBlur()
+        {
+            if (View == View.Map && Locator.settings.Map_CloseWithMouse)
+            {
+                Browser.Close();
+            }
+
+            if (View == View.Price && Locator.settings.Price_CloseWithMouse)
+            {
+                Browser.Close();
+            }
         }
 
         private void Browser_OnReadyToShow()
@@ -45,6 +59,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             Browser.OnReadyToShow -= Browser_OnReadyToShow;
             Browser.OnResize -= Browser_OnResize;
             Browser.OnClosed -= Browser_OnClosed;
+            Browser.OnBlur -= Browser_OnBlur;
         }
 
         public BrowserWindow Browser { get; }

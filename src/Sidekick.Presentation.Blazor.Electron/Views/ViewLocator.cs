@@ -19,10 +19,10 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
     public class ViewLocator : IViewLocator, IDisposable
     {
         private readonly IWebHostEnvironment webHostEnvironment;
-        public readonly IViewPreferenceRepository viewPreferenceRepository;
-        public readonly IDebouncer debouncer;
-        public readonly ILogger<ViewLocator> logger;
-        private readonly ISidekickSettings settings;
+        internal readonly IViewPreferenceRepository viewPreferenceRepository;
+        internal readonly IDebouncer debouncer;
+        internal readonly ILogger<ViewLocator> logger;
+        internal readonly ISidekickSettings settings;
 
         public ViewLocator(IWebHostEnvironment webHostEnvironment,
             IViewPreferenceRepository viewPreferenceRepository,
@@ -175,6 +175,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }
 
             browserWindow.SetTitle("Sidekick");
+            browserWindow.Focus();
 
             var sidekickView = new SidekickView(this, view, browserWindow);
 
