@@ -112,6 +112,9 @@ namespace Sidekick.Presentation.Blazor.Electron
             Task.Run(async () =>
             {
                 trayProvider.Initialize();
+
+                // We need to trick Electron into thinking that our app is ready to be opened.
+                // This makes Electron hide the splashscreen. For us, it means we are ready to initialize and price check :)
                 var browserWindow = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
                 {
                     Width = 1,
