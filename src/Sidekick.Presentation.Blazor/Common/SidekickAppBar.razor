@@ -6,8 +6,11 @@
         {
             <MudText Typo="Typo.body1">@Title</MudText>
         }
-        <MudAppBarSpacer />
-        <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+        @if (View.HasValue)
+        {
+            <MudAppBarSpacer />
+            <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+        }
     </MudAppBar>
 </div>
 
@@ -15,10 +18,13 @@
     [Inject] private IViewLocator ViewLocator { get; set; }
 
     [Parameter] public string Title { get; set; }
-    [Parameter] public View View { get; set; }
+    [Parameter] public View? View { get; set; } = null;
 
     public void Close()
     {
-        ViewLocator.Close(View);
+        if (View.HasValue)
+        {
+            ViewLocator.Close(View.Value);
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace Sidekick.Infrastructure.PoeNinja
         {
             get
             {
-                if (POE_NINJA_LANGUAGE_CODES.TryGetValue(gameLanguageProvider.Current.LanguageCode, out var languageCode))
+                if (POE_NINJA_LANGUAGE_CODES.TryGetValue(gameLanguageProvider.Language.LanguageCode, out var languageCode))
                 {
                     return languageCode;
                 }

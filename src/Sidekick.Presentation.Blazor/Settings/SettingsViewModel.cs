@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Languages;
-using Sidekick.Domain.Game.Leagues.Queries;
-using Sidekick.Domain.Localization;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Wikis;
 using Sidekick.Extensions;
@@ -14,35 +9,8 @@ namespace Sidekick.Presentation.Blazor.Settings
 {
     public class SettingsViewModel : ISidekickSettings
     {
-        private readonly IUILanguageProvider uiLanguageProvider;
-        private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly ISidekickSettings sidekickSettings;
-        private readonly IMediator mediator;
-
-        private bool Initialized = false;
-
-        public SettingsViewModel(
-            IUILanguageProvider uiLanguageProvider,
-            IGameLanguageProvider gameLanguageProvider,
-            ISidekickSettings sidekickSettings,
-            IMediator mediator)
+        public SettingsViewModel(ISidekickSettings sidekickSettings)
         {
-            this.uiLanguageProvider = uiLanguageProvider;
-            this.gameLanguageProvider = gameLanguageProvider;
-            this.sidekickSettings = sidekickSettings;
-            this.mediator = mediator;
-
-            gameLanguageProvider.AvailableLanguages.ForEach(x => ParserLanguageOptions.Add(x.Name, x.LanguageCode));
-        }
-
-        public async Task Initialize()
-        {
-            if (Initialized)
-            {
-                return;
-            }
-            Initialized = true;
-
             sidekickSettings.CopyValuesTo(this);
 
             // Make sure to copy by value for the chat commands. Without doing this,
@@ -57,24 +25,9 @@ namespace Sidekick.Presentation.Blazor.Settings
                 { WikiSetting.PoeWiki, "POE Wiki" },
                 { WikiSetting.PoeDb, "POE Db" },
             };
-
-            ParserLanguageOptions = gameLanguageProvider.AvailableLanguages
-                .ToDictionary(x => x.LanguageCode, x => x.Name);
-
-            UILanguageOptions = uiLanguageProvider.AvailableLanguages
-                .ToDictionary(x => x.Name, x => x.NativeName.First().ToString().ToUpper() + x.NativeName[1..]);
-
-            var leagues = await mediator.Send(new GetLeaguesQuery(true));
-            LeagueOptions = leagues.ToDictionary(x => x.Id, x => x.Text);
         }
 
         public Dictionary<WikiSetting, string> WikiOptions { get; private set; }
-
-        public Dictionary<string, string> LeagueOptions { get; private set; }
-
-        public Dictionary<string, string> UILanguageOptions { get; private set; }
-
-        public Dictionary<string, string> ParserLanguageOptions { get; private set; } = new Dictionary<string, string>();
 
         public Guid? CurrentKey { get; set; }
 

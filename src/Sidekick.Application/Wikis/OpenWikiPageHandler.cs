@@ -5,7 +5,7 @@ using MediatR;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Game.Languages;
+using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
@@ -17,20 +17,17 @@ namespace Sidekick.Application.Wikis
     public class OpenWikiPageHandler : ICommandHandler<OpenWikiPageCommand, bool>
     {
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
         private readonly ISidekickSettings settings;
 
         public OpenWikiPageHandler(
             IClipboardProvider clipboardProvider,
-            IGameLanguageProvider gameLanguageProvider,
             IMediator mediator,
             IViewLocator viewLocator,
             ISidekickSettings settings)
         {
             this.clipboardProvider = clipboardProvider;
-            this.gameLanguageProvider = gameLanguageProvider;
             this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.settings = settings;
@@ -48,7 +45,7 @@ namespace Sidekick.Application.Wikis
                 return false;
             }
 
-            if (!gameLanguageProvider.IsEnglish)
+            if (!await mediator.Send(new IsGameLanguageEnglishQuery()))
             {
                 // Only available for english language
                 await viewLocator.Open(View.AvailableInEnglishError);

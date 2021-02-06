@@ -1,4 +1,5 @@
 @page "/settings/price"
+@using Sidekick.Presentation.Blazor.Settings.Components
 
 <SettingsLayout>
     <MudCard>
@@ -38,10 +39,4 @@
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ViewModel.Initialize();
-        await base.OnInitializedAsync();
-    }
 }

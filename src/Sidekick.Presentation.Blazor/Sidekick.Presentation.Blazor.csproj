@@ -10,12 +10,14 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.2" />
     <PackageReference Include="Delegate.SassBuilder" Version="1.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MudBlazor" Version="1.2.4.13-dev" />
+    <PackageReference Include="MudBlazor" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Extensions\Sidekick.Extensions.csproj" />

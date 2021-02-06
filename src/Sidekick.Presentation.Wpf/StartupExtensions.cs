@@ -4,7 +4,6 @@ using Sidekick.Presentation.Wpf.About;
 using Sidekick.Presentation.Wpf.Cheatsheets;
 using Sidekick.Presentation.Wpf.Errors;
 using Sidekick.Presentation.Wpf.Initialization;
-using Sidekick.Presentation.Wpf.Setup;
 using Sidekick.Presentation.Wpf.Views;
 using Sidekick.Presentation.Wpf.Views.ApplicationLogs;
 using Sidekick.Presentation.Wpf.Views.MapInfo;
@@ -39,9 +38,6 @@ namespace Sidekick.Presentation.Wpf
 
             services.AddScoped<MapInfoView>();
             services.AddScoped<MapInfoViewModel>();
-
-            services.AddScoped<SetupView>();
-            services.AddScoped<SetupViewModel>();
 
             services.AddSingleton<TrayIconViewModel>();
 

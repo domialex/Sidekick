@@ -152,7 +152,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.About => await CreateView($"/about{pathArgs}", 800, 600, preferences),
                 View.Settings => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
                 View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
-                View.Setup => await CreateView($"/about{pathArgs}", 800, 600, preferences),
+                View.Setup => await CreateModal($"/setup{pathArgs}", 600, 400, preferences),
                 View.Initialization => await CreateModal($"/initialization{pathArgs}", 400, 215, preferences),
                 View.Map => await CreateOverlay($"/map{pathArgs}", 500, 250, preferences),
                 _ => null,

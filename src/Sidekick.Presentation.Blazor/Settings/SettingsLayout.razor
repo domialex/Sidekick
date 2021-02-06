@@ -1,4 +1,5 @@
 @using Sidekick.Domain.Cache.Commands
+@using Sidekick.Domain.Initialization.Commands
 @using Sidekick.Domain.Settings.Commands
 
 <SidekickLayout>
@@ -51,11 +52,6 @@
 
     public async Task Save()
     {
-        /*
-                    Chat_CustomCommands.Clear();
-        foreach (var setting in CustomChatSettings)
-                        Chat_CustomCommands.Add(new CustomChatSetting { ChatCommand = setting.ChatCommand, Key = setting.Key });
-        */
         await Mediator.Send(new SaveSettingsCommand(ViewModel));
         ViewLocator.Close(View.Settings);
     }
@@ -63,6 +59,6 @@
     public async Task ResetCache()
     {
         await Mediator.Send(new ClearCacheCommand());
-        ViewLocator.Close(View.Settings);
+        await Mediator.Send(new InitializeCommand(false));
     }
 }

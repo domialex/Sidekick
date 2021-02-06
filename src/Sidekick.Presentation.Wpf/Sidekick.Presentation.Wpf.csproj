@@ -257,10 +257,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Setup\SetupViewModel.resx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="Errors\AvailableInEnglishError.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

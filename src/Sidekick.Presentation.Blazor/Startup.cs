@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Sidekick.Application;
-using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Infrastructure;
 using Sidekick.Logging;
 using Sidekick.Mapper;
@@ -35,7 +34,12 @@ namespace Sidekick.Presentation.Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services
+                .AddRazorPages()
+                .AddFluentValidation(options =>
+                {
+                    options.RegisterValidatorsFromAssembly(Assembly.Load("Sidekick.Presentation.Blazor"));
+                });
             services.AddServerSideBlazor();
 
             services
@@ -100,13 +104,6 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
-                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
-                {
-                    LeagueId = "Ritual",
-                    Language_Parser = "en",
-                    Language_UI = "en",
-                }));
-
                 await mediator.Send(new InitializeCommand(true));
             });
         }

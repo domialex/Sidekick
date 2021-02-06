@@ -10,10 +10,12 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
+using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
@@ -50,12 +52,20 @@ namespace Sidekick.Application.Initialization
 
         private int Completed = 0;
 
-        private void AddCount<TNotification>(bool shouldAdd = true)
+        private void AddNotificationCount<TNotification>(bool shouldAdd = true)
             where TNotification : INotification
         {
             if (!shouldAdd) return;
 
             Count += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
+        }
+
+        private void AddCommandCount<TCommand>(bool shouldAdd = true)
+            where TCommand : ICommand
+        {
+            if (!shouldAdd) return;
+
+            Count += 1;
         }
 
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
@@ -66,22 +76,20 @@ namespace Sidekick.Application.Initialization
                 Count = 0;
 
                 // Set the total count of handlers
-                AddCount<PlatformInitializationStarted>(request.FirstRun);
-                AddCount<LanguageInitializationStarted>();
-                AddCount<DataInitializationStarted>();
+                AddNotificationCount<PlatformInitializationStarted>(request.FirstRun);
+                AddNotificationCount<DataInitializationStarted>();
+                AddCommandCount<SetUiLanguageCommand>();
+                AddCommandCount<SetGameLanguageCommand>();
 
                 // Report initial progress
                 await ReportProgress();
 
                 // Open a clean view of the initialization
-                viewLocator.Close(View.Settings);
-                viewLocator.Close(View.Setup);
-                if (settings.ShowSplashScreen && !viewLocator.IsOpened(View.Initialization))
-                {
-                    await viewLocator.Open(View.Initialization);
-                }
+                viewLocator.CloseAll();
+                await viewLocator.Open(View.Initialization);
 
-                await RunStep<LanguageInitializationStarted>();
+                // Set the UI language
+                await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
 
                 // Check for updates
                 if (await mediator.Send(new IsNewVersionAvailableQuery()))
@@ -96,9 +104,13 @@ namespace Sidekick.Application.Initialization
                 // Check to see if we should run Setup first before running the rest of the initialization process
                 if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))
                 {
-                    await mediator.Send(new SetupCommand());
+                    viewLocator.Close(View.Initialization);
+                    viewLocator.Open(View.Setup);
                     return Unit.Value;
                 }
+
+                // Set the game language
+                await RunCommandStep(new SetGameLanguageCommand(settings.Language_Parser));
 
                 if (request.FirstRun)
                 {
@@ -115,13 +127,14 @@ namespace Sidekick.Application.Initialization
                     if (string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId))
                     {
                         await mediator.Send(new OpenNotificationCommand(localizer["NewLeagues"]));
-                        await mediator.Send(new SetupCommand());
+                        viewLocator.Close(View.Initialization);
+                        viewLocator.Open(View.Setup);
                         return Unit.Value;
                     }
                 }
 
-                await RunStep<DataInitializationStarted>();
-                await RunStep<PlatformInitializationStarted>(request.FirstRun);
+                await RunNotificationStep(new DataInitializationStarted());
+                await RunNotificationStep(new PlatformInitializationStarted(), request.FirstRun);
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
                 await ReportProgress();
@@ -146,16 +159,31 @@ namespace Sidekick.Application.Initialization
             }
         }
 
-        private async Task RunStep<TNotification>(bool shouldRun = true)
-            where TNotification : INotification, new()
+        private async Task RunNotificationStep<TNotification>(TNotification notification, bool shouldRun = true)
+            where TNotification : INotification
         {
             if (!shouldRun) return;
 
             // Publish the notification
-            await mediator.Publish(new TNotification());
+            await mediator.Publish(notification);
 
             // Make sure that after all handlers run, the Completed count is updated
             Completed += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
+
+            // Report progress
+            await ReportProgress();
+        }
+
+        private async Task RunCommandStep<TCommand>(TCommand command, bool shouldRun = true)
+            where TCommand : ICommand
+        {
+            if (!shouldRun) return;
+
+            // Send the command
+            await mediator.Send(command);
+
+            // Make sure that after all handlers run, the Completed count is updated
+            Completed += 1;
 
             // Report progress
             await ReportProgress();
@@ -168,7 +196,6 @@ namespace Sidekick.Application.Initialization
             {
                 args.Title = localizer["Ready"];
                 args.Percentage = 100;
-                logger.LogError($"PROGRESS {args.Percentage} {args.Title}");
             }
             else
             {

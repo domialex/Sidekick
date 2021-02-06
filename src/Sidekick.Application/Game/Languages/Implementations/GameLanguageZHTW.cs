@@ -3,9 +3,10 @@ using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Application.Game.Languages.Implementations
 {
-    [GameLanguage("TraditionalChinese", "稀有度", "zh")]
+    [GameLanguage("TraditionalChinese", "zh")]
     public class GameLanguageZHTW : IGameLanguage
     {
+        public string LanguageCode => "zh";
         public Uri PoeTradeSearchBaseUrl => new Uri("http://web.poe.garena.tw/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("http://web.poe.garena.tw/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("http://web.poe.garena.tw/api/trade/");

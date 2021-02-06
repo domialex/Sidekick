@@ -11,14 +11,21 @@ namespace Sidekick.Domain.Settings.Commands
         /// Command to save the settings
         /// </summary>
         /// <param name="settings">The current settings to save</param>
-        public SaveSettingsCommand(ISidekickSettings settings)
+        /// <param name="skipInitialize">Skips initialization process</param>
+        public SaveSettingsCommand(ISidekickSettings settings, bool skipInitialize = false)
         {
             Settings = settings;
+            SkipInitialize = skipInitialize;
         }
 
         /// <summary>
         /// The current settings to save
         /// </summary>
         public ISidekickSettings Settings { get; }
+
+        /// <summary>
+        /// Skips initialization process
+        /// </summary>
+        public bool SkipInitialize { get; }
     }
 }
