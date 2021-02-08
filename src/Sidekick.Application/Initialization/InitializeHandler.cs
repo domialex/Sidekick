@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
@@ -20,12 +19,13 @@ using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
+using Sidekick.Localization.Initialization;
 
 namespace Sidekick.Application.Initialization
 {
     public class InitializeHandler : ICommandHandler<InitializeCommand>
     {
-        private readonly IStringLocalizer<InitializeHandler> localizer;
+        private readonly InitializationResources resources;
         private readonly IMediator mediator;
         private readonly ServiceFactory serviceFactory;
         private readonly ISidekickSettings settings;
@@ -33,14 +33,14 @@ namespace Sidekick.Application.Initialization
         private readonly IViewLocator viewLocator;
 
         public InitializeHandler(
-            IStringLocalizer<InitializeHandler> localizer,
+            InitializationResources resources,
             IMediator mediator,
             ServiceFactory serviceFactory,
             ISidekickSettings settings,
             ILogger<InitializeHandler> logger,
             IViewLocator viewLocator)
         {
-            this.localizer = localizer;
+            this.resources = resources;
             this.mediator = mediator;
             this.serviceFactory = serviceFactory;
             this.settings = settings;
@@ -60,8 +60,7 @@ namespace Sidekick.Application.Initialization
             Count += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
         }
 
-        private void AddCommandCount<TCommand>(bool shouldAdd = true)
-            where TCommand : ICommand
+        private void AddCommandCount(bool shouldAdd = true)
         {
             if (!shouldAdd) return;
 
@@ -78,15 +77,18 @@ namespace Sidekick.Application.Initialization
                 // Set the total count of handlers
                 AddNotificationCount<PlatformInitializationStarted>(request.FirstRun);
                 AddNotificationCount<DataInitializationStarted>();
-                AddCommandCount<SetUiLanguageCommand>();
-                AddCommandCount<SetGameLanguageCommand>();
+                AddCommandCount(); // SetUiLanguageCommand
+                AddCommandCount(); // SetGameLanguageCommand
 
                 // Report initial progress
                 await ReportProgress();
 
                 // Open a clean view of the initialization
                 viewLocator.CloseAll();
-                await viewLocator.Open(View.Initialization);
+                if (settings.ShowSplashScreen)
+                {
+                    await viewLocator.Open(View.Initialization);
+                }
 
                 // Set the UI language
                 await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
@@ -94,7 +96,7 @@ namespace Sidekick.Application.Initialization
                 // Check for updates
                 if (await mediator.Send(new IsNewVersionAvailableQuery()))
                 {
-                    await mediator.Send(new OpenConfirmNotificationCommand(localizer["UpdateAvailable"], localizer["UpdateTitle"], async () =>
+                    await mediator.Send(new OpenConfirmNotificationCommand(resources.UpdateAvailable, resources.UpdateTitle, async () =>
                     {
                         await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
                         await mediator.Send(new ShutdownCommand());
@@ -105,7 +107,7 @@ namespace Sidekick.Application.Initialization
                 if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))
                 {
                     viewLocator.Close(View.Initialization);
-                    viewLocator.Open(View.Setup);
+                    await viewLocator.Open(View.Setup);
                     return Unit.Value;
                 }
 
@@ -126,9 +128,9 @@ namespace Sidekick.Application.Initialization
                     // Check to see if we should run Setup first before running the rest of the initialization process
                     if (string.IsNullOrEmpty(settings.LeagueId) || !leagues.Any(x => x.Id == settings.LeagueId))
                     {
-                        await mediator.Send(new OpenNotificationCommand(localizer["NewLeagues"]));
+                        await mediator.Send(new OpenNotificationCommand(resources.NewLeagues));
                         viewLocator.Close(View.Initialization);
-                        viewLocator.Open(View.Setup);
+                        await viewLocator.Open(View.Setup);
                         return Unit.Value;
                     }
                 }
@@ -141,9 +143,9 @@ namespace Sidekick.Application.Initialization
                 await Task.Delay(500);
 
                 // Show a system notification
-                await mediator.Send(new OpenNotificationCommand(string.Format(localizer["Notification_Message"], settings.Price_Key_Check.ToKeybindString(), settings.Price_Key_Close.ToKeybindString()), true)
+                await mediator.Send(new OpenNotificationCommand(string.Format(resources.Notification_Message, settings.Price_Key_Check.ToKeybindString(), settings.Price_Key_Close.ToKeybindString()), true)
                 {
-                    Title = localizer["Notification_Title"],
+                    Title = resources.Notification_Title,
                 });
 
                 viewLocator.Close(View.Initialization);
@@ -153,7 +155,7 @@ namespace Sidekick.Application.Initialization
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);
-                await mediator.Send(new OpenNotificationCommand(localizer["Error"]));
+                await mediator.Send(new OpenNotificationCommand(resources.Error));
                 await mediator.Send(new ShutdownCommand());
                 return Unit.Value;
             }
@@ -194,12 +196,12 @@ namespace Sidekick.Application.Initialization
             var args = new InitializationProgressed(Count == 0 ? 0 : (Completed) * 100 / (Count));
             if (args.Percentage >= 100)
             {
-                args.Title = localizer["Ready"];
+                args.Title = resources.Ready;
                 args.Percentage = 100;
             }
             else
             {
-                args.Title = localizer["Title", Completed, Count];
+                args.Title = resources.Title(Completed, Count);
             }
 
             await mediator.Publish(args);

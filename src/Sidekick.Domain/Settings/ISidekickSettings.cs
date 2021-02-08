@@ -35,7 +35,7 @@ namespace Sidekick.Domain.Settings
         string Map_Dangerous_Regex { get; }
 
         string Cheatsheets_Key_Open { get; }
-        int Cheatsheets_SelectedIndex { get; }
+        string Cheatsheets_Selected { get; }
 
         List<ChatSetting> Chat_Commands { get; }
 

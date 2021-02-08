@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ElectronNET.API;
@@ -40,6 +39,48 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private bool FirstView = true;
 
         internal List<SidekickView> Views { get; set; } = new List<SidekickView>();
+
+        private static string GetUrl(View view, params object[] args)
+        {
+            var path = view switch
+            {
+                View.About => "/about",
+                View.Settings => "/settings",
+                View.Price => "/settings",
+                View.League => "/cheatsheets",
+                View.Setup => "/setup",
+                View.Initialization => "/initialization",
+                View.Map => "/map",
+                _ => null,
+            };
+
+            if (path == null)
+            {
+                return null;
+            }
+
+            foreach (var arg in args)
+            {
+                path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+            }
+
+            return path;
+        }
+
+        private static (int Width, int Height) GetSize(View view)
+        {
+            return view switch
+            {
+                View.About => (800, 600),
+                View.Settings => (800, 600),
+                View.Price => (800, 600),
+                View.League => (800, 600),
+                View.Setup => (600, 400),
+                View.Initialization => (400, 215),
+                View.Map => (500, 250),
+                _ => (800, 600),
+            };
+        }
 
         private static async Task<BrowserWindow> CreateView(string path, int minWidth, int minHeight, ViewPreference preferences)
         {
@@ -129,34 +170,40 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         public async Task Open(View view, params object[] args)
         {
+            var url = GetUrl(view);
+            var (width, height) = GetSize(view);
+
             if (IsOpened(view))
             {
+                var openedView = Views.FirstOrDefault(x => x.View == view);
+                if (openedView != null)
+                {
+                    openedView.Browser.LoadURL(url);
+                    openedView.Browser.Focus();
+                    return;
+                }
                 Close(view);
-            }
-
-            if (view == View.Initialization && !settings.ShowSplashScreen)
-            {
-                return;
             }
 
             var preferences = await viewPreferenceRepository.Get(view);
 
-            var pathArgs = new StringBuilder();
-            foreach (var arg in args)
+            BrowserWindow browserWindow = null;
+            switch (view)
             {
-                pathArgs.Append($"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}");
+                case View.About:
+                case View.League:
+                case View.Settings:
+                    browserWindow = await CreateView(url, width, height, preferences);
+                    break;
+                case View.Initialization:
+                case View.Setup:
+                    browserWindow = await CreateModal(url, width, height, preferences);
+                    break;
+                case View.Price:
+                case View.Map:
+                    await CreateOverlay(url, width, height, preferences);
+                    break;
             }
-
-            var browserWindow = view switch
-            {
-                View.About => await CreateView($"/about{pathArgs}", 800, 600, preferences),
-                View.Settings => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
-                View.Price => await CreateView($"/settings{pathArgs}", 800, 600, preferences),
-                View.Setup => await CreateModal($"/setup{pathArgs}", 600, 400, preferences),
-                View.Initialization => await CreateModal($"/initialization{pathArgs}", 400, 215, preferences),
-                View.Map => await CreateOverlay($"/map{pathArgs}", 500, 250, preferences),
-                _ => null,
-            };
 
             if (browserWindow == null)
             {

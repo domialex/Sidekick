@@ -14,8 +14,6 @@ namespace Sidekick.Application.Settings
 
         public string LeaguesHash { get; set; } = "";
 
-        public int Cheatsheets_SelectedIndex { get; set; } = 0;
-
         public WikiSetting Wiki_Preferred { get; set; } = WikiSetting.PoeWiki;
 
         public string Character_Name { get; set; } = "";
@@ -58,6 +56,8 @@ namespace Sidekick.Application.Settings
         public string Key_OpenSettings { get; set; } = "Ctrl+O";
 
         public string Cheatsheets_Key_Open { get; set; } = "F6";
+
+        public string Cheatsheets_Selected { get; set; } = "betrayal";
 
         public string Stash_Key_Left { get; set; } = "";
 

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\lib\InputSimulatorStandard\src\GregsStack.InputSimulatorStandard\GregsStack.InputSimulatorStandard.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
+    <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
   </ItemGroup>
 
 </Project>

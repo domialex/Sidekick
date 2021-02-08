@@ -1,0 +1,53 @@
+
+<SidekickLayout>
+    <SidekickAppBar View="View.League"
+                    Title="@Title">
+        <LeftContent>
+            <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                           Color="Color.Inherit"
+                           Edge="Edge.Start"
+                           OnClick="OpenMenu" />
+        </LeftContent>
+    </SidekickAppBar>
+
+    <MudDrawer @bind-Open="@MenuOpened"
+               Anchor="Anchor.Left"
+               Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h5">Cheatsheets</MudText>
+        </MudDrawerHeader>
+        <MudText Typo="Typo.h6">Leagues</MudText>
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/betrayal">Betrayal</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/blight">Blight</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/delve">Delve</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/heist">Heist</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/incursion">Incursion</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All"
+                        Href="/cheatsheets/metamorph">Metamorph</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer>
+            @ChildContent
+        </MudContainer>
+    </MudMainContent>
+</SidekickLayout>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Title { get; set; }
+
+    private bool MenuOpened { get; set; }
+
+    public void OpenMenu()
+    {
+        MenuOpened = true;
+    }
+}

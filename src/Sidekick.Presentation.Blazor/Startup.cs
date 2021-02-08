@@ -12,6 +12,7 @@ using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Infrastructure;
+using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
@@ -61,6 +62,7 @@ namespace Sidekick.Presentation.Blazor
                 // Layers
                 .AddSidekickApplication()
                 .AddSidekickInfrastructure()
+                .AddSidekickLocalization()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
                 .AddSidekickPresentation()

@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Cheatsheets.Betrayal
+namespace Sidekick.Domain.Cheatsheets.Betrayal
 {
     public class BetrayalReward
     {
@@ -14,7 +14,5 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
         public string Tooltip { get; set; }
 
         public RewardValue Value { get; set; }
-
-        public string Color => Value.GetColor();
     }
 }

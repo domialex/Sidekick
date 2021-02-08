@@ -1,21 +1,19 @@
-namespace Sidekick.Presentation.Cheatsheets.Betrayal
+namespace Sidekick.Domain.Cheatsheets.Betrayal
 {
     public class BetrayalAgent
     {
         public BetrayalAgent(string name, string image, RewardValue value)
         {
-            AgentName = name;
+            Name = name;
             Image = image;
             Value = value;
         }
 
-        public string AgentName { get; set; }
+        public string Name { get; set; }
 
         public string Image { get; set; }
 
         public RewardValue Value { get; set; }
-
-        public string Color => Value.GetColor();
 
         public BetrayalReward Transportation { get; set; }
 

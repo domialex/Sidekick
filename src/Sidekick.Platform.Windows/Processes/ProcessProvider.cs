@@ -9,11 +9,12 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
+using Sidekick.Localization.Platforms;
+using Sidekick.Platform.Windows.DllImport;
 
 namespace Sidekick.Platform.Windows.Processes
 {
@@ -69,16 +70,16 @@ namespace Sidekick.Platform.Windows.Processes
 
         private readonly ILogger logger;
         private readonly IMediator mediator;
-        private readonly IStringLocalizer<ProcessProvider> localizer;
+        private readonly PlatformResources resources;
 
         public ProcessProvider(
             ILogger<ProcessProvider> logger,
             IMediator mediator,
-            IStringLocalizer<ProcessProvider> localizer)
+            PlatformResources resources)
         {
             this.logger = logger;
             this.mediator = mediator;
-            this.localizer = localizer;
+            this.resources = resources;
         }
 
         public async Task Initialize(CancellationToken cancellationToken)
@@ -89,9 +90,9 @@ namespace Sidekick.Platform.Windows.Processes
 
             if (!instanceResult)
             {
-                await mediator.Send(new OpenNotificationCommand(localizer["AlreadyRunningText"]));
-                await Task.Delay(5000);
-                await mediator.Send(new ShutdownCommand());
+                await mediator.Send(new OpenNotificationCommand(resources.AlreadyRunningText), cancellationToken);
+                await Task.Delay(5000, cancellationToken);
+                await mediator.Send(new ShutdownCommand(), cancellationToken);
             }
         }
 
@@ -110,9 +111,13 @@ namespace Sidekick.Platform.Windows.Processes
                 }
 
                 var procId = Environment.ProcessId;
-                GetWindowThreadProcessId(activatedHandle, out var activeProcId);
+                var result = GetWindowThreadProcessId(activatedHandle, out var activeProcId);
+                if (result == HResult.S_OK)
+                {
+                    return activeProcId == procId;
+                }
 
-                return activeProcId == procId;
+                return false;
             }
         }
 
@@ -120,8 +125,13 @@ namespace Sidekick.Platform.Windows.Processes
 
         private static Process GetActiveWindowProcess()
         {
-            GetWindowThreadProcessId(GetForegroundWindow(), out var processID);
-            return Process.GetProcessById(processID);
+            var result = GetWindowThreadProcessId(GetForegroundWindow(), out var processID);
+            if (result == HResult.S_OK)
+            {
+                return Process.GetProcessById(processID);
+            }
+
+            return null;
         }
 
         private static Process GetPathOfExileProcess()
@@ -153,9 +163,9 @@ namespace Sidekick.Platform.Windows.Processes
 
         private async Task RestartAsAdmin()
         {
-            logger.LogError(localizer["RestartText"]);
+            logger.LogError(resources.RestartText);
 
-            await mediator.Send(new OpenConfirmNotificationCommand(localizer["RestartText"],
+            await mediator.Send(new OpenConfirmNotificationCommand(resources.RestartText,
                 onYes: async () =>
                 {
                     Mutex?.Close();
@@ -170,8 +180,8 @@ namespace Sidekick.Platform.Windows.Processes
                     }
                     catch (Exception e)
                     {
-                        logger.LogError(e, localizer["AdminError"]);
-                        await mediator.Send(new OpenNotificationCommand(localizer["AdminError"]));
+                        logger.LogError(e, resources.AdminError);
+                        await mediator.Send(new OpenNotificationCommand(resources.AdminError));
                         await Task.Delay(5000);
                     }
                     finally

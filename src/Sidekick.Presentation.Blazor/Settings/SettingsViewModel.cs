@@ -85,7 +85,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Language_UI { get; set; }
 
-        public int Cheatsheets_SelectedIndex { get; set; }
+        public string Cheatsheets_Selected { get; set; }
 
         public string LeagueId { get; set; }
 
@@ -101,6 +101,6 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public WikiSetting Wiki_Preferred { get; set; }
 
-        public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>();
+        public List<ChatSetting> Chat_Commands { get; set; }
     }
 }

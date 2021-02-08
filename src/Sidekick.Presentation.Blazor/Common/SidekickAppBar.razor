@@ -2,14 +2,19 @@
 
 <div class="application-nav-bar">
     <MudAppBar Color="Color.Primary">
+        @LeftContent
         @if (!string.IsNullOrEmpty(Title))
         {
             <MudText Typo="Typo.body1">@Title</MudText>
         }
+        <MudAppBarSpacer />
+        @RightContent
         @if (View.HasValue)
         {
-            <MudAppBarSpacer />
-            <MudIconButton Icon="@Icons.Filled.Close" Color="Color.Inherit" @onclick="Close" Size="Size.Small" />
+            <MudIconButton Icon="@Icons.Filled.Close"
+                           Color="Color.Inherit"
+                           @onclick="Close"
+                           Edge="Edge.End" />
         }
     </MudAppBar>
 </div>
@@ -17,6 +22,8 @@
 @code {
     [Inject] private IViewLocator ViewLocator { get; set; }
 
+    [Parameter] public RenderFragment LeftContent { get; set; }
+    [Parameter] public RenderFragment RightContent { get; set; }
     [Parameter] public string Title { get; set; }
     [Parameter] public View? View { get; set; } = null;
 

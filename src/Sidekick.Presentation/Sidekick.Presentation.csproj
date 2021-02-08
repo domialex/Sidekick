@@ -34,11 +34,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Localization\Leagues\Betrayal\BetrayalResources.Designer.cs">
-      <DependentUpon>BetrayalResources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Localization\Leagues\Blight\BlightResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -106,10 +101,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Localization\Initialize\InitializeResources.resx">
       <LastGenOutput>InitializeResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Betrayal\BetrayalResources.resx">
-      <LastGenOutput>BetrayalResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Localization\Leagues\Blight\BlightResources.resx">

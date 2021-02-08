@@ -1,0 +1,17 @@
+@page "/cheatsheets/betrayal"
+
+<CheatsheetLayout>
+    Betrayal
+</CheatsheetLayout>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+
+    private BetrayalLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
+        await base.OnInitializedAsync();
+    }
+}

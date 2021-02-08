@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Localization;
 
-namespace Sidekick.Presentation.Localization
+namespace Sidekick.Application.Localization
 {
     public class GetUiLanguagesHandler : IQueryHandler<GetUiLanguagesQuery, List<CultureInfo>>
     {
