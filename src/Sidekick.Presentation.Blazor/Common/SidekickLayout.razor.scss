@@ -1,5 +1,5 @@
 .sidekick-container {
-    &::deep {
+    ::deep {
         .mud-main-content {
             height: calc(100vh - var(--mud-appbar-min-height));
             overflow-y: auto;
