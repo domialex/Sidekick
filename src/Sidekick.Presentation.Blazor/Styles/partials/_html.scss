@@ -1,0 +1,27 @@
+html {
+    // Responsive font-sizes
+    $font-size-min: 14px;
+    $font-size-max: 20px;
+
+    $screen-max: 1280px;
+    $screen-min: 400px;
+
+    font-size: $font-size-min;
+
+    @media screen and (min-width: $screen-min) {
+        @function strip-unit($number) {
+            @if type-of($number) == 'number' and not unitless($number) {
+                @return $number / ($number * 0 + 1);
+            }
+
+            @return $number;
+        }
+
+        font-size: calc(#{$font-size-min} + #{strip-unit($font-size-max - $font-size-min)} * (100vw - #{$screen-min}) / #{strip-unit($screen-max - $screen-min)});
+    }
+
+
+    @media screen and (min-width: $screen-max) {
+        font-size: $font-size-max;
+    }
+}
