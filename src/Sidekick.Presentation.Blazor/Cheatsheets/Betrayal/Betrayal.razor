@@ -1,17 +1,45 @@
 @page "/cheatsheets/betrayal"
 
-<CheatsheetLayout>
-    Betrayal
+<CheatsheetLayout Title="@Resources.Betrayal">
+    <MudGrid Spacing="1">
+        @foreach (var agent in ViewModel.Agents)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard>
+                    <MudCardHeader Class="py-0">
+                        <CardHeaderContent>
+                            <div class="d-flex align-center">
+                                <img src="/images/betrayal/@agent.Image" alt="@agent.Name" />
+                                <MudText Align="Align.Center"
+                                         Typo="Typo.h6">
+                                    @agent.Name
+                                </MudText>
+                            </div>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent Class="py-0">
+                        <MudList Class="pt-0">
+                            <Reward Model="agent.Transportation"></Reward>
+                            <Reward Model="agent.Fortification"></Reward>
+                            <Reward Model="agent.Research"></Reward>
+                            <Reward Model="agent.Intervention"></Reward>
+                        </MudList>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
 </CheatsheetLayout>
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
+  [Inject] private IMediator Mediator { get; set; }
+  [Inject] private BetrayalResources Resources { get; set; }
 
-    private BetrayalLeague ViewModel { get; set; }
+  private BetrayalLeague ViewModel { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
-        await base.OnInitializedAsync();
-    }
+  protected override async Task OnInitializedAsync()
+  {
+      ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
+      await base.OnInitializedAsync();
+  }
 }

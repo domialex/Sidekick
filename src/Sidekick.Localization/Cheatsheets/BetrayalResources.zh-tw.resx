@@ -492,4 +492,7 @@
   <data name="TypeTransportation" xml:space="preserve">
     <value>傳</value>
   </data>
+  <data name="Betrayal" xml:space="preserve">
+    <value>反叛</value>
+  </data>
 </root>

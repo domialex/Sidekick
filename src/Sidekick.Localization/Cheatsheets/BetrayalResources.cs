@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Localization.Cheatsheets.Betrayal
+namespace Sidekick.Localization.Cheatsheets
 {
     public class BetrayalResources
     {
@@ -17,6 +17,7 @@ namespace Sidekick.Localization.Cheatsheets.Betrayal
         public string AislingResearch => localizer["AislingResearch"];
         public string AislingResearchTooltip => localizer["AislingResearchTooltip"];
         public string AislingTransportation => localizer["AislingTransportation"];
+        public string Betrayal => localizer["Betrayal"];
         public string CameriaFortification => localizer["CameriaFortification"];
         public string CameriaIntervention => localizer["CameriaIntervention"];
         public string CameriaName => localizer["CameriaName"];

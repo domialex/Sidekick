@@ -129,9 +129,6 @@
   <data name="LegendMoreValuable" xml:space="preserve">
     <value>非常有價值</value>
   </data>
-  <data name="LeagueNameBetrayal" xml:space="preserve">
-    <value>反叛</value>
-  </data>
   <data name="LeagueNameBlight" xml:space="preserve">
     <value>凋落</value>
   </data>

@@ -1,0 +1,10 @@
+
+<MudListItem Class="pa-0">
+    <MudTooltip Text="@Model.Tooltip">
+        @Model.Reward
+    </MudTooltip>
+</MudListItem>
+
+@code {
+    [Parameter] public BetrayalReward Model { get; set; }
+}

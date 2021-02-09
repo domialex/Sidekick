@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Cheatsheets;
 using Sidekick.Domain.Cheatsheets.Betrayal;
-using Sidekick.Localization.Cheatsheets.Betrayal;
+using Sidekick.Localization.Cheatsheets;
 
 namespace Sidekick.Presentation.Cheatsheets.Betrayal
 {

@@ -61,15 +61,6 @@ namespace Sidekick.Presentation.Localization.Leagues {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Betrayal.
-        /// </summary>
-        public static string LeagueNameBetrayal {
-            get {
-                return ResourceManager.GetString("LeagueNameBetrayal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Blight.
         /// </summary>
         public static string LeagueNameBlight {

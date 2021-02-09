@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Localization.Cheatsheets.Betrayal;
+using Sidekick.Localization.Cheatsheets;
 using Sidekick.Localization.Initialization;
 using Sidekick.Localization.Platforms;
 
