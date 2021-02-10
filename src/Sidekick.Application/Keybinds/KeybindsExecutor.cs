@@ -55,7 +55,7 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnScrollUp()
         {
-            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
+            if (!processProvider.IsPathOfExileInFocus() || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
             {
                 return false;
             }
@@ -66,7 +66,7 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnScrollDown()
         {
-            if (!processProvider.IsPathOfExileInFocus || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
+            if (!processProvider.IsPathOfExileInFocus() || !settings.Stash_EnableCtrlScroll || !keyboard.IsCtrlPressed())
             {
                 return false;
             }
@@ -77,7 +77,7 @@ namespace Sidekick.Application.Keybinds
 
         private bool KeybindsProvider_OnKeyDown(KeyDownArgs args)
         {
-            if (!Enabled || (!processProvider.IsPathOfExileInFocus && !processProvider.IsSidekickInFocus))
+            if (!Enabled || (!processProvider.IsPathOfExileInFocus() && !processProvider.IsSidekickInFocus()))
             {
                 return false;
             }
@@ -136,7 +136,7 @@ namespace Sidekick.Application.Keybinds
 
         private void ExecuteChat(ChatSetting chatSetting, KeyDownArgs args, ref Task<bool> returnTask)
         {
-            if (!processProvider.IsPathOfExileInFocus)
+            if (!processProvider.IsPathOfExileInFocus())
             {
                 return;
             }
@@ -152,7 +152,7 @@ namespace Sidekick.Application.Keybinds
         private void ExecuteKeybind<TCommand>(string keybind, KeyDownArgs args, ref Task<bool> returnTask, bool requireGameInFocus)
             where TCommand : ICommand<bool>, new()
         {
-            if (requireGameInFocus && !processProvider.IsPathOfExileInFocus)
+            if (requireGameInFocus && !processProvider.IsPathOfExileInFocus())
             {
                 return;
             }

@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GregsStack.InputSimulatorSt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor.Mock", "src\Sidekick.Presentation.Blazor.Mock\Sidekick.Presentation.Blazor.Mock.csproj", "{0F9FCDAF-B4BB-4C0F-9412-8D3A88DBA709}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Localization", "src\Sidekick.Localization\Sidekick.Localization.csproj", "{288CB197-808D-40BA-B5A9-8439796781E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Localization", "src\Sidekick.Localization\Sidekick.Localization.csproj", "{288CB197-808D-40BA-B5A9-8439796781E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

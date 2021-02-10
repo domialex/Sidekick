@@ -10,7 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Sidekick.Application;
+using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Settings;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
@@ -78,7 +81,7 @@ namespace Sidekick.Presentation.Blazor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator, ISidekickSettings settings)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -106,6 +109,12 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
+                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+                {
+                    Language_Parser = !string.IsNullOrEmpty(settings.Language_Parser) ? settings.Language_Parser : "en",
+                    Language_UI = !string.IsNullOrEmpty(settings.Language_UI) ? settings.Language_UI : "en",
+                    LeagueId = !string.IsNullOrEmpty(settings.LeagueId) ? settings.LeagueId : "Ritual",
+                }, true));
                 await mediator.Send(new InitializeCommand(true));
             });
         }

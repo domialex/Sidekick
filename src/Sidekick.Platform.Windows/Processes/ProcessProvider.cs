@@ -1,46 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
-using Sidekick.Localization.Platforms;
 using Sidekick.Platform.Windows.DllImport;
 
 namespace Sidekick.Platform.Windows.Processes
 {
     public class ProcessProvider : IProcessProvider
     {
-
-        #region DllImport
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
-
-        [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(IntPtr hWnd, out Rectangle lpRect);
-
-        [DllImport("user32.dll")]
-        static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool CloseHandle(IntPtr hObject);
-        #endregion
-
         private const string APPLICATION_PROCESS_GUID = "93c46709-7db2-4334-8aa3-28d473e66041";
         private const string PATH_OF_EXILE_PROCESS_TITLE = "Path of Exile";
         private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
@@ -70,16 +46,16 @@ namespace Sidekick.Platform.Windows.Processes
 
         private readonly ILogger logger;
         private readonly IMediator mediator;
-        private readonly PlatformResources resources;
+        private readonly IStringLocalizer<ProcessProvider> localizer;
 
         public ProcessProvider(
             ILogger<ProcessProvider> logger,
             IMediator mediator,
-            PlatformResources resources)
+            IStringLocalizer<ProcessProvider> localizer)
         {
             this.logger = logger;
             this.mediator = mediator;
-            this.resources = resources;
+            this.localizer = localizer;
         }
 
         public async Task Initialize(CancellationToken cancellationToken)
@@ -90,48 +66,37 @@ namespace Sidekick.Platform.Windows.Processes
 
             if (!instanceResult)
             {
-                await mediator.Send(new OpenNotificationCommand(resources.AlreadyRunningText), cancellationToken);
-                await Task.Delay(5000, cancellationToken);
-                await mediator.Send(new ShutdownCommand(), cancellationToken);
+                await mediator.Send(new OpenNotificationCommand(localizer["AlreadyRunningText"]), cancellationToken);
+                Environment.Exit(Environment.ExitCode);
             }
         }
 
         private Mutex Mutex { get; set; }
 
-        public bool IsPathOfExileInFocus => ActiveWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
-
-        public bool IsSidekickInFocus
+        public bool IsPathOfExileInFocus()
         {
-            get
-            {
-                var activatedHandle = GetForegroundWindow();
-                if (activatedHandle == IntPtr.Zero)
-                {
-                    return false;
-                }
-
-                var procId = Environment.ProcessId;
-                var result = GetWindowThreadProcessId(activatedHandle, out var activeProcId);
-                if (result == HResult.S_OK)
-                {
-                    return activeProcId == procId;
-                }
-
-                return false;
-            }
+            var activeWindowTitle = GetActiveWindowProcess()?.MainWindowTitle;
+            return activeWindowTitle == PATH_OF_EXILE_PROCESS_TITLE;
         }
 
-        private static string ActiveWindowTitle => GetActiveWindowProcess()?.MainWindowTitle;
+        public bool IsSidekickInFocus()
+        {
+            var activatedHandle = User32.GetForegroundWindow();
+            if (activatedHandle == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            var procId = Environment.ProcessId;
+            User32.GetWindowThreadProcessId(activatedHandle, out var activeProcId);
+
+            return activeProcId == procId;
+        }
 
         private static Process GetActiveWindowProcess()
         {
-            var result = GetWindowThreadProcessId(GetForegroundWindow(), out var processID);
-            if (result == HResult.S_OK)
-            {
-                return Process.GetProcessById(processID);
-            }
-
-            return null;
+            User32.GetWindowThreadProcessId(User32.GetForegroundWindow(), out var processID);
+            return Process.GetProcessById(processID);
         }
 
         private static Process GetPathOfExileProcess()
@@ -150,7 +115,7 @@ namespace Sidekick.Platform.Windows.Processes
 
         private async Task CheckPermission()
         {
-            while (!IsPathOfExileInFocus)
+            while (!IsPathOfExileInFocus())
             {
                 await Task.Delay(1000);
             }
@@ -163,9 +128,9 @@ namespace Sidekick.Platform.Windows.Processes
 
         private async Task RestartAsAdmin()
         {
-            logger.LogError(resources.RestartText);
+            logger.LogError(localizer["RestartText"]);
 
-            await mediator.Send(new OpenConfirmNotificationCommand(resources.RestartText,
+            await mediator.Send(new OpenConfirmNotificationCommand(localizer["RestartText"],
                 onYes: async () =>
                 {
                     Mutex?.Close();
@@ -180,13 +145,12 @@ namespace Sidekick.Platform.Windows.Processes
                     }
                     catch (Exception e)
                     {
-                        logger.LogError(e, resources.AdminError);
-                        await mediator.Send(new OpenNotificationCommand(resources.AdminError));
-                        await Task.Delay(5000);
+                        logger.LogError(e, localizer["AdminError"]);
+                        await mediator.Send(new OpenNotificationCommand(localizer["AdminError"]));
                     }
                     finally
                     {
-                        await mediator.Send(new ShutdownCommand());
+                        Environment.Exit(Environment.ExitCode);
                     }
                 }));
         }
@@ -204,7 +168,7 @@ namespace Sidekick.Platform.Windows.Processes
             try
             {
                 var proc = GetActiveWindowProcess();
-                OpenProcessToken(proc.Handle, TOKEN_ALL_ACCESS, out var ph);
+                User32.OpenProcessToken(proc.Handle, TOKEN_ALL_ACCESS, out var ph);
                 using (var iden = new WindowsIdentity(ph))
                 {
                     foreach (var role in iden.Groups)
@@ -221,7 +185,7 @@ namespace Sidekick.Platform.Windows.Processes
                         }
                     }
 
-                    CloseHandle(ph);
+                    User32.CloseHandle(ph);
                 }
 
                 return result;
