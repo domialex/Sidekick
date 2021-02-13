@@ -46,7 +46,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 View.About => "/about",
                 View.Settings => "/settings",
-                View.Price => "/settings",
+                View.Price => "/price",
                 View.League => "/cheatsheets",
                 View.Setup => "/setup",
                 View.Initialization => "/initialization",
@@ -73,7 +73,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 View.About => (800, 600),
                 View.Settings => (800, 600),
-                View.Price => (800, 600),
+                View.Price => (1200, 650),
                 View.League => (800, 600),
                 View.Setup => (600, 400),
                 View.Initialization => (400, 215),
@@ -170,7 +170,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         public async Task Open(View view, params object[] args)
         {
-            var url = GetUrl(view);
+            var url = GetUrl(view, args);
             var (width, height) = GetSize(view);
 
             if (IsOpened(view))
@@ -201,7 +201,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                     break;
                 case View.Price:
                 case View.Map:
-                    await CreateOverlay(url, width, height, preferences);
+                    browserWindow = await CreateOverlay(url, width, height, preferences);
                     break;
             }
 
