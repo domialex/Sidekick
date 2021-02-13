@@ -1,11 +1,12 @@
 @page "/cheatsheets"
 
 @code {
+    [Inject] private ISidekickSettings Settings { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
-        NavigationManager.NavigateTo("/cheatsheets/betrayal");
+        NavigationManager.NavigateTo($"/cheatsheets/{Settings.Cheatsheets_Selected}");
     }
 }
