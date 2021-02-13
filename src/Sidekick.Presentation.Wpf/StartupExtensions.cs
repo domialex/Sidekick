@@ -29,7 +29,6 @@ namespace Sidekick.Presentation.Wpf
             services.AddScoped<InvalidItemError>();
 
             services.AddScoped<LeagueView>();
-            services.AddScoped<LeagueViewModel>();
 
             services.AddScoped<ParserError>();
 

@@ -55,10 +55,6 @@ namespace Sidekick.Application.Settings
 
         public string Key_OpenSettings { get; set; } = "Ctrl+O";
 
-        public string Cheatsheets_Key_Open { get; set; } = "F6";
-
-        public string Cheatsheets_Selected { get; set; } = "betrayal";
-
         public string Stash_Key_Left { get; set; } = "";
 
         public string Stash_Key_Right { get; set; } = "";
@@ -70,5 +66,11 @@ namespace Sidekick.Application.Settings
             new ChatSetting("Ctrl+Enter", "@{LastWhisper.CharacterName} ", false),
             new ChatSetting("F12", "/exit", true),
         };
+
+        #region Cheatsheets
+        public string Cheatsheets_Key_Open { get; set; } = "F6";
+        public string Cheatsheets_Selected { get; set; } = "betrayal";
+        public string Cheatsheets_Betrayal_Sort { get; set; } = "";
+        #endregion
     }
 }

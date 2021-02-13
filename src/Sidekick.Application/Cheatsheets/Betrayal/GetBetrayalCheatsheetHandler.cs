@@ -1,8 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Cheatsheets;
 using Sidekick.Domain.Cheatsheets.Betrayal;
+using Sidekick.Domain.Settings;
 using Sidekick.Localization.Cheatsheets;
 
 namespace Sidekick.Presentation.Cheatsheets.Betrayal
@@ -10,18 +13,21 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
     public class GetBetrayalCheatsheetHandler : IQueryHandler<GetBetrayalCheatsheetQuery, BetrayalLeague>
     {
         private readonly BetrayalResources resources;
+        private readonly ISidekickSettings settings;
 
         public GetBetrayalCheatsheetHandler(
-            BetrayalResources resources)
+            BetrayalResources resources,
+            ISidekickSettings settings)
         {
             this.resources = resources;
+            this.settings = settings;
         }
 
         public Task<BetrayalLeague> Handle(GetBetrayalCheatsheetQuery request, CancellationToken cancellationToken)
         {
-            var cheatsheet = new BetrayalLeague();
+            var agents = new List<BetrayalAgent>();
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.AislingName, "Aisling.png", RewardValue.Low)
+            agents.Add(new BetrayalAgent(resources.AislingName, "Aisling.png", RewardValue.Low)
             {
                 Transportation = new BetrayalReward(resources.AislingTransportation, RewardValue.NoValue),
                 Fortification = new BetrayalReward(resources.AislingFortification, RewardValue.NoValue),
@@ -29,7 +35,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.AislingIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.CameriaName, "Cameria.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.CameriaName, "Cameria.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.CameriaTransportation, RewardValue.Medium, resources.CameriaTransportationTooltip),
                 Fortification = new BetrayalReward(resources.CameriaFortification, RewardValue.Medium),
@@ -37,7 +43,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.CameriaIntervention, RewardValue.High)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.ElreonName, "Elreon.png", RewardValue.NoValue)
+            agents.Add(new BetrayalAgent(resources.ElreonName, "Elreon.png", RewardValue.NoValue)
             {
                 Transportation = new BetrayalReward(resources.ElreonTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.ElreonFortification, RewardValue.Low),
@@ -45,7 +51,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.ElreonIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.GraviciusName, "Gravicius.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.GraviciusName, "Gravicius.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.GraviciusTransportation, RewardValue.Medium),
                 Fortification = new BetrayalReward(resources.GraviciusFortification, RewardValue.Low),
@@ -53,7 +59,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.GraviciusIntervention, RewardValue.High)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.GuffName, "Guff.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.GuffName, "Guff.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.GuffTransportation, RewardValue.Medium, resources.GuffTransportationTooltip),
                 Fortification = new BetrayalReward(resources.GuffFortification, RewardValue.Low, resources.GuffFortificationTooltip),
@@ -61,7 +67,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.GuffIntervention, RewardValue.Low, resources.GuffInterventionTooltip)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.HakuName, "Haku.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.HakuName, "Haku.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.HakuTransportation, RewardValue.NoValue),
                 Fortification = new BetrayalReward(resources.HakuFortification, RewardValue.NoValue),
@@ -69,7 +75,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.HakuIntervention, RewardValue.Medium)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.HillockName, "Hillock.png", RewardValue.Low)
+            agents.Add(new BetrayalAgent(resources.HillockName, "Hillock.png", RewardValue.Low)
             {
                 Transportation = new BetrayalReward(resources.HillockTransportation, RewardValue.Low, resources.HillockTransportationTooltip),
                 Fortification = new BetrayalReward(resources.HillockFortification, RewardValue.Low, resources.HillockFortificationTooltip),
@@ -77,7 +83,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.HillockIntervention, RewardValue.NoValue, resources.HillockInterventionTooltip)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.ItThatFledName, "It_That_Fled.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.ItThatFledName, "It_That_Fled.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.ItThatFledTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.ItThatFledFortification, RewardValue.Low),
@@ -85,7 +91,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.ItThatFledIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.JanusName, "Janus.png", RewardValue.Low)
+            agents.Add(new BetrayalAgent(resources.JanusName, "Janus.png", RewardValue.Low)
             {
                 Transportation = new BetrayalReward(resources.JanusTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.JanusFortification, RewardValue.Low),
@@ -93,7 +99,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.JanusIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.JorginName, "Jorgin.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.JorginName, "Jorgin.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.JorginTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.JorginFortification, RewardValue.Medium),
@@ -101,7 +107,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.JorginIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.KorellName, "Korell.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.KorellName, "Korell.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.KorellTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.KorellFortification, RewardValue.Medium),
@@ -109,7 +115,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.KorellIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.LeoName, "Leo.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.LeoName, "Leo.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.LeoTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.LeoFortification, RewardValue.Medium),
@@ -117,7 +123,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.LeoIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.RikerName, "Riker.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.RikerName, "Riker.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.RikerTransportation, RewardValue.Medium),
                 Fortification = new BetrayalReward(resources.RikerFortification, RewardValue.Low),
@@ -125,7 +131,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.RikerIntervention, RewardValue.Medium)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.RinName, "Rin.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.RinName, "Rin.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.RinTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.RinFortification, RewardValue.Low),
@@ -133,7 +139,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.RinIntervention, RewardValue.High)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.ToraName, "Tora.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.ToraName, "Tora.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.ToraTransportation, RewardValue.Medium, resources.ToraTransportationTooltip),
                 Fortification = new BetrayalReward(resources.ToraFortification, RewardValue.Low, resources.ToraFortificationTooltip),
@@ -141,7 +147,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.ToraIntervention, RewardValue.Low)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.VaganName, "Vagan.png", RewardValue.Medium)
+            agents.Add(new BetrayalAgent(resources.VaganName, "Vagan.png", RewardValue.Medium)
             {
                 Transportation = new BetrayalReward(resources.VaganTransportation, RewardValue.Medium),
                 Fortification = new BetrayalReward(resources.VaganFortification, RewardValue.Medium),
@@ -149,7 +155,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.VaganIntervention, RewardValue.Medium)
             });
 
-            cheatsheet.Agents.Add(new BetrayalAgent(resources.VoriciName, "Vorici.png", RewardValue.High)
+            agents.Add(new BetrayalAgent(resources.VoriciName, "Vorici.png", RewardValue.High)
             {
                 Transportation = new BetrayalReward(resources.VoriciTransportation, RewardValue.Low),
                 Fortification = new BetrayalReward(resources.VoriciFortification, RewardValue.Medium),
@@ -157,7 +163,40 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 Intervention = new BetrayalReward(resources.VoriciIntervention, RewardValue.Low)
             });
 
-            return Task.FromResult(cheatsheet);
+            switch (settings.Cheatsheets_Betrayal_Sort)
+            {
+                case "":
+                    agents = agents.OrderBy(x => x.Name).ToList();
+                    break;
+                case "value":
+                    agents = agents.OrderByDescending(x => GetRewardValue(x.Fortification) + GetRewardValue(x.Transportation) + GetRewardValue(x.Research) + GetRewardValue(x.Intervention)).ThenBy(x => x.Name).ToList();
+                    break;
+                case "transportation":
+                    agents = agents.OrderByDescending(x => GetRewardValue(x.Transportation)).ThenBy(x => x.Name).ToList();
+                    break;
+                case "fortification":
+                    agents = agents.OrderByDescending(x => GetRewardValue(x.Fortification)).ThenBy(x => x.Name).ToList();
+                    break;
+                case "research":
+                    agents = agents.OrderByDescending(x => GetRewardValue(x.Research)).ThenBy(x => x.Name).ToList();
+                    break;
+                case "intervention":
+                    agents = agents.OrderByDescending(x => GetRewardValue(x.Intervention)).ThenBy(x => x.Name).ToList();
+                    break;
+            }
+
+            return Task.FromResult(new BetrayalLeague()
+            {
+                Agents = agents
+            });
         }
+
+        private int GetRewardValue(BetrayalReward reward) => reward.Value switch
+        {
+            RewardValue.High => 1000,
+            RewardValue.Medium => 100,
+            RewardValue.Low => 10,
+            _ => 1,
+        };
     }
 }

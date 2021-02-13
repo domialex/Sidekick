@@ -69,8 +69,6 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Map_Key_Check { get; set; }
 
-        public string Cheatsheets_Key_Open { get; set; }
-
         public string Price_Key_OpenSearch { get; set; }
 
         public string Key_OpenSettings { get; set; }
@@ -85,7 +83,6 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Language_UI { get; set; }
 
-        public string Cheatsheets_Selected { get; set; }
 
         public string LeagueId { get; set; }
 
@@ -102,5 +99,11 @@ namespace Sidekick.Presentation.Blazor.Settings
         public WikiSetting Wiki_Preferred { get; set; }
 
         public List<ChatSetting> Chat_Commands { get; set; }
+
+        #region Cheatsheets
+        public string Cheatsheets_Selected { get; set; }
+        public string Cheatsheets_Key_Open { get; set; }
+        public string Cheatsheets_Betrayal_Sort { get; set; }
+        #endregion
     }
 }

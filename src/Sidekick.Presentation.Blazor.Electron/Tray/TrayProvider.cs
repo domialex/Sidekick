@@ -33,6 +33,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                 {
                     new MenuItem
                     {
+                        Label = "Cheatsheets",
+                        Click = () => { viewLocator.Open(View.League); }
+                    },
+
+                    new MenuItem
+                    {
                         Label = "About",
                         Click = () => { viewLocator.Open(View.About); }
                     },

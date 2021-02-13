@@ -1,0 +1,35 @@
+
+<div class="d-flex align-center justify-center">
+    @if (Value == Domain.Cheatsheets.RewardValue.High)
+    {
+        <div class="high-double-icon">
+            <MudIcon Icon="@Icons.Material.Filled.ThumbUp"
+                     Class="green-text"></MudIcon>
+            <MudIcon Icon="@Icons.Material.Filled.ThumbUp"
+                     Class="green-text text-darken-4"></MudIcon>
+        </div>
+    }
+    else if (Value == Domain.Cheatsheets.RewardValue.Medium)
+    {
+        <MudIcon Icon="@Icons.Material.Filled.ThumbUp"
+                 Class="teal-text"></MudIcon>
+    }
+    else if (Value == Domain.Cheatsheets.RewardValue.Low)
+    {
+        <MudIcon Icon="@Icons.Material.Filled.ThumbDown"
+                 Class="yellow-text"></MudIcon>
+    }
+    else
+    {
+        <div class="no-double-icon">
+            <MudIcon Icon="@Icons.Material.Filled.ThumbDown"
+                     Class="red-text text-darken-4"></MudIcon>
+            <MudIcon Icon="@Icons.Material.Filled.ThumbDown"
+                     Class="red-text"></MudIcon>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Sidekick.Domain.Cheatsheets.RewardValue Value { get; set; }
+}

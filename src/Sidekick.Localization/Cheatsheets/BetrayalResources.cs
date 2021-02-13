@@ -118,5 +118,11 @@ namespace Sidekick.Localization.Cheatsheets
         public string VoriciResearch => localizer["VoriciResearch"];
         public string VoriciResearchTooltip => localizer["VoriciResearchTooltip"];
         public string VoriciTransportation => localizer["VoriciTransportation"];
+        public string Sort_Alphabetical => localizer["Sort_Alphabetical"];
+        public string Sort_Value => localizer["Sort_Value"];
+        public string Sort_Transportation => localizer["Sort_Transportation"];
+        public string Sort_Fortification => localizer["Sort_Fortification"];
+        public string Sort_Research => localizer["Sort_Research"];
+        public string Sort_Intervention => localizer["Sort_Intervention"];
     }
 }

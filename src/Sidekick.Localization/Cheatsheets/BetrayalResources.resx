@@ -322,9 +322,9 @@
     <value>Shaper Scarab</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
-    <value>Level1: 1 Mod
-Level2: Low Chance for 2 Mods
-Level3: 2 Mods</value>
+    <value>Level 1: 1 Mod&lt;br /&gt;
+Level 2: Low Chance for 2 Mods&lt;br /&gt;
+Level 3: 2 Mods</value>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
     <value>League Specific Items (Headhunter possible)</value>
@@ -494,5 +494,23 @@ Level3: 1-3 White Sockets</value>
   </data>
   <data name="Betrayal" xml:space="preserve">
     <value>Betrayal</value>
+  </data>
+  <data name="Sort_Alphabetical" xml:space="preserve">
+    <value>Alphabetical</value>
+  </data>
+  <data name="Sort_Fortification" xml:space="preserve">
+    <value>Fortification</value>
+  </data>
+  <data name="Sort_Intervention" xml:space="preserve">
+    <value>Intervention</value>
+  </data>
+  <data name="Sort_Research" xml:space="preserve">
+    <value>Research</value>
+  </data>
+  <data name="Sort_Transportation" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="Sort_Value" xml:space="preserve">
+    <value>Value</value>
   </data>
 </root>

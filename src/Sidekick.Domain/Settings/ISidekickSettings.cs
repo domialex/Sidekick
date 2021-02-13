@@ -34,8 +34,11 @@ namespace Sidekick.Domain.Settings
         string Map_Key_Check { get; }
         string Map_Dangerous_Regex { get; }
 
+        #region Cheatsheets
         string Cheatsheets_Key_Open { get; }
         string Cheatsheets_Selected { get; }
+        string Cheatsheets_Betrayal_Sort { get; }
+        #endregion
 
         List<ChatSetting> Chat_Commands { get; }
 
