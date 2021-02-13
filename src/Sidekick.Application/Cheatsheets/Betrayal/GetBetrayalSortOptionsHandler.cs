@@ -21,7 +21,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
         {
             return Task.FromResult(new Dictionary<string, string>()
             {
-                { "", resources.Sort_Alphabetical },
+                { "default", resources.Sort_Alphabetical },
                 { "value", resources.Sort_Value },
                 { "transportation", resources.Sort_Transportation },
                 { "fortification", resources.Sort_Fortification },

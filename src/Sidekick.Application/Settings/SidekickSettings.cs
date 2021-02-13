@@ -70,7 +70,7 @@ namespace Sidekick.Application.Settings
         #region Cheatsheets
         public string Cheatsheets_Key_Open { get; set; } = "F6";
         public string Cheatsheets_Selected { get; set; } = "betrayal";
-        public string Cheatsheets_Betrayal_Sort { get; set; } = "";
+        public string Cheatsheets_Betrayal_Sort { get; set; } = "default";
         #endregion
     }
 }

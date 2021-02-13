@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Cache.Commands;
-using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Localization;
@@ -18,25 +17,28 @@ namespace Sidekick.Application.Settings
         internal const string FileName = "Sidekick_settings.json";
         private readonly IMediator mediator;
         private readonly SidekickSettings settings;
-        private readonly IGameLanguageProvider gameLanguageProvider;
 
         public SaveSettingsHandler(
             IMediator mediator,
-            SidekickSettings settings,
-            IGameLanguageProvider gameLanguageProvider)
+            SidekickSettings settings)
         {
             this.mediator = mediator;
             this.settings = settings;
-            this.gameLanguageProvider = gameLanguageProvider;
         }
 
         public async Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
         {
             var leagueHasChanged = request.Settings.LeagueId != settings.LeagueId;
-            var languageHasChanged = gameLanguageProvider.Language?.LanguageCode != request.Settings.Language_Parser;
+            var languageHasChanged = request.Settings.Language_Parser != settings.Language_Parser;
 
-            await mediator.Send(new SetUiLanguageCommand(request.Settings.Language_UI));
-            await mediator.Send(new SetGameLanguageCommand(request.Settings.Language_Parser));
+            if (settings.Language_UI != request.Settings.Language_UI)
+            {
+                await mediator.Send(new SetUiLanguageCommand(request.Settings.Language_UI));
+            }
+            if (settings.Language_Parser != request.Settings.Language_Parser)
+            {
+                await mediator.Send(new SetGameLanguageCommand(request.Settings.Language_Parser));
+            }
 
             request.Settings.CopyValuesTo(settings);
 
