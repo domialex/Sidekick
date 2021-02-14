@@ -1,7 +1,7 @@
 @using Sidekick.Domain.Views
 
 <div class="application-nav-bar">
-    <MudAppBar Color="Color.Primary">
+    <MudAppBar Color="Color.Primary" Fixed="false">
         @LeftContent
         @if (!string.IsNullOrEmpty(Title))
         {
@@ -11,10 +11,9 @@
         @RightContent
         @if (View.HasValue)
         {
-            <MudIconButton Icon="@Icons.Filled.Close"
-                           Color="Color.Inherit"
-                           @onclick="Close"
-                           Edge="Edge.End" />
+            <MudIconButton Icon="@Icons.Filled.Minimize" @onclick="Minimize" />
+            <MudIconButton Icon="@Icons.Filled.CropSquare" @onclick="Maximize" />
+            <MudIconButton Icon="@Icons.Filled.Close" @onclick="Close" Edge="Edge.End" />
         }
     </MudAppBar>
 </div>
@@ -26,6 +25,22 @@
     [Parameter] public RenderFragment RightContent { get; set; }
     [Parameter] public string Title { get; set; }
     [Parameter] public View? View { get; set; } = null;
+
+    public void Minimize()
+    {
+        if (View.HasValue)
+        {
+            ViewLocator.Minimize(View.Value);
+        }
+    }
+
+    public void Maximize()
+    {
+        if (View.HasValue)
+        {
+            ViewLocator.Maximize(View.Value);
+        }
+    }
 
     public void Close()
     {

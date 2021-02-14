@@ -253,6 +253,22 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             Views.Clear();
         }
 
+        public void Minimize(View view)
+        {
+            foreach (var instance in Views.Where(x => x.View == view))
+            {
+                instance.Browser.Minimize();
+            }
+        }
+
+        public void Maximize(View view)
+        {
+            foreach (var instance in Views.Where(x => x.View == view))
+            {
+                instance.Browser.Maximize();
+            }
+        }
+
         public void Close(View view)
         {
             foreach (var instance in Views.Where(x => x.View == view))

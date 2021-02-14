@@ -19,6 +19,16 @@ namespace Sidekick.Presentation.Blazor.Mock
             // Do nothing
         }
 
+        public void Minimize(View view)
+        {
+
+        }
+
+        public void Maximize(View view)
+        {
+
+        }
+
         public void Close(View view)
         {
             // Do nothing

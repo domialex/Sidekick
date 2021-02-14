@@ -1,7 +1,8 @@
 @page "/map/{encodedItem}"
 
-<MudLayout>
+<SidekickLayout>
     <SidekickAppBar Title="@Localizer[MapInfoResources.Title]" View="View.Map"></SidekickAppBar>
+
     <MudMainContent>
         <MudContainer Class="py-6">
             @if (ViewModel.IsSafe)
@@ -10,12 +11,11 @@
             }
             @foreach (String dangerousMod in ViewModel.DangerousMapMods)
             {
-
                 <MudText Color="Color.Error">@dangerousMod</MudText>
             }
         </MudContainer>
     </MudMainContent>
-</MudLayout>
+</SidekickLayout>
 
 @code {
     [Parameter] public string EncodedItem { get; set; }
