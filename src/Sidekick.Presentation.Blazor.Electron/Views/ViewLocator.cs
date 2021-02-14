@@ -73,7 +73,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 View.About => (800, 600),
                 View.Settings => (800, 600),
-                View.Price => (1200, 650),
+                View.Price => (1200, 660),
                 View.League => (800, 600),
                 View.Setup => (600, 400),
                 View.Initialization => (400, 215),

@@ -1,0 +1,38 @@
+@using Sidekick.Domain.Game.Items.Models;
+@foreach (IGrouping<int, Socket> socketGroup in Show
+.OrderBy(x => x.Group)
+.GroupBy(x => x.Group)
+.ToList())
+{
+    <MudButton Variant="Variant.Outlined" Class="px-n2 mx-2">
+        @foreach (Socket socket in socketGroup)
+        {
+            String colourClass = $"socket-colour-{socket.Colour}";
+            <MudIcon Icon="@Icons.Material.Outlined.PanoramaFishEye" class="@colourClass" />
+        }
+    </MudButton>
+}
+<style>
+    .socket-colour-Blue {
+        color: #2E86C1;
+    }
+
+    .socket-colour-Green {
+        color: #28B463;
+    }
+
+    .socket-colour-Red {
+        color: #C0392B;
+    }
+
+    .socket-colour-White {
+        color: #FBFCFC;
+    }
+
+    .socket-colour-Abyss {
+        color: #839192;
+    }
+</style>
+@code {
+    [Parameter] public List<Domain.Game.Items.Models.Socket> Show { get; set; }
+}

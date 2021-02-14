@@ -1,0 +1,24 @@
+@using System.Collections.ObjectModel;
+<MudPaper Class="mt-4">
+    @foreach (PriceFilter filter in List)
+    {
+    <MudContainer Class="ma-0 pa-0">
+        <MudCheckBox @bind-Checked="filter.Enabled" Color="Color.Primary" />
+        @filter.Text
+        @if (filter.HasRange && filter.Enabled)
+        {
+            <MudGrid Class="px-6">
+                <MudItem xs="6">
+                    <MudTextField @bind-Value="filter.Min" Label="Min" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudTextField @bind-Value="filter.Max" Label="Max" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+                </MudItem>
+            </MudGrid>
+        }
+    </MudContainer>
+    }
+</MudPaper>
+@code {
+    [Parameter] public ObservableCollection<PriceFilter> List { get; set; }
+}
