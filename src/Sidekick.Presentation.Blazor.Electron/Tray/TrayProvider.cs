@@ -68,7 +68,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                     }
                 };
 
-
                 if (webHostEnvironment.IsDevelopment())
                 {
                     menuItems.InsertRange(0, GetDevelopmentMenu());
