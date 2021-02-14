@@ -33,6 +33,7 @@
     [Inject] private SettingsViewModel ViewModel { get; set; }
     [Inject] private IKeyboardProvider Keyboard { get; set; }
     [Inject] private IKeybindsExecutor Keybinds { get; set; }
+    [Inject] private IKeybindProvider KeybindProvider { get; set; }
 
     [Parameter] public string Label { get; set; }
     [Parameter] public string Value { get; set; }
@@ -53,41 +54,40 @@
         if (ViewModel.CurrentKey == Id)
         {
             ViewModel.CurrentKey = null;
-            Keybinds.Enabled = true;
+            KeybindProvider.Register();
         }
         else
         {
             ViewModel.CurrentKey = Id;
-            Keybinds.Enabled = false;
+            KeybindProvider.Unregister();
         }
     }
 
-    private bool OnKeyDown(KeyDownArgs args)
+    private void OnKeyDown(string key)
     {
         if (!Active)
         {
-            return false;
+            return;
         }
 
         this.InvokeAsync(async () =>
         {
 
-            if (args.Key != "Esc")
+            if (key != "Esc")
             {
-                await ValueChanged.InvokeAsync(args.Key);
+                await ValueChanged.InvokeAsync(key);
             }
 
             ViewModel.CurrentKey = null;
-            Keybinds.Enabled = true;
+            KeybindProvider.Register();
             StateHasChanged();
         });
-        return true;
     }
 
     public async Task Delete()
     {
         ViewModel.CurrentKey = null;
-        Keybinds.Enabled = true;
+        KeybindProvider.Register();
         await ValueChanged.InvokeAsync("");
     }
 

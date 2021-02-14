@@ -77,11 +77,11 @@ namespace Sidekick.Application.Game.Chat.Commands
 
             if (request.Submit)
             {
-                await keyboard.PressKey("Enter", "Ctrl+A", "Paste", "Enter", "Enter", "Up", "Up", "Esc");
+                keyboard.PressKey("Enter", "Ctrl+A", "Paste", "Enter", "Enter", "Up", "Up", "Esc");
             }
             else
             {
-                await keyboard.PressKey("Enter", "Ctrl+A", "Paste");
+                keyboard.PressKey("Enter", "Ctrl+A", "Paste");
             }
 
             if (settings.RetainClipboard)

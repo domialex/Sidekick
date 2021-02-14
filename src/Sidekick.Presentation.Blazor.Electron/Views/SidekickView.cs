@@ -7,10 +7,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     internal class SidekickView
     {
-        public SidekickView(ViewLocator locator, View view, BrowserWindow browser)
+        public SidekickView(ViewLocator locator, View view, ViewType type, BrowserWindow browser)
         {
             Locator = locator;
             View = view;
+            Type = type;
             Browser = browser;
 
             Browser.OnReadyToShow += Browser_OnReadyToShow;
@@ -35,6 +36,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private void Browser_OnReadyToShow()
         {
             Browser.Show();
+            Browser.Focus();
         }
 
         private void Browser_OnResize()
@@ -65,5 +67,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         public BrowserWindow Browser { get; }
         public ViewLocator Locator { get; }
         public View View { get; }
+        public ViewType Type { get; }
     }
 }

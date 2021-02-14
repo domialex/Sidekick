@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
@@ -20,6 +21,7 @@ using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
+using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
 using Sidekick.Presentation.Blazor.Electron.Views;
 
@@ -57,7 +59,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Domain"),
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
-                    Assembly.Load("Sidekick.Platform"),
                     Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
@@ -73,6 +74,7 @@ namespace Sidekick.Presentation.Blazor.Electron
 
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<IViewLocator, ViewLocator>();
+            services.AddSingleton<IKeybindProvider, KeybindProvider>();
 
             services
                 .AddMudServices()
@@ -83,7 +85,8 @@ namespace Sidekick.Presentation.Blazor.Electron
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
+        public void Configure(
+            IApplicationBuilder app,
             IWebHostEnvironment env,
             IServiceProvider serviceProvider,
             TrayProvider trayProvider,

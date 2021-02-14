@@ -29,10 +29,6 @@ namespace Sidekick.Application.Game.Maps
         {
             await mediator.Send(new CloseMapViewCommand());
 
-            // Close previously opened map views
-            viewLocator.Close(View.ParserError);
-            viewLocator.Close(View.Map);
-
             // Parses the item by copying the item under the cursor
             var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.Copy()));
 

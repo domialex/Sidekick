@@ -61,7 +61,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             foreach (var arg in args)
             {
-                path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+                if (arg is string)
+                {
+                    path += $"/{arg}";
+                }
+                else
+                {
+                    path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+                }
             }
 
             return path;
@@ -176,7 +183,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             if (IsOpened(view))
             {
                 var openedView = Views.FirstOrDefault(x => x.View == view);
-                if (openedView != null)
+                if (openedView != null && openedView.Type == ViewType.View)
                 {
                     openedView.Browser.LoadURL(url);
                     openedView.Browser.Focus();
@@ -188,20 +195,24 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var preferences = await viewPreferenceRepository.Get(view);
 
             BrowserWindow browserWindow = null;
+            var viewType = ViewType.View;
             switch (view)
             {
                 case View.About:
                 case View.League:
                 case View.Settings:
                     browserWindow = await CreateView(url, width, height, preferences);
+                    viewType = ViewType.View;
                     break;
                 case View.Initialization:
                 case View.Setup:
                     browserWindow = await CreateModal(url, width, height, preferences);
+                    viewType = ViewType.Modal;
                     break;
                 case View.Price:
                 case View.Map:
                     browserWindow = await CreateOverlay(url, width, height, preferences);
+                    viewType = ViewType.Overlay;
                     break;
             }
 
@@ -222,9 +233,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }
 
             browserWindow.SetTitle("Sidekick");
-            browserWindow.Focus();
 
-            var sidekickView = new SidekickView(this, view, browserWindow);
+            var sidekickView = new SidekickView(this, view, viewType, browserWindow);
 
             Views.Add(sidekickView);
         }

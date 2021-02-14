@@ -7,28 +7,21 @@ using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Cheatsheets
 {
-    public class ToggleCheatsheetsHandler : ICommandHandler<ToggleCheatsheetsCommand, bool>
+    public class OpenCheatsheetsHandler : ICommandHandler<OpenCheatsheetsCommand, bool>
     {
         private readonly IViewLocator viewLocator;
         private readonly ISidekickSettings settings;
 
-        public ToggleCheatsheetsHandler(IViewLocator viewLocator,
+        public OpenCheatsheetsHandler(IViewLocator viewLocator,
             ISidekickSettings settings)
         {
             this.viewLocator = viewLocator;
             this.settings = settings;
         }
 
-        public Task<bool> Handle(ToggleCheatsheetsCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(OpenCheatsheetsCommand request, CancellationToken cancellationToken)
         {
-            if (viewLocator.IsOpened(View.League))
-            {
-                viewLocator.Close(View.League);
-            }
-            else
-            {
-                viewLocator.Open(View.League, settings.Cheatsheets_Selected);
-            }
+            viewLocator.Open(View.League, settings.Cheatsheets_Selected);
 
             return Task.FromResult(true);
         }
