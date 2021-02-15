@@ -6,6 +6,11 @@ namespace Sidekick.Domain.Platforms
     public interface IKeybindProvider
     {
         /// <summary>
+        /// Initialize the provider
+        /// </summary>
+        void Initialize();
+
+        /// <summary>
         /// Register keybinds with the operating system
         /// </summary>
         void Register();

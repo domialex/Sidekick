@@ -232,6 +232,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 await browserWindow.WebContents.Session.ClearCacheAsync();
             }
 
+            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
             browserWindow.SetTitle("Sidekick");
 
             var sidekickView = new SidekickView(this, view, viewType, browserWindow);

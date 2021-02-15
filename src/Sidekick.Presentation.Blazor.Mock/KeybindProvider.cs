@@ -1,11 +1,13 @@
-using System;
 using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Presentation.Blazor.Mock
 {
     public class KeybindProvider : IKeybindProvider
     {
-        public event Func<string, bool> OnKeybind;
+        public void Initialize()
+        {
+            // Do nothing in mock
+        }
 
         public void Register()
         {

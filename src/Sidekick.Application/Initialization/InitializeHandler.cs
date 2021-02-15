@@ -158,9 +158,8 @@ namespace Sidekick.Application.Initialization
                     await Run(() => mouseProvider.Initialize());
                     await Run(() => screenProvider.Initialize());
                     await Run(() => keybindsExecutor.Initialize());
+                    await Run(() => keybindProvider.Initialize());
                 }
-
-                await Run(() => keybindProvider.Register());
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
                 Completed = Count;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
@@ -7,26 +8,35 @@ using Sidekick.Domain.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 {
-    public class KeybindProvider : IKeybindProvider
+    public class KeybindProvider : IKeybindProvider, IDisposable
     {
         private readonly ILogger<KeybindProvider> logger;
         private readonly ISidekickSettings settings;
         private readonly IKeyboardProvider keyboardProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
+        private readonly IProcessProvider processProvider;
 
         public KeybindProvider(
             ILogger<KeybindProvider> logger,
             ISidekickSettings settings,
             IKeyboardProvider keyboardProvider,
-            IKeybindsExecutor keybindsExecutor)
+            IKeybindsExecutor keybindsExecutor,
+            IProcessProvider processProvider)
         {
             this.logger = logger;
             this.settings = settings;
             this.keyboardProvider = keyboardProvider;
             this.keybindsExecutor = keybindsExecutor;
+            this.processProvider = processProvider;
         }
 
         private bool Registered { get; set; } = false;
+
+        public void Initialize()
+        {
+            processProvider.OnFocus += Register;
+            processProvider.OnBlur += Unregister;
+        }
 
         public void Register()
         {
@@ -87,6 +97,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             Registered = false;
             ElectronNET.API.Electron.GlobalShortcut.UnregisterAll();
             logger.LogDebug("[Keybind] Unregistered keybinds");
+        }
+
+        public void Dispose()
+        {
+            processProvider.OnFocus -= Register;
+            processProvider.OnBlur -= Unregister;
         }
     }
 }

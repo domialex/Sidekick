@@ -72,27 +72,14 @@ namespace Sidekick.Application.Keybinds
 
         public async Task<bool> Execute(string keybind)
         {
-            var poeInFocus = processProvider.IsPathOfExileInFocus();
-
             var handled = false;
-
-            if (!poeInFocus && !processProvider.IsSidekickInFocus())
-            {
-                return handled;
-            }
 
             // Close commands
             if (keybind == "Esc") handled = await mediator.Send(new CloseAllViewCommand());
             if (keybind == settings.Price_Key_Close) handled = await mediator.Send(new ClosePriceViewCommand()) || handled;
             if (keybind == settings.Map_Key_Close) handled = await mediator.Send(new CloseMapViewCommand()) || handled;
 
-            if (!poeInFocus)
-            {
-                return handled;
-            }
-
             // Commands below this point absolutely need to be inside of the game.
-
             // View commands
             if (keybind == settings.Cheatsheets_Key_Open) handled = await mediator.Send(new OpenCheatsheetsCommand()) || handled;
             if (keybind == settings.Key_OpenSettings) handled = await mediator.Send(new OpenSettingsCommand()) || handled;
