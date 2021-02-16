@@ -1,20 +1,14 @@
 {
   "executable": "Sidekick.Presentation.Blazor.Electron",
-  "splashscreen": {
-    "imageFile": "/Assets/Splashscreen.png"
-  },
   "name": "Sidekick",
-  "author": "",
+  "author": "Sidekick",
+  "homepage": "https://github.com/domialex/Sidekick",
   "singleInstance": true,
   "build": {
-    "appId": "com.Sidekick.Presentation.Blazor.Electron.app",
+    "appId": "com.sidekick.app",
     "productName": "Sidekick",
-    "copyright": "Copyright © 2020",
     "buildVersion": "2.0.0",
     "compression": "maximum",
-    "win": {
-      "icon": "Assets/ExaltedOrb.ico"
-    },
     "directories": {
       "output": "../../../bin/Desktop"
     },
@@ -27,6 +21,9 @@
     ],
     "files": [
       "**/*"
-    ]
+    ],
+    "win": {
+      "icon": "../../../Assets/icon.ico"
+    }
   }
 }

@@ -75,7 +75,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
                 ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png", menuItems.ToArray());
                 ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
-                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);
+                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title + " - " + GetType().Assembly.GetName().Version.ToString());
             }
             catch (Exception e)
             {
