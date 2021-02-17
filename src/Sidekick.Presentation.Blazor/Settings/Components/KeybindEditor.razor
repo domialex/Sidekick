@@ -3,10 +3,7 @@
 
 <div class="d-flex align-center">
     <div class="flex-grow-1 pr-4">
-        <MudField Label="@Label"
-                  Variant="Variant.Filled"
-                  Class="@Class"
-                  @onclick="Click">
+        <MudField Label="@Label" Variant="Variant.Filled" Class="@Class" @onclick="Click">
             @if (Active)
             {
                 <MudText>@Localizer[SettingsResources.Key_Active]</MudText>
@@ -22,8 +19,7 @@
         </MudField>
     </div>
     <div class="flex-grow-0">
-        <MudIconButton Icon="@Icons.Filled.Delete"
-                       @onclick="Delete"></MudIconButton>
+        <MudIconButton Icon="@Icons.Filled.Delete" @onclick="Delete"></MudIconButton>
     </div>
 </div>
 
@@ -45,6 +41,7 @@
 
     protected override void OnInitialized()
     {
+        KeybindProvider.Unregister();
         Keyboard.OnKeyDown += OnKeyDown;
         base.OnInitialized();
     }
@@ -54,12 +51,10 @@
         if (ViewModel.CurrentKey == Id)
         {
             ViewModel.CurrentKey = null;
-            KeybindProvider.Register();
         }
         else
         {
             ViewModel.CurrentKey = Id;
-            KeybindProvider.Unregister();
         }
     }
 
@@ -79,7 +74,6 @@
             }
 
             ViewModel.CurrentKey = null;
-            KeybindProvider.Register();
             StateHasChanged();
         });
     }
@@ -87,12 +81,12 @@
     public async Task Delete()
     {
         ViewModel.CurrentKey = null;
-        KeybindProvider.Register();
         await ValueChanged.InvokeAsync("");
     }
 
     public void Dispose()
     {
         Keyboard.OnKeyDown -= OnKeyDown;
+        KeybindProvider.Register();
     }
 }

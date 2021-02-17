@@ -7,6 +7,7 @@ using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Localization;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 
@@ -17,13 +18,16 @@ namespace Sidekick.Application.Settings
         internal const string FileName = "Sidekick_settings.json";
         private readonly IMediator mediator;
         private readonly SidekickSettings settings;
+        private readonly IKeybindProvider keybindProvider;
 
         public SaveSettingsHandler(
             IMediator mediator,
-            SidekickSettings settings)
+            SidekickSettings settings,
+            IKeybindProvider keybindProvider)
         {
             this.mediator = mediator;
             this.settings = settings;
+            this.keybindProvider = keybindProvider;
         }
 
         public async Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
@@ -95,6 +99,8 @@ namespace Sidekick.Application.Settings
                 await mediator.Send(new ClearCacheCommand());
                 await mediator.Send(new InitializeCommand(false));
             }
+
+            keybindProvider.Register();
 
             return Unit.Value;
         }

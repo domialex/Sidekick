@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Sidekick.Domain.Keybinds
 {
     /// <summary>
@@ -11,10 +9,5 @@ namespace Sidekick.Domain.Keybinds
         /// Initialize the executor
         /// </summary>
         void Initialize();
-
-        /// <summary>
-        /// Executes a keybind
-        /// </summary>
-        Task<bool> Execute(string keybind);
     }
 }
