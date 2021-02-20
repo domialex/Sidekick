@@ -171,9 +171,6 @@
   <data name="HollowFossil" xml:space="preserve">
     <value>Hohles Fossil</value>
   </data>
-  <data name="Information" xml:space="preserve">
-    <value>*Kann nur hinter zerbrochenen Wänden gefunden werden</value>
-  </data>
   <data name="JaggedFossil" xml:space="preserve">
     <value>Gezacktes Fossil</value>
   </data>

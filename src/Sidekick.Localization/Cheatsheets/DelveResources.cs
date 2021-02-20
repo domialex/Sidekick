@@ -31,7 +31,7 @@ namespace Sidekick.Localization.Cheatsheets
         public string HollowFossil => localizer["HollowFossil"];
         public string Information => localizer["Information"];
         public string JaggedFossil => localizer["JaggedFossil"];
-        public string Legend => localizer["Legend"];
+        public string FracturedWall => localizer["FracturedWall"];
         public string LucentFossil => localizer["LucentFossil"];
         public string MagmaFissure => localizer["MagmaFissure"];
         public string MetallicFossil => localizer["MetallicFossil"];

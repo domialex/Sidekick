@@ -171,9 +171,6 @@
   <data name="HollowFossil" xml:space="preserve">
     <value>鏤空化石</value>
   </data>
-  <data name="Information" xml:space="preserve">
-    <value>*只會出現在牆壁後方</value>
-  </data>
   <data name="JaggedFossil" xml:space="preserve">
     <value>鋸齒化石</value>
   </data>

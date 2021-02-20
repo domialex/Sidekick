@@ -153,6 +153,9 @@
   <data name="FracturedFossil" xml:space="preserve">
     <value>Fractured Fossil</value>
   </data>
+  <data name="FracturedWall" xml:space="preserve">
+    <value>Behind fractured walls</value>
+  </data>
   <data name="FrigidFossil" xml:space="preserve">
     <value>Frigid Fossil</value>
   </data>
@@ -170,9 +173,6 @@
   </data>
   <data name="HollowFossil" xml:space="preserve">
     <value>Hollow Fossil</value>
-  </data>
-  <data name="Information" xml:space="preserve">
-    <value>*Can only be found behind fractured walls</value>
   </data>
   <data name="JaggedFossil" xml:space="preserve">
     <value>Jagged Fossil</value>
