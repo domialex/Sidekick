@@ -1,0 +1,25 @@
+
+<MudCard>
+    <MudCardContent Class="pa-0">
+        <div class="d-flex align-center pa-2">
+            <div class="flex-grow-0 mr-2">
+                <img src="/images/metamorph/@Model.Image" alt="@Model.Name" />
+            </div>
+            <div class="flex-grow-1">
+                <div class="d-flex align-center">
+                    <MudText Typo="Typo.h6">
+                        @Model.Name
+                    </MudText>
+                </div>
+                <MudText Typo="Typo.body1">
+                    @((MarkupString)Model.Description)
+                </MudText>
+            </div>
+        </div>
+        <RewardProgress Value="Model.Value"></RewardProgress>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public MetamorphCatalyst Model { get; set; }
+}
