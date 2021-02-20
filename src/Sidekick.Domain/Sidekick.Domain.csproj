@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cheatsheets\Metamorph\" />
+  </ItemGroup>
+
 </Project>

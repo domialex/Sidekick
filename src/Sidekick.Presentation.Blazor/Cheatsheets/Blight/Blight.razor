@@ -1,8 +1,26 @@
 @page "/cheatsheets/blight"
 
-    <CheatsheetLayout>
-        Blight
-    </CheatsheetLayout>
+<CheatsheetLayout Title="@CheatsheetResources.Blight">
+    <MudGrid Spacing="1">
+        @foreach (var oil in ViewModel.Oils)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <Oil Model="oil" />
+            </MudItem>
+        }
+    </MudGrid>
+</CheatsheetLayout>
 
-    @code {
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
+    [Inject] private BlightResources Resources { get; set; }
+
+    private BlightLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel = await Mediator.Send(new GetBlightCheatsheetQuery());
+        await base.OnInitializedAsync();
     }
+}

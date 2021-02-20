@@ -34,11 +34,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Localization\Leagues\Blight\BlightResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>BlightResources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Localization\Leagues\Delve\DelveResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -53,11 +48,6 @@
       <DependentUpon>IncursionResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Localization\Leagues\LeagueResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LeagueResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Localization\Leagues\Metamorph\MetamorphResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -103,15 +93,6 @@
       <LastGenOutput>InitializeResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Blight\BlightResources.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>BlightResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Blight\BlightResources.zh-tw.resx">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Localization\Leagues\Delve\DelveResources.resx">
       <SubType>Designer</SubType>
       <LastGenOutput>DelveResources.Designer.cs</LastGenOutput>
@@ -132,13 +113,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Localization\Leagues\Incursion\IncursionResources.zh-tw.resx">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\LeagueResources.resx">
-      <LastGenOutput>LeagueResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\LeagueResources.zh-tw.resx">
-      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Localization\Leagues\Metamorph\MetamorphResources.resx">
       <SubType>Designer</SubType>

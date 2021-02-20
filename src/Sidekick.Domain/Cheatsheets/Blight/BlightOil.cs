@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Cheatsheets.Blight
+namespace Sidekick.Domain.Cheatsheets.Blight
 {
     public class BlightOil
     {
@@ -17,7 +17,5 @@ namespace Sidekick.Presentation.Cheatsheets.Blight
         public RewardValue Value { get; set; }
 
         public string Image { get; set; }
-
-        public string Color => Value.GetColor();
     }
 }

@@ -17,7 +17,6 @@ namespace Sidekick.Localization.Cheatsheets
         public string AislingResearch => localizer["AislingResearch"];
         public string AislingResearchTooltip => localizer["AislingResearchTooltip"];
         public string AislingTransportation => localizer["AislingTransportation"];
-        public string Betrayal => localizer["Betrayal"];
         public string CameriaFortification => localizer["CameriaFortification"];
         public string CameriaIntervention => localizer["CameriaIntervention"];
         public string CameriaName => localizer["CameriaName"];

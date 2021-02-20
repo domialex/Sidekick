@@ -10,6 +10,7 @@ namespace Sidekick.Localization
         public static IServiceCollection AddSidekickLocalization(this IServiceCollection services)
         {
             services.AddTransient<BetrayalResources>();
+            services.AddTransient<BlightResources>();
             services.AddTransient<CheatsheetResources>();
             services.AddTransient<InitializationResources>();
             services.AddTransient<PlatformResources>();

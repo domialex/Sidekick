@@ -141,4 +141,16 @@
   <data name="Metamorph" xml:space="preserve">
     <value>Metamorph</value>
   </data>
+  <data name="Value_High" xml:space="preserve">
+    <value>High value</value>
+  </data>
+  <data name="Value_Low" xml:space="preserve">
+    <value>Low value</value>
+  </data>
+  <data name="Value_Medium" xml:space="preserve">
+    <value>Medium value</value>
+  </data>
+  <data name="Value_None" xml:space="preserve">
+    <value>No value</value>
+  </data>
 </root>

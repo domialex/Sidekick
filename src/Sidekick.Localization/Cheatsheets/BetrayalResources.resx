@@ -492,9 +492,6 @@ Level3: 1-3 White Sockets</value>
   <data name="TypeTransportation" xml:space="preserve">
     <value>Transportation</value>
   </data>
-  <data name="Betrayal" xml:space="preserve">
-    <value>Betrayal</value>
-  </data>
   <data name="Sort_Alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
   </data>
