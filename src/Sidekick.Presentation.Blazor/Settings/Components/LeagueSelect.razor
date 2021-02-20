@@ -18,7 +18,7 @@
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
-    private Dictionary<string, string> Options { get; set; }
+    private Dictionary<string, string> Options { get; set; } = new Dictionary<string, string>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,10 +33,6 @@
         if (leagues != null)
         {
             Options = leagues.ToDictionary(x => x.Id, x => x.Text);
-        }
-        else
-        {
-            Options = new Dictionary<string, string>();
         }
     }
 }

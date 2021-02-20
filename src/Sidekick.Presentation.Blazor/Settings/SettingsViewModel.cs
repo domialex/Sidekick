@@ -27,6 +27,8 @@ namespace Sidekick.Presentation.Blazor.Settings
             };
         }
 
+        public Guid UserId { get; set; }
+
         public Dictionary<WikiSetting, string> WikiOptions { get; private set; }
 
         public Guid? CurrentKey { get; set; }
@@ -93,6 +95,8 @@ namespace Sidekick.Presentation.Blazor.Settings
         public bool RetainClipboard { get; set; }
 
         public bool ShowSplashScreen { get; set; }
+
+        public bool SendCrashReports { get; set; }
 
         public List<string> Price_Mods_Weapon { get; set; }
 

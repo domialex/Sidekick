@@ -45,6 +45,12 @@
         </MudCardHeader>
         <MudCardContent>
             <div>
+                <MudCheckBox Label="@Localizer[SettingsResources.General_SendCrashReports]" @bind-Checked="@ViewModel.SendCrashReports" />
+                <MudTooltip Text="@Localizer[SettingsResources.General_CopyUserIdToClipboard]" Placement="Placement.Top">
+                    <MudIconButton Icon="@Icons.Material.Filled.FileCopy" @onclick="CopyUserIdToClipboard" />
+                </MudTooltip>
+            </div>
+            <div>
                 <MudCheckBox Label="@Localizer[SettingsResources.General_ShowSplashScreen]"
                              @bind-Checked="@ViewModel.ShowSplashScreen"></MudCheckBox>
             </div>
@@ -63,4 +69,10 @@
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+
+    public void CopyUserIdToClipboard()
+    {
+        JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", ViewModel.UserId);
+    }
 }

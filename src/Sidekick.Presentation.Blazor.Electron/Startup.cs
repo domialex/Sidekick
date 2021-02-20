@@ -50,7 +50,6 @@ namespace Sidekick.Presentation.Blazor.Electron
 
             services
                 // Common
-                .AddSidekickLogging()
                 .AddSidekickMapper(
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"))
@@ -65,6 +64,7 @@ namespace Sidekick.Presentation.Blazor.Electron
 
                 // Layers
                 .AddSidekickApplication()
+                .AddSidekickLogging()
                 .AddSidekickInfrastructure()
                 .AddSidekickLocalization()
                 .AddSidekickPersistence()

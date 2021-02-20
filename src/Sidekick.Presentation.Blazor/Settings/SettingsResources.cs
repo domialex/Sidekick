@@ -28,6 +28,8 @@ namespace Sidekick.Presentation.Blazor.Settings
         public const string Cheatsheets_Key_Open = "Cheatsheets_Key_Open";
         public const string General = "General";
         public const string General_RetainClipboard = "General_RetainClipboard";
+        public const string General_SendCrashReports = "General_SendCrashReports";
+        public const string General_CopyUserIdToClipboard = "General_CopyUserIdToClipboard";
         public const string General_ShowSplashScreen = "General_ShowSplashScreen";
         public const string Group_Custom_Keybinds = "Group_Custom_Keybinds";
         public const string Group_Keybinds = "Group_Keybinds";
