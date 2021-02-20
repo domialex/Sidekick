@@ -34,26 +34,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Localization\Leagues\Delve\DelveResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DelveResources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Localization\Leagues\Heist\HeistResources.Designer.cs">
-      <DependentUpon>HeistResources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Localization\Leagues\Incursion\IncursionResources.Designer.cs">
-      <DependentUpon>IncursionResources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Localization\Leagues\Metamorph\MetamorphResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MetamorphResources.resx</DependentUpon>
-    </Compile>
     <Compile Update="Localization\MapInfo\MapInfoResources.Designer.cs">
       <DependentUpon>MapInfoResources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -92,36 +72,6 @@
     <EmbeddedResource Update="Localization\Initialize\InitializeResources.resx">
       <LastGenOutput>InitializeResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Delve\DelveResources.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>DelveResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Delve\DelveResources.zh-tw.resx">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Heist\HeistResources.resx">
-      <LastGenOutput>HeistResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Incursion\IncursionResources.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>IncursionResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Incursion\IncursionResources.zh-tw.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Metamorph\MetamorphResources.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>MetamorphResources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Leagues\Metamorph\MetamorphResources.zh-tw.resx">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Localization\MapInfo\MapInfoResources.resx">
       <LastGenOutput>MapInfoResources.Designer.cs</LastGenOutput>

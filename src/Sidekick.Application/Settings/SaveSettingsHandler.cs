@@ -100,8 +100,6 @@ namespace Sidekick.Application.Settings
                 await mediator.Send(new InitializeCommand(false));
             }
 
-            keybindProvider.Register();
-
             return Unit.Value;
         }
     }

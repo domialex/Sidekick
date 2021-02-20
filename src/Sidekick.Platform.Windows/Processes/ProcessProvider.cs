@@ -48,7 +48,6 @@ namespace Sidekick.Platform.Windows.Processes
         public event Action OnBlur;
 
         private string FocusedWindow { get; set; }
-        private bool IsFocused { get; set; } = false;
         private bool PermissionChecked { get; set; } = false;
         private CancellationTokenSource WindowsHook { get; set; }
 
@@ -75,15 +74,10 @@ namespace Sidekick.Platform.Windows.Processes
                 FocusedWindow = GetWindowTitle(hwnd);
                 if (FocusedWindow == PATH_OF_EXILE_TITLE || FocusedWindow == SIDEKICK_TITLE)
                 {
-                    if (!IsFocused)
-                    {
-                        IsFocused = true;
-                        OnFocus?.Invoke();
-                    }
+                    OnFocus?.Invoke();
                 }
-                else if (IsFocused)
+                else
                 {
-                    IsFocused = false;
                     OnBlur?.Invoke();
                 }
 
