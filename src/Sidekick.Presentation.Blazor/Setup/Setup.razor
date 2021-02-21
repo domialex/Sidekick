@@ -97,9 +97,9 @@
         public Validator(IStringLocalizer<SettingsResources> localizer)
         {
             RuleFor(v => v.Language_UI)
-            .Cascade(CascadeMode.Stop)
-            .NotEmpty()
-            .WithName(localizer[SettingsResources.Language_UI]);
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .WithName(localizer[SettingsResources.Language_UI]);
             RuleFor(v => v.Language_Parser)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
