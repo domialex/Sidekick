@@ -22,11 +22,11 @@
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>
-                        <UILanguageSelect @bind-Value="ViewModel.Language_UI"></UILanguageSelect>
-                        <GameLanguageSelect Value="@ViewModel.Language_Parser"
-                                            ValueChanged="OnGameLanguageChange"></GameLanguageSelect>
+                        <UILanguageSelect @bind-Value="ViewModel.Language_UI" For="@(() => ViewModel.Language_UI)" />
+                        <GameLanguageSelect Value="@ViewModel.Language_Parser" For="@(() => ViewModel.Language_Parser)" ValueChanged="OnGameLanguageChange" />
                     </MudCardContent>
                 </MudCard>
+
                 <MudCard Class="mt-6">
                     <MudCardHeader>
                         <CardHeaderContent>
@@ -34,24 +34,20 @@
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>
-                        <LeagueSelect @bind-Value="ViewModel.LeagueId"
-                                      @ref="RefLeagueSelect"></LeagueSelect>
+                        <LeagueSelect @bind-Value="ViewModel.LeagueId" For="@(() => ViewModel.LeagueId)" @ref="RefLeagueSelect" />
                         <MudTextField Label="@Localizer[SettingsResources.Character_Name]"
                                       Variant="Variant.Filled"
                                       @bind-Value="ViewModel.Character_Name" />
                     </MudCardContent>
                 </MudCard>
 
-                <MudCard Class="mt-6">                    
+                <MudCard Class="mt-6">
                     <MudCardContent>
                         <MudCheckBox Label="@Localizer[SettingsResources.General_SendCrashReports]" @bind-Checked="@ViewModel.SendCrashReports" />
                     </MudCardContent>
                 </MudCard>
 
-                <MudText Class="my-3"
-                         Color="@Color.Error">
-                    <ValidationSummary />
-                </MudText>
+                <br />
 
                 <div class="d-flex justify-end mb-6">
                     <MudButton OnClick="Exit"
