@@ -78,7 +78,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
                 },
                 new IncursionRoom(resources.GemcuttersWorkshopContains, string.Empty)
                 {
-                    ContainsTooltip = resources.DoubleGemCorruptionTooltip,
+                    Tooltip = resources.DoubleGemCorruptionTooltip,
                     Level1 = new IncursionRoomTier(resources.GemcuttersWorkshop, RewardValue.Low),
                     Level2 = new IncursionRoomTier(resources.DepartmentOfThaumaturgy, RewardValue.Low),
                     Level3 = new IncursionRoomTier(resources.DoryanisInstitute, RewardValue.High),
