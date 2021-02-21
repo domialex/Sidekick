@@ -1,5 +1,6 @@
 @page "/settings"
 @using Sidekick.Presentation.Blazor.Settings.Components
+@using Sidekick.Domain.Platforms
 
 <SettingsLayout>
     <MudCard>
@@ -69,10 +70,10 @@
 @code {
     [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
-    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private IClipboardProvider ClipboardProvider { get; set; }
 
     public void CopyUserIdToClipboard()
     {
-        JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", ViewModel.UserId);
+        ClipboardProvider.SetText(ViewModel.UserId.ToString());
     }
 }
