@@ -1,0 +1,27 @@
+@page "/development"
+
+<MudLayout>
+    <MudAppBar Color="Color.Primary">
+        <MudText Typo="Typo.body1">Development Page</MudText>
+    </MudAppBar>
+
+    <MudDrawer ClipMode="DrawerClipMode.Always"
+               Open="true"
+               Variant="DrawerVariant.Persistent">
+        <MudDrawerHeader></MudDrawerHeader>
+        <MudNavMenu>
+            <MudNavLink Match="NavLinkMatch.All" Href="/development/typography">Typography</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/development/tests">Tests</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent>
+        <MudContainer Class="py-6">
+            @ChildContent
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}
