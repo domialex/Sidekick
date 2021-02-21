@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Wikis;
@@ -6,6 +7,8 @@ namespace Sidekick.Application.Settings
 {
     public class SidekickSettings : ISidekickSettings
     {
+        public Guid UserId { get; set; } = Guid.NewGuid();
+
         public string Language_UI { get; set; } = "en";
 
         public string Language_Parser { get; set; } = "";
@@ -29,6 +32,8 @@ namespace Sidekick.Application.Settings
         public bool Price_Prediction_Enable { get; set; } = true;
 
         public bool ShowSplashScreen { get; set; } = true;
+
+        public bool SendCrashReports { get; set; } = false;
 
         public string Map_Dangerous_Regex { get; set; } = "reflect|regen";
 

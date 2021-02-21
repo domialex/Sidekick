@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -186,8 +186,14 @@
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="General_CopyUserIdToClipboard" xml:space="preserve">
+    <value>Copy your unique id to clipboard</value>
+  </data>
   <data name="General_RetainClipboard" xml:space="preserve">
     <value>Retain Clipboard Data</value>
+  </data>
+  <data name="General_SendCrashReports" xml:space="preserve">
+    <value>Send crash reports to help us fix bugs faster</value>
   </data>
   <data name="General_ShowSplashScreen" xml:space="preserve">
     <value>Show the splash screen when starting</value>

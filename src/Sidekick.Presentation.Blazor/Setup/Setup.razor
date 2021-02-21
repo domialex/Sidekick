@@ -41,6 +41,12 @@
                     </MudCardContent>
                 </MudCard>
 
+                <MudCard Class="mt-6">                    
+                    <MudCardContent>
+                        <MudCheckBox Label="@Localizer[SettingsResources.General_SendCrashReports]" @bind-Checked="@ViewModel.SendCrashReports" />
+                    </MudCardContent>
+                </MudCard>
+
                 <MudText Class="my-3"
                          Color="@Color.Error">
                     <ValidationSummary />
