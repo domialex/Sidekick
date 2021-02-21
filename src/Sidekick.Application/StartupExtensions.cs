@@ -1,5 +1,3 @@
-using System.IO;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Application.Game.Items.Parser.Patterns;
@@ -14,14 +12,8 @@ namespace Sidekick.Application
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddSidekickApplication(this IServiceCollection services)
+        public static IServiceCollection AddSidekickApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
-                .AddJsonFile(SaveSettingsHandler.FileName, optional: true, reloadOnChange: true);
-
-            var configuration = builder.Build();
-
             var sidekickConfiguration = new SidekickSettings();
             configuration.Bind(sidekickConfiguration);
             services.AddSingleton(sidekickConfiguration);
