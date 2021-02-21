@@ -127,7 +127,7 @@
     <value>Armourer's Workshop</value>
   </data>
   <data name="ArmourersWorkshopContains" xml:space="preserve">
-    <value> Armour
+    <value>Armour&lt;br /&gt;
 Animate Guardian Recipe</value>
   </data>
   <data name="ArmourersWorkshopModifiers" xml:space="preserve">
@@ -155,18 +155,18 @@ Animate Guardian Recipe</value>
     <value>Chamber of Iron</value>
   </data>
   <data name="CitaqualotlModTooltip" xml:space="preserve">
-    <value>Prefix: 
-Minions deal 90-138% increased Damage
-------------------------------------
-+2 to Level of socketed Minion Gems
-------------------------------------
-Minions deal 70-110% increased Damage
-Minions have 5% Chance to deal Double Damage
-------------------------------------
-Suffix: 
-Minions have 13-40% increased Attack Speed
-Minions have 13-40% increased Cast Speed
-------------------------------------
+    <value>Prefix: &lt;br /&gt;
+Minions deal 90-138% increased Damage&lt;br /&gt;
+------------------------------------&lt;br /&gt;
++2 to Level of socketed Minion Gems&lt;br /&gt;
+------------------------------------&lt;br /&gt;
+Minions deal 70-110% increased Damage&lt;br /&gt;
+Minions have 5% Chance to deal Double Damage&lt;br /&gt;
+------------------------------------&lt;br /&gt;
+Suffix: &lt;br /&gt;
+Minions have 13-40% increased Attack Speed&lt;br /&gt;
+Minions have 13-40% increased Cast Speed&lt;br /&gt;
+------------------------------------&lt;br /&gt;
 17-30% increased Minion Duration</value>
   </data>
   <data name="ConduitOfLightning" xml:space="preserve">
@@ -206,15 +206,15 @@ Minions have 13-40% increased Cast Speed
     <value>Doryani's Institute</value>
   </data>
   <data name="DoubleCorruptionTooltip" xml:space="preserve">
-    <value>Possible outcomes: 
-Change all sockets to white 
-Add two imnplicit Vaal modifiers 
-Transform Sacrifical Garb into Shadowstitch 
-Transform into a rare Item with random influence 
+    <value>Possible outcomes: &lt;br /&gt;
+Change all sockets to white &lt;br /&gt;
+Add two imnplicit Vaal modifiers &lt;br /&gt;
+Transform Sacrifical Garb into Shadowstitch &lt;br /&gt;
+Transform into a rare Item with random influence &lt;br /&gt;
 Destroy the item</value>
   </data>
   <data name="DoubleGemCorruptionTooltip" xml:space="preserve">
-    <value>Applies two corruptions to a Gem
+    <value>Applies two corruptions to a Gem&lt;br /&gt;
 Possible to get a 21/23 Gem</value>
   </data>
   <data name="EngineeringDepartment" xml:space="preserve">
@@ -224,7 +224,7 @@ Possible to get a 21/23 Gem</value>
     <value>Explosives Room</value>
   </data>
   <data name="ExplosivesRoomContains" xml:space="preserve">
-    <value>1/2/3 Explosive Kegs
+    <value>1/2/3 Explosive Kegs&lt;br /&gt;
 [Used to unlock doors]</value>
   </data>
   <data name="Factory" xml:space="preserve">
@@ -243,7 +243,7 @@ Possible to get a 21/23 Gem</value>
     <value>Gemcutter's Workshop</value>
   </data>
   <data name="GemcuttersWorkshopContains" xml:space="preserve">
-    <value>     Gems
+    <value>Gems&lt;br /&gt;
 Level 3: Double Gem Corruption</value>
   </data>
   <data name="GlitteringHalls" xml:space="preserve">
@@ -256,18 +256,18 @@ Level 3: Double Gem Corruption</value>
     <value>+10/20/30 % Monster Pack Size</value>
   </data>
   <data name="GuateliztzModTooltip" xml:space="preserve">
-    <value>Prefix: 
-+70-119 to Maximum Life
-3-10% increased Maximum Life
---------------------------------
-+44-47 to Maximum Energy Shield
-7-10% increased Maximum Energy Shield
---------------------------------
-+44-47 to Maximum Energy Shield
-Regenerate 0.4% of Energy Shield per Second
---------------------------------
-Suffix: 
-Regenerate 16-20 Life per Second
+    <value>Prefix: &lt;br /&gt;
++70-119 to Maximum Life&lt;br /&gt;
+3-10% increased Maximum Life&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++44-47 to Maximum Energy Shield&lt;br /&gt;
+7-10% increased Maximum Energy Shield&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++44-47 to Maximum Energy Shield&lt;br /&gt;
+Regenerate 0.4% of Energy Shield per Second&lt;br /&gt;
+--------------------------------&lt;br /&gt;
+Suffix: &lt;br /&gt;
+Regenerate 16-20 Life per Second&lt;br /&gt;
 Regenerate 0.4% of Life per Second</value>
   </data>
   <data name="HallOfChampions" xml:space="preserve">
@@ -289,8 +289,8 @@ Regenerate 0.4% of Life per Second</value>
     <value>Hall of Mettle</value>
   </data>
   <data name="HallOfMettleContains" xml:space="preserve">
-    <value>Level 1: Timeless Monolith
-Level 2: Guaranteed War Hoard
+    <value>Level 1: Timeless Monolith&lt;br /&gt;
+Level 2: Guaranteed War Hoard&lt;br /&gt;
 Level 3: Guaranteed General</value>
   </data>
   <data name="HallOfOfferings" xml:space="preserve">
@@ -357,23 +357,23 @@ Level 3: Guaranteed General</value>
     <value>Locus of Corruption</value>
   </data>
   <data name="MatalTooltip" xml:space="preserve">
-    <value>Prefix: 
-30% increased Movement Speed
-5-6% chance to Dodge Spell Hits
---------------------------------------
-90-138% increased Trap/Mine Damage
---------------------------------------
-+2 to Level of socketed Trap or Mine Gems
---------------------------------------
-Suffix: 
-20-33% increased Trap/Mine Throwing Speed
---------------------------------------
-14-22% increased Cooldown Recovery Speed for Throwing Traps
-17-30% increased Trap Duration
---------------------------------------
-Mines have 14-22% increased Detonation Speed
-17-30% increased Mine Duration
---------------------------------------
+    <value>Prefix: &lt;br /&gt;
+30% increased Movement Speed&lt;br /&gt;
+5-6% chance to Dodge Spell Hits&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+90-138% increased Trap/Mine Damage&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
++2 to Level of socketed Trap or Mine Gems&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+Suffix: &lt;br /&gt;
+20-33% increased Trap/Mine Throwing Speed&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+14-22% increased Cooldown Recovery Speed for Throwing Traps&lt;br /&gt;
+17-30% increased Trap Duration&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+Mines have 14-22% increased Detonation Speed&lt;br /&gt;
+17-30% increased Mine Duration&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
 Skills used by Traps/Mines have 22-37% increased Area of Effect</value>
   </data>
   <data name="Modifiers" xml:space="preserve">
@@ -395,7 +395,7 @@ Skills used by Traps/Mines have 22-37% increased Area of Effect</value>
     <value>Poison Garden</value>
   </data>
   <data name="PoisonGardenContains" xml:space="preserve">
-    <value>Chaos Damage Rank 3 Recipe
+    <value>Chaos Damage Rank 3 Recipe&lt;br /&gt;
 Level 3: Tacati Mod or Apep's Slumber</value>
   </data>
   <data name="PoisonGardenModifiers" xml:space="preserve">
@@ -405,24 +405,24 @@ Level 3: Tacati Mod or Apep's Slumber</value>
     <value>Pools of Restoration</value>
   </data>
   <data name="PoolsOfRestorationContains" xml:space="preserve">
-    <value>Leech Rank 2 Recipe
+    <value>Leech Rank 2 Recipe&lt;br /&gt;
 Level 3: Guatelitzi Mod or Mask of the Spirit Drinker</value>
   </data>
   <data name="PoolsOfRestorationModifiers" xml:space="preserve">
     <value>Monster regenerate 4/6/8 % Life per Second</value>
   </data>
   <data name="PuhuarteModTooltuip" xml:space="preserve">
-    <value>Suffix: 
-+46-48% to Fire/Cold/Lightning Resistance
-9-10% of Physical Damage from Hits taken as Fire/Cold/Lightning Damage
-------------------------------------------
-+46-48% to Fire/Cold/Lightning Resistance
-0.4% of Fire/Cold/Lightning Damage leeched as Life
-------------------------------------------
-+46-48% to Fire/Cold/Lightning Resistance
-On of the following matching the Resistance:
-(45-52) to (75-78) added Fire Damage against Burning Enemies
-(30-50)% increased Damage with Hits against Chilled Enemies
+    <value>Suffix: &lt;br /&gt;
++46-48% to Fire/Cold/Lightning Resistance&lt;br /&gt;
+9-10% of Physical Damage from Hits taken as Fire/Cold/Lightning Damage&lt;br /&gt;
+------------------------------------------&lt;br /&gt;
++46-48% to Fire/Cold/Lightning Resistance&lt;br /&gt;
+0.4% of Fire/Cold/Lightning Damage leeched as Life&lt;br /&gt;
+------------------------------------------&lt;br /&gt;
++46-48% to Fire/Cold/Lightning Resistance&lt;br /&gt;
+On of the following matching the Resistance:&lt;br /&gt;
+(45-52) to (75-78) added Fire Damage against Burning Enemies&lt;br /&gt;
+(30-50)% increased Damage with Hits against Chilled Enemies&lt;br /&gt;
 (40-60)% increased Critical Strike Chance against Shocked Enemies</value>
   </data>
   <data name="RoyalMeetingRoom" xml:space="preserve">
@@ -435,8 +435,8 @@ On of the following matching the Resistance:
     <value>10/15/20 % increased Attack/Cast Speed</value>
   </data>
   <data name="SacrificalChamberContains" xml:space="preserve">
-    <value>Level 1: Change Unique to other
-Level 2: Can obtain League Specific Items
+    <value>Level 1: Change Unique to other&lt;br /&gt;
+Level 2: Can obtain League Specific Items&lt;br /&gt;
 Level 3: Unique Item of same class/Vial Upgrade</value>
   </data>
   <data name="SacrificialChamber" xml:space="preserve">
@@ -470,7 +470,7 @@ Level 3: Unique Item of same class/Vial Upgrade</value>
     <value>Sparring Room</value>
   </data>
   <data name="SparringRoomContains" xml:space="preserve">
-    <value> Weapons
+    <value> Weapons&lt;br /&gt;
 Accuracy Rank 3 Recipe</value>
   </data>
   <data name="SparringRoomModifiers" xml:space="preserve">
@@ -480,15 +480,15 @@ Accuracy Rank 3 Recipe</value>
     <value>Splinter Research Lab</value>
   </data>
   <data name="SplinterResearchLabContains" xml:space="preserve">
-    <value>Level 1: 2 Clasped Hands
-Level 2: 1 Breach
+    <value>Level 1: 2 Clasped Hands&lt;br /&gt;
+Level 2: 1 Breach&lt;br /&gt;
 Level 3: 3 Breaches</value>
   </data>
   <data name="StorageRoom" xml:space="preserve">
     <value>Storage Room</value>
   </data>
   <data name="StorageRoomContains" xml:space="preserve">
-    <value>Random Item-Specific Chests
+    <value>Random Item-Specific Chests&lt;br /&gt;
 Level 3: League Specific Items possible</value>
   </data>
   <data name="StormOfCorruption" xml:space="preserve">
@@ -507,30 +507,30 @@ Level 3: League Specific Items possible</value>
     <value>Maps (possible Vaal Prefix)</value>
   </data>
   <data name="TacatiModTooltip" xml:space="preserve">
-    <value>Prefix: 
-155-169% increased Physical Damage
-Gain 9-10% of Physical Damage as Extra Chaos Damage
---------------------------------------------------------
-70-110% increased Spell Damage
-Gain 5% of Non-Chaos Damage as Extra Chaos Damage
---------------------------------------------------------
-Suffix: 
-23-38% increased Cast Speed
-Adds 17-57 Chaos Damage to Spells
---------------------------------------------------------
-14-27% increased Attack Speed
-Adds 23-61 Chaos Damage
---------------------------------------------------------
-31-35% to Chaos Resistance
-9-10% reduced Chaos Damage taken Over Time
---------------------------------------------------------
-13-18% increased Posision Duration
-26-30% increased Chaos Damage
---------------------------------------------------------
-30% chance to Poision on Hit
-26-30% increased Chaos Damage
---------------------------------------------------------
-31-35% increased Damage with Poison
+    <value>Prefix: &lt;br /&gt;
+155-169% increased Physical Damage&lt;br /&gt;
+Gain 9-10% of Physical Damage as Extra Chaos Damage&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+70-110% increased Spell Damage&lt;br /&gt;
+Gain 5% of Non-Chaos Damage as Extra Chaos Damage&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+Suffix: &lt;br /&gt;
+23-38% increased Cast Speed&lt;br /&gt;
+Adds 17-57 Chaos Damage to Spells&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+14-27% increased Attack Speed&lt;br /&gt;
+Adds 23-61 Chaos Damage&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+31-35% to Chaos Resistance&lt;br /&gt;
+9-10% reduced Chaos Damage taken Over Time&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+13-18% increased Posision Duration&lt;br /&gt;
+26-30% increased Chaos Damage&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+30% chance to Poision on Hit&lt;br /&gt;
+26-30% increased Chaos Damage&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+31-35% increased Damage with Poison&lt;br /&gt;
 Adds 17-61 Chaos Damage</value>
   </data>
   <data name="TempestGenerator" xml:space="preserve">
@@ -552,14 +552,14 @@ Adds 17-61 Chaos Damage</value>
     <value>Throne of Atziri</value>
   </data>
   <data name="TopotanteModTooltip" xml:space="preserve">
-    <value>Prefixe: 
-Add Fire/Cold/Lightning Damage to Attacks
-25% of Physical Damage Converted to Fire/Cold/Lighning Damage
----------------------------------------------------------------------
-Add Fire/Cold/Lightning Damage 
-Damage Penetrates 13-15% Fire/Cold/Lightning Resistance 
----------------------------------------------------------------------
-75-115% increased Fire/Cold/Lightning Damage 
+    <value>Prefixe: &lt;br /&gt;
+Add Fire/Cold/Lightning Damage to Attacks&lt;br /&gt;
+25% of Physical Damage Converted to Fire/Cold/Lighning Damage&lt;br /&gt;
+---------------------------------------------------------------------&lt;br /&gt;
+Add Fire/Cold/Lightning Damage &lt;br /&gt;
+Damage Penetrates 13-15% Fire/Cold/Lightning Resistance &lt;br /&gt;
+---------------------------------------------------------------------&lt;br /&gt;
+75-115% increased Fire/Cold/Lightning Damage &lt;br /&gt;
 Add Fire/Cold/Lightning Damage to Spells</value>
   </data>
   <data name="TormentCells" xml:space="preserve">
@@ -578,7 +578,7 @@ Add Fire/Cold/Lightning Damage to Spells</value>
     <value>Trap Workshop</value>
   </data>
   <data name="TrapWorkshopContains" xml:space="preserve">
-    <value>Traps and Mines Rank 2 Recipe
+    <value>Traps and Mines Rank 2 Recipe&lt;br /&gt;
 Level 3: Matatl Mod or Architect's Hand</value>
   </data>
   <data name="TrapWorkshopModifiers" xml:space="preserve">
@@ -606,27 +606,27 @@ Level 3: Matatl Mod or Architect's Hand</value>
     <value>Criticals Rank 3 Recipe</value>
   </data>
   <data name="WorkshopModifiers" xml:space="preserve">
-    <value>5/10/15 % increased Quantity of Items
+    <value>5/10/15 % increased Quantity of Items&lt;br /&gt;
 Unique Boss has 15/25/35 % increased Life</value>
   </data>
   <data name="XopecModTooltip" xml:space="preserve">
-    <value>Prefix: 
-+69-73 to maximum Mana
-7-10% increased maximum Mana
---------------------------------
-+74-78 to maximum Mana
-+2-3 Mana gained for each Enemy hit by your Attacks
---------------------------------
-+74-78 to maximum Mana
-Regenerate 5-7 Mana per Second
---------------------------------
-+69-73 to maximum Mana
-3-5% reduced Mana Reserved
---------------------------------
-+74-78 to maximum Mana
--6-8 to Total Mana Cost of Skills
---------------------------------
-+74-78 to maximum Mana
+    <value>Prefix: &lt;br /&gt;
++69-73 to maximum Mana&lt;br /&gt;
+7-10% increased maximum Mana&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 to maximum Mana&lt;br /&gt;
++2-3 Mana gained for each Enemy hit by your Attacks&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 to maximum Mana&lt;br /&gt;
+Regenerate 5-7 Mana per Second&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++69-73 to maximum Mana&lt;br /&gt;
+3-5% reduced Mana Reserved&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 to maximum Mana&lt;br /&gt;
+-6-8 to Total Mana Cost of Skills&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 to maximum Mana&lt;br /&gt;
 Non-Channelling Skills have -6-8 to Total Mana Cost</value>
   </data>
 </root>

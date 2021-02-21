@@ -127,7 +127,7 @@
     <value>Werkstatt des Rüstungsschmiedes</value>
   </data>
   <data name="ArmourersWorkshopContains" xml:space="preserve">
-    <value>Rüstungen
+    <value>Rüstungen&lt;br /&gt;
 Beschwöre Wächter Rezept</value>
   </data>
   <data name="ArmourersWorkshopModifiers" xml:space="preserve">
@@ -155,18 +155,18 @@ Beschwöre Wächter Rezept</value>
     <value>Kammer des Eisens</value>
   </data>
   <data name="CitaqualotlModTooltip" xml:space="preserve">
-    <value>Prefix:
-Untergebene verursachen 90-138% mehr Schaden
-------------------------------------
-+2 auf Level aktiver Untergebener Edelsteine
-------------------------------------
-Untergebene verursachen 70-110% mehr Schaden
-Untergebene haben 5% Chance doppelten Schaden zu verursachen
-------------------------------------
-Suffix:
-Untergeben haben 13-40% erhöhte Angriffsgeschwindigkeit
-Untergeben haben 13-40% erhöhte Zaubergeschwindigkeit
-------------------------------------
+    <value>Prefix:&lt;br /&gt;
+Untergebene verursachen 90-138% mehr Schaden&lt;br /&gt;
+------------------------------------&lt;br /&gt;
++2 auf Level aktiver Untergebener Edelsteine&lt;br /&gt;
+------------------------------------&lt;br /&gt;
+Untergebene verursachen 70-110% mehr Schaden&lt;br /&gt;
+Untergebene haben 5% Chance doppelten Schaden zu verursachen&lt;br /&gt;
+------------------------------------&lt;br /&gt;
+Suffix:&lt;br /&gt;
+Untergeben haben 13-40% erhöhte Angriffsgeschwindigkeit&lt;br /&gt;
+Untergeben haben 13-40% erhöhte Zaubergeschwindigkeit&lt;br /&gt;
+------------------------------------&lt;br /&gt;
 17-30% erhöhte Untergebenendauer</value>
   </data>
   <data name="ConduitOfLightning" xml:space="preserve">
@@ -203,15 +203,15 @@ Untergeben haben 13-40% erhöhte Zaubergeschwindigkeit
     <value>Doryanis Institut</value>
   </data>
   <data name="DoubleCorruptionTooltip" xml:space="preserve">
-    <value>Mögliche Ergebnisse:
-Ändere alle Fassungen zu weiß
-Füge 2 implizite Modifikationen hinzu
-Verändert Opfergewand zu Schattenstich
-Veränderung in ein seltenes Item mit zufälligem Einfluss
+    <value>Mögliche Ergebnisse:&lt;br /&gt;
+Ändere alle Fassungen zu weiß&lt;br /&gt;
+Füge 2 implizite Modifikationen hinzu&lt;br /&gt;
+Verändert Opfergewand zu Schattenstich&lt;br /&gt;
+Veränderung in ein seltenes Item mit zufälligem Einfluss&lt;br /&gt;
 Zerstört das Item</value>
   </data>
   <data name="DoubleGemCorruptionTooltip" xml:space="preserve">
-    <value>Korrumpiert einen Edelstein zwei Mal
+    <value>Korrumpiert einen Edelstein zwei Mal&lt;br /&gt;
 Es ist möglich einen 21/23 Edelstein zu erhalten</value>
   </data>
   <data name="EngineeringDepartment" xml:space="preserve">
@@ -221,7 +221,7 @@ Es ist möglich einen 21/23 Edelstein zu erhalten</value>
     <value>Sprengstoff Raum</value>
   </data>
   <data name="ExplosivesRoomContains" xml:space="preserve">
-    <value>1/2/3 Explosive Fässer
+    <value>1/2/3 Explosive Fässer&lt;br /&gt;
 [Kann verschlossene Türen öffnen]</value>
   </data>
   <data name="Factory" xml:space="preserve">
@@ -240,7 +240,7 @@ Es ist möglich einen 21/23 Edelstein zu erhalten</value>
     <value>Edelsteinschleifer Werkstatt</value>
   </data>
   <data name="GemcuttersWorkshopContains" xml:space="preserve">
-    <value>Edelsteine
+    <value>Edelsteine&lt;br /&gt;
 Level3: Doppelte Edelstein Korruption</value>
   </data>
   <data name="GlitteringHalls" xml:space="preserve">
@@ -253,18 +253,18 @@ Level3: Doppelte Edelstein Korruption</value>
     <value>+10/20/30 % Monstergruppengröße</value>
   </data>
   <data name="GuateliztzModTooltip" xml:space="preserve">
-    <value>Prefix:
-+70-119 zu gesamten maximalen Leben
-3-10% erhöhtes maximales Leben
---------------------------------
-+44-47 zu gesamten maximalen Energieschild
-7-10% erhöhtes maximales Energieschild
---------------------------------
-+44-47 zu gesamten maximalen Energieschild
-Regeneriere 0.4% Energieschild pro Sekunde
---------------------------------
-Suffix:
-Regeneriere 16-20 Leben pro Sekunde
+    <value>Prefix:&lt;br /&gt;
++70-119 zu gesamten maximalen Leben&lt;br /&gt;
+3-10% erhöhtes maximales Leben&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++44-47 zu gesamten maximalen Energieschild&lt;br /&gt;
+7-10% erhöhtes maximales Energieschild&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++44-47 zu gesamten maximalen Energieschild&lt;br /&gt;
+Regeneriere 0.4% Energieschild pro Sekunde&lt;br /&gt;
+--------------------------------&lt;br /&gt;
+Suffix:&lt;br /&gt;
+Regeneriere 16-20 Leben pro Sekunde&lt;br /&gt;
 Regeneriere 0.4% Leben pro Sekunde</value>
   </data>
   <data name="HallOfChampions" xml:space="preserve">
@@ -286,8 +286,8 @@ Regeneriere 0.4% Leben pro Sekunde</value>
     <value>Halle der Standhaftigkeit</value>
   </data>
   <data name="HallOfMettleContains" xml:space="preserve">
-    <value>Level1: Zeitloser Monolith
-Level2: Garantierter Kriegsschatz
+    <value>Level1: Zeitloser Monolith&lt;br /&gt;
+Level2: Garantierter Kriegsschatz&lt;br /&gt;
 Level3: Garantierter General</value>
   </data>
   <data name="HallOfOfferings" xml:space="preserve">
@@ -342,23 +342,23 @@ Level3: Garantierter General</value>
     <value>Schauplatz der Korruption</value>
   </data>
   <data name="MatalTooltip" xml:space="preserve">
-    <value>Prefix:
-30% erhöhte Bewegungsgeschwindigkeit
-5-6% Chance Zaubertreffern auszuweichen
---------------------------------------
-90-138% erhöhter Fallen/Minen Schaden
---------------------------------------
-+2 auf Level aktiver Fallen oder Minen Edelsteine
---------------------------------------
-Suffix:
-20-33% erhöhte Fallen/Minen Wurfgeschwindigkeit
---------------------------------------
-14-22% erhöhte Abklingzeitreduzierung für das Werfen von Fallen
-17-30% erhöhte Fallen Dauer
---------------------------------------
-Minen haben 14-22% erhöhte Explosionsgeschwindigkeit
-17-30% erhöhte Minen Dauer
---------------------------------------
+    <value>Prefix:&lt;br /&gt;
+30% erhöhte Bewegungsgeschwindigkeit&lt;br /&gt;
+5-6% Chance Zaubertreffern auszuweichen&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+90-138% erhöhter Fallen/Minen Schaden&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
++2 auf Level aktiver Fallen oder Minen Edelsteine&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+Suffix:&lt;br /&gt;
+20-33% erhöhte Fallen/Minen Wurfgeschwindigkeit&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+14-22% erhöhte Abklingzeitreduzierung für das Werfen von Fallen&lt;br /&gt;
+17-30% erhöhte Fallen Dauer&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
+Minen haben 14-22% erhöhte Explosionsgeschwindigkeit&lt;br /&gt;
+17-30% erhöhte Minen Dauer&lt;br /&gt;
+--------------------------------------&lt;br /&gt;
 Fähigkeiten, welche von Fallen/Minen genutzt werden haben 22-37% erhöhten Wirkungsbereich</value>
   </data>
   <data name="MuseumOfArtifacts" xml:space="preserve">
@@ -377,7 +377,7 @@ Fähigkeiten, welche von Fallen/Minen genutzt werden haben 22-37% erhöhten Wirk
     <value>Giftgarten</value>
   </data>
   <data name="PoisonGardenContains" xml:space="preserve">
-    <value>Chaos Schaden Rang 3 Rezept
+    <value>Chaos Schaden Rang 3 Rezept&lt;br /&gt;
 Level3: Tacati Modifikation oder Apeps Schlummer</value>
   </data>
   <data name="PoisonGardenModifiers" xml:space="preserve">
@@ -387,24 +387,24 @@ Level3: Tacati Modifikation oder Apeps Schlummer</value>
     <value>Teiche der Wiederherstellung</value>
   </data>
   <data name="PoolsOfRestorationContains" xml:space="preserve">
-    <value>Lebensraum Rang 2 Rezept
+    <value>Lebensraum Rang 2 Rezept&lt;br /&gt;
 Level3: Guatelitzi Modifikation oder Maske des Seelentrinkers</value>
   </data>
   <data name="PoolsOfRestorationModifiers" xml:space="preserve">
     <value>Monster regenerieren 4/6/8 % Leben pro Sekunde</value>
   </data>
   <data name="PuhuarteModTooltuip" xml:space="preserve">
-    <value>Suffix:
-+46-48% zu Feuer/Kälte/Blitz Widerstand
-Erleidet 9-10% des physischen Schadens von Treffern als Feuer/Kälte/Blitz Schaden
-------------------------------------------
-+46-48% zu Feuer/Kälte/Blitz Widerstand
-0.4% des Feuer/Kälte/Blitz Schadens werden als Leben geraubt
-------------------------------------------
-+46-48% zu Feuer/Kälte/Blitz Widerstand
-Eine der folgenden Modifikationen passen zum Widerstand:
-Fügt (45-52) bis (75-78) Feuerschaden gegen brennende Gegner hinzu
-(30-50)% erhöhter Schaden mit Treffern gegen unterkühlte Gegner
+    <value>Suffix:&lt;br /&gt;
++46-48% zu Feuer/Kälte/Blitz Widerstand&lt;br /&gt;
+Erleidet 9-10% des physischen Schadens von Treffern als Feuer/Kälte/Blitz Schaden&lt;br /&gt;
+------------------------------------------&lt;br /&gt;
++46-48% zu Feuer/Kälte/Blitz Widerstand&lt;br /&gt;
+0.4% des Feuer/Kälte/Blitz Schadens werden als Leben geraubt&lt;br /&gt;
+------------------------------------------&lt;br /&gt;
++46-48% zu Feuer/Kälte/Blitz Widerstand&lt;br /&gt;
+Eine der folgenden Modifikationen passen zum Widerstand:&lt;br /&gt;
+Fügt (45-52) bis (75-78) Feuerschaden gegen brennende Gegner hinzu&lt;br /&gt;
+(30-50)% erhöhter Schaden mit Treffern gegen unterkühlte Gegner&lt;br /&gt;
 (40-60)% erhöhte kritische Trefferchance gegen geschockte Gegner</value>
   </data>
   <data name="RoyalMeetingRoom" xml:space="preserve">
@@ -420,8 +420,8 @@ Fügt (45-52) bis (75-78) Feuerschaden gegen brennende Gegner hinzu
     <value>Opferkammer</value>
   </data>
   <data name="SacrificalChamberContains" xml:space="preserve">
-    <value>Level1: Verwandle ein einzigartiges Item in ein anderes
-Level2: Man kann League spezifische Items erhalten
+    <value>Level1: Verwandle ein einzigartiges Item in ein anderes&lt;br /&gt;
+Level2: Man kann League spezifische Items erhalten&lt;br /&gt;
 Level3: Einzigarte Items der gleichen Klasse/Phiolen Upgrade</value>
   </data>
   <data name="SadistsDen" xml:space="preserve">
@@ -452,7 +452,7 @@ Level3: Einzigarte Items der gleichen Klasse/Phiolen Upgrade</value>
     <value>Sparringraum</value>
   </data>
   <data name="SparringRoomContains" xml:space="preserve">
-    <value>Waffen
+    <value>Waffen&lt;br /&gt;
 Genauigkeit Rang 3 Rezeot</value>
   </data>
   <data name="SparringRoomModifiers" xml:space="preserve">
@@ -462,15 +462,15 @@ Genauigkeit Rang 3 Rezeot</value>
     <value>Splitter-Forschungslabor</value>
   </data>
   <data name="SplinterResearchLabContains" xml:space="preserve">
-    <value>Level1: 2 Geschlossene Hände
-Level2: 1 Riss
+    <value>Level1: 2 Geschlossene Hände&lt;br /&gt;
+Level2: 1 Riss&lt;br /&gt;
 Level3: 3 Risse</value>
   </data>
   <data name="StorageRoom" xml:space="preserve">
     <value>Lagerraum</value>
   </data>
   <data name="StorageRoomContains" xml:space="preserve">
-    <value>Zufällige Item sepzifische Kisten
+    <value>Zufällige Item sepzifische Kisten&lt;br /&gt;
 Level3: Man kann League spezifische Items erhalten</value>
   </data>
   <data name="StormOfCorruption" xml:space="preserve">
@@ -489,30 +489,30 @@ Level3: Man kann League spezifische Items erhalten</value>
     <value>Karten (mit möglichem Vaal Prefix)</value>
   </data>
   <data name="TacatiModTooltip" xml:space="preserve">
-    <value>Prefix:
-155-169% erhöhter physischer Schaden
-Gewährt 9-10% des physischen Schadens als Extra Chaosschaden
---------------------------------------------------------
-70-110% erhöhter Zauberschaden
-Gewährt 5% des Schadens (Chaosschaden ausgenommen) als Extra Chaosschaden
---------------------------------------------------------
-Suffix:
-23-38% erhöhte Zaubergeschwindigkeit
-Fügt Zaubern 17-57 Chaosschaden hinzu
---------------------------------------------------------
-14-37% erhöhte Angriffgeschwindigkeit
-Fügt 23-61 Chaosschaden hinzu
---------------------------------------------------------
-31-35% erhöhte Chaosresistenz
-Erleidet 9-10% reduzierten Chaosschaden über Zeit
---------------------------------------------------------
-13-18% erhöhte Giftdauer
-26-30% erhöhter Chaosschaden
---------------------------------------------------------
-30% Chance bei Treffern zu vergiften
-26-30% erhöhter Chaosschaden
---------------------------------------------------------
-31-35% erhöhter Giftschaden
+    <value>Prefix:&lt;br /&gt;
+155-169% erhöhter physischer Schaden&lt;br /&gt;
+Gewährt 9-10% des physischen Schadens als Extra Chaosschaden&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+70-110% erhöhter Zauberschaden&lt;br /&gt;
+Gewährt 5% des Schadens (Chaosschaden ausgenommen) als Extra Chaosschaden&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+Suffix:&lt;br /&gt;
+23-38% erhöhte Zaubergeschwindigkeit&lt;br /&gt;
+Fügt Zaubern 17-57 Chaosschaden hinzu&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+14-37% erhöhte Angriffgeschwindigkeit&lt;br /&gt;
+Fügt 23-61 Chaosschaden hinzu&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+31-35% erhöhte Chaosresistenz&lt;br /&gt;
+Erleidet 9-10% reduzierten Chaosschaden über Zeit&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+13-18% erhöhte Giftdauer&lt;br /&gt;
+26-30% erhöhter Chaosschaden&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+30% Chance bei Treffern zu vergiften&lt;br /&gt;
+26-30% erhöhter Chaosschaden&lt;br /&gt;
+--------------------------------------------------------&lt;br /&gt;
+31-35% erhöhter Giftschaden&lt;br /&gt;
 Fügt 17-61 Chaosschaden hinzu</value>
   </data>
   <data name="TempestGenerator" xml:space="preserve">
@@ -534,14 +534,14 @@ Fügt 17-61 Chaosschaden hinzu</value>
     <value>Atziris Thron</value>
   </data>
   <data name="TopotanteModTooltip" xml:space="preserve">
-    <value>Prefix:
-Füge Feuer/Kälte/Blitz Schaden hinzu
-Konvertiere 25% des physischen Schadens zu Feuer/Kälte/Blitz Schaden
----------------------------------------------------------------------
-Füge Feuer/Kälte/Blitz Schaden hinzu
-Schaden durchdringt 13-15% Feuer/Kälte/Blitz Resistenz
----------------------------------------------------------------------
-75-115% erhöhter Feuer/Kälte/Blitz Schaden
+    <value>Prefix:&lt;br /&gt;
+Füge Feuer/Kälte/Blitz Schaden hinzu&lt;br /&gt;
+Konvertiere 25% des physischen Schadens zu Feuer/Kälte/Blitz Schaden&lt;br /&gt;
+---------------------------------------------------------------------&lt;br /&gt;
+Füge Feuer/Kälte/Blitz Schaden hinzu&lt;br /&gt;
+Schaden durchdringt 13-15% Feuer/Kälte/Blitz Resistenz&lt;br /&gt;
+---------------------------------------------------------------------&lt;br /&gt;
+75-115% erhöhter Feuer/Kälte/Blitz Schaden&lt;br /&gt;
 Füge Zaubern Feuer/Kälte/Blitz Schaden hinzu</value>
   </data>
   <data name="TormentCells" xml:space="preserve">
@@ -560,7 +560,7 @@ Füge Zaubern Feuer/Kälte/Blitz Schaden hinzu</value>
     <value>Fallenwerkstatt</value>
   </data>
   <data name="TrapWorkshopContains" xml:space="preserve">
-    <value>Fallen und Minen Schaden Rang 2 Rezept
+    <value>Fallen und Minen Schaden Rang 2 Rezept&lt;br /&gt;
 Level3: Matatl Modifikation oder Hand des Architekten</value>
   </data>
   <data name="TrapWorkshopModifiers" xml:space="preserve">
@@ -588,27 +588,27 @@ Level3: Matatl Modifikation oder Hand des Architekten</value>
     <value>Kritische Treffer Rang 3 Rezept</value>
   </data>
   <data name="WorkshopModifiers" xml:space="preserve">
-    <value>5/10/15% erhöhte Menge an Gegenständen
+    <value>5/10/15% erhöhte Menge an Gegenständen&lt;br /&gt;
 Einzigartiger Boss hat 15/25/35 % mehr Leben</value>
   </data>
   <data name="XopecModTooltip" xml:space="preserve">
-    <value>Prefix:
-+69-73 zu maximalem Mana
-7-10% erhöhtes maximales Mana
---------------------------------
-+74-78 zu maximalen Mana
-Erhaltet 2-3 Mana für jeden durch Eure Angriffe getroffenen Gegner
---------------------------------
-+74-78 zu maximalen Mana
-Regeneriere 5-7 Mana pro Sekunde
---------------------------------
-+69-73 zu maximalen Mana
-3-5% reduzierte Manareservierung
---------------------------------
-+74-78 zu maximalen Mana
--6-8 zu Gesamtmanakosten von Fertigkeiten
---------------------------------
-+74-78 zu maximalen Mana
+    <value>Prefix:&lt;br /&gt;
++69-73 zu maximalem Mana&lt;br /&gt;
+7-10% erhöhtes maximales Mana&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 zu maximalen Mana&lt;br /&gt;
+Erhaltet 2-3 Mana für jeden durch Eure Angriffe getroffenen Gegner&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 zu maximalen Mana&lt;br /&gt;
+Regeneriere 5-7 Mana pro Sekunde&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++69-73 zu maximalen Mana&lt;br /&gt;
+3-5% reduzierte Manareservierung&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 zu maximalen Mana&lt;br /&gt;
+-6-8 zu Gesamtmanakosten von Fertigkeiten&lt;br /&gt;
+--------------------------------&lt;br /&gt;
++74-78 zu maximalen Mana&lt;br /&gt;
 Nicht-kanalisierende Fertigkeiten haben -6-8 zu Gesamtmanakosten</value>
   </data>
 </root>

@@ -1,8 +1,30 @@
 @page "/cheatsheets/incursion"
 
-    <CheatsheetLayout>
-        Incursion
-    </CheatsheetLayout>
+<CheatsheetLayout Title="@CheatsheetResources.Incursion">
+    <MudGrid Spacing="1">
+        @foreach (var room in ViewModel.Rooms)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <Room Model="room" />
+            </MudItem>
+        }
+    </MudGrid>
+</CheatsheetLayout>
 
-    @code {
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
+
+    private IncursionLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel = await Mediator.Send(new GetIncursionCheatsheetQuery());
+        await base.OnInitializedAsync();
     }
+
+    public async Task SortChanged()
+    {
+        ViewModel = await Mediator.Send(new GetIncursionCheatsheetQuery());
+    }
+}

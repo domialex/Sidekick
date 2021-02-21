@@ -2,7 +2,7 @@ namespace Sidekick.Domain.Cheatsheets.Incursion
 {
     public class IncursionRoom
     {
-        public IncursionRoom(string contains = "", string modifiers = "")
+        public IncursionRoom(string contains, string modifiers)
         {
             Contains = contains;
             Modifiers = modifiers;
@@ -13,8 +13,7 @@ namespace Sidekick.Domain.Cheatsheets.Incursion
         public IncursionRoomTier Level3 { get; set; }
 
         public string Contains { get; set; }
-        public string ContainsTooltip { get; set; }
-
         public string Modifiers { get; set; }
+        public string Tooltip { get; set; }
     }
 }
