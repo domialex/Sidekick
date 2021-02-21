@@ -8,7 +8,8 @@
 @using Sidekick.Presentation.Blazor.Settings.Components
 
 <SidekickLayout>
-    <SidekickAppBar Title="@SetupLocalizer[SetupResources.Title]"></SidekickAppBar>
+    <SidekickAppBar Title="@SetupLocalizer[SetupResources.Title]" View="View.Setup"></SidekickAppBar>
+
     <MudMainContent>
         <MudContainer>
             <EditForm Model="@ViewModel" OnValidSubmit="Save">

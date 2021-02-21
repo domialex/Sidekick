@@ -79,7 +79,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Settings => (800, 600),
                 View.Price => (1200, 650),
                 View.League => (800, 600),
-                View.Setup => (600, 400),
+                View.Setup => (600, 700),
                 View.Initialization => (400, 215),
                 View.Map => (500, 250),
                 _ => (800, 600),
@@ -98,7 +98,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                // Icon = "/Assets/ExaltedOrb.ico",
                 Maximizable = true,
                 Minimizable = true,
                 MinHeight = minHeight,
@@ -125,8 +124,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
-                HasShadow = true,
-                // Icon = "/Assets/ExaltedOrb.ico",
                 Maximizable = false,
                 Minimizable = false,
                 MinHeight = minHeight,
@@ -153,8 +150,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
-                HasShadow = true,
-                // Icon = "Assets/ExaltedOrb.ico",
                 Maximizable = false,
                 Minimizable = false,
                 MinHeight = minHeight,
@@ -198,13 +193,10 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 case View.About:
                 case View.League:
                 case View.Settings:
-                    browserWindow = await CreateView(url, width, height, preferences);
-                    viewType = ViewType.View;
-                    break;
                 case View.Initialization:
                 case View.Setup:
-                    browserWindow = await CreateModal(url, width, height, preferences);
-                    viewType = ViewType.Modal;
+                    browserWindow = await CreateView(url, width, height, preferences);
+                    viewType = ViewType.View;
                     break;
                 case View.Price:
                 case View.Map:
