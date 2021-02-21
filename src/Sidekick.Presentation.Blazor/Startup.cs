@@ -108,12 +108,6 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
-                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
-                {
-                    Language_Parser = !string.IsNullOrEmpty(settings.Language_Parser) ? settings.Language_Parser : "en",
-                    Language_UI = !string.IsNullOrEmpty(settings.Language_UI) ? settings.Language_UI : "en",
-                    LeagueId = !string.IsNullOrEmpty(settings.LeagueId) ? settings.LeagueId : "Ritual",
-                }, true));
                 await mediator.Send(new InitializeCommand(true));
             });
         }
