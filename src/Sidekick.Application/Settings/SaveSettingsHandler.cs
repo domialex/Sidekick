@@ -16,7 +16,7 @@ namespace Sidekick.Application.Settings
 {
     public class SaveSettingsHandler : ICommandHandler<SaveSettingsCommand>
     {
-        internal const string FileName = "Sidekick_settings.json";
+        public const string FileName = "Sidekick_settings.json";
         private readonly IMediator mediator;
         private readonly SidekickSettings settings;
         private readonly IKeybindProvider keybindProvider;

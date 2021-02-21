@@ -1,0 +1,22 @@
+@page "/development/tests"
+
+<DevelopmentLayout>
+    <MudAppBar Color="Color.Primary">
+        <MudText Typo="Typo.body1">Development Page</MudText>
+    </MudAppBar>
+
+    <MudMainContent>
+        <MudContainer Class="py-6">
+            <MudButton Variant="Variant.Filled" OnClick="ThrowException">Throw an exception</MudButton>
+        </MudContainer>
+    </MudMainContent>
+</DevelopmentLayout>
+
+@code {
+    public void ThrowException()
+    {
+#pragma warning disable S112 // General exceptions should never be thrown
+        throw new Exception("Developper test from the exception page.");
+#pragma warning restore S112 // General exceptions should never be thrown
+    }
+}

@@ -10,10 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Sidekick.Application;
-using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Settings;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
@@ -27,12 +25,14 @@ namespace Sidekick.Presentation.Blazor
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IConfiguration configuration;
+        private readonly IHostEnvironment environment;
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
+        {
+            this.configuration = configuration;
+            this.environment = environment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -47,7 +47,18 @@ namespace Sidekick.Presentation.Blazor
             services.AddServerSideBlazor();
 
             services
+                // Layers
+                .AddSidekickApplication(configuration)
+                .AddSidekickInfrastructure()
+                .AddSidekickLocalization()
+                .AddSidekickPersistence()
+                .AddSidekickPlatform()
+                .AddSidekickPresentation()
+                .AddSidekickPresentationBlazor()
+                .AddSidekickPresentationBlazorMock()
+
                 // Common
+                .AddSidekickLogging(configuration, environment)
                 .AddSidekickMapper(
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"))
@@ -60,18 +71,7 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Mock"))
 
-                // Layers
-                .AddSidekickApplication()
-                .AddSidekickLogging()
-                .AddSidekickInfrastructure()
-                .AddSidekickLocalization()
-                .AddSidekickPersistence()
-                .AddSidekickPlatform()
-                .AddSidekickPresentation()
-                .AddSidekickPresentationBlazor()
-                .AddSidekickPresentationBlazorMock();
-
-            services
+                // MudBlazor
                 .AddMudServices()
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
@@ -80,7 +80,7 @@ namespace Sidekick.Presentation.Blazor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator, ISidekickSettings settings)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator)
         {
             serviceProvider.UseSidekickMapper();
 

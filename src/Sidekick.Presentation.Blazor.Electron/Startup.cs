@@ -29,12 +29,14 @@ namespace Sidekick.Presentation.Blazor.Electron
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly IConfiguration configuration;
+        private readonly IHostEnvironment environment;
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
+        {
+            this.configuration = configuration;
+            this.environment = environment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -49,7 +51,17 @@ namespace Sidekick.Presentation.Blazor.Electron
             services.AddServerSideBlazor();
 
             services
+                // Layers
+                .AddSidekickApplication(configuration)
+                .AddSidekickInfrastructure()
+                .AddSidekickLocalization()
+                .AddSidekickPersistence()
+                .AddSidekickPlatform()
+                .AddSidekickPresentation()
+                .AddSidekickPresentationBlazor()
+
                 // Common
+                .AddSidekickLogging(configuration, environment)
                 .AddSidekickMapper(
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"))
@@ -62,26 +74,16 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
 
-                // Layers
-                .AddSidekickApplication()
-                .AddSidekickLogging()
-                .AddSidekickInfrastructure()
-                .AddSidekickLocalization()
-                .AddSidekickPersistence()
-                .AddSidekickPlatform()
-                .AddSidekickPresentation()
-                .AddSidekickPresentationBlazor();
-
-            services.AddSingleton<TrayProvider>();
-            services.AddSingleton<IViewLocator, ViewLocator>();
-            services.AddSingleton<IKeybindProvider, KeybindProvider>();
-
-            services
+                // Mudblazor
                 .AddMudServices()
                 .AddMudBlazorDialog()
                 .AddMudBlazorSnackbar()
                 .AddMudBlazorResizeListener()
                 .AddMudBlazorDom();
+
+            services.AddSingleton<TrayProvider>();
+            services.AddSingleton<IViewLocator, ViewLocator>();
+            services.AddSingleton<IKeybindProvider, KeybindProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
