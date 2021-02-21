@@ -8,7 +8,7 @@
 @using Sidekick.Presentation.Blazor.Settings.Components
 
 <SidekickLayout>
-    <SidekickAppBar Title="@SetupLocalizer[SetupResources.Title]" View="View.Setup"></SidekickAppBar>
+    <SidekickAppBar Title="@SetupLocalizer[SetupResources.Title]" View="View.Setup" OnClose="Exit"></SidekickAppBar>
 
     <MudMainContent>
         <MudContainer>

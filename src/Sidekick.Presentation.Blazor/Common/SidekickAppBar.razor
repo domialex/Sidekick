@@ -21,6 +21,9 @@
 @code {
     [Inject] private IViewLocator ViewLocator { get; set; }
 
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
     [Parameter] public RenderFragment LeftContent { get; set; }
     [Parameter] public RenderFragment RightContent { get; set; }
     [Parameter] public string Title { get; set; }
@@ -42,9 +45,13 @@
         }
     }
 
-    public void Close()
+    public async void Close()
     {
-        if (View.HasValue)
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+        else if (View.HasValue)
         {
             ViewLocator.Close(View.Value);
         }
