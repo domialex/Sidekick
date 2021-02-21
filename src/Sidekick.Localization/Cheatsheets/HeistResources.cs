@@ -31,6 +31,7 @@ namespace Sidekick.Localization.Cheatsheets
         public string Job_Lockpicking => localizer["Job_Lockpicking"];
         public string Job_Perception => localizer["Job_Perception"];
         public string Job_TrapDisarmament => localizer["Job_TrapDisarmament"];
+        public string MaxLevel => localizer["MaxLevel"];
         public string Reward_Abyss => localizer["Reward_Abyss"];
         public string Reward_Accessories => localizer["Reward_Accessories"];
         public string Reward_Armour => localizer["Reward_Armour"];

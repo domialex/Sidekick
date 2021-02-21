@@ -177,6 +177,9 @@
   <data name="Job_TrapDisarmament" xml:space="preserve">
     <value>Trap Disarmament</value>
   </data>
+  <data name="MaxLevel" xml:space="preserve">
+    <value>Max</value>
+  </data>
   <data name="Reward_Abyss" xml:space="preserve">
     <value>Abyss</value>
   </data>

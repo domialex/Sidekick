@@ -1,0 +1,20 @@
+
+<MudListItem Class="py-0">
+    <div class="d-flex align-center">
+        <div class="flex-grow-0 mr-2">
+            <RewardValue Value="Model.Value" />
+        </div>
+        <div class="flex-grow-0 mr-2">
+            <img src="/images/heist/@Model.Image" alt="@Model.Reward" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.body2">
+                @Model.Reward
+            </MudText>
+        </div>
+    </div>
+</MudListItem>
+
+@code {
+    [Parameter] public HeistReward Model { get; set; }
+}
