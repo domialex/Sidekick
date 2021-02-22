@@ -1,0 +1,48 @@
+@page "/price/{encodedItem}"
+
+<MudLayout>
+    <SidekickAppBar Title="@ViewModel.Item.NameLine" View="View.Price"></SidekickAppBar>
+    <MudMainContent>
+        <MudContainer Class="py-6">
+            <MudGrid>
+                <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
+                    <ItemView Show="ViewModel.Item" Filters="ViewModel.Filters" />
+                </MudItem>
+                <MudItem xs="4" style="height: 600px; overflow-y: hidden;">
+                    <ListView OnClick="ViewModel.Preview" Results="ViewModel.Results" />
+                    <MudCard>
+                        <MudCardContent Class="mt-2">
+                            @ViewModel.CountString
+                        </MudCardContent>
+                    </MudCard>
+                    <MudCard>
+                        <MudCardContent Class="mt-2">
+                            @ViewModel.PoeNinjaText
+                            @ViewModel.PredictionText
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
+                    @if (ViewModel.HasPreviewItem)
+                    {
+                        <ItemPreview PriceItem="ViewModel.PreviewItem" />
+                    }
+                    </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+
+    [Parameter] public string EncodedItem { get; set; }
+    [Inject] private IStringLocalizer<PricesResources> Localizer { get; set; }
+    [Inject] private PricesModel ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewModel.Initialize(EncodedItem);
+    }
+
+}
