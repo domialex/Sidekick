@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sidekick.Presentation.Blazor.Electron.Debounce
+namespace Sidekick.Presentation.Blazor.Debounce
 {
     public class Debouncer : IDebouncer
     {

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Blazor.Electron.Debounce;
+using Sidekick.Presentation.Blazor.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {

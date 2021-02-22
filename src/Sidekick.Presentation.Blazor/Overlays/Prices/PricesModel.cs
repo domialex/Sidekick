@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Extensions;
 using Sidekick.Domain.Apis.PoeNinja.Queries;
 using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Game.Items.Metadatas;
@@ -19,15 +18,16 @@ using Sidekick.Domain.Game.Trade.Models;
 using Sidekick.Domain.Game.Trade.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
+using Sidekick.Extensions;
 using Sidekick.Persistence.ItemCategories;
+using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Extensions;
-using Sidekick.Presentation.Debounce;
 using Sidekick.Presentation.Localization.Prices;
 
 
 namespace Sidekick.Presentation.Blazor.Overlays.Prices
 {
-    public class PricesModel :  IDisposable
+    public class PricesModel : IDisposable
     {
 
         private readonly ILogger logger;
@@ -732,7 +732,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             }
 
             //PropertyChanged?.Invoke(this,
-               // new PropertyChangedEventArgs(nameof(Prices)));
+            // new PropertyChangedEventArgs(nameof(Prices)));
         }
 
         public string PredictionText { get; private set; }
