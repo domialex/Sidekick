@@ -11,11 +11,11 @@ namespace Sidekick.Domain.Notifications.Commands
         /// Open a notification message
         /// </summary>
         /// <param name="message">The message to show in the notification</param>
-        /// <param name="isSystemNotification">If true, the notification will show as a system (Windows) tooltip; if false, as an application window.</param>
-        public OpenNotificationCommand(string message, bool isSystemNotification = false)
+        /// <param name="title">The title of the notification (optional)</param>
+        public OpenNotificationCommand(string message, string title = null)
         {
             Message = message;
-            IsSystemNotification = isSystemNotification;
+            Title = title;
         }
 
         /// <summary>
@@ -27,10 +27,5 @@ namespace Sidekick.Domain.Notifications.Commands
         /// The message to show in the notification
         /// </summary>
         public string Message { get; set; }
-
-        /// <summary>
-        /// If true, the notification will show as a system (Windows) tooltip; if false, as an application window.
-        /// </summary>
-        public bool IsSystemNotification { get; set; }
     }
 }
