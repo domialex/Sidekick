@@ -27,7 +27,7 @@
                 <MudButton OnClick="Exit"
                            Variant="Variant.Text"
                            Color="Color.Default">
-                    @Localizer[InitializationResources.Exit]
+                    @Resources.Exit
                 </MudButton>
             </div>
         </MudContainer>
@@ -35,7 +35,7 @@
 </MudLayout>
 
 @code {
-    [Inject] private IStringLocalizer<InitializationResources> Localizer { get; set; }
+    [Inject] private InitializationResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private InitializationViewModel ViewModel { get; set; }
 

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sidekick.Presentation.Debounce
+namespace Sidekick.Presentation.Blazor.Electron.Debounce
 {
     public interface IDebouncer
     {

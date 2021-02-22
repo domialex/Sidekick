@@ -3,7 +3,7 @@
 @inherits MudSelect<string>
 
 <MudSelect T="string"
-           Label="@Localizer[SettingsResources.Character_League]"
+           Label="@Resources.Character_League"
            Variant="Variant.Filled"
            Value="Value"
            For="For"
@@ -15,7 +15,7 @@
 </MudSelect>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
     private Dictionary<string, string> Options { get; set; } = new Dictionary<string, string>();

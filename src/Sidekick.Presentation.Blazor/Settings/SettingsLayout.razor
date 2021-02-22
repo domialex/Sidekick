@@ -3,19 +3,19 @@
 @using Sidekick.Domain.Settings.Commands
 
 <SidekickLayout>
-    <SidekickAppBar Title="@Localizer[SettingsResources.Title]" View="View.Settings"></SidekickAppBar>
+    <SidekickAppBar Title="@Resources.Title" View="View.Settings"></SidekickAppBar>
 
     <MudDrawer ClipMode="DrawerClipMode.Always"
                Open="true"
                Variant="DrawerVariant.Persistent">
         <MudDrawerHeader></MudDrawerHeader>
         <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings">@Localizer[SettingsResources.General]</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings/price">@Localizer[SettingsResources.Price]</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings/map">@Localizer[SettingsResources.Map]</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings/wiki">@Localizer[SettingsResources.Wiki]</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings/chat">@Localizer[SettingsResources.Chat]</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/settings/stash">@Localizer[SettingsResources.Stash]</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings">@Resources.General</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/price">@Resources.Price</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/map">@Resources.Map</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/wiki">@Resources.Wiki</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/chat">@Resources.Chat</MudNavLink>
+            <MudNavLink Match="NavLinkMatch.All" Href="/settings/stash">@Resources.Stash</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
 
@@ -27,14 +27,14 @@
                 <div class="flex-grow-1">
                     <MudButton Variant="Variant.Text"
                                OnClick="ResetCache">
-                        @Localizer[SettingsResources.ResetCache]
+                        @Resources.ResetCache
                     </MudButton>
                 </div>
                 <div class="flex-grow-0">
                     <MudButton Variant="Variant.Filled"
                                Color="Color.Primary"
                                OnClick="Save">
-                        @Localizer[SettingsResources.Save]
+                        @Resources.Save
                     </MudButton>
                 </div>
             </div>
@@ -43,7 +43,7 @@
 </SidekickLayout>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
     [Inject] private IViewLocator ViewLocator { get; set; }

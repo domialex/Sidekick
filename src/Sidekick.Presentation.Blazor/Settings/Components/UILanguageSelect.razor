@@ -1,7 +1,7 @@
 @inherits MudSelect<string>
 
 <MudSelect T="string"
-           Label="@Localizer[SettingsResources.Language_UI]"
+           Label="@Resources.Language_UI"
            Variant="Variant.Filled"
            Value="Value"
            For="For"
@@ -13,7 +13,7 @@
 </MudSelect>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
     private Dictionary<string, string> Options { get; set; }

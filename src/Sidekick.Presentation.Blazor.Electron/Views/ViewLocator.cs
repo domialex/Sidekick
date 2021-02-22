@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Debounce;
+using Sidekick.Presentation.Blazor.Electron.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
@@ -103,32 +103,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Resizable = true,
                 Show = false,
                 SkipTaskbar = false,
-                Transparent = true,
-                WebPreferences = new WebPreferences()
-                {
-                    NodeIntegration = false,
-                }
-            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
-        }
-
-        private static async Task<BrowserWindow> CreateModal(string path, int minWidth, int minHeight, ViewPreference preferences)
-        {
-            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
-            {
-                Width = preferences?.Width ?? minWidth,
-                Height = preferences?.Height ?? minHeight,
-                AcceptFirstMouse = true,
-                AlwaysOnTop = true,
-                Center = true,
-                Frame = false,
-                Fullscreenable = false,
-                Maximizable = false,
-                Minimizable = false,
-                MinHeight = minHeight,
-                MinWidth = minWidth,
-                Resizable = false,
-                Show = false,
-                SkipTaskbar = true,
                 Transparent = true,
                 WebPreferences = new WebPreferences()
                 {

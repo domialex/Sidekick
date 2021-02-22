@@ -21,6 +21,7 @@ using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
+using Sidekick.Presentation.Blazor.Electron.Debounce;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
 using Sidekick.Presentation.Blazor.Electron.Views;
@@ -57,7 +58,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                 .AddSidekickLocalization()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation()
                 .AddSidekickPresentationBlazor()
 
                 // Common
@@ -84,6 +84,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<IViewLocator, ViewLocator>();
             services.AddSingleton<IKeybindProvider, KeybindProvider>();
+            services.AddSingleton<IDebouncer, Debouncer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

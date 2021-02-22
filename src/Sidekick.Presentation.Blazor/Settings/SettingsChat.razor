@@ -11,29 +11,29 @@
 
     <MudList Clickable="false"
              Dense="true">
-        <MudListSubheader>@Localizer[SettingsResources.Chat_Commands]</MudListSubheader>
-        <MudListItem>@Localizer[SettingsResources.Chat_Commands_Hideout]</MudListItem>
-        <MudListItem>@Localizer[SettingsResources.Chat_Commands_Exit]</MudListItem>
+        <MudListSubheader>@Resources.Chat_Commands</MudListSubheader>
+        <MudListItem>@Resources.Chat_Commands_Hideout</MudListItem>
+        <MudListItem>@Resources.Chat_Commands_Exit</MudListItem>
     </MudList>
 
     <MudList Clickable="false"
              Dense="true">
-        <MudListSubheader>@Localizer[SettingsResources.Chat_Wildcard]</MudListSubheader>
-        <MudListItem>@Localizer[SettingsResources.Chat_Wildcard_Me_CharacterName]</MudListItem>
-        <MudListItem>@Localizer[SettingsResources.Chat_Wildcard_LastWhisper_CharacterName]</MudListItem>
+        <MudListSubheader>@Resources.Chat_Wildcard</MudListSubheader>
+        <MudListItem>@Resources.Chat_Wildcard_Me_CharacterName</MudListItem>
+        <MudListItem>@Resources.Chat_Wildcard_LastWhisper_CharacterName</MudListItem>
     </MudList>
 
     <div class="d-flex flex-row-reverse">
         <MudButton Variant="Variant.Filled"
                    Color="Color.Secondary"
                    OnClick="Add">
-            @Localizer[SettingsResources.Chat_Add]
+            @Resources.Chat_Add
         </MudButton>
     </div>
 </SettingsLayout>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
 
     private void Remove(ChatSetting chatSetting)

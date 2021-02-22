@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
@@ -53,7 +52,6 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickLocalization()
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
-                .AddSidekickPresentation()
                 .AddSidekickPresentationBlazor()
                 .AddSidekickPresentationBlazorMock()
 

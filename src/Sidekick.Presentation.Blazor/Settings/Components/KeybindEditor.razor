@@ -6,11 +6,11 @@
         <MudField Label="@Label" Variant="Variant.Filled" Class="@Class" @onclick="Click">
             @if (Active)
             {
-                <MudText>@Localizer[SettingsResources.Key_Active]</MudText>
+                <MudText>@Resources.Key_Active</MudText>
             }
             else if (string.IsNullOrEmpty(Value))
             {
-                <MudText>@Localizer[SettingsResources.Key_Unset]</MudText>
+                <MudText>@Resources.Key_Unset</MudText>
             }
             else
             {
@@ -25,7 +25,7 @@
 
 @implements IDisposable
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
     [Inject] private IKeyboardProvider Keyboard { get; set; }
     [Inject] private IKeybindsExecutor Keybinds { get; set; }

@@ -6,23 +6,23 @@
     <MudCard>
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Keybinds]</MudText>
+                <MudText Typo="Typo.h6">@Resources.Group_Keybinds</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <KeybindEditor Label="@Localizer[SettingsResources.Wiki_Key_Open]"
+            <KeybindEditor Label="@Resources.Wiki_Key_Open"
                            @bind-Value="ViewModel.Wiki_Key_Open" />
         </MudCardContent>
     </MudCard>
     <MudCard Class="mt-6">
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Other]</MudText>
+                <MudText Typo="Typo.h6">@Resources.Group_Other</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
             <MudSelect T="WikiSetting"
-                       Label="@Localizer[SettingsResources.Wiki_Preferred]"
+                       Label="@Resources.Wiki_Preferred"
                        Variant="Variant.Filled"
                        @bind-Value="ViewModel.Wiki_Preferred">
                 @foreach (var option in ViewModel.WikiOptions)
@@ -35,6 +35,6 @@
 </SettingsLayout>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
 }
