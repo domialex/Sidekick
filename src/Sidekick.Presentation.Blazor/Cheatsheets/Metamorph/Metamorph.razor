@@ -1,8 +1,25 @@
 @page "/cheatsheets/metamorph"
 
-    <CheatsheetLayout>
-        Metamorph
-    </CheatsheetLayout>
+<CheatsheetLayout Title="@CheatsheetResources.Metamorph">
+    <MudGrid Spacing="1">
+        @foreach (var catalyst in ViewModel.Catalysts)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <Catalyst Model="catalyst" />
+            </MudItem>
+        }
+    </MudGrid>
+</CheatsheetLayout>
 
-    @code {
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
+
+    private MetamorphLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel = await Mediator.Send(new GetMetamorphCheatsheetQuery());
+        await base.OnInitializedAsync();
     }
+}

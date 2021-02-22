@@ -1,21 +1,21 @@
 @page "/about"
 
 <SidekickLayout>
-    <SidekickAppBar Title="@Localizer[AboutResources.Title]" View="View.About"></SidekickAppBar>
+    <SidekickAppBar Title="@Resources.Title" View="View.About"></SidekickAppBar>
     <MudMainContent>
         <MudContainer Class="py-6">
 
             <MudText Typo="Typo.h4">SideKick - @ViewModel.VersionNumber</MudText>
-            <MudText>@Localizer[AboutResources.Operating_System] - @ViewModel.OperatingSystem</MudText>
-            <MudText>@Localizer[AboutResources.Environment_Versions] - @ViewModel.EnvironmentVersion</MudText>
+            <MudText>@Resources.Operating_System - @ViewModel.OperatingSystem</MudText>
+            <MudText>@Resources.Environment_Versions - @ViewModel.EnvironmentVersion</MudText>
             <MudDivider Class="my-1 mt-1" />
-            <MudText>@Localizer[AboutResources.Project_Page] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
-            <MudText>@Localizer[AboutResources.Bug_Reports] - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+            <MudText>@Resources.Project_Page - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+            <MudText>@Resources.Bug_Reports - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
 
             <MudCard Class="mt-4">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Contributors]</MudText>
+                        <MudText Typo="Typo.h6">@Resources.Contributors</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
@@ -29,7 +29,7 @@
             <MudCard Class="mt-4">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Translators]</MudText>
+                        <MudText Typo="Typo.h6">@Resources.Translators</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
@@ -43,7 +43,7 @@
             <MudCard Class="mt-4">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@Localizer[AboutResources.Third_Parties]</MudText>
+                        <MudText Typo="Typo.h6">@Resources.Third_Parties</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
@@ -59,7 +59,7 @@
 
 @code {
 
-    [Inject] private IStringLocalizer<AboutResources> Localizer { get; set; }
+    [Inject] private AboutResources Resources { get; set; }
     [Inject] private AboutModel ViewModel { get; set; }
 
 }

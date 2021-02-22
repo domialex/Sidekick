@@ -26,10 +26,6 @@ namespace Sidekick.Application.Game.Trade
 
         public async Task<bool> Handle(PriceCheckItemCommand request, CancellationToken cancellationToken)
         {
-            // Close previously opened price views
-            viewLocator.Close(View.ParserError);
-            viewLocator.Close(View.Price);
-
             // Parses the item by copying the item under the cursor
             var item = request.Item;
             if (item == null)

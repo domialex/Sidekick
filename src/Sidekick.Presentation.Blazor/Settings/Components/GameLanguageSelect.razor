@@ -1,8 +1,10 @@
+@inherits MudSelect<string>
 
 <MudSelect T="string"
-           Label="@Localizer[SettingsResources.Language_Parser]"
+           Label="@Resources.Language_Parser"
            Variant="Variant.Filled"
            Value="Value"
+           For="For"
            ValueChanged="ValueChanged">
     @foreach (var option in Options)
     {
@@ -11,11 +13,8 @@
 </MudSelect>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
-
-    [Parameter] public string Value { get; set; }
-    [Parameter] public EventCallback<string> ValueChanged { get; set; }
 
     private Dictionary<string, string> Options { get; set; }
 

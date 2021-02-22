@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sidekick.Domain.Wikis;
 
@@ -5,6 +6,7 @@ namespace Sidekick.Domain.Settings
 {
     public interface ISidekickSettings
     {
+        Guid UserId { get; }
         string Language_Parser { get; }
         string Language_UI { get; }
 
@@ -16,6 +18,7 @@ namespace Sidekick.Domain.Settings
         string Key_FindItems { get; }
         string Key_OpenSettings { get; }
         bool ShowSplashScreen { get; }
+        bool SendCrashReports { get; }
 
         bool Price_CloseWithMouse { get; }
         string Price_Key_Check { get; }

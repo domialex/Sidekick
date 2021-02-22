@@ -19,5 +19,6 @@ namespace Sidekick.Localization.Initialization
         public string Title(int completed, int count) => localizer["Title", completed, count];
         public string UpdateAvailable => localizer["UpdateAvailable"];
         public string UpdateTitle => localizer["UpdateTitle"];
+        public string Exit => localizer["Exit"];
     }
 }

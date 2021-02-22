@@ -1,0 +1,22 @@
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">
+                @Model.Name
+            </MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pa-0">
+        <MudList>
+            @foreach (var fossil in Model.Fossils)
+            {
+                <Fossil Model="fossil" />
+            }
+        </MudList>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public DelveRegion Model { get; set; }
+}

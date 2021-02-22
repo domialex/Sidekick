@@ -3,7 +3,6 @@
         .mud-main-content {
             height: calc(100vh - var(--mud-appbar-min-height));
             overflow-y: auto;
-            margin-top: var(--mud-appbar-min-height);
             padding-top: 0;
         }
     }

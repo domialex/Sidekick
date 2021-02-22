@@ -1,0 +1,30 @@
+
+<MudCard>
+    <MudCardHeader Class="py-0">
+        <CardHeaderContent>
+            <div class="d-flex align-center">
+                <img src="/images/betrayal/@Model.Image" alt="@Model.Name" />
+                <MudText Align="Align.Center" Typo="Typo.h6">
+                    @Model.Name
+                </MudText>
+            </div>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pa-0">
+        <MudList Class="pa-0">
+            <Reward Model="Model.Transportation" Label="@Resources.TypeTransportation"></Reward>
+            <MudDivider />
+            <Reward Model="Model.Fortification" Label="@Resources.TypeFortification"></Reward>
+            <MudDivider />
+            <Reward Model="Model.Research" Label="@Resources.TypeResearch"></Reward>
+            <MudDivider />
+            <Reward Model="Model.Intervention" Label="@Resources.TypeIntervention"></Reward>
+        </MudList>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Inject] private BetrayalResources Resources { get; set; }
+
+    [Parameter] public BetrayalAgent Model { get; set; }
+}

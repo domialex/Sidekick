@@ -1,13 +1,14 @@
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Cache.Commands;
-using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Localization;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
 
@@ -15,34 +16,40 @@ namespace Sidekick.Application.Settings
 {
     public class SaveSettingsHandler : ICommandHandler<SaveSettingsCommand>
     {
-        internal const string FileName = "Sidekick_settings.json";
+        public const string FileName = "Sidekick_settings.json";
         private readonly IMediator mediator;
         private readonly SidekickSettings settings;
-        private readonly IGameLanguageProvider gameLanguageProvider;
+        private readonly IKeybindProvider keybindProvider;
 
         public SaveSettingsHandler(
             IMediator mediator,
             SidekickSettings settings,
-            IGameLanguageProvider gameLanguageProvider)
+            IKeybindProvider keybindProvider)
         {
             this.mediator = mediator;
             this.settings = settings;
-            this.gameLanguageProvider = gameLanguageProvider;
+            this.keybindProvider = keybindProvider;
         }
 
         public async Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)
         {
             var leagueHasChanged = request.Settings.LeagueId != settings.LeagueId;
-            var languageHasChanged = gameLanguageProvider.Language?.LanguageCode != request.Settings.Language_Parser;
+            var languageHasChanged = request.Settings.Language_Parser != settings.Language_Parser;
 
-            await mediator.Send(new SetUiLanguageCommand(request.Settings.Language_UI));
-            await mediator.Send(new SetGameLanguageCommand(request.Settings.Language_Parser));
+            if (settings.Language_UI != request.Settings.Language_UI)
+            {
+                await mediator.Send(new SetUiLanguageCommand(request.Settings.Language_UI));
+            }
+            if (settings.Language_Parser != request.Settings.Language_Parser)
+            {
+                await mediator.Send(new SetGameLanguageCommand(request.Settings.Language_Parser));
+            }
 
             request.Settings.CopyValuesTo(settings);
 
             var json = JsonSerializer.Serialize(settings);
             var defaults = JsonSerializer.Serialize(new SidekickSettings());
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), FileName);
+            var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FileName);
 
             using var fileStream = File.Create(filePath);
             using var writer = new Utf8JsonWriter(fileStream, options: new JsonWriterOptions

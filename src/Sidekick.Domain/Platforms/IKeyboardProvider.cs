@@ -1,10 +1,9 @@
 using System;
-using System.Threading.Tasks;
 
 namespace Sidekick.Domain.Platforms
 {
     /// <summary>
-    /// Service providing keybind functions
+    /// Service providing keyboard functions
     /// </summary>
     public interface IKeyboardProvider
     {
@@ -16,7 +15,7 @@ namespace Sidekick.Domain.Platforms
         /// <summary>
         /// Event that indicates that a key was pressed
         /// </summary>
-        event Func<KeyDownArgs, bool> OnKeyDown;
+        event Action<string> OnKeyDown;
 
         /// <summary>
         /// Gets the state of the Ctrl key.
@@ -28,6 +27,13 @@ namespace Sidekick.Domain.Platforms
         /// Command to send keystrokes to the system
         /// </summary>
         /// <param name="keys">The keys to send</param>
-        Task PressKey(params string[] keys);
+        void PressKey(params string[] keys);
+
+        /// <summary>
+        /// Converts the system keybind to the Electron equivalent
+        /// </summary>
+        /// <param name="key">The key to convert</param>
+        /// <returns>The electron equivalent key</returns>
+        string ToElectronAccelerator(string key);
     }
 }

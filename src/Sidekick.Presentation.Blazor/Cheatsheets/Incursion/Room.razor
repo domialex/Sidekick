@@ -1,0 +1,43 @@
+
+<MudCard>
+    <MudCardContent Class="pa-0">
+        <MudList Class="pa-0" Dense="true">
+            <RoomTier Model="Model.Level3" TierLabel="3" TierTooltip="@Resources.Level3" TextSize="Typo.h6" />
+            <RoomTier Model="Model.Level2" TierLabel="2" TierTooltip="@Resources.Level2" TextSize="Typo.subtitle1" />
+            <RoomTier Model="Model.Level1" TierLabel="1" TierTooltip="@Resources.Level1" TextSize="Typo.subtitle2" />
+            @if (!string.IsNullOrEmpty(Model.Modifiers))
+            {
+                <MudDivider />
+                <MudListItem>
+                    <MudText Typo="Typo.body2">
+                        @((MarkupString)Model.Modifiers)
+                    </MudText>
+                </MudListItem>
+            }
+            @if (!string.IsNullOrEmpty(Model.Contains))
+            {
+                <MudDivider />
+                <MudListItem>
+                    <MudText Typo="Typo.body2">
+                        @((MarkupString)Model.Contains)
+                    </MudText>
+                </MudListItem>
+            }
+            @if (!string.IsNullOrEmpty(Model.Tooltip))
+            {
+                <MudDivider />
+                <MudListItem>
+                    <MudText Typo="Typo.body2">
+                        @((MarkupString)Model.Tooltip)
+                    </MudText>
+                </MudListItem>
+            }
+        </MudList>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Inject] private IncursionResources Resources { get; set; }
+
+    [Parameter] public IncursionRoom Model { get; set; }
+}

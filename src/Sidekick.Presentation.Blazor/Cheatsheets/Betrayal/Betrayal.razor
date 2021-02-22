@@ -1,43 +1,16 @@
 @page "/cheatsheets/betrayal"
 
-<CheatsheetLayout Title="@Resources.Betrayal">
-    <MudGrid Class="justify-end mb-2">
+<CheatsheetLayout Title="@CheatsheetResources.Betrayal">
+    <MudGrid Class="justify-end mb-1" Spacing="1">
         <MudItem xs="12" sm="6" md="4" lg="3">
-            <MudSelect T="string" Variant="Variant.Filled" Label="Sort" Value="Sort" ValueChanged="SortChanged" Dense="true">
-                @foreach (var option in SortOptions)
-                {
-                    <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
-                }
-            </MudSelect>
+            <AgentSort SortChanged="SortChanged" />
         </MudItem>
     </MudGrid>
     <MudGrid Spacing="1">
         @foreach (var agent in ViewModel.Agents)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudCard>
-                    <MudCardHeader Class="py-0">
-                        <CardHeaderContent>
-                            <div class="d-flex align-center">
-                                <img src="/images/betrayal/@agent.Image" alt="@agent.Name" />
-                                <MudText Align="Align.Center" Typo="Typo.h6">
-                                    @agent.Name
-                                </MudText>
-                            </div>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent Class="pa-0">
-                        <MudList Class="pa-0">
-                            <Reward Model="agent.Transportation" Label="@Resources.TypeTransportation"></Reward>
-                            <MudDivider />
-                            <Reward Model="agent.Fortification" Label="@Resources.TypeFortification"></Reward>
-                            <MudDivider />
-                            <Reward Model="agent.Research" Label="@Resources.TypeResearch"></Reward>
-                            <MudDivider />
-                            <Reward Model="agent.Intervention" Label="@Resources.TypeIntervention"></Reward>
-                        </MudList>
-                    </MudCardContent>
-                </MudCard>
+                <Agent Model="agent" />
             </MudItem>
         }
     </MudGrid>
@@ -45,24 +18,18 @@
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
-    [Inject] private BetrayalResources Resources { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
 
-    private Dictionary<string, string> SortOptions { get; set; }
-    private string Sort { get; set; }
     private BetrayalLeague ViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
-        SortOptions = await Mediator.Send(new GetBetrayalSortOptionsQuery());
         await base.OnInitializedAsync();
     }
 
-    public async Task SortChanged(string sort)
+    public async Task SortChanged()
     {
-        Sort = sort;
-        await Mediator.Send(new Sidekick.Domain.Settings.Commands.SaveSettingCommand(
-            nameof(Sidekick.Domain.Settings.ISidekickSettings.Cheatsheets_Betrayal_Sort), Sort));
         ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
     }
 }

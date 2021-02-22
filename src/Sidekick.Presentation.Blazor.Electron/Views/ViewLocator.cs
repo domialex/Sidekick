@@ -5,31 +5,26 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
-using Sidekick.Presentation.Debounce;
+using Sidekick.Presentation.Blazor.Electron.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
         internal readonly IViewPreferenceRepository viewPreferenceRepository;
         internal readonly IDebouncer debouncer;
         internal readonly ILogger<ViewLocator> logger;
         internal readonly ISidekickSettings settings;
 
-        public ViewLocator(IWebHostEnvironment webHostEnvironment,
-            IViewPreferenceRepository viewPreferenceRepository,
-            IDebouncer debouncer,
-            ILogger<ViewLocator> logger,
-            ISidekickSettings settings)
+        public ViewLocator(IViewPreferenceRepository viewPreferenceRepository,
+                           IDebouncer debouncer,
+                           ILogger<ViewLocator> logger,
+                           ISidekickSettings settings)
         {
-            this.webHostEnvironment = webHostEnvironment;
             this.viewPreferenceRepository = viewPreferenceRepository;
             this.debouncer = debouncer;
             this.logger = logger;
@@ -61,7 +56,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             foreach (var arg in args)
             {
-                path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+                if (arg is string)
+                {
+                    path += $"/{arg}";
+                }
+                else
+                {
+                    path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+                }
             }
 
             return path;
@@ -75,7 +77,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Settings => (800, 600),
                 View.Price => (1200, 660),
                 View.League => (800, 600),
-                View.Setup => (600, 400),
+                View.Setup => (600, 700),
                 View.Initialization => (400, 215),
                 View.Map => (500, 250),
                 _ => (800, 600),
@@ -94,7 +96,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                // Icon = "/Assets/ExaltedOrb.ico",
                 Maximizable = true,
                 Minimizable = true,
                 MinHeight = minHeight,
@@ -102,34 +103,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Resizable = true,
                 Show = false,
                 SkipTaskbar = false,
-                Transparent = true,
-                WebPreferences = new WebPreferences()
-                {
-                    NodeIntegration = false,
-                }
-            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
-        }
-
-        private static async Task<BrowserWindow> CreateModal(string path, int minWidth, int minHeight, ViewPreference preferences)
-        {
-            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
-            {
-                Width = preferences?.Width ?? minWidth,
-                Height = preferences?.Height ?? minHeight,
-                AcceptFirstMouse = true,
-                AlwaysOnTop = true,
-                Center = true,
-                Frame = false,
-                Fullscreenable = false,
-                HasShadow = true,
-                // Icon = "/Assets/ExaltedOrb.ico",
-                Maximizable = false,
-                Minimizable = false,
-                MinHeight = minHeight,
-                MinWidth = minWidth,
-                Resizable = false,
-                Show = false,
-                SkipTaskbar = true,
                 Transparent = true,
                 WebPreferences = new WebPreferences()
                 {
@@ -149,8 +122,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
-                HasShadow = true,
-                // Icon = "Assets/ExaltedOrb.ico",
                 Maximizable = false,
                 Minimizable = false,
                 MinHeight = minHeight,
@@ -176,7 +147,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             if (IsOpened(view))
             {
                 var openedView = Views.FirstOrDefault(x => x.View == view);
-                if (openedView != null)
+                if (openedView != null && openedView.Type == ViewType.View)
                 {
                     openedView.Browser.LoadURL(url);
                     openedView.Browser.Focus();
@@ -188,20 +159,21 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var preferences = await viewPreferenceRepository.Get(view);
 
             BrowserWindow browserWindow = null;
+            var viewType = ViewType.View;
             switch (view)
             {
                 case View.About:
                 case View.League:
                 case View.Settings:
-                    browserWindow = await CreateView(url, width, height, preferences);
-                    break;
                 case View.Initialization:
                 case View.Setup:
-                    browserWindow = await CreateModal(url, width, height, preferences);
+                    browserWindow = await CreateView(url, width, height, preferences);
+                    viewType = ViewType.View;
                     break;
                 case View.Price:
                 case View.Map:
                     browserWindow = await CreateOverlay(url, width, height, preferences);
+                    viewType = ViewType.Overlay;
                     break;
             }
 
@@ -210,21 +182,16 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 return;
             }
 
-            if (webHostEnvironment.IsDevelopment())
-            {
-                browserWindow.WebContents.OpenDevTools();
-            }
-
             if (FirstView)
             {
                 FirstView = false;
                 await browserWindow.WebContents.Session.ClearCacheAsync();
             }
 
+            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
             browserWindow.SetTitle("Sidekick");
-            browserWindow.Focus();
 
-            var sidekickView = new SidekickView(this, view, browserWindow);
+            var sidekickView = new SidekickView(this, view, viewType, browserWindow);
 
             Views.Add(sidekickView);
         }
@@ -241,6 +208,22 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }
 
             Views.Clear();
+        }
+
+        public void Minimize(View view)
+        {
+            foreach (var instance in Views.Where(x => x.View == view))
+            {
+                instance.Browser.Minimize();
+            }
+        }
+
+        public void Maximize(View view)
+        {
+            foreach (var instance in Views.Where(x => x.View == view))
+            {
+                instance.Browser.Maximize();
+            }
         }
 
         public void Close(View view)

@@ -3,7 +3,7 @@ using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Application.Game.Languages.Implementations
 {
-    [GameLanguage("TraditionalChinese", "zh")]
+    [GameLanguage("Traditional Chinese", "zh")]
     public class GameLanguageZHTW : IGameLanguage
     {
         public string LanguageCode => "zh";

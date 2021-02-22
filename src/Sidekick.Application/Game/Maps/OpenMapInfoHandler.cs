@@ -5,7 +5,6 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Maps.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
-using Sidekick.Domain.Views.Commands;
 
 namespace Sidekick.Application.Game.Maps
 {
@@ -27,12 +26,6 @@ namespace Sidekick.Application.Game.Maps
 
         public async Task<bool> Handle(OpenMapInfoCommand request, CancellationToken cancellationToken)
         {
-            await mediator.Send(new CloseMapViewCommand());
-
-            // Close previously opened map views
-            viewLocator.Close(View.ParserError);
-            viewLocator.Close(View.Map);
-
             // Parses the item by copying the item under the cursor
             var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.Copy()));
 

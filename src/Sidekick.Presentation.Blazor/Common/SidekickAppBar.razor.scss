@@ -1,10 +1,33 @@
 ::deep {
     .mud-appbar {
-        -webkit-app-region: drag;
-        -webkit-user-select: none;
+        // Add margins to allow resizing the window.
+        $resize-marging: 4px;
+        height: var(--mud-appbar-min-height);
 
-        button {
-            -webkit-app-region: no-drag;
+        .mud-toolbar-appbar {
+            // Electron titlebar drag
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+            min-height: var(--mud-appbar-min-height);
+            margin: $resize-marging $resize-marging 0 $resize-marging;
+            padding-left: 20px; // Original value: 24px;
+            // Flatten the icons and make them match Windows' style.
+            padding-right: 0;
+
+            p {
+                margin-top: -#{$resize-marging};
+            }
+
+            button {
+                -webkit-app-region: no-drag;
+                margin: 0;
+                top: -#{$resize-marging};
+                right: -#{$resize-marging};
+                width: var(--mud-appbar-min-height);
+                height: var(--mud-appbar-min-height);
+                border-radius: 0;
+                cursor: default;
+            }
         }
     }
 }

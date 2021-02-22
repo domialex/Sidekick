@@ -120,13 +120,13 @@
   <data name="AislingTransportation" xml:space="preserve">
     <value>Veiled Weapons + Jewellery</value>
   </data>
-  <data name="AislingFortification" xml:space="preserve">
+  <data name="Ally_Karst" xml:space="preserve">
     <value>Veiled Armor + Jewellery</value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
     <value>Add Veiled Mod(s)</value>
   </data>
-  <data name="AislingIntervention" xml:space="preserve">
+  <data name="Ally_Kurai" xml:space="preserve">
     <value>Metamorph scarabs</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
@@ -429,7 +429,7 @@ Level3: 200m Exp</value>
 Level2: 1-2 White Sockets
 Level3: 1-3 White Sockets</value>
   </data>
-  <data name="AislingName" xml:space="preserve">
+  <data name="Ally_Huck" xml:space="preserve">
     <value>Aisling</value>
   </data>
   <data name="CameriaName" xml:space="preserve">
@@ -491,9 +491,6 @@ Level3: 1-3 White Sockets</value>
   </data>
   <data name="TypeTransportation" xml:space="preserve">
     <value>Transportation</value>
-  </data>
-  <data name="Betrayal" xml:space="preserve">
-    <value>Betrayal</value>
   </data>
   <data name="Sort_Alphabetical" xml:space="preserve">
     <value>Alphabetical</value>

@@ -14,8 +14,10 @@ using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
+using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
@@ -31,6 +33,13 @@ namespace Sidekick.Application.Initialization
         private readonly ISidekickSettings settings;
         private readonly ILogger<InitializeHandler> logger;
         private readonly IViewLocator viewLocator;
+        private readonly IProcessProvider processProvider;
+        private readonly IKeyboardProvider keyboardProvider;
+        private readonly IScrollProvider scrollProvider;
+        private readonly IMouseProvider mouseProvider;
+        private readonly IScreenProvider screenProvider;
+        private readonly IKeybindsExecutor keybindsExecutor;
+        private readonly IKeybindProvider keybindProvider;
 
         public InitializeHandler(
             InitializationResources resources,
@@ -38,7 +47,14 @@ namespace Sidekick.Application.Initialization
             ServiceFactory serviceFactory,
             ISidekickSettings settings,
             ILogger<InitializeHandler> logger,
-            IViewLocator viewLocator)
+            IViewLocator viewLocator,
+            IProcessProvider processProvider,
+            IKeyboardProvider keyboardProvider,
+            IScrollProvider scrollProvider,
+            IMouseProvider mouseProvider,
+            IScreenProvider screenProvider,
+            IKeybindsExecutor keybindsExecutor,
+            IKeybindProvider keybindProvider)
         {
             this.resources = resources;
             this.mediator = mediator;
@@ -46,6 +62,13 @@ namespace Sidekick.Application.Initialization
             this.settings = settings;
             this.logger = logger;
             this.viewLocator = viewLocator;
+            this.processProvider = processProvider;
+            this.keyboardProvider = keyboardProvider;
+            this.scrollProvider = scrollProvider;
+            this.mouseProvider = mouseProvider;
+            this.screenProvider = screenProvider;
+            this.keybindsExecutor = keybindsExecutor;
+            this.keybindProvider = keybindProvider;
         }
 
         private int Count = 0;
@@ -60,25 +83,15 @@ namespace Sidekick.Application.Initialization
             Count += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
         }
 
-        private void AddCommandCount(bool shouldAdd = true)
-        {
-            if (!shouldAdd) return;
-
-            Count += 1;
-        }
-
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 Completed = 0;
-                Count = 0;
+                Count = request.FirstRun ? 9 : 3;
 
                 // Set the total count of handlers
-                AddNotificationCount<PlatformInitializationStarted>(request.FirstRun);
                 AddNotificationCount<DataInitializationStarted>();
-                AddCommandCount(); // SetUiLanguageCommand
-                AddCommandCount(); // SetGameLanguageCommand
 
                 // Report initial progress
                 await ReportProgress();
@@ -136,9 +149,20 @@ namespace Sidekick.Application.Initialization
                 }
 
                 await RunNotificationStep(new DataInitializationStarted());
-                await RunNotificationStep(new PlatformInitializationStarted(), request.FirstRun);
+
+                if (request.FirstRun)
+                {
+                    await Run(() => processProvider.Initialize(cancellationToken));
+                    await Run(() => keyboardProvider.Initialize());
+                    await Run(() => scrollProvider.Initialize());
+                    await Run(() => mouseProvider.Initialize());
+                    await Run(() => screenProvider.Initialize());
+                    await Run(() => keybindsExecutor.Initialize());
+                    await Run(() => keybindProvider.Initialize());
+                }
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
+                Completed = Count;
                 await ReportProgress();
                 await Task.Delay(500);
 
@@ -159,6 +183,30 @@ namespace Sidekick.Application.Initialization
                 await mediator.Send(new ShutdownCommand());
                 return Unit.Value;
             }
+        }
+
+        private async Task Run(Func<Task> func)
+        {
+            // Send the command
+            await func.Invoke();
+
+            // Make sure that after all handlers run, the Completed count is updated
+            Completed += 1;
+
+            // Report progress
+            await ReportProgress();
+        }
+
+        private async Task Run(Action action)
+        {
+            // Send the command
+            action.Invoke();
+
+            // Make sure that after all handlers run, the Completed count is updated
+            Completed += 1;
+
+            // Report progress
+            await ReportProgress();
         }
 
         private async Task RunNotificationStep<TNotification>(TNotification notification, bool shouldRun = true)

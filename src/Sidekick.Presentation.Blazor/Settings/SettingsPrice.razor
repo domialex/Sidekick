@@ -5,31 +5,31 @@
     <MudCard>
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Keybinds]</MudText>
+                <MudText Typo="Typo.h6">@Resources.Group_Keybinds</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
-            <KeybindEditor Label="@Localizer[SettingsResources.Price_Key_Check]"
+            <KeybindEditor Label="@Resources.Price_Key_Check"
                            @bind-Value="ViewModel.Price_Key_Check" />
-            <KeybindEditor Label="@Localizer[SettingsResources.Price_Key_OpenSearch]"
+            <KeybindEditor Label="@Resources.Price_Key_OpenSearch"
                            @bind-Value="ViewModel.Price_Key_OpenSearch" />
-            <KeybindEditor Label="@Localizer[SettingsResources.Price_Key_Close]"
+            <KeybindEditor Label="@Resources.Price_Key_Close"
                            @bind-Value="ViewModel.Price_Key_Close" />
         </MudCardContent>
     </MudCard>
     <MudCard Class="mt-6">
         <MudCardHeader>
             <CardHeaderContent>
-                <MudText Typo="Typo.h6">@Localizer[SettingsResources.Group_Other]</MudText>
+                <MudText Typo="Typo.h6">@Resources.Group_Other</MudText>
             </CardHeaderContent>
         </MudCardHeader>
         <MudCardContent>
             <div>
-                <MudCheckBox Label="@Localizer[SettingsResources.Price_Prediction_Enable]"
+                <MudCheckBox Label="@Resources.Price_Prediction_Enable"
                              @bind-Checked="@ViewModel.Price_Prediction_Enable"></MudCheckBox>
             </div>
             <div>
-                <MudCheckBox Label="@Localizer[SettingsResources.Price_CloseWithMouse]"
+                <MudCheckBox Label="@Resources.Price_CloseWithMouse"
                              @bind-Checked="@ViewModel.Price_CloseWithMouse"></MudCheckBox>
             </div>
         </MudCardContent>
@@ -37,6 +37,6 @@
 </SettingsLayout>
 
 @code {
-    [Inject] private IStringLocalizer<SettingsResources> Localizer { get; set; }
+    [Inject] private SettingsResources Resources { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
 }
