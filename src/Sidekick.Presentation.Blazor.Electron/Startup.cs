@@ -115,7 +115,7 @@ namespace Sidekick.Presentation.Blazor.Electron
 
             app.UseRouting();
 
-            app.AddElectronCookieProtection();
+            app.UseMiddleware<ElectronCookieProtectionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
