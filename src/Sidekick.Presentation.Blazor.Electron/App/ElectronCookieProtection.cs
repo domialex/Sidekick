@@ -8,8 +8,8 @@ namespace Sidekick.Presentation.Blazor.Electron.App
     /// </summary>
     public class ElectronCookieProtection
     {
-        public string Name { get; init; } = "ElectronCookieProtection";
-        public string Value { get; init; } = Guid.NewGuid().ToString();
+        public string Name { get; init; }
+        public string Value { get; init; }
         public CookieDetails Cookie { get; init; }
 
         public ElectronCookieProtection()
