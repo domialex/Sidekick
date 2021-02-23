@@ -10,6 +10,7 @@ using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Presentation.Blazor.Debounce;
+using Sidekick.Presentation.Blazor.Electron.App;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
@@ -19,16 +20,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         internal readonly IDebouncer debouncer;
         internal readonly ILogger<ViewLocator> logger;
         internal readonly ISidekickSettings settings;
+        internal readonly ElectronCookieProtection electronCookieProtection;
 
         public ViewLocator(IViewPreferenceRepository viewPreferenceRepository,
                            IDebouncer debouncer,
                            ILogger<ViewLocator> logger,
-                           ISidekickSettings settings)
+                           ISidekickSettings settings,
+                           ElectronCookieProtection electronCookieProtection)
         {
             this.viewPreferenceRepository = viewPreferenceRepository;
             this.debouncer = debouncer;
             this.logger = logger;
             this.settings = settings;
+            this.electronCookieProtection = electronCookieProtection;
         }
 
         private bool FirstView = true;
@@ -190,6 +194,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             // Make sure the title is always Sidekick. For keybind management we are watching for this value.
             browserWindow.SetTitle("Sidekick");
+
+            await browserWindow.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
 
             var sidekickView = new SidekickView(this, view, viewType, browserWindow);
 
