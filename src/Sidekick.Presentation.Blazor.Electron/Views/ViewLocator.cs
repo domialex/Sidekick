@@ -140,6 +140,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 }
             }, $"http://localhost:{BridgeSettings.WebPort}{path}");
 
+            window.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
+            window.SetVisibleOnAllWorkspaces(true);
+
             return window;
         }
 
@@ -154,7 +157,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 if (openedView != null && openedView.Type == ViewType.View)
                 {
                     openedView.Browser.LoadURL(url);
-                    openedView.Browser.Focus();
                     return;
                 }
                 Close(view);

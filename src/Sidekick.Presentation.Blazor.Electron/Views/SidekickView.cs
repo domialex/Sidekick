@@ -36,7 +36,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private void Browser_OnReadyToShow()
         {
             Browser.Show();
-            Browser.Focus();
         }
 
         private void Browser_OnResize()
