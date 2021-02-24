@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
@@ -21,18 +22,21 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         internal readonly ILogger<ViewLocator> logger;
         internal readonly ISidekickSettings settings;
         internal readonly ElectronCookieProtection electronCookieProtection;
+        internal readonly IHostEnvironment hostEnvironment;
 
         public ViewLocator(IViewPreferenceRepository viewPreferenceRepository,
                            IDebouncer debouncer,
                            ILogger<ViewLocator> logger,
                            ISidekickSettings settings,
-                           ElectronCookieProtection electronCookieProtection)
+                           ElectronCookieProtection electronCookieProtection,
+                           IHostEnvironment hostEnvironment)
         {
             this.viewPreferenceRepository = viewPreferenceRepository;
             this.debouncer = debouncer;
             this.logger = logger;
             this.settings = settings;
             this.electronCookieProtection = electronCookieProtection;
+            this.hostEnvironment = hostEnvironment;
         }
 
         private bool FirstView = true;
@@ -157,6 +161,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 if (openedView != null && openedView.Type == ViewType.View)
                 {
                     openedView.Browser.LoadURL(url);
+                    openedView.Browser.Focus();
                     return;
                 }
                 Close(view);
@@ -196,6 +201,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             // Make sure the title is always Sidekick. For keybind management we are watching for this value.
             browserWindow.SetTitle("Sidekick");
+
+            // Remove menu to disable the default hotkeys such as Ctrl+W and Ctrl+R.
+            if (hostEnvironment.IsProduction())
+            {
+                browserWindow.RemoveMenu();
+            }
 
             await browserWindow.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
 
