@@ -19,7 +19,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Notifications
         {
             var notificationOptions = new ElectronNET.API.Entities.NotificationOptions(request.Title, request.Message)
             {
-                Icon = $"{WebHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png"
+                Icon = $"{WebHostEnvironment.ContentRootPath}Assets/icon.png"
             };
 
             ElectronNET.API.Electron.Notification.Show(notificationOptions);
