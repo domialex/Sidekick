@@ -30,3 +30,7 @@ html {
         overflow: hidden;
     }
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}

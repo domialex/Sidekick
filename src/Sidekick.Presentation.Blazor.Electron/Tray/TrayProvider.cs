@@ -1,16 +1,15 @@
 using System;
+using System.Collections.Generic;
 using ElectronNET.API.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Trade.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Presentation.Localization.Tray;
-using Microsoft.Extensions.Hosting;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Sidekick.Presentation.Blazor.Electron.Tray
 {
@@ -43,6 +42,16 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                 {
                     new ()
                     {
+                        Label = TrayResources.Title + " - " + GetType().Assembly.GetName().Version.ToString(),
+                        Type = MenuType.normal,
+                        Icon = $"{webHostEnvironment.ContentRootPath}Assets/16x16.png",
+                        Enabled = false,
+                    },
+
+                    new () { Type = MenuType.separator },
+
+                    new ()
+                    {
                         Label = "Cheatsheets",
                         Click = () => { viewLocator.Open(View.League); }
                     },
@@ -73,9 +82,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                     menuItems.InsertRange(0, GetDevelopmentMenu());
                 }
 
-                ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/ExaltedOrb.png", menuItems.ToArray());
+                ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/icon.png", menuItems.ToArray());
                 ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
-                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title + " - " + GetType().Assembly.GetName().Version.ToString());
+                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);
             }
             catch (Exception e)
             {

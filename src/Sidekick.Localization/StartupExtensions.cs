@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Localization.About;
 using Sidekick.Localization.Cheatsheets;
 using Sidekick.Localization.Initialization;
+using Sidekick.Localization.Maps;
 using Sidekick.Localization.Platforms;
 using Sidekick.Localization.Settings;
 using Sidekick.Localization.Setup;
@@ -29,7 +30,7 @@ namespace Sidekick.Localization
             services.AddTransient<PlatformResources>();
 
             services.AddTransient<SettingsResources>();
-
+            services.AddTransient<MapInfoResources>();
             services.AddTransient<SetupResources>();
 
             return services;
