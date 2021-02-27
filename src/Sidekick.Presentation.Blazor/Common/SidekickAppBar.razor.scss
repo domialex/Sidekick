@@ -14,12 +14,19 @@
             // Flatten the right side icons and make them match Windows' style.
             padding-right: 0;
 
+            // Menu Icon.
+            > button:first-child {
+                right: 0;
+                margin-left: calc(-#{$resize-marging} + 2px);
+            }
+
+            // Window icon.
             .icon {
                 width: var(--mud-appbar-min-height);
                 height: var(--mud-appbar-min-height);
-                margin-top: -#{$resize-marging};
-                margin-left: -#{$resize-marging};
-                padding: 0 12px;
+                margin-top: calc(-#{$resize-marging} * 2);
+                margin-right: 2px;
+                padding: 0 5px;
 
                 img {
                     display: block;
@@ -30,19 +37,26 @@
                 }
             }
 
+            // Window title.
             p {
-                margin-top: -#{$resize-marging};
+                margin-top: -8px;
             }
 
+            // Window buttons.
             button {
                 -webkit-app-region: no-drag;
                 margin: 0;
                 top: -#{$resize-marging};
                 right: -#{$resize-marging};
-                width: var(--mud-appbar-min-height);
+                width: calc(var(--mud-appbar-min-height) * 1.4);
                 height: var(--mud-appbar-min-height);
                 border-radius: 0;
                 cursor: default;
+
+                &.close-button:hover {
+                    color: var(--mud-palette-error-text);
+                    background-color: var(--mud-palette-error);
+                }
             }
         }
     }
