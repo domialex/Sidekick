@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sidekick.Presentation.Blazor.Debounce
@@ -8,6 +9,7 @@ namespace Sidekick.Presentation.Blazor.Debounce
     {
         private readonly Dictionary<string, uint> Debounces = new Dictionary<string, uint>();
         public async Task Debounce(string id, Func<Task> func,
+            CancellationToken cancellationToken = new CancellationToken(),
             int refreshRate = 1000,
             int delay = 2000,
             Action<int> delayUpdate = null)
@@ -25,7 +27,7 @@ namespace Sidekick.Presentation.Blazor.Debounce
             var count = ++Debounces[id];
             while (delay > 0)
             {
-                await Task.Delay(refreshRate);
+                await Task.Delay(refreshRate, cancellationToken);
                 if (count != Debounces[id])
                 {
                     continue;
