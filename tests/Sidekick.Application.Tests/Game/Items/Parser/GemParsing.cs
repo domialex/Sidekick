@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using MediatR;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Xunit;
@@ -7,17 +8,38 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 {
     public class GemParsing : IClassFixture<SidekickFixture>
     {
-        private readonly SidekickFixture fixture;
+        private readonly IMediator mediator;
 
         public GemParsing(SidekickFixture fixture)
         {
-            this.fixture = fixture;
+            mediator = fixture.Mediator;
         }
 
         [Fact]
         public async Task ParseVaalGem()
         {
-            var actual = await fixture.Mediator.Send(new ParseItemCommand(@"Rarity: Gem
+            var actual = await mediator.Send(new ParseItemCommand(VaalGem));
+
+            Assert.Equal(Rarity.Gem, actual.Rarity);
+            Assert.Equal("Vaal Double Strike", actual.Type);
+            Assert.Equal(1, actual.Properties.GemLevel);
+            Assert.True(actual.Corrupted);
+        }
+
+        [Fact]
+        public async Task ParseAnomalousGem()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(AnomalousGem));
+
+            Assert.Equal(Rarity.Gem, actual.Rarity);
+            Assert.Equal("Static Strike", actual.Type);
+            Assert.Equal(1, actual.Properties.GemLevel);
+            Assert.True(actual.Properties.AlternateQuality);
+        }
+
+        #region ItemText
+
+        private const string VaalGem = @"Rarity: Gem
 Double Strike
 --------
 Vaal, Attack, Melee, Strike, Duration, Physical
@@ -57,13 +79,39 @@ Place into an item socket of the right colour to gain this skill.Right click to 
 Corrupted
 --------
 Note: ~price 2 chaos
-"));
+";
 
-            Assert.Equal(Rarity.Gem, actual.Rarity);
-            Assert.Equal("Vaal Double Strike", actual.Type);
-            Assert.Equal(1, actual.Properties.GemLevel);
-            Assert.True(actual.Corrupted);
-        }
+        private const string AnomalousGem = @"Rarity: Gem
+Anomalous Static Strike
+--------
+Attack, Melee, Strike, AoE, Duration, Lightning, Chaining
+Level: 1
+Mana Cost: 6
+Effectiveness of Added Damage: 110%
+Quality: +17% (augmented)
+Alternate Quality
+--------
+Requirements:
+Level: 12
+Str: 21
+Int: 14
+--------
+Attack with a melee weapon, gaining static energy for a duration if you hit an enemy. While you have static energy, you'll frequently hit a number of nearby enemies with beams, dealing attack damage.
+--------
+Beams Hit Enemies every 0.40 seconds
+50% of Physical Damage Converted to Lightning Damage
+Deals 110% of Base Damage
+Base duration is 2.00 seconds
+Chains +1 Times
+17% increased Damage
+Beams deal 40% less Damage
+4 maximum Beam Targets
+--------
+Experience: 1/15249
+--------
+Place into an item socket of the right colour to gain this skill. Right click to remove from a socket.
+";
 
+        #endregion
     }
 }

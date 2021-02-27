@@ -1,86 +1,81 @@
 using System.Linq;
-using FluentAssertions;
-using NUnit.Framework;
-using Sidekick.Business.Apis.Poe.Parser;
-using Sidekick.Business.Apis.Poe.Trade.Data.Items;
+using System.Threading.Tasks;
+using MediatR;
+using Sidekick.Domain.Game.Items.Commands;
+using Sidekick.Domain.Game.Items.Models;
+using Xunit;
 
-namespace Sidekick.Business.Tests.ItemParserTests
+namespace Sidekick.Application.Tests.Game.Items.Parser
 {
-    public class MapParsing : TestContext<ParserService>
+    public class MapParsing : IClassFixture<SidekickFixture>
     {
-        [Test]
-        public void ParseNormalMap()
-        {
-            var actual = Subject.ParseItem(NormalMap);
+        private readonly IMediator mediator;
 
-            actual.Type.Should().Be("Beach Map");
-            actual.Properties.MapTier.Should().Be(1);
+        public MapParsing(SidekickFixture fixture)
+        {
+            mediator = fixture.Mediator;
         }
 
-        [Test]
-        public void ParseMagicMap()
+        [Fact]
+        public async Task ParseNormalMap()
         {
-            var actual = Subject.ParseItem(MagicMap);
+            var actual = await mediator.Send(new ParseItemCommand(NormalMap));
 
-            actual.Type.Should().Be("Beach Map");
-            actual.Properties.MapTier.Should().Be(1);
+            Assert.Equal("Beach Map", actual.Type);
+            Assert.Equal(1, actual.Properties.MapTier);
         }
 
-        [Test]
-        public void ParseBlightedMap()
+        [Fact]
+        public async Task ParseMagicMap()
         {
-            var actual = Subject.ParseItem(BlightedMap);
+            var actual = await mediator.Send(new ParseItemCommand(MagicMap));
 
-            actual.Type.Should().Be("Ramparts Map");
-            actual.Properties.MapTier.Should().Be(2);
-            actual.Properties.Blighted.Should().BeTrue();
+            Assert.Equal("Beach Map", actual.Type);
+            Assert.Equal(1, actual.Properties.MapTier);
         }
 
-        [Test]
-        public void ParseUniqueMap()
+        [Fact]
+        public async Task ParseBlightedMap()
         {
-            var actual = Subject.ParseItem(UniqueMap);
+            var actual = await mediator.Send(new ParseItemCommand(BlightedMap));
 
-            actual.Name.Should().Be("Maelström of Chaos");
-            actual.Properties.MapTier.Should().Be(5);
-            actual.Properties.Quality.Should().Be(10);
-            actual.Properties.ItemQuantity.Should().Be(69);
-            actual.Properties.ItemRarity.Should().Be(356);
+            Assert.Equal("Ramparts Map", actual.Type);
+            Assert.Equal(2, actual.Properties.MapTier);
+            Assert.True(actual.Properties.Blighted);
         }
 
-        [Test]
-        public void ParseOccupiedMap()
+        [Fact]
+        public async Task ParseUniqueMap()
         {
-            var actual = Subject.ParseItem(OccupiedMap);
+            var actual = await mediator.Send(new ParseItemCommand(UniqueMap));
 
-            var expectedImplicits = new[]
-            {
-                    "Area is influenced by The Elder",
-                    "Map is occupied by The Purifier"
-                };
-
-            var expectedExplicits = new[]
-            {
-                    "Players are Cursed with Enfeeble, with 60% increased Effect"
-                };
-
-            actual.Type.Should().Be("Carcass Map");
-            actual.Rarity.Should().Be(Apis.Poe.Models.Rarity.Rare);
-            actual.Modifiers.Implicit
-                  .Select(mod => mod.Text)
-                  .Should().Contain(expectedImplicits);
-            actual.Modifiers.Explicit
-                  .Select(mod => mod.Text)
-                  .Should().Contain(expectedExplicits);
+            Assert.Equal("Maelström of Chaos", actual.Name);
+            Assert.Equal("Atoll Map", actual.Type);
+            Assert.Equal(5, actual.Properties.MapTier);
+            Assert.Equal(10, actual.Properties.Quality);
+            Assert.Equal(69, actual.Properties.ItemQuantity);
+            Assert.Equal(356, actual.Properties.ItemRarity);
         }
 
-        [Test]
-        public void ParseTimelessKaruiEmblem()
+        [Fact]
+        public async Task ParseOccupiedMap()
         {
-            var actual = Subject.ParseItem(TimelessKaruiEmblem);
+            var actual = await mediator.Send(new ParseItemCommand(OccupiedMap));
 
-            actual.Type.Should().Be("Timeless Karui Emblem");
-            actual.Category.Should().Be(Category.Map);
+            Assert.Equal("Carcass Map", actual.Type);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Contains("Area is influenced by The Elder", actual.Modifiers.Implicit.Select(x => x.Text));
+            Assert.Contains("Map is occupied by The Purifier", actual.Modifiers.Implicit.Select(x => x.Text));
+            Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
+        }
+
+        [Fact]
+        public async Task ParseTimelessKaruiEmblem()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(TimelessKaruiEmblem));
+
+            Assert.Equal("Timeless Karui Emblem", actual.Type);
+            Assert.Equal(Category.Map, actual.Category);
         }
 
         #region ItemText

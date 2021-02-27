@@ -38,7 +38,6 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var mockEnvironment = new Mock<IHostEnvironment>();
 
-            Console.WriteLine("Setup started.");
             var settings = new SidekickSettings()
             {
                 Language_Parser = "en",
@@ -85,14 +84,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
             ServiceProvider = services.BuildServiceProvider();
 
-            Console.WriteLine("Setup completed.");
-
-            Console.WriteLine("Initialization started.");
-
             Mediator = ServiceProvider.GetRequiredService<IMediator>();
             await Mediator.Send(new InitializeCommand(true));
-
-            Console.WriteLine("Initialization completed.");
         }
     }
 }
