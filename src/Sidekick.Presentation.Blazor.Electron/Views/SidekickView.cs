@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using ElectronNET.API;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Views;
@@ -7,8 +8,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     internal class SidekickView
     {
+        private CancellationTokenSource WindowResizeCancellationTokenSource { get; }
+
         public SidekickView(ViewLocator locator, View view, ViewType type, BrowserWindow browser)
         {
+            WindowResizeCancellationTokenSource = new CancellationTokenSource();
+
             Locator = locator;
             View = view;
             Type = type;
@@ -51,11 +56,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 {
                     Locator.logger.LogError("Failed to save the view size.", e);
                 }
-            });
+            }, WindowResizeCancellationTokenSource.Token, delay: 500);
         }
 
         private void Browser_OnClosed()
         {
+            WindowResizeCancellationTokenSource.Cancel();
             Locator.Views.Remove(this);
             Browser.OnReadyToShow -= Browser_OnReadyToShow;
             Browser.OnResize -= Browser_OnResize;
