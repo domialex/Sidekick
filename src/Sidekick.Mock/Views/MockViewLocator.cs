@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Sidekick.Domain.Views;
 
-namespace Sidekick.Presentation.Blazor.Mock
+namespace Sidekick.Mock.Views
 {
-    public class ViewLocator : IViewLocator
+    public class MockViewLocator : IViewLocator
     {
         public Task Open(View view, params object[] args)
         {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
@@ -13,21 +13,21 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Blazored.FluentValidation" Version="1.3.2" />
+    <PackageReference Include="Blazored.FluentValidation" Version="1.4.1" />
     <PackageReference Include="Delegate.SassBuilder" Version="1.4.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MudBlazor" Version="5.0.1" />
+    <PackageReference Include="MudBlazor" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Extensions\Sidekick.Extensions.csproj" />
     <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
+    <ProjectReference Include="..\Sidekick.Mock\Sidekick.Mock.csproj" />
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
     <ProjectReference Include="..\Sidekick.Platform\Sidekick.Platform.csproj" />
-    <ProjectReference Include="..\Sidekick.Presentation.Blazor.Mock\Sidekick.Presentation.Blazor.Mock.csproj" />
     <ProjectReference Include="..\Sidekick.Presentation\Sidekick.Presentation.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

@@ -8,17 +8,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
+using Sidekick.Domain.Platforms;
+using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
+using Sidekick.Mock.Platforms;
+using Sidekick.Mock.Views;
 using Sidekick.Persistence;
 using Sidekick.Platform;
-using Sidekick.Presentation.Blazor.Mock;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -53,7 +55,6 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickPersistence()
                 .AddSidekickPlatform()
                 .AddSidekickPresentationBlazor()
-                .AddSidekickPresentationBlazorMock()
 
                 // Common
                 .AddSidekickLogging(configuration, environment)
@@ -67,14 +68,11 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Blazor"),
-                    Assembly.Load("Sidekick.Presentation.Blazor.Mock"))
+                    Assembly.Load("Sidekick.Mock"));
 
-                // MudBlazor
-                .AddMudServices()
-                .AddMudBlazorDialog()
-                .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener()
-                .AddMudBlazorDom();
+            // Mock services
+            services.AddSingleton<IViewLocator, MockViewLocator>();
+            services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

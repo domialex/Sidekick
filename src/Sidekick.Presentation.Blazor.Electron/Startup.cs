@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MudBlazor.Services;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
@@ -71,14 +70,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Blazor"),
-                    Assembly.Load("Sidekick.Presentation.Blazor.Electron"))
-
-                // Mudblazor
-                .AddMudServices()
-                .AddMudBlazorDialog()
-                .AddMudBlazorSnackbar()
-                .AddMudBlazorResizeListener()
-                .AddMudBlazorDom();
+                    Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
 
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<IViewLocator, ViewLocator>();

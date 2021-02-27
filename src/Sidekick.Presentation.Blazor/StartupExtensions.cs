@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using MudBlazor.Services;
 using Sidekick.Presentation.Blazor.About;
 using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Initialization;
@@ -19,6 +20,17 @@ namespace Sidekick.Presentation.Blazor
             services.AddScoped<AboutModel>();
             services.AddScoped<MapInfoModel>();
             services.AddScoped<PricesModel>();
+
+            // Mudblazor
+            services
+                .AddMudServices()
+                .AddMudBlazorDialog()
+                .AddMudBlazorSnackbar()
+                .AddMudBlazorResizeListener()
+                .AddMudBlazorScrollListener()
+                .AddMudBlazorScrollManager()
+                .AddMudBlazorJsApi();
+
             return services;
         }
     }

@@ -1,8 +1,8 @@
 using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Presentation.Blazor.Mock
+namespace Sidekick.Mock.Platforms
 {
-    public class KeybindProvider : IKeybindProvider
+    public class MockKeybindProvider : IKeybindProvider
     {
         public void Initialize()
         {

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Notifications.Commands;
 
-namespace Sidekick.Presentation.Blazor.Mock
+namespace Sidekick.Mock.Notifications
 {
-    public class OpenNotificationHandler : ICommandHandler<OpenNotificationCommand>
+    public class MockOpenNotificationHandler : ICommandHandler<OpenNotificationCommand>
     {
         public Task<Unit> Handle(OpenNotificationCommand request, CancellationToken cancellationToken)
         {
