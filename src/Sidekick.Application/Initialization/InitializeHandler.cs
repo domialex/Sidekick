@@ -6,11 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Application.Game.Items.Parser.Patterns;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
+using Sidekick.Domain.Game.Items.Metadatas;
+using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
+using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
@@ -29,7 +33,6 @@ namespace Sidekick.Application.Initialization
     {
         private readonly InitializationResources resources;
         private readonly IMediator mediator;
-        private readonly ServiceFactory serviceFactory;
         private readonly ISidekickSettings settings;
         private readonly ILogger<InitializeHandler> logger;
         private readonly IViewLocator viewLocator;
@@ -40,11 +43,15 @@ namespace Sidekick.Application.Initialization
         private readonly IScreenProvider screenProvider;
         private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IKeybindProvider keybindProvider;
+        private readonly IParserPatterns parserPatterns;
+        private readonly IModifierProvider modifierProvider;
+        private readonly IPseudoModifierProvider pseudoModifierProvider;
+        private readonly IItemMetadataProvider itemMetadataProvider;
+        private readonly IItemStaticDataProvider itemStaticDataProvider;
 
         public InitializeHandler(
             InitializationResources resources,
             IMediator mediator,
-            ServiceFactory serviceFactory,
             ISidekickSettings settings,
             ILogger<InitializeHandler> logger,
             IViewLocator viewLocator,
@@ -54,11 +61,15 @@ namespace Sidekick.Application.Initialization
             IMouseProvider mouseProvider,
             IScreenProvider screenProvider,
             IKeybindsExecutor keybindsExecutor,
-            IKeybindProvider keybindProvider)
+            IKeybindProvider keybindProvider,
+            IParserPatterns parserPatterns,
+            IModifierProvider modifierProvider,
+            IPseudoModifierProvider pseudoModifierProvider,
+            IItemMetadataProvider itemMetadataProvider,
+            IItemStaticDataProvider itemStaticDataProvider)
         {
             this.resources = resources;
             this.mediator = mediator;
-            this.serviceFactory = serviceFactory;
             this.settings = settings;
             this.logger = logger;
             this.viewLocator = viewLocator;
@@ -69,29 +80,23 @@ namespace Sidekick.Application.Initialization
             this.screenProvider = screenProvider;
             this.keybindsExecutor = keybindsExecutor;
             this.keybindProvider = keybindProvider;
+            this.parserPatterns = parserPatterns;
+            this.modifierProvider = modifierProvider;
+            this.pseudoModifierProvider = pseudoModifierProvider;
+            this.itemMetadataProvider = itemMetadataProvider;
+            this.itemStaticDataProvider = itemStaticDataProvider;
         }
 
         private int Count = 0;
 
         private int Completed = 0;
 
-        private void AddNotificationCount<TNotification>(bool shouldAdd = true)
-            where TNotification : INotification
-        {
-            if (!shouldAdd) return;
-
-            Count += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
-        }
-
         public async Task<Unit> Handle(InitializeCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 Completed = 0;
-                Count = request.FirstRun ? 9 : 3;
-
-                // Set the total count of handlers
-                AddNotificationCount<DataInitializationStarted>();
+                Count = request.FirstRun ? 14 : 7;
 
                 // Report initial progress
                 await ReportProgress();
@@ -148,7 +153,11 @@ namespace Sidekick.Application.Initialization
                     }
                 }
 
-                await RunNotificationStep(new DataInitializationStarted());
+                await Run(() => parserPatterns.Initialize());
+                await Run(() => itemMetadataProvider.Initialize());
+                await Run(() => itemStaticDataProvider.Initialize());
+                await Run(() => modifierProvider.Initialize());
+                await Run(() => pseudoModifierProvider.Initialize());
 
                 if (request.FirstRun)
                 {
@@ -202,21 +211,6 @@ namespace Sidekick.Application.Initialization
 
             // Make sure that after all handlers run, the Completed count is updated
             Completed += 1;
-
-            // Report progress
-            await ReportProgress();
-        }
-
-        private async Task RunNotificationStep<TNotification>(TNotification notification, bool shouldRun = true)
-            where TNotification : INotification
-        {
-            if (!shouldRun) return;
-
-            // Publish the notification
-            await mediator.Publish(notification);
-
-            // Make sure that after all handlers run, the Completed count is updated
-            Completed += serviceFactory.GetInstances<INotificationHandler<TNotification>>().Count();
 
             // Report progress
             await ReportProgress();

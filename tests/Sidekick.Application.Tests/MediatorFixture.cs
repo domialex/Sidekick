@@ -1,7 +1,5 @@
-using System;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +9,7 @@ using Moq;
 using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
@@ -22,11 +21,10 @@ using Sidekick.Mock.Views;
 using Sidekick.Persistence;
 using Xunit;
 
-namespace Sidekick.Application.Tests.Game.Items.Parser
+namespace Sidekick.Application.Tests
 {
-    public class SidekickFixture : IAsyncLifetime
+    public class MediatorFixture : IAsyncLifetime
     {
-        public IServiceProvider ServiceProvider { get; private set; }
         public IMediator Mediator { get; private set; }
 
         public Task DisposeAsync()
@@ -38,20 +36,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var mockEnvironment = new Mock<IHostEnvironment>();
 
-            var settings = new SidekickSettings()
-            {
-                Language_Parser = "en",
-                Language_UI = "en",
-                LeagueId = "Ritual",
-            };
-
-            var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, settings);
-            stream.Seek(0, SeekOrigin.Begin);
-
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonStream(stream)
+                .AddJsonFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), SaveSettingsHandler.FileName), true, true)
                 .Build();
 
             var services = new ServiceCollection()
@@ -82,9 +68,15 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             services.AddSingleton<IMouseProvider, MockMouseProvider>();
             services.AddSingleton<IScreenProvider, MockScreenProvider>();
 
-            ServiceProvider = services.BuildServiceProvider();
+            var serviceProvider = services.BuildServiceProvider();
 
-            Mediator = ServiceProvider.GetRequiredService<IMediator>();
+            Mediator = serviceProvider.GetRequiredService<IMediator>();
+            await Mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+            {
+                Language_Parser = "en",
+                Language_UI = "en",
+                LeagueId = "Ritual",
+            }, true));
             await Mediator.Send(new InitializeCommand(true));
         }
     }

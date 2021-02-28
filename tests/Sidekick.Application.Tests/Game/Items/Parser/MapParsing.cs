@@ -7,11 +7,12 @@ using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
 {
-    public class MapParsing : IClassFixture<SidekickFixture>
+    [Collection(Collections.Mediator)]
+    public class MapParsing
     {
         private readonly IMediator mediator;
 
-        public MapParsing(SidekickFixture fixture)
+        public MapParsing(MediatorFixture fixture)
         {
             mediator = fixture.Mediator;
         }
@@ -21,6 +22,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(NormalMap));
 
+            Assert.Equal(Category.Map, actual.Category);
+            Assert.Equal(Rarity.Normal, actual.Rarity);
             Assert.Equal("Beach Map", actual.Type);
             Assert.Equal(1, actual.Properties.MapTier);
         }
@@ -30,6 +33,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(MagicMap));
 
+            Assert.Equal(Category.Map, actual.Category);
+            Assert.Equal(Rarity.Magic, actual.Rarity);
             Assert.Equal("Beach Map", actual.Type);
             Assert.Equal(1, actual.Properties.MapTier);
         }
@@ -39,6 +44,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(BlightedMap));
 
+            Assert.Equal(Category.Map, actual.Category);
+            Assert.Equal(Rarity.Normal, actual.Rarity);
             Assert.Equal("Ramparts Map", actual.Type);
             Assert.Equal(2, actual.Properties.MapTier);
             Assert.True(actual.Properties.Blighted);
@@ -49,6 +56,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(UniqueMap));
 
+            Assert.Equal(Category.Map, actual.Category);
+            Assert.Equal(Rarity.Unique, actual.Rarity);
             Assert.Equal("Maelström of Chaos", actual.Name);
             Assert.Equal("Atoll Map", actual.Type);
             Assert.Equal(5, actual.Properties.MapTier);
@@ -62,8 +71,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(OccupiedMap));
 
-            Assert.Equal("Carcass Map", actual.Type);
+            Assert.Equal(Category.Map, actual.Category);
             Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Carcass Map", actual.Type);
             Assert.Contains("Area is influenced by The Elder", actual.Modifiers.Implicit.Select(x => x.Text));
             Assert.Contains("Map is occupied by The Purifier", actual.Modifiers.Implicit.Select(x => x.Text));
             Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
@@ -74,6 +84,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(TimelessKaruiEmblem));
 
+            Assert.Equal(Category.Map, actual.Category);
+            Assert.Equal(Rarity.Normal, actual.Rarity);
             Assert.Equal("Timeless Karui Emblem", actual.Type);
             Assert.Equal(Category.Map, actual.Category);
         }

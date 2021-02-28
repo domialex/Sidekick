@@ -6,33 +6,35 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
 {
     public interface IParserPatterns
     {
-        Regex Armor { get; set; }
-        Regex AttacksPerSecond { get; set; }
-        Regex Blighted { get; set; }
-        Regex ChanceToBlock { get; set; }
-        Regex Corrupted { get; set; }
-        Regex CriticalStrikeChance { get; set; }
-        Regex Crusader { get; set; }
-        Regex Elder { get; set; }
-        Regex ElementalDamage { get; set; }
-        Regex EnergyShield { get; set; }
-        Regex Evasion { get; set; }
-        Regex Hunter { get; set; }
-        Regex ItemLevel { get; set; }
-        Regex ItemQuantity { get; set; }
-        Regex ItemRarity { get; set; }
-        Regex Level { get; set; }
-        Regex MapTier { get; set; }
-        Regex MonsterPackSize { get; set; }
-        Regex PhysicalDamage { get; set; }
-        Regex Quality { get; set; }
-        Regex AlternateQuality { get; set; }
-        Dictionary<Rarity, Regex> Rarity { get; set; }
-        Regex Redeemer { get; set; }
-        Regex Shaper { get; set; }
-        Regex Socket { get; set; }
-        Regex Unidentified { get; set; }
-        Regex Warlord { get; set; }
+        void Initialize();
+
+        Regex Armor { get; }
+        Regex AttacksPerSecond { get; }
+        Regex Blighted { get; }
+        Regex ChanceToBlock { get; }
+        Regex Corrupted { get; }
+        Regex CriticalStrikeChance { get; }
+        Regex Crusader { get; }
+        Regex Elder { get; }
+        Regex ElementalDamage { get; }
+        Regex EnergyShield { get; }
+        Regex Evasion { get; }
+        Regex Hunter { get; }
+        Regex ItemLevel { get; }
+        Regex ItemQuantity { get; }
+        Regex ItemRarity { get; }
+        Regex Level { get; }
+        Regex MapTier { get; }
+        Regex MonsterPackSize { get; }
+        Regex PhysicalDamage { get; }
+        Regex Quality { get; }
+        Regex AlternateQuality { get; }
+        Dictionary<Rarity, Regex> Rarity { get; }
+        Regex Redeemer { get; }
+        Regex Shaper { get; }
+        Regex Socket { get; }
+        Regex Unidentified { get; }
+        Regex Warlord { get; }
 
         int GetInt(Regex regex, string input);
 

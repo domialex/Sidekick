@@ -1,0 +1,424 @@
+using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
+using Sidekick.Domain.Game.Items.Commands;
+using Sidekick.Domain.Game.Items.Models;
+using Xunit;
+
+namespace Sidekick.Application.Tests.Game.Items.Parser
+{
+    [Collection(Collections.Mediator)]
+    public class EquipmentParsing
+    {
+        private readonly IMediator mediator;
+
+        public EquipmentParsing(MediatorFixture fixture)
+        {
+            mediator = fixture.Mediator;
+        }
+
+        [Fact]
+        public async Task ParseUnidentifiedUnique()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(UnidentifiedUnique));
+
+            Assert.Equal(Category.Weapon, actual.Category);
+            Assert.Equal(Rarity.Unique, actual.Rarity);
+            Assert.Equal("Jade Hatchet", actual.Type);
+            Assert.False(actual.Identified);
+        }
+
+        [Fact]
+        public async Task ParseSixLinkUniqueBodyArmor()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(UniqueSixLink));
+
+            Assert.Equal(Category.Armour, actual.Category);
+            Assert.Equal(Rarity.Unique, actual.Rarity);
+            Assert.Equal("Carcass Jack", actual.Name);
+            Assert.Equal("Varnished Coat", actual.Type);
+            Assert.Equal(20, actual.Properties.Quality);
+            Assert.Equal(960, actual.Properties.Evasion);
+            Assert.Equal(186, actual.Properties.EnergyShield);
+            Assert.Equal(6, actual.Sockets.Count(x => x.Group == 0));
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("128% increased Evasion and Energy Shield (Local)", explicits);
+            Assert.Contains("+55 to maximum Life", explicits);
+            Assert.Contains("+12% to all Elemental Resistances", explicits);
+            Assert.Contains("44% increased Area of Effect", explicits);
+            Assert.Contains("47% increased Area Damage", explicits);
+            Assert.Contains("Extra gore", explicits);
+
+            var pseudos = actual.Modifiers.Pseudo.Select(x => x.Text);
+            Assert.Contains("+12% total to all Elemental Resistances", pseudos);
+            Assert.Contains("+36% total Elemental Resistance", pseudos);
+            Assert.Contains("+36% total Resistance", pseudos);
+            Assert.Contains("+55 total maximum Life", pseudos);
+
+        }
+
+        [Fact]
+        public async Task ParseRareGloves()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(GlovesAssasinsMitts));
+
+            Assert.Equal(Category.Armour, actual.Category);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Death Nails", actual.NameLine);
+            Assert.Equal("Assassin's Mitts", actual.Type);
+            Assert.Single(actual.Sockets);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("+18 to Intelligence", explicits);
+            Assert.Contains("+73 to maximum Life", explicits);
+            Assert.Contains("+14% to Lightning Resistance", explicits);
+            Assert.Contains("0.23% of Physical Attack Damage Leeched as Mana", explicits);
+        }
+
+        [Fact]
+        public async Task ParseJewel()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(JewelBlightCut));
+
+            Assert.Equal(Category.Jewel, actual.Category);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Blight Cut", actual.NameLine);
+            Assert.Equal("Cobalt Jewel", actual.Type);
+            Assert.Equal(68, actual.ItemLevel);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("+8 to Strength and Intelligence", explicits);
+            Assert.Contains("14% increased Spell Damage while Dual Wielding", explicits);
+            Assert.Contains("19% increased Burning Damage", explicits);
+            Assert.Contains("15% increased Damage with Wands", explicits);
+        }
+
+        [Fact]
+        public async Task ParseInfluencedWeapon()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(InfluencedWand));
+
+            Assert.Equal(Category.Weapon, actual.Category);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Miracle Chant", actual.NameLine);
+            Assert.Equal("Imbued Wand", actual.Type);
+            Assert.True(actual.Influences.Crusader);
+
+            var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
+            Assert.Contains("33% increased Spell Damage", implicits);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("Adds 10 to 16 Physical Damage", explicits);
+            Assert.Contains("24% increased Fire Damage", explicits);
+            Assert.Contains("14% increased Critical Strike Chance for Spells", explicits);
+            Assert.Contains("Attacks with this Weapon Penetrate 10% Lightning Resistance", explicits);
+        }
+
+        [Fact]
+        public async Task ParseMagicWeapon()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(MagicWeapon));
+
+            Assert.Equal(Category.Weapon, actual.Category);
+            Assert.Equal(Rarity.Magic, actual.Rarity);
+            Assert.Equal("Shadow Axe", actual.Type);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("11% reduced Enemy Stun Threshold", explicits);
+        }
+
+        [Fact]
+        public async Task ParseFracturedItem()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(FracturedItem));
+
+            Assert.Equal(Category.Armour, actual.Category);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Iron Greaves", actual.Type);
+
+            var fractureds = actual.Modifiers.Fractured.Select(x => x.Text);
+            Assert.Contains("10% increased Movement Speed", fractureds);
+        }
+
+        /// <summary>
+        /// This unique item can have multiple possible bases.
+        /// </summary>
+        [Fact]
+        public async Task ParseUniqueItemWithDifferentBases()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(UniqueItemWithDifferentBases));
+
+            Assert.Equal(Category.Weapon, actual.Category);
+            Assert.Equal(Rarity.Unique, actual.Rarity);
+            Assert.Equal("Wings of Entropy", actual.Name);
+            Assert.Equal("Ezomyte Axe", actual.Type);
+
+            Assert.Equal(243.68, actual.Properties.PhysicalDps);
+            Assert.Equal(172.80, actual.Properties.ElementalDps);
+            Assert.Equal(416.48, actual.Properties.DamagePerSecond);
+        }
+
+        [Fact]
+        public async Task ParseWeaponWithMultipleElementalDamages()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(WeaponWithMultipleElementalDamages));
+
+            Assert.Equal(Category.Weapon, actual.Category);
+            Assert.Equal(Rarity.Rare, actual.Rarity);
+            Assert.Equal("Ancient Sword", actual.Type);
+
+            Assert.Equal(53.94, actual.Properties.PhysicalDps);
+            Assert.Equal(314.07, actual.Properties.ElementalDps);
+            Assert.Equal(368.01, actual.Properties.DamagePerSecond);
+        }
+
+        [Fact]
+        public async Task ParseEnchantWithAdditionalProjectiles()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(EnchantWithAdditionalProjectiles));
+
+            var enchants = actual.Modifiers.Enchant.Select(x => x.Text);
+            Assert.Contains("Split Arrow fires an additional Projectile", enchants);
+            Assert.Equal(2, actual.Modifiers.Enchant.First().Values.First());
+        }
+
+        #region ItemText
+
+        private const string UniqueSixLink = @"Rarity: Unique
+Carcass Jack
+Varnished Coat
+--------
+Quality: +20% (augmented)
+Evasion Rating: 960 (augmented)
+Energy Shield: 186 (augmented)
+--------
+Requirements:
+Level: 70
+Str: 68
+Dex: 96
+Int: 111
+--------
+Sockets: B-B-R-B-B-B 
+--------
+Item Level: 81
+--------
+128% increased Evasion and Energy Shield
++55 to maximum Life
++12% to all Elemental Resistances
+44% increased Area of Effect
+47% increased Area Damage
+Extra gore
+--------
+""...The discomfort shown by the others is amusing, but none
+can deny that my work has made quite the splash...""
+- Maligaro's Journal
+";
+
+        private const string UnidentifiedUnique = @"Rarity: Unique
+Jade Hatchet
+--------
+One Handed Axe
+Physical Damage: 10-15
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.45
+Weapon Range: 11
+--------
+Requirements:
+Str: 21
+--------
+Sockets: R-G-B 
+--------
+Item Level: 71
+--------
+Unidentified
+;";
+
+        private const string GlovesAssasinsMitts = @"Rarity: Rare
+Death Nails
+Assassin's Mitts
+--------
+Evasion Rating: 104
+Energy Shield: 20
+--------
+Requirements:
+Level: 58
+Dex: 45
+Int: 45
+--------
+Sockets: G 
+--------
+Item Level: 61
+--------
++18 to Intelligence
++73 to maximum Life
++14% to Lightning Resistance
+0.23% of Physical Attack Damage Leeched as Mana
+";
+
+        private const string JewelBlightCut = @"Rarity: Rare
+Blight Cut
+Cobalt Jewel
+--------
+Item Level: 68
+--------
++8 to Strength and Intelligence
+14% increased Spell Damage while Dual Wielding
+19% increased Burning Damage
+15% increased Damage with Wands
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
+";
+
+        private const string InfluencedWand = @"Rarity: Rare
+Miracle Chant
+Imbued Wand
+--------
+Wand
+Physical Damage: 38-69 (augmented)
+Critical Strike Chance: 7.00%
+Attacks per Second: 1.50
+--------
+Requirements:
+Level: 59
+Int: 188
+--------
+Sockets: R B 
+--------
+Item Level: 70
+--------
+33% increased Spell Damage (implicit)
+--------
+Adds 10 to 16 Physical Damage
+24% increased Fire Damage
+14% increased Critical Strike Chance for Spells
+Attacks with this Weapon Penetrate 10% Lightning Resistance
+--------
+Crusader Item
+";
+
+        private const string MagicWeapon = @"Rarity: Magic
+Shadow Axe of the Boxer
+--------
+Two Handed Axe
+Physical Damage: 42-62
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.25
+Weapon Range: 13
+--------
+Requirements:
+Level: 33
+Str: 80
+Dex: 37
+--------
+Sockets: R-R 
+--------
+Item Level: 50
+--------
+11% reduced Enemy Stun Threshold
+";
+
+        private const string FracturedItem = @"Rarity: Rare
+Invasion Track
+Iron Greaves
+--------
+Armour: 6
+--------
+Sockets: B B 
+--------
+Item Level: 2
+--------
+10% increased Movement Speed (fractured)
++5 to maximum Life
+Regenerate 1.9 Life per second
++8% to Cold Resistance
+--------
+Fractured Item
+";
+
+        private const string UniqueItemWithDifferentBases = @"Rarity: Unique
+Wings of Entropy
+Ezomyte Axe
+--------
+Two Handed Axe
+Physical Damage: 144-217 (augmented)
+Elemental Damage: 81-175 (augmented)
+Chaos Damage: 85-177 (augmented)
+Critical Strike Chance: 5.70%
+Attacks per Second: 1.35
+Weapon Range: 13
+--------
+Requirements:
+Level: 62
+Str: 140 (unmet)
+Dex: 86
+--------
+Sockets: R-B-R 
+--------
+Item Level: 70
+--------
+7% Chance to Block Spell Damage
++11% Chance to Block Attack Damage while Dual Wielding
+66% increased Physical Damage
+Adds 81 to 175 Fire Damage in Main Hand
+Adds 85 to 177 Chaos Damage in Off Hand
+Counts as Dual Wielding
+--------
+Fire and Anarchy are the most reliable agents of change.";
+
+        private const string WeaponWithMultipleElementalDamages = @"Rarity: Rare
+Honour Beak
+Ancient Sword
+--------
+One Handed Sword
+Quality: +20% (augmented)
+Physical Damage: 22-40 (augmented)
+Elemental Damage: 26-48 (augmented), 47-81 (augmented), 4-155 (augmented)
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.74 (augmented)
+Weapon Range: 11
+--------
+Requirements:
+Level: 50
+Str: 44
+Dex: 44
+--------
+Sockets: R-R B 
+--------
+Item Level: 68
+--------
+Attribute Modifiers have 8% increased Effect (enchant)
+--------
++165 to Accuracy Rating (implicit)
+--------
++37 to Dexterity
+Adds 26 to 48 Fire Damage
+Adds 47 to 81 Cold Damage
+Adds 4 to 155 Lightning Damage
+20% increased Attack Speed
++21% to Global Critical Strike Multiplier";
+
+        private const string EnchantWithAdditionalProjectiles = @"Rarity: Rare
+Doom Glance
+Hubris Circlet
+--------
+Energy Shield: 111 (augmented)
+--------
+Requirements:
+Level: 69
+Int: 154
+--------
+Sockets: B-B 
+--------
+Item Level: 69
+--------
+Split Arrow fires 2 additional Projectiles (enchant)
+--------
++26 to Intelligence
++4 to maximum Energy Shield
+39% increased Energy Shield
++25 to maximum Life";
+
+        #endregion
+    }
+}

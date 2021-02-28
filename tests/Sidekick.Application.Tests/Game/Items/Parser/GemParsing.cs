@@ -6,11 +6,12 @@ using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
 {
-    public class GemParsing : IClassFixture<SidekickFixture>
+    [Collection(Collections.Mediator)]
+    public class GemParsing
     {
         private readonly IMediator mediator;
 
-        public GemParsing(SidekickFixture fixture)
+        public GemParsing(MediatorFixture fixture)
         {
             mediator = fixture.Mediator;
         }
@@ -20,9 +21,12 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(VaalGem));
 
+            Assert.Equal(Category.Gem, actual.Category);
             Assert.Equal(Rarity.Gem, actual.Rarity);
             Assert.Equal("Vaal Double Strike", actual.Type);
             Assert.Equal(1, actual.Properties.GemLevel);
+            Assert.Equal(0, actual.Properties.Quality);
+            Assert.False(actual.Properties.AlternateQuality);
             Assert.True(actual.Corrupted);
         }
 
@@ -31,10 +35,13 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(AnomalousGem));
 
+            Assert.Equal(Category.Gem, actual.Category);
             Assert.Equal(Rarity.Gem, actual.Rarity);
             Assert.Equal("Static Strike", actual.Type);
             Assert.Equal(1, actual.Properties.GemLevel);
+            Assert.Equal(17, actual.Properties.Quality);
             Assert.True(actual.Properties.AlternateQuality);
+            Assert.False(actual.Corrupted);
         }
 
         #region ItemText
