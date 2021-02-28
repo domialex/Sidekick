@@ -1,11 +1,12 @@
-@inherits MudSelect<string>
+@using System.Linq.Expressions;
 
 <MudSelect T="string"
            Label="@Resources.Language_UI"
            Variant="Variant.Filled"
            Value="Value"
            For="For"
-           ValueChanged="ValueChanged">
+           ValueChanged="ValueChanged"
+           OffsetY="true">
     @foreach (var option in Options)
     {
         <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
@@ -16,7 +17,11 @@
     [Inject] private SettingsResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
-    private Dictionary<string, string> Options { get; set; }
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public Expression<Func<string>> For { get; set; }
+
+    private Dictionary<string, string> Options { get; set; } = new Dictionary<string, string>();
 
     protected override async Task OnInitializedAsync()
     {
