@@ -22,6 +22,6 @@ namespace Sidekick.Domain.Game.Items.Models
 
         public ItemModifiers Modifiers { get; set; } = new ItemModifiers();
 
-        public ItemTexts Texts { get; set; } = new ItemTexts();
+        public OriginalItem Original { get; set; } = new OriginalItem();
     }
 }

@@ -123,7 +123,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
                 if (item.Properties.AlternateQuality)
                 {
-                    request.Query.Term = item.Texts.NameLine;
+                    request.Query.Term = item.Original.Name;
                 }
 
                 if (item.Properties.MapTier > 0)
@@ -337,10 +337,10 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 Influences = result.Item.Influences,
                 ItemLevel = result.Item.ItemLevel,
 
-                Texts = new ItemTexts()
+                Original = new OriginalItem()
                 {
-                    NameLine = result.Item.Name,
-                    TypeLine = result.Item.TypeLine,
+                    Name = result.Item.Name,
+                    Type = result.Item.TypeLine,
                 },
 
                 Metadata = new ItemMetadata()

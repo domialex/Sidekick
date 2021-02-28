@@ -90,7 +90,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
         {
             Item = item;
 
-            CategoryOptions.Add(Item.Texts.TypeLine, null);
+            CategoryOptions.Add(Item.Original.Type, null);
             if (Item.Metadata.Category == Category.Weapon)
             {
                 CategoryOptions.Add(PriceResources.Class_Weapon, "weapon");
@@ -196,7 +196,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_CurrencyIncubator, "currency.incubator");
             }
 
-            SelectedCategory = (await itemCategoryRepository.Get(Item.Texts.TypeLine))?.Category;
+            SelectedCategory = (await itemCategoryRepository.Get(Item.Original.Type))?.Category;
             if (!CategoryOptions.Values.Any(x => x == SelectedCategory))
             {
                 SelectedCategory = null;
@@ -779,11 +779,11 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             {
                 if (string.IsNullOrEmpty(SelectedCategory))
                 {
-                    _ = itemCategoryRepository.Delete(Item.Texts.TypeLine);
+                    _ = itemCategoryRepository.Delete(Item.Original.Type);
                 }
                 else
                 {
-                    _ = itemCategoryRepository.SaveCategory(Item.Texts.TypeLine, SelectedCategory);
+                    _ = itemCategoryRepository.SaveCategory(Item.Original.Type, SelectedCategory);
                 }
                 UpdateDebounce();
             }

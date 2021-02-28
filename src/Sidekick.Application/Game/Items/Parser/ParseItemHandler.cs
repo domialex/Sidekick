@@ -55,10 +55,10 @@ namespace Sidekick.Application.Game.Items.Parser
                 var item = new Item
                 {
                     Metadata = metadata,
-                    Texts = new ItemTexts()
+                    Original = new OriginalItem()
                     {
-                        NameLine = parsingItem.NameLine,
-                        TypeLine = parsingItem.TypeLine,
+                        Name = parsingItem.NameLine,
+                        Type = parsingItem.TypeLine,
                         Text = parsingItem.Text,
                     }
                 };
@@ -101,7 +101,7 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             var propertySection = parsingItem.WholeSections[1];
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Texts.Text);
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
             item.Identified = !ParseFromEnd(patterns.Unidentified, parsingItem);
             item.Properties.Armor = patterns.GetInt(patterns.Armor, propertySection);
             item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, propertySection);
@@ -120,8 +120,8 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             var mapBlock = parsingItem.MapPropertiesSection;
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Texts.Text);
-            item.Identified = !patterns.Unidentified.IsMatch(item.Texts.Text);
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
+            item.Identified = !patterns.Unidentified.IsMatch(item.Original.Text);
             item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, mapBlock);
             item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
             item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
@@ -133,7 +133,7 @@ namespace Sidekick.Application.Game.Items.Parser
 
         private void ParseSockets(Item item)
         {
-            var result = patterns.Socket.Match(item.Texts.Text);
+            var result = patterns.Socket.Match(item.Original.Text);
             if (result.Success)
             {
                 var groups = result.Groups

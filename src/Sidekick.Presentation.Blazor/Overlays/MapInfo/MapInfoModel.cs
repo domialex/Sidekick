@@ -38,7 +38,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
         {
             Item = item;
 
-            foreach (var matchingLine in NewLinePattern.Split(Item.Texts.Text)
+            foreach (var matchingLine in NewLinePattern.Split(Item.Original.Text)
                 .Where(line => DangerousModsRegex.IsMatch(line)))
             {
                 DangerousMapMods.Add(matchingLine);

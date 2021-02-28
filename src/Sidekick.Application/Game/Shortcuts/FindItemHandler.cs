@@ -32,7 +32,7 @@ namespace Sidekick.Application.Game.Shortcuts
             {
                 var clipboardContents = await clipboardProvider.GetText();
 
-                await clipboardProvider.SetText(item.Texts.NameLine);
+                await clipboardProvider.SetText(item.Original.Name);
 
                 keyboard.PressKey("Ctrl+F", "Ctrl+A", "Paste", "Enter");
 

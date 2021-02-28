@@ -66,7 +66,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Assassin's Mitts", actual.Metadata.Type);
-            Assert.Equal("Death Nails", actual.Texts.NameLine);
+            Assert.Equal("Death Nails", actual.Original.Name);
             Assert.Single(actual.Sockets);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
@@ -84,7 +84,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Jewel, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Cobalt Jewel", actual.Metadata.Type);
-            Assert.Equal("Blight Cut", actual.Texts.NameLine);
+            Assert.Equal("Blight Cut", actual.Original.Name);
             Assert.Equal(68, actual.ItemLevel);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
@@ -102,7 +102,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Imbued Wand", actual.Metadata.Type);
-            Assert.Equal("Miracle Chant", actual.Texts.NameLine);
+            Assert.Equal("Miracle Chant", actual.Original.Name);
             Assert.True(actual.Influences.Crusader);
 
             var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
