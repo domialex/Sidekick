@@ -8,12 +8,6 @@ namespace Sidekick.Domain.Game.Items.Models
     {
         public ItemMetadata Metadata { get; set; }
 
-        public bool Identified { get; set; }
-
-        public int ItemLevel { get; set; }
-
-        public bool Corrupted { get; set; }
-
         public Properties Properties { get; set; } = new Properties();
 
         public Influences Influences { get; set; } = new Influences();

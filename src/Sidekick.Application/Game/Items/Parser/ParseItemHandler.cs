@@ -101,8 +101,8 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             var propertySection = parsingItem.WholeSections[1];
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
-            item.Identified = !ParseFromEnd(patterns.Unidentified, parsingItem);
+            item.Properties.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
+            item.Properties.Identified = !ParseFromEnd(patterns.Unidentified, parsingItem);
             item.Properties.Armor = patterns.GetInt(patterns.Armor, propertySection);
             item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, propertySection);
             item.Properties.Evasion = patterns.GetInt(patterns.Evasion, propertySection);
@@ -113,22 +113,22 @@ namespace Sidekick.Application.Game.Items.Parser
             item.Properties.ElementalDps = patterns.GetDps(patterns.ElementalDamage, propertySection, item.Properties.AttacksPerSecond);
             item.Properties.PhysicalDps = patterns.GetDps(patterns.PhysicalDamage, propertySection, item.Properties.AttacksPerSecond);
             item.Properties.DamagePerSecond = item.Properties.ElementalDps + item.Properties.PhysicalDps;
-            item.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
+            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
         }
 
         private void ParseMap(Item item, ParsingItem parsingItem)
         {
             var mapBlock = parsingItem.MapPropertiesSection;
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
-            item.Identified = !patterns.Unidentified.IsMatch(item.Original.Text);
+            item.Properties.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
+            item.Properties.Identified = !patterns.Unidentified.IsMatch(item.Original.Text);
             item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, mapBlock);
             item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
             item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
             item.Properties.MapTier = patterns.GetInt(patterns.MapTier, mapBlock);
             item.Properties.Quality = patterns.GetInt(patterns.Quality, mapBlock);
             item.Properties.Blighted = patterns.Blighted.IsMatch(parsingItem.WholeSections[0]);
-            item.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
+            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
         }
 
         private void ParseSockets(Item item)
@@ -165,7 +165,7 @@ namespace Sidekick.Application.Game.Items.Parser
             item.Properties.GemLevel = patterns.GetInt(patterns.Level, parsingItem.WholeSections[1]);
             item.Properties.Quality = patterns.GetInt(patterns.Quality, parsingItem.WholeSections[1]);
             item.Properties.AlternateQuality = patterns.AlternateQuality.IsMatch(parsingItem.WholeSections[1]);
-            item.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
+            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
         }
 
         private bool ParseFromEnd(Regex pattern, ParsingItem parsingItem)

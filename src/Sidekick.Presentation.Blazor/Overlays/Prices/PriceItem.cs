@@ -33,7 +33,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 Item.RequirementContents.Add(requires);
             }
 
-            if (Item.ItemLevel > 0)
+            if (Item.Properties.ItemLevel > 0)
             {
                 if (Item.RequirementContents == null)
                 {
@@ -42,13 +42,13 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
                 Item.RequirementContents = Item.RequirementContents.Prepend(new LineContent()
                 {
-                    Text = $"{PriceResources.ItemLevel}: {Item.ItemLevel}",
+                    Text = $"{PriceResources.ItemLevel}: {Item.Properties.ItemLevel}",
                     Values = new List<LineContentValue>
                     {
                         new LineContentValue()
                         {
                             Type = LineContentType.Simple,
-                            Value = Item.ItemLevel.ToString(),
+                            Value = Item.Properties.ItemLevel.ToString(),
                         }
                     },
                 })

@@ -332,10 +332,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     Note = result.Item.Note,
                 },
 
-                Corrupted = result.Item.Corrupted,
-                Identified = result.Item.Identified,
                 Influences = result.Item.Influences,
-                ItemLevel = result.Item.ItemLevel,
 
                 Original = new OriginalItem()
                 {
@@ -358,6 +355,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
                 Properties = new Properties()
                 {
+                    ItemLevel = result.Item.ItemLevel,
+                    Corrupted = result.Item.Corrupted,
+                    Identified = result.Item.Identified,
                     Armor = result.Item.Extended.ArmourAtMax,
                     EnergyShield = result.Item.Extended.EnergyShieldAtMax,
                     Evasion = result.Item.Extended.EvasionAtMax,

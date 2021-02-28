@@ -285,14 +285,14 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 delta: 1);
 
             // Item level
-            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_ItemLevel, gameLanguageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
-                enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Metadata.Rarity != Rarity.Unique,
-                min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_ItemLevel, gameLanguageProvider.Language.DescriptionItemLevel, Item.Properties.ItemLevel,
+                enabled: Item.Properties.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Metadata.Rarity != Rarity.Unique,
+                min: Item.Properties.ItemLevel >= 80 ? (double?)Item.Properties.ItemLevel : null);
 
             // Corrupted
-            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_Corrupted, gameLanguageProvider.Language.DescriptionCorrupted, Item.Corrupted,
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_Corrupted, gameLanguageProvider.Language.DescriptionCorrupted, Item.Properties.Corrupted,
                 alwaysIncluded: Item.Metadata.Rarity == Rarity.Gem || Item.Metadata.Rarity == Rarity.Unique,
-                enabled: (Item.Metadata.Rarity == Rarity.Gem || Item.Metadata.Rarity == Rarity.Unique || Item.Metadata.Rarity == Rarity.Rare) && Item.Corrupted);
+                enabled: (Item.Metadata.Rarity == Rarity.Gem || Item.Metadata.Rarity == Rarity.Unique || Item.Metadata.Rarity == Rarity.Rare) && Item.Properties.Corrupted);
 
             // Crusader
             InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Crusader, gameLanguageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,

@@ -25,7 +25,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
             Assert.Equal("Jade Hatchet", actual.Metadata.Type);
-            Assert.False(actual.Identified);
+            Assert.False(actual.Properties.Identified);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Cobalt Jewel", actual.Metadata.Type);
             Assert.Equal("Blight Cut", actual.Original.Name);
-            Assert.Equal(68, actual.ItemLevel);
+            Assert.Equal(68, actual.Properties.ItemLevel);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
             Assert.Contains("+8 to Strength and Intelligence", explicits);

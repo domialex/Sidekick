@@ -27,7 +27,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(1, actual.Properties.GemLevel);
             Assert.Equal(0, actual.Properties.Quality);
             Assert.False(actual.Properties.AlternateQuality);
-            Assert.True(actual.Corrupted);
+            Assert.True(actual.Properties.Corrupted);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(1, actual.Properties.GemLevel);
             Assert.Equal(17, actual.Properties.Quality);
             Assert.True(actual.Properties.AlternateQuality);
-            Assert.False(actual.Corrupted);
+            Assert.False(actual.Properties.Corrupted);
         }
 
         #region ItemText
