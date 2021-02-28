@@ -34,7 +34,17 @@ namespace Sidekick.Domain.Game.Items
         /// <summary>
         /// Indicates if this block has been successfully parsed by the parser
         /// </summary>
-        public bool Parsed => !Lines.Any(x => !x.Parsed);
+        public bool Parsed
+        {
+            get => !Lines.Any(x => !x.Parsed);
+            set
+            {
+                foreach (var line in Lines)
+                {
+                    line.Parsed = value;
+                }
+            }
+        }
 
         /// <summary>
         /// The text of the whole block

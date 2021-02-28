@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Items.Metadatas;
+using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
@@ -101,28 +102,28 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     };
                 }
 
-                if (item.Rarity == Rarity.Unique)
+                if (item.Metadata.Rarity == Rarity.Unique)
                 {
-                    request.Query.Name = item.Name;
-                    request.Query.Type = item.Type;
+                    request.Query.Name = item.Metadata.Name;
+                    request.Query.Type = item.Metadata.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("Unique");
                 }
-                else if (item.Rarity == Rarity.Prophecy)
+                else if (item.Metadata.Rarity == Rarity.Prophecy)
                 {
-                    request.Query.Name = item.Name;
+                    request.Query.Name = item.Metadata.Name;
                 }
                 else
                 {
                     if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
                     {
-                        request.Query.Type = item.Type;
+                        request.Query.Type = item.Metadata.Type;
                     }
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("nonunique");
                 }
 
                 if (item.Properties.AlternateQuality)
                 {
-                    request.Query.Term = item.NameLine;
+                    request.Query.Term = item.Texts.NameLine;
                 }
 
                 if (item.Properties.MapTier > 0)
@@ -335,11 +336,19 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 Identified = result.Item.Identified,
                 Influences = result.Item.Influences,
                 ItemLevel = result.Item.ItemLevel,
-                Name = result.Item.Name,
-                NameLine = result.Item.Name,
-                Rarity = result.Item.Rarity,
-                Type = result.Item.TypeLine,
-                TypeLine = result.Item.TypeLine,
+
+                Texts = new ItemTexts()
+                {
+                    NameLine = result.Item.Name,
+                    TypeLine = result.Item.TypeLine,
+                },
+
+                Metadata = new ItemMetadata()
+                {
+                    Name = result.Item.Name,
+                    Rarity = result.Item.Rarity,
+                    Type = result.Item.TypeLine,
+                },
 
                 Image = result.Item.Icon,
 

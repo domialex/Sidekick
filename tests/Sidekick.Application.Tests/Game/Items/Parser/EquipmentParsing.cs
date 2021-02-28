@@ -22,9 +22,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(UnidentifiedUnique));
 
-            Assert.Equal(Category.Weapon, actual.Category);
-            Assert.Equal(Rarity.Unique, actual.Rarity);
-            Assert.Equal("Jade Hatchet", actual.Type);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal("Jade Hatchet", actual.Metadata.Type);
             Assert.False(actual.Identified);
         }
 
@@ -33,10 +33,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(UniqueSixLink));
 
-            Assert.Equal(Category.Armour, actual.Category);
-            Assert.Equal(Rarity.Unique, actual.Rarity);
-            Assert.Equal("Carcass Jack", actual.Name);
-            Assert.Equal("Varnished Coat", actual.Type);
+            Assert.Equal(Category.Armour, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal("Carcass Jack", actual.Metadata.Name);
+            Assert.Equal("Varnished Coat", actual.Metadata.Type);
             Assert.Equal(20, actual.Properties.Quality);
             Assert.Equal(960, actual.Properties.Evasion);
             Assert.Equal(186, actual.Properties.EnergyShield);
@@ -63,10 +63,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(GlovesAssasinsMitts));
 
-            Assert.Equal(Category.Armour, actual.Category);
-            Assert.Equal(Rarity.Rare, actual.Rarity);
-            Assert.Equal("Death Nails", actual.NameLine);
-            Assert.Equal("Assassin's Mitts", actual.Type);
+            Assert.Equal(Category.Armour, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Assassin's Mitts", actual.Metadata.Type);
+            Assert.Equal("Death Nails", actual.Texts.NameLine);
             Assert.Single(actual.Sockets);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
@@ -81,10 +81,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(JewelBlightCut));
 
-            Assert.Equal(Category.Jewel, actual.Category);
-            Assert.Equal(Rarity.Rare, actual.Rarity);
-            Assert.Equal("Blight Cut", actual.NameLine);
-            Assert.Equal("Cobalt Jewel", actual.Type);
+            Assert.Equal(Category.Jewel, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Cobalt Jewel", actual.Metadata.Type);
+            Assert.Equal("Blight Cut", actual.Texts.NameLine);
             Assert.Equal(68, actual.ItemLevel);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
@@ -99,10 +99,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(InfluencedWand));
 
-            Assert.Equal(Category.Weapon, actual.Category);
-            Assert.Equal(Rarity.Rare, actual.Rarity);
-            Assert.Equal("Miracle Chant", actual.NameLine);
-            Assert.Equal("Imbued Wand", actual.Type);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Imbued Wand", actual.Metadata.Type);
+            Assert.Equal("Miracle Chant", actual.Texts.NameLine);
             Assert.True(actual.Influences.Crusader);
 
             var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
@@ -120,9 +120,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(MagicWeapon));
 
-            Assert.Equal(Category.Weapon, actual.Category);
-            Assert.Equal(Rarity.Magic, actual.Rarity);
-            Assert.Equal("Shadow Axe", actual.Type);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
+            Assert.Equal("Shadow Axe", actual.Metadata.Type);
 
             var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
             Assert.Contains("11% reduced Enemy Stun Threshold", explicits);
@@ -133,9 +133,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(FracturedItem));
 
-            Assert.Equal(Category.Armour, actual.Category);
-            Assert.Equal(Rarity.Rare, actual.Rarity);
-            Assert.Equal("Iron Greaves", actual.Type);
+            Assert.Equal(Category.Armour, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Iron Greaves", actual.Metadata.Type);
 
             var fractureds = actual.Modifiers.Fractured.Select(x => x.Text);
             Assert.Contains("10% increased Movement Speed", fractureds);
@@ -149,10 +149,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(UniqueItemWithDifferentBases));
 
-            Assert.Equal(Category.Weapon, actual.Category);
-            Assert.Equal(Rarity.Unique, actual.Rarity);
-            Assert.Equal("Wings of Entropy", actual.Name);
-            Assert.Equal("Ezomyte Axe", actual.Type);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal("Wings of Entropy", actual.Metadata.Name);
+            Assert.Equal("Ezomyte Axe", actual.Metadata.Type);
 
             Assert.Equal(243.68, actual.Properties.PhysicalDps);
             Assert.Equal(172.80, actual.Properties.ElementalDps);
@@ -164,9 +164,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(WeaponWithMultipleElementalDamages));
 
-            Assert.Equal(Category.Weapon, actual.Category);
-            Assert.Equal(Rarity.Rare, actual.Rarity);
-            Assert.Equal("Ancient Sword", actual.Type);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Ancient Sword", actual.Metadata.Type);
 
             Assert.Equal(53.94, actual.Properties.PhysicalDps);
             Assert.Equal(314.07, actual.Properties.ElementalDps);

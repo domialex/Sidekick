@@ -29,7 +29,7 @@ namespace Sidekick.Application.Game.Trade
         {
             Uri baseUri;
 
-            if (request.Item.Rarity == Rarity.Currency && itemStaticDataProvider.GetId(request.Item) != null)
+            if (request.Item.Metadata.Rarity == Rarity.Currency && itemStaticDataProvider.GetId(request.Item) != null)
             {
                 baseUri = gameLanguageProvider.Language.PoeTradeExchangeBaseUrl;
             }

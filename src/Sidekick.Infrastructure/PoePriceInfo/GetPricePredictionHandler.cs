@@ -30,7 +30,7 @@ namespace Sidekick.Infrastructure.PoePriceInfo
 
         public async Task<PricePrediction> Handle(GetPricePredictionQuery request, CancellationToken cancellationToken)
         {
-            var encodedItem = Convert.ToBase64String(Encoding.UTF8.GetBytes(request.Item.Text));
+            var encodedItem = Convert.ToBase64String(Encoding.UTF8.GetBytes(request.Item.Texts.Text));
             var response = await client.Client.GetAsync("?l=" + settings.LeagueId + "&i=" + encodedItem);
             var content = await response.Content.ReadAsStreamAsync();
             var result = await JsonSerializer.DeserializeAsync<PriceInfoResult>(content, client.Options);

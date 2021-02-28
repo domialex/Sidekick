@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Sidekick.Application.Game.Items.Parser.Extensions;
+using Sidekick.Application.Game.Items.Parser.Patterns;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Game.Items;
 using Sidekick.Domain.Game.Items.Metadatas;
@@ -18,14 +20,17 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
         private readonly ICacheRepository cacheRepository;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IPoeTradeClient poeTradeClient;
+        private readonly IParserPatterns parserPatterns;
 
         public ItemMetadataProvider(ICacheRepository cacheRepository,
             IGameLanguageProvider gameLanguageProvider,
-            IPoeTradeClient poeTradeClient)
+            IPoeTradeClient poeTradeClient,
+            IParserPatterns parserPatterns)
         {
             this.cacheRepository = cacheRepository;
             this.gameLanguageProvider = gameLanguageProvider;
             this.poeTradeClient = poeTradeClient;
+            this.parserPatterns = parserPatterns;
         }
 
         private Dictionary<string, List<ItemMetadata>> NameAndTypeDictionary { get; set; }
@@ -78,21 +83,32 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
                     Category = category,
                 };
 
-                var key = item.Name ?? item.Type;
+                var key = header.Name ?? header.Type;
+
+                // If the item is unique, exclude it from the regex dictionary
+                if (header.Rarity == Rarity.Unique)
+                {
+                    FillDictionary(header, key);
+                    continue;
+                }
 
                 if (useRegex)
                 {
                     NameAndTypeRegex.Add((key.ToRegex(), header));
                 }
 
-                if (!NameAndTypeDictionary.TryGetValue(key, out var dictionaryEntry))
-                {
-                    dictionaryEntry = new List<ItemMetadata>();
-                    NameAndTypeDictionary.Add(key, dictionaryEntry);
-                }
-
-                dictionaryEntry.Add(header);
+                FillDictionary(header, key);
             }
+        }
+
+        private void FillDictionary(ItemMetadata metadata, string key)
+        {
+            if (!NameAndTypeDictionary.TryGetValue(key, out var dictionaryEntry))
+            {
+                dictionaryEntry = new List<ItemMetadata>();
+                NameAndTypeDictionary.Add(key, dictionaryEntry);
+            }
+            dictionaryEntry.Add(metadata);
         }
 
         private Rarity GetRarityForCategory(Category category, ApiItem item)
@@ -115,45 +131,99 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             };
         }
 
-        public IItemMetadata Parse(ParsingItem parsingItem, Rarity itemRarity)
+        public ItemMetadata Parse(ParsingItem parsingItem)
         {
-            var results = new List<ItemMetadata>();
+            var parsingBlock = parsingItem.Blocks.First();
+            var itemRarity = GetRarity(parsingBlock);
+
+            // If we find a Vaal Gem, we don't care about any other results
+            if (itemRarity == Rarity.Gem &&
+                parsingItem.Blocks.Count > 7 && // If the items has more than 7 blocks, it could be a vaal gem
+                NameAndTypeDictionary.TryGetValue(parsingItem.Blocks[5].Lines[0].Text, out var vaalGem)) // The vaal gem name is always at the same position
+            {
+                parsingBlock.Parsed = true;
+                return vaalGem.First();
+            }
+
+            // Get name and type text
+            string name = null;
+            string type = null;
+            if (parsingBlock.Lines.Count >= 3)
+            {
+                name = parsingBlock.Lines[1].Text;
+                type = parsingBlock.Lines[2].Text;
+            }
+            else if (parsingBlock.Lines.Count >= 2)
+            {
+                name = parsingBlock.Lines[1].Text;
+            }
 
             // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
+            if (itemRarity == Rarity.Rare)
+            {
+                name = null;
+            }
+
+            // We can find multiple matches while parsing. This will store all of them. We will figure out which result is correct at the end of this method.
+            var results = new List<ItemMetadata>();
+
             // There are some items which have prefixes which we don't want to remove, like the "Blighted Delirium Orb".
-            if (itemRarity != Rarity.Rare && NameAndTypeDictionary.TryGetValue(parsingItem.HeaderSection[1], out var itemData))
+            if (!string.IsNullOrEmpty(name) && NameAndTypeDictionary.TryGetValue(name, out var itemData))
             {
                 results.AddRange(itemData);
             }
-            else if (itemRarity != Rarity.Rare && NameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(parsingItem.HeaderSection[1]), out itemData))
+            // Here we check without any prefixes
+            else if (!string.IsNullOrEmpty(name) && NameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(name), out itemData))
             {
                 results.AddRange(itemData);
             }
-            else if (parsingItem.HeaderSection.Length > 2 && NameAndTypeDictionary.TryGetValue(GetLineWithoutPrefixes(parsingItem.HeaderSection[2]), out itemData))
+            // Now we check the type
+            else if (!string.IsNullOrEmpty(type) && NameAndTypeDictionary.TryGetValue(type, out itemData))
             {
                 results.AddRange(itemData);
             }
+            // Finally. if we don't have any matches, we will look into our regex dictionary
             else
             {
-                results.AddRange(NameAndTypeRegex
-                    .Where(pattern => pattern.Regex.IsMatch(parsingItem.WholeSections[0]))
-                    .Select(x => x.Item));
+                if (!string.IsNullOrEmpty(name))
+                {
+                    results.AddRange(NameAndTypeRegex
+                        .Where(pattern => pattern.Regex.IsMatch(name))
+                        .Select(x => x.Item));
+                }
+
+                if (!string.IsNullOrEmpty(type))
+                {
+                    results.AddRange(NameAndTypeRegex
+                        .Where(pattern => pattern.Regex.IsMatch(type))
+                        .Select(x => x.Item));
+                }
             }
 
-            if (results.Any(item => item.Rarity == Rarity.Gem)
-                && parsingItem.TryGetVaalGemName(out var vaalGemName)
-                && NameAndTypeDictionary.TryGetValue(vaalGemName, out itemData))
+            // If we have a Unique item in our results, we return it
+            if (results.Any(x => x.Rarity == Rarity.Unique))
             {
-                // If we find a Vaal gem, we don't care about other matches
-                results.Clear();
-                results.Add(itemData.First());
+                parsingBlock.Parsed = true;
+                return results.First(x => x.Rarity == Rarity.Unique);
             }
 
-            return results
-                .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
-                .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
-                .ThenBy(x => x.Type == parsingItem.HeaderSection.Last() ? 0 : 1)
+            var result = results
+                .OrderBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
+                .ThenBy(x => x.Type == type ? 0 : 1)
                 .FirstOrDefault();
+
+            if (result != null)
+            {
+                parsingBlock.Parsed = true;
+
+                // If we don't have the rarity from the metadata, we set it to the value from the text
+                if (result.Rarity == Rarity.Unknown)
+                {
+                    result.Rarity = itemRarity;
+                }
+            }
+
+            return result;
         }
 
         private string GetLineWithoutPrefixes(string line)
@@ -164,6 +234,18 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             }
 
             return line.Trim();
+        }
+
+        private Rarity GetRarity(ParsingBlock parsingBlock)
+        {
+            foreach (var pattern in parserPatterns.Rarity)
+            {
+                if (pattern.Value.IsMatch(parsingBlock.Lines[0].Text))
+                {
+                    return pattern.Key;
+                }
+            }
+            throw new NotSupportedException("Item rarity is unknown.");
         }
     }
 }

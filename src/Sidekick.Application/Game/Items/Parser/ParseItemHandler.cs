@@ -44,33 +44,26 @@ namespace Sidekick.Application.Game.Items.Parser
             try
             {
                 var itemText = new ItemNameTokenizer().CleanString(request.ItemText);
+                var parsingItem = new ParsingItem(itemText);
+                var metadata = itemMetadataProvider.Parse(parsingItem);
 
-                var parsingItem = new ParsingItem(request.ItemText);
-
-                var itemHeader = itemMetadataProvider.Parse(parsingItem, GetRarity(parsingItem.Rarity));
-
-                if (itemHeader == null || (string.IsNullOrEmpty(itemHeader.Name) && string.IsNullOrEmpty(itemHeader.Type)))
+                if (metadata == null || (string.IsNullOrEmpty(metadata.Name) && string.IsNullOrEmpty(metadata.Type)))
                 {
                     throw new NotSupportedException("Item not found.");
                 }
 
                 var item = new Item
                 {
-                    Name = itemHeader.Name,
-                    Type = itemHeader.Type,
-                    Rarity = itemHeader.Rarity,
-                    Category = itemHeader.Category,
-                    NameLine = parsingItem.NameLine,
-                    TypeLine = parsingItem.TypeLine,
-                    Text = parsingItem.Text,
+                    Metadata = metadata,
+                    Texts = new ItemTexts()
+                    {
+                        NameLine = parsingItem.NameLine,
+                        TypeLine = parsingItem.TypeLine,
+                        Text = parsingItem.Text,
+                    }
                 };
 
-                if (item.Rarity == Rarity.Unknown)
-                {
-                    item.Rarity = GetRarity(parsingItem.Rarity);
-                }
-
-                switch (item.Category)
+                switch (item.Metadata.Category)
                 {
                     case Category.DivinationCard:
                     case Category.Currency:
@@ -82,6 +75,7 @@ namespace Sidekick.Application.Game.Items.Parser
                         break;
 
                     case Category.Map:
+                    case Category.Contract:
                         ParseMap(item, parsingItem);
                         ParseMods(item, parsingItem);
                         break;
@@ -107,7 +101,7 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             var propertySection = parsingItem.WholeSections[1];
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Text);
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Texts.Text);
             item.Identified = !ParseFromEnd(patterns.Unidentified, parsingItem);
             item.Properties.Armor = patterns.GetInt(patterns.Armor, propertySection);
             item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, propertySection);
@@ -126,8 +120,8 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             var mapBlock = parsingItem.MapPropertiesSection;
 
-            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Text);
-            item.Identified = !patterns.Unidentified.IsMatch(item.Text);
+            item.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Texts.Text);
+            item.Identified = !patterns.Unidentified.IsMatch(item.Texts.Text);
             item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, mapBlock);
             item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
             item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
@@ -139,7 +133,7 @@ namespace Sidekick.Application.Game.Items.Parser
 
         private void ParseSockets(Item item)
         {
-            var result = patterns.Socket.Match(item.Text);
+            var result = patterns.Socket.Match(item.Texts.Text);
             if (result.Success)
             {
                 var groups = result.Groups
@@ -201,18 +195,6 @@ namespace Sidekick.Application.Game.Items.Parser
         private void ParseMods(Item item, ParsingItem parsingItem)
         {
             item.Modifiers = modifierProvider.Parse(parsingItem);
-        }
-
-        private Rarity GetRarity(string rarityString)
-        {
-            foreach (var pattern in patterns.Rarity)
-            {
-                if (pattern.Value.IsMatch(rarityString))
-                {
-                    return pattern.Key;
-                }
-            }
-            throw new NotSupportedException("Item rarity is unknown.");
         }
     }
 }

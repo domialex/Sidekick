@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Settings;
-using System.Linq;
 using Sidekick.Extensions;
-using System.Text.Json;
 
 namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
 {
@@ -38,7 +38,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.MapInfo
         {
             Item = item;
 
-            foreach (var matchingLine in NewLinePattern.Split(Item.Text)
+            foreach (var matchingLine in NewLinePattern.Split(Item.Texts.Text)
                 .Where(line => DangerousModsRegex.IsMatch(line)))
             {
                 DangerousMapMods.Add(matchingLine);

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Domain.Game.Trade.Models;
-using Sidekick.Presentation.Localization.Prices;
 using Sidekick.Presentation.Blazor.Extensions;
+using Sidekick.Presentation.Localization.Prices;
 
 namespace Sidekick.Presentation.Blazor.Overlays.Prices
 {
@@ -58,7 +58,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
         public TradeItem Item { get; set; }
 
-        public string Color => Item?.Rarity.GetColor();
+        public string Color => Item?.Metadata.Rarity.GetColor();
 
         public string Amount
         {

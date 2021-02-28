@@ -4,23 +4,13 @@ using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Domain.Game.Items.Models
 {
-    public class Item : IItemMetadata
+    public class Item
     {
-        public string Name { get; set; }
-
-        public string NameLine { get; set; }
-
-        public string Type { get; set; }
-
-        public string TypeLine { get; set; }
+        public ItemMetadata Metadata { get; set; }
 
         public bool Identified { get; set; }
 
         public int ItemLevel { get; set; }
-
-        public Rarity Rarity { get; set; }
-
-        public Category Category { get; set; }
 
         public bool Corrupted { get; set; }
 
@@ -32,6 +22,6 @@ namespace Sidekick.Domain.Game.Items.Models
 
         public ItemModifiers Modifiers { get; set; } = new ItemModifiers();
 
-        public string Text { get; set; }
+        public ItemTexts Texts { get; set; } = new ItemTexts();
     }
 }

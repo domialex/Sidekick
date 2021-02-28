@@ -64,6 +64,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Static
             return null;
         }
 
-        public string GetId(Item item) => GetId(item.Name ?? item.Type);
+        public string GetId(Item item) => GetId(item.Metadata.Name ?? item.Metadata.Type);
     }
 }
