@@ -9,28 +9,25 @@ namespace Sidekick.Presentation.Blazor.Electron.App
     /// </summary>
     public class ElectronCookieProtectionMiddleware
     {
-        private RequestDelegate Next { get; init; }
-        private ElectronCookieProtection ElectronAuthorizationCookie { get; init; }
+        private readonly RequestDelegate next;
+        private readonly ElectronCookieProtection electronAuthorizationCookie;
 
         public ElectronCookieProtectionMiddleware(RequestDelegate next, ElectronCookieProtection electronAuthorizationCookie)
         {
-            Next = next;
-            ElectronAuthorizationCookie = electronAuthorizationCookie;
+            this.next = next;
+            this.electronAuthorizationCookie = electronAuthorizationCookie;
         }
 
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
-            context.Request.Cookies.TryGetValue(ElectronAuthorizationCookie.Name, out string cookie);
-
-            if (cookie != ElectronAuthorizationCookie.Value)
+            if (context.Request.Cookies.TryGetValue(electronAuthorizationCookie.Name, out var cookie) && cookie == electronAuthorizationCookie.Value)
             {
-                context.Response.Clear();
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                return;
+                return next.Invoke(context);
             }
 
-            await Next.Invoke(context);
+            context.Response.Clear();
+            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return Task.CompletedTask;
         }
-
     }
 }

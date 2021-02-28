@@ -102,7 +102,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                     Submenu = new MenuItem[]
                     {
                         new () {
-                            Label = "Parse item from clipboard",
+                            Label = "Price check from clipboard",
                             Click = async () =>
                             {
                                 var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.GetText()));

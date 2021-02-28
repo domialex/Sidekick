@@ -23,9 +23,9 @@ namespace Sidekick.Application.Settings
 
         public bool RetainClipboard { get; set; } = true;
 
-        public bool Price_CloseWithMouse { get; set; } = true;
+        public bool Price_CloseWithMouse { get; set; } = false;
 
-        public bool Map_CloseWithMouse { get; set; } = true;
+        public bool Map_CloseWithMouse { get; set; } = false;
 
         public bool Stash_EnableCtrlScroll { get; set; } = true;
 
