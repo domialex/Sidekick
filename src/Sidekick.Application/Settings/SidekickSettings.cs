@@ -50,6 +50,8 @@ namespace Sidekick.Application.Settings
 
         public string Chat_Key_Hideout { get; set; } = "F5";
 
+        public string Chat_Key_ReplyToLastWhisper { get; set; } = "Ctrl+Enter";
+
         public string Wiki_Key_Open { get; set; } = "Alt+W";
 
         public string Key_FindItems { get; set; } = "Ctrl+F";

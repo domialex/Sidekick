@@ -2,33 +2,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.Game.Stashes.Commands;
-using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Process;
+using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Game.Stashes
 {
     public class ScrollStashDownHandler : ICommandHandler<ScrollStashDownCommand, bool>
     {
-        private readonly IKeybindsProvider keybindsProvider;
-        private readonly INativeProcess nativeProcess;
+        private readonly IKeyboardProvider keyboard;
 
         public ScrollStashDownHandler(
-            IKeybindsProvider keybindsProvider,
-            INativeProcess nativeProcess)
+            IKeyboardProvider keyboard)
         {
-            this.keybindsProvider = keybindsProvider;
-            this.nativeProcess = nativeProcess;
+            this.keyboard = keyboard;
         }
 
-        public Task<bool> Handle(ScrollStashDownCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ScrollStashDownCommand request, CancellationToken cancellationToken)
         {
-            if (!nativeProcess.IsPathOfExileInFocus)
-            {
-                return Task.FromResult(false);
-            }
-
-            keybindsProvider.PressKey("Right");
-            return Task.FromResult(true);
+            await keyboard.PressKey("Right");
+            return true;
         }
     }
 }

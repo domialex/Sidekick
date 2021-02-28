@@ -56,6 +56,5 @@ namespace Sidekick.Presentation.Wpf.Views.Prices
 
             self.SocketGroups = sockets;
         }
-
     }
 }

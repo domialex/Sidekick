@@ -54,6 +54,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             FillPattern(result.Result[10].Entries, Category.Prophecy);
             FillPattern(result.Result[11].Entries, Category.ItemisedMonster, useRegex: true);
             FillPattern(result.Result[12].Entries, Category.Watchstone);
+            FillPattern(result.Result[14].Entries, Category.Contract, useRegex: true);
 
             Prefixes = new[]
             {
