@@ -35,7 +35,9 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
 
         private Dictionary<string, List<ItemMetadata>> NameAndTypeDictionary { get; set; }
         private List<(Regex Regex, ItemMetadata Item)> NameAndTypeRegex { get; set; }
-        private string[] Prefixes { get; set; }
+
+        private Regex Prefixes { get; set; }
+        private string GetLineWithoutPrefixes(string line) => Prefixes.Replace(line, string.Empty);
 
         public async Task Initialize()
         {
@@ -61,14 +63,12 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             FillPattern(result.Result[12].Entries, Category.Watchstone);
             FillPattern(result.Result[14].Entries, Category.Contract, useRegex: true);
 
-            Prefixes = new[]
-            {
-                gameLanguageProvider.Language.PrefixSuperior,
-                gameLanguageProvider.Language.PrefixBlighted,
-                gameLanguageProvider.Language.PrefixAnomalous,
-                gameLanguageProvider.Language.PrefixDivergent,
-                gameLanguageProvider.Language.PrefixPhantasmal,
-            };
+            Prefixes = new Regex("^(?:" +
+                gameLanguageProvider.Language.PrefixSuperior + " |" +
+                gameLanguageProvider.Language.PrefixBlighted + " |" +
+                gameLanguageProvider.Language.PrefixAnomalous + " |" +
+                gameLanguageProvider.Language.PrefixDivergent + " |" +
+                gameLanguageProvider.Language.PrefixPhantasmal + " )");
         }
 
         private void FillPattern(List<ApiItem> items, Category category, bool useRegex = false)
@@ -200,6 +200,12 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
                 }
             }
 
+            // If we have a matching type, we narrow down our results
+            if (results.Any(x => x.Type == type))
+            {
+                results = results.Where(x => x.Type == type).ToList();
+            }
+
             // If we have a Unique item in our results, we return it
             if (results.Any(x => x.Rarity == Rarity.Unique))
             {
@@ -209,7 +215,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
 
             var result = results
                 .OrderBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
-                .ThenBy(x => x.Type == type ? 0 : 1)
                 .FirstOrDefault();
 
             if (result != null)
@@ -224,16 +229,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             }
 
             return result;
-        }
-
-        private string GetLineWithoutPrefixes(string line)
-        {
-            foreach (var prefix in Prefixes)
-            {
-                line = line.Replace(prefix, "");
-            }
-
-            return line.Trim();
         }
 
         private Rarity GetRarity(ParsingBlock parsingBlock)

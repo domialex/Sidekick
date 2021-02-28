@@ -29,7 +29,7 @@ namespace Sidekick.Infrastructure.PoeNinja
         {
             var cacheResult = await repository.Find(request.Item.Original.Name, request.Item.Properties.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
 
-            if (cacheResult != null && cacheResult.LastUpdated.AddHours(2) > DateTimeOffset.Now)
+            if (cacheResult != null && cacheResult.LastUpdated.AddHours(4) > DateTimeOffset.Now)
             {
                 return cacheResult;
             }
