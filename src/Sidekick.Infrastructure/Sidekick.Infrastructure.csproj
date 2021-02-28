@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PoeApi\Items\Modifiers\stat_translations.min.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="PoeApi\Items\Modifiers\stat_translations.min.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
   </ItemGroup>
 

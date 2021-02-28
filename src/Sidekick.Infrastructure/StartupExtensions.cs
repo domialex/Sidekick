@@ -31,6 +31,7 @@ namespace Sidekick.Infrastructure
             services.AddSingleton<IModifierProvider, ModifierProvider>();
             services.AddSingleton<IPseudoModifierProvider, PseudoModifierProvider>();
             services.AddSingleton<IItemStaticDataProvider, ItemStaticDataProvider>();
+            services.AddSingleton<IAlternateModifierProvider, AlternateModifierProvider>();
 
             return services;
         }
