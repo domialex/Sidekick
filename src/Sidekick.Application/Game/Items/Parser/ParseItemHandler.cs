@@ -22,9 +22,6 @@ namespace Sidekick.Application.Game.Items.Parser
         private readonly IModifierProvider modifierProvider;
         private readonly IParserPatterns patterns;
 
-        private static readonly Regex newLinePattern = new Regex("[\\r\\n]+");
-        private const string SEPARATOR_PATTERN = "--------";
-
         public ParseItemHandler(
             ILogger<ParseItemHandler> logger,
             IItemMetadataProvider itemMetadataProvider,
@@ -47,16 +44,8 @@ namespace Sidekick.Application.Game.Items.Parser
             try
             {
                 var itemText = new ItemNameTokenizer().CleanString(request.ItemText);
-                var wholeSections = itemText.Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries);
-                var splitSections = wholeSections
-                    .Select(block => newLinePattern
-                        .Split(block)
-                        .Where(line => line != "")
-                        .ToArray()
-                    )
-                    .ToArray();
 
-                var parsingItem = new ParsingItem(wholeSections, splitSections, request.ItemText);
+                var parsingItem = new ParsingItem(request.ItemText);
 
                 var itemHeader = itemMetadataProvider.Parse(parsingItem, GetRarity(parsingItem.Rarity));
 

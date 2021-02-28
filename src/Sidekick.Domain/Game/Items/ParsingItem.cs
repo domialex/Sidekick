@@ -1,34 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Sidekick.Domain.Game.Items
 {
-    public readonly struct ParsingItem
+    /// <summary>
+    /// Stores data about the state of the parsing process for the item
+    /// </summary>
+    public class ParsingItem
     {
-        public ParsingItem(string[] wholeSections, string[][] splitSections, string text)
+        private const string SEPARATOR_PATTERN = "--------";
+
+        /// <summary>
+        /// Stores data about the state of the parsing process for the item
+        /// </summary>
+        /// <param name="text">The original text of the item</param>
+        public ParsingItem(string text)
         {
-            WholeSections = wholeSections;
-            SplitSections = splitSections;
             Text = text;
+
+            Blocks = text
+                .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new ParsingBlock(x))
+                .ToList();
         }
 
         /// <summary>
-        /// Sections containing arrays of individual lines. For accessing specific lines.
+        /// Item sections seperated by dashes when copying an item in-game.
         /// </summary>
-        public string[][] SplitSections { get; }
+        public List<ParsingBlock> Blocks { get; }
 
         /// <summary>
-        /// Sections with the contents as single string. For parsing the whole section.
+        /// The original text of the item
         /// </summary>
-        public string[] WholeSections { get; }
-
         public string Text { get; }
-
-        public string[] HeaderSection => SplitSections[0];
-
-        public string Rarity => HeaderSection[0];
-
-        public string MapPropertiesSection => WholeSections[1];
-
-        public string NameLine => HeaderSection.Length > 1 ? HeaderSection[1] : string.Empty;
-
-        public string TypeLine => HeaderSection.Length > 2 ? HeaderSection[2] : string.Empty;
     }
 }
