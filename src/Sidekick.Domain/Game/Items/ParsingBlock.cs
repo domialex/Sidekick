@@ -50,5 +50,10 @@ namespace Sidekick.Domain.Game.Items
         /// The text of the whole block
         /// </summary>
         public string Text { get; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

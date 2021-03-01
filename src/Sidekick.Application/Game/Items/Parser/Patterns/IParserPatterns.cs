@@ -35,11 +35,5 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
         Regex Socket { get; }
         Regex Unidentified { get; }
         Regex Warlord { get; }
-
-        int GetInt(Regex regex, string input);
-
-        double GetDouble(Regex regex, string input);
-
-        double GetDps(Regex regex, string input, double attacksPerSecond);
     }
 }

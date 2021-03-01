@@ -8,14 +8,14 @@ namespace Sidekick.Domain.Game.Items.Models
     {
         public ItemMetadata Metadata { get; set; }
 
-        public Properties Properties { get; set; } = new Properties();
+        public OriginalItem Original { get; set; }
 
-        public Influences Influences { get; set; } = new Influences();
+        public Properties Properties { get; set; }
 
-        public List<Socket> Sockets { get; set; } = new List<Socket>();
+        public Influences Influences { get; set; }
 
-        public ItemModifiers Modifiers { get; set; } = new ItemModifiers();
+        public List<Socket> Sockets { get; set; }
 
-        public OriginalItem Original { get; set; } = new OriginalItem();
+        public ItemModifiers Modifiers { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,6 +14,7 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Modifiers;
+using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Application.Game.Items.Parser
 {
@@ -45,48 +48,22 @@ namespace Sidekick.Application.Game.Items.Parser
             {
                 var itemText = new ItemNameTokenizer().CleanString(request.ItemText);
                 var parsingItem = new ParsingItem(itemText);
-                var metadata = itemMetadataProvider.Parse(parsingItem);
+                parsingItem.Metadata = itemMetadataProvider.Parse(parsingItem);
 
-                if (metadata == null || (string.IsNullOrEmpty(metadata.Name) && string.IsNullOrEmpty(metadata.Type)))
+                if (parsingItem.Metadata == null || (string.IsNullOrEmpty(parsingItem.Metadata.Name) && string.IsNullOrEmpty(parsingItem.Metadata.Type)))
                 {
                     throw new NotSupportedException("Item not found.");
                 }
 
                 var item = new Item
                 {
-                    Metadata = metadata,
-                    Original = new OriginalItem()
-                    {
-                        Name = parsingItem.NameLine,
-                        Type = parsingItem.TypeLine,
-                        Text = parsingItem.Text,
-                    }
+                    Metadata = parsingItem.Metadata,
+                    Original = ParseOriginal(parsingItem),
+                    Properties = ParseProperties(parsingItem),
+                    Influences = ParseInfluences(parsingItem),
+                    Sockets = ParseSockets(parsingItem),
+                    Modifiers = ParseModifiers(parsingItem),
                 };
-
-                switch (item.Metadata.Category)
-                {
-                    case Category.DivinationCard:
-                    case Category.Currency:
-                    case Category.Prophecy:
-                        break;
-
-                    case Category.Gem:
-                        ParseGem(item, parsingItem);
-                        break;
-
-                    case Category.Map:
-                    case Category.Contract:
-                        ParseMap(item, parsingItem);
-                        ParseMods(item, parsingItem);
-                        break;
-
-                    default:
-                        ParseEquipmentProperties(item, parsingItem);
-                        ParseMods(item, parsingItem);
-                        ParseSockets(item);
-                        ParseInfluences(item, parsingItem);
-                        break;
-                }
 
                 return Task.FromResult(item);
             }
@@ -97,104 +74,304 @@ namespace Sidekick.Application.Game.Items.Parser
             }
         }
 
-        private void ParseEquipmentProperties(Item item, ParsingItem parsingItem)
+        private OriginalItem ParseOriginal(ParsingItem parsingItem)
         {
-            var propertySection = parsingItem.WholeSections[1];
-
-            item.Properties.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
-            item.Properties.Identified = !ParseFromEnd(patterns.Unidentified, parsingItem);
-            item.Properties.Armor = patterns.GetInt(patterns.Armor, propertySection);
-            item.Properties.EnergyShield = patterns.GetInt(patterns.EnergyShield, propertySection);
-            item.Properties.Evasion = patterns.GetInt(patterns.Evasion, propertySection);
-            item.Properties.ChanceToBlock = patterns.GetInt(patterns.ChanceToBlock, propertySection);
-            item.Properties.Quality = patterns.GetInt(patterns.Quality, propertySection);
-            item.Properties.AttacksPerSecond = patterns.GetDouble(patterns.AttacksPerSecond, propertySection);
-            item.Properties.CriticalStrikeChance = patterns.GetDouble(patterns.CriticalStrikeChance, propertySection);
-            item.Properties.ElementalDps = patterns.GetDps(patterns.ElementalDamage, propertySection, item.Properties.AttacksPerSecond);
-            item.Properties.PhysicalDps = patterns.GetDps(patterns.PhysicalDamage, propertySection, item.Properties.AttacksPerSecond);
-            item.Properties.DamagePerSecond = item.Properties.ElementalDps + item.Properties.PhysicalDps;
-            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
-        }
-
-        private void ParseMap(Item item, ParsingItem parsingItem)
-        {
-            var mapBlock = parsingItem.MapPropertiesSection;
-
-            item.Properties.ItemLevel = patterns.GetInt(patterns.ItemLevel, item.Original.Text);
-            item.Properties.Identified = !patterns.Unidentified.IsMatch(item.Original.Text);
-            item.Properties.ItemQuantity = patterns.GetInt(patterns.ItemQuantity, mapBlock);
-            item.Properties.ItemRarity = patterns.GetInt(patterns.ItemRarity, mapBlock);
-            item.Properties.MonsterPackSize = patterns.GetInt(patterns.MonsterPackSize, mapBlock);
-            item.Properties.MapTier = patterns.GetInt(patterns.MapTier, mapBlock);
-            item.Properties.Quality = patterns.GetInt(patterns.Quality, mapBlock);
-            item.Properties.Blighted = patterns.Blighted.IsMatch(parsingItem.WholeSections[0]);
-            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
-        }
-
-        private void ParseSockets(Item item)
-        {
-            var result = patterns.Socket.Match(item.Original.Text);
-            if (result.Success)
+            return new OriginalItem()
             {
-                var groups = result.Groups
+                Name = parsingItem.Blocks[0].Lines.ElementAtOrDefault(1)?.Text,
+                Type = parsingItem.Blocks[0].Lines.ElementAtOrDefault(2)?.Text,
+                Text = parsingItem.Text,
+            };
+        }
+
+        private Properties ParseProperties(ParsingItem parsingItem)
+        {
+            switch (parsingItem.Metadata.Category)
+            {
+                case Category.Gem:
+                    return ParseGemProperties(parsingItem);
+
+                case Category.Map:
+                case Category.Contract:
+                    return ParseMapProperties(parsingItem);
+
+                case Category.Accessory:
+                    return ParseAccessoryProperties(parsingItem);
+
+                case Category.Armour:
+                    return ParseArmourProperties(parsingItem);
+
+                case Category.Weapon:
+                    return ParseWeaponProperties(parsingItem);
+
+                case Category.Jewel:
+                    return ParseJewelProperties(parsingItem);
+
+                default:
+                    return null;
+            }
+        }
+
+        private Properties ParseWeaponProperties(ParsingItem parsingItem)
+        {
+            var propertyBlock = parsingItem.Blocks[1];
+
+            var properties = new Properties
+            {
+                ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
+                Identified = !GetBool(patterns.Unidentified, parsingItem),
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+
+                Quality = GetInt(patterns.Quality, propertyBlock),
+                AttacksPerSecond = GetDouble(patterns.AttacksPerSecond, propertyBlock),
+                CriticalStrikeChance = GetDouble(patterns.CriticalStrikeChance, propertyBlock)
+            };
+
+            properties.ElementalDps = GetDps(patterns.ElementalDamage, propertyBlock, properties.AttacksPerSecond);
+            properties.PhysicalDps = GetDps(patterns.PhysicalDamage, propertyBlock, properties.AttacksPerSecond);
+            properties.DamagePerSecond = properties.ElementalDps + properties.PhysicalDps;
+
+            return properties;
+        }
+
+        private Properties ParseArmourProperties(ParsingItem parsingItem)
+        {
+            var propertyBlock = parsingItem.Blocks[1];
+
+            return new Properties()
+            {
+                ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
+                Identified = !GetBool(patterns.Unidentified, parsingItem),
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+
+                Quality = GetInt(patterns.Quality, propertyBlock),
+                Armor = GetInt(patterns.Armor, propertyBlock),
+                EnergyShield = GetInt(patterns.EnergyShield, propertyBlock),
+                Evasion = GetInt(patterns.Evasion, propertyBlock),
+                ChanceToBlock = GetInt(patterns.ChanceToBlock, propertyBlock),
+            };
+        }
+
+        private Properties ParseAccessoryProperties(ParsingItem parsingItem)
+        {
+            return new Properties()
+            {
+                ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
+                Identified = !GetBool(patterns.Unidentified, parsingItem),
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+            };
+        }
+
+        private Properties ParseMapProperties(ParsingItem parsingItem)
+        {
+            var propertyBlock = parsingItem.Blocks[1];
+
+            return new Properties()
+            {
+                ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
+                Identified = !GetBool(patterns.Unidentified, parsingItem),
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+                Blighted = patterns.Blighted.IsMatch(parsingItem.Blocks[0].Lines[1].Text),
+
+                ItemQuantity = GetInt(patterns.ItemQuantity, propertyBlock),
+                ItemRarity = GetInt(patterns.ItemRarity, propertyBlock),
+                MonsterPackSize = GetInt(patterns.MonsterPackSize, propertyBlock),
+                MapTier = GetInt(patterns.MapTier, propertyBlock),
+                Quality = GetInt(patterns.Quality, propertyBlock),
+            };
+        }
+
+        private Properties ParseGemProperties(ParsingItem parsingItem)
+        {
+            var propertyBlock = parsingItem.Blocks[1];
+
+            return new Properties()
+            {
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+
+                GemLevel = GetInt(patterns.Level, propertyBlock),
+                Quality = GetInt(patterns.Quality, propertyBlock),
+                AlternateQuality = GetBool(patterns.AlternateQuality, parsingItem),
+            };
+        }
+
+        private Properties ParseJewelProperties(ParsingItem parsingItem)
+        {
+            return new Properties()
+            {
+                ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
+                Identified = !GetBool(patterns.Unidentified, parsingItem),
+                Corrupted = GetBool(patterns.Corrupted, parsingItem),
+            };
+        }
+
+        private List<Socket> ParseSockets(ParsingItem parsingItem)
+        {
+            if (TryParseValue(patterns.Socket, parsingItem, out var match))
+            {
+                var groups = match.Groups
                     .Where(x => !string.IsNullOrEmpty(x.Value))
-                    .Select(x => x.Value)
+                    .Skip(1)
+                    .Select((x, Index) => new
+                    {
+                        x.Value,
+                        Index,
+                    })
                     .ToList();
 
-                for (var index = 1; index < groups.Count; index++)
+                var result = new List<Socket>();
+
+                foreach (var group in groups)
                 {
-                    var groupValue = groups[index].Replace("-", "").Trim();
+                    var groupValue = group.Value.Replace("-", "").Trim();
                     while (groupValue.Length > 0)
                     {
                         switch (groupValue[0])
                         {
-                            case 'B': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Blue }); break;
-                            case 'G': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Green }); break;
-                            case 'R': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Red }); break;
-                            case 'W': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.White }); break;
-                            case 'A': item.Sockets.Add(new Socket() { Group = index - 1, Colour = SocketColour.Abyss }); break;
+                            case 'B': result.Add(new Socket() { Group = group.Index, Colour = SocketColour.Blue }); break;
+                            case 'G': result.Add(new Socket() { Group = group.Index, Colour = SocketColour.Green }); break;
+                            case 'R': result.Add(new Socket() { Group = group.Index, Colour = SocketColour.Red }); break;
+                            case 'W': result.Add(new Socket() { Group = group.Index, Colour = SocketColour.White }); break;
+                            case 'A': result.Add(new Socket() { Group = group.Index, Colour = SocketColour.Abyss }); break;
                         }
                         groupValue = groupValue[1..];
                     }
                 }
+
+                return result;
+            }
+
+            return null;
+        }
+
+        private Influences ParseInfluences(ParsingItem parsingItem)
+        {
+            switch (parsingItem.Metadata.Category)
+            {
+                case Category.Accessory:
+                case Category.Armour:
+                case Category.Weapon:
+                    return new Influences()
+                    {
+                        Crusader = GetBool(patterns.Crusader, parsingItem),
+                        Elder = GetBool(patterns.Elder, parsingItem),
+                        Hunter = GetBool(patterns.Hunter, parsingItem),
+                        Redeemer = GetBool(patterns.Redeemer, parsingItem),
+                        Shaper = GetBool(patterns.Shaper, parsingItem),
+                        Warlord = GetBool(patterns.Warlord, parsingItem),
+                    };
+
+                default:
+                    return null;
             }
         }
 
-        private void ParseGem(Item item, ParsingItem parsingItem)
+        private ItemModifiers ParseModifiers(ParsingItem parsingItem)
         {
-            item.Properties.GemLevel = patterns.GetInt(patterns.Level, parsingItem.WholeSections[1]);
-            item.Properties.Quality = patterns.GetInt(patterns.Quality, parsingItem.WholeSections[1]);
-            item.Properties.AlternateQuality = patterns.AlternateQuality.IsMatch(parsingItem.WholeSections[1]);
-            item.Properties.Corrupted = ParseFromEnd(patterns.Corrupted, parsingItem);
+            switch (parsingItem.Metadata.Category)
+            {
+                case Category.DivinationCard:
+                case Category.Currency:
+                case Category.Prophecy:
+                case Category.Gem:
+                    return null;
+
+                default:
+                    return modifierProvider.Parse(parsingItem);
+            }
         }
 
-        private bool ParseFromEnd(Regex pattern, ParsingItem parsingItem)
-        {
-            if (parsingItem.WholeSections.Length < 3)
-                return false;
 
-            // Section order at the end:
-            // Corruption
-            // Influence
-            // Note
-            return pattern.IsMatch(parsingItem.WholeSections[^1])
-                || pattern.IsMatch(parsingItem.WholeSections[^2])
-                || pattern.IsMatch(parsingItem.WholeSections[^3]);
+        #region Helpers
+        private bool GetBool(Regex pattern, ParsingItem parsingItem)
+        {
+            return TryParseValue(pattern, parsingItem, out var _);
         }
 
-        private void ParseInfluences(Item item, ParsingItem parsingItem)
+        private int GetInt(Regex pattern, ParsingItem parsingItem)
         {
-            item.Influences.Crusader = ParseFromEnd(patterns.Crusader, parsingItem);
-            item.Influences.Elder = ParseFromEnd(patterns.Elder, parsingItem);
-            item.Influences.Hunter = ParseFromEnd(patterns.Hunter, parsingItem);
-            item.Influences.Redeemer = ParseFromEnd(patterns.Redeemer, parsingItem);
-            item.Influences.Shaper = ParseFromEnd(patterns.Shaper, parsingItem);
-            item.Influences.Warlord = ParseFromEnd(patterns.Warlord, parsingItem);
+            if (TryParseValue(pattern, parsingItem, out var match) && int.TryParse(match.Groups[1].Value, out var result))
+            {
+                return result;
+            }
+
+            return default;
         }
 
-        private void ParseMods(Item item, ParsingItem parsingItem)
+        private int GetInt(Regex pattern, ParsingBlock parsingBlock)
         {
-            item.Modifiers = modifierProvider.Parse(parsingItem);
+            if (TryParseValue(pattern, parsingBlock, out var match) && int.TryParse(match.Groups[1].Value, out var result))
+            {
+                return result;
+            }
+
+            return default;
         }
+
+        private double GetDouble(Regex pattern, ParsingBlock parsingBlock)
+        {
+            if (TryParseValue(pattern, parsingBlock, out var match) && double.TryParse(match.Groups[1].Value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var result))
+            {
+                return result;
+            }
+
+            return default;
+        }
+
+        private double GetDps(Regex pattern, ParsingBlock parsingBlock, double attacksPerSecond)
+        {
+            if (TryParseValue(pattern, parsingBlock, out var match))
+            {
+                var matches = new Regex("(\\d+-\\d+)").Matches(match.Value);
+                var dps = matches
+                    .Select(x => x.Value.Split("-"))
+                    .Sum(split =>
+                    {
+                        if (double.TryParse(split[0], NumberStyles.Any, CultureInfo.InvariantCulture, out var minValue)
+                         && double.TryParse(split[1], NumberStyles.Any, CultureInfo.InvariantCulture, out var maxValue))
+                        {
+                            return (minValue + maxValue) / 2d;
+                        }
+
+                        return 0d;
+                    });
+
+                return Math.Round(dps * attacksPerSecond, 2);
+            }
+
+            return default;
+        }
+
+        private bool TryParseValue(Regex pattern, ParsingItem parsingItem, out Match match)
+        {
+            foreach (var block in parsingItem.Blocks.Where(x => !x.Parsed))
+            {
+                if (TryParseValue(pattern, block, out match))
+                {
+                    return true;
+                }
+            }
+
+            match = null;
+            return false;
+        }
+
+        private bool TryParseValue(Regex pattern, ParsingBlock parsingBlock, out Match match)
+        {
+            foreach (var line in parsingBlock.Lines.Where(x => !x.Parsed))
+            {
+                match = pattern.Match(line.Text);
+                if (match.Success)
+                {
+                    line.Parsed = true;
+                    return true;
+                }
+            }
+
+            match = null;
+            return false;
+        }
+
+        #endregion Helpers
     }
 }

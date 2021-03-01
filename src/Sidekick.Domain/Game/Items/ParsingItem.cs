@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sidekick.Domain.Game.Items.Metadatas.Models;
 
 namespace Sidekick.Domain.Game.Items
 {
@@ -21,12 +22,14 @@ namespace Sidekick.Domain.Game.Items
 
             Blocks = text
                 .Split(SEPARATOR_PATTERN, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new ParsingBlock(x))
+                .Select(x => new ParsingBlock(x.Trim('\r', '\n')))
                 .ToList();
 
             WholeSections = Blocks.Select(x => x.Text).ToArray();
             SplitSections = Blocks.Select(block => block.Lines.Select(x => x.Text).ToArray()).ToArray();
         }
+
+        public ItemMetadata Metadata { get; set; }
 
         /// <summary>
         /// Item sections seperated by dashes when copying an item in-game.
@@ -39,21 +42,14 @@ namespace Sidekick.Domain.Game.Items
         [Obsolete]
         public string[] WholeSections { get; }
 
-        [Obsolete]
-        public string[] HeaderSection => SplitSections[0];
-
-        [Obsolete]
-        public string MapPropertiesSection => WholeSections[1];
-
-        [Obsolete]
-        public string NameLine => HeaderSection.Length > 1 ? HeaderSection[1] : string.Empty;
-
-        [Obsolete]
-        public string TypeLine => HeaderSection.Length > 2 ? HeaderSection[2] : string.Empty;
-
         /// <summary>
         /// The original text of the item
         /// </summary>
         public string Text { get; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

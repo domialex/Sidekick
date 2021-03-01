@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Sidekick.Application.Game.Items.Parser.Extensions;
 using Sidekick.Application.Game.Items.Parser.Patterns;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Game.Items;
@@ -94,7 +93,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
 
                 if (useRegex)
                 {
-                    NameAndTypeRegex.Add((key.ToRegex(), header));
+                    NameAndTypeRegex.Add((new Regex(Regex.Escape(key)), header));
                 }
 
                 FillDictionary(header, key);

@@ -23,5 +23,10 @@ namespace Sidekick.Domain.Game.Items
         /// The line of the item description
         /// </summary>
         public string Text { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }
