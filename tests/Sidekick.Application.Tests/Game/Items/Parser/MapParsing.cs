@@ -75,7 +75,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Carcass Map", actual.Metadata.Type);
             Assert.Contains("Area is influenced by The Elder", actual.Modifiers.Implicit.Select(x => x.Text));
-            Assert.Equal("The Elder", actual.Modifiers.Implicit.First(x=>x.Text.Contains("The Elder")).OptionValue.Text);
+            Assert.Equal(2, actual.Modifiers.Implicit.First(x=>x.Text.Contains("The Elder")).OptionValue.Value);
             Assert.Contains("Map is occupied by The Purifier", actual.Modifiers.Implicit.Select(x => x.Text));
             Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
         }

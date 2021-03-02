@@ -77,24 +77,6 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseJewel()
-        {
-            var actual = await mediator.Send(new ParseItemCommand(JewelBlightCut));
-
-            Assert.Equal(Category.Jewel, actual.Metadata.Category);
-            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
-            Assert.Equal("Cobalt Jewel", actual.Metadata.Type);
-            Assert.Equal("Blight Cut", actual.Original.Name);
-            Assert.Equal(68, actual.Properties.ItemLevel);
-
-            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
-            Assert.Contains("+8 to Strength and Intelligence", explicits);
-            Assert.Contains("14% increased Spell Damage while Dual Wielding", explicits);
-            Assert.Contains("19% increased Burning Damage", explicits);
-            Assert.Contains("15% increased Damage with Wands", explicits);
-        }
-
-        [Fact]
         public async Task ParseInfluencedWeapon()
         {
             var actual = await mediator.Send(new ParseItemCommand(InfluencedWand));
@@ -254,20 +236,6 @@ Item Level: 61
 +73 to maximum Life
 +14% to Lightning Resistance
 0.23% of Physical Attack Damage Leeched as Mana
-";
-
-        private const string JewelBlightCut = @"Rarity: Rare
-Blight Cut
-Cobalt Jewel
---------
-Item Level: 68
---------
-+8 to Strength and Intelligence
-14% increased Spell Damage while Dual Wielding
-19% increased Burning Damage
-15% increased Damage with Wands
---------
-Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
 ";
 
         private const string InfluencedWand = @"Rarity: Rare
