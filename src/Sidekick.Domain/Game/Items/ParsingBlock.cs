@@ -22,7 +22,7 @@ namespace Sidekick.Domain.Game.Items
             Lines = NEWLINEPATTERN
                 .Split(Text)
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select(x => new ParsingLine(x))
+                .Select((x, index) => new ParsingLine(index, x))
                 .ToList();
         }
 

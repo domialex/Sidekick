@@ -21,6 +21,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         private readonly IAlternateModifierProvider alternateModifierProvider;
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
+        private readonly Regex NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
 
         public ModifierProvider(
             IPseudoModifierProvider pseudoModifierProvider,
@@ -42,7 +43,6 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         public List<ModifierPatternMetadata> VeiledPatterns { get; set; }
         public List<ModifierPatternMetadata> FracturedPatterns { get; set; }
 
-        private Regex NewLinePattern { get; set; } = new Regex("(?:\\\\)*[\\r\\n]+");
 
         public async Task Initialize()
         {
@@ -97,6 +97,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                             new ModifierPattern()
                             {
                                 Text = entry.Text,
+                                LineCount = NewLinePattern.Matches(entry.Text).Count + 1,
                             },
                         },
                     };
@@ -207,7 +208,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 
             foreach (var line in block.Lines.Where(x => !x.Parsed))
             {
-                if (ParseModifierLine(modifiers, patterns, line))
+                if (ParseModifierLine(modifiers, patterns, block, line))
                 {
                     found = true;
                 }
@@ -216,7 +217,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             return found;
         }
 
-        private bool ParseModifierLine(List<Modifier> modifiers, List<ModifierPatternMetadata> metadatas, ParsingLine line)
+        private bool ParseModifierLine(List<Modifier> modifiers, List<ModifierPatternMetadata> metadatas, ParsingBlock block, ParsingLine line)
         {
             foreach (var metadata in metadatas)
             {
@@ -226,6 +227,17 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                     {
                         ParseMod(modifiers, metadata, pattern, line.Text);
                         line.Parsed = true;
+                        return true;
+                    }
+
+                    // Multiline modifiers
+                    else if (pattern.LineCount > 1 && pattern.Pattern.IsMatch(string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount))))
+                    {
+                        ParseMod(modifiers, metadata, pattern, string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount)));
+                        foreach (var multiline in block.Lines.Skip(line.Index).Take(pattern.LineCount))
+                        {
+                            multiline.Parsed = true;
+                        }
                         return true;
                     }
                 }
@@ -274,9 +286,9 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                         modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
                     }
                 }
-            }
 
-            modifier.Text = modifier.Text.Replace("+-", "-");
+                modifier.Text = modifier.Text.Replace("+-", "-");
+            }
 
             modifiers.Add(modifier);
         }

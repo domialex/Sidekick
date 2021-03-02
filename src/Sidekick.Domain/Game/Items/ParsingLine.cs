@@ -9,8 +9,9 @@ namespace Sidekick.Domain.Game.Items
         /// Stores data about each line in the parsing process
         /// </summary>
         /// <param name="text">The line of the item description</param>
-        public ParsingLine(string text)
+        public ParsingLine(int index,string text)
         {
+            Index = index;
             Text = text;
         }
 
@@ -18,6 +19,11 @@ namespace Sidekick.Domain.Game.Items
         /// Indicates if this line has been successfully parsed
         /// </summary>
         public bool Parsed { get; set; } = false;
+
+        /// <summary>
+        /// The index of the line inside the ParsingBlock
+        /// </summary>
+        public int Index { get; }
 
         /// <summary>
         /// The line of the item description
