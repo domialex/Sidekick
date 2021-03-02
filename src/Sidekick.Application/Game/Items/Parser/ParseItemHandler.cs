@@ -356,9 +356,9 @@ namespace Sidekick.Application.Game.Items.Parser
             return false;
         }
 
-        private bool TryParseValue(Regex pattern, ParsingBlock parsingBlock, out Match match)
+        private bool TryParseValue(Regex pattern, ParsingBlock block, out Match match)
         {
-            foreach (var line in parsingBlock.Lines.Where(x => !x.Parsed))
+            foreach (var line in block.Lines.Where(x => !x.Parsed))
             {
                 match = pattern.Match(line.Text);
                 if (match.Success)

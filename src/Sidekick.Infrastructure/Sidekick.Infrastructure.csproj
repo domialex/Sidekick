@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PoeApi\Items\Modifiers\stat_translations.min.json" />
+    <None Remove="RePoe\Data\stat_translations.min.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="PoeApi\Items\Modifiers\stat_translations.min.json" />
+    <EmbeddedResource Include="RePoe\Data\stat_translations.min.json" />
   </ItemGroup>
 
   <ItemGroup>

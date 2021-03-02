@@ -47,6 +47,11 @@ namespace Sidekick.Domain.Game.Items
         }
 
         /// <summary>
+        /// Indicates if this block has been partially parsed by the parser
+        /// </summary>
+        public bool PartiallyParsed => Lines.Any(x => x.Parsed);
+
+        /// <summary>
         /// The text of the whole block
         /// </summary>
         public string Text { get; }

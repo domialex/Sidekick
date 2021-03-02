@@ -5,6 +5,7 @@ using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Infrastructure.Github;
 using Sidekick.Infrastructure.PoeApi;
+using Sidekick.Infrastructure.PoeApi.Items.AlternateModifiers;
 using Sidekick.Infrastructure.PoeApi.Items.Metadatas;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers;
 using Sidekick.Infrastructure.PoeApi.Items.Pseudo;

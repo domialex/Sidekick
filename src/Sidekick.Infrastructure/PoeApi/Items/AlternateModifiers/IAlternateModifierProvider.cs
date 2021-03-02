@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
+using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models.Alternate;
 
-namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
+namespace Sidekick.Infrastructure.PoeApi.Items.AlternateModifiers
 {
     public interface IAlternateModifierProvider
     {
-        List<ModifierTranslation> Translations { get; }
-
         Task Initialize();
 
-        List<Translation> GetAlternateStats(string text);
+        List<ModifierPattern> GetAlternateModifiers(string text);
     }
 }

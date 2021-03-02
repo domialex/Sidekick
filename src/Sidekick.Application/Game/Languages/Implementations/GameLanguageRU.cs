@@ -22,7 +22,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionQuality => "Качество";
         public string DescriptionAlternateQuality => "Изменённый эффект качества";
         public string DescriptionCorrupted => "Осквернено";
-        public string DescriptionRarity => "Редкость";
         public string DescriptionSockets => "Гнезда";
         public string DescriptionItemLevel => "Уровень предмета";
         public string PrefixSuperior => "Рог";
@@ -38,10 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionMonsterPackSize => "Размер групп монстров";
         public string PrefixBlighted => "Заражённая";
         public string DescriptionExperience => "Опыт";
-        public string DescriptionOrgan => "Использует";
-
-        public string KeywordVaal => "Ваал";
-
+        
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -58,11 +54,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
-
-        public string ModifierIncreased => "__TranslationRequired__";
-        public string ModifierReduced => "__TranslationRequired__";
-        public string AdditionalProjectile => "__TranslationRequired__";
-        public string AdditionalProjectiles => "__TranslationRequired__";
 
         public string PrefixAnomalous => "Аномальный: ";
         public string PrefixDivergent => "Искривлённый: ";

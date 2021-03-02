@@ -430,8 +430,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
         private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
-            if (lines == null)
-                return null;
+            if (lines == null) return null;
 
             return lines
                 .OrderBy(x => x.Order)
@@ -496,15 +495,13 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             for (var index = 0; index < hashes.Count; index++)
             {
                 var id = hashes[index].Value;
-                var definition = modifierProvider.GetById(id);
-
                 var text = texts.FirstOrDefault(x => modifierProvider.IsMatch(id, x));
-                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == definition.Id));
+                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == id));
 
                 modifiers.Add(new Modifier()
                 {
-                    Id = definition.Id,
-                    Text = text ?? definition.Text,
+                    Id = id,
+                    Text = text,
                     Tier = mod?.Tier,
                     TierName = mod?.Name,
                 });

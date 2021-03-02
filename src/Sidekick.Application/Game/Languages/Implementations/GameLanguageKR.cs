@@ -22,7 +22,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionQuality => "퀄리티";
         public string DescriptionAlternateQuality => "대체 퀄리티";
         public string DescriptionCorrupted => "타락";
-        public string DescriptionRarity => "아이템 희귀도";
         public string DescriptionSockets => "홈";
         public string DescriptionItemLevel => "아이템 레벨";
         public string PrefixSuperior => "상";
@@ -38,9 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionMonsterPackSize => "몬스터 무리 규모";
         public string PrefixBlighted => "역병";
         public string DescriptionExperience => "경험치";
-        public string DescriptionOrgan => "사용";
-        public string KeywordVaal => "바알";
-
+        
         public string DescriptionPhysicalDamage => "물리 피해";
 
         public string DescriptionElementalDamage => "원소 피해";
@@ -57,11 +54,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionChanceToBlock => "막기";
 
         public string DescriptionLevel => "레벨";
-
-        public string ModifierIncreased => "증가";
-        public string ModifierReduced => "감소";
-        public string AdditionalProjectile => "투사체 1개 추가 발사";
-        public string AdditionalProjectiles => "투사체 #개 추가 발사";
 
         public string PrefixAnomalous => "기묘한";
         public string PrefixDivergent => "분기하는";
