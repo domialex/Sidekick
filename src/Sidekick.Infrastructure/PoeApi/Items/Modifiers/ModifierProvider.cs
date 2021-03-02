@@ -92,6 +92,13 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                     {
                         Category = categoryLabel,
                         Id = entry.Id,
+                        Patterns = new List<ModifierPattern>()
+                        {
+                            new ModifierPattern()
+                            {
+                                Text = entry.Text,
+                            },
+                        },
                     };
 
                     if (entry.Option?.Options?.Any() ?? false)
@@ -255,18 +262,17 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                     }
                 }
 
-                if (data.Options?.Any() == true)
+                if (data.Options?.Any() ?? false)
                 {
                     var optionMod = data.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
-                    if (optionMod == null)
+                    if (optionMod != null)
                     {
-                        return;
+                        modifier.OptionValue = new ModifierOption()
+                        {
+                            Text = optionMod.Text,
+                        };
+                        modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
                     }
-                    modifier.OptionValue = new ModifierOption()
-                    {
-                        Text = optionMod.Text,
-                    };
-                    modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
                 }
             }
 

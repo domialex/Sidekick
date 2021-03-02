@@ -8,7 +8,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models
 
         public string Category { get; set; }
 
-        public List<ModifierPattern> Patterns { get; set; } = new List<ModifierPattern>();
+        public List<ModifierPattern> Patterns { get; set; }
 
         public List<ModifierOptionParse> Options { get; set; }
     }
