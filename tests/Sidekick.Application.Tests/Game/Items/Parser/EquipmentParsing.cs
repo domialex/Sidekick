@@ -161,7 +161,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             var actual = await mediator.Send(new ParseItemCommand(EnchantWithAdditionalProjectiles));
 
             var enchants = actual.Modifiers.Enchant.Select(x => x.Text);
-            Assert.Contains("Split Arrow fires an additional Projectile", enchants);
+            Assert.Contains("Split Arrow fires 2 additional Projectiles", enchants);
             Assert.Equal(2, actual.Modifiers.Enchant.First().Values.First());
         }
 

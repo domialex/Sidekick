@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models.Alternate
+namespace Sidekick.Infrastructure.RePoe.Data.StatTranslations.Models
 {
-    public class Translation
+    public class Stat
     {
         [JsonPropertyName("condition")]
         public List<Condition> Conditions { get; set; }

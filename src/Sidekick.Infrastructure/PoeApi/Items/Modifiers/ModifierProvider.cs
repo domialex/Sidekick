@@ -8,8 +8,8 @@ using Sidekick.Domain.Game.Items;
 using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Modifiers.Models;
-using Sidekick.Infrastructure.PoeApi.Items.AlternateModifiers;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
+using Sidekick.Infrastructure.RePoe.Data.StatTranslations;
 
 namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 {
@@ -18,7 +18,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
         private readonly IPseudoModifierProvider pseudoModifierProvider;
         private readonly ICacheRepository cacheRepository;
         private readonly IPoeTradeClient poeTradeClient;
-        private readonly IAlternateModifierProvider alternateModifierProvider;
+        private readonly IStatTranslationProvider statTranslationProvider;
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
         private readonly Regex NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
@@ -29,12 +29,12 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             IPseudoModifierProvider pseudoModifierProvider,
             ICacheRepository cacheRepository,
             IPoeTradeClient poeTradeClient,
-            IAlternateModifierProvider alternateModifierProvider)
+            IStatTranslationProvider statTranslationProvider)
         {
             this.pseudoModifierProvider = pseudoModifierProvider;
             this.cacheRepository = cacheRepository;
             this.poeTradeClient = poeTradeClient;
-            this.alternateModifierProvider = alternateModifierProvider;
+            this.statTranslationProvider = statTranslationProvider;
         }
 
         public List<ModifierPatternMetadata> PseudoPatterns { get; set; }
@@ -47,7 +47,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 
         public async Task Initialize()
         {
-            await alternateModifierProvider.Initialize();
+            await statTranslationProvider.Initialize();
 
             var result = await cacheRepository.GetOrSet(
                 "Sidekick.Infrastructure.PoeApi.Items.Modifiers.ModifierProvider.Initialize",
@@ -111,12 +111,31 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                     }
                     else
                     {
-                        modifier.Patterns.Add(new ModifierPattern()
+                        var stats = statTranslationProvider.GetAlternateModifiers(entry.Text);
+
+                        if (stats != null)
                         {
-                            Text = entry.Text,
-                            LineCount = NewLinePattern.Matches(entry.Text).Count + 1,
-                            Pattern = ComputePattern(categoryLabel, entry.Text),
-                        });
+                            foreach(var stat in stats)
+                            {
+                                modifier.Patterns.Add(new ModifierPattern()
+                                {
+                                    Text = stat.Text,
+                                    LineCount = NewLinePattern.Matches(stat.Text).Count + 1,
+                                    Pattern = ComputePattern(categoryLabel, stat.Text),
+                                    Negative = stat.Negative,
+                                    Value = stat.Value,
+                                });
+                            }
+                        }
+                        else
+                        {
+                            modifier.Patterns.Add(new ModifierPattern()
+                            {
+                                Text = entry.Text,
+                                LineCount = NewLinePattern.Matches(entry.Text).Count + 1,
+                                Pattern = ComputePattern(categoryLabel, entry.Text),
+                            });
+                        }
                     }
 
                     patterns.Add(modifier);
@@ -270,7 +289,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
                 {
                     if (double.TryParse(match.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
                     {
-                        if (pattern.Negated)
+                        if (pattern.Negative)
                         {
                             parsedValue *= -1;
                         }
