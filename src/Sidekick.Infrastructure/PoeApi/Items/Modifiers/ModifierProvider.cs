@@ -22,8 +22,8 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
         private readonly Regex NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
-        private readonly Regex hashPattern = new Regex("\\\\#");
-        private readonly Regex parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+        private readonly Regex HashPattern = new Regex("\\\\#");
+        private readonly Regex ParenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
 
         public ModifierProvider(
             IPseudoModifierProvider pseudoModifierProvider,
@@ -158,19 +158,19 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             };
 
             var patternValue = Regex.Escape(text);
-            patternValue = parenthesesPattern.Replace(patternValue, "(?:$1)?");
+            patternValue = ParenthesesPattern.Replace(patternValue, "(?:$1)?");
             patternValue = NewLinePattern.Replace(patternValue, "\\n");
 
             if (string.IsNullOrEmpty(optionText))
             {
-                patternValue = hashPattern.Replace(patternValue, "(.*)");
+                patternValue = HashPattern.Replace(patternValue, "(.*)");
             }
             else
             {
                 var optionLines = new List<string>();
                 foreach (var optionLine in NewLinePattern.Split(optionText))
                 {
-                    optionLines.Add(hashPattern.Replace(patternValue, Regex.Escape(optionLine)));
+                    optionLines.Add(HashPattern.Replace(patternValue, Regex.Escape(optionLine)));
                 }
                 patternValue = string.Join('\n', optionLines);
             }
@@ -204,59 +204,35 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             return mods;
         }
 
-        private void ParseModifiers(List<Modifier> modifiers, List<ModifierPatternMetadata> patterns, ParsingItem item)
+        private void ParseModifiers(List<Modifier> modifiers, List<ModifierPatternMetadata> metadatas, ParsingItem item)
         {
             foreach (var block in item.Blocks.Where(x => !x.Parsed))
             {
-                if (ParseModifierBlock(modifiers, patterns, block))
+                foreach (var line in block.Lines.Where(x => !x.Parsed))
                 {
-                    return;
-                }
-            }
-        }
-
-        private bool ParseModifierBlock(List<Modifier> modifiers, List<ModifierPatternMetadata> patterns, ParsingBlock block)
-        {
-            var found = false;
-
-            foreach (var line in block.Lines.Where(x => !x.Parsed))
-            {
-                if (ParseModifierLine(modifiers, patterns, block, line))
-                {
-                    found = true;
-                }
-            }
-
-            return found;
-        }
-
-        private bool ParseModifierLine(List<Modifier> modifiers, List<ModifierPatternMetadata> metadatas, ParsingBlock block, ParsingLine line)
-        {
-            foreach (var metadata in metadatas)
-            {
-                foreach (var pattern in metadata.Patterns)
-                {
-                    if (pattern.Pattern.IsMatch(line.Text))
+                    foreach (var metadata in metadatas)
                     {
-                        ParseMod(modifiers, metadata, pattern, line.Text);
-                        line.Parsed = true;
-                        return true;
-                    }
-
-                    // Multiline modifiers
-                    else if (pattern.LineCount > 1 && pattern.Pattern.IsMatch(string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount))))
-                    {
-                        ParseMod(modifiers, metadata, pattern, string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount)));
-                        foreach (var multiline in block.Lines.Skip(line.Index).Take(pattern.LineCount))
+                        foreach (var pattern in metadata.Patterns)
                         {
-                            multiline.Parsed = true;
+                            if (pattern.Pattern.IsMatch(line.Text))
+                            {
+                                ParseMod(modifiers, metadata, pattern, line.Text);
+                                line.Parsed = true;
+                            }
+
+                            // Multiline modifiers
+                            else if (pattern.LineCount > 1 && pattern.Pattern.IsMatch(string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount))))
+                            {
+                                ParseMod(modifiers, metadata, pattern, string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount)));
+                                foreach (var multiline in block.Lines.Skip(line.Index).Take(pattern.LineCount))
+                                {
+                                    multiline.Parsed = true;
+                                }
+                            }
                         }
-                        return true;
                     }
                 }
             }
-
-            return false;
         }
 
         private void ParseMod(List<Modifier> modifiers, ModifierPatternMetadata data, ModifierPattern pattern, string text)
