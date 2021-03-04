@@ -1,17 +1,19 @@
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models
 {
     public class ModifierPattern
     {
-        public ModifierMetadata Metadata { get; set; }
+        public string Text { get; set; }
+
+        public string OptionText { get; set; }
+
+        public int LineCount { get; set; }
 
         public Regex Pattern { get; set; }
 
-        public List<ModifierOptionParse> Options { get; set; }
+        public bool Negative { get; set; } = false;
 
-        public List<AlternateModifier> AlternateModifiers { get; set; }
+        public int? Value { get; set; }
     }
 }

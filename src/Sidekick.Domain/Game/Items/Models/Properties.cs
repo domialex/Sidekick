@@ -2,6 +2,12 @@ namespace Sidekick.Domain.Game.Items.Models
 {
     public class Properties
     {
+        public bool Identified { get; set; }
+
+        public int ItemLevel { get; set; }
+
+        public bool Corrupted { get; set; }
+
         public int Armor { get; set; }
 
         public int EnergyShield { get; set; }

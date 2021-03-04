@@ -44,7 +44,7 @@ namespace Sidekick.Application.Game.Trade
             {
                 string id;
 
-                if (item.Category == Category.Currency)
+                if (item.Metadata.Category == Category.Currency)
                 {
                     var result = await tradeSearchService.SearchBulk(item);
                     id = result.Id;

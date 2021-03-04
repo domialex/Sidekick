@@ -6,174 +6,136 @@ using System.Threading.Tasks;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Game.Items;
 using Sidekick.Domain.Game.Items.Modifiers;
-using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Modifiers.Models;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers.Models;
+using Sidekick.Infrastructure.RePoe.Data.StatTranslations;
 
 namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 {
     public class ModifierProvider : IModifierProvider
     {
         private readonly IPseudoModifierProvider pseudoModifierProvider;
-        private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheRepository cacheRepository;
         private readonly IPoeTradeClient poeTradeClient;
-        private readonly IAlternateModifierProvider alternateModifierProvider;
+        private readonly IStatTranslationProvider statTranslationProvider;
 
         private readonly Regex ParseHashPattern = new Regex("\\#");
+        private readonly Regex NewLinePattern = new Regex("(?:\\\\)*[\\r\\n]+");
+        private readonly Regex HashPattern = new Regex("\\\\#");
+        private readonly Regex ParenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
 
         public ModifierProvider(
             IPseudoModifierProvider pseudoModifierProvider,
-            IGameLanguageProvider gameLanguageProvider,
             ICacheRepository cacheRepository,
             IPoeTradeClient poeTradeClient,
-            IAlternateModifierProvider alternateModifierProvider)
+            IStatTranslationProvider statTranslationProvider)
         {
             this.pseudoModifierProvider = pseudoModifierProvider;
-            this.gameLanguageProvider = gameLanguageProvider;
             this.cacheRepository = cacheRepository;
             this.poeTradeClient = poeTradeClient;
-            this.alternateModifierProvider = alternateModifierProvider;
+            this.statTranslationProvider = statTranslationProvider;
         }
 
-        public List<ModifierPattern> PseudoPatterns { get; set; }
-        public List<ModifierPattern> ExplicitPatterns { get; set; }
-        public List<ModifierPattern> ImplicitPatterns { get; set; }
-        public List<ModifierPattern> EnchantPatterns { get; set; }
-        public List<ModifierPattern> CraftedPatterns { get; set; }
-        public List<ModifierPattern> VeiledPatterns { get; set; }
-        public List<ModifierPattern> FracturedPatterns { get; set; }
-
-        public Regex NewLinePattern { get; set; } = new Regex("(?:\\\\)*[\\r\\n]+");
+        public List<ModifierPatternMetadata> PseudoPatterns { get; set; }
+        public List<ModifierPatternMetadata> ExplicitPatterns { get; set; }
+        public List<ModifierPatternMetadata> ImplicitPatterns { get; set; }
+        public List<ModifierPatternMetadata> EnchantPatterns { get; set; }
+        public List<ModifierPatternMetadata> CraftedPatterns { get; set; }
+        public List<ModifierPatternMetadata> VeiledPatterns { get; set; }
+        public List<ModifierPatternMetadata> FracturedPatterns { get; set; }
 
         public async Task Initialize()
         {
-            await alternateModifierProvider.Initialize();
+            await statTranslationProvider.Initialize();
 
             var result = await cacheRepository.GetOrSet(
                 "Sidekick.Infrastructure.PoeApi.Items.Modifiers.ModifierProvider.Initialize",
                 () => poeTradeClient.Fetch<ApiCategory>("data/stats"));
             var categories = result.Result;
 
-            PseudoPatterns = new List<ModifierPattern>();
-            ExplicitPatterns = new List<ModifierPattern>();
-            ImplicitPatterns = new List<ModifierPattern>();
-            EnchantPatterns = new List<ModifierPattern>();
-            CraftedPatterns = new List<ModifierPattern>();
-            VeiledPatterns = new List<ModifierPattern>();
-            FracturedPatterns = new List<ModifierPattern>();
-
-            var hashPattern = new Regex("\\\\#");
-            var parenthesesPattern = new Regex("((?:\\\\\\ )*\\\\\\([^\\(\\)]*\\\\\\))");
+            PseudoPatterns = new List<ModifierPatternMetadata>();
+            ExplicitPatterns = new List<ModifierPatternMetadata>();
+            ImplicitPatterns = new List<ModifierPatternMetadata>();
+            EnchantPatterns = new List<ModifierPatternMetadata>();
+            CraftedPatterns = new List<ModifierPatternMetadata>();
+            VeiledPatterns = new List<ModifierPatternMetadata>();
+            FracturedPatterns = new List<ModifierPatternMetadata>();
 
             foreach (var category in categories)
             {
-                var first = category.Entries.FirstOrDefault();
-                if (first == null)
+                if (!category.Entries.Any())
                 {
                     continue;
                 }
 
                 // The notes in parentheses are never translated by the game.
                 // We should be fine hardcoding them this way.
-                string suffix, pattern;
-                List<ModifierPattern> patterns;
-                switch (first.Id.Split('.').First())
+                List<ModifierPatternMetadata> patterns;
+                var categoryLabel = category.Entries[0].Id.Split('.').First();
+                switch (categoryLabel)
                 {
                     default: continue;
-                    case "pseudo": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = PseudoPatterns; break;
+                    case "pseudo": patterns = PseudoPatterns; break;
                     case "delve":
                     case "monster":
-                    case "explicit": suffix = "(?:\\n|(?<!(?:\\n.*){2,})$)"; patterns = ExplicitPatterns; break;
-                    case "implicit": suffix = "(?:\\ \\(implicit\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = ImplicitPatterns; break;
-                    case "enchant": suffix = "(?:\\ \\(enchant\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = EnchantPatterns; break;
-                    case "crafted": suffix = "(?:\\ \\(crafted\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = CraftedPatterns; break;
-                    case "veiled": suffix = "(?:\\ \\(veiled\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = VeiledPatterns; break;
-                    case "fractured": suffix = "(?:\\ \\(fractured\\)\\n|(?<!(?:\\n.*){2,})$)"; patterns = FracturedPatterns; break;
+                    case "explicit": patterns = ExplicitPatterns; break;
+                    case "implicit": patterns = ImplicitPatterns; break;
+                    case "enchant": patterns = EnchantPatterns; break;
+                    case "crafted": patterns = CraftedPatterns; break;
+                    case "veiled": patterns = VeiledPatterns; break;
+                    case "fractured": patterns = FracturedPatterns; break;
                 }
 
                 foreach (var entry in category.Entries)
                 {
-                    var modifier = new ModifierPattern()
+                    var modifier = new ModifierPatternMetadata()
                     {
-                        Metadata = new ModifierMetadata()
-                        {
-                            Category = category.Label,
-                            Id = entry.Id,
-                            Text = entry.Text,
-                            Type = entry.Type,
-                        },
-                        AlternateModifiers = new List<AlternateModifier>()
+                        Category = categoryLabel,
+                        Id = entry.Id,
+                        IsOption = entry.Option?.Options?.Any() ?? false,
                     };
 
-                    pattern = Regex.Escape(entry.Text);
-                    pattern = parenthesesPattern.Replace(pattern, "(?:$1)?");
-                    pattern = NewLinePattern.Replace(pattern, "\\n");
-
-                    if (entry.Option == null || entry.Option.Options == null || entry.Option.Options.Count == 0)
+                    if (modifier.IsOption)
                     {
-                        pattern = hashPattern.Replace(pattern, "([-+\\d,\\.]+)");
+                        for (var i = 0; i < entry.Option.Options.Count; i++)
+                        {
+                            modifier.Patterns.Add(new ModifierPattern()
+                            {
+                                Text = ComputeOptionText(entry.Text, entry.Option.Options[i].Text),
+                                LineCount = NewLinePattern.Matches(entry.Text).Count + NewLinePattern.Matches(entry.Option.Options[i].Text).Count + 1,
+                                Value = i + 1,
+                                Pattern = ComputePattern(categoryLabel, entry.Text, entry.Option.Options[i].Text),
+                            });
+                        }
                     }
                     else
                     {
-                        modifier.Options = new List<ModifierOptionParse>();
+                        var stats = statTranslationProvider.GetAlternateModifiers(entry.Text);
 
-                        foreach (var entryOption in entry.Option.Options)
+                        if (stats != null)
                         {
-                            var modifierOption = new ModifierOptionParse()
+                            foreach(var stat in stats)
                             {
-                                Text = entryOption.Text,
-                            };
-
-                            if (NewLinePattern.IsMatch(entryOption.Text))
-                            {
-                                var lines = NewLinePattern.Split(entryOption.Text).ToList();
-                                var options = lines.ConvertAll(x => hashPattern.Replace(pattern, Regex.Escape(x)));
-                                modifierOption.Pattern = new Regex($"(?:^|\\n){string.Join("\\n", options)}{suffix}");
-                                modifierOption.Text = string.Join("\n", lines.Select((x, i) => new
+                                modifier.Patterns.Add(new ModifierPattern()
                                 {
-                                    Text = x,
-                                    Index = i
-                                })
-                                .ToList()
-                                .ConvertAll(x =>
-                                {
-                                    if (x.Index == 0)
-                                    {
-                                        return x.Text;
-                                    }
-
-                                    return entry.Text.Replace("#", x.Text);
-                                }));
-                            }
-                            else
-                            {
-                                modifierOption.Pattern = new Regex($"(?:^|\\n){hashPattern.Replace(pattern, Regex.Escape(entryOption.Text))}{suffix}", RegexOptions.None);
+                                    Text = stat.Text,
+                                    LineCount = NewLinePattern.Matches(stat.Text).Count + 1,
+                                    Pattern = ComputePattern(categoryLabel, stat.Text),
+                                    Negative = stat.Negative,
+                                    Value = stat.Value,
+                                });
                             }
                         }
-
-                        pattern = hashPattern.Replace(pattern, "(.*)");
-                    }
-
-                    modifier.Pattern = new Regex($"(?:^|\\n){pattern}{suffix}", RegexOptions.None);
-
-                    var alternateStats = alternateModifierProvider.GetAlternateStats(entry.Text);
-
-                    foreach (var stat in alternateStats)
-                    {
-                        var altPattern = Regex.Escape(stat.Text);
-                        altPattern = parenthesesPattern.Replace(altPattern, "(?:$1)?");
-                        altPattern = NewLinePattern.Replace(altPattern, "\\n");
-                        altPattern = hashPattern.Replace(altPattern, "([-+\\d,\\.]+)");
-
-                        var alternateModifier = new AlternateModifier
+                        else
                         {
-                            Stat = stat,
-                            Pattern = new Regex($"(?:^|\\n){altPattern}{suffix}", RegexOptions.None)
-                        };
-
-                        modifier.AlternateModifiers.Add(alternateModifier);
+                            modifier.Patterns.Add(new ModifierPattern()
+                            {
+                                Text = entry.Text,
+                                LineCount = NewLinePattern.Matches(entry.Text).Count + 1,
+                                Pattern = ComputePattern(categoryLabel, entry.Text),
+                            });
+                        }
                     }
 
                     patterns.Add(modifier);
@@ -181,252 +143,167 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
             }
         }
 
-        public ItemModifiers Parse(ParsingItem parsingItem)
+        private Regex ComputePattern(string category, string text, string optionText = null)
         {
-            var text = NewLinePattern.Replace(parsingItem.Text, "\n");
-
-            var mods = new ItemModifiers();
-
-            // Make sure the text ends with an empty line for our regexes to work correctly
-            if (!text.EndsWith("\n"))
+            // The notes in parentheses are never translated by the game.
+            // We should be fine hardcoding them this way.
+            var suffix = category switch
             {
-                text += "\n";
+                "implicit" => "(?:\\ \\(implicit\\))?",
+                "enchant" => "(?:\\ \\(enchant\\))?",
+                "crafted" => "(?:\\ \\(crafted\\))?",
+                "veiled" => "(?:\\ \\(veiled\\))?",
+                "fractured" => "(?:\\ \\(fractured\\))?",
+                _ => "",
+            };
+
+            var patternValue = Regex.Escape(text);
+            patternValue = ParenthesesPattern.Replace(patternValue, "(?:$1)?");
+            patternValue = NewLinePattern.Replace(patternValue, "\\n");
+
+            if (string.IsNullOrEmpty(optionText))
+            {
+                patternValue = HashPattern.Replace(patternValue, "(.*)");
+            }
+            else
+            {
+                var optionLines = new List<string>();
+                foreach (var optionLine in NewLinePattern.Split(optionText))
+                {
+                    optionLines.Add(HashPattern.Replace(patternValue, Regex.Escape(optionLine)));
+                }
+                patternValue = string.Join('\n', optionLines);
             }
 
-            ParseMods(mods.Explicit, ExplicitPatterns, text);
-            ParseMods(mods.Implicit, ImplicitPatterns, text);
-            ParseMods(mods.Enchant, EnchantPatterns, text);
-            ParseMods(mods.Crafted, CraftedPatterns, text);
-            //FillMods(mods.Veiled, VeiledPatterns, text);
-            ParseMods(mods.Fractured, FracturedPatterns, text);
+            return new Regex($"^{patternValue}{suffix}$", RegexOptions.None);
+        }
+
+        private string ComputeOptionText(string text, string optionText)
+        {
+            var optionLines = new List<string>();
+            foreach (var optionLine in NewLinePattern.Split(optionText))
+            {
+                optionLines.Add(ParseHashPattern.Replace(text, optionLine));
+            }
+            return string.Join('\n', optionLines);
+        }
+
+        public ItemModifiers Parse(ParsingItem parsingItem)
+        {
+            var mods = new ItemModifiers();
+
+            ParseModifiers(mods.Explicit, ExplicitPatterns, parsingItem);
+            ParseModifiers(mods.Enchant, EnchantPatterns, parsingItem);
+            ParseModifiers(mods.Implicit, ImplicitPatterns, parsingItem);
+            ParseModifiers(mods.Crafted, CraftedPatterns, parsingItem);
+            ParseModifiers(mods.Fractured, FracturedPatterns, parsingItem);
+            // ParseModifiers(mods.Veiled, VeiledPatterns, parsingItem);
 
             mods.Pseudo = pseudoModifierProvider.Parse(mods);
 
             return mods;
         }
 
-        private void ParseMods(List<Modifier> mods, List<ModifierPattern> patterns, string text)
+        private void ParseModifiers(List<Modifier> modifiers, List<ModifierPatternMetadata> metadatas, ParsingItem item)
         {
-            var unorderedMods = new List<Modifier>();
-
-            foreach (var data in patterns)
+            foreach (var block in item.Blocks.Where(x => !x.Parsed))
             {
-                if (data.Pattern.IsMatch(text))
+                foreach (var line in block.Lines.Where(x => !x.Parsed))
                 {
-                    ParseMod(unorderedMods, text, data, data.Pattern.Match(text));
-                }
-                else
-                {
-                    if (data.AlternateModifiers.Count > 0)
+                    foreach (var metadata in metadatas)
                     {
-                        foreach (var alternateModifier in data.AlternateModifiers)
+                        foreach (var pattern in metadata.Patterns)
                         {
-                            if (alternateModifier.Pattern.IsMatch(text))
+                            if (pattern.Pattern.IsMatch(line.Text))
                             {
-                                ParseAlternateMod(unorderedMods, text, alternateModifier, data, alternateModifier.Pattern.Match(text));
+                                ParseMod(modifiers, metadata, pattern, line.Text);
+                                line.Parsed = true;
+                            }
+
+                            // Multiline modifiers
+                            else if (pattern.LineCount > 1 && pattern.Pattern.IsMatch(string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount))))
+                            {
+                                ParseMod(modifiers, metadata, pattern, string.Join('\n', block.Lines.Skip(line.Index).Take(pattern.LineCount)));
+                                foreach (var multiline in block.Lines.Skip(line.Index).Take(pattern.LineCount))
+                                {
+                                    multiline.Parsed = true;
+                                }
                             }
                         }
                     }
                 }
             }
-
-            unorderedMods.OrderBy(x => x.Index).ToList().ForEach(x => mods.Add(x));
         }
 
-        private void ParseAlternateMod(List<Modifier> mods, string text, AlternateModifier alternateModifier, ModifierPattern data, Match result)
+        private void ParseMod(List<Modifier> modifiers, ModifierPatternMetadata data, ModifierPattern pattern, string text)
         {
+            var match = pattern.Pattern.Match(text);
+
             var modifier = new Modifier()
             {
-                Index = result.Index,
-                Id = data.Metadata.Id,
-                Text = data.Metadata.Text,
-                Category = !data.Metadata.Id.StartsWith("explicit") ? data.Metadata.Category : null,
+                Index = match.Index,
+                Id = data.Id,
+                Text = pattern.Text,
+                Category = !data.Id.StartsWith("explicit") ? data.Category : null,
             };
 
-            if (result.Groups.Count > 1)
+            if (data.IsOption)
             {
-                for (var index = 1; index < result.Groups.Count; index++)
-                {
-                    if (double.TryParse(result.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
-                    {
-                        for (int i = 0; i < alternateModifier.Stat.Conditions.Count; i++)
-                        {
-                            var condition = alternateModifier.Stat.Conditions[i];
-                            string handler = "";
-
-                            if (alternateModifier.Stat.IndexHandlers.Count > i + 1)
-                                handler = alternateModifier.Stat.IndexHandlers[i][0];
-
-                            var negate = handler == "negate";
-                            parsedValue *= (negate ? -1 : 1);
-
-                            if ((condition.Min != null && condition.Max != null && parsedValue >= condition.Min && parsedValue <= condition.Max) ||
-                                (condition.Min != null && condition.Max == null && parsedValue >= condition.Min) ||
-                                (condition.Min == null && condition.Max != null && parsedValue <= condition.Max))
-                            {
-                                modifier.Values.Add(parsedValue);
-                                break;
-                            }
-                        }
-
-                    }
-                }
-            }
-            else if (alternateModifier.Stat.Conditions.Count == 1)
-            {
-                var condition = alternateModifier.Stat.Conditions[0];
-
-                var negate = condition.Negated == null ? false : condition.Negated.Value;
-
-                if (condition.Min != null && condition.Max == null)
-                    modifier.Values.Add(condition.Min.Value * (negate ? -1 : 1));
-                else if (condition.Min == null && condition.Max != null)
-                    modifier.Values.Add(condition.Max.Value * (negate ? -1 : 1));
-                else if (condition.Min != null && condition.Max != null && condition.Min == condition.Max)
-                    modifier.Values.Add(condition.Min.Value * (negate ? -1 : 1));
-            }
-
-            if (data.Options?.Any() == true)
-            {
-                var optionMod = data.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
-                if (optionMod == null)
-                {
-                    return;
-                }
                 modifier.OptionValue = new ModifierOption()
                 {
-                    Text = optionMod.Text,
+                    Value = pattern.Value,
                 };
-                modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
             }
-
-            modifier.Text = modifier.Text.Replace("+-", "-");
-
-            mods.Add(modifier);
-        }
-
-        private void ParseMod(List<Modifier> mods, string text, ModifierPattern data, Match result, bool negative = false)
-        {
-            var modifier = new Modifier()
+            else if (pattern.Value.HasValue)
             {
-                Index = result.Index,
-                Id = data.Metadata.Id,
-                Text = data.Metadata.Text,
-                Category = !data.Metadata.Id.StartsWith("explicit") ? data.Metadata.Category : null,
-            };
-
-            if (result.Groups.Count > 1)
+                modifier.Values.Add(pattern.Value.Value);
+                modifier.Text = ParseHashPattern.Replace(modifier.Text, match.Groups[1].Value, 1);
+            }
+            else if (match.Groups.Count > 1)
             {
-                for (var index = 1; index < result.Groups.Count; index++)
+                for (var index = 1; index < match.Groups.Count; index++)
                 {
-                    if (double.TryParse(result.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
+                    if (double.TryParse(match.Groups[index].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
                     {
-                        var modifierText = modifier.Text;
-                        if (negative)
+                        if (pattern.Negative)
                         {
                             parsedValue *= -1;
                         }
 
                         modifier.Values.Add(parsedValue);
-                        modifier.Text = ParseHashPattern.Replace(modifierText, result.Groups[index].Value, 1);
+                        modifier.Text = ParseHashPattern.Replace(modifier.Text, match.Groups[index].Value, 1);
                     }
                 }
 
-                if (data.Options?.Any() == true)
-                {
-                    var optionMod = data.Options.SingleOrDefault(x => x.Pattern.IsMatch(text));
-                    if (optionMod == null)
-                    {
-                        return;
-                    }
-                    modifier.OptionValue = new ModifierOption()
-                    {
-                        Text = optionMod.Text,
-                    };
-                    modifier.Text = ParseHashPattern.Replace(modifier.Text, optionMod.Text, 1);
-                }
+                modifier.Text = modifier.Text.Replace("+-", "-");
             }
 
-            modifier.Text = modifier.Text.Replace("+-", "-");
-
-            mods.Add(modifier);
-        }
-
-        public ModifierMetadata GetById(string id)
-        {
-            var result = PseudoPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            result = ImplicitPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            result = ExplicitPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            result = CraftedPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            result = EnchantPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            result = FracturedPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (result != null)
-            {
-                return result.Metadata;
-            }
-
-            return null;
+            modifiers.Add(modifier);
         }
 
         public bool IsMatch(string id, string text)
         {
-            ModifierPattern pattern = null;
+            ModifierPatternMetadata metadata = null;
 
-            pattern = PseudoPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            if (pattern == null)
-            {
-                pattern = ImplicitPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            }
-            if (pattern == null)
-            {
-                pattern = ExplicitPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            }
-            if (pattern == null)
-            {
-                pattern = CraftedPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            }
-            if (pattern == null)
-            {
-                pattern = EnchantPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            }
-            if (pattern == null)
-            {
-                pattern = FracturedPatterns.FirstOrDefault(x => x.Metadata.Id == id);
-            }
+            metadata = PseudoPatterns.FirstOrDefault(x => x.Id == id);
+            if (metadata == null) metadata = ImplicitPatterns.FirstOrDefault(x => x.Id == id);
+            if (metadata == null) metadata = ExplicitPatterns.FirstOrDefault(x => x.Id == id);
+            if (metadata == null) metadata = CraftedPatterns.FirstOrDefault(x => x.Id == id);
+            if (metadata == null) metadata = EnchantPatterns.FirstOrDefault(x => x.Id == id);
+            if (metadata == null) metadata = FracturedPatterns.FirstOrDefault(x => x.Id == id);
 
-            if (pattern == null)
+
+            if (metadata == null)
             {
                 return false;
             }
 
-            if (pattern.Pattern != null && pattern.Pattern.IsMatch(text))
+            foreach (var pattern in metadata.Patterns)
             {
-                return true;
+                if (pattern.Pattern != null && pattern.Pattern.IsMatch(text))
+                {
+                    return true;
+                }
             }
 
             return false;

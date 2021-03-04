@@ -88,11 +88,10 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
         public async Task Initialize(Item item)
         {
-
             Item = item;
 
-            CategoryOptions.Add(Item.TypeLine, null);
-            if (Item.Category == Category.Weapon)
+            CategoryOptions.Add(Item.Original.Type, null);
+            if (Item.Metadata.Category == Category.Weapon)
             {
                 CategoryOptions.Add(PriceResources.Class_Weapon, "weapon");
                 CategoryOptions.Add(PriceResources.Class_WeaponOne, "weapon.one");
@@ -115,7 +114,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_WeaponRod, "weapon.rod");
             }
 
-            if (Item.Category == Category.Armour)
+            if (Item.Metadata.Category == Category.Armour)
             {
                 CategoryOptions.Add(PriceResources.Class_Armour, "armour");
                 CategoryOptions.Add(PriceResources.Class_ArmourChest, "armour.chest");
@@ -126,7 +125,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_ArmourQuiver, "armour.quiver");
             }
 
-            if (Item.Category == Category.Accessory)
+            if (Item.Metadata.Category == Category.Accessory)
             {
                 CategoryOptions.Add(PriceResources.Class_Accessory, "accessory");
                 CategoryOptions.Add(PriceResources.Class_AccessoryAmulet, "accessory.amulet");
@@ -134,7 +133,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_AccessoryRing, "accessory.ring");
             }
 
-            if (Item.Category == Category.Gem)
+            if (Item.Metadata.Category == Category.Gem)
             {
                 CategoryOptions.Add(PriceResources.Class_Gem, "gem");
                 CategoryOptions.Add(PriceResources.Class_GemActive, "gem.activegem");
@@ -142,7 +141,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_GemAwakenedSupport, "gem.supportgemplus");
             }
 
-            if (Item.Category == Category.Jewel)
+            if (Item.Metadata.Category == Category.Jewel)
             {
                 CategoryOptions.Add(PriceResources.Class_Jewel, "jewel");
                 CategoryOptions.Add(PriceResources.Class_JewelBase, "jewel.base");
@@ -150,45 +149,45 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_JewelCluster, "jewel.cluster");
             }
 
-            if (Item.Category == Category.Flask)
+            if (Item.Metadata.Category == Category.Flask)
             {
                 CategoryOptions.Add(PriceResources.Class_Flask, "flask");
             }
 
-            if (Item.Category == Category.Map)
+            if (Item.Metadata.Category == Category.Map)
             {
                 CategoryOptions.Add(PriceResources.Class_Map, "map");
                 CategoryOptions.Add(PriceResources.Class_MapFragment, "map.fragment");
                 CategoryOptions.Add(PriceResources.Class_MapScarab, "map.scarab");
             }
 
-            if (Item.Category == Category.Watchstone)
+            if (Item.Metadata.Category == Category.Watchstone)
             {
                 CategoryOptions.Add(PriceResources.Class_Watchstone, "watchstone");
             }
 
-            if (Item.Category == Category.Leaguestone)
+            if (Item.Metadata.Category == Category.Leaguestone)
             {
                 CategoryOptions.Add(PriceResources.Class_Leaguestone, "leaguestone");
             }
 
-            if (Item.Category == Category.Prophecy)
+            if (Item.Metadata.Category == Category.Prophecy)
             {
                 CategoryOptions.Add(PriceResources.Class_Prophecy, "prophecy");
             }
 
-            if (Item.Category == Category.DivinationCard)
+            if (Item.Metadata.Category == Category.DivinationCard)
             {
                 CategoryOptions.Add(PriceResources.Class_Card, "card");
             }
 
-            if (Item.Category == Category.ItemisedMonster)
+            if (Item.Metadata.Category == Category.ItemisedMonster)
             {
                 CategoryOptions.Add(PriceResources.Class_MonsterBeast, "monster.beast");
                 CategoryOptions.Add(PriceResources.Class_MonsterSample, "monster.sample");
             }
 
-            if (Item.Category == Category.Currency)
+            if (Item.Metadata.Category == Category.Currency)
             {
                 CategoryOptions.Add(PriceResources.Class_Currency, "currency");
                 CategoryOptions.Add(PriceResources.Class_CurrencyPiece, "currency.piece");
@@ -197,13 +196,13 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 CategoryOptions.Add(PriceResources.Class_CurrencyIncubator, "currency.incubator");
             }
 
-            SelectedCategory = (await itemCategoryRepository.Get(Item.TypeLine))?.Category;
+            SelectedCategory = (await itemCategoryRepository.Get(Item.Original.Type))?.Category;
             if (!CategoryOptions.Values.Any(x => x == SelectedCategory))
             {
                 SelectedCategory = null;
             }
 
-            ShowCategory = (Item?.Rarity == Rarity.Rare || Item?.Rarity == Rarity.Magic || Item?.Rarity == Rarity.Normal) && CategoryOptions.Count > 2;
+            ShowCategory = (Item?.Metadata.Rarity == Rarity.Rare || Item?.Metadata.Rarity == Rarity.Magic || Item?.Metadata.Rarity == Rarity.Normal) && CategoryOptions.Count > 2;
 
             InitializeFilters();
 
@@ -221,13 +220,13 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
         private void InitializeFilters()
         {
             // No filters for prophecies, currencies and divination cards, etc.
-            if (Item.Category == Category.DivinationCard
-                || Item.Category == Category.Currency
-                || Item.Category == Category.Prophecy
-                || Item.Category == Category.ItemisedMonster
-                || Item.Category == Category.Leaguestone
-                || Item.Category == Category.Watchstone
-                || Item.Category == Category.Undefined)
+            if (Item.Metadata.Category == Category.DivinationCard
+                || Item.Metadata.Category == Category.Currency
+                || Item.Metadata.Category == Category.Prophecy
+                || Item.Metadata.Category == Category.ItemisedMonster
+                || Item.Metadata.Category == Category.Leaguestone
+                || Item.Metadata.Category == Category.Watchstone
+                || Item.Metadata.Category == Category.Undefined)
             {
                 Filters = null;
                 return;
@@ -240,8 +239,8 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
             // Quality
             InitializePropertyFilter(propertyCategory1, PropertyFilterType.Misc_Quality, gameLanguageProvider.Language.DescriptionQuality, Item.Properties.Quality,
-                enabled: Item.Rarity == Rarity.Gem,
-                min: Item.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
+                enabled: Item.Metadata.Rarity == Rarity.Gem,
+                min: Item.Metadata.Rarity == Rarity.Gem && Item.Properties.Quality >= 20 ? (double?)Item.Properties.Quality : null);
 
             // Armour
             InitializePropertyFilter(propertyCategory1, PropertyFilterType.Armour_Armour, gameLanguageProvider.Language.DescriptionArmour, Item.Properties.Armor);
@@ -286,14 +285,14 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 delta: 1);
 
             // Item level
-            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_ItemLevel, gameLanguageProvider.Language.DescriptionItemLevel, Item.ItemLevel,
-                enabled: Item.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Rarity != Rarity.Unique,
-                min: Item.ItemLevel >= 80 ? (double?)Item.ItemLevel : null);
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_ItemLevel, gameLanguageProvider.Language.DescriptionItemLevel, Item.Properties.ItemLevel,
+                enabled: Item.Properties.ItemLevel >= 80 && Item.Properties.MapTier == 0 && Item.Metadata.Rarity != Rarity.Unique,
+                min: Item.Properties.ItemLevel >= 80 ? (double?)Item.Properties.ItemLevel : null);
 
             // Corrupted
-            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_Corrupted, gameLanguageProvider.Language.DescriptionCorrupted, Item.Corrupted,
-                alwaysIncluded: Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique,
-                enabled: (Item.Rarity == Rarity.Gem || Item.Rarity == Rarity.Unique || Item.Rarity == Rarity.Rare) && Item.Corrupted);
+            InitializePropertyFilter(propertyCategory2, PropertyFilterType.Misc_Corrupted, gameLanguageProvider.Language.DescriptionCorrupted, Item.Properties.Corrupted,
+                alwaysIncluded: Item.Metadata.Rarity == Rarity.Gem || Item.Metadata.Rarity == Rarity.Unique,
+                enabled: (Item.Metadata.Rarity == Rarity.Gem || Item.Metadata.Rarity == Rarity.Unique || Item.Metadata.Rarity == Rarity.Rare) && Item.Properties.Corrupted);
 
             // Crusader
             InitializePropertyFilter(propertyCategory2, PropertyFilterType.Influence_Crusader, gameLanguageProvider.Language.InfluenceCrusader, Item.Influences.Crusader,
@@ -347,7 +346,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
             PriceFilterCategory category = null;
 
-            var settingMods = Item.Category switch
+            var settingMods = Item.Metadata.Category switch
             {
                 Category.Accessory => settings.Price_Mods_Accessory,
                 Category.Armour => settings.Price_Mods_Armour,
@@ -372,7 +371,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                                      !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                      modifier.OptionValue,
                                      normalizeValues: normalizeValues,
-                                     enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
+                                     enabled: settingMods.Contains(modifier.Id) && Item.Metadata.Rarity != Rarity.Unique
                     );
                 }
                 else
@@ -382,7 +381,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                                      !string.IsNullOrEmpty(modifier.Category) ? $"({modifier.Category}) {modifier.Text}" : modifier.Text,
                                      modifier.Values,
                                      normalizeValues: normalizeValues,
-                                     enabled: settingMods.Contains(modifier.Id) && Item.Rarity != Rarity.Unique
+                                     enabled: settingMods.Contains(modifier.Id) && Item.Metadata.Rarity != Rarity.Unique
                     );
                 }
             }
@@ -587,7 +586,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
             if (Filters != null)
             {
-                var settingMods = Item.Category switch
+                var settingMods = Item.Metadata.Category switch
                 {
                     Category.Accessory => settings.Price_Mods_Accessory,
                     Category.Armour => settings.Price_Mods_Armour,
@@ -620,7 +619,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             }
 
             IsFetching = true;
-            if (Item.Rarity == Rarity.Currency && itemStaticDataProvider.GetId(Item) != null)
+            if (Item.Metadata.Rarity == Rarity.Currency && itemStaticDataProvider.GetId(Item) != null)
             {
                 QueryResult = await tradeSearchService.SearchBulk(Item);
             }
@@ -780,11 +779,11 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             {
                 if (string.IsNullOrEmpty(SelectedCategory))
                 {
-                    _ = itemCategoryRepository.Delete(Item.TypeLine);
+                    _ = itemCategoryRepository.Delete(Item.Original.Type);
                 }
                 else
                 {
-                    _ = itemCategoryRepository.SaveCategory(Item.TypeLine, SelectedCategory);
+                    _ = itemCategoryRepository.SaveCategory(Item.Original.Type, SelectedCategory);
                 }
                 UpdateDebounce();
             }

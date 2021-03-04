@@ -22,11 +22,9 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionQuality => "Qualité";
         public string DescriptionAlternateQuality => "Qualité alternative";
         public string DescriptionCorrupted => "Corrompu";
-        public string DescriptionRarity => "Rareté";
         public string DescriptionSockets => "Châsses";
         public string DescriptionItemLevel => "Niveau de l'objet";
         public string DescriptionExperience => "Expérience";
-        public string DescriptionOrgan => "Aptitude ";
         public string PrefixSuperior => "supérieure";
         public string InfluenceShaper => "Façonneur";
         public string InfluenceElder => "l'Ancien";
@@ -39,8 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemRarity => "Rareté des objets";
         public string DescriptionMonsterPackSize => "Taille des groupes de monstres";
         public string PrefixBlighted => "infestée";
-        public string KeywordVaal => "Vaal";
-
+        
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -57,11 +54,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionChanceToBlock => "__TranslationRequired__";
 
         public string DescriptionLevel => "__TranslationRequired__";
-
-        public string ModifierIncreased => "__TranslationRequired__";
-        public string ModifierReduced => "__TranslationRequired__";
-        public string AdditionalProjectile => "tire un Projectile supplémentaire";
-        public string AdditionalProjectiles => "tire # Projectiles supplémentaires";
 
         public string PrefixAnomalous => "anormale";
         public string PrefixDivergent => "divergente";

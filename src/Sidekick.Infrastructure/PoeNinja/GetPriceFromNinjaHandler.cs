@@ -27,9 +27,9 @@ namespace Sidekick.Infrastructure.PoeNinja
 
         public async Task<NinjaPrice> Handle(GetPriceFromNinjaQuery request, CancellationToken cancellationToken)
         {
-            var cacheResult = await repository.Find(request.Item.NameLine, request.Item.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
+            var cacheResult = await repository.Find(request.Item.Original.Name, request.Item.Properties.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
 
-            if (cacheResult != null && cacheResult.LastUpdated.AddHours(2) > DateTimeOffset.Now)
+            if (cacheResult != null && cacheResult.LastUpdated.AddHours(4) > DateTimeOffset.Now)
             {
                 return cacheResult;
             }
@@ -37,7 +37,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             var fetchItems = new List<Task<PoeNinjaQueryResult<PoeNinjaItem>>>();
             var fetchCurrencies = new List<Task<PoeNinjaQueryResult<PoeNinjaCurrency>>>();
 
-            if (request.Item.Category == Category.Currency)
+            if (request.Item.Metadata.Category == Category.Currency)
             {
                 fetchCurrencies.Add(poeNinjaClient.FetchCurrencies(CurrencyType.Currency));
                 fetchCurrencies.Add(poeNinjaClient.FetchCurrencies(CurrencyType.Fragment));
@@ -51,9 +51,9 @@ namespace Sidekick.Infrastructure.PoeNinja
                 fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Essence));
                 fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Resonator));
             }
-            else if (request.Item.Rarity == Rarity.Unique)
+            else if (request.Item.Metadata.Rarity == Rarity.Unique)
             {
-                switch (request.Item.Category)
+                switch (request.Item.Metadata.Category)
                 {
                     case Category.Accessory: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.UniqueAccessory)); break;
                     case Category.Armour: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.UniqueArmour)); break;
@@ -65,7 +65,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             }
             else
             {
-                switch (request.Item.Category)
+                switch (request.Item.Metadata.Category)
                 {
                     case Category.DivinationCard: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.DivinationCard)); break;
                     case Category.Map: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Map)); break;
@@ -111,7 +111,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             await repository.SavePrices(currencies);
             await SaveTranslations(currencyResults);
 
-            cacheResult = await repository.Find(request.Item.NameLine, request.Item.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
+            cacheResult = await repository.Find(request.Item.Original.Name, request.Item.Properties.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
             return cacheResult;
         }
 

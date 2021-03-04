@@ -21,9 +21,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(Prophecy));
 
-            Assert.Equal(Category.Prophecy, actual.Category);
-            Assert.Equal(Rarity.Prophecy, actual.Rarity);
-            Assert.Equal("The Four Feral Exiles", actual.Name);
+            Assert.Equal(Category.Prophecy, actual.Metadata.Category);
+            Assert.Equal(Rarity.Prophecy, actual.Metadata.Rarity);
+            Assert.Equal("The Four Feral Exiles", actual.Metadata.Name);
+            Assert.Equal("Prophecy", actual.Metadata.Type);
         }
 
         [Fact]
@@ -31,9 +32,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(DivinationCard));
 
-            Assert.Equal(Category.DivinationCard, actual.Category);
-            Assert.Equal(Rarity.DivinationCard, actual.Rarity);
-            Assert.Equal("The Saint's Treasure", actual.Name);
+            Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
+            Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
+            Assert.Null(actual.Metadata.Name);
+            Assert.Equal("The Saint's Treasure", actual.Metadata.Type);
         }
 
         [Fact]
@@ -41,10 +43,11 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(ShaperItemDivinationCard));
 
-            Assert.Equal(Category.DivinationCard, actual.Category);
-            Assert.Equal(Rarity.DivinationCard, actual.Rarity);
-            Assert.Equal("The Lord of Celebration", actual.Name);
-            Assert.False(actual.Influences.Shaper);
+            Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
+            Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
+            Assert.Null(actual.Metadata.Name);
+            Assert.Equal("The Lord of Celebration", actual.Metadata.Type);
+            Assert.Null(actual.Influences);
         }
 
         [Fact]
@@ -52,9 +55,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(Currency));
 
-            Assert.Equal(Category.Currency, actual.Category);
-            Assert.Equal(Rarity.Currency, actual.Rarity);
-            Assert.Equal("Divine Orb", actual.Name);
+            Assert.Equal(Category.Currency, actual.Metadata.Category);
+            Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
+            Assert.Null(actual.Metadata.Name);
+            Assert.Equal("Divine Orb", actual.Metadata.Type);
         }
 
         [Fact]
@@ -62,9 +66,10 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         {
             var actual = await mediator.Send(new ParseItemCommand(Organ));
 
-            Assert.Equal(Category.ItemisedMonster, actual.Category);
-            Assert.Equal(Rarity.Unique, actual.Rarity);
-            Assert.Equal("Portentia, the Foul", actual.Name);
+            Assert.Equal(Category.ItemisedMonster, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Null(actual.Metadata.Name);
+            Assert.Equal("Portentia, the Foul", actual.Metadata.Type);
         }
 
         #region ItemText

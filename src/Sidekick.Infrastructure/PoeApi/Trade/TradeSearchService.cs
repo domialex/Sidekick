@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Items.Metadatas;
+using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
@@ -101,28 +102,28 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     };
                 }
 
-                if (item.Rarity == Rarity.Unique)
+                if (item.Metadata.Rarity == Rarity.Unique)
                 {
-                    request.Query.Name = item.Name;
-                    request.Query.Type = item.Type;
+                    request.Query.Name = item.Metadata.Name;
+                    request.Query.Type = item.Metadata.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("Unique");
                 }
-                else if (item.Rarity == Rarity.Prophecy)
+                else if (item.Metadata.Rarity == Rarity.Prophecy)
                 {
-                    request.Query.Name = item.Name;
+                    request.Query.Name = item.Metadata.Name;
                 }
                 else
                 {
                     if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
                     {
-                        request.Query.Type = item.Type;
+                        request.Query.Type = item.Metadata.Type;
                     }
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("nonunique");
                 }
 
                 if (item.Properties.AlternateQuality)
                 {
-                    request.Query.Term = item.NameLine;
+                    request.Query.Term = item.Original.Name;
                 }
 
                 if (item.Properties.MapTier > 0)
@@ -331,15 +332,20 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     Note = result.Item.Note,
                 },
 
-                Corrupted = result.Item.Corrupted,
-                Identified = result.Item.Identified,
                 Influences = result.Item.Influences,
-                ItemLevel = result.Item.ItemLevel,
-                Name = result.Item.Name,
-                NameLine = result.Item.Name,
-                Rarity = result.Item.Rarity,
-                Type = result.Item.TypeLine,
-                TypeLine = result.Item.TypeLine,
+
+                Original = new OriginalItem()
+                {
+                    Name = result.Item.Name,
+                    Type = result.Item.TypeLine,
+                },
+
+                Metadata = new ItemMetadata()
+                {
+                    Name = result.Item.Name,
+                    Rarity = result.Item.Rarity,
+                    Type = result.Item.TypeLine,
+                },
 
                 Image = result.Item.Icon,
 
@@ -349,6 +355,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
                 Properties = new Properties()
                 {
+                    ItemLevel = result.Item.ItemLevel,
+                    Corrupted = result.Item.Corrupted,
+                    Identified = result.Item.Identified,
                     Armor = result.Item.Extended.ArmourAtMax,
                     EnergyShield = result.Item.Extended.EnergyShieldAtMax,
                     Evasion = result.Item.Extended.EvasionAtMax,
@@ -421,8 +430,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
         private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
-            if (lines == null)
-                return null;
+            if (lines == null) return null;
 
             return lines
                 .OrderBy(x => x.Order)
@@ -487,15 +495,13 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             for (var index = 0; index < hashes.Count; index++)
             {
                 var id = hashes[index].Value;
-                var definition = modifierProvider.GetById(id);
-
                 var text = texts.FirstOrDefault(x => modifierProvider.IsMatch(id, x));
-                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == definition.Id));
+                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == id));
 
                 modifiers.Add(new Modifier()
                 {
-                    Id = definition.Id,
-                    Text = text ?? definition.Text,
+                    Id = id,
+                    Text = text,
                     Tier = mod?.Tier,
                     TierName = mod?.Name,
                 });

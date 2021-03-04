@@ -52,7 +52,7 @@ namespace Sidekick.Application.Wikis
                 return false;
             }
 
-            if (string.IsNullOrEmpty(item.Name))
+            if (string.IsNullOrEmpty(item.Metadata.Name))
             {
                 // Most items will open the basetype wiki link.
                 // Does not work for unique items that are not identified.
@@ -79,14 +79,14 @@ namespace Sidekick.Application.Wikis
         private const string PoeDb_SubUrlItem = "item.php?n=";
         private Task OpenPoeDb(Item item)
         {
-            var subUrl = item.Rarity switch
+            var subUrl = item.Metadata.Rarity switch
             {
                 Rarity.Unique => PoeDb_SubUrlUnique,
                 Rarity.Gem => PoeDb_SubUrlGem,
                 _ => PoeDb_SubUrlItem
             };
 
-            var searchLink = item.Name ?? item.Type;
+            var searchLink = item.Metadata.Name ?? item.Metadata.Type;
             var wikiLink = subUrl + searchLink.Replace(" ", "+");
 
             return mediator.Send(new OpenBrowserCommand(new Uri(PoeDb_BaseUri + wikiLink)));
@@ -97,7 +97,7 @@ namespace Sidekick.Application.Wikis
         private Task OpenPoeWiki(Item item)
         {
             // determine search link, so wiki can be opened for any item
-            var searchLink = item.Name ?? item.Type;
+            var searchLink = item.Metadata.Name ?? item.Metadata.Type;
             // replace space encodes with '_' to match the link layout of the poe wiki and then url encode it
             var itemLink = System.Net.WebUtility.UrlEncode(searchLink.Replace(" ", "_"));
 

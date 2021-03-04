@@ -12,6 +12,7 @@ using Sidekick.Infrastructure.PoeApi.Items.Static;
 using Sidekick.Infrastructure.PoeApi.Trade;
 using Sidekick.Infrastructure.PoeNinja;
 using Sidekick.Infrastructure.PoePriceInfo;
+using Sidekick.Infrastructure.RePoe.Data.StatTranslations;
 
 namespace Sidekick.Infrastructure
 {
@@ -26,12 +27,15 @@ namespace Sidekick.Infrastructure
             services.AddTransient<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddTransient<IPoeNinjaClient, PoeNinjaClient>();
 
+            // PoeApi
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
             services.AddSingleton<IItemMetadataProvider, ItemMetadataProvider>();
             services.AddSingleton<IModifierProvider, ModifierProvider>();
             services.AddSingleton<IPseudoModifierProvider, PseudoModifierProvider>();
             services.AddSingleton<IItemStaticDataProvider, ItemStaticDataProvider>();
-            services.AddSingleton<IAlternateModifierProvider, AlternateModifierProvider>();
+
+            // RePoe
+            services.AddSingleton<IStatTranslationProvider, StatTranslationProvider>();
 
             return services;
         }

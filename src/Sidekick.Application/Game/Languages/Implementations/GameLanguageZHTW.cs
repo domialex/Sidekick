@@ -30,17 +30,13 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string InfluenceRedeemer => "救贖者物品";
         public string InfluenceWarlord => "總督軍物品";
 
-        public string KeywordVaal => "瓦爾";
-
         public string DescriptionUnidentified => "未鑑定";
         public string DescriptionQuality => "品質";
         public string DescriptionAlternateQuality => "替代品質";
         public string DescriptionCorrupted => "已汙染";
-        public string DescriptionRarity => "稀有度";
         public string DescriptionSockets => "插槽";
         public string DescriptionItemLevel => "物品等級";
         public string DescriptionExperience => "經驗值";
-        public string DescriptionOrgan => "使用";
         public string DescriptionPhysicalDamage => "物理傷害";
         public string DescriptionElementalDamage => "元素傷害";
         public string DescriptionAttacksPerSecond => "每秒攻擊次數";
@@ -54,11 +50,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemQuantity => "物品數量";
         public string DescriptionItemRarity => "物品稀有度";
         public string DescriptionMonsterPackSize => "怪物群大小";
-
-        public string ModifierIncreased => "__TranslationRequired__";
-        public string ModifierReduced => "__TranslationRequired__";
-        public string AdditionalProjectile => "__TranslationRequired__";
-        public string AdditionalProjectiles => "__TranslationRequired__";
 
         public string PrefixAnomalous => "異常的";
         public string PrefixDivergent => "相異的";

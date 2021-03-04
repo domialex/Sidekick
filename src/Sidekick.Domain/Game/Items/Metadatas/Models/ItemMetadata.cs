@@ -2,7 +2,7 @@ using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Domain.Game.Items.Metadatas.Models
 {
-    public class ItemMetadata : IItemMetadata
+    public class ItemMetadata
     {
         public string Name { get; set; }
 

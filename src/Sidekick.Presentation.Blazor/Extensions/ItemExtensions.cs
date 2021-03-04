@@ -6,7 +6,7 @@ namespace Sidekick.Presentation.Blazor.Extensions
     {
         public static string GetColor(this Item item)
         {
-            return item?.Rarity switch
+            return item?.Metadata.Rarity switch
             {
                 Rarity.Normal => "#c8c8c8",
                 Rarity.Magic => "#8888ff",
