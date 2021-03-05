@@ -48,6 +48,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
             var enchants = actual.Modifiers.Enchant.Select(x => x.Text);
             Assert.Contains("Added Small Passive Skills grant: Axe Attacks deal 12% increased Damage with Hits and Ailments\nAdded Small Passive Skills grant: Sword Attacks deal 12% increased Damage with Hits and Ailments", enchants);
+            Assert.Contains("2 Added Passive Skills are Jewel Sockets", enchants);
+            Assert.Contains("Adds 11 Passive Skills", enchants);
         }
 
         #region ItemText
