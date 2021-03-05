@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using ElectronNET.API.Entities;
@@ -7,7 +6,6 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -71,7 +69,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Domain"),
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
-                    Assembly.Load("Sidekick.Presentation"),
                     Assembly.Load("Sidekick.Presentation.Blazor"),
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
 
