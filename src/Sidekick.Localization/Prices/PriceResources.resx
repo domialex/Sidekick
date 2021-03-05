@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Age_Day" xml:space="preserve">
+    <value>{0} day</value>
+  </data>
+  <data name="Age_Days" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="Age_Hour" xml:space="preserve">
+    <value>{0} hour</value>
+  </data>
+  <data name="Age_Hours" xml:space="preserve">
+    <value>{0} hours</value>
+  </data>
+  <data name="Age_Minute" xml:space="preserve">
+    <value>{0} minute</value>
+  </data>
+  <data name="Age_Minutes" xml:space="preserve">
+    <value>{0} minutes</value>
+  </data>
+  <data name="Age_Now" xml:space="preserve">
+    <value>now</value>
+  </data>
+  <data name="Age_Seconds" xml:space="preserve">
+    <value>{0} seconds</value>
+  </data>
+  <data name="Class_Accessory" xml:space="preserve">
+    <value>Any Accessory</value>
+  </data>
+  <data name="Class_AccessoryAmulet" xml:space="preserve">
+    <value>Amulet</value>
+  </data>
+  <data name="Class_AccessoryBelt" xml:space="preserve">
+    <value>Belt</value>
+  </data>
+  <data name="Class_AccessoryRing" xml:space="preserve">
+    <value>Ring</value>
+  </data>
+  <data name="Class_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="Class_Armour" xml:space="preserve">
+    <value>Any Armour</value>
+  </data>
+  <data name="Class_ArmourBoots" xml:space="preserve">
+    <value>Boots</value>
+  </data>
+  <data name="Class_ArmourChest" xml:space="preserve">
+    <value>Body Armour</value>
+  </data>
+  <data name="Class_ArmourGloves" xml:space="preserve">
+    <value>Gloves</value>
+  </data>
+  <data name="Class_ArmourHelmet" xml:space="preserve">
+    <value>Helmet</value>
+  </data>
+  <data name="Class_ArmourQuiver" xml:space="preserve">
+    <value>Quiver</value>
+  </data>
+  <data name="Class_ArmourShield" xml:space="preserve">
+    <value>Shield</value>
+  </data>
+  <data name="Class_Card" xml:space="preserve">
+    <value>Card</value>
+  </data>
+  <data name="Class_Currency" xml:space="preserve">
+    <value>Any Currency</value>
+  </data>
+  <data name="Class_CurrencyFossil" xml:space="preserve">
+    <value>Fossil</value>
+  </data>
+  <data name="Class_CurrencyIncubator" xml:space="preserve">
+    <value>Incubator</value>
+  </data>
+  <data name="Class_CurrencyPiece" xml:space="preserve">
+    <value>Unique Fragment</value>
+  </data>
+  <data name="Class_CurrencyResonator" xml:space="preserve">
+    <value>Resonator</value>
+  </data>
+  <data name="Class_Flask" xml:space="preserve">
+    <value>Flask</value>
+  </data>
+  <data name="Class_Gem" xml:space="preserve">
+    <value>Any Gem</value>
+  </data>
+  <data name="Class_GemActive" xml:space="preserve">
+    <value>Skill Gem</value>
+  </data>
+  <data name="Class_GemAwakenedSupport" xml:space="preserve">
+    <value>Awakened Support Gem</value>
+  </data>
+  <data name="Class_GemSupport" xml:space="preserve">
+    <value>Support Gem</value>
+  </data>
+  <data name="Class_Jewel" xml:space="preserve">
+    <value>Any Jewel</value>
+  </data>
+  <data name="Class_JewelAbyss" xml:space="preserve">
+    <value>Abyss Jewel</value>
+  </data>
+  <data name="Class_JewelBase" xml:space="preserve">
+    <value>Base Jewel</value>
+  </data>
+  <data name="Class_JewelCluster" xml:space="preserve">
+    <value>Cluster Jewel</value>
+  </data>
+  <data name="Class_Leaguestone" xml:space="preserve">
+    <value>Leaguestone</value>
+  </data>
+  <data name="Class_Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="Class_MapFragment" xml:space="preserve">
+    <value>Map Fragment</value>
+  </data>
+  <data name="Class_MapScarab" xml:space="preserve">
+    <value>Scarab</value>
+  </data>
+  <data name="Class_MonsterBeast" xml:space="preserve">
+    <value>Captured Beast</value>
+  </data>
+  <data name="Class_MonsterSample" xml:space="preserve">
+    <value>Metamorph Sample</value>
+  </data>
+  <data name="Class_Prophecy" xml:space="preserve">
+    <value>Prophecy</value>
+  </data>
+  <data name="Class_Watchstone" xml:space="preserve">
+    <value>Watchstone</value>
+  </data>
+  <data name="Class_Weapon" xml:space="preserve">
+    <value>Any Weapon</value>
+  </data>
+  <data name="Class_WeaponBow" xml:space="preserve">
+    <value>Bow</value>
+  </data>
+  <data name="Class_WeaponClaw" xml:space="preserve">
+    <value>Claw</value>
+  </data>
+  <data name="Class_WeaponDagger" xml:space="preserve">
+    <value>Any Dagger</value>
+  </data>
+  <data name="Class_WeaponOne" xml:space="preserve">
+    <value>One-Handed Weapon</value>
+  </data>
+  <data name="Class_WeaponOneAxe" xml:space="preserve">
+    <value>One-Handed Axe</value>
+  </data>
+  <data name="Class_WeaponOneMace" xml:space="preserve">
+    <value>One-Handed Mace</value>
+  </data>
+  <data name="Class_WeaponOneMelee" xml:space="preserve">
+    <value>One-Handed Melee Weapon</value>
+  </data>
+  <data name="Class_WeaponOneSword" xml:space="preserve">
+    <value>One-Handed Sword</value>
+  </data>
+  <data name="Class_WeaponRod" xml:space="preserve">
+    <value>Fishing Rod</value>
+  </data>
+  <data name="Class_WeaponRuneDagger" xml:space="preserve">
+    <value>Rune Dagger</value>
+  </data>
+  <data name="Class_WeaponSceptre" xml:space="preserve">
+    <value>Sceptre</value>
+  </data>
+  <data name="Class_WeaponStaff" xml:space="preserve">
+    <value>Any Staff</value>
+  </data>
+  <data name="Class_WeaponTwoAxe" xml:space="preserve">
+    <value>Two-Handed Axe</value>
+  </data>
+  <data name="Class_WeaponTwoMace" xml:space="preserve">
+    <value>Two-Handed Mace</value>
+  </data>
+  <data name="Class_WeaponTwoMelee" xml:space="preserve">
+    <value>Two-Handed Melee Weapon</value>
+  </data>
+  <data name="Class_WeaponTwoSword" xml:space="preserve">
+    <value>Two-Handed Sword</value>
+  </data>
+  <data name="Class_WeaponWand" xml:space="preserve">
+    <value>Wand</value>
+  </data>
+  <data name="Class_WeaponWarstaff" xml:space="preserve">
+    <value>Warstaff</value>
+  </data>
+  <data name="Corrupted" xml:space="preserve">
+    <value>Corrupted</value>
+  </data>
+  <data name="CountString" xml:space="preserve">
+    <value>Showing {0} out of {1} items</value>
+  </data>
+  <data name="Filters_Dps" xml:space="preserve">
+    <value>Damage per second</value>
+  </data>
+  <data name="Filters_EDps" xml:space="preserve">
+    <value>Elemental DPS</value>
+  </data>
+  <data name="Filters_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Filters_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Filters_PDps" xml:space="preserve">
+    <value>Physical DPS</value>
+  </data>
+  <data name="ItemLevel" xml:space="preserve">
+    <value>Item Level</value>
+  </data>
+  <data name="LoadMoreData" xml:space="preserve">
+    <value>Load More Data</value>
+  </data>
+  <data name="MaxQualityArmour" xml:space="preserve">
+    <value>Armour at max Quality</value>
+  </data>
+  <data name="MaxQualityDps" xml:space="preserve">
+    <value>DPS at max Quality</value>
+  </data>
+  <data name="MaxQualityEDps" xml:space="preserve">
+    <value>Elemental DPS at max Quality</value>
+  </data>
+  <data name="MaxQualityEnergyShield" xml:space="preserve">
+    <value>Energy Shield at max Quality</value>
+  </data>
+  <data name="MaxQualityEvasion" xml:space="preserve">
+    <value>Evasion at max Quality</value>
+  </data>
+  <data name="MaxQualityPDps" xml:space="preserve">
+    <value>Physical DPS at max Quality</value>
+  </data>
+  <data name="OverlayAccountName" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="OverlayAge" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="OverlayCharacter" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="OverlayItemLevel" xml:space="preserve">
+    <value>iLvl</value>
+  </data>
+  <data name="OverlayPrice" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="PoeNinjaString" xml:space="preserve">
+    <value>Poe.Ninja: {0}c - Last updated: {1}</value>
+  </data>
+  <data name="PredictionString" xml:space="preserve">
+    <value>Prediction: {0} - Confidence: {1}%</value>
+  </data>
+  <data name="Requires" xml:space="preserve">
+    <value>Requires</value>
+  </data>
+  <data name="Unidentified" xml:space="preserve">
+    <value>Unidentified</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update now</value>
+  </data>
+  <data name="UpdateSeconds" xml:space="preserve">
+    <value> seconds</value>
+  </data>
+  <data name="UpdateShortly" xml:space="preserve">
+    <value>Updating shortly</value>
+  </data>
+</root>

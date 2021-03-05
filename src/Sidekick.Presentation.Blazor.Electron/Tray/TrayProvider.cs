@@ -9,29 +9,32 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Trade.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
-using Sidekick.Presentation.Localization.Tray;
+using Sidekick.Localization.Tray;
 
 namespace Sidekick.Presentation.Blazor.Electron.Tray
 {
     public class TrayProvider
     {
-        private IWebHostEnvironment webHostEnvironment { get; init; }
-        private ILogger<TrayProvider> logger { get; init; }
-        private IViewLocator viewLocator { get; init; }
-        private IClipboardProvider clipboardProvider { get; init; }
-        private IMediator mediator { get; init; }
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ILogger<TrayProvider> logger;
+        private readonly IViewLocator viewLocator;
+        private readonly IClipboardProvider clipboardProvider;
+        private readonly IMediator mediator;
+        private readonly TrayResources resources;
 
         public TrayProvider(IWebHostEnvironment webHostEnvironment,
                             ILogger<TrayProvider> logger,
                             IViewLocator viewLocator,
                             IClipboardProvider clipboardProvider,
-                            IMediator mediator)
+                            IMediator mediator,
+                            TrayResources resources)
         {
             this.webHostEnvironment = webHostEnvironment;
             this.logger = logger;
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
             this.mediator = mediator;
+            this.resources = resources;
         }
 
         public void Initialize()
@@ -42,7 +45,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                 {
                     new ()
                     {
-                        Label = TrayResources.Title + " - " + GetType().Assembly.GetName().Version.ToString(),
+                        Label = resources.Title + " - " + GetType().Assembly.GetName().Version.ToString(),
                         Type = MenuType.normal,
                         Icon = $"{webHostEnvironment.ContentRootPath}Assets/16x16.png",
                         Enabled = false,
@@ -52,19 +55,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
                     new ()
                     {
-                        Label = "Cheatsheets",
+                        Label = resources.Cheatsheets,
                         Click = () => { viewLocator.Open(View.League); }
                     },
 
                     new ()
                     {
-                        Label = "About",
+                        Label = resources.About,
                         Click = () => { viewLocator.Open(View.About); }
                     },
 
                     new ()
                     {
-                        Label = "Settings",
+                        Label = resources.Settings,
                         Click = () => { viewLocator.Open(View.Settings); }
                     },
 
@@ -72,7 +75,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
                     new ()
                     {
-                        Label = TrayResources.Exit,
+                        Label = resources.Exit,
                         Click = () => ElectronNET.API.Electron.App.Quit()
                     }
                 };
@@ -84,7 +87,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
                 ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/icon.png", menuItems.ToArray());
                 ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
-                ElectronNET.API.Electron.Tray.SetToolTip(TrayResources.Title);
+                ElectronNET.API.Electron.Tray.SetToolTip(resources.Title);
             }
             catch (Exception e)
             {

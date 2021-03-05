@@ -19,10 +19,10 @@ using Sidekick.Domain.Game.Trade.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Extensions;
+using Sidekick.Localization.Prices;
 using Sidekick.Persistence.ItemCategories;
 using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Extensions;
-using Sidekick.Presentation.Localization.Prices;
 
 
 namespace Sidekick.Presentation.Blazor.Overlays.Prices
@@ -38,6 +38,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
         private readonly ISidekickSettings settings;
         private readonly IItemCategoryRepository itemCategoryRepository;
         private readonly IMediator mediator;
+        private readonly PriceResources resources;
 
         public PricesModel(
             ILogger<PricesModel> logger,
@@ -47,7 +48,8 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             IGameLanguageProvider gameLanguageProvider,
             ISidekickSettings settings,
             IItemCategoryRepository itemCategoryRepository,
-            IMediator mediator)
+            IMediator mediator,
+            PriceResources resources)
         {
             this.logger = logger;
             this.debouncer = debouncer;
@@ -57,6 +59,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             this.settings = settings;
             this.itemCategoryRepository = itemCategoryRepository;
             this.mediator = mediator;
+            this.resources = resources;
 
             //
         }
@@ -93,107 +96,107 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             CategoryOptions.Add(Item.Original.Type, null);
             if (Item.Metadata.Category == Category.Weapon)
             {
-                CategoryOptions.Add(PriceResources.Class_Weapon, "weapon");
-                CategoryOptions.Add(PriceResources.Class_WeaponOne, "weapon.one");
-                CategoryOptions.Add(PriceResources.Class_WeaponOneMelee, "weapon.onemelee");
-                CategoryOptions.Add(PriceResources.Class_WeaponTwoMelee, "weapon.twomelee");
-                CategoryOptions.Add(PriceResources.Class_WeaponBow, "weapon.bow");
-                CategoryOptions.Add(PriceResources.Class_WeaponClaw, "weapon.claw");
-                CategoryOptions.Add(PriceResources.Class_WeaponDagger, "weapon.dagger");
-                CategoryOptions.Add(PriceResources.Class_WeaponRuneDagger, "weapon.runedagger");
-                CategoryOptions.Add(PriceResources.Class_WeaponOneAxe, "weapon.oneaxe");
-                CategoryOptions.Add(PriceResources.Class_WeaponOneMace, "weapon.onemace");
-                CategoryOptions.Add(PriceResources.Class_WeaponOneSword, "weapon.onesword");
-                CategoryOptions.Add(PriceResources.Class_WeaponSceptre, "weapon.sceptre");
-                CategoryOptions.Add(PriceResources.Class_WeaponStaff, "weapon.staff");
-                CategoryOptions.Add(PriceResources.Class_WeaponWarstaff, "weapon.warstaff");
-                CategoryOptions.Add(PriceResources.Class_WeaponTwoAxe, "weapon.twoaxe");
-                CategoryOptions.Add(PriceResources.Class_WeaponTwoMace, "weapon.twomace");
-                CategoryOptions.Add(PriceResources.Class_WeaponTwoSword, "weapon.twosword");
-                CategoryOptions.Add(PriceResources.Class_WeaponWand, "weapon.wand");
-                CategoryOptions.Add(PriceResources.Class_WeaponRod, "weapon.rod");
+                CategoryOptions.Add(resources.Class_Weapon, "weapon");
+                CategoryOptions.Add(resources.Class_WeaponOne, "weapon.one");
+                CategoryOptions.Add(resources.Class_WeaponOneMelee, "weapon.onemelee");
+                CategoryOptions.Add(resources.Class_WeaponTwoMelee, "weapon.twomelee");
+                CategoryOptions.Add(resources.Class_WeaponBow, "weapon.bow");
+                CategoryOptions.Add(resources.Class_WeaponClaw, "weapon.claw");
+                CategoryOptions.Add(resources.Class_WeaponDagger, "weapon.dagger");
+                CategoryOptions.Add(resources.Class_WeaponRuneDagger, "weapon.runedagger");
+                CategoryOptions.Add(resources.Class_WeaponOneAxe, "weapon.oneaxe");
+                CategoryOptions.Add(resources.Class_WeaponOneMace, "weapon.onemace");
+                CategoryOptions.Add(resources.Class_WeaponOneSword, "weapon.onesword");
+                CategoryOptions.Add(resources.Class_WeaponSceptre, "weapon.sceptre");
+                CategoryOptions.Add(resources.Class_WeaponStaff, "weapon.staff");
+                CategoryOptions.Add(resources.Class_WeaponWarstaff, "weapon.warstaff");
+                CategoryOptions.Add(resources.Class_WeaponTwoAxe, "weapon.twoaxe");
+                CategoryOptions.Add(resources.Class_WeaponTwoMace, "weapon.twomace");
+                CategoryOptions.Add(resources.Class_WeaponTwoSword, "weapon.twosword");
+                CategoryOptions.Add(resources.Class_WeaponWand, "weapon.wand");
+                CategoryOptions.Add(resources.Class_WeaponRod, "weapon.rod");
             }
 
             if (Item.Metadata.Category == Category.Armour)
             {
-                CategoryOptions.Add(PriceResources.Class_Armour, "armour");
-                CategoryOptions.Add(PriceResources.Class_ArmourChest, "armour.chest");
-                CategoryOptions.Add(PriceResources.Class_ArmourBoots, "armour.boots");
-                CategoryOptions.Add(PriceResources.Class_ArmourGloves, "armour.gloves");
-                CategoryOptions.Add(PriceResources.Class_ArmourHelmet, "armour.helmet");
-                CategoryOptions.Add(PriceResources.Class_ArmourShield, "armour.shield");
-                CategoryOptions.Add(PriceResources.Class_ArmourQuiver, "armour.quiver");
+                CategoryOptions.Add(resources.Class_Armour, "armour");
+                CategoryOptions.Add(resources.Class_ArmourChest, "armour.chest");
+                CategoryOptions.Add(resources.Class_ArmourBoots, "armour.boots");
+                CategoryOptions.Add(resources.Class_ArmourGloves, "armour.gloves");
+                CategoryOptions.Add(resources.Class_ArmourHelmet, "armour.helmet");
+                CategoryOptions.Add(resources.Class_ArmourShield, "armour.shield");
+                CategoryOptions.Add(resources.Class_ArmourQuiver, "armour.quiver");
             }
 
             if (Item.Metadata.Category == Category.Accessory)
             {
-                CategoryOptions.Add(PriceResources.Class_Accessory, "accessory");
-                CategoryOptions.Add(PriceResources.Class_AccessoryAmulet, "accessory.amulet");
-                CategoryOptions.Add(PriceResources.Class_AccessoryBelt, "accessory.belt");
-                CategoryOptions.Add(PriceResources.Class_AccessoryRing, "accessory.ring");
+                CategoryOptions.Add(resources.Class_Accessory, "accessory");
+                CategoryOptions.Add(resources.Class_AccessoryAmulet, "accessory.amulet");
+                CategoryOptions.Add(resources.Class_AccessoryBelt, "accessory.belt");
+                CategoryOptions.Add(resources.Class_AccessoryRing, "accessory.ring");
             }
 
             if (Item.Metadata.Category == Category.Gem)
             {
-                CategoryOptions.Add(PriceResources.Class_Gem, "gem");
-                CategoryOptions.Add(PriceResources.Class_GemActive, "gem.activegem");
-                CategoryOptions.Add(PriceResources.Class_GemSupport, "gem.supportgem");
-                CategoryOptions.Add(PriceResources.Class_GemAwakenedSupport, "gem.supportgemplus");
+                CategoryOptions.Add(resources.Class_Gem, "gem");
+                CategoryOptions.Add(resources.Class_GemActive, "gem.activegem");
+                CategoryOptions.Add(resources.Class_GemSupport, "gem.supportgem");
+                CategoryOptions.Add(resources.Class_GemAwakenedSupport, "gem.supportgemplus");
             }
 
             if (Item.Metadata.Category == Category.Jewel)
             {
-                CategoryOptions.Add(PriceResources.Class_Jewel, "jewel");
-                CategoryOptions.Add(PriceResources.Class_JewelBase, "jewel.base");
-                CategoryOptions.Add(PriceResources.Class_JewelAbyss, "jewel.abyss");
-                CategoryOptions.Add(PriceResources.Class_JewelCluster, "jewel.cluster");
+                CategoryOptions.Add(resources.Class_Jewel, "jewel");
+                CategoryOptions.Add(resources.Class_JewelBase, "jewel.base");
+                CategoryOptions.Add(resources.Class_JewelAbyss, "jewel.abyss");
+                CategoryOptions.Add(resources.Class_JewelCluster, "jewel.cluster");
             }
 
             if (Item.Metadata.Category == Category.Flask)
             {
-                CategoryOptions.Add(PriceResources.Class_Flask, "flask");
+                CategoryOptions.Add(resources.Class_Flask, "flask");
             }
 
             if (Item.Metadata.Category == Category.Map)
             {
-                CategoryOptions.Add(PriceResources.Class_Map, "map");
-                CategoryOptions.Add(PriceResources.Class_MapFragment, "map.fragment");
-                CategoryOptions.Add(PriceResources.Class_MapScarab, "map.scarab");
+                CategoryOptions.Add(resources.Class_Map, "map");
+                CategoryOptions.Add(resources.Class_MapFragment, "map.fragment");
+                CategoryOptions.Add(resources.Class_MapScarab, "map.scarab");
             }
 
             if (Item.Metadata.Category == Category.Watchstone)
             {
-                CategoryOptions.Add(PriceResources.Class_Watchstone, "watchstone");
+                CategoryOptions.Add(resources.Class_Watchstone, "watchstone");
             }
 
             if (Item.Metadata.Category == Category.Leaguestone)
             {
-                CategoryOptions.Add(PriceResources.Class_Leaguestone, "leaguestone");
+                CategoryOptions.Add(resources.Class_Leaguestone, "leaguestone");
             }
 
             if (Item.Metadata.Category == Category.Prophecy)
             {
-                CategoryOptions.Add(PriceResources.Class_Prophecy, "prophecy");
+                CategoryOptions.Add(resources.Class_Prophecy, "prophecy");
             }
 
             if (Item.Metadata.Category == Category.DivinationCard)
             {
-                CategoryOptions.Add(PriceResources.Class_Card, "card");
+                CategoryOptions.Add(resources.Class_Card, "card");
             }
 
             if (Item.Metadata.Category == Category.ItemisedMonster)
             {
-                CategoryOptions.Add(PriceResources.Class_MonsterBeast, "monster.beast");
-                CategoryOptions.Add(PriceResources.Class_MonsterSample, "monster.sample");
+                CategoryOptions.Add(resources.Class_MonsterBeast, "monster.beast");
+                CategoryOptions.Add(resources.Class_MonsterSample, "monster.sample");
             }
 
             if (Item.Metadata.Category == Category.Currency)
             {
-                CategoryOptions.Add(PriceResources.Class_Currency, "currency");
-                CategoryOptions.Add(PriceResources.Class_CurrencyPiece, "currency.piece");
-                CategoryOptions.Add(PriceResources.Class_CurrencyResonator, "currency.resonator");
-                CategoryOptions.Add(PriceResources.Class_CurrencyFossil, "currency.fossil");
-                CategoryOptions.Add(PriceResources.Class_CurrencyIncubator, "currency.incubator");
+                CategoryOptions.Add(resources.Class_Currency, "currency");
+                CategoryOptions.Add(resources.Class_CurrencyPiece, "currency.piece");
+                CategoryOptions.Add(resources.Class_CurrencyResonator, "currency.resonator");
+                CategoryOptions.Add(resources.Class_CurrencyFossil, "currency.fossil");
+                CategoryOptions.Add(resources.Class_CurrencyIncubator, "currency.incubator");
             }
 
             SelectedCategory = (await itemCategoryRepository.Get(Item.Original.Type))?.Category;
@@ -272,11 +275,11 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 min: Item.Properties.MapTier);
 
             // Physical Dps
-            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_PhysicalDps, PriceResources.Filters_PDps, Item.Properties.PhysicalDps);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_PhysicalDps, resources.Filters_PDps, Item.Properties.PhysicalDps);
             // Elemental Dps
-            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_ElementalDps, PriceResources.Filters_EDps, Item.Properties.ElementalDps);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_ElementalDps, resources.Filters_EDps, Item.Properties.ElementalDps);
             // Total Dps
-            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_Dps, PriceResources.Filters_Dps, Item.Properties.DamagePerSecond);
+            InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_Dps, resources.Filters_Dps, Item.Properties.DamagePerSecond);
             // Attacks per second
             InitializePropertyFilter(propertyCategory1, PropertyFilterType.Weapon_AttacksPerSecond, gameLanguageProvider.Language.DescriptionAttacksPerSecond, Item.Properties.AttacksPerSecond,
                 delta: 0.1);
@@ -702,7 +705,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
                 if (result != null && result.Any())
                 {
-                    Results.AddRange(result.Select(x => new PriceItem(x)
+                    Results.AddRange(result.Select(x => new PriceItem(x, resources)
                     {
                         ImageUrl = new Uri($"{gameLanguageProvider.Language.PoeCdnBaseUrl}{itemStaticDataProvider.GetImage(x.Price.Currency)}").AbsoluteUri,
                     }));
@@ -725,7 +728,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             var poeNinjaPrice = await mediator.Send(new GetPriceFromNinjaQuery(Item));
             if (poeNinjaPrice != null)
             {
-                PoeNinjaText = string.Format(PriceResources.PoeNinjaString,
+                PoeNinjaText = string.Format(resources.PoeNinjaString,
                                              poeNinjaPrice.Price.ToString("N3"),
                                              poeNinjaPrice.LastUpdated.ToString("t"));
             }
@@ -749,7 +752,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
                 }
 
                 PredictionText = string.Format(
-                    PriceResources.PredictionString,
+                    resources.PredictionString,
                     $"{result.Min:N1}-{result.Max:N1} {result.Currency}",
                     result.ConfidenceScore.ToString("N1"));
             }
@@ -761,7 +764,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
         private void UpdateCountString()
         {
             FullyLoaded = (Results?.Count ?? 0) == (QueryResult?.Result?.Count ?? 0);
-            CountString = string.Format(PriceResources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
+            CountString = string.Format(resources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
         }
 
         public bool HasPreviewItem { get; private set; }

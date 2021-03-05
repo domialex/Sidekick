@@ -23,15 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Domain", "src\Side
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application", "src\Sidekick.Application\Sidekick.Application.csproj", "{5A2D100E-5475-4951-AA01-83A6CBCFC71F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation", "src\Sidekick.Presentation\Sidekick.Presentation.csproj", "{76DB7E71-66D9-4300-AE60-3E70ECD56778}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Persistence", "src\Sidekick.Persistence\Sidekick.Persistence.csproj", "{A4D9D025-4013-43D4-8E69-4D07AE8205B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Infrastructure", "src\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj", "{A81460B5-7B3B-4122-86DE-7B710EF2416B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Extensions", "src\Sidekick.Extensions\Sidekick.Extensions.csproj", "{4135AA01-4A10-4574-B38D-103CF1359867}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Wpf", "src\Sidekick.Presentation.Wpf\Sidekick.Presentation.Wpf.csproj", "{7695E480-5FFC-40CD-86A5-C659274EB17B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Mapper", "src\Sidekick.Mapper\Sidekick.Mapper.csproj", "{8E09D8B1-46A3-438F-B1F3-DE3305521299}"
 EndProject
@@ -81,10 +77,6 @@ Global
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76DB7E71-66D9-4300-AE60-3E70ECD56778}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,10 +89,6 @@ Global
 		{4135AA01-4A10-4574-B38D-103CF1359867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4135AA01-4A10-4574-B38D-103CF1359867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4135AA01-4A10-4574-B38D-103CF1359867}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7695E480-5FFC-40CD-86A5-C659274EB17B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E09D8B1-46A3-438F-B1F3-DE3305521299}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -34,10 +34,7 @@
 </MudLayout>
 
 @code {
-
-
     [Parameter] public string EncodedItem { get; set; }
-    [Inject] private IStringLocalizer<PricesResources> Localizer { get; set; }
     [Inject] private PricesModel ViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()

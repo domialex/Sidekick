@@ -28,7 +28,6 @@
     <ProjectReference Include="..\Sidekick.Mock\Sidekick.Mock.csproj" />
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
     <ProjectReference Include="..\Sidekick.Platform\Sidekick.Platform.csproj" />
-    <ProjectReference Include="..\Sidekick.Presentation\Sidekick.Presentation.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="xcopy &quot;$(ProjectDir)styles\site.css&quot; &quot;$(ProjectDir)wwwroot\css&quot; /Y" />

@@ -2,23 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Domain.Game.Trade.Models;
+using Sidekick.Localization.Prices;
 using Sidekick.Presentation.Blazor.Extensions;
-using Sidekick.Presentation.Localization.Prices;
 
 namespace Sidekick.Presentation.Blazor.Overlays.Prices
 {
     public partial class PriceItem
     {
-        public PriceItem(TradeItem result)
+        private readonly PriceResources resources;
+
+        public PriceItem(TradeItem result, PriceResources resources)
         {
             Item = result;
+            this.resources = resources;
 
             if (Item.RequirementContents != null)
             {
                 var requirementValues = string.Join(", ", Item.RequirementContents.Select(x => x.Text.Replace(":", "")));
                 var requires = new LineContent()
                 {
-                    Text = $"{PriceResources.Requires} {requirementValues}",
+                    Text = $"{resources.Requires} {requirementValues}",
                     Values = new List<LineContentValue>
                     {
                         new LineContentValue()
@@ -42,7 +45,7 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
 
                 Item.RequirementContents = Item.RequirementContents.Prepend(new LineContent()
                 {
-                    Text = $"{PriceResources.ItemLevel}: {Item.Properties.ItemLevel}",
+                    Text = $"{resources.ItemLevel}: {Item.Properties.ItemLevel}",
                     Values = new List<LineContentValue>
                     {
                         new LineContentValue()
@@ -83,15 +86,15 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             {
                 var span = DateTimeOffset.Now - Item.Price.Date;
 
-                if (span.Days > 1) return string.Format(PriceResources.Age_Days, span.Days);
-                if (span.Days == 1) return string.Format(PriceResources.Age_Day, span.Days);
-                if (span.Hours > 1) return string.Format(PriceResources.Age_Hours, span.Hours);
-                if (span.Hours == 1) return string.Format(PriceResources.Age_Hour, span.Hours);
-                if (span.Minutes > 1) return string.Format(PriceResources.Age_Minutes, span.Minutes);
-                if (span.Minutes == 1) return string.Format(PriceResources.Age_Minute, span.Minutes);
-                if (span.Seconds > 10) return string.Format(PriceResources.Age_Seconds, span.Seconds);
+                if (span.Days > 1) return string.Format(resources.Age_Days, span.Days);
+                if (span.Days == 1) return string.Format(resources.Age_Day, span.Days);
+                if (span.Hours > 1) return string.Format(resources.Age_Hours, span.Hours);
+                if (span.Hours == 1) return string.Format(resources.Age_Hour, span.Hours);
+                if (span.Minutes > 1) return string.Format(resources.Age_Minutes, span.Minutes);
+                if (span.Minutes == 1) return string.Format(resources.Age_Minute, span.Minutes);
+                if (span.Seconds > 10) return string.Format(resources.Age_Seconds, span.Seconds);
 
-                return PriceResources.Age_Now;
+                return resources.Age_Now;
             }
         }
     }
