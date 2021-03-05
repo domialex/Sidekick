@@ -30,6 +30,20 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Contains("You have Shocking Conflux for 3 seconds every 8 seconds", explicits);
         }
 
+        [Fact]
+        public async Task ParseStarkonjaHead()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(StarkonjaHead));
+
+            Assert.Equal(Category.Armour, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal("Starkonja's Head", actual.Metadata.Name);
+            Assert.Equal("Silken Hood", actual.Metadata.Type);
+
+            var enchants = actual.Modifiers.Enchant.Select(x => x.Text);
+            Assert.Contains("Divine Ire Damages 2 additional nearby Enemies when gaining Stages", enchants);
+        }
+
         #region ItemText
 
         private const string BlightGuardian = @"Rarity: Rare
@@ -54,6 +68,34 @@ Adds 28 to 51 Fire Damage to Spells
 You have Shocking Conflux for 3 seconds every 8 seconds
 --------
 Hunter Item
+";
+
+        private const string StarkonjaHead = @"Rarity: Unique
+Starkonja's Head
+Silken Hood
+--------
+Evasion Rating: 765 (augmented)
+--------
+Requirements:
+Level: 60
+Dex: 138
+--------
+Sockets: G G 
+--------
+Item Level: 80
+--------
+Divine Ire Damages 2 additional nearby Enemies when gaining Stages (enchant)
+--------
++57 to Dexterity
+50% reduced Damage when on Low Life
+10% increased Attack Speed
+25% increased Global Critical Strike Chance
+121% increased Evasion Rating
++87 to maximum Life
+150% increased Global Evasion Rating when on Low Life
+--------
+There was no hero made out of Starkonja's death,
+but merely a long sleep made eternal.
 ";
 
         #endregion
