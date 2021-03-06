@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
-using Sidekick.Presentation.Blazor.About;
 using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Initialization;
 using Sidekick.Presentation.Blazor.Overlays.MapInfo;
@@ -17,7 +16,6 @@ namespace Sidekick.Presentation.Blazor
             services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<SettingsViewModel>();
-            services.AddScoped<AboutModel>();
             services.AddScoped<MapInfoModel>();
             services.AddScoped<PricesModel>();
 

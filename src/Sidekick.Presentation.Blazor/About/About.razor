@@ -5,12 +5,12 @@
     <MudMainContent>
         <MudContainer Class="py-6">
 
-            <MudText Typo="Typo.h4">SideKick - @ViewModel.VersionNumber</MudText>
-            <MudText>@Resources.Operating_System - @ViewModel.OperatingSystem</MudText>
-            <MudText>@Resources.Environment_Versions - @ViewModel.EnvironmentVersion</MudText>
-            <MudDivider Class="my-1 mt-1" />
-            <MudText>@Resources.Project_Page - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.ProjectUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
-            <MudText>@Resources.Bug_Reports - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(ViewModel.BugUrl)))">@ViewModel.ProjectUrl</MudLink></MudText>
+            <MudText Typo="Typo.h4">SideKick - @VersionNumber</MudText>
+            <MudText>@Resources.Operating_System - @OperatingSystem</MudText>
+            <MudText>@Resources.Environment_Versions - @EnvironmentVersion</MudText>
+            <MudDivider Class="my-1" />
+            <MudText>@Resources.Project_Page - <MudLink @onclick="() => Navigate(ProjectUrl)">@ProjectUrl</MudLink></MudText>
+            <MudText>@Resources.Bug_Reports - <MudLink @onclick="() => Navigate(BugUrl)">@ProjectUrl</MudLink></MudText>
 
             <MudCard Class="mt-4">
                 <MudCardHeader>
@@ -19,9 +19,9 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    @foreach (var contributor in ViewModel.Contributors)
+                    @foreach (var contributor in Contributors)
                     {
-                        <MudText>@contributor.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(@contributor.Value)))">@contributor.Value</MudLink></MudText>
+                        <MudText>@contributor.Key - <MudLink @onclick="() => Navigate(contributor.Value)">@contributor.Value</MudLink></MudText>
                     }
                 </MudCardContent>
             </MudCard>
@@ -33,9 +33,9 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    @foreach (var translator in ViewModel.Translators)
+                    @foreach (var translator in Translators)
                     {
-                        <MudText>@translator.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(translator.Value)))">@translator.Value</MudLink></MudText>
+                        <MudText>@translator.Key - <MudLink @onclick="() => Navigate(translator.Value)">@translator.Value</MudLink></MudText>
                     }
                 </MudCardContent>
             </MudCard>
@@ -47,9 +47,9 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    @foreach (var thirdparty in ViewModel.ThirdParties)
+                    @foreach (var thirdparty in ThirdParties)
                     {
-                        <MudText>@thirdparty.Key - <MudLink @onclick="@(e => ViewModel.Hyperlink_RequestNavigate(new Uri(thirdparty.Value)))">@thirdparty.Value</MudLink></MudText>
+                        <MudText>@thirdparty.Key - <MudLink @onclick="() => Navigate(thirdparty.Value)">@thirdparty.Value</MudLink></MudText>
                     }
                 </MudCardContent>
             </MudCard>
@@ -58,8 +58,71 @@
 </SidekickLayout>
 
 @code {
-
     [Inject] private AboutResources Resources { get; set; }
-    [Inject] private AboutModel ViewModel { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private ILogger<About> Logger { get; set; }
 
+    public string VersionNumber { get; private set; }
+
+    public string OperatingSystem { get; private set; }
+
+    public string EnvironmentVersion { get; private set; }
+
+    public string ProjectUrl { get; private set; } = "https://github.com/domialex/Sidekick";
+
+    public string BugUrl { get; private set; } = "https://github.com/domialex/Sidekick/issues";
+
+    public Dictionary<string, string> Contributors { get; private set; } = new Dictionary<string, string>()
+    {
+        { "domialex", "https://github.com/domialex" },
+        { "leMicin", "https://github.com/leMicin" },
+        { "Blinke", "https://github.com/Blinke" },
+        { "Zalhera", "https://github.com/Zalhera" },
+        { "cmos12345", "https://github.com/cmos12345" },
+        { "kai-oswald", "https://github.com/kai-oswald" },
+        { "Arisix", "https://github.com/Arisix" },
+        { "dandrew-xx", "https://github.com/dandrew-xx" },
+        { "pobiega", "https://github.com/pobiega" },
+        { "lascoin", "https://github.com/lascoin" },
+        { "vestakip", "https://github.com/vestakip" },
+        { "PeteyPii", "https://github.com/PeteyPii" },
+        { "mwardrop", "https://github.com/mwardrop" }
+    };
+
+    public Dictionary<string, string> Translators { get; private set; } = new Dictionary<string, string>()
+    {
+        { "Taiwanese Mandarin - Arisix", "https://github.com/Arisix" }
+    };
+
+    public Dictionary<string, string> ThirdParties { get; private set; } = new Dictionary<string, string>()
+    {
+        { "MudBlazor", "https://github.com/Garderoben/MudBlazor" },
+        { "Fluent Assertions", "https://fluentassertions.com" },
+        { "Microsoft - ASP.NET", "https://asp.net" },
+        { "NeatInput", "https://github.com/LegendaryB/NeatInput" },
+        { "Serilog", "https://serilog.net" },
+        { "TextCopy", "https://github.com/CopyText/TextCopy" },
+    };
+
+    protected override Task OnInitializedAsync()
+    {
+        VersionNumber = GetType().Assembly.GetName().Version.ToString();
+
+        try
+        {
+            OperatingSystem = Environment.OSVersion.VersionString;
+            EnvironmentVersion = Environment.Version.ToString();
+        }
+        catch (Exception e)
+        {
+            Logger.LogInformation($"[About Page] - Failed to load Operating System details: " + e.Message);
+        }
+
+        return base.OnInitializedAsync();
+    }
+
+    public async Task Navigate(string uri)
+    {
+        await Mediator.Send(new Sidekick.Domain.App.Commands.OpenBrowserCommand(uri));
+    }
 }
