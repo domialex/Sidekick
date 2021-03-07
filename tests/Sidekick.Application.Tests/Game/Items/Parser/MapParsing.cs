@@ -74,9 +74,11 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
             Assert.Equal("Carcass Map", actual.Metadata.Type);
-            Assert.Contains("Area is influenced by The Elder", actual.Modifiers.Implicit.Select(x => x.Text));
+
+            var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
+            Assert.Contains("Area is influenced by The Elder", implicits);
             Assert.Equal(2, actual.Modifiers.Implicit.First(x=>x.Text.Contains("The Elder")).OptionValue.Value);
-            Assert.Contains("Map is occupied by The Purifier", actual.Modifiers.Implicit.Select(x => x.Text));
+            Assert.Contains("Map is occupied by The Purifier", implicits);
             Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
         }
 
@@ -88,7 +90,19 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
             Assert.Equal("Timeless Karui Emblem", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task ParseVortexPit()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(VortexPit));
+
             Assert.Equal(Category.Map, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Burial Chambers Map", actual.Metadata.Type);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.DoesNotContain("#% increased Area of Effect", explicits);
         }
 
         #region ItemText
@@ -190,6 +204,32 @@ Travel to this Map by using it in a personal Map Device. Maps can only be used o
 Timeless Karui Emblem
 --------
 Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.";
+
+        private const string VortexPit = @"Rarity: Rare
+Vortex Pit
+Burial Chambers Map
+--------
+Map Tier: 16
+Atlas Region: Lex Ejoris
+Item Quantity: +70% (augmented)
+Item Rarity: +31% (augmented)
+Monster Pack Size: +20% (augmented)
+Quality: +18% (augmented)
+--------
+Item Level: 82
+--------
+Area is influenced by The Elder (implicit)
+Map is occupied by The Eradicator (implicit)
+--------
+29% more Magic Monsters
+22% more Rare Monsters
+Monsters have 100% increased Area of Effect
+Monsters Poison on Hit
+Rare Monsters each have a Nemesis Mod
+Magic Monster Packs each have a Bloodline Mod
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.
+";
 
         #endregion
     }

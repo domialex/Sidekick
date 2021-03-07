@@ -56,5 +56,20 @@ namespace Sidekick.Extensions
 
             return HttpUtility.UrlDecode(input);
         }
+
+        /// <summary>
+        /// Encode a string in Base64 for URL transfer
+        /// </summary>
+        public static string EncodeBase64Url(this string input)
+        {
+            return input.EncodeBase64().EncodeUrl();
+        }
+        /// <summary>
+        /// Decodes a Url Encodeded in Base64 String
+        /// </summary>
+        public static string DecodeBase64Url(this string input)
+        {
+            return input.DecodeUrl().DecodeBase64();
+        }
     }
 }

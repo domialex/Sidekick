@@ -163,7 +163,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Modifiers
 
             if (string.IsNullOrEmpty(optionText))
             {
-                patternValue = HashPattern.Replace(patternValue, "(.*)");
+                patternValue = HashPattern.Replace(patternValue, "([-+0-9,.]+)");
             }
             else
             {

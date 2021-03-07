@@ -66,11 +66,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 if (arg is string)
                 {
-                    path += $"/{arg}";
+                    path += $"/{arg.ToString().EncodeBase64Url()}";
                 }
                 else
                 {
-                    path += $"/{JsonSerializer.Serialize(arg).EncodeBase64().EncodeUrl()}";
+                    path += $"/{JsonSerializer.Serialize(arg).EncodeBase64Url()}";
                 }
             }
 
@@ -87,7 +87,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.League => (800, 600),
                 View.Setup => (600, 715),
                 View.Initialization => (400, 215),
-                View.Map => (500, 250),
+                View.Map => (400, 300),
                 _ => (800, 600),
             };
         }

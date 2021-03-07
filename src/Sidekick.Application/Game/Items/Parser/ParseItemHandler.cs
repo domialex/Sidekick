@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Game.Items.Parser.Patterns;
-using Sidekick.Application.Game.Items.Parser.Tokenizers;
 using Sidekick.Domain.Game.Items;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Metadatas;
@@ -20,34 +19,36 @@ namespace Sidekick.Application.Game.Items.Parser
 {
     public class ParseItemHandler : ICommandHandler<ParseItemCommand, Item>
     {
+        private readonly IMediator mediator;
         private readonly ILogger logger;
         private readonly IItemMetadataProvider itemMetadataProvider;
         private readonly IModifierProvider modifierProvider;
         private readonly IParserPatterns patterns;
 
         public ParseItemHandler(
+            IMediator mediator,
             ILogger<ParseItemHandler> logger,
             IItemMetadataProvider itemMetadataProvider,
             IModifierProvider modifierProvider,
             IParserPatterns patterns)
         {
+            this.mediator = mediator;
             this.logger = logger;
             this.itemMetadataProvider = itemMetadataProvider;
             this.modifierProvider = modifierProvider;
             this.patterns = patterns;
         }
 
-        public Task<Item> Handle(ParseItemCommand request, CancellationToken cancellationToken)
+        public async Task<Item> Handle(ParseItemCommand request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.ItemText))
             {
-                return Task.FromResult<Item>(null);
+                return null;
             }
 
             try
             {
-                var itemText = new ItemNameTokenizer().CleanString(request.ItemText);
-                var parsingItem = new ParsingItem(itemText);
+                var parsingItem = await mediator.Send(new GetParsingItem(request.ItemText));
                 parsingItem.Metadata = itemMetadataProvider.Parse(parsingItem);
 
                 if (parsingItem.Metadata == null || (string.IsNullOrEmpty(parsingItem.Metadata.Name) && string.IsNullOrEmpty(parsingItem.Metadata.Type)))
@@ -65,12 +66,12 @@ namespace Sidekick.Application.Game.Items.Parser
                     Modifiers = ParseModifiers(parsingItem),
                 };
 
-                return Task.FromResult(item);
+                return item;
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Could not parse item.");
-                return Task.FromResult<Item>(null);
+                return null;
             }
         }
 

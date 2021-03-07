@@ -13,5 +13,6 @@ namespace Sidekick.Localization.Maps
 
         public string Title => localizer["Title"];
         public string Is_Safe => localizer["Is_Safe"];
+        public string Is_Unsafe => localizer["Is_Unsafe"];
     }
 }

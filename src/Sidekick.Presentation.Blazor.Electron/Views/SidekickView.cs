@@ -41,6 +41,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private void Browser_OnReadyToShow()
         {
             Browser.Show();
+
+            if(Type == ViewType.View)
+            {
+                Browser.Focus();
+            }
         }
 
         private void Browser_OnResize()
@@ -62,11 +67,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private void Browser_OnClosed()
         {
             WindowResizeCancellationTokenSource.Cancel();
-            Locator.Views.Remove(this);
             Browser.OnReadyToShow -= Browser_OnReadyToShow;
             Browser.OnResize -= Browser_OnResize;
             Browser.OnClosed -= Browser_OnClosed;
             Browser.OnBlur -= Browser_OnBlur;
+            Locator.Views.Remove(this);
         }
 
         public BrowserWindow Browser { get; }
