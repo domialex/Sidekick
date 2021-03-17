@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Minor Code Smell", "S1643:Strings should not be concatenated using '+' in a loop", Justification = "<Pending>", Scope = "member", Target = "~M:Sidekick.Presentation.Blazor.Electron.Views.ViewLocator.GetUrl(Sidekick.Domain.Views.View,System.Object[])~System.String")]
+[assembly: SuppressMessage("Minor Code Smell", "S1643:Strings should not be concatenated using '+' in a loop", Justification = "<Pending>", Scope = "member", Target = "~M:Sidekick.Presentation.Blazor.Electron.Views.ViewLocator.GetPath(Sidekick.Domain.Views.View,System.Object[])~System.String")]

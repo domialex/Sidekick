@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
+using Sidekick.Domain.Errors;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages.Commands;
@@ -41,14 +42,14 @@ namespace Sidekick.Application.Wikis
             if (item == null)
             {
                 // If the item can't be parsed, show an error
-                await viewLocator.Open(View.ParserError);
+                await viewLocator.Open(View.Error, ErrorType.Unparsable);
                 return false;
             }
 
             if (!await mediator.Send(new IsGameLanguageEnglishQuery()))
             {
                 // Only available for english language
-                await viewLocator.Open(View.AvailableInEnglishError);
+                await viewLocator.Open(View.Error, ErrorType.UnavailableTranslation);
                 return false;
             }
 
@@ -56,7 +57,7 @@ namespace Sidekick.Application.Wikis
             {
                 // Most items will open the basetype wiki link.
                 // Does not work for unique items that are not identified.
-                await viewLocator.Open(View.InvalidItemError);
+                await viewLocator.Open(View.Error, ErrorType.InvalidItem);
                 return false;
             }
 

@@ -18,7 +18,6 @@ using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Initialization.Queries;
-using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
@@ -38,10 +37,6 @@ namespace Sidekick.Application.Initialization
         private readonly IViewLocator viewLocator;
         private readonly IProcessProvider processProvider;
         private readonly IKeyboardProvider keyboardProvider;
-        private readonly IScrollProvider scrollProvider;
-        private readonly IMouseProvider mouseProvider;
-        private readonly IScreenProvider screenProvider;
-        private readonly IKeybindsExecutor keybindsExecutor;
         private readonly IKeybindProvider keybindProvider;
         private readonly IParserPatterns parserPatterns;
         private readonly IModifierProvider modifierProvider;
@@ -57,10 +52,6 @@ namespace Sidekick.Application.Initialization
             IViewLocator viewLocator,
             IProcessProvider processProvider,
             IKeyboardProvider keyboardProvider,
-            IScrollProvider scrollProvider,
-            IMouseProvider mouseProvider,
-            IScreenProvider screenProvider,
-            IKeybindsExecutor keybindsExecutor,
             IKeybindProvider keybindProvider,
             IParserPatterns parserPatterns,
             IModifierProvider modifierProvider,
@@ -75,10 +66,6 @@ namespace Sidekick.Application.Initialization
             this.viewLocator = viewLocator;
             this.processProvider = processProvider;
             this.keyboardProvider = keyboardProvider;
-            this.scrollProvider = scrollProvider;
-            this.mouseProvider = mouseProvider;
-            this.screenProvider = screenProvider;
-            this.keybindsExecutor = keybindsExecutor;
             this.keybindProvider = keybindProvider;
             this.parserPatterns = parserPatterns;
             this.modifierProvider = modifierProvider;
@@ -96,7 +83,7 @@ namespace Sidekick.Application.Initialization
             try
             {
                 Completed = 0;
-                Count = request.FirstRun ? 14 : 7;
+                Count = request.FirstRun ? 10 : 7;
 
                 // Report initial progress
                 await ReportProgress();
@@ -163,10 +150,6 @@ namespace Sidekick.Application.Initialization
                 {
                     await Run(() => processProvider.Initialize(cancellationToken));
                     await Run(() => keyboardProvider.Initialize());
-                    await Run(() => scrollProvider.Initialize());
-                    await Run(() => mouseProvider.Initialize());
-                    await Run(() => screenProvider.Initialize());
-                    await Run(() => keybindsExecutor.Initialize());
                     await Run(() => keybindProvider.Initialize());
                 }
 

@@ -14,10 +14,6 @@ namespace Sidekick.Domain.Views
         /// <param name="args">Arguments to pass to the view</param>
         Task Open(View view, params object[] args);
 
-        void Minimize(View view);
-
-        void Maximize(View view);
-
         /// <summary>
         /// Close the specified view
         /// </summary>

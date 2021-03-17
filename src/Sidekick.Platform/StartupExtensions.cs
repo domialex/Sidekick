@@ -3,10 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Platforms;
 using Sidekick.Platform.Clipboard;
 using Sidekick.Platform.Windows.Keyboards;
-using Sidekick.Platform.Windows.Mouse;
 using Sidekick.Platform.Windows.Processes;
-using Sidekick.Platform.Windows.Screen;
-using Sidekick.Platform.Windows.Scroll;
 
 namespace Sidekick.Platform
 {
@@ -20,9 +17,6 @@ namespace Sidekick.Platform
             {
                 services.AddSingleton<IProcessProvider, ProcessProvider>();
                 services.AddSingleton<IKeyboardProvider, KeyboardProvider>();
-                services.AddSingleton<IScrollProvider, ScrollProvider>();
-                services.AddSingleton<IMouseProvider, MouseProvider>();
-                services.AddSingleton<IScreenProvider, ScreenProvider>();
             }
 
             return services;

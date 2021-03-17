@@ -41,13 +41,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         private bool FirstView = true;
 
-        internal List<SidekickView> Views { get; set; } = new List<SidekickView>();
+        internal List<ViewInstance> Views { get; set; } = new List<ViewInstance>();
 
-        private static string GetUrl(View view, params object[] args)
+        private static string GetPath(View view, params object[] args)
         {
             var path = view switch
             {
                 View.About => "/about",
+                View.Error => "/error",
                 View.Settings => "/settings",
                 View.Price => "/price",
                 View.League => "/cheatsheets",
@@ -64,9 +65,16 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             foreach (var arg in args)
             {
-                if (arg is string)
+                if (arg is string stringArg)
                 {
-                    path += $"/{arg.ToString().EncodeBase64Url()}";
+                    if (stringArg.HasInvalidUrlCharacters())
+                    {
+                        path += $"/{stringArg.EncodeBase64Url()}";
+                    }
+                    else
+                    {
+                        path += $"/{stringArg}";
+                    }
                 }
                 else
                 {
@@ -77,7 +85,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             return path;
         }
 
-        private static (int Width, int Height) GetSize(View view)
+        internal static (int Width, int Height) GetSize(View view)
         {
             return view switch
             {
@@ -88,131 +96,93 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Setup => (600, 715),
                 View.Initialization => (400, 215),
                 View.Map => (400, 300),
+                View.Error => (300, 200),
                 _ => (800, 600),
             };
         }
 
-        private static async Task<BrowserWindow> CreateView(string path, int minWidth, int minHeight, ViewPreference preferences)
+        private static readonly List<View> OverlayViews = new()
         {
-            return await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            View.Map,
+            View.Price,
+            View.Error,
+        };
+        internal static bool IsOverlay(View view) => OverlayViews.Contains(view);
+
+        private async Task<BrowserWindow> CreateBrowser(View view, string path)
+        {
+            var preferences = await viewPreferenceRepository.Get(view);
+            var (width, height) = GetSize(view);
+            var isOverlay = IsOverlay(view);
+
+            var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
-                Width = preferences?.Width ?? minWidth,
-                Height = preferences?.Height ?? minHeight,
+                Width = preferences?.Width ?? width,
+                Height = preferences?.Height ?? height,
                 AcceptFirstMouse = true,
-                AlwaysOnTop = false,
+                AlwaysOnTop = isOverlay,
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                Maximizable = true,
-                Minimizable = true,
-                MinHeight = minHeight,
-                MinWidth = minWidth,
+                Maximizable = !isOverlay,
+                Minimizable = !isOverlay,
+                MinHeight = height,
+                MinWidth = width,
                 Resizable = true,
                 Show = false,
-                SkipTaskbar = false,
+                SkipTaskbar = isOverlay,
                 Transparent = true,
+                DarkTheme = true,
+                EnableLargerThanScreen = false,
                 WebPreferences = new WebPreferences()
                 {
                     NodeIntegration = false,
                 }
             }, $"http://localhost:{BridgeSettings.WebPort}{path}");
-        }
 
-        private static async Task<BrowserWindow> CreateOverlay(string path, int minWidth, int minHeight, ViewPreference preferences)
-        {
-            var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            await window.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
+
+            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
+            window.SetTitle("Sidekick");
+
+            // Remove menu to disable the default hotkeys such as Ctrl+W and Ctrl+R.
+            if (hostEnvironment.IsProduction())
             {
-                Width = preferences?.Width ?? minWidth,
-                Height = preferences?.Height ?? minHeight,
-                AcceptFirstMouse = true,
-                AlwaysOnTop = true,
-                Center = true,
-                Frame = false,
-                Fullscreenable = false,
-                Maximizable = false,
-                Minimizable = false,
-                MinHeight = minHeight,
-                MinWidth = minWidth,
-                Resizable = true,
-                Show = false,
-                SkipTaskbar = true,
-                Transparent = true,
-                WebPreferences = new WebPreferences()
-                {
-                    NodeIntegration = false,
-                }
-            }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+                window.RemoveMenu();
+            }
 
-            window.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
-            window.SetVisibleOnAllWorkspaces(true);
+            if (isOverlay)
+            {
+                window.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
+                window.SetVisibleOnAllWorkspaces(true);
+            }
+
+            if (FirstView)
+            {
+                FirstView = false;
+                await window.WebContents.Session.ClearCacheAsync();
+            }
+
 
             return window;
         }
 
         public async Task Open(View view, params object[] args)
         {
-            var url = GetUrl(view, args);
-            var (width, height) = GetSize(view);
+            var url = GetPath(view, args);
 
-            if (IsOpened(view))
-            {
-                var openedView = Views.FirstOrDefault(x => x.View == view);
-                if (openedView != null && openedView.Type == ViewType.View)
-                {
-                    openedView.Browser.LoadURL(url);
-                    openedView.Browser.Focus();
-                    return;
-                }
-                Close(view);
-            }
-
-            var preferences = await viewPreferenceRepository.Get(view);
-
-            BrowserWindow browserWindow = null;
-            var viewType = ViewType.View;
-            switch (view)
-            {
-                case View.About:
-                case View.League:
-                case View.Settings:
-                case View.Initialization:
-                case View.Setup:
-                    browserWindow = await CreateView(url, width, height, preferences);
-                    viewType = ViewType.View;
-                    break;
-                case View.Price:
-                case View.Map:
-                    browserWindow = await CreateOverlay(url, width, height, preferences);
-                    viewType = ViewType.Overlay;
-                    break;
-            }
-
-            if (browserWindow == null)
+            if (string.IsNullOrEmpty(url))
             {
                 return;
             }
 
-            if (FirstView)
+            if (IsOpened(view))
             {
-                FirstView = false;
-                await browserWindow.WebContents.Session.ClearCacheAsync();
+                Close(view);
             }
 
-            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
-            browserWindow.SetTitle("Sidekick");
-
-            // Remove menu to disable the default hotkeys such as Ctrl+W and Ctrl+R.
-            if (hostEnvironment.IsProduction())
-            {
-                browserWindow.RemoveMenu();
-            }
-
-            await browserWindow.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
-
-            var sidekickView = new SidekickView(this, view, viewType, browserWindow);
-
-            Views.Add(sidekickView);
+            Views.Add(new ViewInstance(this, view, await CreateBrowser(view, url)));
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View == view);
@@ -227,22 +197,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }
 
             Views.Clear();
-        }
-
-        public void Minimize(View view)
-        {
-            foreach (var instance in Views.Where(x => x.View == view))
-            {
-                instance.Browser.Minimize();
-            }
-        }
-
-        public void Maximize(View view)
-        {
-            foreach (var instance in Views.Where(x => x.View == view))
-            {
-                instance.Browser.Maximize();
-            }
         }
 
         public void Close(View view)

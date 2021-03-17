@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Localization.About;
 using Sidekick.Localization.Cheatsheets;
+using Sidekick.Localization.Errors;
 using Sidekick.Localization.Initialization;
 using Sidekick.Localization.Maps;
 using Sidekick.Localization.Platforms;
@@ -26,6 +27,8 @@ namespace Sidekick.Localization
             services.AddTransient<HeistResources>();
             services.AddTransient<IncursionResources>();
             services.AddTransient<MetamorphResources>();
+
+            services.AddTransient<ErrorResources>();
 
             services.AddTransient<InitializationResources>();
 

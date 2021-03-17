@@ -1,4 +1,3 @@
-@using Sidekick.Domain.Keybinds
 @using Sidekick.Domain.Platforms
 
 <div class="d-flex align-center">
@@ -28,7 +27,6 @@
     [Inject] private SettingsResources Resources { get; set; }
     [Inject] private SettingsViewModel ViewModel { get; set; }
     [Inject] private IKeyboardProvider Keyboard { get; set; }
-    [Inject] private IKeybindsExecutor Keybinds { get; set; }
     [Inject] private IKeybindProvider KeybindProvider { get; set; }
 
     [Parameter] public string Label { get; set; }

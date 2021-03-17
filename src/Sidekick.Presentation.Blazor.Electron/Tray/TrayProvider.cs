@@ -119,11 +119,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                             Label = "Check map from clipboard",
                             Click = async () =>
                             {
-                                var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.GetText()));
-                                if (item !=null && item.Properties.MapTier != 0)
-                                {
-                                    await viewLocator.Open(View.Map, item);
-                                }
+                                var itemText = await clipboardProvider.GetText();
+                                    await viewLocator.Open(View.Map, itemText);
                             }
                         }
                     }

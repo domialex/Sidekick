@@ -64,12 +64,21 @@ namespace Sidekick.Extensions
         {
             return input.EncodeBase64().EncodeUrl();
         }
+
         /// <summary>
         /// Decodes a Url Encodeded in Base64 String
         /// </summary>
         public static string DecodeBase64Url(this string input)
         {
             return input.DecodeUrl().DecodeBase64();
+        }
+
+        /// <summary>
+        /// Indicates if the string has invalid characters
+        /// </summary>
+        public static bool HasInvalidUrlCharacters(this string input)
+        {
+            return input.EncodeUrl() != input;
         }
     }
 }

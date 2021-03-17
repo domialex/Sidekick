@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Domain.Errors;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Trade.Commands;
 using Sidekick.Domain.Platforms;
@@ -37,7 +38,7 @@ namespace Sidekick.Application.Game.Trade
             if (item == null)
             {
                 // If the item can't be parsed, show an error
-                await viewLocator.Open(View.ParserError);
+                await viewLocator.Open(View.Error, ErrorType.Unparsable);
             }
             else
             {

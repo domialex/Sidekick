@@ -1,13 +1,11 @@
 
 <SidekickLayout>
-    <SidekickAppBar View="View.League"
-                    Title="@Title"
-                    ShowIcon="false">
+    <SidekickAppBar Title="@Title">
         <LeftContent>
             <MudIconButton Icon="@Icons.Material.Filled.Menu"
                            Color="Color.Inherit"
                            Edge="Edge.Start"
-                           OnClick="OpenMenu" />
+                           OnClick="ToggleMenu" />
         </LeftContent>
     </SidekickAppBar>
 
@@ -75,8 +73,8 @@
         await base.OnInitializedAsync();
     }
 
-    public void OpenMenu()
+    public void ToggleMenu()
     {
-        MenuOpened = true;
+        MenuOpened = !MenuOpened;
     }
 }

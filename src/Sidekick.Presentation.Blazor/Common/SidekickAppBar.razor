@@ -13,50 +13,39 @@
         }
         <MudAppBarSpacer />
         @RightContent
-        @if (View.HasValue)
+        @if (ViewInstance != null)
         {
-            <MudIconButton Icon="@Icons.Filled.Minimize" @onclick="Minimize" />
-            <MudIconButton Icon="@Icons.Filled.CropSquare" @onclick="Maximize" />
+            if (ViewInstance.Minimizable)
+            {
+                <MudIconButton Icon="@Icons.Filled.Minimize" @onclick="ViewInstance.Minimize" />
+            }
+            if (ViewInstance.Maximizable)
+            {
+                <MudIconButton Icon="@Icons.Filled.CropSquare" @onclick="ViewInstance.Maximize" />
+            }
             <MudIconButton Class="close-button" Icon="@Icons.Filled.Close" @onclick="Close" Edge="Edge.End" />
         }
     </MudAppBar>
 </div>
 
 @code {
-    [Inject] private IViewLocator ViewLocator { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
     [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public bool ShowIcon { get; set; } = true;
     [Parameter] public RenderFragment LeftContent { get; set; }
     [Parameter] public RenderFragment RightContent { get; set; }
     [Parameter] public string Title { get; set; }
-    [Parameter] public View? View { get; set; } = null;
 
-    public void Minimize()
-    {
-        if (View.HasValue)
-        {
-            ViewLocator.Minimize(View.Value);
-        }
-    }
-
-    public void Maximize()
-    {
-        if (View.HasValue)
-        {
-            ViewLocator.Maximize(View.Value);
-        }
-    }
-
-    public async void Close()
+    public Task Close()
     {
         if (OnClose.HasDelegate)
         {
-            await OnClose.InvokeAsync();
+            return OnClose.InvokeAsync();
         }
-        else if (View.HasValue)
+        else
         {
-            ViewLocator.Close(View.Value);
+            return ViewInstance.Close();
         }
     }
 }

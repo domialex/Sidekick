@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ElectronNET.API.Entities;
@@ -73,7 +74,9 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
 
             services.AddSingleton<TrayProvider>();
-            services.AddSingleton<IViewLocator, ViewLocator>();
+            services.AddSingleton<ViewLocator>();
+            services.AddSingleton<IViewLocator>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>());
+            services.AddScoped<IViewInstance>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>().Views.LastOrDefault());
             services.AddSingleton<IKeybindProvider, KeybindProvider>();
             services.AddSingleton<ElectronCookieProtection>();
         }
