@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="11.5.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
