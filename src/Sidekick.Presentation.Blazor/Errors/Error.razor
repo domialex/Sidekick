@@ -1,40 +1,33 @@
 @page "/error/{type}"
+@layout OverlayLayout
 
-<SidekickLayout>
-    <SidekickAppBar Title="@Resources.Title" />
-
-    <MudMainContent>
-        <MudContainer Class="py-2">
-            <MudPaper Class="pa-2 mb-4">
-                <MudGrid Class="align-center">
-                    <MudItem xs="3">
-                        <div class="d-flex justify-center">
-                            <MudIcon Size="Size.Large" Color="Color.Error" Icon="@Icons.Filled.Error" />
-                        </div>
-                    </MudItem>
-                    <MudItem xs="9">
-                        <MudText Align="Align.Center">
-                            @Text
-                        </MudText>
-                    </MudItem>
-                </MudGrid>
-            </MudPaper>
-            <div class="d-flex justify-end">
-                <MudButton Variant="Variant.Filled"
-                           Color="Color.Primary"
-                           OnClick="Close">
-                    @Resources.Close
-                </MudButton>
-            </div>
-        </MudContainer>
-    </MudMainContent>
-</SidekickLayout>
+<MudPaper Class="pa-2 mb-4 d-flex flex-row align-center">
+    <MudIcon Size="Size.Large" Color="Color.Error" Icon="@Icons.Filled.Error" Class="mr-4" />
+    <MudText Align="Align.Center">
+        @Text
+    </MudText>
+</MudPaper>
+<div class="d-flex justify-end">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Close">
+        @Resources.Close
+    </MudButton>
+</div>
 
 @code {
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ErrorResources Resources { get; set; }
 
+    [CascadingParameter] public WindowLayout Layout { get; set; }
+
     [Parameter] public string Type { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Layout.SetTitle(Resources.Title);
+        base.OnInitialized();
+    }
 
     private string Text => Type switch
     {
@@ -44,8 +37,8 @@
         _ => Resources.Error,
     };
 
-    public async Task Close()
+    public Task Close()
     {
-        await ViewInstance.Close();
+        return ViewInstance.Close();
     }
 }

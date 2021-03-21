@@ -2,7 +2,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Sidekick.Presentation.Blazor.Electron.App
+namespace Sidekick.Presentation.Blazor.Electron
 {
     /// <summary>
     /// Middleware that checks if the requests being made are from the Electron app and nothing else.

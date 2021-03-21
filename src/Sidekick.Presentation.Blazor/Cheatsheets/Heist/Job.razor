@@ -1,33 +1,27 @@
 
-<MudCard>
-    <MudCardHeader>
-        <CardHeaderContent>
-            <div class="d-flex align-center">
-                <div class="flex-grow-0 mr-2">
-                    <img src="/images/heist/@Model.Image" alt="@Model.JobName" />
-                </div>
-                <div class="flex-grow-1">
-                    <MudText Typo="Typo.h6">
-                        @Model.JobName
-                    </MudText>
-                </div>
-            </div>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent Class="pa-0">
-        <MudList Class="pa-0" Dense="true">
-            @foreach (var reward in Model.Rewards)
-            {
-                <Reward Model="reward" />
-            }
-            <MudDivider />
-            @foreach (var ally in Model.Allies)
-            {
-                <Ally Model="ally" />
-            }
-        </MudList>
-    </MudCardContent>
-</MudCard>
+<MudPaper Class="pa-2">
+    <div class="d-flex align-center">
+        <div class="flex-grow-0 mr-2">
+            <img src="/images/heist/@Model.Image" alt="@Model.JobName" />
+        </div>
+        <div class="flex-grow-1">
+            <MudText Typo="Typo.h6">
+                @Model.JobName
+            </MudText>
+        </div>
+    </div>
+    <MudList Dense="true" DisableGutters="true" DisablePadding="true">
+        @foreach (var reward in Model.Rewards)
+        {
+            <Reward Model="reward" />
+        }
+        <MudDivider Class="my-1" />
+        @foreach (var ally in Model.Allies)
+        {
+            <Ally Model="ally" />
+        }
+    </MudList>
+</MudPaper>
 
 @code {
     [Parameter] public HeistJob Model { get; set; }

@@ -1,45 +1,63 @@
-@page "/price/{encodedItem}"
+@page "/price/{itemText}"
 
 <MudLayout>
     <SidekickAppBar Title="@ViewModel.Item.Original.Name"></SidekickAppBar>
     <MudMainContent>
         <MudContainer Class="py-6">
-            <MudGrid>
-                <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
-                    <ItemView Show="ViewModel.Item" Filters="ViewModel.Filters" />
-                </MudItem>
-                <MudItem xs="4" style="height: 600px; overflow-y: hidden;">
-                    <ListView OnClick="ViewModel.Preview" Results="ViewModel.Results" />
-                    <MudCard>
-                        <MudCardContent Class="mt-2">
-                            @ViewModel.CountString
-                        </MudCardContent>
-                    </MudCard>
-                    <MudCard>
-                        <MudCardContent Class="mt-2">
-                            @ViewModel.PoeNinjaText
-                            @ViewModel.PredictionText
-                        </MudCardContent>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
-                    @if (ViewModel.HasPreviewItem)
-                    {
-                        <ItemPreview PriceItem="ViewModel.PreviewItem" />
-                    }
+            @if (ViewModel != null)
+            {
+                <MudGrid>
+                    <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
+                        <ItemView Show="ViewModel.Item" Filters="ViewModel.Filters" />
                     </MudItem>
-            </MudGrid>
+                    <MudItem xs="4" style="height: 600px; overflow-y: hidden;">
+                        <ListView OnClick="ViewModel.Preview" Results="ViewModel.Results" />
+                        <MudCard>
+                            <MudCardContent Class="mt-2">
+                                @ViewModel.CountString
+                            </MudCardContent>
+                        </MudCard>
+                        <MudCard>
+                            <MudCardContent Class="mt-2">
+                                @ViewModel.PoeNinjaText
+                                @ViewModel.PredictionText
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="4" style="height: 600px; overflow-y: scroll;">
+                        @if (ViewModel.HasPreviewItem)
+                        {
+                            <ItemPreview PriceItem="ViewModel.PreviewItem" />
+                        }
+                    </MudItem>
+                </MudGrid>
+            }
         </MudContainer>
     </MudMainContent>
 </MudLayout>
 
 @code {
-    [Parameter] public string EncodedItem { get; set; }
     [Inject] private PricesModel ViewModel { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private IViewLocator ViewLocator { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    [Parameter] public string ItemText { get; set; }
+
+    private Item Item { get; set; }
+
+    protected override async Task OnParametersSetAsync()
     {
-        await ViewModel.Initialize(EncodedItem);
+        Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
+
+        if (Item == null)
+        {
+            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewInstance.Close();
+            return;
+        }
+
+        await base.OnParametersSetAsync();
     }
 
 }

@@ -40,7 +40,10 @@ namespace Sidekick.Presentation.Blazor
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddRazorPages()
+                .AddRazorPages(options =>
+                {
+                    options.RootDirectory = "/Shared";
+                })
                 .AddFluentValidation(options =>
                 {
                     options.RegisterValidatorsFromAssembly(Assembly.Load("Sidekick.Presentation.Blazor"));

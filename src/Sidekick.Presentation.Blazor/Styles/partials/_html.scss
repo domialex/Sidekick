@@ -24,11 +24,6 @@ html {
     @media screen and (min-width: $screen-max) {
         font-size: $font-size-max;
     }
-
-    body {
-        // Use MudBlazor's container scrolling.
-        overflow: hidden;
-    }
 }
 
 ::-webkit-scrollbar {

@@ -1,0 +1,29 @@
+@using Sidekick.Domain.Apis.PoeNinja.Models
+@using Sidekick.Domain.Apis.PoeNinja.Queries
+
+@if (Price != null)
+{
+    <MudPaper Class="pa-2">
+        <MudTextField T="string"
+                      Variant="Variant.Filled"
+                      Label="Poe Ninja"
+                      Adornment="Adornment.End"
+                      AdornmentIcon="Icons.Material.Filled.VisibilityOff"
+                      Value="@("Test")" />
+    </MudPaper>
+}
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+
+    [Parameter] public Item Item { get; set; }
+
+    private NinjaPrice Price { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Price = await Mediator.Send(new GetPriceFromNinjaQuery(Item));
+
+        await base.OnParametersSetAsync();
+    }
+}

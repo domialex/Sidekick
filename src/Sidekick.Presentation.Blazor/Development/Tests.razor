@@ -1,44 +1,33 @@
-@page "/development/tests"
 @using Sidekick.Domain.Notifications.Commands
+@page "/development/tests"
+@layout DevelopmentLayout
 
-<DevelopmentLayout>
-    <MudAppBar Color="Color.Primary">
-        <MudText Typo="Typo.body1">Development Page</MudText>
-    </MudAppBar>
+<MudCard Class="mt-6">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">General</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudButton Variant="Variant.Filled" OnClick="ThrowException">Throw an exception</MudButton>
+    </MudCardContent>
+</MudCard>
 
-    <MudMainContent>
-        <MudContainer Class="py-6">
-
-            <MudCard Class="mt-6">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">General</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudButton Variant="Variant.Filled" OnClick="ThrowException">Throw an exception</MudButton>
-                </MudCardContent>
-            </MudCard>
-
-            <MudCard Class="mt-6">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">Notification</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudText>OpenNotificationHandler must be implemented.</MudText>
-                    <MudTextField Label="Title" @bind-Value="NotificationTitle" />
-                    <MudTextField Label="Message" @bind-Value="NotificationMessage" />
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Filled" OnClick="ShowNotification">Show notification</MudButton>
-                </MudCardActions>
-            </MudCard>
-
-        </MudContainer>
-    </MudMainContent>
-</DevelopmentLayout>
+<MudCard Class="mt-6">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Notification</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>OpenNotificationHandler must be implemented.</MudText>
+        <MudTextField Label="Title" @bind-Value="NotificationTitle" />
+        <MudTextField Label="Message" @bind-Value="NotificationMessage" />
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" OnClick="ShowNotification">Show notification</MudButton>
+    </MudCardActions>
+</MudCard>
 
 @code {
     [Inject] private IMediator Mediator { get; set; }

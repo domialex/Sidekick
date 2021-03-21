@@ -1,0 +1,17 @@
+@using Sidekick.Domain.Views
+
+<div class="d-flex justify-center align-center">
+    <img src="/images/orbs/ExaltedOrb.png" class="mr-4" />
+    <MudText Typo="Typo.h4"
+             Align="Align.Center">Sidekick</MudText>
+</div>
+
+@code {
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    [Parameter] public bool Minimizable { get; set; } = false;
+    [Parameter] public bool Maximizable { get; set; } = false;
+    [Parameter] public RenderFragment LeftContent { get; set; }
+    [Parameter] public RenderFragment RightContent { get; set; }
+    [Parameter] public string Title { get; set; }
+}

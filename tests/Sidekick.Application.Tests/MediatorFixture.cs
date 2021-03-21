@@ -64,9 +64,6 @@ namespace Sidekick.Application.Tests
             services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
             services.AddSingleton<IKeyboardProvider, MockKeyboardProvider>();
             services.AddSingleton<IProcessProvider, MockProcessProvider>();
-            services.AddSingleton<IScrollProvider, MockScrollProvider>();
-            services.AddSingleton<IMouseProvider, MockMouseProvider>();
-            services.AddSingleton<IScreenProvider, MockScreenProvider>();
 
             var serviceProvider = services.BuildServiceProvider();
 

@@ -1,38 +1,29 @@
 @page "/initialization"
+@layout EmptyLayout
 @implements IDisposable
 @using Sidekick.Domain.App.Commands
 @using System.ComponentModel
 
-<MudLayout>
-    <MudMainContent>
-        <MudContainer>
-            <div class="d-flex justify-center align-center">
-                <img src="/images/orbs/ExaltedOrb.png" class="mr-4" />
-                <MudText Typo="Typo.h4"
-                         Align="Align.Center">Sidekick</MudText>
-            </div>
-            <MudCard Class="my-4">
-                <MudCardContent>
-                    <MudText Typo="Typo.body1"
-                             Align="Align.Center">
-                        @ViewModel.Title
-                    </MudText>
-                    <MudProgressLinear Color="Color.Primary"
-                                       Value="ViewModel.Percentage"
-                                       Minimum="0"
-                                       Maximum="100" />
-                </MudCardContent>
-            </MudCard>
-            <div class="d-flex justify-end">
-                <MudButton OnClick="Exit"
-                           Variant="Variant.Text"
-                           Color="Color.Default">
-                    @Resources.Exit
-                </MudButton>
-            </div>
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+<SidekickLogo />
+<MudCard Class="my-4">
+    <MudCardContent>
+        <MudText Typo="Typo.body1"
+                 Align="Align.Center">
+            @ViewModel.Title
+        </MudText>
+        <MudProgressLinear Color="Color.Primary"
+                           Value="ViewModel.Percentage"
+                           Minimum="0"
+                           Maximum="100" />
+    </MudCardContent>
+</MudCard>
+<div class="d-flex justify-end">
+    <MudButton OnClick="Exit"
+               Variant="Variant.Text"
+               Color="Color.Default">
+        @Resources.Exit
+    </MudButton>
+</div>
 
 @code {
     [Inject] private InitializationResources Resources { get; set; }

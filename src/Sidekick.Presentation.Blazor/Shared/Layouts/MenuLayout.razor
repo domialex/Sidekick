@@ -1,0 +1,43 @@
+@inherits LayoutComponentBase
+
+<SidekickWrapper>
+    <SidekickAppBar Title="@Title" Minimizable="true" Maximizable="true">
+        <LeftContent>
+            @if (MenuIcon)
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                               Color="Color.Inherit"
+                               Edge="Edge.Start"
+                               OnClick="ToggleMenu" />
+            }
+        </LeftContent>
+    </SidekickAppBar>
+
+    <CascadingValue Value="this">
+        @Body
+    </CascadingValue>
+</SidekickWrapper>
+
+@code {
+    public string Title { get; private set; }
+
+    public bool MenuIcon { get; private set; } = true;
+    public bool MenuOpened { get; set; } = true;
+
+    public void SetTitle(string title)
+    {
+        Title = title;
+        StateHasChanged();
+    }
+
+    public void SetMenuIcon(bool menuIcon)
+    {
+        MenuIcon = menuIcon;
+        StateHasChanged();
+    }
+
+    public void ToggleMenu()
+    {
+        MenuOpened = !MenuOpened;
+    }
+}

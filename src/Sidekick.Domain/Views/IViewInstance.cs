@@ -8,19 +8,9 @@ namespace Sidekick.Domain.Views
     public interface IViewInstance
     {
         /// <summary>
-        /// Indicates if the view can be minimized
-        /// </summary>
-        bool Minimizable { get; }
-
-        /// <summary>
         /// Minimizes the view
         /// </summary>
         Task Minimize();
-
-        /// <summary>
-        /// Indicates if the view can be maximized
-        /// </summary>
-        bool Maximizable { get; }
 
         /// <summary>
         /// Maximizes the view

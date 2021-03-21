@@ -5,25 +5,31 @@
         @LeftContent
         @if (!string.IsNullOrEmpty(Title))
         {
-            if (ShowIcon)
-            {
-                <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
-            }
-            <MudText Typo="Typo.body1">@Title</MudText>
+            <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
+            <MudText Typo="Typo.body1">
+                @if (string.IsNullOrEmpty(Title))
+                {
+                    @:Sidekick
+                }
+                else
+                {
+                    @Title
+                }
+            </MudText>
         }
         <MudAppBarSpacer />
         @RightContent
         @if (ViewInstance != null)
         {
-            if (ViewInstance.Minimizable)
+            if (Minimizable)
             {
                 <MudIconButton Icon="@Icons.Filled.Minimize" @onclick="ViewInstance.Minimize" />
             }
-            if (ViewInstance.Maximizable)
+            if (Maximizable)
             {
                 <MudIconButton Icon="@Icons.Filled.CropSquare" @onclick="ViewInstance.Maximize" />
             }
-            <MudIconButton Class="close-button" Icon="@Icons.Filled.Close" @onclick="Close" Edge="Edge.End" />
+            <MudIconButton Class="close-button" Icon="@Icons.Filled.Close" @onclick="ViewInstance.Close" Edge="Edge.End" />
         }
     </MudAppBar>
 </div>
@@ -31,21 +37,9 @@
 @code {
     [Inject] private IViewInstance ViewInstance { get; set; }
 
-    [Parameter] public EventCallback OnClose { get; set; }
-    [Parameter] public bool ShowIcon { get; set; } = true;
+    [Parameter] public bool Minimizable { get; set; } = false;
+    [Parameter] public bool Maximizable { get; set; } = false;
     [Parameter] public RenderFragment LeftContent { get; set; }
     [Parameter] public RenderFragment RightContent { get; set; }
     [Parameter] public string Title { get; set; }
-
-    public Task Close()
-    {
-        if (OnClose.HasDelegate)
-        {
-            return OnClose.InvokeAsync();
-        }
-        else
-        {
-            return ViewInstance.Close();
-        }
-    }
 }

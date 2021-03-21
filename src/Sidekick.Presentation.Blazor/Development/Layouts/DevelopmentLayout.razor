@@ -1,4 +1,4 @@
-@page "/development"
+@inherits LayoutComponentBase
 
 <MudLayout>
     <MudAppBar Color="Color.Primary">
@@ -17,11 +17,7 @@
 
     <MudMainContent>
         <MudContainer Class="py-6">
-            @ChildContent
+            @Body
         </MudContainer>
     </MudMainContent>
 </MudLayout>
-
-@code {
-    [Parameter] public RenderFragment ChildContent { get; set; }
-}

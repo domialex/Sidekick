@@ -94,12 +94,20 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.Price => (1200, 660),
                 View.League => (800, 600),
                 View.Setup => (600, 715),
-                View.Initialization => (400, 215),
+                View.Initialization => (400, 260),
                 View.Map => (400, 300),
                 View.Error => (300, 200),
                 _ => (800, 600),
             };
         }
+
+        private static readonly List<View> ModalViews = new()
+        {
+            View.Initialization,
+            View.Setup,
+            View.Error,
+        };
+        internal static bool IsModal(View view) => ModalViews.Contains(view);
 
         private static readonly List<View> OverlayViews = new()
         {
@@ -114,6 +122,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             var preferences = await viewPreferenceRepository.Get(view);
             var (width, height) = GetSize(view);
             var isOverlay = IsOverlay(view);
+            var isModal = IsModal(view);
 
             var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
@@ -125,11 +134,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                Maximizable = !isOverlay,
-                Minimizable = !isOverlay,
+                Maximizable = !isOverlay && !isModal,
+                Minimizable = !isOverlay && !isModal,
                 MinHeight = height,
                 MinWidth = width,
-                Resizable = true,
+                Resizable = !isModal,
                 Show = false,
                 SkipTaskbar = isOverlay,
                 Transparent = true,
@@ -145,6 +154,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             // Make sure the title is always Sidekick. For keybind management we are watching for this value.
             window.SetTitle("Sidekick");
+            window.SetVisibleOnAllWorkspaces(true);
 
             // Remove menu to disable the default hotkeys such as Ctrl+W and Ctrl+R.
             if (hostEnvironment.IsProduction())
@@ -155,7 +165,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             if (isOverlay)
             {
                 window.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
-                window.SetVisibleOnAllWorkspaces(true);
             }
 
             if (FirstView)
@@ -163,7 +172,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 FirstView = false;
                 await window.WebContents.Session.ClearCacheAsync();
             }
-
 
             return window;
         }

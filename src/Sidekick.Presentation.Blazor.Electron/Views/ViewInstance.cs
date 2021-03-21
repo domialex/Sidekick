@@ -45,7 +45,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         private void Browser_OnReadyToShow()
         {
-            if (ViewLocator.IsOverlay(View))
+            if (ViewLocator.IsOverlay(View) || ViewLocator.IsModal(View))
             {
                 Browser.ShowInactive();
             }
@@ -84,29 +84,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             Locator.Views.Remove(this);
         }
 
-        private readonly List<View> MinimizableViews = new()
-        {
-            View.About,
-            View.League,
-            View.Settings,
-            View.Setup,
-        };
-        public bool Minimizable => MinimizableViews.Contains(View);
-
         public Task Minimize()
         {
             Browser.Minimize();
             return Task.CompletedTask;
         }
-
-        private readonly List<View> MaximizableViews = new()
-        {
-            View.About,
-            View.League,
-            View.Price,
-            View.Settings,
-        };
-        public bool Maximizable => MaximizableViews.Contains(View);
 
         public async Task Maximize()
         {

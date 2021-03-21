@@ -1,20 +1,16 @@
 
-<MudListItem Class="py-0">
+<MudListItem>
     <div class="d-flex align-center">
-        <div class="flex-grow-0">
-            <RewardValue Value="Model.Value" />
-        </div>
-        @if (Model.BehindFracturedWall)
-        {
-            <div class="flex-grow-0">
-                <MudTooltip Text="@Resources.FracturedWall">
-                    <img src="/images/delve/FracturedWall.png" class="mr-2" />
-                </MudTooltip>
-            </div>
-        }
+        <RewardValue Value="Model.Value" />
         <MudText Typo="Typo.body2">
             @Model.Name
         </MudText>
+        @if (Model.BehindFracturedWall)
+        {
+            <MudTooltip Text="@Resources.FracturedWall">
+                <img src="/images/delve/FracturedWall.png" class="mr-2" />
+            </MudTooltip>
+        }
     </div>
 </MudListItem>
 

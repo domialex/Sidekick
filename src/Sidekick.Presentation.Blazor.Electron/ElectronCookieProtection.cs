@@ -1,7 +1,7 @@
 using System;
 using ElectronNET.API.Entities;
 
-namespace Sidekick.Presentation.Blazor.Electron.App
+namespace Sidekick.Presentation.Blazor.Electron
 {
     /// <summary>
     /// Service that holds the cookie name and value for <see cref="ElectronCookieProtectionMiddleware"/>.
