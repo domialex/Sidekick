@@ -120,7 +120,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                             Click = async () =>
                             {
                                 var itemText = await clipboardProvider.GetText();
-                                    await viewLocator.Open(View.Map, itemText);
+                                await viewLocator.Open(View.Map, itemText);
                             }
                         }
                     }

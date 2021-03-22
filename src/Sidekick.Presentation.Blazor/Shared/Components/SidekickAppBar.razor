@@ -3,20 +3,17 @@
 <div class="application-nav-bar">
     <MudAppBar Color="Color.Primary" Fixed="false">
         @LeftContent
-        @if (!string.IsNullOrEmpty(Title))
-        {
-            <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
-            <MudText Typo="Typo.body1">
-                @if (string.IsNullOrEmpty(Title))
-                {
-                    @:Sidekick
-                }
-                else
-                {
-                    @Title
-                }
-            </MudText>
-        }
+        <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
+        <MudText Typo="Typo.body1">
+            @if (string.IsNullOrEmpty(Title))
+            {
+                @:Sidekick
+            }
+            else
+            {
+                @Title
+            }
+        </MudText>
         <MudAppBarSpacer />
         @RightContent
         @if (ViewInstance != null)

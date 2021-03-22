@@ -1,49 +1,42 @@
 @page "/map/{itemText}"
+@layout OverlayLayout
 
-<SidekickLayout>
-    <SidekickAppBar Title="@Resources.Title"></SidekickAppBar>
-
-    <MudMainContent>
-        <MudContainer Class="py-2">
-            @if (MapInfo != null)
-            {
-                if (MapInfo.DangerousMods.Count == 0)
-                {
-                    <MudPaper Outlined="true" Class="pa-2 mb-2">
-                        <MudText Typo="Typo.h3" Align="Align.Center" Color="Color.Success">
-                            <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Large"></MudIcon>
-                            @Resources.Is_Safe
-                        </MudText>
-                    </MudPaper>
-                }
-                else
-                {
-                    <MudPaper Outlined="true" Class="pa-2 mb-2">
-                        <MudText Typo="Typo.h3" Align="Align.Center" Color="Color.Error">
-                            <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Large"></MudIcon>
-                            @Resources.Is_Unsafe
-                        </MudText>
-                    </MudPaper>
-                    foreach (var mod in MapInfo.DangerousMods)
-                    {
-                        <MudText Typo="Typo.body1">
-                            <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Small" Color="Color.Error" Class="mr-2"></MudIcon>
-                            @mod
-                        </MudText>
-                    }
-                    <MudDivider Class="my-1" />
-                }
-                foreach (var mod in MapInfo.OkMods)
-                {
-                    <MudText Typo="Typo.body2">
-                        <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Small" Color="Color.Success" Class="mr-2"></MudIcon>
-                        @mod
-                    </MudText>
-                }
-            }
-        </MudContainer>
-    </MudMainContent>
-</SidekickLayout>
+@if (MapInfo != null)
+{
+    if (MapInfo.DangerousMods.Count == 0)
+    {
+        <MudPaper Outlined="true" Class="pa-2 mb-2">
+            <MudText Typo="Typo.h3" Align="Align.Center" Color="Color.Success">
+                <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Large"></MudIcon>
+                @Resources.Is_Safe
+            </MudText>
+        </MudPaper>
+    }
+    else
+    {
+        <MudPaper Outlined="true" Class="pa-2 mb-2">
+            <MudText Typo="Typo.h3" Align="Align.Center" Color="Color.Error">
+                <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Large"></MudIcon>
+                @Resources.Is_Unsafe
+            </MudText>
+        </MudPaper>
+        foreach (var mod in MapInfo.DangerousMods)
+        {
+            <MudText Typo="Typo.body1">
+                <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Small" Color="Color.Error" Class="mr-2"></MudIcon>
+                @mod
+            </MudText>
+        }
+        <MudDivider Class="my-1" />
+    }
+    foreach (var mod in MapInfo.OkMods)
+    {
+        <MudText Typo="Typo.body2">
+            <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Small" Color="Color.Success" Class="mr-2"></MudIcon>
+            @mod
+        </MudText>
+    }
+}
 
 @code {
     [Inject] private MapInfoResources Resources { get; set; }
@@ -51,10 +44,18 @@
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
 
+    [CascadingParameter] public OverlayLayout Layout { get; set; }
+
     [Parameter] public string ItemText { get; set; }
 
     private Item Item { get; set; }
     private MapInfo MapInfo { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Layout.SetTitle(Resources.Title);
+        base.OnInitialized();
+    }
 
     protected override async Task OnParametersSetAsync()
     {

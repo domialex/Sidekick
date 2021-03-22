@@ -29,9 +29,6 @@
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
     <ProjectReference Include="..\Sidekick.Platform\Sidekick.Platform.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Home\Components\" />
-  </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="xcopy &quot;$(ProjectDir)styles\site.css&quot; &quot;$(ProjectDir)wwwroot\css&quot; /Y" />
   </Target>

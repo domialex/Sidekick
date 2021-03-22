@@ -67,14 +67,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 if (arg is string stringArg)
                 {
-                    if (stringArg.HasInvalidUrlCharacters())
-                    {
-                        path += $"/{stringArg.EncodeBase64Url()}";
-                    }
-                    else
-                    {
-                        path += $"/{stringArg}";
-                    }
+                    path += $"/{stringArg.EncodeBase64Url()}";
                 }
                 else
                 {

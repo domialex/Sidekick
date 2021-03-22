@@ -62,7 +62,12 @@ namespace Sidekick.Extensions
         /// </summary>
         public static string EncodeBase64Url(this string input)
         {
-            return input.EncodeBase64().EncodeUrl();
+            if (input.HasInvalidUrlCharacters())
+            {
+                return $"xurl_{input.EncodeBase64().EncodeUrl()}";
+            }
+
+            return input;
         }
 
         /// <summary>
@@ -70,7 +75,12 @@ namespace Sidekick.Extensions
         /// </summary>
         public static string DecodeBase64Url(this string input)
         {
-            return input.DecodeUrl().DecodeBase64();
+            if (input.StartsWith("xurl_"))
+            {
+                return input.Substring(5).DecodeUrl().DecodeBase64();
+            }
+
+            return input;
         }
 
         /// <summary>
