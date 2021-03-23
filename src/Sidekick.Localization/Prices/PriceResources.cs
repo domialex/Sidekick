@@ -93,7 +93,8 @@ namespace Sidekick.Localization.Prices
         public string OverlayCharacter => localizer["OverlayCharacter"];
         public string OverlayItemLevel => localizer["OverlayItemLevel"];
         public string OverlayPrice => localizer["OverlayPrice"];
-        public string PoeNinjaString => localizer["PoeNinjaString"];
+        public string PoeNinja => localizer["PoeNinja"];
+        public string PoeNinjaLastUpdated => localizer["PoeNinjaLastUpdated"];
         public string PredictionString => localizer["PredictionString"];
         public string Requires => localizer["Requires"];
         public string Unidentified => localizer["Unidentified"];

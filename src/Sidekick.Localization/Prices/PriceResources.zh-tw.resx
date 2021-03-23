@@ -180,9 +180,6 @@
   <data name="OverlayPrice" xml:space="preserve">
     <value>價格</value>
   </data>
-  <data name="PoeNinjaString" xml:space="preserve">
-    <value>Poe.Ninja: {0}c - 最後更新時間: {1}</value>
-  </data>
   <data name="PredictionString" xml:space="preserve">
     <value>預測價格: {0} - 信心指數: {1}%</value>
   </data>

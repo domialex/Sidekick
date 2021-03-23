@@ -2,7 +2,7 @@ using System.ComponentModel;
 using Sidekick.Domain.Game.Modifiers.Models;
 using Sidekick.Domain.Game.Trade.Models;
 
-namespace Sidekick.Presentation.Blazor.Overlays.Prices
+namespace Sidekick.Presentation.Blazor.Prices
 {
     public class PriceFilter : INotifyPropertyChanged
     {

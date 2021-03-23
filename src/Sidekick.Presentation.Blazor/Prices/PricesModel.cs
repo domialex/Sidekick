@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Apis.PoeNinja.Queries;
 using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Models;
@@ -25,7 +24,7 @@ using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Extensions;
 
 
-namespace Sidekick.Presentation.Blazor.Overlays.Prices
+namespace Sidekick.Presentation.Blazor.Prices
 {
     public class PricesModel : IDisposable
     {
@@ -210,8 +209,6 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
             InitializeFilters();
 
             await UpdateQuery();
-
-            await GetPoeNinjaPrice();
 
             if (settings.Price_Prediction_Enable)
             {
@@ -720,22 +717,6 @@ namespace Sidekick.Presentation.Blazor.Overlays.Prices
         }
 
         public string PoeNinjaText { get; private set; }
-
-        private async Task GetPoeNinjaPrice()
-        {
-            PoeNinjaText = string.Empty;
-
-            var poeNinjaPrice = await mediator.Send(new GetPriceFromNinjaQuery(Item));
-            if (poeNinjaPrice != null)
-            {
-                PoeNinjaText = string.Format(resources.PoeNinjaString,
-                                             poeNinjaPrice.Price.ToString("N3"),
-                                             poeNinjaPrice.LastUpdated.ToString("t"));
-            }
-
-            //PropertyChanged?.Invoke(this,
-            // new PropertyChangedEventArgs(nameof(Prices)));
-        }
 
         public string PredictionText { get; private set; }
 

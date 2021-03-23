@@ -3,17 +3,15 @@
 
 @if (Price != null)
 {
-    <MudPaper Class="pa-2">
-        <MudTextField T="string"
-                      Variant="Variant.Filled"
-                      Label="Poe Ninja"
-                      Adornment="Adornment.End"
-                      AdornmentIcon="Icons.Material.Filled.VisibilityOff"
-                      Value="@("Test")" />
+    <MudPaper Class="pa-2 d-inline-block">
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-1">@Resources.PoeNinja</MudText>
+        <Sidekick.Presentation.Blazor.Prices.Components.PoePrice Value="Price.Price" />
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-1">@Resources.PoeNinjaLastUpdated : @Price.LastUpdated.ToString("t")</MudText>
     </MudPaper>
 }
 
 @code {
+    [Inject] private PriceResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
     [Parameter] public Item Item { get; set; }

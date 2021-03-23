@@ -363,8 +363,11 @@
   <data name="OverlayPrice" xml:space="preserve">
     <value>Price</value>
   </data>
-  <data name="PoeNinjaString" xml:space="preserve">
-    <value>Poe.Ninja: {0}c - Last updated: {1}</value>
+  <data name="PoeNinja" xml:space="preserve">
+    <value>Poe.Ninja</value>
+  </data>
+  <data name="PoeNinjaLastUpdated" xml:space="preserve">
+    <value>Last updated</value>
   </data>
   <data name="PredictionString" xml:space="preserve">
     <value>Prediction: {0} - Confidence: {1}%</value>

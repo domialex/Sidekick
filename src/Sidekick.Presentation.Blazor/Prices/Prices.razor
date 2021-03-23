@@ -1,6 +1,11 @@
 @page "/price/{itemText}"
 @layout OverlayLayout
 
+@if (Item != null)
+{
+    <PoeNinjaPrice Item="Item" />
+}
+
 @if (ViewModel != null && false)
 {
     <MudGrid>
@@ -31,30 +36,30 @@
 }
 
 @code {
-  [Inject] private PricesModel ViewModel { get; set; }
-  [Inject] private IMediator Mediator { get; set; }
-  [Inject] private IViewLocator ViewLocator { get; set; }
-  [Inject] private IViewInstance ViewInstance { get; set; }
+    [Inject] private PricesModel ViewModel { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private IViewLocator ViewLocator { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
-  [CascadingParameter] public OverlayLayout Layout { get; set; }
+    [CascadingParameter] public OverlayLayout Layout { get; set; }
 
-  [Parameter] public string ItemText { get; set; }
+    [Parameter] public string ItemText { get; set; }
 
-  private Item Item { get; set; }
+    private Item Item { get; set; }
 
-  protected override async Task OnInitializedAsync()
-  {
-      Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
+    protected override async Task OnInitializedAsync()
+    {
+        Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
 
-      if (Item == null)
-      {
-          await ViewLocator.Open(View.Error, ErrorType.Unparsable);
-          await ViewInstance.Close();
-          return;
-      }
+        if (Item == null)
+        {
+            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewInstance.Close();
+            return;
+        }
 
-      Layout.SetTitle(Item.Original.Name);
+        Layout.SetTitle(Item.Original.Name);
 
-      await base.OnInitializedAsync();
-  }
+        await base.OnInitializedAsync();
+    }
 }
