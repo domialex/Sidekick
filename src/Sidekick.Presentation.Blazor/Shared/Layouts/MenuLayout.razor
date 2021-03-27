@@ -1,7 +1,7 @@
 @inherits LayoutComponentBase
 
 <SidekickWrapper>
-    <SidekickAppBar Title="@Title" Minimizable="true" Maximizable="true">
+    <SidekickAppBar Minimizable="true" Maximizable="true">
         <LeftContent>
             @if (MenuIcon)
             {
@@ -19,16 +19,8 @@
 </SidekickWrapper>
 
 @code {
-    public string Title { get; private set; }
-
     public bool MenuIcon { get; private set; } = true;
     public bool MenuOpened { get; set; } = true;
-
-    public void SetTitle(string title)
-    {
-        Title = title;
-        StateHasChanged();
-    }
 
     public void SetMenuIcon(bool menuIcon)
     {

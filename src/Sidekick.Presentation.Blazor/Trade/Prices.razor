@@ -1,0 +1,40 @@
+@page "/price/{itemText}"
+@layout OverlayLayout
+
+<div class="d-flex flex-row align-start">
+    <PriceNinja Item="Item" Class="flex-grow-1" />
+    <PricePrediction Item="Item" Class="flex-grow-1" />
+</div>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private IViewLocator ViewLocator { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    [Parameter] public string ItemText { get; set; }
+
+    private Item Item { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
+
+        if (Item == null)
+        {
+            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewInstance.Close();
+            return;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Item != null)
+        {
+            await ViewInstance.SetTitle(Item.Original.Name);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

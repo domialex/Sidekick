@@ -95,8 +95,10 @@ namespace Sidekick.Localization.Prices
         public string OverlayPrice => localizer["OverlayPrice"];
         public string PoeNinja => localizer["PoeNinja"];
         public string PoeNinjaLastUpdated => localizer["PoeNinjaLastUpdated"];
-        public string PredictionString => localizer["PredictionString"];
+        public string Prediction => localizer["Prediction"];
+        public string PredictionConfidence(double confidence) => localizer["PredictionConfidence", confidence.ToString("0.##")];
         public string Requires => localizer["Requires"];
+        public string Trade => localizer["Trade"];
         public string Unidentified => localizer["Unidentified"];
         public string UpdateNow => localizer["UpdateNow"];
         public string UpdateSeconds => localizer["UpdateSeconds"];

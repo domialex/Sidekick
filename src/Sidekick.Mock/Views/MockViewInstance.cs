@@ -5,23 +5,22 @@ namespace Sidekick.Mock.Views
 {
     public class MockViewInstance : IViewInstance
     {
-        public View View => View.Error;
-
-        public bool Minimizable => false;
-
-        public bool Maximizable => false;
-
-        public Task Close()
+        public virtual Task Close()
         {
             return Task.CompletedTask;
         }
 
-        public Task Maximize()
+        public virtual Task Maximize()
         {
             return Task.CompletedTask;
         }
 
-        public Task Minimize()
+        public virtual Task Minimize()
+        {
+            return Task.CompletedTask;
+        }
+
+        public virtual Task SetTitle(string title)
         {
             return Task.CompletedTask;
         }

@@ -1,0 +1,39 @@
+@using Sidekick.Domain.Apis.PoePriceInfo.Queries
+
+@if (Loading || Item == null)
+{
+    <MudSkeleton Height="115px" Class="@Class" />
+}
+else if (Prediction != null)
+{
+    <MudPaper Class="@($"pa-2 {Class}")">
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-1">@Resources.Prediction</MudText>
+        <PriceRangeDisplay Min="Prediction.Min" Max="Prediction.Max" Currency="@Prediction.Currency" />
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-1">@Resources.PredictionConfidence(Prediction.ConfidenceScore)</MudText>
+    </MudPaper>
+}
+
+@code {
+    [Inject] private PriceResources Resources { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+
+    [Parameter] public string Class { get; set; }
+    [Parameter] public Item Item { get; set; }
+
+    private bool Loading { get; set; }
+    private Sidekick.Domain.Apis.PoePriceInfo.Models.PricePrediction Prediction { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        Loading = true;
+
+        if (Item != null)
+        {
+             Prediction = await Mediator.Send(new GetPricePredictionQuery(Item));
+        }
+
+        Loading = false;
+    }
+}

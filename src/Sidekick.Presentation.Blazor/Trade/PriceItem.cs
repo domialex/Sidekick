@@ -5,7 +5,7 @@ using Sidekick.Domain.Game.Trade.Models;
 using Sidekick.Localization.Prices;
 using Sidekick.Presentation.Blazor.Extensions;
 
-namespace Sidekick.Presentation.Blazor.Prices
+namespace Sidekick.Presentation.Blazor.Trade
 {
     public partial class PriceItem
     {

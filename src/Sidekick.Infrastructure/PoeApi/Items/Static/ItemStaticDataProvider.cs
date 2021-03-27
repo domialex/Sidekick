@@ -46,7 +46,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Static
 
         public string GetImage(string id)
         {
-            if (ImageUrls.TryGetValue(id, out var result))
+            if (!string.IsNullOrEmpty(id) && ImageUrls.TryGetValue(id, out var result))
             {
                 return result;
             }

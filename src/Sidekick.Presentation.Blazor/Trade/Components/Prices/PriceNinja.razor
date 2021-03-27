@@ -1,11 +1,15 @@
 @using Sidekick.Domain.Apis.PoeNinja.Models
 @using Sidekick.Domain.Apis.PoeNinja.Queries
 
-@if (Price != null)
+@if (Loading || Item == null)
 {
-    <MudPaper Class="pa-2 d-inline-block">
+    <MudSkeleton Height="115px" Class="@Class" />
+}
+else if (Price != null)
+{
+    <MudPaper Class="@($"pa-2 {Class}")">
         <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-1">@Resources.PoeNinja</MudText>
-        <Sidekick.Presentation.Blazor.Prices.Components.PoePrice Value="Price.Price" />
+        <PriceDisplay Value="Price.Price" />
         <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-1">@Resources.PoeNinjaLastUpdated : @Price.LastUpdated.ToString("t")</MudText>
     </MudPaper>
 }
@@ -14,14 +18,24 @@
     [Inject] private PriceResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
+    [Parameter] public string Class { get; set; }
     [Parameter] public Item Item { get; set; }
 
+    private bool Loading { get; set; }
     private NinjaPrice Price { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Price = await Mediator.Send(new GetPriceFromNinjaQuery(Item));
-
         await base.OnParametersSetAsync();
+
+        Loading = true;
+        StateHasChanged();
+
+        if (Item != null)
+        {
+            Price = await Mediator.Send(new GetPriceFromNinjaQuery(Item));
+        }
+
+        Loading = false;
     }
 }

@@ -19,14 +19,12 @@
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ErrorResources Resources { get; set; }
 
-    [CascadingParameter] public WindowLayout Layout { get; set; }
-
     [Parameter] public string Type { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Layout.SetTitle(Resources.Title);
-        base.OnInitialized();
+        await ViewInstance.SetTitle(Resources.Title);
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     private string Text => Type switch

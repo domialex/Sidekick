@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Initialization;
-using Sidekick.Presentation.Blazor.Prices;
 using Sidekick.Presentation.Blazor.Settings;
 
 namespace Sidekick.Presentation.Blazor
@@ -15,7 +14,6 @@ namespace Sidekick.Presentation.Blazor
             services.AddSingleton<IDebouncer, Debouncer>();
 
             services.AddScoped<SettingsViewModel>();
-            services.AddScoped<PricesModel>();
 
             // Mudblazor
             services

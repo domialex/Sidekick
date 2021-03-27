@@ -21,5 +21,12 @@ namespace Sidekick.Domain.Views
         /// Closes the view
         /// </summary>
         Task Close();
+
+        /// <summary>
+        ///  Allows to change the title of the view
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        Task SetTitle(string title);
     }
 }

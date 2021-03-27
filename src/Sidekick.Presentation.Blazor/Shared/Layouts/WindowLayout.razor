@@ -1,7 +1,7 @@
 @inherits LayoutComponentBase
 
 <SidekickWrapper>
-    <SidekickAppBar Title="@Title" Minimizable="true" Maximizable="true"></SidekickAppBar>
+    <SidekickAppBar Minimizable="true" Maximizable="true"></SidekickAppBar>
     <MudMainContent>
         <MudContainer Class="py-6">
             <CascadingValue Value="this">
@@ -10,13 +10,3 @@
         </MudContainer>
     </MudMainContent>
 </SidekickWrapper>
-
-@code {
-    public string Title { get; private set; }
-
-    public void SetTitle(string title)
-    {
-        Title = title;
-        StateHasChanged();
-    }
-}

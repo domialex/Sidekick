@@ -12,16 +12,20 @@
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
-    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
-
-    [CascadingParameter] MenuLayout Layout { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
     private HeistLeague ViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Layout.SetTitle(CheatsheetResources.Heist);
         ViewModel = await Mediator.Send(new GetHeistCheatsheetQuery());
         await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await ViewInstance.SetTitle(Resources.Heist);
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

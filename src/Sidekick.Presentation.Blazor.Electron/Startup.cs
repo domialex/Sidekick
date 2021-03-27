@@ -1,12 +1,10 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using ElectronNET.API.Entities;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +20,6 @@ using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Persistence;
 using Sidekick.Platform;
-using Sidekick.Presentation.Blazor.Electron.App;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
 using Sidekick.Presentation.Blazor.Electron.Views;
@@ -77,7 +74,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<ViewLocator>();
             services.AddSingleton<IViewLocator>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>());
-            services.AddScoped<IViewInstance>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>().Views.LastOrDefault());
+            services.AddScoped<IViewInstance, ViewInstance>();
             services.AddSingleton<IKeybindProvider, KeybindProvider>();
             services.AddSingleton<ElectronCookieProtection>();
         }

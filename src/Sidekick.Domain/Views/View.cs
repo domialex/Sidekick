@@ -7,7 +7,7 @@ namespace Sidekick.Domain.Views
         Initialization,
         League,
         Map,
-        Price,
+        Trade,
         Settings,
         Setup,
     }

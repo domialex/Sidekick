@@ -369,11 +369,17 @@
   <data name="PoeNinjaLastUpdated" xml:space="preserve">
     <value>Last updated</value>
   </data>
-  <data name="PredictionString" xml:space="preserve">
-    <value>Prediction: {0} - Confidence: {1}%</value>
+  <data name="Prediction" xml:space="preserve">
+    <value>PoePrices.info</value>
+  </data>
+  <data name="PredictionConfidence" xml:space="preserve">
+    <value>Confidence: {0}%</value>
   </data>
   <data name="Requires" xml:space="preserve">
     <value>Requires</value>
+  </data>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade</value>
   </data>
   <data name="Unidentified" xml:space="preserve">
     <value>Unidentified</value>

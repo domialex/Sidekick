@@ -1,6 +1,6 @@
 @using System.Collections.ObjectModel;
 <MudPaper Class="mt-4">
-    @foreach (PriceFilter filter in List)
+    @foreach (var filter in List)
     {
     <MudContainer Class="ma-0 pa-0">
         <MudCheckBox @bind-Checked="filter.Enabled" Color="Color.Primary" />

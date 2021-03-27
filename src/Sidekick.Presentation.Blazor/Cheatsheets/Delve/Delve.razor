@@ -12,16 +12,20 @@
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
-    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
-
-    [CascadingParameter] MenuLayout Layout { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
     private DelveLeague ViewModel { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Layout.SetTitle(CheatsheetResources.Delve);
         ViewModel = await Mediator.Send(new GetDelveCheatsheetQuery());
         await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await ViewInstance.SetTitle(Resources.Delve);
+        await base.OnAfterRenderAsync(firstRender);
     }
 }

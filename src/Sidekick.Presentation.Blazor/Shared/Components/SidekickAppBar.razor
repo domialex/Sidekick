@@ -5,14 +5,7 @@
         @LeftContent
         <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
         <MudText Typo="Typo.body1">
-            @if (string.IsNullOrEmpty(Title))
-            {
-                @:Sidekick
-            }
-            else
-            {
-                @Title
-            }
+            <span id="sidekick-appbar-title">Sidekick</span>
         </MudText>
         <MudAppBarSpacer />
         @RightContent

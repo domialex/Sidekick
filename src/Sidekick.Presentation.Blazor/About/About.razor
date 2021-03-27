@@ -53,8 +53,7 @@
     [Inject] private AboutResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private ILogger<About> Logger { get; set; }
-
-    [CascadingParameter] WindowLayout Layout { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
 
     public string VersionNumber { get; private set; }
 
@@ -67,7 +66,7 @@
     public string BugUrl { get; private set; } = "https://github.com/domialex/Sidekick/issues";
 
     public Dictionary<string, string> Contributors { get; private set; } = new Dictionary<string, string>()
-    {
+{
         { "domialex", "https://github.com/domialex" },
         { "leMicin", "https://github.com/leMicin" },
         { "Blinke", "https://github.com/Blinke" },
@@ -84,12 +83,12 @@
     };
 
     public Dictionary<string, string> Translators { get; private set; } = new Dictionary<string, string>()
-    {
+{
         { "Taiwanese Mandarin - Arisix", "https://github.com/Arisix" }
     };
 
     public Dictionary<string, string> ThirdParties { get; private set; } = new Dictionary<string, string>()
-    {
+{
         { "MudBlazor", "https://github.com/Garderoben/MudBlazor" },
         { "Fluent Assertions", "https://fluentassertions.com" },
         { "Microsoft - ASP.NET", "https://asp.net" },
@@ -98,9 +97,8 @@
         { "TextCopy", "https://github.com/CopyText/TextCopy" },
     };
 
-    protected override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        Layout.SetTitle(Resources.Title);
         VersionNumber = GetType().Assembly.GetName().Version.ToString();
 
         try
@@ -113,7 +111,13 @@
             Logger.LogInformation($"[About Page] - Failed to load Operating System details: " + e.Message);
         }
 
-        return base.OnInitializedAsync();
+        base.OnInitialized();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await ViewInstance.SetTitle(Resources.Title);
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     public async Task Navigate(string uri)

@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace Sidekick.Presentation.Blazor.Prices
+namespace Sidekick.Presentation.Blazor.Trade
 {
     public class PriceFilterCategory
     {

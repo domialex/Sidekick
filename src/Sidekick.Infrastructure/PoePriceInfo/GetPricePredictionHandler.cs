@@ -30,6 +30,11 @@ namespace Sidekick.Infrastructure.PoePriceInfo
 
         public async Task<PricePrediction> Handle(GetPricePredictionQuery request, CancellationToken cancellationToken)
         {
+            if (request.Item.Metadata.Rarity != Domain.Game.Items.Models.Rarity.Rare)
+            {
+                return null;
+            }
+
             var encodedItem = Convert.ToBase64String(Encoding.UTF8.GetBytes(request.Item.Original.Text));
             var response = await client.Client.GetAsync("?l=" + settings.LeagueId + "&i=" + encodedItem);
             var content = await response.Content.ReadAsStreamAsync();

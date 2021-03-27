@@ -24,7 +24,7 @@ using Sidekick.Presentation.Blazor.Debounce;
 using Sidekick.Presentation.Blazor.Extensions;
 
 
-namespace Sidekick.Presentation.Blazor.Prices
+namespace Sidekick.Presentation.Blazor.Trade
 {
     public class PricesModel : IDisposable
     {
@@ -209,12 +209,6 @@ namespace Sidekick.Presentation.Blazor.Prices
             InitializeFilters();
 
             await UpdateQuery();
-
-            if (settings.Price_Prediction_Enable)
-            {
-                await GetPredictionPrice();
-            }
-
         }
 
         private void InitializeFilters()
@@ -716,29 +710,6 @@ namespace Sidekick.Presentation.Blazor.Prices
             }
         }
 
-        public string PoeNinjaText { get; private set; }
-
-        public string PredictionText { get; private set; }
-
-        private async Task GetPredictionPrice()
-        {
-            PredictionText = string.Empty;
-
-            if (string.IsNullOrEmpty(PoeNinjaText))
-            {
-                var result = await mediator.Send(new GetPricePredictionQuery(Item));
-                if (result == null || (result.Min == 0 && result.Max == 0))
-                {
-                    return;
-                }
-
-                PredictionText = string.Format(
-                    resources.PredictionString,
-                    $"{result.Min:N1}-{result.Max:N1} {result.Currency}",
-                    result.ConfidenceScore.ToString("N1"));
-            }
-        }
-
         public bool FullyLoaded { get; private set; }
         public string CountString { get; private set; }
 
@@ -755,22 +726,6 @@ namespace Sidekick.Presentation.Blazor.Prices
         {
             PreviewItem = selectedItem;
             HasPreviewItem = PreviewItem != null;
-        }
-
-        private void PriceViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SelectedCategory))
-            {
-                if (string.IsNullOrEmpty(SelectedCategory))
-                {
-                    _ = itemCategoryRepository.Delete(Item.Original.Type);
-                }
-                else
-                {
-                    _ = itemCategoryRepository.SaveCategory(Item.Original.Type, SelectedCategory);
-                }
-                UpdateDebounce();
-            }
         }
 
         public void Dispose()

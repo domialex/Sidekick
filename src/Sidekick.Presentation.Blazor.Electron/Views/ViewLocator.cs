@@ -11,7 +11,6 @@ using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Presentation.Blazor.Debounce;
-using Sidekick.Presentation.Blazor.Electron.App;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
@@ -41,7 +40,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         private bool FirstView = true;
 
-        internal List<ViewInstance> Views { get; set; } = new List<ViewInstance>();
+        internal List<InternalViewInstance> Views { get; set; } = new List<InternalViewInstance>();
 
         private static string GetPath(View view, params object[] args)
         {
@@ -50,7 +49,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 View.About => "/about",
                 View.Error => "/error",
                 View.Settings => "/settings",
-                View.Price => "/price",
+                View.Trade => "/price",
                 View.League => "/cheatsheets",
                 View.Setup => "/setup",
                 View.Initialization => "/initialization",
@@ -84,7 +83,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             {
                 View.About => (800, 600),
                 View.Settings => (800, 600),
-                View.Price => (1200, 660),
+                View.Trade => (1200, 660),
                 View.League => (800, 600),
                 View.Setup => (600, 715),
                 View.Initialization => (400, 260),
@@ -105,7 +104,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         private static readonly List<View> OverlayViews = new()
         {
             View.Map,
-            View.Price,
+            View.Trade,
             View.Error,
         };
         internal static bool IsOverlay(View view) => OverlayViews.Contains(view);
@@ -183,7 +182,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Close(view);
             }
 
-            Views.Add(new ViewInstance(this, view, await CreateBrowser(view, url)));
+            Views.Add(new InternalViewInstance(this, view, await CreateBrowser(view, url)));
         }
 
         public bool IsOpened(View view) => Views.Any(x => x.View == view);

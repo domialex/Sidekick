@@ -17,9 +17,9 @@ namespace Sidekick.Application.Views
 
         public Task<bool> Handle(ClosePriceViewCommand request, CancellationToken cancellationToken)
         {
-            var result = viewLocator.IsOpened(View.Price);
+            var result = viewLocator.IsOpened(View.Trade);
 
-            viewLocator.Close(View.Price);
+            viewLocator.Close(View.Trade);
 
             return Task.FromResult(result);
         }
