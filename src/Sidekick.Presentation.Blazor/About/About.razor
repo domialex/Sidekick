@@ -1,16 +1,16 @@
 @page "/about"
 
-<MudText Typo="Typo.h4">SideKick - @VersionNumber</MudText>
-<MudText>@Resources.Operating_System - @OperatingSystem</MudText>
-<MudText>@Resources.Environment_Versions - @EnvironmentVersion</MudText>
-<MudDivider Class="my-1" />
-<MudText>@Resources.Project_Page - <MudLink @onclick="() => Navigate(ProjectUrl)">@ProjectUrl</MudLink></MudText>
-<MudText>@Resources.Bug_Reports - <MudLink @onclick="() => Navigate(BugUrl)">@ProjectUrl</MudLink></MudText>
+<MudText Typo="Typo.h1">Sidekick - @VersionNumber</MudText>
+<MudText Typo="Typo.subtitle1">@Resources.Operating_System - @OperatingSystem</MudText>
+<MudText Typo="Typo.subtitle1">@Resources.Environment_Versions - @EnvironmentVersion</MudText>
+<MudDivider Class="my-2" />
+<MudText Typo="Typo.subtitle2">@Resources.Project_Page - <MudLink @onclick="() => Navigate(ProjectUrl)">@ProjectUrl</MudLink></MudText>
+<MudText Typo="Typo.subtitle2">@Resources.Bug_Reports - <MudLink @onclick="() => Navigate(BugUrl)">@ProjectUrl</MudLink></MudText>
 
 <MudCard Class="mt-4">
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Contributors</MudText>
+            <MudText Typo="Typo.h3">@Resources.Contributors</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
@@ -24,7 +24,7 @@
 <MudCard Class="mt-4">
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Translators</MudText>
+            <MudText Typo="Typo.h3">@Resources.Translators</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
@@ -38,7 +38,7 @@
 <MudCard Class="mt-4">
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Third_Parties</MudText>
+            <MudText Typo="Typo.h3">@Resources.Third_Parties</MudText>
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>

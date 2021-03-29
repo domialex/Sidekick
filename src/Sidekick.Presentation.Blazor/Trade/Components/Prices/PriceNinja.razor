@@ -15,7 +15,7 @@ else if (Price != null)
 }
 
 @code {
-    [Inject] private PriceResources Resources { get; set; }
+    [Inject] private TradeResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
 
     [Parameter] public string Class { get; set; }

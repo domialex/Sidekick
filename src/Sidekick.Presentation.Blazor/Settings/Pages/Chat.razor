@@ -9,21 +9,15 @@
                        OnRemove="() => Remove(chatSetting)" />
 }
 
-<MudList Clickable="false"
-         Dense="true">
-    <MudListSubheader>@Resources.Chat_Commands</MudListSubheader>
-    <MudListItem>@Resources.Chat_Commands_Hideout</MudListItem>
-    <MudListItem>@Resources.Chat_Commands_Exit</MudListItem>
-</MudList>
+<MudText Typo="Typo.h5" Class="mb-2">@Resources.Chat_Commands</MudText>
+<MudText>@Resources.Chat_Commands_Hideout</MudText>
+<MudText>@Resources.Chat_Commands_Exit</MudText>
 
-<MudList Clickable="false"
-         Dense="true">
-    <MudListSubheader>@Resources.Chat_Wildcard</MudListSubheader>
-    <MudListItem>@Resources.Chat_Wildcard_Me_CharacterName</MudListItem>
-    <MudListItem>@Resources.Chat_Wildcard_LastWhisper_CharacterName</MudListItem>
-</MudList>
+<MudText Typo="Typo.h5" Class="mt-4 mb-2">@Resources.Chat_Wildcard</MudText>
+<MudText>@Resources.Chat_Wildcard_Me_CharacterName</MudText>
+<MudText>@Resources.Chat_Wildcard_LastWhisper_CharacterName</MudText>
 
-<div class="d-flex flex-row-reverse">
+<div class="d-flex flex-row-reverse mt-4">
     <MudButton Variant="Variant.Filled"
                Color="Color.Secondary"
                OnClick="Add">

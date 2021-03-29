@@ -4,23 +4,23 @@
 @using Sidekick.Domain.Platforms
 
 <MudCard>
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Language_Title</MudText>
+            <MudText Typo="Typo.h3">@Resources.Language_Title</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <UILanguageSelect @bind-Value="ViewModel.Language_UI"></UILanguageSelect>
         <GameLanguageSelect @bind-Value="ViewModel.Language_Parser"></GameLanguageSelect>
     </MudCardContent>
 </MudCard>
 <MudCard Class="mt-6">
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Character_Title</MudText>
+            <MudText Typo="Typo.h3">@Resources.Character_Title</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <LeagueSelect @bind-Value="ViewModel.LeagueId"></LeagueSelect>
         <MudTextField Label="@Resources.Character_Name"
                       Variant="Variant.Filled"
@@ -28,23 +28,23 @@
     </MudCardContent>
 </MudCard>
 <MudCard Class="mt-6">
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Cheatsheets</MudText>
+            <MudText Typo="Typo.h3">@Resources.Cheatsheets</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <KeybindEditor Label="@Resources.Cheatsheets_Key_Open"
                        @bind-Value="ViewModel.Cheatsheets_Key_Open" />
     </MudCardContent>
 </MudCard>
 <MudCard Class="mt-6">
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Group_Other</MudText>
+            <MudText Typo="Typo.h3">@Resources.Group_Other</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <div>
             <MudCheckBox Label="@Resources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
             <MudTooltip Text="@Resources.General_CopyUserIdToClipboard" Placement="Placement.Top">

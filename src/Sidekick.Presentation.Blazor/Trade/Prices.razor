@@ -1,19 +1,64 @@
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using System.Text.Json
+@using System.Text.RegularExpressions
+@using System.Threading.Tasks
+@using MediatR
+@using Microsoft.Extensions.Logging
+@using Sidekick.Domain.Game.Items.Metadatas
+@using Sidekick.Domain.Game.Items.Models
+@using Sidekick.Domain.Game.Languages
+@using Sidekick.Domain.Game.Modifiers.Models
+@using Sidekick.Domain.Game.Trade
+@using Sidekick.Domain.Game.Trade.Models
+@using Sidekick.Domain.Game.Trade.Queries
+@using Sidekick.Domain.Settings
+@using Sidekick.Domain.Settings.Commands
+@using Sidekick.Extensions
+@using Sidekick.Localization.Trade
+@using Sidekick.Presentation.Blazor.Debounce
+@using Sidekick.Presentation.Blazor.Extensions
 @page "/price/{itemText}"
 @layout OverlayLayout
 
-<div class="d-flex flex-row align-start">
-    <PriceNinja Item="Item" Class="flex-grow-1" />
-    <PricePrediction Item="Item" Class="flex-grow-1" />
+<div class="d-flex flex-row align-start mx-n1 mb-2">
+    <PriceNinja Item="Item" Class="flex-grow-1 mx-1" />
+    <PricePrediction Item="Item" Class="flex-grow-1 mx-1" />
 </div>
+
+<MudGrid Spacing="1">
+    @foreach (var result in Results)
+    {
+        <MudItem xs="12" lg="6">
+            <ItemComponent Item="result" />
+        </MudItem>
+    }
+</MudGrid>
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
+    [Inject] private ILogger<Prices> Logger { get; set; }
+    [Inject] private ITradeSearchService TradeSearchService { get; set; }
+    [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
+    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
+    [Inject] private ISidekickSettings Settings { get; set; }
+    [Inject] private TradeResources Resources { get; set; }
 
     [Parameter] public string ItemText { get; set; }
 
     private Item Item { get; set; }
+    private PropertyFilters PropertyFilters { get; set; }
+    private ModifierFilters ModifierFilters { get; set; }
+    private TradeSearchResult<string> QueryResult { get; set; }
+    private List<TradeItem> Results { get; set; }
+    private bool FullyLoaded => (Results?.Count ?? 0) == (QueryResult?.Result?.Count ?? 0);
+    private string CountString => string.Format(Resources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
+    private bool IsError { get; set; }
+    private bool IsFetching { get; set; }
+    private Uri Uri { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -27,6 +72,11 @@
             await ViewInstance.Close();
             return;
         }
+
+        PropertyFilters = await Mediator.Send(new GetPropertyFilters(Item));
+        ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
+
+        await UpdateQuery();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -36,5 +86,93 @@
             await ViewInstance.SetTitle(Item.Original.Name);
         }
         await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async Task UpdateQuery()
+    {
+        Results = new List<TradeItem>();
+        Uri = null;
+        IsError = false;
+        IsFetching = true;
+
+        // if (Filters != null)
+        // {
+        //     var settingMods = Item.Metadata.Category switch
+        //     {
+        //         Category.Accessory => Settings.Price_Mods_Accessory,
+        //         Category.Armour => Settings.Price_Mods_Armour,
+        //         Category.Flask => Settings.Price_Mods_Flask,
+        //         Category.Jewel => Settings.Price_Mods_Jewel,
+        //         Category.Map => Settings.Price_Mods_Map,
+        //         Category.Weapon => Settings.Price_Mods_Weapon,
+        //         _ => new List<string>(),
+        //     };
+        //
+        //     foreach (var filter in Filters.SelectMany(x => x.Filters))
+        //     {
+        //         if (settingMods.Contains(filter.Id))
+        //         {
+        //             if (!filter.Enabled)
+        //             {
+        //                 settingMods.Remove(filter.Id);
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if (filter.Enabled)
+        //             {
+        //                 settingMods.Add(filter.Id);
+        //             }
+        //         }
+        //     }
+        //
+        //     await Mediator.Send(new SaveSettingsCommand(Settings));
+        // }
+
+
+        if (Item.Metadata.Rarity == Rarity.Currency && ItemStaticDataProvider.GetId(Item) != null)
+        {
+            QueryResult = await TradeSearchService.SearchBulk(Item);
+        }
+        else
+        {
+            QueryResult = await TradeSearchService.Search(Item, PropertyFilters, ModifierFilters);
+        }
+
+        IsFetching = false;
+
+        if (QueryResult == null)
+        {
+            IsError = true;
+        }
+        else
+        {
+            Uri = await Mediator.Send(new GetTradeUriQuery(Item, QueryResult.Id));
+            await LoadMoreData();
+        }
+    }
+
+    public async Task LoadMoreData()
+    {
+        if (IsFetching)
+        {
+            return;
+        }
+
+        var ids = QueryResult.Result.Skip(Results?.Count ?? 0).Take(10).ToList();
+        if (ids.Count == 0)
+        {
+            return;
+        }
+
+        IsFetching = true;
+
+        var result = await TradeSearchService.GetResults(QueryResult.Id, ids, ModifierFilters);
+        if (result != null)
+        {
+            Results.AddRange(result);
+        }
+
+        IsFetching = false;
     }
 }

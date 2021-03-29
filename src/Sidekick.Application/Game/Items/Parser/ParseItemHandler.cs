@@ -48,7 +48,7 @@ namespace Sidekick.Application.Game.Items.Parser
 
             try
             {
-                var parsingItem = await mediator.Send(new GetParsingItem(request.ItemText));
+                var parsingItem = await mediator.Send(new GetParsingItem(request.ItemText), cancellationToken);
                 parsingItem.Metadata = itemMetadataProvider.Parse(parsingItem);
 
                 if (parsingItem.Metadata == null || (string.IsNullOrEmpty(parsingItem.Metadata.Name) && string.IsNullOrEmpty(parsingItem.Metadata.Type)))
@@ -75,7 +75,7 @@ namespace Sidekick.Application.Game.Items.Parser
             }
         }
 
-        private OriginalItem ParseOriginal(ParsingItem parsingItem)
+        private static OriginalItem ParseOriginal(ParsingItem parsingItem)
         {
             return new OriginalItem()
             {
@@ -210,7 +210,7 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             if (TryParseValue(patterns.Socket, parsingItem, out var match))
             {
-                var groups = match.Groups
+                var groups = match.Groups.Values
                     .Where(x => !string.IsNullOrEmpty(x.Value))
                     .Skip(1)
                     .Select((x, Index) => new
@@ -284,12 +284,12 @@ namespace Sidekick.Application.Game.Items.Parser
 
 
         #region Helpers
-        private bool GetBool(Regex pattern, ParsingItem parsingItem)
+        private static bool GetBool(Regex pattern, ParsingItem parsingItem)
         {
             return TryParseValue(pattern, parsingItem, out var _);
         }
 
-        private int GetInt(Regex pattern, ParsingItem parsingItem)
+        private static int GetInt(Regex pattern, ParsingItem parsingItem)
         {
             if (TryParseValue(pattern, parsingItem, out var match) && int.TryParse(match.Groups[1].Value, out var result))
             {
@@ -299,7 +299,7 @@ namespace Sidekick.Application.Game.Items.Parser
             return default;
         }
 
-        private int GetInt(Regex pattern, ParsingBlock parsingBlock)
+        private static int GetInt(Regex pattern, ParsingBlock parsingBlock)
         {
             if (TryParseValue(pattern, parsingBlock, out var match) && int.TryParse(match.Groups[1].Value, out var result))
             {
@@ -309,7 +309,7 @@ namespace Sidekick.Application.Game.Items.Parser
             return default;
         }
 
-        private double GetDouble(Regex pattern, ParsingBlock parsingBlock)
+        private static double GetDouble(Regex pattern, ParsingBlock parsingBlock)
         {
             if (TryParseValue(pattern, parsingBlock, out var match) && double.TryParse(match.Groups[1].Value.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out var result))
             {
@@ -319,7 +319,7 @@ namespace Sidekick.Application.Game.Items.Parser
             return default;
         }
 
-        private double GetDps(Regex pattern, ParsingBlock parsingBlock, double attacksPerSecond)
+        private static double GetDps(Regex pattern, ParsingBlock parsingBlock, double attacksPerSecond)
         {
             if (TryParseValue(pattern, parsingBlock, out var match))
             {
@@ -343,7 +343,7 @@ namespace Sidekick.Application.Game.Items.Parser
             return default;
         }
 
-        private bool TryParseValue(Regex pattern, ParsingItem parsingItem, out Match match)
+        private static bool TryParseValue(Regex pattern, ParsingItem parsingItem, out Match match)
         {
             foreach (var block in parsingItem.Blocks.Where(x => !x.Parsed))
             {
@@ -357,7 +357,7 @@ namespace Sidekick.Application.Game.Items.Parser
             return false;
         }
 
-        private bool TryParseValue(Regex pattern, ParsingBlock block, out Match match)
+        private static bool TryParseValue(Regex pattern, ParsingBlock block, out Match match)
         {
             foreach (var line in block.Lines.Where(x => !x.Parsed))
             {

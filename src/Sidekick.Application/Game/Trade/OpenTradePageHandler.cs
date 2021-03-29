@@ -38,7 +38,7 @@ namespace Sidekick.Application.Game.Trade
         public async Task<bool> Handle(OpenTradePageCommand request, CancellationToken cancellationToken)
         {
             var text = await clipboardProvider.Copy();
-            var item = await mediator.Send(new ParseItemCommand(text));
+            var item = await mediator.Send(new ParseItemCommand(text), cancellationToken);
 
             if (item != null)
             {
@@ -55,7 +55,7 @@ namespace Sidekick.Application.Game.Trade
                     id = result.Id;
                 }
 
-                await mediator.Send(new OpenBrowserCommand(new Uri($"{gameLanguageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{id}")));
+                await mediator.Send(new OpenBrowserCommand(new Uri($"{gameLanguageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{id}")), cancellationToken);
                 return true;
             }
 

@@ -510,4 +510,7 @@ Level3: 1-3 White Sockets</value>
   <data name="Sort_Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="AislingName" xml:space="preserve">
+    <value>Aisling</value>
+  </data>
 </root>

@@ -1,9 +1,9 @@
 @using Sidekick.Domain.Settings
 
 <MudCard Class="mb-6">
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Title</MudText>
+            <MudText Typo="Typo.h3">@Title</MudText>
         </CardHeaderContent>
         <CardHeaderActions>
             <MudIconButton OnClick="OnRemove"
@@ -11,7 +11,7 @@
                            Color="Color.Error"></MudIconButton>
         </CardHeaderActions>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <KeybindEditor Label="@Resources.Chat_Keybind"
                        @bind-Value="ChatSetting.Key" />
         <MudTextField Label="@Resources.Chat_Command"

@@ -1,0 +1,60 @@
+
+@font-face {
+    font-family: 'fontin';
+    src: url('/fonts/fontin-bold-webfont.woff2') format('woff2'), url('/fonts/fontin-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fontin';
+    src: url('/fonts/fontin-italic-webfont.woff2') format('woff2'), url('/fonts/fontin-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'fontin';
+    src: url('/fonts/fontin-regular-webfont.woff2') format('woff2'), url('/fonts/fontin-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fontin-smallcaps';
+    src: url('/fonts/fontin-smallcaps-webfont.woff2') format('woff2'), url('/fonts/fontin-smallcaps-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    // Responsive font-sizes
+    $font-size-enabled: false;
+
+    @if($font-size-enabled) {
+        $font-size-min: 16px;
+        $font-size-max: 16px;
+
+        $screen-max: 1280px;
+        $screen-min: 400px;
+
+        font-size: $font-size-min;
+
+        @media screen and (min-width: $screen-min) {
+            @function strip-unit($number) {
+                @if type-of($number) == 'number' and not unitless($number) {
+                    @return $number / ($number * 0 + 1);
+                }
+
+                @return $number;
+            }
+
+            font-size: calc(#{$font-size-min} + #{strip-unit($font-size-max - $font-size-min)} * (100vw - #{$screen-min}) / #{strip-unit($screen-max - $screen-min)});
+        }
+
+
+        @media screen and (min-width: $screen-max) {
+            font-size: $font-size-max;
+        }
+    }
+}

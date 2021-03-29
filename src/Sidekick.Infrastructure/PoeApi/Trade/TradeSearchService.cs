@@ -78,15 +78,15 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return null;
         }
 
-        public async Task<TradeSearchResult<string>> Search(Item item, List<PropertyFilter> propertyFilters = null, List<ModifierFilter> modifierFilters = null)
+        public async Task<TradeSearchResult<string>> Search(Item item, PropertyFilters propertyFilters = null, ModifierFilters modifierFilters = null)
         {
             try
             {
                 logger.LogInformation("Querying Trade API.");
 
                 var request = new QueryRequest();
-                SetFilters(request.Query.Filters, propertyFilters);
-                SetStats(request.Query.Stats, modifierFilters);
+                SetPropertyFilters(request.Query.Filters, propertyFilters);
+                SetModifierFilters(request.Query.Stats, modifierFilters);
 
                 // Auto Search 5+ Links
                 var highestCount = item.Sockets
@@ -157,17 +157,21 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return null;
         }
 
-        private void SetFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
+        private static void SetPropertyFilters(SearchFilters filters, PropertyFilters propertyFilters)
         {
-            if (propertyFilters == null)
-            {
-                return;
-            }
+            if (propertyFilters == null) return;
 
+            SetPropertyFilters(filters, propertyFilters.Armour);
+            SetPropertyFilters(filters, propertyFilters.Weapon);
+            SetPropertyFilters(filters, propertyFilters.Map);
+            SetPropertyFilters(filters, propertyFilters.Misc);
+        }
+
+        private static void SetPropertyFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
+        {
             foreach (var propertyFilter in propertyFilters)
             {
-                if (!propertyFilter.Enabled
-                    && propertyFilter.Type != PropertyFilterType.Misc_Corrupted)
+                if (!propertyFilter.Enabled && propertyFilter.Type != PropertyFilterType.Misc_Corrupted)
                 {
                     continue;
                 }
@@ -194,22 +198,22 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                         break;
 
                     // Influence
-                    case PropertyFilterType.Influence_Crusader:
+                    case PropertyFilterType.Misc_Influence_Crusader:
                         filters.MiscFilters.Filters.CrusaderItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Elder:
+                    case PropertyFilterType.Misc_Influence_Elder:
                         filters.MiscFilters.Filters.ElderItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Hunter:
+                    case PropertyFilterType.Misc_Influence_Hunter:
                         filters.MiscFilters.Filters.HunterItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Redeemer:
+                    case PropertyFilterType.Misc_Influence_Redeemer:
                         filters.MiscFilters.Filters.RedeemerItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Shaper:
+                    case PropertyFilterType.Misc_Influence_Shaper:
                         filters.MiscFilters.Filters.ShaperItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Warlord:
+                    case PropertyFilterType.Misc_Influence_Warlord:
                         filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption(propertyFilter);
                         break;
 
@@ -264,7 +268,19 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             }
         }
 
-        private void SetStats(List<StatFilterGroup> stats, List<ModifierFilter> modifierFilters)
+        private static void SetModifierFilters(List<StatFilterGroup> stats, ModifierFilters modifierFilters)
+        {
+            if (modifierFilters == null) return;
+
+            SetModifierFilters(stats, modifierFilters.Pseudo);
+            SetModifierFilters(stats, modifierFilters.Enchant);
+            SetModifierFilters(stats, modifierFilters.Implicit);
+            SetModifierFilters(stats, modifierFilters.Explicit);
+            SetModifierFilters(stats, modifierFilters.Crafted);
+            SetModifierFilters(stats, modifierFilters.Fractured);
+        }
+
+        private static void SetModifierFilters(List<StatFilterGroup> stats, List<ModifierFilter> modifierFilters)
         {
             if (modifierFilters == null)
             {
@@ -276,14 +292,14 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 Type = StatType.And,
                 Filters = modifierFilters.ConvertAll(x => new StatFilter()
                 {
-                    Disabled = false,
-                    Id = x.Id,
+                    Disabled = !x.Enabled,
+                    Id = x.Modifier.Id,
                     Value = new SearchFilterValue(x),
                 })
             });
         }
 
-        public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, List<ModifierFilter> modifierFilters = null)
+        public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, ModifierFilters modifierFilters = null)
         {
             try
             {
@@ -292,7 +308,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 var pseudo = string.Empty;
                 if (modifierFilters != null)
                 {
-                    pseudo = string.Join("", modifierFilters.Where(x => x.Id.StartsWith("pseudo.")).Select(x => $"&pseudos[]={x.Id}"));
+                    pseudo = string.Join("", modifierFilters.Pseudo.Select(x => $"&pseudos[]={x.Modifier.Id}"));
                 }
 
                 var response = await poeTradeClient.HttpClient.GetAsync(gameLanguageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId + pseudo);
@@ -368,37 +384,37 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             };
 
             ParseMods(modifierProvider,
-                item.Modifiers.Crafted,
+                item.Modifiers?.Crafted,
                 result.Item.CraftedMods,
                 result.Item.Extended.Mods?.Crafted,
                 ParseHash(result.Item.Extended.Hashes?.Crafted));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Enchant,
+                item.Modifiers?.Enchant,
                 result.Item.EnchantMods,
                 result.Item.Extended.Mods?.Enchant,
                 ParseHash(result.Item.Extended.Hashes?.Enchant));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Explicit,
+                item.Modifiers?.Explicit,
                 result.Item.ExplicitMods,
                 result.Item.Extended.Mods?.Explicit,
                 ParseHash(result.Item.Extended.Hashes?.Explicit));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Implicit,
+                item.Modifiers?.Implicit,
                 result.Item.ImplicitMods,
                 result.Item.Extended.Mods?.Implicit,
                 ParseHash(result.Item.Extended.Hashes?.Implicit));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Pseudo,
+                item.Modifiers?.Pseudo,
                 result.Item.PseudoMods,
                 result.Item.Extended.Mods?.Pseudo,
                 ParseHash(result.Item.Extended.Hashes?.Pseudo));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Fractured,
+                item.Modifiers?.Fractured,
                 result.Item.FracturedMods,
                 result.Item.Extended.Mods?.Fractured,
                 ParseHash(result.Item.Extended.Hashes?.Fractured));
@@ -406,7 +422,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return item;
         }
 
-        private List<LineContentValue> ParseHash(List<List<JsonElement>> values)
+        private static List<LineContentValue> ParseHash(List<List<JsonElement>> values)
         {
             var result = new List<LineContentValue>();
             if (values != null)
@@ -428,9 +444,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return result;
         }
 
-        private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
+        private static List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
-            if (lines == null) return null;
+            if (lines == null) return new List<LineContent>();
 
             return lines
                 .OrderBy(x => x.Order)
@@ -485,7 +501,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 .ToList();
         }
 
-        private void ParseMods(IModifierProvider modifierProvider, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
+        private static void ParseMods(IModifierProvider modifierProvider, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
         {
             if (modifiers == null || mods == null || hashes == null)
             {
@@ -508,7 +524,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             }
         }
 
-        private List<Socket> ParseSockets(List<ResultSocket> sockets)
+        private static List<Socket> ParseSockets(List<ResultSocket> sockets)
         {
             return sockets.ConvertAll(x => new Socket()
             {

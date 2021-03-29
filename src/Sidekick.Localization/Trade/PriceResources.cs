@@ -1,12 +1,12 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Localization.Prices
+namespace Sidekick.Localization.Trade
 {
-    public class PriceResources
+    public class TradeResources
     {
-        private readonly IStringLocalizer<PriceResources> localizer;
+        private readonly IStringLocalizer<TradeResources> localizer;
 
-        public PriceResources(IStringLocalizer<PriceResources> localizer)
+        public TradeResources(IStringLocalizer<TradeResources> localizer)
         {
             this.localizer = localizer;
         }
@@ -19,6 +19,7 @@ namespace Sidekick.Localization.Prices
         public string Age_Minutes => localizer["Age_Minutes"];
         public string Age_Now => localizer["Age_Now"];
         public string Age_Seconds => localizer["Age_Seconds"];
+        public string Class => localizer["Class"];
         public string Class_Accessory => localizer["Class_Accessory"];
         public string Class_AccessoryAmulet => localizer["Class_AccessoryAmulet"];
         public string Class_AccessoryBelt => localizer["Class_AccessoryBelt"];

@@ -1,0 +1,15 @@
+@using Sidekick.Domain.Game.Items.Models;
+
+@foreach (var socketGroup in Item.Sockets.OrderBy(x => x.Group).GroupBy(x => x.Group))
+{
+    <div class="group">
+        @foreach (Socket socket in socketGroup)
+        {
+            <MudIcon Icon="@Icons.Material.Outlined.PanoramaFishEye" class="@($"socket-{socket.Colour}")" />
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public Item Item { get; set; }
+}

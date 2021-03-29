@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sidekick.Domain.Game.Trade.Models;
-using Sidekick.Localization.Prices;
+using Sidekick.Localization.Trade;
 using Sidekick.Presentation.Blazor.Extensions;
 
 namespace Sidekick.Presentation.Blazor.Trade
 {
     public partial class PriceItem
     {
-        private readonly PriceResources resources;
-
-        public PriceItem(TradeItem result, PriceResources resources)
+        public PriceItem(TradeItem result, TradeResources resources)
         {
             Item = result;
-            this.resources = resources;
 
             if (Item.RequirementContents != null)
             {
@@ -63,39 +59,5 @@ namespace Sidekick.Presentation.Blazor.Trade
 
         public string Color => Item?.Metadata.Rarity.GetColor();
 
-        public string Amount
-        {
-            get
-            {
-                if (Item.Price == null)
-                {
-                    return null;
-                }
-
-                if (Item.Price.Amount % 1 == 0)
-                {
-                    return Item.Price.Amount.ToString("N0");
-                }
-                return Item.Price.Amount.ToString("N2");
-            }
-        }
-        public string ImageUrl { get; set; }
-        public string Age
-        {
-            get
-            {
-                var span = DateTimeOffset.Now - Item.Price.Date;
-
-                if (span.Days > 1) return string.Format(resources.Age_Days, span.Days);
-                if (span.Days == 1) return string.Format(resources.Age_Day, span.Days);
-                if (span.Hours > 1) return string.Format(resources.Age_Hours, span.Hours);
-                if (span.Hours == 1) return string.Format(resources.Age_Hour, span.Hours);
-                if (span.Minutes > 1) return string.Format(resources.Age_Minutes, span.Minutes);
-                if (span.Minutes == 1) return string.Format(resources.Age_Minute, span.Minutes);
-                if (span.Seconds > 10) return string.Format(resources.Age_Seconds, span.Seconds);
-
-                return resources.Age_Now;
-            }
-        }
     }
 }

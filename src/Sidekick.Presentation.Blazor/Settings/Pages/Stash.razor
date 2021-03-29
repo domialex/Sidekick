@@ -3,12 +3,12 @@
 @using Sidekick.Presentation.Blazor.Settings.Components
 
 <MudCard>
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Group_Keybinds</MudText>
+            <MudText Typo="Typo.h3">@Resources.Group_Keybinds</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <KeybindEditor Label="@Resources.Stash_Key_Left"
                        @bind-Value="ViewModel.Stash_Key_Left" />
         <KeybindEditor Label="@Resources.Stash_Key_Right"
@@ -16,12 +16,12 @@
     </MudCardContent>
 </MudCard>
 <MudCard Class="mt-6">
-    <MudCardHeader>
+    <MudCardHeader Class="pb-0">
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">@Resources.Group_Other]</MudText>
+            <MudText Typo="Typo.h3">@Resources.Group_Other</MudText>
         </CardHeaderContent>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="pt-0">
         <div>
             <MudCheckBox Label="@Resources.Stash_EnableCtrlScroll"
                          @bind-Checked="@ViewModel.Stash_EnableCtrlScroll"></MudCheckBox>

@@ -1,13 +1,15 @@
+using Sidekick.Domain.Game.Modifiers.Models;
+
 namespace Sidekick.Domain.Game.Trade.Models
 {
     public class ModifierFilter
     {
-        public string Id { get; set; }
+        public Modifier Modifier { get; set; }
+
+        public bool Enabled { get; set; }
 
         public double? Min { get; set; }
 
         public double? Max { get; set; }
-
-        public object Value { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade.Filters
 
         public SearchFilterValue(ModifierFilter filter)
         {
-            Option = filter.Value;
+            Option = filter.Modifier.OptionValue;
             Min = filter.Min;
             Max = filter.Max;
         }

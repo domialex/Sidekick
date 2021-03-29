@@ -1,0 +1,31 @@
+
+<MudPaper Class="pa-2">
+    <MudGrid Class="align-center" Spacing="1">
+        <MudItem xs="3" Class="text-center">
+            <InfluencesComponent Item="Item" />
+            <div>
+                <img src="@Item.Image" />
+            </div>
+            <SocketsComponent Item="Item" />
+        </MudItem>
+        <MudItem xs="6">
+            @if (!string.IsNullOrEmpty(Item.Original.Name))
+            {
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="font-smallcaps">@Item.Original.Name</MudText>
+            }
+            @if (!string.IsNullOrEmpty(Item.Original.Type))
+            {
+                <MudText Typo="Typo.h5" Align="Align.Center" Class="font-smallcaps">@Item.Original.Type</MudText>
+            }
+        </MudItem>
+        <MudItem xs="3">
+            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
+            <MudText Typo="Typo.body2" Align="Align.Center">@Item.Price.AccountName</MudText>
+            <PriceAge Date="Item.Price.Date" />
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code{
+    [Parameter] public TradeItem Item { get; set; }
+}
