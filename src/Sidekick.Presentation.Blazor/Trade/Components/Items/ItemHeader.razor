@@ -2,15 +2,11 @@
 <div class="header @BackgroundClass">
     @if (!string.IsNullOrEmpty(Item.Original.Name))
     {
-        <div class="name d-flex align-center justify-center">
-            <MudText Typo="Typo.h6" Align="Align.Center" Class="font-smallcaps" Style="@LabelStyle">@Item.Original.Name</MudText>
-        </div>
+        <MudText Typo="Typo.h6" Align="Align.Center" Class="name font-smallcaps" Style="@LabelStyle">@Item.Original.Name</MudText>
     }
     @if (!string.IsNullOrEmpty(Item.Original.Type))
     {
-        <div class="type d-flex align-center justify-center">
-            <MudText Typo="Typo.h6" Align="Align.Center" Class="font-smallcaps" Style="@LabelStyle">@Item.Original.Type</MudText>
-        </div>
+        <MudText Typo="Typo.h6" Align="Align.Center" Class="type font-smallcaps" Style="@LabelStyle">@Item.Original.Type</MudText>
     }
 </div>
 
