@@ -5,26 +5,4 @@
     margin: 4px;
     border: 1px solid #fff;
     line-height: 1;
-
-    ::deep {
-        .socket-Blue {
-            color: #2E86C1;
-        }
-
-        .socket-Green {
-            color: #28B463;
-        }
-
-        .socket-Red {
-            color: #C0392B;
-        }
-
-        .socket-White {
-            color: #FBFCFC;
-        }
-
-        .socket-Abyss {
-            color: #839192;
-        }
-    }
 }

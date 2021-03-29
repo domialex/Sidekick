@@ -5,11 +5,24 @@
     <div class="group">
         @foreach (Socket socket in socketGroup)
         {
-            <MudIcon Icon="@Icons.Material.Outlined.PanoramaFishEye" class="@($"socket-{socket.Colour}")" />
+            <MudIcon Icon="@Icons.Material.Outlined.PanoramaFishEye" Style="@GetSocketStyle(socket.Colour)" />
         }
     </div>
 }
 
 @code {
     [Parameter] public Item Item { get; set; }
+
+    private string GetSocketStyle(SocketColour colour)
+    {
+        return colour switch
+        {
+            SocketColour.Abyss => "color:#839192;",
+            SocketColour.Blue => "color:#2E86C1;",
+            SocketColour.Green => "color:#28B463;",
+            SocketColour.Red => "color:#C0392B;",
+            SocketColour.White => "color:#FBFCFC;",
+            _ => "color:#CCCCCC;",
+        };
+    }
 }

@@ -9,14 +9,7 @@
             <SocketsComponent Item="Item" />
         </MudItem>
         <MudItem xs="6">
-            @if (!string.IsNullOrEmpty(Item.Original.Name))
-            {
-                <MudText Typo="Typo.h5" Align="Align.Center" Class="font-smallcaps">@Item.Original.Name</MudText>
-            }
-            @if (!string.IsNullOrEmpty(Item.Original.Type))
-            {
-                <MudText Typo="Typo.h5" Align="Align.Center" Class="font-smallcaps">@Item.Original.Type</MudText>
-            }
+            <ItemHeader Item="Item" />
         </MudItem>
         <MudItem xs="3">
             <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
