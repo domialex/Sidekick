@@ -1,0 +1,18 @@
+@using Sidekick.Domain.Game.Modifiers.Models
+
+@if (Modifiers.Count > 0)
+{
+    <div class="modifiers">
+        @foreach (var modifier in Modifiers)
+        {
+            <MudText Typo="Typo.body1" Class="font-smallcaps" Align="Align.Center">@modifier.Text</MudText>
+        }
+    </div>
+
+    <ItemSeparatorComponent Item="Item" />
+}
+
+@code {
+    [Parameter] public Item Item { get; set; }
+    [Parameter] public List<Modifier> Modifiers { get; set; }
+}

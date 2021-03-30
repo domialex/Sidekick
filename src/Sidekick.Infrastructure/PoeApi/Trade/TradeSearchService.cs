@@ -384,25 +384,25 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             };
 
             ParseMods(modifierProvider,
-                item.Modifiers?.Crafted,
+                item.Modifiers.Crafted,
                 result.Item.CraftedMods,
                 result.Item.Extended.Mods?.Crafted,
                 ParseHash(result.Item.Extended.Hashes?.Crafted));
 
             ParseMods(modifierProvider,
-                item.Modifiers?.Enchant,
+                item.Modifiers.Enchant,
                 result.Item.EnchantMods,
                 result.Item.Extended.Mods?.Enchant,
                 ParseHash(result.Item.Extended.Hashes?.Enchant));
 
             ParseMods(modifierProvider,
-                item.Modifiers?.Explicit,
+                item.Modifiers.Explicit,
                 result.Item.ExplicitMods,
                 result.Item.Extended.Mods?.Explicit,
                 ParseHash(result.Item.Extended.Hashes?.Explicit));
 
             ParseMods(modifierProvider,
-                item.Modifiers?.Implicit,
+                item.Modifiers.Implicit,
                 result.Item.ImplicitMods,
                 result.Item.Extended.Mods?.Implicit,
                 ParseHash(result.Item.Extended.Hashes?.Implicit));
@@ -414,7 +414,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 ParseHash(result.Item.Extended.Hashes?.Pseudo));
 
             ParseMods(modifierProvider,
-                item.Modifiers?.Fractured,
+                item.Modifiers.Fractured,
                 result.Item.FracturedMods,
                 result.Item.Extended.Mods?.Fractured,
                 ParseHash(result.Item.Extended.Hashes?.Fractured));

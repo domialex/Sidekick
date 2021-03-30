@@ -1,5 +1,8 @@
 
 <div class="header @BackgroundClass">
+    <div class="influences left">
+        <InfluencesComponent Item="Item" />
+    </div>
     @if (!string.IsNullOrEmpty(Item.Original.Name))
     {
         <MudText Typo="Typo.h6" Align="Align.Center" Class="name font-smallcaps" Style="@LabelStyle">@Item.Original.Name</MudText>
@@ -8,6 +11,9 @@
     {
         <MudText Typo="Typo.h6" Align="Align.Center" Class="type font-smallcaps" Style="@LabelStyle">@Item.Original.Type</MudText>
     }
+    <div class="influences right">
+        <InfluencesComponent Item="Item" />
+    </div>
 </div>
 
 @code {

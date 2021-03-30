@@ -5,6 +5,8 @@ namespace Sidekick.Domain.Game.Trade.Models
 {
     public class TradeItem : Item
     {
+        public TradeItem() : base() { }
+
         public string Id { get; set; }
         public TradePrice Price { get; set; }
 

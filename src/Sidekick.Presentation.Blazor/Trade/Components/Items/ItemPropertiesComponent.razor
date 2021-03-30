@@ -1,0 +1,38 @@
+
+<div class="properties">
+    @foreach (var property in Item.PropertyContents)
+    {
+        <MudText Typo="Typo.body1" Class="font-smallcaps" Align="Align.Center">@((MarkupString)GetLine(property))</MudText>
+    }
+</div>
+
+<ItemSeparatorComponent Item="Item" />
+
+@code {
+    [Parameter] public TradeItem Item { get; set; }
+
+    private string GetLine(LineContent property)
+    {
+        base.OnParametersSet();
+
+        var highlightMatches = new Dictionary<int, (string Value, LineContentType Type)>();
+        var text = property.Text;
+
+        foreach (var value in property.Values)
+        {
+            var color = value.Type switch
+            {
+                LineContentType.Augmented => "#8888FF",
+                LineContentType.Fire => "#960000",
+                LineContentType.Cold => "#366492",
+                LineContentType.Chaos => "#D02090",
+                LineContentType.Lightning => "#FFD700",
+                _ => "#FFFFFF",
+            };
+
+            text = text.Replace(value.Value, $"<span style=\"color:{color};\">{value.Value}</span>");
+        }
+
+        return text;
+    }
+}

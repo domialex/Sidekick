@@ -28,11 +28,14 @@
 </div>
 
 <MudGrid Spacing="1">
-    @foreach (var result in Results)
+    @if (Results != null)
     {
-        <MudItem xs="12" lg="6">
-            <ItemComponent Item="result" />
-        </MudItem>
+        foreach (var result in Results)
+        {
+            <MudItem xs="12" lg="6">
+                <ItemComponent Item="result" />
+            </MudItem>
+        }
     }
 </MudGrid>
 

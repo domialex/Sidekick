@@ -1,0 +1,22 @@
+
+<div class="separator @BackgroundClass"></div>
+
+@code {
+    [Parameter] public Item Item { get; set; }
+
+    private string BackgroundClass
+    {
+        get
+        {
+            switch (Item.Metadata.Rarity)
+            {
+                case Rarity.Currency: return "separator-currency";
+                case Rarity.Magic: return "separator-magic";
+                case Rarity.Prophecy: return "separator-prophecy";
+                case Rarity.Rare: return "separator-rare";
+                case Rarity.Unique: return "separator-unique";
+                default: return "separator-normal";
+            }
+        }
+    }
+}

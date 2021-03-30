@@ -1,5 +1,6 @@
 
 .header {
+    position: relative;
     padding: 0 7px;
 
     ::deep {
@@ -10,6 +11,22 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+    }
+}
+
+.influences {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+
+    &.left {
+      left: 2px;
+    }
+
+    &.right {
+      right: 2px;
     }
 }
 
@@ -25,11 +42,11 @@
         }
 
         .name {
-          padding-top: 3px;
+            padding-top: 2px;
         }
 
         .type {
-          padding-bottom: 3px;
+            padding-bottom: 3px;
         }
     }
 }
