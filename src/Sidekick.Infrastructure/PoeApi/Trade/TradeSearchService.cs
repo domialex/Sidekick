@@ -364,6 +364,8 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 },
 
                 Image = result.Item.Icon,
+                Width = result.Item.Width,
+                Height = result.Item.Height,
 
                 RequirementContents = ParseLineContents(result.Item.Requirements),
                 PropertyContents = ParseLineContents(result.Item.Properties),
