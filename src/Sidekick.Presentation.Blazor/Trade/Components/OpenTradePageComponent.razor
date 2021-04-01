@@ -1,0 +1,58 @@
+
+<MudPaper Class="pa-2">
+    <MudGrid Class="align-center" Spacing="1">
+        <MudItem xs="3" Class="text-center">
+            <ItemImageComponent Item="Item" />
+        </MudItem>
+        <MudItem xs="6" Class="my-n2">
+            <ItemHeaderComponent Item="Item" />
+            <div class="item-content pa-2">
+                <ItemPropertiesComponent Item="Item" />
+                <ItemRequirementsComponent Item="Item" />
+                <ItemModifiersComponent Item="Item"
+                                        Modifiers="Item.Modifiers.Enchant" />
+                <ItemModifiersComponent Item="Item"
+                                        Modifiers="Item.Modifiers.Implicit" />
+                <ItemModifiersComponent Item="Item"
+                                        Modifiers="Item.Modifiers.Explicit" />
+                <ItemModifiersComponent Item="Item"
+                                        Modifiers="Item.Modifiers.Crafted" />
+                <ItemModifiersComponent Item="Item"
+                                        Modifiers="Item.Modifiers.Fractured" />
+                @if (!Item.Properties.Identified)
+                {
+                    <div class="red-text">
+                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Unidentified</MudText>
+                    </div>
+                }
+                @if (Item.Properties.Corrupted)
+                {
+                    <div class="red-text">
+                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Corrupted</MudText>
+                    </div>
+                }
+                @if (!Item.Properties.Identified || Item.Properties.Corrupted)
+                {
+                    <ItemSeparatorComponent Item="Item" />
+                }
+                @if (!string.IsNullOrEmpty(Item.Price.Note))
+                {
+                    <div class="note-text">
+                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Item.Price.Note</MudText>
+                    </div>
+                }
+            </div>
+        </MudItem>
+        <MudItem xs="3">
+            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
+            <MudText Typo="Typo.body2" Align="Align.Center">@Item.Price.AccountName</MudText>
+            <PriceAge Date="Item.Price.Date" />
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
+@code{
+    [Inject] private TradeResources Resources { get; set; }
+
+    [Parameter] public TradeItem Item { get; set; }
+}

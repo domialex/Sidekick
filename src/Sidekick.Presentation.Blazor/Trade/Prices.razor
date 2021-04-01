@@ -24,13 +24,13 @@
     <PricePrediction Item="Item" Class="flex-grow-1 mx-1" />
 </div>
 
-<MudGrid Spacing="1">
+<MudGrid Spacing="1" Class="align-stretch">
     @if (Results != null)
     {
         foreach (var result in Results)
         {
-            <MudItem xs="12" lg="6">
-                <ItemComponent Item="result" />
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <ItemComponent Item="result" Style="height: 100%;" />
             </MudItem>
         }
     }

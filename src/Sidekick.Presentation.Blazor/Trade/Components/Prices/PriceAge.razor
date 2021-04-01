@@ -1,10 +1,11 @@
 
-<MudText Typo="Typo.caption" Align="Align.Center" Class="d-block">@Text</MudText>
+<MudText Typo="Typo.caption" Align="Align" Class="d-block">@Text</MudText>
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
 
     [Parameter] public DateTimeOffset Date { get; set; }
+    [Parameter] public Align Align { get; set; } = Align.Center;
 
     private string Text
     {

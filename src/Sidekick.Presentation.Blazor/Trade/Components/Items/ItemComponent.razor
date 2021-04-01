@@ -1,58 +1,60 @@
 
-<MudPaper Class="pa-2">
-    <MudGrid Class="align-center" Spacing="1">
-        <MudItem xs="3" Class="text-center">
-            <ItemImageComponent Item="Item" />
-        </MudItem>
-        <MudItem xs="6" Class="my-n2">
-            <ItemHeaderComponent Item="Item" />
-            <div class="item-content pa-2">
-                <ItemPropertiesComponent Item="Item" />
-                <ItemRequirementsComponent Item="Item" />
-                <ItemModifiersComponent Item="Item"
-                                        Modifiers="Item.Modifiers.Enchant" />
-                <ItemModifiersComponent Item="Item"
-                                        Modifiers="Item.Modifiers.Implicit" />
-                <ItemModifiersComponent Item="Item"
-                                        Modifiers="Item.Modifiers.Explicit" />
-                <ItemModifiersComponent Item="Item"
-                                        Modifiers="Item.Modifiers.Crafted" />
-                <ItemModifiersComponent Item="Item"
-                                        Modifiers="Item.Modifiers.Fractured" />
-                @if (!Item.Properties.Identified)
-                {
-                    <div class="red-text">
-                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Unidentified</MudText>
-                    </div>
-                }
-                @if (Item.Properties.Corrupted)
-                {
-                    <div class="red-text">
-                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Corrupted</MudText>
-                    </div>
-                }
-                @if (!Item.Properties.Identified || Item.Properties.Corrupted)
-                {
-                    <ItemSeparatorComponent Item="Item" />
-                }
-                @if (!string.IsNullOrEmpty(Item.Price.Note))
-                {
-                    <div class="note-text">
-                        <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Item.Price.Note</MudText>
-                    </div>
-                }
+<div class="item-content" style="@Style">
+    <ItemHeaderComponent Item="Item" />
+    <MudGrid Spacing="2" Class="pt-2 px-4">
+        <MudItem xs="6" Class="align-self-center">
+            <div class="d-inline-block">
+                <ItemImageComponent Item="Item" />
             </div>
         </MudItem>
-        <MudItem xs="3">
-            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
-            <MudText Typo="Typo.body2" Align="Align.Center">@Item.Price.AccountName</MudText>
-            <PriceAge Date="Item.Price.Date" />
+        <MudItem xs="6" Class="align-self-start">
+            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" Class="justify-end" />
+            <MudText Typo="Typo.body2" Align="Align.Right">@Item.Price.AccountName</MudText>
+            <PriceAge Date="Item.Price.Date" Align="Align.Right" />
         </MudItem>
     </MudGrid>
-</MudPaper>
+
+    <div class="pa-2">
+        <ItemPropertiesComponent Item="Item" />
+        <ItemRequirementsComponent Item="Item" />
+        <ItemModifiersComponent Item="Item"
+                                Modifiers="Item.Modifiers.Enchant" />
+        <ItemModifiersComponent Item="Item"
+                                Modifiers="Item.Modifiers.Implicit" />
+        <ItemModifiersComponent Item="Item"
+                                Modifiers="Item.Modifiers.Explicit" />
+        <ItemModifiersComponent Item="Item"
+                                Modifiers="Item.Modifiers.Crafted" />
+        <ItemModifiersComponent Item="Item"
+                                Modifiers="Item.Modifiers.Fractured" />
+        @if (!Item.Properties.Identified)
+        {
+            <div class="red-text">
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Unidentified</MudText>
+            </div>
+        }
+        @if (Item.Properties.Corrupted)
+        {
+            <div class="red-text">
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Resources.Corrupted</MudText>
+            </div>
+        }
+        @if (!Item.Properties.Identified || Item.Properties.Corrupted)
+        {
+            <ItemSeparatorComponent Item="Item" />
+        }
+        @if (!string.IsNullOrEmpty(Item.Price.Note))
+        {
+            <div class="note-text">
+                <MudText Typo="Typo.body1" Align="Align.Center" Class="font-smallcaps">@Item.Price.Note</MudText>
+            </div>
+        }
+    </div>
+</div>
 
 @code{
     [Inject] private TradeResources Resources { get; set; }
 
     [Parameter] public TradeItem Item { get; set; }
+    [Parameter] public string Style { get; set; }
 }
