@@ -330,6 +330,15 @@
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
   </data>
+  <data name="Layout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="Layout_Cards_Maximized" xml:space="preserve">
+    <value>Maximized</value>
+  </data>
+  <data name="Layout_Cards_Minimized" xml:space="preserve">
+    <value>Minimized</value>
+  </data>
   <data name="LoadMoreData" xml:space="preserve">
     <value>Load More Data</value>
   </data>
@@ -350,6 +359,9 @@
   </data>
   <data name="MaxQualityPDps" xml:space="preserve">
     <value>Physical DPS at max Quality</value>
+  </data>
+  <data name="OpenWebsite" xml:space="preserve">
+    <value>Open Official Website</value>
   </data>
   <data name="OverlayAccountName" xml:space="preserve">
     <value>Account Name</value>
@@ -381,19 +393,13 @@
   <data name="Requires" xml:space="preserve">
     <value>Requires</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Trade" xml:space="preserve">
     <value>Trade</value>
   </data>
   <data name="Unidentified" xml:space="preserve">
     <value>Unidentified</value>
-  </data>
-  <data name="UpdateNow" xml:space="preserve">
-    <value>Update now</value>
-  </data>
-  <data name="UpdateSeconds" xml:space="preserve">
-    <value> seconds</value>
-  </data>
-  <data name="UpdateShortly" xml:space="preserve">
-    <value>Updating shortly</value>
   </data>
 </root>

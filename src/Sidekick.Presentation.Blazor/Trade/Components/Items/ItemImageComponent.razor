@@ -1,10 +1,13 @@
 
-<div class="image-container">
-    <img src="@Item.Image" />
-    <div class="sockets">
-        <ItemSocketsComponent Item="Item" />
+@if (Item != null)
+{
+    <div class="image-container">
+        <img src="@Item.Image" />
+        <div class="sockets">
+            <ItemSocketsComponent Item="Item" />
+        </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter] public TradeItem Item { get; set; }

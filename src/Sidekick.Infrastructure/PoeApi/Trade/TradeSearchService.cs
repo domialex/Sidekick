@@ -272,31 +272,29 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
         {
             if (modifierFilters == null) return;
 
-            SetModifierFilters(stats, modifierFilters.Pseudo);
-            SetModifierFilters(stats, modifierFilters.Enchant);
-            SetModifierFilters(stats, modifierFilters.Implicit);
-            SetModifierFilters(stats, modifierFilters.Explicit);
-            SetModifierFilters(stats, modifierFilters.Crafted);
-            SetModifierFilters(stats, modifierFilters.Fractured);
+            var group = new StatFilterGroup();
+
+            SetModifierFilters(group, modifierFilters.Pseudo);
+            SetModifierFilters(group, modifierFilters.Enchant);
+            SetModifierFilters(group, modifierFilters.Implicit);
+            SetModifierFilters(group, modifierFilters.Explicit);
+            SetModifierFilters(group, modifierFilters.Crafted);
+            SetModifierFilters(group, modifierFilters.Fractured);
         }
 
-        private static void SetModifierFilters(List<StatFilterGroup> stats, List<ModifierFilter> modifierFilters)
+        private static void SetModifierFilters(StatFilterGroup group, List<ModifierFilter> modifierFilters)
         {
             if (modifierFilters == null)
             {
                 return;
             }
 
-            stats.Add(new StatFilterGroup()
+            group.Filters.AddRange(modifierFilters.ConvertAll(x => new StatFilter()
             {
-                Type = StatType.And,
-                Filters = modifierFilters.ConvertAll(x => new StatFilter()
-                {
-                    Disabled = !x.Enabled,
-                    Id = x.Modifier.Id,
-                    Value = new SearchFilterValue(x),
-                })
-            });
+                Disabled = !x.Enabled,
+                Id = x.Modifier.Id,
+                Value = new SearchFilterValue(x),
+            }));
         }
 
         public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, ModifierFilters modifierFilters = null)

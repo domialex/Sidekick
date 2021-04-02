@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Apis.PoePriceInfo.Models;
+using Sidekick.Domain.Apis.PoePriceInfo.Queries;
 using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoePriceInfo.Models;
 
@@ -39,6 +39,11 @@ namespace Sidekick.Infrastructure.PoePriceInfo
             var response = await client.Client.GetAsync("?l=" + settings.LeagueId + "&i=" + encodedItem);
             var content = await response.Content.ReadAsStreamAsync();
             var result = await JsonSerializer.DeserializeAsync<PriceInfoResult>(content, client.Options);
+            if (result.Min == 0 && result.Max == 0)
+            {
+                return null;
+            }
+
             return mapper.Map<PricePrediction>(result);
         }
     }

@@ -31,6 +31,7 @@ namespace Sidekick.Domain.Settings
         List<string> Price_Mods_Jewel { get; }
         List<string> Price_Mods_Map { get; }
         List<string> Price_Mods_Weapon { get; }
+        string Price_Layout { get; }
 
         bool Map_CloseWithMouse { get; }
         string Map_Key_Close { get; }

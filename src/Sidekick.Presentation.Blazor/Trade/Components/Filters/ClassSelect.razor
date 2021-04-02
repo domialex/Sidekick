@@ -28,8 +28,6 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        await base.OnParametersSetAsync();
-
         if (Item == null)
         {
             return;
@@ -148,6 +146,7 @@
             selectedCategory = null;
         }
 
+        await base.OnParametersSetAsync();
     }
 
     private void SetCategory(string category)

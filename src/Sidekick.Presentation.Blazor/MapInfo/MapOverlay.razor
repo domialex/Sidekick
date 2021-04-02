@@ -52,7 +52,7 @@
     private Item Item { get; set; }
     private MapInfo MapInfo { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
         if (Item == null)
@@ -69,7 +69,7 @@
         }
         MapInfo = await Mediator.Send(new GetMapInfo(Item));
 
-        await base.OnParametersSetAsync();
+        await base.OnInitializedAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

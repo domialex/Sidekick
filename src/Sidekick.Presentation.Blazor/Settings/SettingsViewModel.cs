@@ -85,6 +85,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Language_UI { get; set; }
 
+        public string Price_Layout { get; set; }
 
         public string LeagueId { get; set; }
 

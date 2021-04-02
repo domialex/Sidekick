@@ -36,17 +36,17 @@
         .name,
         .type {
             height: 27px;
-            line-height: 24px;
+            line-height: 23px;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
 
         .name {
-            padding-top: 2px;
+            padding-top: 4px;
         }
 
         .type {
-            padding-bottom: 3px;
+            padding-bottom: 4px;
         }
     }
 }

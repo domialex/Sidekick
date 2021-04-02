@@ -13,8 +13,6 @@
 
     private string GetLine(LineContent property)
     {
-        base.OnParametersSet();
-
         var highlightMatches = new Dictionary<int, (string Value, LineContentType Type)>();
         var text = property.Text;
 

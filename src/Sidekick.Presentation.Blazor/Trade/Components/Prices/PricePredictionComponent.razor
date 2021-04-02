@@ -1,4 +1,5 @@
 @using Sidekick.Domain.Apis.PoePriceInfo.Queries
+@using Sidekick.Domain.Apis.PoePriceInfo.Models
 
 @if (Loading || Item == null)
 {
@@ -21,17 +22,21 @@ else if (Prediction != null)
     [Parameter] public Item Item { get; set; }
 
     private bool Loading { get; set; }
-    private Sidekick.Domain.Apis.PoePriceInfo.Models.PricePrediction Prediction { get; set; }
+    private bool IsInit { get; set; }
+    private PricePrediction Prediction { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
 
+        if (IsInit) return;
+
         Loading = true;
 
         if (Item != null)
         {
-             Prediction = await Mediator.Send(new GetPricePredictionQuery(Item));
+            IsInit = true;
+            Prediction = await Mediator.Send(new GetPricePredictionQuery(Item));
         }
 
         Loading = false;

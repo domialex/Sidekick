@@ -23,16 +23,19 @@ else if (Price != null)
 
     private bool Loading { get; set; }
     private NinjaPrice Price { get; set; }
+    private bool IsInit { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
 
+        if (IsInit) return;
+
         Loading = true;
-        StateHasChanged();
 
         if (Item != null)
         {
+            IsInit = true;
             Price = await Mediator.Send(new GetPriceFromNinjaQuery(Item));
         }
 

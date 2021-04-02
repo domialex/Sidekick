@@ -1,0 +1,38 @@
+@using Sidekick.Domain.App.Commands
+@using Sidekick.Domain.Game.Trade.Queries
+
+<div class="d-flex flex-row align-center justify-end">
+    <CountString Count="Count" Total="Total" />
+    <MudIconButton Icon="@Icons.Material.Filled.Settings" Size="Size.Small" OnClick="Open" />
+</div>
+
+<MudDrawer @bind-Open="@Opened" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h6">@Resources.Settings</MudText>
+    </MudDrawerHeader>
+    <MudNavMenu>
+        <LayoutSelectLink Layout="Layout" LayoutChanged="LayoutChanged" />
+        <OpenWebsiteLink Item="Item" QueryId="@QueryId" />
+    </MudNavMenu>
+</MudDrawer>
+
+@code {
+    [Inject] private TradeResources Resources { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+
+    [Parameter] public Item Item { get; set; }
+    [Parameter] public string QueryId { get; set; }
+
+    [Parameter] public Layout Layout { get; set; }
+    [Parameter] public EventCallback<Layout> LayoutChanged { get; set; }
+
+    [Parameter] public int Count { get; set; }
+    [Parameter] public int Total { get; set; }
+
+    private bool Opened { get; set; } = false;
+
+    private void Open()
+    {
+        Opened = true;
+    }
+}

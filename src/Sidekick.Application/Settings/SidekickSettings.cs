@@ -43,6 +43,7 @@ namespace Sidekick.Application.Settings
         public List<string> Price_Mods_Jewel { get; set; } = new List<string>();
         public List<string> Price_Mods_Map { get; set; } = new List<string>();
         public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
+        public string Price_Layout { get; set; }
 
         public string Map_Key_Close { get; set; } = "Space";
 

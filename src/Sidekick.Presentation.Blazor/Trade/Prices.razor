@@ -1,15 +1,7 @@
-@using System
-@using System.Collections.Generic
-@using System.Linq
-@using System.Text.Json
-@using System.Text.RegularExpressions
-@using System.Threading.Tasks
 @using MediatR
 @using Microsoft.Extensions.Logging
 @using Sidekick.Domain.Game.Items.Metadatas
 @using Sidekick.Domain.Game.Items.Models
-@using Sidekick.Domain.Game.Languages
-@using Sidekick.Domain.Game.Modifiers.Models
 @using Sidekick.Domain.Game.Trade
 @using Sidekick.Domain.Game.Trade.Models
 @using Sidekick.Domain.Game.Trade.Queries
@@ -19,9 +11,15 @@
 @page "/price/{itemText}"
 @layout OverlayLayout
 
+<PriceOptionsComponent Item="Item"
+                       QueryId="@QueryResult?.Id"
+                       @bind-Layout="Layout"
+                       Count="Results?.Count ?? 0"
+                       Total="QueryResult?.Total ?? 0" />
+
 <div class="d-flex flex-row align-start mx-n1 mb-2">
-    <PriceNinja Item="Item" Class="flex-grow-1 mx-1" />
-    <PricePrediction Item="Item" Class="flex-grow-1 mx-1" />
+    <PriceNinjaComponent Item="Item" Class="flex-grow-1 mx-1" />
+    <PricePredictionComponent Item="Item" Class="flex-grow-1 mx-1" />
 </div>
 
 <MudGrid Spacing="1" Class="align-stretch">
@@ -30,11 +28,23 @@
         foreach (var result in Results)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <ItemComponent Item="result" Style="height: 100%;" />
+                <ItemComponent Item="result" Style="height: 100%;" Layout="Layout" />
+            </MudItem>
+        }
+
+        if (IsFetching)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudSkeleton Height="100%" Width="100%" Style="min-height: 100px;" SkeletonType="SkeletonType.Rectangle" />
             </MudItem>
         }
     }
 </MudGrid>
+
+@if (!IsFetching && !FullyLoaded && Results != null)
+{
+    <MudButton Variant="Variant.Outlined" Color="Color.Info" FullWidth="true" OnClick="LoadMoreData" Class="mt-2">@Resources.LoadMoreData</MudButton>
+}
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
@@ -43,7 +53,6 @@
     [Inject] private ILogger<Prices> Logger { get; set; }
     [Inject] private ITradeSearchService TradeSearchService { get; set; }
     [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
-    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
     [Inject] private ISidekickSettings Settings { get; set; }
     [Inject] private TradeResources Resources { get; set; }
 
@@ -55,15 +64,12 @@
     private TradeSearchResult<string> QueryResult { get; set; }
     private List<TradeItem> Results { get; set; }
     private bool FullyLoaded => (Results?.Count ?? 0) == (QueryResult?.Result?.Count ?? 0);
-    private string CountString => string.Format(Resources.CountString, Results?.Count ?? 0, QueryResult?.Total.ToString() ?? "?");
     private bool IsError { get; set; }
     private bool IsFetching { get; set; }
-    private Uri Uri { get; set; }
+    private Layout Layout { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        await base.OnParametersSetAsync();
-
         Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
 
         if (Item == null)
@@ -77,6 +83,8 @@
         ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
 
         await UpdateQuery();
+
+        await base.OnInitializedAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -91,7 +99,6 @@
     public async Task UpdateQuery()
     {
         Results = new List<TradeItem>();
-        Uri = null;
         IsError = false;
         IsFetching = true;
 
@@ -147,7 +154,6 @@
         }
         else
         {
-            Uri = await Mediator.Send(new GetTradeUriQuery(Item, QueryResult.Id));
             await LoadMoreData();
         }
     }

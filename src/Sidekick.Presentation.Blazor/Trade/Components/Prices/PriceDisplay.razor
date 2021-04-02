@@ -1,9 +1,9 @@
 
 <div class="d-flex flex-row align-center @Class">
     <MudText Typo="Typo.h3">@Value.ToString("0.##")</MudText>
-    <MudText Typo="Typo.body1" Class="mx-1">&times;</MudText>
-    @if (!string.IsNullOrEmpty(ImageUrl))
+    @if (ShowImage)
     {
+        <MudText Typo="Typo.body1" Class="mx-1">&times;</MudText>
         <img src="@ImageUrl" />
     }
 </div>
@@ -16,11 +16,6 @@
     [Parameter] public double Value { get; set; }
     [Parameter] public string Class { get; set; } = "justify-center";
 
-    private string ImageUrl { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        ImageUrl = new Uri($"{GameLanguageProvider.Language.PoeCdnBaseUrl}{ItemStaticDataProvider.GetImage(Currency)}").AbsoluteUri;
-        await base.OnParametersSetAsync();
-    }
+    private bool ShowImage => !string.IsNullOrEmpty(ItemStaticDataProvider.GetImage(Currency));
+    private string ImageUrl => $"{GameLanguageProvider.Language.PoeCdnBaseUrl}{ItemStaticDataProvider.GetImage(Currency).Trim('/')}";
 }

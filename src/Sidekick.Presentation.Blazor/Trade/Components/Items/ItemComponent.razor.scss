@@ -1,4 +1,28 @@
 
+.clickable {
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity ease 0.3s;
+    z-index: 1;
+  }
+
+  &:hover::before {
+    opacity: 0.15;
+  }
+}
+
 img {
     max-width: 100%;
     height: auto;

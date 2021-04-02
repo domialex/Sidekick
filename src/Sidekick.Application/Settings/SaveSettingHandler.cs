@@ -21,8 +21,9 @@ namespace Sidekick.Application.Settings
         public async Task<Unit> Handle(SaveSettingCommand request, CancellationToken cancellationToken)
         {
             var property = settings.GetType().GetProperty(request.Property);
+            var value = property.GetValue(settings);
 
-            if (property.GetValue(settings).Equals(request.Value))
+            if (value != null && request.Value != null && value.Equals(request.Value))
             {
                 return Unit.Value;
             }
