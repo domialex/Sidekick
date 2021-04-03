@@ -11,7 +11,7 @@
                 </div>
             </MudItem>
             <MudItem xs="6" Class="align-self-start">
-                <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" Class="justify-end" />
+                <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
                 <MudText Typo="Typo.body2" Align="Align.Right">@Item.Price.AccountName</MudText>
                 <PriceAge Date="Item.Price.Date" Align="Align.Right" />
             </MudItem>
@@ -61,7 +61,7 @@
                 <MudText Typo="Typo.body2" Align="Align.Left">@Item.Price.AccountName</MudText>
                 <PriceAge Date="Item.Price.Date" Align="Align.Left" />
             </div>
-            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" Class="justify-end" />
+            <PriceDisplay Value="(double)Item.Price.Amount" Currency="@Item.Price.Currency" />
         </div>
     }
 

@@ -1,22 +1,33 @@
 @using Sidekick.Domain.Apis.PoePriceInfo.Queries
 @using Sidekick.Domain.Apis.PoePriceInfo.Models
+@using Sidekick.Domain.Settings
 
-@if (Loading || Item == null)
+@if (Settings.Price_Prediction_Enable)
 {
-    <MudSkeleton Height="115px" Class="@Class" />
-}
-else if (Prediction != null)
-{
-    <MudPaper Class="@($"pa-2 {Class}")">
-        <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-1">@Resources.Prediction</MudText>
-        <PriceRangeDisplay Min="Prediction.Min" Max="Prediction.Max" Currency="@Prediction.Currency" />
-        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-1">@Resources.PredictionConfidence(Prediction.ConfidenceScore)</MudText>
-    </MudPaper>
+    if (Loading || Item == null)
+    {
+        <MudSkeleton Height="55px" Class="@Class" />
+    }
+    else if (Prediction != null && (Prediction.Min != 0 || Prediction.Max != 0))
+    {
+        <MudPaper Class="@($"pa-2 {Class}")">
+            <MudGrid Spacing="4" Justify="Justify.Center" Class="align-center">
+                <MudItem xs="6">
+                    <MudText Typo="Typo.subtitle1" Align="Align.Right">@Resources.Prediction</MudText>
+                    <MudText Typo="Typo.caption" Align="Align.Right" Class="d-block">@Resources.PredictionConfidence(Prediction.ConfidenceScore)</MudText>
+                </MudItem>
+                <MudItem xs="6">
+                    <PriceRangeDisplay Min="Prediction.Min" Max="Prediction.Max" Currency="@Prediction.Currency" Class="justify-start" />
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
 }
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
     [Inject] private IMediator Mediator { get; set; }
+    [Inject] private ISidekickSettings Settings { get; set; }
 
     [Parameter] public string Class { get; set; }
     [Parameter] public Item Item { get; set; }
@@ -29,7 +40,7 @@ else if (Prediction != null)
     {
         await base.OnParametersSetAsync();
 
-        if (IsInit) return;
+        if (IsInit || !Settings.Price_Prediction_Enable) return;
 
         Loading = true;
 

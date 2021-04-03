@@ -318,7 +318,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });
 
-                    return result.Result.ConvertAll(x => GetItem(x));
+                    return result.Result.Where(x => x != null).ToList().ConvertAll(x => GetItem(x));
                 }
             }
             catch (Exception ex)

@@ -3,14 +3,20 @@
 
 @if (Loading || Item == null)
 {
-    <MudSkeleton Height="115px" Class="@Class" />
+    <MudSkeleton Height="55px" Class="@Class" />
 }
 else if (Price != null)
 {
     <MudPaper Class="@($"pa-2 {Class}")">
-        <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-1">@Resources.PoeNinja</MudText>
-        <PriceDisplay Value="Price.Price" />
-        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-1">@Resources.PoeNinjaLastUpdated : @Price.LastUpdated.ToString("t")</MudText>
+        <MudGrid Spacing="4" Justify="Justify.Center" Class="align-center">
+            <MudItem xs="6">
+                <MudText Typo="Typo.subtitle1" Align="Align.Right">@Resources.PoeNinja</MudText>
+                <MudText Typo="Typo.caption" Align="Align.Right" Class="d-block">@Resources.PoeNinjaLastUpdated : @Price.LastUpdated.ToString("t")</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <PriceDisplay Value="Price.Price" Class="justify-start" />
+            </MudItem>
+        </MudGrid>
     </MudPaper>
 }
 

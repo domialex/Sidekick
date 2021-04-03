@@ -14,7 +14,7 @@
 
     [Parameter] public string Currency { get; set; } = "chaos";
     [Parameter] public double Value { get; set; }
-    [Parameter] public string Class { get; set; } = "justify-center";
+    [Parameter] public string Class { get; set; } = "justify-end";
 
     private bool ShowImage => !string.IsNullOrEmpty(ItemStaticDataProvider.GetImage(Currency));
     private string ImageUrl => $"{GameLanguageProvider.Language.PoeCdnBaseUrl}{ItemStaticDataProvider.GetImage(Currency).Trim('/')}";
