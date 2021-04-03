@@ -76,6 +76,7 @@ namespace Sidekick.Localization.Trade
         public string Class_WeaponWarstaff => localizer["Class_WeaponWarstaff"];
         public string Corrupted => localizer["Corrupted"];
         public string CountString(int count, int total) => localizer["CountString", count, total];
+        public string Error_PoeApi => localizer["Error_PoeApi"];
         public string Filters_Dps => localizer["Filters_Dps"];
         public string Filters_EDps => localizer["Filters_EDps"];
         public string Filters_Max => localizer["Filters_Max"];

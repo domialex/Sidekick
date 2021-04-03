@@ -312,6 +312,9 @@
   <data name="CountString" xml:space="preserve">
     <value>Showing {0} out of {1} items</value>
   </data>
+  <data name="Error_PoeApi" xml:space="preserve">
+    <value>An error occured while trying to get the results from the official trade API. The official trade website may be down. Please try again later or open a ticket on github.</value>
+  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>Damage per second</value>
   </data>

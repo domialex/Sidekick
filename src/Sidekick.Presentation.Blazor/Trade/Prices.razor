@@ -22,24 +22,31 @@
     <PricePredictionComponent Item="Item" Class="flex-grow-1 mx-1" />
 </div>
 
-<MudGrid Spacing="1" Class="align-stretch">
-    @if (Results != null)
-    {
-        foreach (var result in Results)
+@if (IsError)
+{
+    <MudAlert Severity="Severity.Error">@Resources.Error_PoeApi</MudAlert>
+}
+else
+{
+    <MudGrid Spacing="1" Class="align-stretch">
+        @if (Results != null)
         {
-            <MudItem xs="12" sm="6" md="4" lg="3">
-                <ItemComponent Item="result" Style="height: 100%;" Layout="Layout" />
-            </MudItem>
-        }
+            foreach (var result in Results)
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <ItemComponent Item="result" Style="height: 100%;" Layout="Layout" />
+                </MudItem>
+            }
 
-        if (IsFetching)
-        {
-            <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudSkeleton Height="100%" Width="100%" Style="min-height: 100px;" SkeletonType="SkeletonType.Rectangle" />
-            </MudItem>
+            if (IsFetching)
+            {
+                <MudItem xs="12" sm="6" md="4" lg="3">
+                    <MudSkeleton Height="100%" Width="100%" Style="min-height: 100px;" SkeletonType="SkeletonType.Rectangle" />
+                </MudItem>
+            }
         }
-    }
-</MudGrid>
+    </MudGrid>
+}
 
 @if (!IsFetching && !FullyLoaded && Results != null)
 {
@@ -135,7 +142,6 @@
         //
         //     await Mediator.Send(new SaveSettingsCommand(Settings));
         // }
-
 
         if (Item.Metadata.Rarity == Rarity.Currency && ItemStaticDataProvider.GetId(Item) != null)
         {
