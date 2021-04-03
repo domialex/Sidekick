@@ -39,8 +39,6 @@ Sockets: D D
 Reforges a rare item with new random modifiers
 --------
 All sockets must be filled with Fossils before this item can be used.
---------
-Note: ~price 3 alt
 ";
 
         #endregion

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Domain.Apis.PoeNinja;
 using Sidekick.Domain.Apis.PoeNinja.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Persistence.Apis.PoeNinja
 {
@@ -16,17 +17,26 @@ namespace Sidekick.Persistence.Apis.PoeNinja
             this.options = options;
         }
 
-        public async Task<NinjaPrice> Find(string name, bool corrupted, int mapTier, int gemLevel)
+        public async Task<NinjaPrice> Find(Item item)
         {
             using var dbContext = new SidekickContext(options);
 
+            var name = item.Original.Name;
             var translation = await dbContext.NinjaTranslations.FirstOrDefaultAsync(x => x.Translation == name);
             if (translation != null)
             {
                 name = translation.English;
             }
 
-            return await dbContext.NinjaPrices.FirstOrDefaultAsync(x => x.Name == name && x.Corrupted == corrupted && x.MapTier == mapTier && x.GemLevel == gemLevel);
+            var query = dbContext.NinjaPrices
+                .Where(x => x.Name == name);
+
+            if (item.Properties != null)
+            {
+                query = query.Where(x => x.Corrupted == item.Properties.Corrupted && x.MapTier == item.Properties.MapTier && x.GemLevel == item.Properties.GemLevel);
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task SavePrices(List<NinjaPrice> prices)

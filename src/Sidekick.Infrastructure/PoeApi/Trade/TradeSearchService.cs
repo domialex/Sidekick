@@ -526,19 +526,22 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
         private static List<Socket> ParseSockets(List<ResultSocket> sockets)
         {
-            return sockets.ConvertAll(x => new Socket()
-            {
-                Group = x.Group,
-                Colour = x.ColourString switch
+            return sockets
+                .Where(x => x.ColourString != "DV") // Remove delve resonator sockets
+                .Select(x => new Socket()
                 {
-                    "B" => SocketColour.Blue,
-                    "G" => SocketColour.Green,
-                    "R" => SocketColour.Red,
-                    "W" => SocketColour.White,
-                    "A" => SocketColour.Abyss,
-                    _ => throw new Exception("Invalid socket"),
-                }
-            });
+                    Group = x.Group,
+                    Colour = x.ColourString switch
+                    {
+                        "B" => SocketColour.Blue,
+                        "G" => SocketColour.Green,
+                        "R" => SocketColour.Red,
+                        "W" => SocketColour.White,
+                        "A" => SocketColour.Abyss,
+                        _ => throw new Exception("Invalid socket"),
+                    }
+                })
+                .ToList();
         }
     }
 }

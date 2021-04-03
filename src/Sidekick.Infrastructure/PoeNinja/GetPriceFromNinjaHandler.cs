@@ -27,7 +27,7 @@ namespace Sidekick.Infrastructure.PoeNinja
 
         public async Task<NinjaPrice> Handle(GetPriceFromNinjaQuery request, CancellationToken cancellationToken)
         {
-            var cacheResult = await repository.Find(request.Item.Original.Name, request.Item.Properties.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
+            var cacheResult = await repository.Find(request.Item);
 
             if (cacheResult != null && cacheResult.LastUpdated.AddHours(4) > DateTimeOffset.Now)
             {
@@ -111,8 +111,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             await repository.SavePrices(currencies);
             await SaveTranslations(currencyResults);
 
-            cacheResult = await repository.Find(request.Item.Original.Name, request.Item.Properties.Corrupted, request.Item.Properties.MapTier, request.Item.Properties.GemLevel);
-            return cacheResult;
+            return await repository.Find(request.Item);
         }
 
         private async Task SaveTranslations<T>(PoeNinjaQueryResult<T>[] results)
