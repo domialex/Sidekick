@@ -17,24 +17,26 @@ A Path of Exile tool to:
 ## Features
 ### Trade
 #### Default Binding: Ctrl + D
-Sidekick allows you to price check items using the official Path of Exile trade market. You can compare and preview items by clicking on any result. For rare items, a price prediction from poeprices.info is shown.
-For unique items, prices from poe.ninja are used.
+Opens a trade view from the official Path of Exile trade API. You can compare and preview items by clicking on any result. For rare items, a price prediction from poeprices.info is shown. For unique items, prices from poe.ninja are used.
 | Trade |
 |---|
 | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/price-check.png) |
-![image](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/price-check.png)
 
 ### Cheatsheets
 #### Default Binding: F6
+Opens a view with useful common information about different mechanics of the game.
+
 | Heist | Betrayal | Incursion | Blight |
 |---|---|---|---|
 | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-heist.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-betrayal.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-incursion.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-blight.png) |
 
 ### Map Information
 #### Default Binding: Ctrl + X
-| Map |
-|---|
-| ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/map-dangerous.png) |
+Checks the modifiers on a map or contract for mods that are dangerous (configurable).
+
+| Safe Map | Unsafe Map |
+|---|---|
+| ![](./docs/assets/images/map_safe.png) | ![](./docs/assets/images/map_unsafe.png) |
 
 ### Chat Commands
 | Name | Default Binding | Description |
