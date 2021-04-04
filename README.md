@@ -28,7 +28,7 @@ Opens a view with useful common information about different mechanics of the gam
 
 | Heist | Betrayal | Incursion | Blight |
 |---|---|---|---|
-| ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-heist.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-betrayal.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-incursion.png) | ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/overlay-blight.png) |
+| ![](./docs/assets/images/cheatsheets_heist.png) | ![](./docs/assets/images/cheatsheets_betrayal.png) | ![](./docs/assets/images/cheatsheets_incursion.png) | ![](./docs/assets/images/cheatsheets_blight.png) |
 
 ### Map Information
 #### Default Binding: Ctrl + X
