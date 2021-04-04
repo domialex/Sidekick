@@ -1,9 +1,5 @@
 # [![](https://i.gyazo.com/94476b2151a7b7c5af914957955edb4a.png)](#) Sidekick 2 Beta [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square&include_prereleases)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
-A Path of Exile tool to:
-- Trade Efficiently;
-- View Cheatsheets;
-- Check Dangerous Modifiers;
-- And More!
+A Path of Exile companion tool.
 
 ## Installation and Usage
 1. [Download Sidekick](https://github.com/domialex/Sidekick/releases)
