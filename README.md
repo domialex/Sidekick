@@ -6,9 +6,8 @@ A Path of Exile companion tool.
 2. Extract the zip file
 3. Run Sidekick.exe
 4. Optionnally, you may get a security warning when running this software. You may have to add a security exception to run this software. Our code is open source and there is no malware included with this program.
-5. You will get a Setup window to select your language preference and your league.
-6. You cannot run Path of Exile in Fullscreen mode to use this tool. We recommend using "Windows Fullscreen".
-7. Enjoy! Report issues or suggestions in our Discord or create an issue here.
+5. You cannot run Path of Exile in Fullscreen mode to use this tool. We recommend using "Windowed Fullscreen".
+6. Enjoy! Report issues or suggestions in our Discord or create an issue here.
 
 ## Features
 ### Trade
