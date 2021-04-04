@@ -1,4 +1,4 @@
-# [![](https://i.gyazo.com/94476b2151a7b7c5af914957955edb4a.png)](#) Sidekick 2 Beta [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square&include_prereleases)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
+# [![](./docs/assets/images/orb_exalted.png)](#) Sidekick 2 Beta [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square&include_prereleases)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
 A Path of Exile companion tool.
 
 ## Installation and Usage
@@ -13,9 +13,9 @@ A Path of Exile companion tool.
 ### Trade
 #### Default Binding: Ctrl + D
 Opens a trade view from the official Path of Exile trade API. You can compare and preview items by clicking on any result. For rare items, a price prediction from poeprices.info is shown. For unique items, prices from poe.ninja are used.
-| Trade |
-|---|
-| ![](https://raw.githubusercontent.com/domialex/Sidekick/master/docs/assets/images/price-check.png) |
+| Trade | Minimized |
+|---|---|
+| ![](./docs/assets/images/trade_maximized.png) | ![](./docs/assets/images/trade_minimized.png) |
 
 ### Cheatsheets
 #### Default Binding: F6
