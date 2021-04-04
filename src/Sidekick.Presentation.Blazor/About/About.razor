@@ -89,16 +89,21 @@
 
     public Dictionary<string, string> ThirdParties { get; private set; } = new Dictionary<string, string>()
 {
+        { "Path of Exile Trade", "https://www.pathofexile.com/trade" },
+        { "poe.ninja", "https://poe.ninja/" },
+        { "poeprices.info", "https://www.poeprices.info/" },
         { "MudBlazor", "https://github.com/Garderoben/MudBlazor" },
-        { "Fluent Assertions", "https://fluentassertions.com" },
-        { "Microsoft - ASP.NET", "https://asp.net" },
+        { "FluentAssertions", "https://fluentassertions.com" },
+        { "Electron", "https://www.electronjs.org/" },
+        { "Electron.NET", "https://github.com/ElectronNET/Electron.NET/" },
         { "NeatInput", "https://github.com/LegendaryB/NeatInput" },
-        { "Serilog", "https://serilog.net" },
+        { "GregsStack.InputSimulatorStandard", "https://github.com/GregsStack/InputSimulatorStandard" },
         { "TextCopy", "https://github.com/CopyText/TextCopy" },
     };
 
     protected override void OnInitialized()
     {
+        ViewInstance.SetTitle(Resources.Title);
         VersionNumber = GetType().Assembly.GetName().Version.ToString();
 
         try
@@ -112,12 +117,6 @@
         }
 
         base.OnInitialized();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Title);
-        await base.OnAfterRenderAsync(firstRender);
     }
 
     public async Task Navigate(string uri)

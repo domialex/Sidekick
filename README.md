@@ -55,9 +55,18 @@ We accept most PR and ideas. If you want a feature included, create an issue and
 We are also available on [Discord](https://discord.gg/H4bg4GQ).
 
 ## Thanks
-- [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
-- [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
-- [WindowsHook](https://github.com/topstarai/WindowsHook) - Keyboard and mouse hooks
-- [AdonisUI](https://benruehl.github.io/adonis-ui/) - UI
+Community
+- [Path of Exile Trade](https://www.pathofexile.com/trade)
 - [poe.ninja](https://poe.ninja/)
-- [Poe Price Info](https://www.poeprices.info/)
+- [poeprices.info](https://www.poeprices.info/)
+- [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
+
+Technology
+- [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
+- [MudBlazor](https://mudblazor.com/)
+- [FluentAssertions](https://fluentassertions.com)
+- [Electron](https://www.electronjs.org/)
+- [Electron.NET](https://github.com/ElectronNET/Electron.NET/)
+- [NeatInput](https://github.com/LegendaryB/NeatInput)
+- [GregsStack.InputSimulatorStandard](https://github.com/GregsStack/InputSimulatorStandard)
+- [TextCopy](https://github.com/CopyText/TextCopy)
