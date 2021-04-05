@@ -5,7 +5,7 @@
         @LeftContent
         <div class="icon"><img src="/images/orbs/ExaltedOrb.png" /></div>
         <MudText Typo="Typo.h6">
-            <span id="sidekick-appbar-title">Sidekick</span>
+            <span id="sidekick-appbar-title">@ViewInstance.Title</span>
         </MudText>
         <MudAppBarSpacer />
         @RightContent
@@ -31,5 +31,4 @@
     [Parameter] public bool Maximizable { get; set; } = false;
     [Parameter] public RenderFragment LeftContent { get; set; }
     [Parameter] public RenderFragment RightContent { get; set; }
-    [Parameter] public string Title { get; set; }
 }

@@ -20,9 +20,11 @@ namespace Sidekick.Mock.Views
             return Task.CompletedTask;
         }
 
-        public virtual Task SetTitle(string title)
+        public string Title { get; private set; }
+
+        public virtual void SetTitle(string title)
         {
-            return Task.CompletedTask;
+            Title = title;
         }
     }
 }

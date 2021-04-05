@@ -51,14 +51,9 @@
 
     protected override void OnInitialized()
     {
+        ViewInstance.SetTitle(Resources.Title);
         Layout.SetMenuIcon(false);
         base.OnInitialized();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Title);
-        await base.OnAfterRenderAsync(firstRender);
     }
 
     public async Task Save()

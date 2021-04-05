@@ -54,6 +54,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewInstance.SetTitle(Resources.Title);
+
         Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
         if (Item == null)
         {
@@ -67,14 +69,10 @@
             await ViewInstance.Close();
             return;
         }
+
+        ViewInstance.SetTitle(Item.Original.Type);
         MapInfo = await Mediator.Send(new GetMapInfo(Item));
 
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Title);
-        await base.OnAfterRenderAsync(firstRender);
     }
 }

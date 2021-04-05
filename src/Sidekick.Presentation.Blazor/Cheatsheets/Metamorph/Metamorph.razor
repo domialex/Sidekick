@@ -19,13 +19,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewInstance.SetTitle(Resources.Metamorph);
         ViewModel = await Mediator.Send(new GetMetamorphCheatsheetQuery());
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Metamorph);
-        await base.OnAfterRenderAsync(firstRender);
     }
 }

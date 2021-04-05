@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.JSInterop;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
@@ -9,13 +8,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
     {
         private readonly InternalViewInstance view;
         private readonly IViewPreferenceRepository viewPreferenceRepository;
-        private readonly IJSRuntime jSRuntime;
 
-        public ViewInstance(ViewLocator locator, IViewPreferenceRepository viewPreferenceRepository, IJSRuntime jSRuntime)
+        public ViewInstance(ViewLocator locator, IViewPreferenceRepository viewPreferenceRepository)
         {
             view = locator.Views.Last();
             this.viewPreferenceRepository = viewPreferenceRepository;
-            this.jSRuntime = jSRuntime;
         }
 
         public Task Minimize()
@@ -52,9 +49,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             return Task.CompletedTask;
         }
 
-        public async Task SetTitle(string title)
+        public string Title { get; private set; } = "Sidekick";
+
+        public void SetTitle(string title)
         {
-            await jSRuntime.InvokeVoidAsync("sidekickSetTitle", title);
+            Title = title;
             view.Browser.SetTitle(title);
         }
     }

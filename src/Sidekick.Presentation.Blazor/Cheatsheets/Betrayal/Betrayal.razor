@@ -24,14 +24,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewInstance.SetTitle(Resources.Betrayal);
         ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Betrayal);
-        await base.OnAfterRenderAsync(firstRender);
     }
 
     public async Task SortChanged()

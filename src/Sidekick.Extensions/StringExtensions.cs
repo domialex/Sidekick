@@ -77,7 +77,9 @@ namespace Sidekick.Extensions
         {
             if (input.StartsWith("xurl_"))
             {
-                return input.Substring(5).DecodeUrl().DecodeBase64();
+                var substr = input.Substring(5);
+                var decode = substr.DecodeUrl();
+                return decode.DecodeBase64();
             }
 
             return input;

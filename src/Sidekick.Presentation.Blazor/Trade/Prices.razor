@@ -22,6 +22,8 @@
     <PricePredictionComponent Item="Item" Class="flex-grow-1 mx-1" />
 </div>
 
+<FiltersComponent Item="Item" ModifierFilters="ModifierFilters" PropertyFilters="PropertyFilters" OnSearch="UpdateQuery" />
+
 @if (IsError)
 {
     <MudAlert Severity="Severity.Error">@Resources.Error_PoeApi</MudAlert>
@@ -86,21 +88,13 @@ else
             return;
         }
 
+        ViewInstance.SetTitle(Item.Original.Type);
         PropertyFilters = await Mediator.Send(new GetPropertyFilters(Item));
         ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
 
         await UpdateQuery();
 
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (Item != null)
-        {
-            await ViewInstance.SetTitle(Item.Original.Name);
-        }
-        await base.OnAfterRenderAsync(firstRender);
     }
 
     public async Task UpdateQuery()

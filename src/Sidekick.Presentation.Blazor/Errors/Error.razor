@@ -21,10 +21,9 @@
 
     [Parameter] public string Type { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnInitialized()
     {
-        await ViewInstance.SetTitle(Resources.Title);
-        await base.OnAfterRenderAsync(firstRender);
+        ViewInstance.SetTitle(Resources.Title);
     }
 
     private string Text => Type switch

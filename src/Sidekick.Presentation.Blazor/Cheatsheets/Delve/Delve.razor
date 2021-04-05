@@ -19,13 +19,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ViewInstance.SetTitle(Resources.Delve);
         ViewModel = await Mediator.Send(new GetDelveCheatsheetQuery());
         await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await ViewInstance.SetTitle(Resources.Delve);
-        await base.OnAfterRenderAsync(firstRender);
     }
 }

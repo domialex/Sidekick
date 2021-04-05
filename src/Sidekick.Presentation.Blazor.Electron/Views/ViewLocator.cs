@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using ElectronNET.API;
 using ElectronNET.API.Entities;
@@ -64,14 +63,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             foreach (var arg in args)
             {
-                if (arg is string stringArg)
-                {
-                    path += $"/{stringArg.EncodeBase64Url()}";
-                }
-                else
-                {
-                    path += $"/{JsonSerializer.Serialize(arg).EncodeBase64Url()}";
-                }
+                path += $"/{arg.ToString().EncodeBase64Url()}";
             }
 
             return path;

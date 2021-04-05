@@ -77,11 +77,20 @@ namespace Sidekick.Localization.Trade
         public string Corrupted => localizer["Corrupted"];
         public string CountString(int count, int total) => localizer["CountString", count, total];
         public string Error_PoeApi => localizer["Error_PoeApi"];
+        public string Filters_Expand => localizer["Filters_Expand"];
+        public string Filters_Collapse => localizer["Filters_Collapse"];
         public string Filters_Dps => localizer["Filters_Dps"];
         public string Filters_EDps => localizer["Filters_EDps"];
         public string Filters_Max => localizer["Filters_Max"];
         public string Filters_Min => localizer["Filters_Min"];
         public string Filters_PDps => localizer["Filters_PDps"];
+        public string Filters_Armour => localizer["Filters_Armour"];
+        public string Filters_Map => localizer["Filters_Map"];
+        public string Filters_Misc => localizer["Filters_Misc"];
+        public string Filters_Weapon => localizer["Filters_Weapon"];
+        public string Filters_Modifiers => localizer["Filters_Modifiers"];
+        public string Filters_Pseudo => localizer["Filters_Pseudo"];
+        public string Filters_Submit => localizer["Filters_Submit"];
         public string ItemLevel => localizer["ItemLevel"];
         public string Layout => localizer["Layout"];
         public string Layout_Cards_Maximized => localizer["Layout_Cards_Maximized"];
@@ -110,6 +119,8 @@ namespace Sidekick.Localization.Trade
         public string UpdateNow => localizer["UpdateNow"];
         public string UpdateSeconds => localizer["UpdateSeconds"];
         public string UpdateShortly => localizer["UpdateShortly"];
+        public string View_More => localizer["View_More"];
+        public string View_Less => localizer["View_Less"];
 
     }
 }

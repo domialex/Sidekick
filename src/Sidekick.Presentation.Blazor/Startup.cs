@@ -74,7 +74,7 @@ namespace Sidekick.Presentation.Blazor
 
             // Mock services
             services.AddSingleton<IViewLocator, MockViewLocator>();
-            services.AddScoped<IViewInstance, Mocks.MockViewInstance>();
+            services.AddScoped<IViewInstance, MockViewInstance>();
             services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
         }
 

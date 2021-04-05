@@ -315,11 +315,23 @@
   <data name="Error_PoeApi" xml:space="preserve">
     <value>An error occured while trying to get the results from the official trade API. The official trade website may be down. Please try again later or open a ticket on github.</value>
   </data>
+  <data name="Filters_Armour" xml:space="preserve">
+    <value>Armour Filters</value>
+  </data>
+  <data name="Filters_Collapse" xml:space="preserve">
+    <value>Collapse Filters</value>
+  </data>
   <data name="Filters_Dps" xml:space="preserve">
     <value>Damage per second</value>
   </data>
   <data name="Filters_EDps" xml:space="preserve">
     <value>Elemental DPS</value>
+  </data>
+  <data name="Filters_Expand" xml:space="preserve">
+    <value>Expand Filters</value>
+  </data>
+  <data name="Filters_Map" xml:space="preserve">
+    <value>Map Filters</value>
   </data>
   <data name="Filters_Max" xml:space="preserve">
     <value>Max</value>
@@ -327,8 +339,23 @@
   <data name="Filters_Min" xml:space="preserve">
     <value>Min</value>
   </data>
+  <data name="Filters_Misc" xml:space="preserve">
+    <value>Miscellaneous Filters</value>
+  </data>
+  <data name="Filters_Modifiers" xml:space="preserve">
+    <value>Modifier Filters</value>
+  </data>
   <data name="Filters_PDps" xml:space="preserve">
     <value>Physical DPS</value>
+  </data>
+  <data name="Filters_Pseudo" xml:space="preserve">
+    <value>Pseudo Filters</value>
+  </data>
+  <data name="Filters_Submit" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Filters_Weapon" xml:space="preserve">
+    <value>Weapon Filters</value>
   </data>
   <data name="ItemLevel" xml:space="preserve">
     <value>Item Level</value>
@@ -404,5 +431,11 @@
   </data>
   <data name="Unidentified" xml:space="preserve">
     <value>Unidentified</value>
+  </data>
+  <data name="View_Less" xml:space="preserve">
+    <value>View Less</value>
+  </data>
+  <data name="View_More" xml:space="preserve">
+    <value>View More</value>
   </data>
 </root>

@@ -280,6 +280,8 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             SetModifierFilters(group, modifierFilters.Explicit);
             SetModifierFilters(group, modifierFilters.Crafted);
             SetModifierFilters(group, modifierFilters.Fractured);
+
+            stats.Add(group);
         }
 
         private static void SetModifierFilters(StatFilterGroup group, List<ModifierFilter> modifierFilters)

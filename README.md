@@ -55,13 +55,13 @@ We are also available on [Discord](https://discord.gg/H4bg4GQ).
 
 ## Thanks
 Community
+- [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
 - [Path of Exile Trade](https://www.pathofexile.com/trade)
 - [poe.ninja](https://poe.ninja/)
 - [poeprices.info](https://www.poeprices.info/)
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
 
 Technology
-- [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
 - [MudBlazor](https://mudblazor.com/)
 - [FluentAssertions](https://fluentassertions.com)
 - [Electron](https://www.electronjs.org/)
