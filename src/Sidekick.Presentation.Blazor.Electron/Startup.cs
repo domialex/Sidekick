@@ -114,6 +114,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             });
 
             // Electron stuff
+            ElectronNET.API.Electron.NativeTheme.SetThemeSource(ThemeSourceMode.Dark);
             ElectronNET.API.Electron.WindowManager.IsQuitOnWindowAllClosed = false;
             Task.Run(async () =>
             {
