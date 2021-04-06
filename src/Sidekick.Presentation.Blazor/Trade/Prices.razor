@@ -92,7 +92,10 @@ else
         PropertyFilters = await Mediator.Send(new GetPropertyFilters(Item));
         ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
 
-        await UpdateQuery();
+        if (Item.Metadata.Rarity != Rarity.Rare && Item.Metadata.Rarity != Rarity.Magic)
+        {
+            await UpdateQuery();
+        }
 
         await base.OnInitializedAsync();
     }

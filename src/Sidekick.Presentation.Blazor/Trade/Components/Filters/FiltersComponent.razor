@@ -49,6 +49,10 @@
                         }
                     </MudItem>
                 </MudGrid>
+
+                <div class="d-flex justify-end pa-2">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Search">@Resources.Filters_Submit</MudButton>
+                </div>
             }
         </MudPaper>
     </div>
@@ -66,10 +70,14 @@
     private bool Visible { get; set; }
     private bool ModifierVisible { get; set; }
     private bool PseudoVisible { get; set; }
+    private bool IsInit { get; set; } = false;
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        if (IsInit) return;
+        IsInit = Item != null;
 
         int propertyCount = 0;
         propertyCount += PropertyFilters?.Armour?.Count ?? 0;
@@ -98,5 +106,11 @@
     private void Collapse()
     {
         Expanded = false;
+    }
+
+    private Task Search()
+    {
+        Expanded = false;
+        return OnSearch.InvokeAsync();
     }
 }
