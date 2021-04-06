@@ -24,7 +24,7 @@ namespace Sidekick.Application.Game.Trade
         {
             var itemText = await clipboardProvider.Copy();
 
-            await viewLocator.Open(View.Map, itemText);
+            await viewLocator.Open(View.Trade, itemText);
 
             return true;
         }

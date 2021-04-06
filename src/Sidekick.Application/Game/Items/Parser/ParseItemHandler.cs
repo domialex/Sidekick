@@ -109,7 +109,7 @@ namespace Sidekick.Application.Game.Items.Parser
                     return ParseJewelProperties(parsingItem);
 
                 default:
-                    return null;
+                    return new Properties();
             }
         }
 
@@ -242,7 +242,7 @@ namespace Sidekick.Application.Game.Items.Parser
                 return result;
             }
 
-            return null;
+            return new List<Socket>();
         }
 
         private Influences ParseInfluences(ParsingItem parsingItem)
@@ -263,7 +263,7 @@ namespace Sidekick.Application.Game.Items.Parser
                     };
 
                 default:
-                    return null;
+                    return new Influences();
             }
         }
 
@@ -275,7 +275,7 @@ namespace Sidekick.Application.Game.Items.Parser
                 case Category.Currency:
                 case Category.Prophecy:
                 case Category.Gem:
-                    return null;
+                    return new ItemModifiers();
 
                 default:
                     return modifierProvider.Parse(parsingItem);
