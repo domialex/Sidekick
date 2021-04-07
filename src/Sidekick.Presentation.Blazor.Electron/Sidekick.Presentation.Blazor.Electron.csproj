@@ -39,8 +39,15 @@
   <ItemGroup>
     <Content Include=".gitignore" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)..\Sidekick.Presentation.Blazor\wwwroot&quot; &quot;$(ProjectDir)wwwroot&quot; /Y /I /E" />
+
+  <Target Name="Copywwwroot" BeforeTargets="PreBuildEvent">
+    <ItemGroup>
+      <wwwrootFolder Include="$(ProjectDir)..\Sidekick.Presentation.Blazor\wwwroot\**\*.*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(wwwrootFolder)"
+      DestinationFolder="$(ProjectDir)wwwroot\%(RecursiveDir)"
+    />
   </Target>
 
 </Project>
