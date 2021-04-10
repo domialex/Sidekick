@@ -21,12 +21,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: .NET - ElectronNET.CLI Tool
-      run: dotnet tool install ElectronNET.CLI -g
     - name: Nuget - Setup
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
+    - name: .NET - Tools
+      run: dotnet tools restore
     - name: Restore
       run: dotnet restore
     - name: Build
