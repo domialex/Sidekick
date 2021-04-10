@@ -15,18 +15,21 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: .NET - Setup
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Setup NuGet.exe for use with actions
+    - name: .NET - Tools
+      run: dotnet tool install
+    - name: Nuget - Setup
       uses: NuGet/setup-nuget@v1.0.5
-    - name: Restore dependencies
+    - name: NuGet - Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+    - name: Restore
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Tool install
-      run: dotnet tool install
     - name: Test
       run: dotnet test --no-build --verbosity normal
