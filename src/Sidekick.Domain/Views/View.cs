@@ -3,14 +3,11 @@ namespace Sidekick.Domain.Views
     public enum View
     {
         About,
-        AvailableInEnglishError,
+        Error,
         Initialization,
-        InvalidItemError,
         League,
-        Logs,
         Map,
-        ParserError,
-        Price,
+        Trade,
         Settings,
         Setup,
     }

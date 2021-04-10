@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="altcover" Version="7.5.809" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.29" />
+    <PackageReference Include="altcover" Version="8.0.816" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="Moq" Version="4.16.0" />
     <PackageReference Include="xunit" Version="2.4.1" />

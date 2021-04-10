@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Items.Metadatas;
+using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;
@@ -77,15 +78,15 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return null;
         }
 
-        public async Task<TradeSearchResult<string>> Search(Item item, List<PropertyFilter> propertyFilters = null, List<ModifierFilter> modifierFilters = null)
+        public async Task<TradeSearchResult<string>> Search(Item item, PropertyFilters propertyFilters = null, ModifierFilters modifierFilters = null)
         {
             try
             {
                 logger.LogInformation("Querying Trade API.");
 
                 var request = new QueryRequest();
-                SetFilters(request.Query.Filters, propertyFilters);
-                SetStats(request.Query.Stats, modifierFilters);
+                SetPropertyFilters(request.Query.Filters, propertyFilters);
+                SetModifierFilters(request.Query.Stats, modifierFilters);
 
                 // Auto Search 5+ Links
                 var highestCount = item.Sockets
@@ -101,28 +102,28 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     };
                 }
 
-                if (item.Rarity == Rarity.Unique)
+                if (item.Metadata.Rarity == Rarity.Unique)
                 {
-                    request.Query.Name = item.Name;
-                    request.Query.Type = item.Type;
+                    request.Query.Name = item.Metadata.Name;
+                    request.Query.Type = item.Metadata.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("Unique");
                 }
-                else if (item.Rarity == Rarity.Prophecy)
+                else if (item.Metadata.Rarity == Rarity.Prophecy)
                 {
-                    request.Query.Name = item.Name;
+                    request.Query.Name = item.Metadata.Name;
                 }
                 else
                 {
                     if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
                     {
-                        request.Query.Type = item.Type;
+                        request.Query.Type = item.Metadata.Type;
                     }
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("nonunique");
                 }
 
                 if (item.Properties.AlternateQuality)
                 {
-                    request.Query.Term = item.NameLine;
+                    request.Query.Term = item.Original.Name;
                 }
 
                 if (item.Properties.MapTier > 0)
@@ -156,17 +157,21 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return null;
         }
 
-        private void SetFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
+        private static void SetPropertyFilters(SearchFilters filters, PropertyFilters propertyFilters)
         {
-            if (propertyFilters == null)
-            {
-                return;
-            }
+            if (propertyFilters == null) return;
 
+            SetPropertyFilters(filters, propertyFilters.Armour);
+            SetPropertyFilters(filters, propertyFilters.Weapon);
+            SetPropertyFilters(filters, propertyFilters.Map);
+            SetPropertyFilters(filters, propertyFilters.Misc);
+        }
+
+        private static void SetPropertyFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
+        {
             foreach (var propertyFilter in propertyFilters)
             {
-                if (!propertyFilter.Enabled
-                    && propertyFilter.Type != PropertyFilterType.Misc_Corrupted)
+                if (!propertyFilter.Enabled && propertyFilter.Type != PropertyFilterType.Misc_Corrupted)
                 {
                     continue;
                 }
@@ -193,22 +198,22 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                         break;
 
                     // Influence
-                    case PropertyFilterType.Influence_Crusader:
+                    case PropertyFilterType.Misc_Influence_Crusader:
                         filters.MiscFilters.Filters.CrusaderItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Elder:
+                    case PropertyFilterType.Misc_Influence_Elder:
                         filters.MiscFilters.Filters.ElderItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Hunter:
+                    case PropertyFilterType.Misc_Influence_Hunter:
                         filters.MiscFilters.Filters.HunterItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Redeemer:
+                    case PropertyFilterType.Misc_Influence_Redeemer:
                         filters.MiscFilters.Filters.RedeemerItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Shaper:
+                    case PropertyFilterType.Misc_Influence_Shaper:
                         filters.MiscFilters.Filters.ShaperItem = new SearchFilterOption(propertyFilter);
                         break;
-                    case PropertyFilterType.Influence_Warlord:
+                    case PropertyFilterType.Misc_Influence_Warlord:
                         filters.MiscFilters.Filters.WarlordItem = new SearchFilterOption(propertyFilter);
                         break;
 
@@ -263,26 +268,38 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             }
         }
 
-        private void SetStats(List<StatFilterGroup> stats, List<ModifierFilter> modifierFilters)
+        private static void SetModifierFilters(List<StatFilterGroup> stats, ModifierFilters modifierFilters)
+        {
+            if (modifierFilters == null) return;
+
+            var group = new StatFilterGroup();
+
+            SetModifierFilters(group, modifierFilters.Pseudo);
+            SetModifierFilters(group, modifierFilters.Enchant);
+            SetModifierFilters(group, modifierFilters.Implicit);
+            SetModifierFilters(group, modifierFilters.Explicit);
+            SetModifierFilters(group, modifierFilters.Crafted);
+            SetModifierFilters(group, modifierFilters.Fractured);
+
+            stats.Add(group);
+        }
+
+        private static void SetModifierFilters(StatFilterGroup group, List<ModifierFilter> modifierFilters)
         {
             if (modifierFilters == null)
             {
                 return;
             }
 
-            stats.Add(new StatFilterGroup()
+            group.Filters.AddRange(modifierFilters.ConvertAll(x => new StatFilter()
             {
-                Type = StatType.And,
-                Filters = modifierFilters.ConvertAll(x => new StatFilter()
-                {
-                    Disabled = false,
-                    Id = x.Id,
-                    Value = new SearchFilterValue(x),
-                })
-            });
+                Disabled = !x.Enabled,
+                Id = x.Modifier.Id,
+                Value = new SearchFilterValue(x),
+            }));
         }
 
-        public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, List<ModifierFilter> modifierFilters = null)
+        public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, ModifierFilters modifierFilters = null)
         {
             try
             {
@@ -291,7 +308,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 var pseudo = string.Empty;
                 if (modifierFilters != null)
                 {
-                    pseudo = string.Join("", modifierFilters.Where(x => x.Id.StartsWith("pseudo.")).Select(x => $"&pseudos[]={x.Id}"));
+                    pseudo = string.Join("", modifierFilters.Pseudo.Select(x => $"&pseudos[]={x.Modifier.Id}"));
                 }
 
                 var response = await poeTradeClient.HttpClient.GetAsync(gameLanguageProvider.Language.PoeTradeApiBaseUrl + "fetch/" + string.Join(",", ids) + "?query=" + queryId + pseudo);
@@ -303,7 +320,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     });
 
-                    return result.Result.ConvertAll(x => GetItem(x));
+                    return result.Result.Where(x => x != null).ToList().ConvertAll(x => GetItem(x));
                 }
             }
             catch (Exception ex)
@@ -331,17 +348,24 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     Note = result.Item.Note,
                 },
 
-                Corrupted = result.Item.Corrupted,
-                Identified = result.Item.Identified,
                 Influences = result.Item.Influences,
-                ItemLevel = result.Item.ItemLevel,
-                Name = result.Item.Name,
-                NameLine = result.Item.Name,
-                Rarity = result.Item.Rarity,
-                Type = result.Item.TypeLine,
-                TypeLine = result.Item.TypeLine,
+
+                Original = new OriginalItem()
+                {
+                    Name = result.Item.Name,
+                    Type = result.Item.TypeLine,
+                },
+
+                Metadata = new ItemMetadata()
+                {
+                    Name = result.Item.Name,
+                    Rarity = result.Item.Rarity,
+                    Type = result.Item.TypeLine,
+                },
 
                 Image = result.Item.Icon,
+                Width = result.Item.Width,
+                Height = result.Item.Height,
 
                 RequirementContents = ParseLineContents(result.Item.Requirements),
                 PropertyContents = ParseLineContents(result.Item.Properties),
@@ -349,6 +373,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
 
                 Properties = new Properties()
                 {
+                    ItemLevel = result.Item.ItemLevel,
+                    Corrupted = result.Item.Corrupted,
+                    Identified = result.Item.Identified,
                     Armor = result.Item.Extended.ArmourAtMax,
                     EnergyShield = result.Item.Extended.EnergyShieldAtMax,
                     Evasion = result.Item.Extended.EvasionAtMax,
@@ -383,7 +410,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 ParseHash(result.Item.Extended.Hashes?.Implicit));
 
             ParseMods(modifierProvider,
-                item.Modifiers.Pseudo,
+                item.Modifiers?.Pseudo,
                 result.Item.PseudoMods,
                 result.Item.Extended.Mods?.Pseudo,
                 ParseHash(result.Item.Extended.Hashes?.Pseudo));
@@ -397,7 +424,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return item;
         }
 
-        private List<LineContentValue> ParseHash(List<List<JsonElement>> values)
+        private static List<LineContentValue> ParseHash(List<List<JsonElement>> values)
         {
             var result = new List<LineContentValue>();
             if (values != null)
@@ -419,10 +446,9 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return result;
         }
 
-        private List<LineContent> ParseLineContents(List<ResultLineContent> lines)
+        private static List<LineContent> ParseLineContents(List<ResultLineContent> lines)
         {
-            if (lines == null)
-                return null;
+            if (lines == null) return new List<LineContent>();
 
             return lines
                 .OrderBy(x => x.Order)
@@ -477,7 +503,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 .ToList();
         }
 
-        private void ParseMods(IModifierProvider modifierProvider, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
+        private static void ParseMods(IModifierProvider modifierProvider, List<Modifier> modifiers, List<string> texts, List<Mod> mods, List<LineContentValue> hashes)
         {
             if (modifiers == null || mods == null || hashes == null)
             {
@@ -487,36 +513,37 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             for (var index = 0; index < hashes.Count; index++)
             {
                 var id = hashes[index].Value;
-                var definition = modifierProvider.GetById(id);
-
                 var text = texts.FirstOrDefault(x => modifierProvider.IsMatch(id, x));
-                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == definition.Id));
+                var mod = mods.FirstOrDefault(x => x.Magnitudes != null && x.Magnitudes.Any(y => y.Hash == id));
 
                 modifiers.Add(new Modifier()
                 {
-                    Id = definition.Id,
-                    Text = text ?? definition.Text,
+                    Id = id,
+                    Text = text,
                     Tier = mod?.Tier,
                     TierName = mod?.Name,
                 });
             }
         }
 
-        private List<Socket> ParseSockets(List<ResultSocket> sockets)
+        private static List<Socket> ParseSockets(List<ResultSocket> sockets)
         {
-            return sockets.ConvertAll(x => new Socket()
-            {
-                Group = x.Group,
-                Colour = x.ColourString switch
+            return sockets
+                .Where(x => x.ColourString != "DV") // Remove delve resonator sockets
+                .Select(x => new Socket()
                 {
-                    "B" => SocketColour.Blue,
-                    "G" => SocketColour.Green,
-                    "R" => SocketColour.Red,
-                    "W" => SocketColour.White,
-                    "A" => SocketColour.Abyss,
-                    _ => throw new Exception("Invalid socket"),
-                }
-            });
+                    Group = x.Group,
+                    Colour = x.ColourString switch
+                    {
+                        "B" => SocketColour.Blue,
+                        "G" => SocketColour.Green,
+                        "R" => SocketColour.Red,
+                        "W" => SocketColour.White,
+                        "A" => SocketColour.Abyss,
+                        _ => throw new Exception("Invalid socket"),
+                    }
+                })
+                .ToList();
         }
     }
 }

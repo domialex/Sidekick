@@ -9,13 +9,6 @@ namespace Sidekick.Domain.Game.Trade.Models
 
         Category,
 
-        Influence_Crusader,
-        Influence_Elder,
-        Influence_Hunter,
-        Influence_Redeemer,
-        Influence_Shaper,
-        Influence_Warlord,
-
         Map_ItemQuantity,
         Map_ItemRarity,
         Map_MonsterPackSize,
@@ -26,6 +19,12 @@ namespace Sidekick.Domain.Game.Trade.Models
         Misc_GemLevel,
         Misc_ItemLevel,
         Misc_Corrupted,
+        Misc_Influence_Crusader,
+        Misc_Influence_Elder,
+        Misc_Influence_Hunter,
+        Misc_Influence_Redeemer,
+        Misc_Influence_Shaper,
+        Misc_Influence_Warlord,
 
         Weapon_PhysicalDps,
         Weapon_ElementalDps,

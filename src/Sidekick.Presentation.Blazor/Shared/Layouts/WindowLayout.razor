@@ -1,0 +1,12 @@
+@inherits LayoutComponentBase
+
+<SidekickWrapper>
+    <SidekickAppBar Minimizable="true" Maximizable="true"></SidekickAppBar>
+    <MudMainContent>
+        <MudContainer Class="py-6">
+            <CascadingValue Value="this">
+                @Body
+            </CascadingValue>
+        </MudContainer>
+    </MudMainContent>
+</SidekickWrapper>

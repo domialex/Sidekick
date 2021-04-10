@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="PoeApi\Items\Modifiers\stat_translations.min.json" />
+    <None Remove="RePoe\Data\stat_translations.min.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="PoeApi\Items\Modifiers\stat_translations.min.json" />
+    <EmbeddedResource Include="RePoe\Data\stat_translations.min.json" />
   </ItemGroup>
 
   <ItemGroup>

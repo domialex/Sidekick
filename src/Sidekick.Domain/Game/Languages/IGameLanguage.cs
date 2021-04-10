@@ -4,6 +4,8 @@ namespace Sidekick.Domain.Game.Languages
 {
     public interface IGameLanguage
     {
+        string LanguageCode { get; }
+
         Uri PoeTradeSearchBaseUrl { get; }
         Uri PoeTradeExchangeBaseUrl { get; }
         Uri PoeTradeApiBaseUrl { get; }
@@ -21,7 +23,6 @@ namespace Sidekick.Domain.Game.Languages
         string DescriptionQuality { get; }
         string DescriptionAlternateQuality { get; }
         string DescriptionCorrupted { get; }
-        string DescriptionRarity { get; }
         string DescriptionSockets { get; }
         string DescriptionItemLevel { get; }
         string DescriptionMapTier { get; }
@@ -29,7 +30,6 @@ namespace Sidekick.Domain.Game.Languages
         string DescriptionItemRarity { get; }
         string DescriptionMonsterPackSize { get; }
         string DescriptionExperience { get; }
-        string DescriptionOrgan { get; }
         string DescriptionPhysicalDamage { get; }
         string DescriptionElementalDamage { get; }
         string DescriptionAttacksPerSecond { get; }
@@ -46,18 +46,11 @@ namespace Sidekick.Domain.Game.Languages
         string PrefixDivergent { get; }
         string PrefixPhantasmal { get; }
 
-        string KeywordVaal { get; }
-
         string InfluenceShaper { get; }
         string InfluenceElder { get; }
         string InfluenceCrusader { get; }
         string InfluenceHunter { get; }
         string InfluenceRedeemer { get; }
         string InfluenceWarlord { get; }
-
-        string ModifierIncreased { get; }
-        string ModifierReduced { get; }
-        string AdditionalProjectile { get; }
-        string AdditionalProjectiles { get; }
     }
 }

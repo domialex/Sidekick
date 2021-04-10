@@ -9,5 +9,11 @@ namespace Sidekick.Domain.Game.Trade.Models
         public double? Min { get; set; }
 
         public double? Max { get; set; }
+
+        public string Text { get; set; }
+
+        public object Value { get; set; }
+
+        public FilterValueType ValueType { get; set; }
     }
 }

@@ -118,10 +118,9 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Pseudo
                     Definitions.Add(definition);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                logger.LogInformation($"Could not initialize pseudo service.");
-                throw;
+                logger.LogWarning(e , "Could not initialize pseudo service.");
             }
         }
 
@@ -472,10 +471,10 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Pseudo
         {
             var pseudo = new List<Modifier>();
 
-            FillPseudo(ref pseudo, modifiers.Explicit);
-            FillPseudo(ref pseudo, modifiers.Implicit);
-            FillPseudo(ref pseudo, modifiers.Enchant);
-            FillPseudo(ref pseudo, modifiers.Crafted);
+            FillPseudo(pseudo, modifiers.Explicit);
+            FillPseudo(pseudo, modifiers.Implicit);
+            FillPseudo(pseudo, modifiers.Enchant);
+            FillPseudo(pseudo, modifiers.Crafted);
 
             pseudo.ForEach(x =>
             {
@@ -485,7 +484,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Pseudo
             return pseudo;
         }
 
-        private void FillPseudo(ref List<Modifier> pseudoMods, List<Modifier> mods)
+        private void FillPseudo(List<Modifier> pseudoMods, List<Modifier> mods)
         {
             Modifier pseudoMod;
             Modifier mod;

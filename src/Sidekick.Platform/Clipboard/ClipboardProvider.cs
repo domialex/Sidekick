@@ -32,7 +32,7 @@ namespace Sidekick.Platform.Clipboard
 
             await SetText(string.Empty);
 
-            await keyboard.PressKey("Copy");
+            keyboard.PressKey("Copy");
 
             await Task.Delay(100);
 

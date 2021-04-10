@@ -1,0 +1,24 @@
+
+<div class="d-flex flex-row align-center @Class">
+    <MudText Typo="Typo.h3">@Min.ToString("0.##")</MudText>
+    <MudText Typo="Typo.body1" Class="mx-1">-</MudText>
+    <MudText Typo="Typo.h3">@Max.ToString("0.##")</MudText>
+    @if (ShowImage)
+    {
+        <MudText Typo="Typo.body1" Class="mx-1">&times;</MudText>
+        <img src="@ImageUrl" />
+    }
+</div>
+
+@code {
+    [Inject] private Sidekick.Domain.Game.Items.Metadatas.IItemStaticDataProvider ItemStaticDataProvider { get; set; }
+    [Inject] private Sidekick.Domain.Game.Languages.IGameLanguageProvider GameLanguageProvider { get; set; }
+
+    [Parameter] public string Currency { get; set; }
+    [Parameter] public double Min { get; set; }
+    [Parameter] public double Max { get; set; }
+    [Parameter] public string Class { get; set; } = "justify-end";
+
+    private bool ShowImage => !string.IsNullOrEmpty(ItemStaticDataProvider.GetImage(Currency));
+    private string ImageUrl => $"{GameLanguageProvider.Language.PoeCdnBaseUrl}{ItemStaticDataProvider.GetImage(Currency).Trim('/')}";
+}

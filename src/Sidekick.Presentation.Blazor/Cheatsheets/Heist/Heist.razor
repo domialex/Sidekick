@@ -1,0 +1,26 @@
+@page "/cheatsheets/heist"
+@layout CheatsheetLayout
+
+<MudGrid Spacing="1">
+    @foreach (var job in ViewModel.Jobs)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Job Model="job" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private HeistLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(Resources.Heist);
+        ViewModel = await Mediator.Send(new GetHeistCheatsheetQuery());
+        await base.OnInitializedAsync();
+    }
+}

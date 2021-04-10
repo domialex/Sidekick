@@ -1,0 +1,12 @@
+
+@if (Total > 0 && Count > 0)
+{
+    <MudText Typo="Typo.caption">@Resources.CountString(Count, Total)</MudText>
+}
+
+@code {
+    [Inject] private TradeResources Resources { get; set; }
+
+    [Parameter] public int Total { get; set; }
+    [Parameter] public int Count { get; set; }
+}

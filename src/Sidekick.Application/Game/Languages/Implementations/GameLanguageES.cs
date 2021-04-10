@@ -3,9 +3,10 @@ using Sidekick.Domain.Game.Languages;
 
 namespace Sidekick.Application.Game.Languages.Implementations
 {
-    [GameLanguage("Spanish", "Rareza", "es")]
+    [GameLanguage("Spanish", "es")]
     public class GameLanguageES : IGameLanguage
     {
+        public string LanguageCode => "es";
         public Uri PoeTradeSearchBaseUrl => new Uri("https://es.pathofexile.com/trade/search/");
         public Uri PoeTradeExchangeBaseUrl => new Uri("https://es.pathofexile.com/trade/exchange/");
         public Uri PoeTradeApiBaseUrl => new Uri("https://es.pathofexile.com/api/trade/");
@@ -21,11 +22,9 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionQuality => "Calidad";
         public string DescriptionAlternateQuality => "Calidad alternativa";
         public string DescriptionCorrupted => "Corrupto";
-        public string DescriptionRarity => "Rareza";
         public string DescriptionSockets => "Engarces";
         public string DescriptionItemLevel => "Nivel de Objeto";
         public string DescriptionExperience => "Experiencia";
-        public string DescriptionOrgan => "Usa";
         public string PrefixSuperior => "Superior";
         public string InfluenceShaper => "Creador";
         public string InfluenceElder => "Antiguo";
@@ -38,8 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemRarity => "Rareza de Objetos";
         public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos";
         public string PrefixBlighted => "Infestado";
-        public string KeywordVaal => "Vaal";
-
+        
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -55,11 +53,6 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionEvasion => "__TranslationRequired__";
         public string DescriptionChanceToBlock => "__TranslationRequired__";
         public string DescriptionLevel => "__TranslationRequired__";
-
-        public string ModifierIncreased => "__TranslationRequired__";
-        public string ModifierReduced => "__TranslationRequired__";
-        public string AdditionalProjectile => "__TranslationRequired__";
-        public string AdditionalProjectiles => "__TranslationRequired__";
 
         public string PrefixAnomalous => "anómala";
         public string PrefixDivergent => "divergente";

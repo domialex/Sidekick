@@ -1,0 +1,26 @@
+@page "/cheatsheets/delve"
+@layout CheatsheetLayout
+
+<MudGrid Spacing="1">
+    @foreach (var region in ViewModel.Regions)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Region Model="region" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private DelveLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(Resources.Delve);
+        ViewModel = await Mediator.Send(new GetDelveCheatsheetQuery());
+        await base.OnInitializedAsync();
+    }
+}

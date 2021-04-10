@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Sidekick.Domain.Views
 {
     /// <summary>
@@ -10,7 +12,7 @@ namespace Sidekick.Domain.Views
         /// </summary>
         /// <param name="view">The view to open and show</param>
         /// <param name="args">Arguments to pass to the view</param>
-        void Open(View view, params object[] args);
+        Task Open(View view, params object[] args);
 
         /// <summary>
         /// Close the specified view
