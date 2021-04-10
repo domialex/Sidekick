@@ -43,3 +43,5 @@ jobs:
       uses: dorny/test-reporter@v1.3.1
       with:
         name: Report
+    - name: Test - Coverage Report
+      uses: 5monkeys/cobertura-action@v8
