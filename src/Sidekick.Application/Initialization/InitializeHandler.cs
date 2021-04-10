@@ -159,7 +159,7 @@ namespace Sidekick.Application.Initialization
                 await Task.Delay(500);
 
                 // Show a system notification
-                await mediator.Send(new OpenNotificationCommand(string.Format(resources.Notification_Message, settings.Price_Key_Check.ToKeybindString(), settings.Price_Key_Close.ToKeybindString()),
+                await mediator.Send(new OpenNotificationCommand(string.Format(resources.Notification_Message, settings.Price_Key_Check.ToKeybindString(), settings.Key_Close.ToKeybindString()),
                                                                 resources.Notification_Title));
 
                 viewLocator.Close(View.Initialization);

@@ -45,9 +45,7 @@ namespace Sidekick.Application.Settings
         public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
         public string Price_Layout { get; set; }
 
-        public string Map_Key_Close { get; set; } = "Space";
-
-        public string Price_Key_Close { get; set; } = "Space";
+        public string Key_Close { get; set; } = "Space";
 
         public string Price_Key_Check { get; set; } = "Ctrl+D";
 

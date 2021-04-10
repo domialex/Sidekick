@@ -15,6 +15,10 @@
             {
                 <MudText>@Value</MudText>
             }
+            @if (Duplicated)
+            {
+                <MudText Typo="Typo.caption" Color="Color.Error">@Resources.Key_Duplicated</MudText>
+            }
         </MudField>
     </div>
     <div class="flex-grow-0">
@@ -36,6 +40,7 @@
     private Guid Id { get; } = Guid.NewGuid();
     private bool Active => ViewModel.CurrentKey == Id;
     private string Class => Active ? "mud-info" : null;
+    private bool Duplicated { get; set; }
 
     protected override void OnInitialized()
     {
@@ -46,6 +51,8 @@
 
     public void Click()
     {
+        Duplicated = false;
+
         if (ViewModel.CurrentKey == Id)
         {
             ViewModel.CurrentKey = null;
@@ -56,19 +63,54 @@
         }
     }
 
-    private void OnKeyDown(string key)
+    private bool IsDuplicated(string key)
     {
-        if (!Active)
+        var count = 0;
+        foreach (var property in ViewModel.GetType().GetProperties())
         {
-            return;
+            if (property.GetValue(ViewModel)?.ToString() == key)
+            {
+                count++;
+            }
         }
 
+        foreach (var chatCommand in ViewModel.Chat_Commands)
+        {
+            if (chatCommand.Key == key)
+            {
+                count++;
+            }
+        }
+
+        return count >= 2;
+    }
+
+    private void OnKeyDown(string key)
+    {
         this.InvokeAsync(async () =>
         {
+            if (!Active)
+            {
+                return;
+            }
 
             if (key != "Esc")
             {
+                var oldValue = Value;
+
                 await ValueChanged.InvokeAsync(key);
+                Duplicated = IsDuplicated(key);
+
+                if (Duplicated)
+                {
+                    await ValueChanged.InvokeAsync(oldValue);
+                    _ = this.InvokeAsync(async () =>
+                    {
+                        await Task.Delay(3000);
+                        Duplicated = false;
+                        StateHasChanged();
+                    });
+                }
             }
 
             ViewModel.CurrentKey = null;

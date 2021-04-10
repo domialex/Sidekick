@@ -42,6 +42,8 @@ namespace Sidekick.Localization.Settings
         public string Group_Keybinds => resources["Group_Keybinds"];
         public string Group_Other => resources["Group_Other"];
         public string Key_Active => resources["Key_Active"];
+        public string Key_Close => resources["Key_Close"];
+        public string Key_Duplicated => resources["Key_Duplicated"];
         public string Key_FindItems => resources["Key_FindItems"];
         public string Key_OpenSettings => resources["Key_OpenSettings"];
         public string Key_Unset => resources["Key_Unset"];
@@ -53,11 +55,9 @@ namespace Sidekick.Localization.Settings
         public string Map_Dangerous => resources["Map_Dangerous"];
         public string Map_Dangerous_Regex => resources["Map_Dangerous_Regex"];
         public string Map_Key_Check => resources["Map_Key_Check"];
-        public string Map_Key_Close => resources["Map_Key_Close"];
         public string Price => resources["Price"];
         public string Price_CloseWithMouse => resources["Price_CloseWithMouse"];
         public string Price_Key_Check => resources["Price_Key_Check"];
-        public string Price_Key_Close => resources["Price_Key_Close"];
         public string Price_Key_OpenSearch => resources["Price_Key_OpenSearch"];
         public string Price_Prediction_Enable => resources["Price_Prediction_Enable"];
         public string ResetCache => resources["ResetCache"];

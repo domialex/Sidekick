@@ -150,6 +150,9 @@
   <data name="Group_Other" xml:space="preserve">
     <value>其他設定</value>
   </data>
+  <data name="Key_Close" xml:space="preserve">
+    <value>關閉視窗</value>
+  </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>查詢物品</value>
   </data>
@@ -168,17 +171,11 @@
   <data name="Map_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
-  <data name="Map_Key_Close" xml:space="preserve">
-    <value>關閉視窗</value>
-  </data>
   <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
   <data name="Price_Key_Check" xml:space="preserve">
     <value>查詢價錢</value>
-  </data>
-  <data name="Price_Key_Close" xml:space="preserve">
-    <value>關閉視窗</value>
   </data>
   <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>在瀏覽器中開啟查詢結果</value>

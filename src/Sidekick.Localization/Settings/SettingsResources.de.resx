@@ -147,6 +147,9 @@
   <data name="Group_Other" xml:space="preserve">
     <value>Andere Einstellungen</value>
   </data>
+  <data name="Key_Close" xml:space="preserve">
+    <value>Fenster schließen</value>
+  </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>Gegenstandssuche</value>
   </data>
@@ -159,17 +162,11 @@
   <data name="Map_CloseWithMouse" xml:space="preserve">
     <value>Schließe Overlay per Mausklick</value>
   </data>
-  <data name="Map_Key_Close" xml:space="preserve">
-    <value>Fenster schließen</value>
-  </data>
   <data name="Price_CloseWithMouse" xml:space="preserve">
     <value>Schließe Overlay per Mausklick</value>
   </data>
   <data name="Price_Key_Check" xml:space="preserve">
     <value>Prüfe Preise</value>
-  </data>
-  <data name="Price_Key_Close" xml:space="preserve">
-    <value>Fenster schließen</value>
   </data>
   <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>Öffne Suche</value>

@@ -55,9 +55,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Price_Key_Check { get; set; }
 
-        public string Price_Key_Close { get; set; }
-
-        public string Map_Key_Close { get; set; }
+        public string Key_Close { get; set; }
 
         public string Chat_Key_Exit { get; set; }
 

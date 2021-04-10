@@ -210,6 +210,12 @@
   <data name="Key_Active" xml:space="preserve">
     <value>&lt;Press a key&gt;</value>
   </data>
+  <data name="Key_Close" xml:space="preserve">
+    <value>Close Window</value>
+  </data>
+  <data name="Key_Duplicated" xml:space="preserve">
+    <value>The keybind you tried is already in use.</value>
+  </data>
   <data name="Key_FindItems" xml:space="preserve">
     <value>Find Items</value>
   </data>
@@ -243,9 +249,6 @@
   <data name="Map_Key_Check" xml:space="preserve">
     <value>Check Map Mods</value>
   </data>
-  <data name="Map_Key_Close" xml:space="preserve">
-    <value>Close Window</value>
-  </data>
   <data name="Price" xml:space="preserve">
     <value>Price Information</value>
   </data>
@@ -254,9 +257,6 @@
   </data>
   <data name="Price_Key_Check" xml:space="preserve">
     <value>Check Prices</value>
-  </data>
-  <data name="Price_Key_Close" xml:space="preserve">
-    <value>Close Window</value>
   </data>
   <data name="Price_Key_OpenSearch" xml:space="preserve">
     <value>Open Search</value>

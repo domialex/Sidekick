@@ -58,16 +58,15 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             Keybinds.Clear();
 
             RegisterKeybind<CloseAllViewCommand>("Esc");
+            RegisterKeybind<CloseOverlayCommand>(settings.Key_Close);
             RegisterKeybind<FindItemCommand>(settings.Key_FindItems);
             RegisterKeybind<OpenSettingsCommand>(settings.Key_OpenSettings);
 
             RegisterKeybind<OpenCheatsheetsCommand>(settings.Cheatsheets_Key_Open);
 
             RegisterKeybind<OpenMapInfoCommand>(settings.Map_Key_Check);
-            RegisterKeybind<CloseMapViewCommand>(settings.Map_Key_Close);
 
             RegisterKeybind<PriceCheckItemCommand>(settings.Price_Key_Check);
-            RegisterKeybind<ClosePriceViewCommand>(settings.Price_Key_Close);
             RegisterKeybind<OpenTradePageCommand>(settings.Price_Key_OpenSearch);
 
             RegisterKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open);
