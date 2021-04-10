@@ -18,9 +18,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseFlaskOfStaunching()
+        public async Task ParseSanctifiedManaFlask()
         {
-            var actual = await mediator.Send(new ParseItemCommand(FlaskOfStaunching));
+            var actual = await mediator.Send(new ParseItemCommand(SanctifiedManaFlask));
 
             Assert.Equal(Category.Flask, actual.Metadata.Category);
             Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
@@ -32,7 +32,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string FlaskOfStaunching = @"Rarity: Magic
+        private const string SanctifiedManaFlask = @"Rarity: Magic
 Concentrated Sanctified Mana Flask of Staunching
 --------
 Recovers 1430 (augmented) Mana over 6.50 Seconds

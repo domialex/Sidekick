@@ -17,7 +17,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseResonator()
+        public async Task ParsePotentChaoticResonator()
         {
             var actual = await mediator.Send(new ParseItemCommand(PotentChaoticResonator));
 

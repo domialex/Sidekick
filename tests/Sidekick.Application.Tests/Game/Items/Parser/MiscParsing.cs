@@ -28,29 +28,6 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseDivinationCard()
-        {
-            var actual = await mediator.Send(new ParseItemCommand(DivinationCard));
-
-            Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
-            Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
-            Assert.Null(actual.Metadata.Name);
-            Assert.Equal("The Saint's Treasure", actual.Metadata.Type);
-        }
-
-        [Fact]
-        public async Task ParseShaperItemDivinationCard()
-        {
-            var actual = await mediator.Send(new ParseItemCommand(ShaperItemDivinationCard));
-
-            Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
-            Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
-            Assert.Null(actual.Metadata.Name);
-            Assert.Equal("The Lord of Celebration", actual.Metadata.Type);
-            Assert.Null(actual.Influences);
-        }
-
-        [Fact]
         public async Task ParseCurrency()
         {
             var actual = await mediator.Send(new ParseItemCommand(Currency));
@@ -84,16 +61,6 @@ You will enter a map that holds four additional Rogue Exiles.
 Right-click to add this prophecy to your character.
 ";
 
-        private const string DivinationCard = @"Rarity: Divination Card
-The Saint's Treasure
---------
-Stack Size: 1/10
---------
-2x Exalted Orb
---------
-Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
-";
-
         private const string Currency = @"Rarity: Currency
 Divine Orb
 --------
@@ -104,16 +71,6 @@ Randomises the numeric values of the random modifiers on an item
 Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
 ";
-
-        private const string ShaperItemDivinationCard = @"Rarity: Divination Card
-The Lord of Celebration
---------
-Stack Size: 1/4
---------
-Sceptre of Celebration
-Shaper Item
---------
-Though they were a pack of elite combatants, the Emperor's royal guards were not ready to face one of his notorious parties.";
 
         private const string Organ = @"Rarity: Unique
 Portentia, the Foul's Heart
