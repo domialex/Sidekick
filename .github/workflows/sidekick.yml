@@ -78,10 +78,6 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
-    - name: .NET - Tool - ElectronNET
-      run: dotnet tool install --global ElectronNET.CLI
-    - name: .NET - Tool Restore
-      run: dotnet tool restore
     - name: Restore
       run: dotnet restore
     - name: Build
@@ -99,6 +95,10 @@ jobs:
       with:
         repo_token: ${{ github.token }}
         report_name: Tests - Coverage
+    - name: cd - Electron
+      run: cd ./src/Sidekick.Presentation.Blazor.Electron
+    - name: .NET - Tool Restore
+      run: dotnet tool restore
     - name: Electron - Build x64
       run: dotnet electronize build /target win /PublishSingleFile false
     - name: Git - Tag
