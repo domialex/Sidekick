@@ -38,8 +38,8 @@ jobs:
       run: dotnet tool install --global GitVersion.Tool
     - name: .NET - Tool Restore
       run: dotnet tool restore
-    - name: GitVersion - Update versions
-      run: GitVersion /updateassemblyinfo /updateprojectfiles /output buildserver
+    - name: GitVersion
+      run: dotnet GitVersion /updateassemblyinfo /updateprojectfiles /output buildserver
     - name: Restore
       run: dotnet restore
     - name: Build
