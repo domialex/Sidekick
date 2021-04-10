@@ -39,7 +39,7 @@ jobs:
     - name: .NET - Tool Restore
       run: dotnet tool restore
     - name: GitVersion
-      run: dotnet GitVersion /updateassemblyinfo /updateprojectfiles /output buildserver
+      run: dotnet gitversion /updateassemblyinfo /updateprojectfiles /output buildserver
     - name: Restore
       run: dotnet restore
     - name: Build
