@@ -41,7 +41,7 @@ namespace Sidekick.Application.Settings
 
         public string Trade_Key_Check { get; set; } = "Ctrl+D";
 
-        public string Map_Key_Check { get; set; } = "F3";
+        public string Map_Key_Check { get; set; } = "Ctrl+X";
 
         public string Wiki_Key_Open { get; set; } = "Alt+W";
 
@@ -49,7 +49,7 @@ namespace Sidekick.Application.Settings
 
         public string Trade_Key_OpenSearch { get; set; } = "Alt+Q";
 
-        public string Key_OpenSettings { get; set; } = "F9";
+        public string Key_OpenSettings { get; set; } = "F12";
 
         public string Stash_Key_Left { get; set; } = "";
 
@@ -60,7 +60,7 @@ namespace Sidekick.Application.Settings
             new ChatSetting("F5", "/hideout", true),
             new ChatSetting("F4", "/kick {Me.CharacterName}", true),
             new ChatSetting("Ctrl+Enter", "@{LastWhisper.CharacterName} ", false),
-            new ChatSetting("F12", "/exit", true),
+            new ChatSetting("F9", "/exit", true),
         };
 
         #region Cheatsheets
