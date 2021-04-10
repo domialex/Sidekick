@@ -41,3 +41,5 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Test - Report
       uses: dorny/test-reporter@v1.3.1
+      with:
+        name: Report
