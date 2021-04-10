@@ -1,4 +1,4 @@
-name: .NET
+name: Sidekick Workflow
 
 on:
   push:
