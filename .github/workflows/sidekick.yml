@@ -1,0 +1,35 @@
+name: Sidekick Workflow
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+  pull_request:
+    branches:
+    - main
+    - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: .NET - Setup
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Nuget - Setup
+      uses: NuGet/setup-nuget@v1.0.5
+    - name: NuGet - Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+    - name: .NET - Tools
+      run: dotnet tool restore
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
