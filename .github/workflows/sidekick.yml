@@ -44,5 +44,8 @@ jobs:
       with:
         name: Report
         path: '**/*.trx'
+        reporter: dotnet-trx
     - name: Test - Coverage Report
       uses: 5monkeys/cobertura-action@v8
+      with:
+        repo_token: ${{ github.token }}
