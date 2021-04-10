@@ -17,8 +17,16 @@ jobs:
     env:
       ASPNETCORE_ENVIRONMENT: Production
     steps:
-    - name: Checkout
+    - name: Git - Checkout
       uses: actions/checkout@v2
+    - name: Git - Fetch Tags
+      run: git fetch --tags
+    - name: Git - Fetch Main
+      if: github.ref != 'refs/heads/main'
+      run: git branch --create-reflog main origin/main
+    - name: GitVersion
+      id: gitversion
+      uses: roryprimrose/rungitversion@v1.0.0
     - name: .NET - Setup
       uses: actions/setup-dotnet@v1
       with:
@@ -31,12 +39,6 @@ jobs:
       run: dotnet tool install ElectronNET.CLI -g
     - name: .NET - Tool Restore
       run: dotnet tool restore
-    - name: Git Version
-      uses: codacy/git-version@2.4.0
-      with:
-        release-branch: main
-        dev-branch: develop
-        prefix: v
     - name: Restore
       run: dotnet restore
     - name: Build
