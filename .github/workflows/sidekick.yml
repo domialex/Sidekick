@@ -14,6 +14,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ASPNETCORE_ENVIRONMENT: Production
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -50,3 +52,6 @@ jobs:
       with:
         repo_token: ${{ github.token }}
         report_name: Tests - Coverage
+    - name: Electron - Build x64
+      run: dotnet electronize build /target win /PublishSingleFile false
+      
