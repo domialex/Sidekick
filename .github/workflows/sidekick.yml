@@ -27,7 +27,9 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
-    - name: .NET - Tools
+    - name: .NET - ElectronNET.CLI
+      run: dotnet tool install ElectronNET.CLI -g
+    - name: .NET - Tool Restore
       run: dotnet tool restore
     - name: Git Version
       uses: codacy/git-version@2.4.0
