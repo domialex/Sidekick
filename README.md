@@ -48,6 +48,9 @@ Checks the modifiers on a map or contract for mods that are dangerous (configura
 | Find Items | Ctrl + F | Search an item in your stash or passive tree. |
 | Open Search | Alt + Q | Open the official trade website using the item under your mouse. |
 
+## Uninstallation
+You may uninstall Sidekick by using Windows Settings => Apps & features. Alternatively, you can run `Uninstall Sidekick.exe` in the installation folder. The default directory where the app is installed is `%APPDATA%/Local/Programs/sidekick`.
+
 ## Development [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
 We accept most PR and ideas. If you want a feature included, create an issue and we will discuss it.
 
