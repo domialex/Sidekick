@@ -37,15 +37,16 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
+    - name: Tests
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-    - name: Test - Report
+    - name: Tests - Unit Tests Report
       uses: dorny/test-reporter@v1.3.1
       with:
-        name: Report
+        name: Tests - Unit Tests
         path: '**/*.trx'
         reporter: dotnet-trx
-    - name: Test - Coverage Report
+    - name: Tests - Coverage Report
       uses: 5monkeys/cobertura-action@v8
       with:
         repo_token: ${{ github.token }}
+        report_name: Tests - Coverage
