@@ -95,12 +95,14 @@ jobs:
       with:
         repo_token: ${{ github.token }}
         report_name: Tests - Coverage
-    - name: cd - Electron
-      run: cd ./src/Sidekick.Presentation.Blazor.Electron
     - name: .NET - Tool Restore
-      run: dotnet tool restore
+      run: |
+        cd ./src/Sidekick.Presentation.Blazor.Electron
+        dotnet tool restore
     - name: Electron - Build x64
-      run: dotnet electronize build /target win /PublishSingleFile false
+      run: |
+        cd ./src/Sidekick.Presentation.Blazor.Electron
+        dotnet electronize build /target win /PublishSingleFile false
     - name: Git - Tag
       uses: tvdias/github-tagger@v0.0.2
       with:
