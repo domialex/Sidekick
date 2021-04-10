@@ -24,9 +24,6 @@ jobs:
     - name: Git - Fetch Main
       if: github.ref != 'refs/heads/main'
       run: git branch --create-reflog main origin/main
-    - name: GitVersion
-      id: gitversion
-      uses: roryprimrose/rungitversion@v1.0.0
     - name: .NET - Setup
       uses: actions/setup-dotnet@v1
       with:
@@ -35,10 +32,14 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
-    - name: .NET - ElectronNET.CLI
-      run: dotnet tool install ElectronNET.CLI -g
+    - name: .NET - Tool - ElectronNET
+      run: dotnet tool install --global ElectronNET.CLI
+    - name: .NET - Tool - GitVersion
+      run: dotnet tool install --global GitVersion.Tool
     - name: .NET - Tool Restore
       run: dotnet tool restore
+    - name: GitVersion - Update versions
+      run: GitVersion /updateassemblyinfo /updateprojectfiles /output buildserver
     - name: Restore
       run: dotnet restore
     - name: Build
