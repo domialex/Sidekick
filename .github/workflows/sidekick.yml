@@ -26,7 +26,7 @@ jobs:
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
     - name: .NET - Tools
-      run: dotnet tools restore
+      run: dotnet tool restore
     - name: Restore
       run: dotnet restore
     - name: Build
