@@ -21,17 +21,11 @@ namespace Sidekick.Domain.Settings
         bool ShowSplashScreen { get; }
         bool SendCrashReports { get; }
 
-        bool Price_CloseWithMouse { get; }
-        string Price_Key_Check { get; }
-        string Price_Key_OpenSearch { get; }
-        bool Price_Prediction_Enable { get; }
-        List<string> Price_Mods_Accessory { get; }
-        List<string> Price_Mods_Armour { get; }
-        List<string> Price_Mods_Flask { get; }
-        List<string> Price_Mods_Jewel { get; }
-        List<string> Price_Mods_Map { get; }
-        List<string> Price_Mods_Weapon { get; }
-        string Price_Layout { get; }
+        bool Trade_CloseWithMouse { get; }
+        string Trade_Key_Check { get; }
+        string Trade_Key_OpenSearch { get; }
+        bool Trade_Prediction_Enable { get; }
+        string Trade_Layout { get; }
 
         bool Map_CloseWithMouse { get; }
         string Map_Key_Check { get; }
@@ -47,7 +41,6 @@ namespace Sidekick.Domain.Settings
 
         string Stash_Key_Left { get; }
         string Stash_Key_Right { get; }
-        bool Stash_EnableCtrlScroll { get; }
 
         string Wiki_Key_Open { get; }
         WikiSetting Wiki_Preferred { get; }

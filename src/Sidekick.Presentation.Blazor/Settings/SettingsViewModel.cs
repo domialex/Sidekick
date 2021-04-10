@@ -33,27 +33,17 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public Guid? CurrentKey { get; set; }
 
-        public List<string> Price_Mods_Accessory { get; set; }
-
-        public List<string> Price_Mods_Armour { get; set; }
-
         public string Character_Name { get; set; }
 
-        public bool Price_CloseWithMouse { get; set; }
+        public bool Trade_CloseWithMouse { get; set; }
 
         public bool Map_CloseWithMouse { get; set; }
 
         public string Map_Dangerous_Regex { get; set; }
 
-        public bool Stash_EnableCtrlScroll { get; set; }
+        public bool Trade_Prediction_Enable { get; set; }
 
-        public bool Price_Prediction_Enable { get; set; }
-
-        public List<string> Price_Mods_Flask { get; set; }
-
-        public List<string> Price_Mods_Jewel { get; set; }
-
-        public string Price_Key_Check { get; set; }
+        public string Trade_Key_Check { get; set; }
 
         public string Key_Close { get; set; }
 
@@ -69,7 +59,7 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Map_Key_Check { get; set; }
 
-        public string Price_Key_OpenSearch { get; set; }
+        public string Trade_Key_OpenSearch { get; set; }
 
         public string Key_OpenSettings { get; set; }
 
@@ -83,21 +73,17 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Language_UI { get; set; }
 
-        public string Price_Layout { get; set; }
+        public string Trade_Layout { get; set; }
 
         public string LeagueId { get; set; }
 
         public string LeaguesHash { get; set; }
-
-        public List<string> Price_Mods_Map { get; set; }
 
         public bool RetainClipboard { get; set; }
 
         public bool ShowSplashScreen { get; set; }
 
         public bool SendCrashReports { get; set; }
-
-        public List<string> Price_Mods_Weapon { get; set; }
 
         public WikiSetting Wiki_Preferred { get; set; }
 

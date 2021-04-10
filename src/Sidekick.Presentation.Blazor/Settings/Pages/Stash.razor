@@ -15,19 +15,6 @@
                        @bind-Value="ViewModel.Stash_Key_Right" />
     </MudCardContent>
 </MudCard>
-<MudCard Class="mt-6">
-    <MudCardHeader Class="pb-0">
-        <CardHeaderContent>
-            <MudText Typo="Typo.h3">@Resources.Group_Other</MudText>
-        </CardHeaderContent>
-    </MudCardHeader>
-    <MudCardContent Class="pt-0">
-        <div>
-            <MudCheckBox Label="@Resources.Stash_EnableCtrlScroll"
-                         @bind-Checked="@ViewModel.Stash_EnableCtrlScroll"></MudCheckBox>
-        </div>
-    </MudCardContent>
-</MudCard>
 
 @code {
     [Inject] private SettingsResources Resources { get; set; }

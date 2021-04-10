@@ -35,7 +35,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 Browser.Close();
             }
 
-            if (View == View.Trade && Locator.settings.Price_CloseWithMouse)
+            if (View == View.Trade && Locator.settings.Trade_CloseWithMouse)
             {
                 Browser.Close();
             }

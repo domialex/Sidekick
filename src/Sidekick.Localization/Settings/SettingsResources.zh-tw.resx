@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -171,23 +171,20 @@
   <data name="Map_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
-  <data name="Price_CloseWithMouse" xml:space="preserve">
+  <data name="Trade_CloseWithMouse" xml:space="preserve">
     <value>滑鼠點擊時關閉視窗</value>
   </data>
-  <data name="Price_Key_Check" xml:space="preserve">
+  <data name="Trade_Key_Check" xml:space="preserve">
     <value>查詢價錢</value>
   </data>
-  <data name="Price_Key_OpenSearch" xml:space="preserve">
+  <data name="Trade_Key_OpenSearch" xml:space="preserve">
     <value>在瀏覽器中開啟查詢結果</value>
   </data>
-  <data name="Price_Prediction_Enable" xml:space="preserve">
+  <data name="Trade_Prediction_Enable" xml:space="preserve">
     <value>啟用價錢預測</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>確定</value>
-  </data>
-  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
-    <value>Ctrl+滾輪滾動倉庫標籤</value>
   </data>
   <data name="Wiki" xml:space="preserve">
     <value>資料庫設定</value>

@@ -38,19 +38,19 @@ namespace Sidekick.Application.Game.Trade
             }
 
             List<string> enabledModifiers = new();
-            if (request.Item.Metadata.Rarity == Rarity.Rare || request.Item.Metadata.Rarity == Rarity.Magic)
-            {
-                enabledModifiers = request.Item.Metadata.Category switch
-                {
-                    Category.Accessory => settings.Price_Mods_Accessory,
-                    Category.Armour => settings.Price_Mods_Armour,
-                    Category.Flask => settings.Price_Mods_Flask,
-                    Category.Jewel => settings.Price_Mods_Jewel,
-                    Category.Map => settings.Price_Mods_Map,
-                    Category.Weapon => settings.Price_Mods_Weapon,
-                    _ => enabledModifiers,
-                };
-            }
+            // if (request.Item.Metadata.Rarity == Rarity.Rare || request.Item.Metadata.Rarity == Rarity.Magic)
+            // {
+            //     enabledModifiers = request.Item.Metadata.Category switch
+            //     {
+            //         Category.Accessory => settings.Price_Mods_Accessory,
+            //         Category.Armour => settings.Price_Mods_Armour,
+            //         Category.Flask => settings.Price_Mods_Flask,
+            //         Category.Jewel => settings.Price_Mods_Jewel,
+            //         Category.Map => settings.Price_Mods_Map,
+            //         Category.Weapon => settings.Price_Mods_Weapon,
+            //         _ => enabledModifiers,
+            //     };
+            // }
 
             InitializeModifierFilters(result.Pseudo, request.Item.Modifiers.Pseudo, enabledModifiers);
             InitializeModifierFilters(result.Enchant, request.Item.Modifiers.Enchant, enabledModifiers, false);

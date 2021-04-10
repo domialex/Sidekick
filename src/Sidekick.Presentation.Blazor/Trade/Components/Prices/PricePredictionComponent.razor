@@ -2,7 +2,7 @@
 @using Sidekick.Domain.Apis.PoePriceInfo.Models
 @using Sidekick.Domain.Settings
 
-@if (Settings.Price_Prediction_Enable)
+@if (Settings.Trade_Prediction_Enable)
 {
     if (Loading || Item == null)
     {
@@ -40,7 +40,7 @@
     {
         await base.OnParametersSetAsync();
 
-        if (IsInit || !Settings.Price_Prediction_Enable) return;
+        if (IsInit || !Settings.Trade_Prediction_Enable) return;
 
         Loading = true;
 

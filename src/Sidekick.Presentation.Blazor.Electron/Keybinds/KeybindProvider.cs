@@ -66,8 +66,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 
             RegisterKeybind<OpenMapInfoCommand>(settings.Map_Key_Check);
 
-            RegisterKeybind<PriceCheckItemCommand>(settings.Price_Key_Check);
-            RegisterKeybind<OpenTradePageCommand>(settings.Price_Key_OpenSearch);
+            RegisterKeybind<PriceCheckItemCommand>(settings.Trade_Key_Check);
+            RegisterKeybind<OpenTradePageCommand>(settings.Trade_Key_OpenSearch);
 
             RegisterKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open);
 

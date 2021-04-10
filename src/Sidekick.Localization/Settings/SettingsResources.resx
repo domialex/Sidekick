@@ -249,19 +249,19 @@
   <data name="Map_Key_Check" xml:space="preserve">
     <value>Check Map Mods</value>
   </data>
-  <data name="Price" xml:space="preserve">
-    <value>Price Information</value>
+  <data name="Trade" xml:space="preserve">
+    <value>Trade Information</value>
   </data>
-  <data name="Price_CloseWithMouse" xml:space="preserve">
+  <data name="Trade_CloseWithMouse" xml:space="preserve">
     <value>Close Overlay with Mouse Click</value>
   </data>
-  <data name="Price_Key_Check" xml:space="preserve">
+  <data name="Trade_Key_Check" xml:space="preserve">
     <value>Check Prices</value>
   </data>
-  <data name="Price_Key_OpenSearch" xml:space="preserve">
+  <data name="Trade_Key_OpenSearch" xml:space="preserve">
     <value>Open Search</value>
   </data>
-  <data name="Price_Prediction_Enable" xml:space="preserve">
+  <data name="Trade_Prediction_Enable" xml:space="preserve">
     <value>Enable Price Prediction</value>
   </data>
   <data name="ResetCache" xml:space="preserve">
@@ -272,9 +272,6 @@
   </data>
   <data name="Stash" xml:space="preserve">
     <value>Stash Commands</value>
-  </data>
-  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
-    <value>Enable Tab Scrolling with Ctrl + Scroll</value>
   </data>
   <data name="Stash_Key_Left" xml:space="preserve">
     <value>Tab Scroll Left</value>

@@ -1,5 +1,8 @@
 {
   "executable": "Sidekick.Presentation.Blazor.Electron",
+  "splashscreen": {
+    "imageFile": "/Assets/splashscreen.png"
+  },
   "name": "Sidekick",
   "author": "Sidekick",
   "homepage": "https://github.com/domialex/Sidekick",
@@ -9,8 +12,20 @@
     "productName": "Sidekick",
     "buildVersion": "2.0.0",
     "compression": "maximum",
+    "win": {
+      "icon": "Assets/icon.ico",
+      "publish": [
+        {
+          "provider": "github",
+          "owner": "domialex",
+          "repo": "Sidekick",
+          "token": ">> Insert GH_TOKEN here! <<"
+        }
+      ]
+    },
     "directories": {
-      "output": "../../../bin/Desktop"
+      "output": "../../../bin/Desktop",
+      "buildResources": "Assets"
     },
     "extraResources": [
       {
@@ -20,10 +35,12 @@
       }
     ],
     "files": [
+      {
+        "from": "./ElectronHostHook/node_modules",
+        "to": "ElectronHostHook/node_modules",
+        "filter": [ "**/*" ]
+      },
       "**/*"
-    ],
-    "win": {
-      "icon": "../../../Assets/icon.ico"
-    }
+    ]
   }
 }

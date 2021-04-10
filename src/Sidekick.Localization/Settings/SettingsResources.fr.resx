@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -156,14 +156,11 @@
   <data name="Map_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
   </data>
-  <data name="Price_CloseWithMouse" xml:space="preserve">
+  <data name="Trade_CloseWithMouse" xml:space="preserve">
     <value>Fermer la fenêtre avec la souris</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Sauvegarder</value>
-  </data>
-  <data name="Stash_EnableCtrlScroll" xml:space="preserve">
-    <value>Permettre de changer d'onglet avec Ctrl+Roulette</value>
   </data>
   <data name="Wiki" xml:space="preserve">
     <value>Paramètres du wiki</value>

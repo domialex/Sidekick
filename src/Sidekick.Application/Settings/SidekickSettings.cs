@@ -23,13 +23,11 @@ namespace Sidekick.Application.Settings
 
         public bool RetainClipboard { get; set; } = true;
 
-        public bool Price_CloseWithMouse { get; set; } = false;
+        public bool Trade_CloseWithMouse { get; set; } = false;
 
         public bool Map_CloseWithMouse { get; set; } = false;
 
-        public bool Stash_EnableCtrlScroll { get; set; } = true;
-
-        public bool Price_Prediction_Enable { get; set; } = true;
+        public bool Trade_Prediction_Enable { get; set; } = true;
 
         public bool ShowSplashScreen { get; set; } = true;
 
@@ -37,27 +35,21 @@ namespace Sidekick.Application.Settings
 
         public string Map_Dangerous_Regex { get; set; } = "reflect|regen";
 
-        public List<string> Price_Mods_Accessory { get; set; } = new List<string>();
-        public List<string> Price_Mods_Armour { get; set; } = new List<string>();
-        public List<string> Price_Mods_Flask { get; set; } = new List<string>();
-        public List<string> Price_Mods_Jewel { get; set; } = new List<string>();
-        public List<string> Price_Mods_Map { get; set; } = new List<string>();
-        public List<string> Price_Mods_Weapon { get; set; } = new List<string>();
-        public string Price_Layout { get; set; }
+        public string Trade_Layout { get; set; }
 
         public string Key_Close { get; set; } = "Space";
 
-        public string Price_Key_Check { get; set; } = "Ctrl+D";
+        public string Trade_Key_Check { get; set; } = "Ctrl+D";
 
-        public string Map_Key_Check { get; set; } = "Ctrl+X";
+        public string Map_Key_Check { get; set; } = "F3";
 
         public string Wiki_Key_Open { get; set; } = "Alt+W";
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
 
-        public string Price_Key_OpenSearch { get; set; } = "Alt+Q";
+        public string Trade_Key_OpenSearch { get; set; } = "Alt+Q";
 
-        public string Key_OpenSettings { get; set; } = "Ctrl+O";
+        public string Key_OpenSettings { get; set; } = "F9";
 
         public string Stash_Key_Left { get; set; } = "";
 

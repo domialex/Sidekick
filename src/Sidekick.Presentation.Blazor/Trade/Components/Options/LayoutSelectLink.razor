@@ -17,7 +17,7 @@
     {
         await base.OnInitializedAsync();
 
-        switch (Settings.Price_Layout)
+        switch (Settings.Trade_Layout)
         {
             case nameof(Layout.Cards_Minimized): await LayoutChanged.InvokeAsync(Layout.Cards_Minimized); break;
             default: await LayoutChanged.InvokeAsync(Layout.Cards_Maximized); break;
@@ -26,9 +26,9 @@
 
     private async Task Select(Layout layout)
     {
-        if (layout.ToString() != Settings.Price_Layout)
+        if (layout.ToString() != Settings.Trade_Layout)
         {
-            await Mediator.Send(new Sidekick.Domain.Settings.Commands.SaveSettingCommand(nameof(ISidekickSettings.Price_Layout), layout.ToString()));
+            await Mediator.Send(new Sidekick.Domain.Settings.Commands.SaveSettingCommand(nameof(ISidekickSettings.Trade_Layout), layout.ToString()));
         }
 
         await LayoutChanged.InvokeAsync(layout);
