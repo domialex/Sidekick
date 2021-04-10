@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="ElectronNET.API" Version="11.5.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -44,10 +44,7 @@
     <ItemGroup>
       <wwwrootFolder Include="$(ProjectDir)..\Sidekick.Presentation.Blazor\wwwroot\**\*.*" />
     </ItemGroup>
-    <Copy
-      SourceFiles="@(wwwrootFolder)"
-      DestinationFolder="$(ProjectDir)wwwroot\%(RecursiveDir)"
-    />
+    <Copy SourceFiles="@(wwwrootFolder)" DestinationFolder="$(ProjectDir)wwwroot\%(RecursiveDir)" />
   </Target>
 
 </Project>

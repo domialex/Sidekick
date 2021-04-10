@@ -13,10 +13,10 @@
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Blazored.FluentValidation" Version="1.4.1" />
-    <PackageReference Include="Delegate.SassBuilder" Version="1.4.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
+    <PackageReference Include="Blazored.FluentValidation" Version="2.0.0" />
+    <PackageReference Include="CssBuilder" Version="0.1.8" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -32,7 +32,4 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\influences\" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;$(ProjectDir)styles\site.css&quot; &quot;$(ProjectDir)wwwroot\css&quot; /Y" />
-  </Target>
 </Project>
