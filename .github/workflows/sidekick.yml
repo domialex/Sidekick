@@ -21,15 +21,23 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Nuget - Setup
+    - name: NuGet - Setup
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
     - name: .NET - Tools
       run: dotnet tool restore
+    - name: Git Version
+      uses: codacy/git-version@2.4.0
+      with:
+        release-branch: main
+        dev-branch: develop
+        prefix: v
     - name: Restore
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Test - Report
+      uses: dorny/test-reporter@v1.3.1
