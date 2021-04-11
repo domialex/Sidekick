@@ -122,5 +122,5 @@ jobs:
       uses: actions/upload-artifact@v2.2.3
       with:
         name: Sidekick-windows-x64
-        path: ./src/Sidekick.Presentation.Blazor.Electron
+        path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
       
