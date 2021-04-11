@@ -112,7 +112,7 @@ jobs:
         publish: false
         prerelease: false
         commitish: true
-        disable-release: true
+        disable-releaser: true
         disable-autolabeler: true
     - name: Release - Asset
       uses: AButler/upload-release-assets@v2.0
