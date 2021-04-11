@@ -116,7 +116,7 @@ jobs:
     - name: Git - Tag
       uses: tvdias/github-tagger@v0.0.2
       with:
-        repo_token: ${{ github.token }}
+        repo-token: ${{ github.token }}
         tag: ${{ steps.gitversion.outputs.fullSemVer }}
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
