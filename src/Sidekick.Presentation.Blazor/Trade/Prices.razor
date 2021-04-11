@@ -88,7 +88,7 @@ else
             return;
         }
 
-        ViewInstance.SetTitle(Item.Original.Type);
+        ViewInstance.SetTitle(Item.Original.Name);
         PropertyFilters = await Mediator.Send(new GetPropertyFilters(Item));
         ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
 
