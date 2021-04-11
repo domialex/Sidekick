@@ -104,7 +104,9 @@ jobs:
         name: Sidekick-windows
         path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
     - name: Artifact - Release
-      uses: alexellis/upload-assets@0.3.0
+      uses: AButler/upload-release-assets@v2.0
       with:
-        asset_paths: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-      
+        files: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        release-tag: ${{ steps.gitversion.outputs.fullSemVer }}
+        repo-token: ${{ github.token }}
+        
