@@ -1,13 +1,12 @@
-# [![](./docs/assets/images/orb_exalted.png)](#) Sidekick 2 Beta [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square&include_prereleases)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/checks-status/domialex/Sidekick/develop?style=flat-square)](#) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
+# [![](./docs/assets/images/orb_exalted.png)](#) Sidekick 2 Beta [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square&include_prereleases)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/checks-status/domialex/Sidekick/develop?style=flat-square)](https://github.com/domialex/Sidekick/actions) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
 A Path of Exile companion tool.
 
 ## Installation and Usage
 1. [Download Sidekick](https://github.com/domialex/Sidekick/releases)
-2. Extract the zip file
-3. Run Sidekick.exe
-4. Optionnally, you may get a security warning when running this software. You may have to add a security exception to run this software. Our code is open source and there is no malware included with this program.
-5. You cannot run Path of Exile in Fullscreen mode to use this tool. We recommend using "Windowed Fullscreen".
-6. Enjoy! Report issues or suggestions in our Discord or create an issue here.
+2. Run Sidekick-Setup.exe
+3. Optionnally, you may get a security warning when running this software. You may have to add a security exception to run this software. Our code is open source and there is no malware included with this program.
+4. You cannot run Path of Exile in Fullscreen mode to use this tool. We recommend using "Windowed Fullscreen".
+5. Enjoy! Report issues or suggestions in our Discord or create an issue here.
 
 ## Features
 ### Trade
