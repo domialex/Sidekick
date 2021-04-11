@@ -81,15 +81,15 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.5
     - name: NuGet - Source
       uses: fabriciomurta/ensure-nuget-source@v1
-    - name: Restore
+    - name: .NET - Restore
       run: dotnet restore
-    - name: Build
+    - name: .NET - Build
       run: dotnet build --no-restore
     - name: .NET - Tool Restore
       run: |
         cd ./src/Sidekick.Presentation.Blazor.Electron
         dotnet tool restore
-    - name: Electron - Build x64
+    - name: Electron - Build
       run: |
         cd ./src/Sidekick.Presentation.Blazor.Electron
         dotnet electronize build /target win /PublishSingleFile false
