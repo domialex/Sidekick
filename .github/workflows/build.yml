@@ -1,4 +1,4 @@
-name: Sidekick Workflow
+name: Sidekick Build
 
 on:
   push:
@@ -100,26 +100,4 @@ jobs:
       with:
         repo_token: ${{ github.token }}
         report_name: Tests - Coverage
-    - name: .NET - Tool Restore
-      run: |
-        cd ./src/Sidekick.Presentation.Blazor.Electron
-        dotnet tool restore
-    - name: Electron - Build x64
-      run: |
-        cd ./src/Sidekick.Presentation.Blazor.Electron
-        dotnet electronize build /target win /PublishSingleFile false
-    - name: Artifact - Build
-      uses: actions/upload-artifact@v2.2.3
-      with:
-        name: Sidekick-windows
-        path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-    - name: Git - Tag
-      uses: tvdias/github-tagger@v0.0.2
-      with:
-        repo-token: ${{ github.token }}
-        tag: ${{ steps.gitversion.outputs.fullSemVer }}
-    - name: Artifact - Release
-      uses: yakuhzi/release-asset@v1.2.3
-      with:
-        file: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-      
+        
