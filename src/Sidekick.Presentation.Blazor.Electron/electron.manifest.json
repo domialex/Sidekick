@@ -12,14 +12,14 @@
     "productName": "Sidekick",
     "buildVersion": "2.0.0",
     "compression": "maximum",
+    "artifactName": "Sidekick Setup${ext}",
     "win": {
       "icon": "Assets/icon.ico",
       "publish": [
         {
           "provider": "github",
           "owner": "domialex",
-          "repo": "Sidekick",
-          "token": ">> Insert GH_TOKEN here! <<"
+          "repo": "Sidekick"
         }
       ]
     },
