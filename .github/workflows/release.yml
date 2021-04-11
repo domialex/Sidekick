@@ -97,16 +97,27 @@ jobs:
       uses: tvdias/github-tagger@v0.0.2
       with:
         repo-token: ${{ github.token }}
-        tag: ${{ steps.gitversion.outputs.fullSemVer }}
+        tag: v${{ steps.gitversion.outputs.fullSemVer }}
     - name: Artifact - Build
       uses: actions/upload-artifact@v2.2.3
       with:
         name: Sidekick-windows
         path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-    - name: Artifact - Release
+    - name: Release - Notes
+      uses: release-drafter/release-drafter@v5.15.0
+      with:
+        name: 'Release v${{ steps.gitversion.outputs.fullSemVer }}'
+        tag: v${{ steps.gitversion.outputs.fullSemVer }}
+        version: v${{ steps.gitversion.outputs.fullSemVer }}
+        publish: false
+        prerelease: false
+        commitish: true
+        disable-release: true
+        disable-autolabeler: true
+    - name: Release - Asset
       uses: AButler/upload-release-assets@v2.0
       with:
         files: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-        release-tag: ${{ steps.gitversion.outputs.fullSemVer }}
+        release-tag: v${{ steps.gitversion.outputs.fullSemVer }}
         repo-token: ${{ github.token }}
         
