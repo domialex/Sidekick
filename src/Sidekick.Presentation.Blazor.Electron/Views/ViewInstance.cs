@@ -54,7 +54,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         public void SetTitle(string title)
         {
             Title = title;
-            view.Browser.SetTitle(title);
+            view.Browser.SetTitle(title ?? "Sidekick");
         }
     }
 }
