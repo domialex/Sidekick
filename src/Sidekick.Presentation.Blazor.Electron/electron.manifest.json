@@ -14,7 +14,7 @@
     "compression": "maximum",
     "artifactName": "Sidekick-Setup.${ext}",
     "win": {
-      "icon": "Assets/icon.ico",
+      "icon": "../../../Assets/icon.ico",
       "publish": [
         {
           "provider": "github",
