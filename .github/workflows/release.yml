@@ -67,7 +67,7 @@ jobs:
       uses: myci-actions/export-env-var@1
       with:
         name: BUILD_NUMBER
-        value: ${{ steps.gitversion.outputs.fullSemVer }}
+        value: ${{ steps.gitversion.outputs.majorMinorPatch }}
     - name: Environment - Github Token
       uses: myci-actions/export-env-var@1
       with:
@@ -93,17 +93,21 @@ jobs:
       run: |
         cd ./src/Sidekick.Presentation.Blazor.Electron
         dotnet electronize build /target win /PublishSingleFile false
-    - name: Git - Tag
-      uses: tvdias/github-tagger@v0.0.2
-      with:
-        repo-token: ${{ github.token }}
-        tag: v${{ steps.gitversion.outputs.fullSemVer }}
     - name: Artifact - Build
       uses: actions/upload-artifact@v2.2.3
       with:
         name: Sidekick-windows
         path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-    - name: Release - Notes
+        
+    # Manual release
+    - name: Manual Release - Git Tag
+      if: github.ref != 'refs/heads/main'
+      uses: tvdias/github-tagger@v0.0.2
+      with:
+        repo-token: ${{ github.token }}
+        tag: v${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Manual Release - Notes
+      if: github.ref != 'refs/heads/main'
       uses: release-drafter/release-drafter@v5.15.0
       with:
         name: 'Release v${{ steps.gitversion.outputs.fullSemVer }}'
@@ -111,10 +115,37 @@ jobs:
         version: v${{ steps.gitversion.outputs.fullSemVer }}
         publish: false
         prerelease: false
-    - name: Release - Asset
-      uses: AButler/upload-release-assets@v2.0
+    - name: Main Release - Asset
+      if: github.ref == 'refs/heads/main'
+      uses: xresloader/upload-to-github-release@v1.3.0
       with:
-        files: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-        release-tag: v${{ steps.gitversion.outputs.fullSemVer }}
+        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        tags: true
+        draft: true
+        verbose: true
+
+    # Main release
+    - name: Main Release - Git Tag
+      if: github.ref == 'refs/heads/main'
+      uses: tvdias/github-tagger@v0.0.2
+      with:
         repo-token: ${{ github.token }}
+        tag: v${{ steps.gitversion.outputs.majorMinorPatch }}
+    - name: Main Release - Notes
+      if: github.ref == 'refs/heads/main'
+      uses: release-drafter/release-drafter@v5.15.0
+      with:
+        name: 'Release v${{ steps.gitversion.outputs.majorMinorPatch }}'
+        tag: v${{ steps.gitversion.outputs.majorMinorPatch }}
+        version: v${{ steps.gitversion.outputs.majorMinorPatch }}
+        publish: false
+        prerelease: false
+    - name: Main Release - Asset
+      if: github.ref == 'refs/heads/main'
+      uses: xresloader/upload-to-github-release@v1.3.0
+      with:
+        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        tags: true
+        draft: true
+        verbose: true
         
