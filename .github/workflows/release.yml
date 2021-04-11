@@ -115,8 +115,8 @@ jobs:
         version: v${{ steps.gitversion.outputs.fullSemVer }}
         publish: false
         prerelease: false
-    - name: Main Release - Asset
-      if: github.ref == 'refs/heads/main'
+    - name: Manual Release - Asset
+      if: github.ref != 'refs/heads/main'
       uses: xresloader/upload-to-github-release@v1.3.0
       with:
         file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
