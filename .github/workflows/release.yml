@@ -114,7 +114,7 @@ jobs:
     - name: Release - Asset
       uses: AButler/upload-release-assets@v2.0
       with:
-        files: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        files: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
         release-tag: v${{ steps.gitversion.outputs.fullSemVer }}
         repo-token: ${{ github.token }}
         
