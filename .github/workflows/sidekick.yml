@@ -70,6 +70,16 @@ jobs:
         echo "CommitsSinceVersionSourcePadded: ${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
         echo "UncommittedChanges: ${{ steps.gitversion.outputs.uncommittedChanges }}"
         echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
+    - name: Environment - Build Number
+      uses: myci-actions/export-env-var@1
+      with:
+        name: BUILD_NUMBER
+        value: ${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Environment - Github Token
+      uses: myci-actions/export-env-var@1
+      with:
+        name: GITHUB_TOKEN
+        value: ${{ github.token }}
     - name: .NET - Setup
       uses: actions/setup-dotnet@v1
       with:
@@ -106,5 +116,11 @@ jobs:
     - name: Git - Tag
       uses: tvdias/github-tagger@v0.0.2
       with:
+        repo_token: ${{ github.token }}
         tag: ${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: Sidekick-windows-x64
+        path: ./src/Sidekick.Presentation.Blazor.Electron
       
