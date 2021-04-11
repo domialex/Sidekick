@@ -113,14 +113,23 @@ jobs:
       run: |
         cd ./src/Sidekick.Presentation.Blazor.Electron
         dotnet electronize build /target win /PublishSingleFile false
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: Sidekick-windows-x64
+        path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+    - name: Electron - Build x86
+      run: |
+        cd ./src/Sidekick.Presentation.Blazor.Electron
+        dotnet electronize build /target win /PublishSingleFile false
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: Sidekick-windows-x86
+        path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
     - name: Git - Tag
       uses: tvdias/github-tagger@v0.0.2
       with:
         repo-token: ${{ github.token }}
         tag: ${{ steps.gitversion.outputs.fullSemVer }}
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.3
-      with:
-        name: Sidekick-windows-x64
-        path: ./src/Sidekick.Presentation.Blazor.Electron
       
