@@ -21,11 +21,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Git - Fetch Tags
-      run: git fetch --tags
-    - name: Git - Fetch Main
-      if: github.ref != 'refs/heads/main'
-      run: git branch --create-reflog main origin/main
     - name: GitVersion - Install
       uses: gittools/actions/gitversion/setup@v0.9.9
       with:
@@ -118,13 +113,13 @@ jobs:
       with:
         name: Sidekick-windows
         path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-    - name: Artifact - Release
-      uses: yakuhzi/release-asset@v1.2.3
-      with:
-        file: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
     - name: Git - Tag
       uses: tvdias/github-tagger@v0.0.2
       with:
         repo-token: ${{ github.token }}
         tag: ${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Artifact - Release
+      uses: yakuhzi/release-asset@v1.2.3
+      with:
+        file: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
       
