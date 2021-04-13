@@ -38,7 +38,7 @@ Checks the modifiers on a map or contract for mods that are dangerous (configura
 | Go to Hideout | F5 | Quickly go to your hideout. Writes the following chat command: `/hideout` |
 | Leave Party | F4 | Quickly leave a party. You must have set your character name in the settings first. Writes the following chat command: `/kick {settings.Character_Name}` |
 | Reply to Latest Whisper | Ctrl + Shift + R | Reply to the last whisper received. Starts writing the following chat command: `@{characterName}` |
-| Exit to Character Selection | F12 | Exit to the character selection screen. Writes the following chat command: `/exit` |
+| Exit to Character Selection | F9 | Exit to the character selection screen. Writes the following chat command: `/exit` |
 
 ### Other Features
 | Name | Default Binding | Description |
