@@ -72,7 +72,7 @@ namespace Sidekick.Application.Tests
             {
                 Language_Parser = "en",
                 Language_UI = "en",
-                LeagueId = "Ritual",
+                LeagueId = "Standard",
             }, true));
             await Mediator.Send(new InitializeCommand(true));
         }
