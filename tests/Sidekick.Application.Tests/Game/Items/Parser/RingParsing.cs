@@ -33,7 +33,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string AgonyFinger = @"Rarity: Rare
+        private const string AgonyFinger = @"Item Class: Unknown
+Rarity: Rare
 Agony Finger
 Amethyst Ring
 --------

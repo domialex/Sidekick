@@ -53,7 +53,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         #region ItemText
-        private const string JewelBlightCut = @"Rarity: Rare
+        private const string JewelBlightCut = @"Item Class: Unknown
+Rarity: Rare
 Blight Cut
 Cobalt Jewel
 --------
@@ -67,7 +68,8 @@ Item Level: 68
 Place into an allocated Jewel Socket on the Passive Skill Tree.Right click to remove from the Socket.
 ";
 
-        private const string JewelLoathHope = @"Rarity: Rare
+        private const string JewelLoathHope = @"Item Class: Unknown
+Rarity: Rare
 Loath Hope
 Large Cluster Jewel
 --------

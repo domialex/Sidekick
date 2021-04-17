@@ -51,7 +51,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string Prophecy = @"Rarity: Normal
+        private const string Prophecy = @"Item Class: Unknown
+Rarity: Normal
 The Four Feral Exiles
 --------
 In a faraway dream, four souls far from home prepare to fight to the death.
@@ -61,7 +62,8 @@ You will enter a map that holds four additional Rogue Exiles.
 Right-click to add this prophecy to your character.
 ";
 
-        private const string Currency = @"Rarity: Currency
+        private const string Currency = @"Item Class: Unknown
+Rarity: Currency
 Divine Orb
 --------
 Stack Size: 2/10
@@ -72,7 +74,8 @@ Right click this item then left click a magic, rare or unique item to apply it.
 Shift click to unstack.
 ";
 
-        private const string Organ = @"Rarity: Unique
+        private const string Organ = @"Item Class: Unknown
+Rarity: Unique
 Portentia, the Foul's Heart
 --------
 Uses: Blood Bubble

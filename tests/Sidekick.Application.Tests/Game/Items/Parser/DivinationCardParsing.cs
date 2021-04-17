@@ -46,7 +46,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string SaintTreasure = @"Rarity: Divination Card
+        private const string SaintTreasure = @"Item Class: Unknown
+Rarity: Divination Card
 The Saint's Treasure
 --------
 Stack Size: 1/10
@@ -56,7 +57,8 @@ Stack Size: 1/10
 Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
 ";
 
-        private const string LordOfCelebration = @"Rarity: Divination Card
+        private const string LordOfCelebration = @"Item Class: Unknown
+Rarity: Divination Card
 The Lord of Celebration
 --------
 Stack Size: 1/4

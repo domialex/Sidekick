@@ -32,7 +32,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string VortexWeaver = @"Rarity: Rare
+        private const string VortexWeaver = @"Item Class: Unknown
+Rarity: Rare
 Vortex Weaver
 Vaal Sceptre
 --------

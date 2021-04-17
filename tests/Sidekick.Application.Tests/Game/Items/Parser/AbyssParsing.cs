@@ -33,7 +33,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string BulbonicTrail = @"Rarity: Unique
+        private const string BulbonicTrail = @"Item Class: Unknown
+Rarity: Unique
 Bubonic Trail
 Murder Boots
 --------

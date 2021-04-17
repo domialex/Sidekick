@@ -46,7 +46,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string BlightGuardian = @"Rarity: Rare
+        private const string BlightGuardian = @"Item Class: Unknown
+Rarity: Rare
 Blight Guardian
 Hunter Hood
 --------
@@ -70,7 +71,8 @@ You have Shocking Conflux for 3 seconds every 8 seconds
 Hunter Item
 ";
 
-        private const string StarkonjaHead = @"Rarity: Unique
+        private const string StarkonjaHead = @"Item Class: Unknown
+Rarity: Unique
 Starkonja's Head
 Silken Hood
 --------

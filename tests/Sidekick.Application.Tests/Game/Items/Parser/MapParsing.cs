@@ -77,7 +77,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
             var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
             Assert.Contains("Area is influenced by The Elder", implicits);
-            Assert.Equal(2, actual.Modifiers.Implicit.First(x=>x.Text.Contains("The Elder")).OptionValue.Value);
+            Assert.Equal(2, actual.Modifiers.Implicit.First(x => x.Text.Contains("The Elder")).OptionValue.Value);
             Assert.Contains("Map is occupied by The Purifier", implicits);
             Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
         }
@@ -107,7 +107,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string NormalMap = @"Rarity: Normal
+        private const string NormalMap = @"Item Class: Unknown
+Rarity: Normal
 Beach Map
 --------
 Map Tier: 1
@@ -118,7 +119,8 @@ Item Level: 52
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
 
-        private const string MagicMap = @"Rarity: Magic
+        private const string MagicMap = @"Item Class: Unknown
+Rarity: Magic
 Mirrored Beach Map
 --------
 Map Tier: 1
@@ -134,7 +136,8 @@ Monsters reflect 13% of Elemental Damage
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.
 ";
 
-        private const string BlightedMap = @"Rarity: Normal
+        private const string BlightedMap = @"Item Class: Unknown
+Rarity: Normal
 Blighted Ramparts Map
 --------
 Map Tier: 2
@@ -150,7 +153,8 @@ Travel to this Map by using it in a personal Map Device. Maps can only be used o
 Note: ~price 33 chaos
 ";
 
-        private const string UniqueMap = @"Rarity: Unique
+        private const string UniqueMap = @"Item Class: Unknown
+Rarity: Unique
 Maelström of Chaos
 Atoll Map
 --------
@@ -176,7 +180,8 @@ Will they grant me strength or doom?
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
 
-        private const string OccupiedMap = @"Rarity: Rare
+        private const string OccupiedMap = @"Item Class: Unknown
+Rarity: Rare
 Lost Roost
 Carcass Map
 --------
@@ -205,7 +210,8 @@ Timeless Karui Emblem
 --------
 Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.";
 
-        private const string VortexPit = @"Rarity: Rare
+        private const string VortexPit = @"Item Class: Unknown
+Rarity: Rare
 Vortex Pit
 Burial Chambers Map
 --------

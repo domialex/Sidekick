@@ -167,7 +167,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string UniqueSixLink = @"Rarity: Unique
+        private const string UniqueSixLink = @"Item Class: Unknown
+Rarity: Unique
 Carcass Jack
 Varnished Coat
 --------
@@ -197,7 +198,8 @@ can deny that my work has made quite the splash...""
 - Maligaro's Journal
 ";
 
-        private const string UnidentifiedUnique = @"Rarity: Unique
+        private const string UnidentifiedUnique = @"Item Class: Unknown
+Rarity: Unique
 Jade Hatchet
 --------
 One Handed Axe
@@ -216,7 +218,8 @@ Item Level: 71
 Unidentified
 ;";
 
-        private const string GlovesAssasinsMitts = @"Rarity: Rare
+        private const string GlovesAssasinsMitts = @"Item Class: Unknown
+Rarity: Rare
 Death Nails
 Assassin's Mitts
 --------
@@ -238,7 +241,8 @@ Item Level: 61
 0.23% of Physical Attack Damage Leeched as Mana
 ";
 
-        private const string InfluencedWand = @"Rarity: Rare
+        private const string InfluencedWand = @"Item Class: Unknown
+Rarity: Rare
 Miracle Chant
 Imbued Wand
 --------
@@ -265,7 +269,8 @@ Attacks with this Weapon Penetrate 10% Lightning Resistance
 Crusader Item
 ";
 
-        private const string MagicWeapon = @"Rarity: Magic
+        private const string MagicWeapon = @"Item Class: Unknown
+Rarity: Magic
 Shadow Axe of the Boxer
 --------
 Two Handed Axe
@@ -286,7 +291,8 @@ Item Level: 50
 11% reduced Enemy Stun Threshold
 ";
 
-        private const string FracturedItem = @"Rarity: Rare
+        private const string FracturedItem = @"Item Class: Unknown
+Rarity: Rare
 Invasion Track
 Iron Greaves
 --------
@@ -304,7 +310,8 @@ Regenerate 1.9 Life per second
 Fractured Item
 ";
 
-        private const string UniqueItemWithDifferentBases = @"Rarity: Unique
+        private const string UniqueItemWithDifferentBases = @"Item Class: Unknown
+Rarity: Unique
 Wings of Entropy
 Ezomyte Axe
 --------
@@ -334,7 +341,8 @@ Counts as Dual Wielding
 --------
 Fire and Anarchy are the most reliable agents of change.";
 
-        private const string WeaponWithMultipleElementalDamages = @"Rarity: Rare
+        private const string WeaponWithMultipleElementalDamages = @"Item Class: Unknown
+Rarity: Rare
 Honour Beak
 Ancient Sword
 --------
@@ -366,7 +374,8 @@ Adds 4 to 155 Lightning Damage
 20% increased Attack Speed
 +21% to Global Critical Strike Multiplier";
 
-        private const string EnchantWithAdditionalProjectiles = @"Rarity: Rare
+        private const string EnchantWithAdditionalProjectiles = @"Item Class: Unknown
+Rarity: Rare
 Doom Glance
 Hubris Circlet
 --------
