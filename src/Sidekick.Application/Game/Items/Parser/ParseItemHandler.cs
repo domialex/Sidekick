@@ -79,8 +79,8 @@ namespace Sidekick.Application.Game.Items.Parser
         {
             return new OriginalItem()
             {
-                Name = parsingItem.Blocks[0].Lines.ElementAtOrDefault(1)?.Text,
-                Type = parsingItem.Blocks[0].Lines.ElementAtOrDefault(2)?.Text,
+                Name = parsingItem.Blocks[0].Lines.ElementAtOrDefault(2)?.Text,
+                Type = parsingItem.Blocks[0].Lines.ElementAtOrDefault(3)?.Text,
                 Text = parsingItem.Text,
             };
         }
@@ -172,7 +172,7 @@ namespace Sidekick.Application.Game.Items.Parser
                 ItemLevel = GetInt(patterns.ItemLevel, parsingItem),
                 Identified = !GetBool(patterns.Unidentified, parsingItem),
                 Corrupted = GetBool(patterns.Corrupted, parsingItem),
-                Blighted = patterns.Blighted.IsMatch(parsingItem.Blocks[0].Lines[1].Text),
+                Blighted = patterns.Blighted.IsMatch(parsingItem.Blocks[0].Lines[2].Text),
 
                 ItemQuantity = GetInt(patterns.ItemQuantity, propertyBlock),
                 ItemRarity = GetInt(patterns.ItemRarity, propertyBlock),

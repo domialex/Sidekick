@@ -28,7 +28,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string PotentChaoticResonator = @"Rarity: Currency
+        private const string PotentChaoticResonator = @"Item Class: Unknown
+Rarity: Currency
 Potent Chaotic Resonator
 --------
 Stack Size: 1/10

@@ -46,7 +46,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string VaalGem = @"Rarity: Gem
+        private const string VaalGem = @"Item Class: Unknown
+Rarity: Gem
 Double Strike
 --------
 Vaal, Attack, Melee, Strike, Duration, Physical
@@ -88,7 +89,8 @@ Corrupted
 Note: ~price 2 chaos
 ";
 
-        private const string AnomalousGem = @"Rarity: Gem
+        private const string AnomalousGem = @"Item Class: Unknown
+Rarity: Gem
 Anomalous Static Strike
 --------
 Attack, Melee, Strike, AoE, Duration, Lightning, Chaining

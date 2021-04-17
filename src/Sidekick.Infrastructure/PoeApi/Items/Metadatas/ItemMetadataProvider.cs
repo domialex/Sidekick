@@ -147,14 +147,14 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
             // Get name and type text
             string name = null;
             string type = null;
-            if (parsingBlock.Lines.Count >= 3)
+            if (parsingBlock.Lines.Count >= 4)
             {
-                name = parsingBlock.Lines[1].Text;
-                type = parsingBlock.Lines[2].Text;
+                name = parsingBlock.Lines[2].Text;
+                type = parsingBlock.Lines[3].Text;
             }
-            else if (parsingBlock.Lines.Count >= 2)
+            else if (parsingBlock.Lines.Count == 3)
             {
-                name = parsingBlock.Lines[1].Text;
+                name = parsingBlock.Lines[2].Text;
             }
 
             // Rares may have conflicting names, so we don't want to search any unique items that may have that name. Like "Ancient Orb" which can be used by abyss jewels.
@@ -234,7 +234,7 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
         {
             foreach (var pattern in parserPatterns.Rarity)
             {
-                if (pattern.Value.IsMatch(parsingBlock.Lines[0].Text))
+                if (pattern.Value.IsMatch(parsingBlock.Lines[1].Text))
                 {
                     return pattern.Key;
                 }
