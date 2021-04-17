@@ -1,5 +1,5 @@
+using System;
 using System.IO;
-using System.Reflection;
 using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,11 +15,14 @@ namespace Sidekick.Presentation.Blazor.Electron
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
+
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(config =>
                 {
-                    config.AddJsonFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), SaveSettingsHandler.FileName), true, true);
+                    config.AddJsonFile(Path.Combine(sidekickPath, SaveSettingsHandler.FileName), true, true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -27,5 +30,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                         .UseElectron(args)
                         .UseStartup<Startup>();
                 });
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,10 @@ namespace Sidekick.Persistence
     {
         public SidekickContext CreateDbContext(string[] args)
         {
+            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
+
             var builder = new DbContextOptionsBuilder<SidekickContext>();
-            var connectionString = "Filename=" + Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data.db");
+            var connectionString = "Filename=" + Path.Combine(sidekickPath, "data.db");
             builder.UseSqlite(connectionString);
             return new SidekickContext(builder.Options);
         }

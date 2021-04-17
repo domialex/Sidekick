@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,9 @@ namespace Sidekick.Persistence
     {
         public static IServiceCollection AddSidekickPersistence(this IServiceCollection services)
         {
-            var connectionString = "Filename=" + Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data.db");
+            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
+
+            var connectionString = "Filename=" + Path.Combine(sidekickPath, "data.db");
 
             services.AddDbContextPool<SidekickContext>(options => options.UseSqlite(connectionString));
 

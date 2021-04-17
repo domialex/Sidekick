@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -35,9 +36,10 @@ namespace Sidekick.Application.Tests
         public async Task InitializeAsync()
         {
             var mockEnvironment = new Mock<IHostEnvironment>();
+            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
 
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), SaveSettingsHandler.FileName), true, true)
+                .AddJsonFile(Path.Combine(sidekickPath, SaveSettingsHandler.FileName), true, true)
                 .Build();
 
             var services = new ServiceCollection()
