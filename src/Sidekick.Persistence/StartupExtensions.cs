@@ -1,12 +1,10 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Domain.Apis.PoeNinja;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Game.Leagues;
 using Sidekick.Domain.Views;
+using Sidekick.Extensions;
 using Sidekick.Persistence.Apis.PoeNinja;
 using Sidekick.Persistence.Cache;
 using Sidekick.Persistence.ItemCategories;
@@ -19,9 +17,7 @@ namespace Sidekick.Persistence
     {
         public static IServiceCollection AddSidekickPersistence(this IServiceCollection services)
         {
-            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
-
-            var connectionString = "Filename=" + Path.Combine(sidekickPath, "data.db");
+            var connectionString = "Filename=" + SidekickPaths.GetDataFilePath("data.db");
 
             services.AddDbContextPool<SidekickContext>(options => options.UseSqlite(connectionString));
 
