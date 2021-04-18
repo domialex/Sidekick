@@ -1,11 +1,11 @@
-using System.IO;
-using System.Reflection;
+using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sentry;
 using Serilog;
 using Sidekick.Domain.Settings;
+using Sidekick.Extensions;
 
 namespace Sidekick.Logging
 {
@@ -14,13 +14,15 @@ namespace Sidekick.Logging
     {
         public static IServiceCollection AddSidekickLogging(this IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
         {
+            var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");
+
             var logSink = new LogSink();
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Sidekick_log.log"),
+                .WriteTo.File(SidekickPaths.GetDataFilePath("Sidekick_log.log"),
                     rollingInterval: RollingInterval.Day,
                     retainedFileCountLimit: 1,
                     fileSizeLimitBytes: 5242880,

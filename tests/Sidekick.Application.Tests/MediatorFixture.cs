@@ -1,4 +1,3 @@
-using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,6 +10,7 @@ using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
+using Sidekick.Extensions;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
 using Sidekick.Logging;
@@ -37,7 +37,7 @@ namespace Sidekick.Application.Tests
             var mockEnvironment = new Mock<IHostEnvironment>();
 
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), SaveSettingsHandler.FileName), true, true)
+                .AddJsonFile(SidekickPaths.GetDataFilePath(SaveSettingsHandler.FileName), true, true)
                 .Build();
 
             var services = new ServiceCollection()
