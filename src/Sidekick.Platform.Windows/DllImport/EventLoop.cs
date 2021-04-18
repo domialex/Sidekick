@@ -23,6 +23,7 @@ namespace Sidekick.Platform.Windows.DllImport
                         User32.TranslateMessage(ref msg);
                         User32.DispatchMessage(ref msg);
                     }
+                    Thread.Sleep(200);
                 }
                 User32.UnhookWinEvent(handle);
             }, cancellationToken.Token);

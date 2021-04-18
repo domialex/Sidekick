@@ -44,4 +44,5 @@ jobs:
       with:
         repo_token: ${{ github.token }}
         report_name: Tests - Coverage
+        minimum_coverage: 0
         
