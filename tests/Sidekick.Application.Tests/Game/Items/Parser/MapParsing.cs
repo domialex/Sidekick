@@ -46,8 +46,8 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
-            Assert.Equal("Ramparts Map", actual.Metadata.Type);
-            Assert.Equal(2, actual.Properties.MapTier);
+            Assert.Equal("Dark Forest Map", actual.Metadata.Type);
+            Assert.Equal(14, actual.Properties.MapTier);
             Assert.True(actual.Properties.Blighted);
         }
 
@@ -107,7 +107,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
 
         #region ItemText
 
-        private const string NormalMap = @"Item Class: Unknown
+        private const string NormalMap = @"Item Class: Maps
 Rarity: Normal
 Beach Map
 --------
@@ -119,7 +119,7 @@ Item Level: 52
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
 
-        private const string MagicMap = @"Item Class: Unknown
+        private const string MagicMap = @"Item Class: Maps
 Rarity: Magic
 Mirrored Beach Map
 --------
@@ -136,24 +136,22 @@ Monsters reflect 13% of Elemental Damage
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.
 ";
 
-        private const string BlightedMap = @"Item Class: Unknown
+        private const string BlightedMap = @"Item Class: Maps
 Rarity: Normal
-Blighted Ramparts Map
+Blighted Dark Forest Map
 --------
-Map Tier: 2
-Atlas Region: Glennach Cairns
+Map Tier: 14
 --------
-Item Level: 71
+Item Level: 83
 --------
-Area is infested with Fungal Growths (implicit)
+Area is infested with Fungal Growths
+Map's Item Quantity Modifiers also affect Blight Chest count at 20% value (implicit)
 Natural inhabitants of this area have been removed (implicit)
 --------
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.
---------
-Note: ~price 33 chaos
 ";
 
-        private const string UniqueMap = @"Item Class: Unknown
+        private const string UniqueMap = @"Item Class: Maps
 Rarity: Unique
 Maelström of Chaos
 Atoll Map
@@ -180,7 +178,7 @@ Will they grant me strength or doom?
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
 
-        private const string OccupiedMap = @"Item Class: Unknown
+        private const string OccupiedMap = @"Item Class: Maps
 Rarity: Rare
 Lost Roost
 Carcass Map
@@ -205,10 +203,12 @@ Players gain 50% reduced Flask Charges
 --------
 Travel to this Map by using it in a personal Map Device. Maps can only be used once.";
 
-        private const string TimelessKaruiEmblem = @"Rarity: Normal
+        private const string TimelessKaruiEmblem = @"Item Class: Map Fragments
+Rarity: Normal
 Timeless Karui Emblem
 --------
-Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.";
+Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.
+";
 
         private const string VortexPit = @"Item Class: Unknown
 Rarity: Rare
