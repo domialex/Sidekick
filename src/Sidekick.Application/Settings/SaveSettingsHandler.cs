@@ -1,5 +1,4 @@
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +48,7 @@ namespace Sidekick.Application.Settings
 
             var json = JsonSerializer.Serialize(settings);
             var defaults = JsonSerializer.Serialize(new SidekickSettings());
-            var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FileName);
+            var filePath = SidekickPaths.GetDataFilePath(FileName);
 
             using var fileStream = File.Create(filePath);
             using var writer = new Utf8JsonWriter(fileStream, options: new JsonWriterOptions
