@@ -7,7 +7,16 @@ namespace Sidekick.Extensions
     {
         public static string GetDataFilePath(string fileName)
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Path.Combine("sidekick/", fileName));
+            var environmentFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var sidekickFolder = Path.Combine(environmentFolder, "sidekick");
+            var dataFile = Path.Combine(sidekickFolder, fileName);
+
+            if (!Directory.Exists(sidekickFolder))
+            {
+                Directory.CreateDirectory(sidekickFolder);
+            }
+
+            return dataFile;
         }
     }
 }
