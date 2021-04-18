@@ -51,6 +51,12 @@ namespace Sidekick.Platform.Windows.Processes
         private bool PermissionChecked { get; set; } = false;
         private CancellationTokenSource WindowsHook { get; set; }
 
+        /// <summary>
+        /// Used to prevent having to Invoke the blur action everytime a
+        /// window that is not Path of Exile is focused.
+        /// </summary>
+        private bool PathOfExileWasMinimized { get; set; }
+
         public ProcessProvider(
             ILogger<ProcessProvider> logger,
             IMediator mediator,
@@ -74,14 +80,18 @@ namespace Sidekick.Platform.Windows.Processes
                 FocusedWindow = GetWindowTitle(hwnd);
                 if (FocusedWindow == PATH_OF_EXILE_TITLE || FocusedWindow == SIDEKICK_TITLE)
                 {
+                    logger.LogInformation("Path of Exile focused.");
+                    PathOfExileWasMinimized = false;
                     OnFocus?.Invoke();
                 }
-                else
+                else if (PathOfExileWasMinimized == false)
                 {
+                    PathOfExileWasMinimized = true;
+                    logger.LogInformation("Path of Exile minimized.");
                     OnBlur?.Invoke();
                 }
 
-                // If the game is run as administrator, sidekick needs to be administrator also.
+                // If the game is run as administrator, Sidekick also needs administrator privileges.
                 if (!PermissionChecked && FocusedWindow == PATH_OF_EXILE_TITLE)
                 {
                     PermissionChecked = true;
