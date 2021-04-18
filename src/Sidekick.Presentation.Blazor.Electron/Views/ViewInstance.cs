@@ -54,7 +54,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         public void SetTitle(string title)
         {
             Title = title;
-            view.Browser.SetTitle(title ?? "Sidekick");
+            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
+            // view.Browser.SetTitle(title ?? "Sidekick");
         }
     }
 }
