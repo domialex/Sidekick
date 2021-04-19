@@ -67,7 +67,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 }
                 catch (Exception e)
                 {
-                    Locator.logger.LogWarning("Failed to save the view size.", e);
+                    Locator.logger.LogWarning(e, "Failed to save the view size.");
                 }
             }, WindowResizeCancellationTokenSource.Token, delay: 500);
         }
