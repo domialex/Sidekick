@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Cheatsheets.Commands;
@@ -38,10 +37,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             this.processProvider = processProvider;
         }
 
-        private bool Registered { get; set; } = false;
-        private Dictionary<string, List<Func<ICommand<bool>>>> Keybinds { get; set; }
-            = new Dictionary<string, List<Func<ICommand<bool>>>>();
-
         public void Initialize()
         {
             processProvider.OnFocus += Register;
@@ -50,27 +45,17 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 
         public void Register()
         {
-            if (Registered)
-            {
-                Unregister();
-            }
-
-            Keybinds.Clear();
+            Unregister();
 
             RegisterKeybind<CloseOverlayCommand>("Esc");
             RegisterKeybind<CloseOverlayCommand>(settings.Key_Close);
             RegisterKeybind<FindItemCommand>(settings.Key_FindItems);
             RegisterKeybind<OpenSettingsCommand>(settings.Key_OpenSettings);
-
             RegisterKeybind<OpenCheatsheetsCommand>(settings.Cheatsheets_Key_Open);
-
             RegisterKeybind<OpenMapInfoCommand>(settings.Map_Key_Check);
-
             RegisterKeybind<PriceCheckItemCommand>(settings.Trade_Key_Check);
             RegisterKeybind<OpenTradePageCommand>(settings.Trade_Key_OpenSearch);
-
             RegisterKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open);
-
             RegisterKeybind<ScrollStashUpCommand>(settings.Stash_Key_Left);
             RegisterKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right);
 
@@ -79,68 +64,46 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
                 RegisterChatKeybind(chat);
             }
 
-            foreach (var keybind in Keybinds)
-            {
-                var accelerator = keyboardProvider.ToElectronAccelerator(keybind.Key);
-                if (string.IsNullOrEmpty(accelerator))
-                {
-                    continue;
-                }
-
-                ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, async () =>
-                {
-                    Unregister();
-                    var handled = false;
-                    foreach (var command in keybind.Value)
-                    {
-                        handled = await mediator.Send(command.Invoke()) || handled;
-                    }
-                    if (!handled && !Registered)
-                    {
-                        keyboardProvider.PressKey(keybind.Key);
-                    }
-                    Register();
-                });
-            }
-
             logger.LogDebug("[Keybind] Registered keybinds");
-            Registered = true;
         }
 
-        private void RegisterChatKeybind(ChatSetting chat)
+        private Action GetAction(string accelerator, string key, Func<ICommand<bool>> keybind)
         {
-            if (string.IsNullOrEmpty(chat.Key))
+            return async () =>
             {
-                return;
-            }
-
-            if (!Keybinds.ContainsKey(chat.Key))
-            {
-                Keybinds.Add(chat.Key, new List<Func<ICommand<bool>>>());
-            }
-
-            Keybinds[chat.Key].Add(() => new ChatCommand(chat.Command, chat.Submit));
+                ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
+                var handled = await mediator.Send(keybind.Invoke());
+                if (!handled)
+                {
+                    keyboardProvider.PressKey(key);
+                }
+                ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, key, keybind));
+            };
         }
 
         private void RegisterKeybind<TCommand>(string keybind)
             where TCommand : ICommand<bool>, new()
         {
-            if (string.IsNullOrEmpty(keybind))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(keybind)) return;
 
-            if (!Keybinds.ContainsKey(keybind))
-            {
-                Keybinds.Add(keybind, new List<Func<ICommand<bool>>>());
-            }
+            var accelerator = keyboardProvider.ToElectronAccelerator(keybind);
+            if (string.IsNullOrEmpty(accelerator)) return;
 
-            Keybinds[keybind].Add(() => new TCommand());
+            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, keybind, () => new TCommand()));
+        }
+
+        private void RegisterChatKeybind(ChatSetting chat)
+        {
+            if (string.IsNullOrEmpty(chat.Key)) return;
+
+            var accelerator = keyboardProvider.ToElectronAccelerator(chat.Key);
+            if (string.IsNullOrEmpty(accelerator)) return;
+
+            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, chat.Key, () => new ChatCommand(chat.Command, chat.Submit)));
         }
 
         public void Unregister()
         {
-            Registered = false;
             ElectronNET.API.Electron.GlobalShortcut.UnregisterAll();
             logger.LogDebug("[Keybind] Unregistered keybinds");
         }
