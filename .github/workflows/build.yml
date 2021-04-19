@@ -46,4 +46,4 @@ jobs:
         report_name: Tests - Coverage
         path: tests\Sidekick.Application.Tests\coverage.cobertura.xml
         minimum_coverage: 0
-        
+        only_changed_files: true
