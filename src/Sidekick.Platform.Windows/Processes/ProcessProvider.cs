@@ -151,7 +151,7 @@ namespace Sidekick.Platform.Windows.Processes
                     }
                     catch (Exception e)
                     {
-                        logger.LogError(e, localizer["AdminError"]);
+                        logger.LogWarning(e, localizer["AdminError"]);
                     }
                     finally
                     {
@@ -201,7 +201,7 @@ namespace Sidekick.Platform.Windows.Processes
             }
             catch (Exception e)
             {
-                logger.LogError(e, e.Message);
+                logger.LogWarning(e, e.Message);
             }
 
             return result;

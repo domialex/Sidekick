@@ -91,7 +91,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
             }
             catch (Exception e)
             {
-                logger.LogError("Exception while initializing the tray.", e);
+                logger.LogError(e, "Exception while initializing the tray.");
             }
         }
 
