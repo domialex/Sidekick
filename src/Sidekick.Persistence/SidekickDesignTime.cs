@@ -1,7 +1,7 @@
-using System.IO;
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Sidekick.Extensions;
+
 namespace Sidekick.Persistence
 {
     internal class SidekickDesignTime : IDesignTimeDbContextFactory<SidekickContext>
@@ -9,7 +9,7 @@ namespace Sidekick.Persistence
         public SidekickContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<SidekickContext>();
-            var connectionString = "Filename=" + Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data.db");
+            var connectionString = "Filename=" + SidekickPaths.GetDataFilePath("data.db");
             builder.UseSqlite(connectionString);
             return new SidekickContext(builder.Options);
         }

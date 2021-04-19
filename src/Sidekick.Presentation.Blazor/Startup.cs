@@ -9,8 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sidekick.Application;
+using Sidekick.Application.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
+using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
@@ -105,6 +107,12 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
+                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+                {
+                    Language_Parser = "en",
+                    Language_UI = "en",
+                    LeagueId = "Ultimatum",
+                }, true));
                 await mediator.Send(new InitializeCommand(true));
             });
         }
