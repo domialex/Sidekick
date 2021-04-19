@@ -1,9 +1,11 @@
+using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.GameLogs.Queries;
 using Sidekick.Domain.Platforms;
 
@@ -12,11 +14,12 @@ namespace Sidekick.Application.Game.GameLogs
     public class GetLatestWhisperCharacterNameHandler : IQueryHandler<GetLatestWhisperCharacterNameQuery, string>
     {
         private readonly IProcessProvider processProvider;
+        private readonly ILogger logger;
 
-        public GetLatestWhisperCharacterNameHandler(
-            IProcessProvider processProvider)
+        public GetLatestWhisperCharacterNameHandler(IProcessProvider processProvider, ILogger<GetLatestWhisperCharacterNameHandler> logger)
         {
             this.processProvider = processProvider;
+            this.logger = logger;
         }
 
         public Task<string> Handle(GetLatestWhisperCharacterNameQuery request, CancellationToken cancellationToken)
@@ -27,28 +30,35 @@ namespace Sidekick.Application.Game.GameLogs
                 return Task.FromResult<string>(null);
             }
 
-            using var stream = new FileStream(clientLogFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
-            if (stream.Length == 0)
+            try
             {
-                return Task.FromResult<string>(null);
-            }
+                using var stream = new FileStream(clientLogFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
-            stream.Position = stream.Length - 1;
-
-            while (stream.Position > 0)
-            {
-                var currentLine = GetLine(stream);
-
-                // See if the current line contains a received whisper
-                var match = Regex.Match(currentLine, @"(@From){1}\s.+?(?=:)", RegexOptions.Singleline);
-                if (match.Success)
+                if (stream.Length == 0)
                 {
-                    // No extract only character name
-                    return Task.FromResult(match.Value[(match.Value.LastIndexOf(" ") + 1)..]);
+                    return Task.FromResult<string>(null);
                 }
 
-                stream.Position -= 1;
+                stream.Position = stream.Length - 1;
+
+                while (stream.Position > 0)
+                {
+                    var currentLine = GetLine(stream);
+
+                    // See if the current line contains a received whisper
+                    var match = Regex.Match(currentLine, @"(@From){1}\s.+?(?=:)", RegexOptions.Singleline);
+                    if (match.Success)
+                    {
+                        // No extract only character name
+                        return Task.FromResult(match.Value[(match.Value.LastIndexOf(" ") + 1)..]);
+                    }
+
+                    stream.Position -= 1;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning(e, "Error while trying to fetch the latest whisper character name.");
             }
 
             return Task.FromResult<string>(null);

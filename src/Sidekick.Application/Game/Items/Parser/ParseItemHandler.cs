@@ -70,7 +70,7 @@ namespace Sidekick.Application.Game.Items.Parser
             }
             catch (Exception e)
             {
-                logger.LogError(e, "Could not parse item.");
+                logger.LogWarning(e, "Could not parse item.");
                 return null;
             }
         }
