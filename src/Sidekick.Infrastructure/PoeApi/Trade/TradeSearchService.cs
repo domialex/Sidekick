@@ -65,14 +65,14 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 else
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
-                    logger.LogError("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
-                    logger.LogError("Uri: {uri}", uri);
-                    logger.LogError("Query: {query}", json);
+                    logger.LogWarning("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.LogWarning("Uri: {uri}", uri);
+                    logger.LogWarning("Query: {query}", json);
                 }
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Exception thrown while querying trade api.");
+                logger.LogWarning(ex, "Exception thrown while querying trade api.");
             }
 
             return null;
@@ -144,14 +144,14 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 else
                 {
                     var responseMessage = await response?.Content?.ReadAsStringAsync();
-                    logger.LogError("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
-                    logger.LogError("Uri: {uri}", uri);
-                    logger.LogError("Query: {query}", json);
+                    logger.LogWarning("Querying failed: {responseCode} {responseMessage}", response.StatusCode, responseMessage);
+                    logger.LogWarning("Uri: {uri}", uri);
+                    logger.LogWarning("Query: {query}", json);
                 }
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Exception thrown while querying trade api.");
+                logger.LogWarning(ex, "Exception thrown while querying trade api.");
             }
 
             return null;
@@ -325,7 +325,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Exception thrown when fetching trade API listings from Query {queryId}.");
+                logger.LogWarning(ex, $"Exception thrown when fetching trade API listings from Query {queryId}.");
             }
 
             return null;

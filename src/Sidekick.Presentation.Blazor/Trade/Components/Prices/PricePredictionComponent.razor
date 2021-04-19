@@ -1,3 +1,7 @@
+@using System.Threading
+ 
+@implements IDisposable
+
 @using Sidekick.Domain.Apis.PoePriceInfo.Queries
 @using Sidekick.Domain.Apis.PoePriceInfo.Models
 @using Sidekick.Domain.Settings
@@ -35,6 +39,7 @@
     private bool Loading { get; set; }
     private bool IsInit { get; set; }
     private PricePrediction Prediction { get; set; }
+    private CancellationTokenSource pricePredictionCancellationTokenSource = new CancellationTokenSource();
 
     protected override async Task OnParametersSetAsync()
     {
@@ -47,9 +52,14 @@
         if (Item != null)
         {
             IsInit = true;
-            Prediction = await Mediator.Send(new GetPricePredictionQuery(Item));
+            Prediction = await Mediator.Send(new GetPricePredictionQuery(Item), pricePredictionCancellationTokenSource.Token);
         }
 
         Loading = false;
+    }
+
+    public void Dispose()
+    {
+        pricePredictionCancellationTokenSource.Cancel();
     }
 }

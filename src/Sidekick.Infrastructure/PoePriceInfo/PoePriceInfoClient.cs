@@ -12,6 +12,7 @@ namespace Sidekick.Infrastructure.PoePriceInfo
             Client.BaseAddress = new Uri("https://www.poeprices.info/api");
             Client.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
             Client.DefaultRequestHeaders.UserAgent.TryParseAdd("Sidekick");
+            Client.Timeout = TimeSpan.FromSeconds(10);
             Options = new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
