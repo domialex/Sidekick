@@ -156,10 +156,5 @@ namespace Sidekick.Presentation.Blazor.Electron
                 }
             });
         }
-
-        public static void CrashApplication()
-        {
-            ElectronNET.API.Electron.App.Exit();
-        }
     }
 }
