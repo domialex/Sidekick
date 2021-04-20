@@ -122,6 +122,19 @@ namespace Sidekick.Presentation.Blazor.Electron
             {
                 try
                 {
+                    // Auto Update
+                    try
+                    {
+                        ElectronNET.API.Electron.AutoUpdater.AutoDownload = true;
+                        ElectronNET.API.Electron.AutoUpdater.AutoInstallOnAppQuit = true;
+                        await ElectronNET.API.Electron.AutoUpdater.CheckForUpdatesAndNotifyAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError(e, "Could not update Sidekick.");
+                    }
+
+                    // Tray
                     trayProvider.Initialize();
 
                     // We need to trick Electron into thinking that our app is ready to be opened.
