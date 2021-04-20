@@ -92,7 +92,7 @@ jobs:
     - name: Electron - Build
       run: |
         cd ./src/Sidekick.Presentation.Blazor.Electron
-        dotnet electronize build /target win /PublishSingleFile false
+        dotnet electronize build /target win /PublishSingleFile false /electron-params --publish=always
     - name: Artifact - Build
       uses: actions/upload-artifact@v2.2.3
       with:
