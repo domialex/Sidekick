@@ -67,7 +67,7 @@ jobs:
       uses: myci-actions/export-env-var@1
       with:
         name: BUILD_NUMBER
-        value: ${{ steps.gitversion.outputs.majorMinorPatch }}
+        value: ${{ steps.gitversion.outputs.fullSemVer }}
     - name: Environment - Github Token
       uses: myci-actions/export-env-var@1
       with:
