@@ -35,6 +35,21 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             this.settings = settings;
             this.electronCookieProtection = electronCookieProtection;
             this.hostEnvironment = hostEnvironment;
+
+            ElectronNET.API.Electron.IpcMain.OnSync("close", (viewName) =>
+            {
+                logger.LogError("Force closing the Blazor view {viewName}", viewName);
+                if (Enum.TryParse(viewName as string, true, out View view))
+                {
+                    Close(view);
+                }
+                else
+                {
+                    CloseAll();
+                }
+
+                return null;
+            });
         }
 
         private bool FirstView = true;
@@ -130,9 +145,21 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 EnableLargerThanScreen = false,
                 WebPreferences = new WebPreferences()
                 {
-                    NodeIntegration = false,
+                    NodeIntegration = true,
                 }
             }, $"http://localhost:{BridgeSettings.WebPort}{path}");
+
+            window.WebContents.OnCrashed += (killed) =>
+            {
+                logger.LogWarning("The view {view} has crashed. Attempting to close the window.", view);
+                Close(view);
+            };
+
+            window.OnUnresponsive += () =>
+            {
+                logger.LogWarning("The view {view} has become unresponsive. Attempting to close the window.", view);
+                Close(view);
+            };
 
             await window.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
 

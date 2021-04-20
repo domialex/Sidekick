@@ -39,60 +39,53 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
 
         public void Initialize()
         {
-            try
+            var menuItems = new List<MenuItem>()
             {
-                var menuItems = new List<MenuItem>()
+                new ()
                 {
-                    new ()
-                    {
-                        Label = resources.Title + " - " + GetType().Assembly.GetName().Version.ToString(),
-                        Type = MenuType.normal,
-                        Icon = $"{webHostEnvironment.ContentRootPath}Assets/16x16.png",
-                        Enabled = false,
-                    },
+                    Label = resources.Title + " - " + GetType().Assembly.GetName().Version.ToString(),
+                    Type = MenuType.normal,
+                    Icon = $"{webHostEnvironment.ContentRootPath}Assets/16x16.png",
+                    Enabled = false,
+                },
 
-                    new () { Type = MenuType.separator },
+                new () { Type = MenuType.separator },
 
-                    new ()
-                    {
-                        Label = resources.Cheatsheets,
-                        Click = () => { viewLocator.Open(View.League); }
-                    },
-
-                    new ()
-                    {
-                        Label = resources.About,
-                        Click = () => { viewLocator.Open(View.About); }
-                    },
-
-                    new ()
-                    {
-                        Label = resources.Settings,
-                        Click = () => { viewLocator.Open(View.Settings); }
-                    },
-
-                    new () { Type = MenuType.separator },
-
-                    new ()
-                    {
-                        Label = resources.Exit,
-                        Click = () => ElectronNET.API.Electron.App.Quit()
-                    }
-                };
-
-                if (webHostEnvironment.IsDevelopment())
+                new ()
                 {
-                    menuItems.InsertRange(0, GetDevelopmentMenu());
+                    Label = resources.Cheatsheets,
+                    Click = () => { viewLocator.Open(View.League); }
+                },
+
+                new ()
+                {
+                    Label = resources.About,
+                    Click = () => { viewLocator.Open(View.About); }
+                },
+
+                new ()
+                {
+                    Label = resources.Settings,
+                    Click = () => { viewLocator.Open(View.Settings); }
+                },
+
+                new () { Type = MenuType.separator },
+
+                new ()
+                {
+                    Label = resources.Exit,
+                    Click = () => ElectronNET.API.Electron.App.Quit()
                 }
+            };
 
-                ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/icon.png", menuItems.ToArray());
-                ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
-                ElectronNET.API.Electron.Tray.SetToolTip(resources.Title);
-            }
-            catch (Exception e)
+            if (webHostEnvironment.IsDevelopment())
             {
-                logger.LogError(e, "Exception while initializing the tray.");
+                menuItems.InsertRange(0, GetDevelopmentMenu());
             }
+
+            ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/icon.png", menuItems.ToArray());
+            ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
+            ElectronNET.API.Electron.Tray.SetToolTip(resources.Title);
         }
 
         public List<MenuItem> GetDevelopmentMenu()
