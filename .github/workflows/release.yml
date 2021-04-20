@@ -109,14 +109,15 @@ jobs:
         version: v${{ steps.gitversion.outputs.fullSemVer }}
         publish: false
         prerelease: false
-    - name: Manual Release - Asset
-      if: github.ref != 'refs/heads/main'
-      uses: xresloader/upload-to-github-release@v1.3.0
-      with:
-        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-        tag_name: v${{ steps.gitversion.outputs.fullSemVer }}
-        draft: true
-        verbose: true
+    #- name: Manual Release - Asset
+    #  if: github.ref != 'refs/heads/main'
+    #  uses: xresloader/upload-to-github-release@v1.3.0
+    #  with:
+    #    file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+    #    tag_name: v${{ steps.gitversion.outputs.fullSemVer }}
+    #    draft: true
+    #    verbose: true
+    #    overwrite: true
 
     # Main release
     - name: Main Release - Git Tag
@@ -134,12 +135,13 @@ jobs:
         version: v${{ steps.gitversion.outputs.majorMinorPatch }}
         publish: false
         prerelease: false
-    - name: Main Release - Asset
-      if: github.ref == 'refs/heads/main'
-      uses: xresloader/upload-to-github-release@v1.3.0
-      with:
-        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
-        tag_name: v${{ steps.gitversion.outputs.majorMinorPatch }}
-        draft: true
-        verbose: true
+    #- name: Main Release - Asset
+    #  if: github.ref == 'refs/heads/main'
+    #  uses: xresloader/upload-to-github-release@v1.3.0
+    #  with:
+    #    file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+    #    tag_name: v${{ steps.gitversion.outputs.majorMinorPatch }}
+    #    draft: true
+    #    verbose: true
+    #    overwrite: true
         
