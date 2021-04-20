@@ -120,12 +120,6 @@ jobs:
     #    overwrite: true
 
     # Main release
-    - name: Main Release - Git Tag
-      if: github.ref == 'refs/heads/main'
-      uses: tvdias/github-tagger@v0.0.2
-      with:
-        repo-token: ${{ github.token }}
-        tag: v${{ steps.gitversion.outputs.majorMinorPatch }}
     - name: Main Release - Notes
       if: github.ref == 'refs/heads/main'
       uses: release-drafter/release-drafter@v5.15.0
