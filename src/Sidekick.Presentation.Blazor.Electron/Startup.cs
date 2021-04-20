@@ -123,7 +123,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                 try
                 {
                     // Auto Update
-                    // Comment to test auto updater count : 1
+                    // Comment to test auto updater count : 2
                     try
                     {
                         ElectronNET.API.Electron.AutoUpdater.AutoDownload = true;
