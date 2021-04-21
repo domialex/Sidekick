@@ -101,11 +101,8 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                             Label = "Price check from clipboard",
                             Click = async () =>
                             {
-                                var item = await mediator.Send(new ParseItemCommand(await clipboardProvider.GetText()));
-                                if (item != null)
-                                {
-                                    await mediator.Send(new PriceCheckItemCommand(item));
-                                }
+                                var itemText = await clipboardProvider.GetText();
+                                await viewLocator.Open(View.Trade, itemText);
                             }
                         },
                         new () {

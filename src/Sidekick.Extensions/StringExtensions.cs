@@ -71,15 +71,14 @@ namespace Sidekick.Extensions
         }
 
         /// <summary>
-        /// Decodes a Url Encodeded in Base64 String
+        /// Decodes Base64 Url
         /// </summary>
         public static string DecodeBase64Url(this string input)
         {
             if (input.StartsWith("xurl_"))
             {
                 var substr = input.Substring(5);
-                var decode = substr.DecodeUrl();
-                return decode.DecodeBase64();
+                return substr.DecodeBase64();
             }
 
             return input;
