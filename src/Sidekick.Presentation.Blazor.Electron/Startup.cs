@@ -74,6 +74,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
 
             services.AddSingleton<TrayProvider>();
+            services.AddSingleton<UpdateProvider>();
             services.AddSingleton<ViewLocator>();
             services.AddSingleton<IViewLocator>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>());
             services.AddScoped<IViewInstance, ViewInstance>();
