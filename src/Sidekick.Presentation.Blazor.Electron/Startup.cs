@@ -23,6 +23,7 @@ using Sidekick.Persistence;
 using Sidekick.Platform;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
+using Sidekick.Presentation.Blazor.Electron.Update;
 using Sidekick.Presentation.Blazor.Electron.Views;
 
 namespace Sidekick.Presentation.Blazor.Electron
@@ -86,6 +87,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             IWebHostEnvironment env,
             IServiceProvider serviceProvider,
             TrayProvider trayProvider,
+            UpdateProvider updateProvider,
             IMediator mediator,
             ILogger<Startup> logger)
         {
@@ -122,17 +124,8 @@ namespace Sidekick.Presentation.Blazor.Electron
             {
                 try
                 {
-                    // Auto Update
-                    try
-                    {
-                        ElectronNET.API.Electron.AutoUpdater.AutoDownload = true;
-                        ElectronNET.API.Electron.AutoUpdater.AutoInstallOnAppQuit = true;
-                        await ElectronNET.API.Electron.AutoUpdater.CheckForUpdatesAndNotifyAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError(e, "Could not update Sidekick.");
-                    }
+                    // Auto update
+                    await updateProvider.Initialize();
 
                     // Tray
                     trayProvider.Initialize();

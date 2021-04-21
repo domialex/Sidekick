@@ -9,6 +9,7 @@ using Sidekick.Localization.Settings;
 using Sidekick.Localization.Setup;
 using Sidekick.Localization.Trade;
 using Sidekick.Localization.Tray;
+using Sidekick.Localization.Update;
 
 namespace Sidekick.Localization
 {
@@ -43,6 +44,8 @@ namespace Sidekick.Localization
             services.AddTransient<SetupResources>();
 
             services.AddTransient<TrayResources>();
+
+            services.AddTransient<UpdateResources>();
 
             return services;
         }
