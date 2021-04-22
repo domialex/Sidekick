@@ -9,37 +9,82 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Apis.GitHub;
+using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Extensions;
 using Sidekick.Infrastructure.Github.Models;
+using Sidekick.Localization.Update;
 
 namespace Sidekick.Infrastructure.Github.Queries
 {
-    public class CheckForUpdateHandler : ICommandHandler<CheckForUpdate>
+    public class CheckForUpdateHandler : IQueryHandler<CheckForUpdate, bool>
     {
+        private readonly IMediator mediator;
         private readonly ILogger<CheckForUpdateHandler> logger;
         private readonly IGithubClient githubClient;
+        private readonly UpdateResources resources;
 
         public CheckForUpdateHandler(
+            IMediator mediator,
             ILogger<CheckForUpdateHandler> logger,
-            IGithubClient githubClient)
+            IGithubClient githubClient,
+            UpdateResources resources)
         {
+            this.mediator = mediator;
             this.logger = logger;
             this.githubClient = githubClient;
+            this.resources = resources;
         }
 
-        public async Task<Unit> Handle(CheckForUpdate request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CheckForUpdate request, CancellationToken cancellationToken)
         {
-            var release = await GetLatestRelease();
-            if (IsUpdateAvailable(release))
+            try
             {
-                var path = await DownloadRelease(release);
-                if (path != null)
+                var release = await GetLatestRelease();
+                if (IsUpdateAvailable(release))
                 {
+                    await mediator.Publish(new InitializationProgressed(0)
+                    {
+                        Title = resources.Downloading(release.Tag),
+                    });
+
+                    var path = await DownloadRelease(release);
+                    if (path == null)
+                    {
+                        await mediator.Publish(new InitializationProgressed(33)
+                        {
+                            Title = resources.Failed,
+                        });
+                        await Task.Delay(1000);
+                        await mediator.Publish(new InitializationProgressed(66)
+                        {
+                            Title = resources.Failed,
+                        });
+                        await Task.Delay(1000);
+                        await mediator.Publish(new InitializationProgressed(100)
+                        {
+                            Title = resources.Failed,
+                        });
+                        await Task.Delay(1000);
+                        return false;
+                    }
+
+                    await mediator.Publish(new InitializationProgressed(100)
+                    {
+                        Title = resources.Downloading(release.Tag),
+                    });
+                    await Task.Delay(1000);
+
                     Process.Start(path);
+
+                    return true;
                 }
             }
+            catch (Exception e)
+            {
+                logger.LogWarning(e, "Update failed.");
+            }
 
-            return Unit.Value;
+            return false;
         }
 
         /// <summary>

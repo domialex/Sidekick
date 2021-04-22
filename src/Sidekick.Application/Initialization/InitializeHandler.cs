@@ -99,7 +99,11 @@ namespace Sidekick.Application.Initialization
                 await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
 
                 // Check for updates
-                await mediator.Send(new CheckForUpdate(), cancellationToken);
+                if (await mediator.Send(new CheckForUpdate(), cancellationToken))
+                {
+                    viewLocator.Close(View.Initialization);
+                    return Unit.Value;
+                }
 
                 // Check to see if we should run Setup first before running the rest of the initialization process
                 if (string.IsNullOrEmpty(settings.LeagueId) || string.IsNullOrEmpty(settings.Language_Parser) || string.IsNullOrEmpty(settings.Language_UI))

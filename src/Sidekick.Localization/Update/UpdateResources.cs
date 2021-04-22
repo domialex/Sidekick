@@ -11,9 +11,8 @@ namespace Sidekick.Localization.Update
             this.localizer = localizer;
         }
 
-        public string Available => localizer["Available"];
-        public string AvailableText(string version) => localizer["AvailableText", version];
         public string Downloaded => localizer["Downloaded"];
-        public string DownloadedText(string version) => localizer["DownloadedText", version];
+        public string Downloading(string version) => localizer["Downloading", version];
+        public string Failed => localizer["Failed"];
     }
 }

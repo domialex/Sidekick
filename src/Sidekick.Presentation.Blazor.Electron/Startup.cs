@@ -23,7 +23,6 @@ using Sidekick.Persistence;
 using Sidekick.Platform;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
-using Sidekick.Presentation.Blazor.Electron.Update;
 using Sidekick.Presentation.Blazor.Electron.Views;
 
 namespace Sidekick.Presentation.Blazor.Electron
@@ -74,7 +73,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                     Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
 
             services.AddSingleton<TrayProvider>();
-            services.AddSingleton<UpdateProvider>();
             services.AddSingleton<ViewLocator>();
             services.AddSingleton<IViewLocator>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>());
             services.AddScoped<IViewInstance, ViewInstance>();
@@ -88,7 +86,6 @@ namespace Sidekick.Presentation.Blazor.Electron
             IWebHostEnvironment env,
             IServiceProvider serviceProvider,
             TrayProvider trayProvider,
-            UpdateProvider updateProvider,
             IMediator mediator,
             ILogger<Startup> logger)
         {
@@ -125,9 +122,6 @@ namespace Sidekick.Presentation.Blazor.Electron
             {
                 try
                 {
-                    // Auto update
-                    await updateProvider.Initialize();
-
                     // Tray
                     trayProvider.Initialize();
 

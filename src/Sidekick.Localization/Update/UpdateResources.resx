@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Available" xml:space="preserve">
-    <value>Update Available!</value>
-  </data>
-  <data name="AvailableText" xml:space="preserve">
-    <value>Version {0} is being downloaded now. Once the download is complete. You can restart the application to get the update.</value>
-  </data>
   <data name="Downloaded" xml:space="preserve">
-    <value>Update Ready!</value>
+    <value>Update Ready! Starting installer.</value>
   </data>
-  <data name="DownloadedText" xml:space="preserve">
-    <value>Version {0} is ready to use. You can restart the application to use the update.</value>
+  <data name="Downloading" xml:space="preserve">
+    <value>Update Available! Version {0} is being downloaded now.</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value />
   </data>
 </root>
