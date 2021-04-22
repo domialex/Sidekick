@@ -22,18 +22,22 @@
 .header-double-rare ::deep .name,
 .header-double-rare ::deep .type,
 .header-double-unique ::deep .name,
-.header-double-unique ::deep .type {
+.header-double-unique ::deep .type,
+.header-double-relic ::deep .name,
+.header-double-relic ::deep .type {
   height: 27px;
   line-height: 23px;
   white-space: nowrap;
   text-overflow: ellipsis; }
 
 .header-double-rare ::deep .name,
-.header-double-unique ::deep .name {
+.header-double-unique ::deep .name,
+.header-double-relic ::deep .name {
   padding-top: 4px; }
 
 .header-double-rare ::deep .type,
-.header-double-unique ::deep .type {
+.header-double-unique ::deep .type,
+.header-double-relic ::deep .type {
   padding-bottom: 4px; }
 
 .header-currency {
@@ -41,6 +45,12 @@
 
 .header-gem {
   background: url("/images/items/header-gem-left.png") top left repeat-y, url("/images/items/header-gem-right.png") top right repeat-y, url("/images/items/header-gem-middle.png") top center repeat; }
+
+.header-relic {
+  background: url("/images/items/header-relic-left.png") top left repeat-y, url("/images/items/header-relic-right.png") top right repeat-y, url("/images/items/header-relic-middle.png") top center repeat; }
+
+.header-double-relic {
+  background: url("/images/items/header-double-relic-left.png") top left repeat-y, url("/images/items/header-double-relic-right.png") top right repeat-y, url("/images/items/header-double-relic-middle.png") top center repeat; }
 
 .header-double-rare {
   background: url("/images/items/header-double-rare-left.png") top left repeat-y, url("/images/items/header-double-rare-right.png") top right repeat-y, url("/images/items/header-double-rare-middle.png") top center repeat; }

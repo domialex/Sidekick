@@ -26,6 +26,15 @@
     {
         get
         {
+            if (Item.Properties.IsRelic)
+            {
+                if (string.IsNullOrEmpty(Item.Original.Name) || string.IsNullOrEmpty(Item.Original.Type))
+                {
+                    return "header-relic";
+                }
+                return "header-double-relic";
+            }
+
             switch (Item.Metadata.Rarity)
             {
                 case Rarity.Currency: return "header-currency";

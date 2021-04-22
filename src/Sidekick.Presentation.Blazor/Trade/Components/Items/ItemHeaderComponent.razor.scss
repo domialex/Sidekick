@@ -31,7 +31,8 @@
 }
 
 .header-double-rare,
-.header-double-unique {
+.header-double-unique,
+.header-double-relic {
     ::deep {
         .name,
         .type {
@@ -57,6 +58,14 @@
 
 .header-gem {
     background: url('/images/items/header-gem-left.png') top left repeat-y, url('/images/items/header-gem-right.png') top right repeat-y, url('/images/items/header-gem-middle.png') top center repeat;
+}
+
+.header-relic {
+    background: url('/images/items/header-relic-left.png') top left repeat-y, url('/images/items/header-relic-right.png') top right repeat-y, url('/images/items/header-relic-middle.png') top center repeat;
+}
+
+.header-double-relic {
+    background: url('/images/items/header-double-relic-left.png') top left repeat-y, url('/images/items/header-double-relic-right.png') top right repeat-y, url('/images/items/header-double-relic-middle.png') top center repeat;
 }
 
 .header-double-rare {
