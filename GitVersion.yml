@@ -2,7 +2,7 @@ next-version: 2.0
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{Major}.{Minor}.{Patch}'
-mode: ContinuousDelivery
+mode: Mainline
 increment: Inherit
 continuous-delivery-fallback-tag: ci
 tag-prefix: '[vV]'
@@ -18,16 +18,16 @@ commit-date-format: 'yyyy-MM-dd'
 branches:
   main:
     regex: ^master$|^main$
-    mode: ContinuousDelivery
     tag: ''
-    increment: Minor
+    increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
+    is-mainline: true
   release:
     regex: ^releases?[/-]
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     tag: beta
     increment: Patch
     prevent-increment-of-merged-branch-version: true
@@ -37,7 +37,7 @@ branches:
     pre-release-weight: 1000
   feature:
     regex: ^features?[/-]
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     tag: useBranchName
     increment: Inherit
     prevent-increment-of-merged-branch-version: false
@@ -46,7 +46,7 @@ branches:
     is-release-branch: false
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     tag: pr
     increment: Inherit
     prevent-increment-of-merged-branch-version: false
@@ -56,7 +56,7 @@ branches:
     is-release-branch: false
   hotfix:
     regex: ^hotfix(es)?[/-]
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     tag: beta
     increment: Patch
     prevent-increment-of-merged-branch-version: false
@@ -65,19 +65,10 @@ branches:
     is-release-branch: false
   support:
     regex: ^support[/-]
-    mode: ContinuousDelivery
+    mode: ContinuousDeployment
     tag: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: false
-  develop:
-    regex: ^dev(elop)?(ment)?$
-    mode: ContinuousDeployment
-    tag: alpha
-    increment: Minor
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: true
-    tracks-release-branches: true
     is-release-branch: false
