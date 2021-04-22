@@ -123,27 +123,6 @@ namespace Sidekick.Presentation.Blazor.Electron
             {
                 try
                 {
-                    // Auto Update
-                    // Comment to test auto updater count : 2
-                    try
-                    {
-                        ElectronNET.API.Electron.AutoUpdater.AutoDownload = true;
-                        ElectronNET.API.Electron.AutoUpdater.AutoInstallOnAppQuit = true;
-                        ElectronNET.API.Electron.AutoUpdater.OnUpdateAvailable += (info) =>
-                        {
-                            _ = mediator.Send(new OpenNotificationCommand("Version " + info.Version + " is being downloaded now. Once the download is complete. You can restart the application to get the update.", "Update Available!"));
-                        };
-                        ElectronNET.API.Electron.AutoUpdater.OnUpdateDownloaded += (info) =>
-                        {
-                            _ = mediator.Send(new OpenNotificationCommand("Version " + info.Version + " is ready to use. You can restart the application to use the update.", "Update Ready!"));
-                        };
-                        await ElectronNET.API.Electron.AutoUpdater.CheckForUpdatesAndNotifyAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError(e, "Could not update Sidekick.");
-                    }
-
                     // Tray
                     trayProvider.Initialize();
 

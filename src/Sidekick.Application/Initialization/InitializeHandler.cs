@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Game.Items.Parser.Patterns;
 using Sidekick.Core.Settings;
+using Sidekick.Domain.Apis.GitHub;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Items.Metadatas;
@@ -17,7 +18,6 @@ using Sidekick.Domain.Game.Leagues.Queries;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Domain.Initialization.Queries;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
@@ -99,13 +99,10 @@ namespace Sidekick.Application.Initialization
                 await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
 
                 // Check for updates
-                if (await mediator.Send(new IsNewVersionAvailableQuery()))
+                if (await mediator.Send(new CheckForUpdate(), cancellationToken))
                 {
-                    await mediator.Send(new OpenConfirmNotificationCommand(resources.UpdateAvailable, resources.UpdateTitle, async () =>
-                    {
-                        await mediator.Send(new OpenBrowserCommand(new Uri("https://github.com/domialex/Sidekick/releases")));
-                        await mediator.Send(new ShutdownCommand());
-                    }));
+                    viewLocator.Close(View.Initialization);
+                    return Unit.Value;
                 }
 
                 // Check to see if we should run Setup first before running the rest of the initialization process
