@@ -12,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
@@ -149,7 +148,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                     browserWindow.Close();
 
                     // Initialize Sidekick
-                    await mediator.Send(new InitializeCommand(true));
+                    await mediator.Send(new InitializeCommand(true, true));
                 }
                 catch (Exception e)
                 {

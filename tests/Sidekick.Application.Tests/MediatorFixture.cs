@@ -74,7 +74,7 @@ namespace Sidekick.Application.Tests
                 Language_UI = "en",
                 LeagueId = "Standard",
             }, true));
-            await Mediator.Send(new InitializeCommand(true));
+            await Mediator.Send(new InitializeCommand(true, false));
         }
     }
 }

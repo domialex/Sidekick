@@ -113,7 +113,7 @@ namespace Sidekick.Presentation.Blazor
                     Language_UI = "en",
                     LeagueId = "Ultimatum",
                 }, true));
-                await mediator.Send(new InitializeCommand(true));
+                await mediator.Send(new InitializeCommand(true, false));
             });
         }
     }
