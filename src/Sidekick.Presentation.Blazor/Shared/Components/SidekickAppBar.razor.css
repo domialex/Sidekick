@@ -22,8 +22,8 @@
         height: 100%;
         object-fit: contain;
         image-rendering: -webkit-optimize-contrast; }
-    ::deep .mud-appbar .mud-toolbar-appbar p {
-      margin-top: -8px; }
+    ::deep .mud-appbar .mud-toolbar-appbar h6 {
+      margin-top: -6px; }
     ::deep .mud-appbar .mud-toolbar-appbar button {
       -webkit-app-region: no-drag;
       margin: 0;
