@@ -99,7 +99,7 @@ namespace Sidekick.Application.Initialization
                 await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
 
                 // Check for updates
-                if (await mediator.Send(new CheckForUpdate(), cancellationToken))
+                if (request.AutoUpdate && await mediator.Send(new CheckForUpdate(), cancellationToken))
                 {
                     viewLocator.Close(View.Initialization);
                     return Unit.Value;
