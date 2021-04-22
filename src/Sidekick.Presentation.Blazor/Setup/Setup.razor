@@ -75,7 +75,7 @@
     public async Task Save()
     {
         await Mediator.Send(new SaveSettingsCommand(ViewModel, true));
-        await Mediator.Send(new InitializeCommand(true));
+        await Mediator.Send(new InitializeCommand(true, false));
     }
 
     public async Task OnGameLanguageChange(string value)

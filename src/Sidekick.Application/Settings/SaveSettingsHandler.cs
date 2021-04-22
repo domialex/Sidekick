@@ -97,7 +97,7 @@ namespace Sidekick.Application.Settings
             if (!request.SkipInitialize && (languageHasChanged || leagueHasChanged))
             {
                 await mediator.Send(new ClearCacheCommand());
-                await mediator.Send(new InitializeCommand(false));
+                await mediator.Send(new InitializeCommand(false, false));
             }
 
             return Unit.Value;

@@ -65,6 +65,6 @@
     public async Task ResetCache()
     {
         await Mediator.Send(new ClearCacheCommand());
-        await Mediator.Send(new InitializeCommand(false));
+        await Mediator.Send(new InitializeCommand(false, false));
     }
 }
