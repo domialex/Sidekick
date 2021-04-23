@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,6 +87,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             return () =>
             {
                 ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
+                Thread.Sleep(1);
 
                 var handler = serviceProvider.GetService<THandler>();
                 if (handler.IsValid())
@@ -119,6 +121,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             return () =>
             {
                 ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
+                Thread.Sleep(1);
 
                 var handler = serviceProvider.GetService<ChatKeybindHandler>();
                 if (handler.IsValid())
