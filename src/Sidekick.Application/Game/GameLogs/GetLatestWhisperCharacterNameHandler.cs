@@ -25,7 +25,7 @@ namespace Sidekick.Application.Game.GameLogs
         public Task<string> Handle(GetLatestWhisperCharacterNameQuery request, CancellationToken cancellationToken)
         {
             var clientLogFile = processProvider?.ClientLogPath;
-            if (clientLogFile == null || !processProvider.IsPathOfExileInFocus())
+            if (clientLogFile == null || !processProvider.IsPathOfExileInFocus)
             {
                 return Task.FromResult<string>(null);
             }

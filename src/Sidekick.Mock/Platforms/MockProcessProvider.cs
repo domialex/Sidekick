@@ -19,9 +19,7 @@ namespace Sidekick.Mock.Platforms
             return Task.CompletedTask;
         }
 
-        public bool IsPathOfExileInFocus()
-        {
-            return true;
-        }
+        public bool IsPathOfExileInFocus => true;
+        public bool IsSidekickInFocus => false;
     }
 }

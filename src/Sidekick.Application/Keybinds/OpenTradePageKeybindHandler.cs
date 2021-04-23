@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
@@ -7,38 +6,43 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade;
-using Sidekick.Domain.Game.Trade.Commands;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 
-namespace Sidekick.Application.Game.Trade
+namespace Sidekick.Application.Keybinds
 {
-    public class OpenTradePageHandler : ICommandHandler<OpenTradePageCommand, bool>
+    public class OpenTradePageKeybindHandler : IKeybindHandler
     {
         private readonly IClipboardProvider clipboardProvider;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IMediator mediator;
         private readonly ISidekickSettings settings;
+        private readonly IProcessProvider processProvider;
 
-        public OpenTradePageHandler(
+        public OpenTradePageKeybindHandler(
             IClipboardProvider clipboardProvider,
             IGameLanguageProvider gameLanguageProvider,
             ITradeSearchService tradeSearchService,
             IMediator mediator,
-            ISidekickSettings settings)
+            ISidekickSettings settings,
+            IProcessProvider processProvider)
         {
             this.clipboardProvider = clipboardProvider;
             this.gameLanguageProvider = gameLanguageProvider;
             this.tradeSearchService = tradeSearchService;
             this.mediator = mediator;
             this.settings = settings;
+            this.processProvider = processProvider;
         }
 
-        public async Task<bool> Handle(OpenTradePageCommand request, CancellationToken cancellationToken)
+        public bool IsValid() => processProvider.IsPathOfExileInFocus;
+
+        public async Task Execute()
         {
             var text = await clipboardProvider.Copy();
-            var item = await mediator.Send(new ParseItemCommand(text), cancellationToken);
+            var item = await mediator.Send(new ParseItemCommand(text));
 
             if (item != null)
             {
@@ -55,11 +59,8 @@ namespace Sidekick.Application.Game.Trade
                     id = result.Id;
                 }
 
-                await mediator.Send(new OpenBrowserCommand(new Uri($"{gameLanguageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{id}")), cancellationToken);
-                return true;
+                await mediator.Send(new OpenBrowserCommand(new Uri($"{gameLanguageProvider.Language.PoeTradeSearchBaseUrl}{settings.LeagueId}/{id}")));
             }
-
-            return false;
         }
     }
 }

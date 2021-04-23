@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Sidekick.Domain.App.Commands;
@@ -7,34 +6,39 @@ using Sidekick.Domain.Errors;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages.Commands;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Domain.Wikis;
-using Sidekick.Domain.Wikis.Commands;
 
-namespace Sidekick.Application.Wikis
+namespace Sidekick.Application.Keybinds
 {
-    public class OpenWikiPageHandler : ICommandHandler<OpenWikiPageCommand, bool>
+    public class OpenWikiPageKeybindHandler : IKeybindHandler
     {
         private readonly IClipboardProvider clipboardProvider;
         private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
         private readonly ISidekickSettings settings;
+        private readonly IProcessProvider processProvider;
 
-        public OpenWikiPageHandler(
+        public OpenWikiPageKeybindHandler(
             IClipboardProvider clipboardProvider,
             IMediator mediator,
             IViewLocator viewLocator,
-            ISidekickSettings settings)
+            ISidekickSettings settings,
+            IProcessProvider processProvider)
         {
             this.clipboardProvider = clipboardProvider;
             this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.settings = settings;
+            this.processProvider = processProvider;
         }
 
-        public async Task<bool> Handle(OpenWikiPageCommand request, CancellationToken cancellationToken)
+        public bool IsValid() => processProvider.IsPathOfExileInFocus;
+
+        public async Task Execute()
         {
             var text = await clipboardProvider.Copy();
             var item = await mediator.Send(new ParseItemCommand(text));
@@ -43,14 +47,14 @@ namespace Sidekick.Application.Wikis
             {
                 // If the item can't be parsed, show an error
                 await viewLocator.Open(View.Error, ErrorType.Unparsable);
-                return false;
+                return;
             }
 
             if (!await mediator.Send(new IsGameLanguageEnglishQuery()))
             {
                 // Only available for english language
                 await viewLocator.Open(View.Error, ErrorType.UnavailableTranslation);
-                return false;
+                return;
             }
 
             if (string.IsNullOrEmpty(item.Metadata.Name))
@@ -58,7 +62,7 @@ namespace Sidekick.Application.Wikis
                 // Most items will open the basetype wiki link.
                 // Does not work for unique items that are not identified.
                 await viewLocator.Open(View.Error, ErrorType.InvalidItem);
-                return false;
+                return;
             }
 
             if (settings.Wiki_Preferred == WikiSetting.PoeDb)
@@ -69,8 +73,6 @@ namespace Sidekick.Application.Wikis
             {
                 await OpenPoeWiki(item);
             }
-
-            return true;
         }
 
         #region PoeDb

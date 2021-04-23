@@ -1,32 +1,32 @@
-using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Maps.Commands;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 
-namespace Sidekick.Application.Game.Maps
+namespace Sidekick.Application.Keybinds
 {
-    public class OpenMapInfoHandler : ICommandHandler<OpenMapInfoCommand, bool>
+    public class OpenMapInfoKeybindHandler : IKeybindHandler
     {
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
+        private readonly IProcessProvider processProvider;
 
-        public OpenMapInfoHandler(
+        public OpenMapInfoKeybindHandler(
             IViewLocator viewLocator,
-            IClipboardProvider clipboardProvider)
+            IClipboardProvider clipboardProvider,
+            IProcessProvider processProvider)
         {
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
+            this.processProvider = processProvider;
         }
 
-        public async Task<bool> Handle(OpenMapInfoCommand request, CancellationToken cancellationToken)
+        public bool IsValid() => processProvider.IsPathOfExileInFocus;
+
+        public async Task Execute()
         {
             var itemText = await clipboardProvider.Copy();
-
             await viewLocator.Open(View.Map, itemText);
-
-            return true;
         }
     }
 }
