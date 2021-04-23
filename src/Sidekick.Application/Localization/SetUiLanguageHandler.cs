@@ -28,8 +28,8 @@ namespace Sidekick.Application.Localization
 
             if (!string.IsNullOrEmpty(name))
             {
-                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(request.Name);
-                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(request.Name);
+                CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(request.Name);
+                CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo(request.Name);
             }
 
             return Unit.Value;
