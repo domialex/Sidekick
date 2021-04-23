@@ -41,5 +41,7 @@ namespace Sidekick.Domain.Game.Items.Models
         public double ElementalDps { get; set; }
 
         public double PhysicalDps { get; set; }
+
+        public bool IsRelic { get; set; }
     }
 }

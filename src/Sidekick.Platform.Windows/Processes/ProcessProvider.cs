@@ -142,7 +142,6 @@ namespace Sidekick.Platform.Windows.Processes
                     {
                         using var p = new Process();
                         p.StartInfo.FileName = "Sidekick.exe";
-                        // p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
                         p.StartInfo.UseShellExecute = true;
                         p.StartInfo.Verb = "runas";
                         p.Start();
@@ -207,7 +206,7 @@ namespace Sidekick.Platform.Windows.Processes
 
         public void Dispose()
         {
-            WindowsHook.Cancel();
+            WindowsHook?.Cancel();
         }
     }
 }

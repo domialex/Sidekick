@@ -45,7 +45,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
         {
             Unregister();
 
-            RegisterKeybind<CloseOverlayKeybindHandler>("Esc");
+            if (settings.EscapeClosesOverlays)
+            {
+                RegisterKeybind<CloseOverlayKeybindHandler>("Esc");
+            }
+
             RegisterKeybind<CloseOverlayKeybindHandler>(settings.Key_Close);
             RegisterKeybind<FindItemKeybindHandler>(settings.Key_FindItems);
             RegisterKeybind<OpenSettingsKeybindHandler>(settings.Key_OpenSettings);

@@ -7,6 +7,9 @@
     <Version>2.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
@@ -14,7 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="2.0.0" />
-    <PackageReference Include="CssBuilder" Version="0.1.8" />
+    <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -31,5 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\images\influences\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 </Project>

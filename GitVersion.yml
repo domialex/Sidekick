@@ -3,8 +3,6 @@ assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{Major}.{Minor}.{Patch}'
 mode: Mainline
-increment: Inherit
-continuous-delivery-fallback-tag: ci
 tag-prefix: '[vV]'
 major-version-bump-message: '\+semver:\s?(breaking|major)'
 minor-version-bump-message: '\+semver:\s?(feature|minor)'
@@ -20,55 +18,18 @@ branches:
     regex: ^master$|^main$
     tag: ''
     increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
+    is-source-branch-for: ['feature', 'pull-request', 'hotfix']
     is-mainline: true
-  release:
-    regex: ^releases?[/-]
-    mode: ContinuousDeployment
-    tag: beta
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: true
-    pre-release-weight: 1000
   feature:
     regex: ^features?[/-]
-    mode: ContinuousDeployment
     tag: useBranchName
-    increment: Inherit
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
+    increment: Minor
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
-    mode: ContinuousDeployment
     tag: pr
-    increment: Inherit
-    prevent-increment-of-merged-branch-version: false
+    increment: Minor
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
   hotfix:
     regex: ^hotfix(es)?[/-]
-    mode: ContinuousDeployment
     tag: beta
     increment: Patch
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
-  support:
-    regex: ^support[/-]
-    mode: ContinuousDeployment
-    tag: ''
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
