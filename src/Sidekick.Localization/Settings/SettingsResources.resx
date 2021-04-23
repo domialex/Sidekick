@@ -291,4 +291,7 @@
   <data name="Wiki_Preferred" xml:space="preserve">
     <value>Preferred Wiki</value>
   </data>
+  <data name="EscapeClosesOverlays" xml:space="preserve">
+    <value>Close Overlay with Escape</value>
+  </data>
 </root>

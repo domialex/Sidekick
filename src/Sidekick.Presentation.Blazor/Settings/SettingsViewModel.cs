@@ -47,6 +47,8 @@ namespace Sidekick.Presentation.Blazor.Settings
 
         public string Key_Close { get; set; }
 
+        public bool EscapeClosesOverlays { get; set; }
+
         public string Chat_Key_Exit { get; set; }
 
         public string Key_FindItems { get; set; }

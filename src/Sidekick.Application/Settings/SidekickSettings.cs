@@ -39,6 +39,8 @@ namespace Sidekick.Application.Settings
 
         public string Key_Close { get; set; } = "Space";
 
+        public bool EscapeClosesOverlays { get; set; } = true;
+
         public string Trade_Key_Check { get; set; } = "Ctrl+D";
 
         public string Map_Key_Check { get; set; } = "Ctrl+X";
