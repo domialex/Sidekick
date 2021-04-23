@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Domain.Game.Items.Models

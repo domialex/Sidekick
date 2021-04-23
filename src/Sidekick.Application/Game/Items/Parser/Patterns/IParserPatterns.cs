@@ -35,5 +35,6 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
         Regex Socket { get; }
         Regex Unidentified { get; }
         Regex Warlord { get; }
+        Dictionary<Class, Regex> Classes { get; }
     }
 }

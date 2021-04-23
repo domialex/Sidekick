@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Items.Metadatas;
-using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Modifiers;

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Sidekick.Domain.Game.Items.Metadatas.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Domain.Game.Items.Metadatas
 {
@@ -7,6 +7,5 @@ namespace Sidekick.Domain.Game.Items.Metadatas
     {
         Task Initialize();
         ItemMetadata Parse(ParsingItem parsingItem);
-
     }
 }

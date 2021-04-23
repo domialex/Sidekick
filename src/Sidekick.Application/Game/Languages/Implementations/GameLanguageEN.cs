@@ -45,10 +45,57 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemQuantity => "Item Quantity";
         public string DescriptionItemRarity => "Item Rarity";
         public string DescriptionMonsterPackSize => "Monster Pack Size";
+
         public string PrefixBlighted => "Blighted";
-        
         public string PrefixAnomalous => "Anomalous";
         public string PrefixDivergent => "Divergent";
         public string PrefixPhantasmal => "Phantasmal";
+
+        public ClassLanguage Classes { get; } = new ClassLanguage()
+        {
+            Prefix = "Item Class: ",
+            DivinationCard = "Divination Card",
+            StackableCurrency = "Stackable Currency",
+            Jewel = "Jewel",
+            DelveStackableSocketableCurrency = "Delve Stackable Socketable Currency",
+            MetamorphSample = "Metamorph Sample",
+            HeistTool = "Heist Tool",
+            Amulet = "Amulet",
+            Ring = "Ring",
+            Belt = "Belt",
+            Gloves = "Gloves",
+            Boots = "Boots",
+            BodyArmours = "Body Armours",
+            Helmets = "Helmets",
+            Shields = "Shields",
+            Quivers = "Quivers",
+            LifeFlasks = "Life Flasks",
+            ManaFlasks = "Mana Flasks",
+            HybridFlasks = "Hybrid Flasks",
+            UtilityFlasks = "Utility Flasks",
+            CriticalUtilityFlasks = "Critical Utility Flasks",
+            ActiveSkillGems = "Active Skill Gems",
+            SupportSkillGems = "Support Skill Gems",
+            Maps = "Maps",
+            MapFragments = "Map Fragments",
+            Contract = "Contract",
+            Blueprint = "Blueprint",
+            MiscMapItems = "Misc Map Items",
+            Claws = "Claws",
+            Daggers = "Daggers",
+            Wands = "Wands",
+            OneHandSwords = "One Hand Swords",
+            ThrustingOneHandSwords = "Thrusting One Hand Swords",
+            OneHandAxes = "One Hand Axes",
+            OneHandMaces = "One Hand Maces",
+            Bows = "Bows",
+            Staves = "Staves",
+            TwoHandSwords = "Two Hand Swords",
+            TwoHandAxes = "Two Hand Axes",
+            TwoHandMaces = "Two Hand Maces",
+            Sceptres = "Sceptres",
+            RuneDaggers = "Rune Daggers",
+            Warstaves = "Warstaves",
+        };
     }
 }
