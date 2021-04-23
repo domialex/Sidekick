@@ -114,7 +114,7 @@ jobs:
         tag_name: v${{ steps.gitversion.outputs.fullSemVer }}
         draft: true
         verbose: true
-        overwrite: true
+        overwrite: false
 
     # Main release
     - name: Main Release - Notes
@@ -134,4 +134,4 @@ jobs:
         tag_name: v${{ steps.gitversion.outputs.majorMinorPatch }}
         draft: true
         verbose: true
-        overwrite: true
+        overwrite: false
