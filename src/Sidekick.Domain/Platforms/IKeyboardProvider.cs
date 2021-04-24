@@ -18,10 +18,10 @@ namespace Sidekick.Domain.Platforms
         event Action<string> OnKeyDown;
 
         /// <summary>
-        /// Gets the state of the Ctrl key.
+        /// Indicates if the input includes a modifer (Ctrl, Alt, Shift) key pressed.
         /// </summary>
-        /// <returns>If it is pressed, returns true.</returns>
-        bool IsCtrlPressed();
+        /// <returns>If a modifier is in the input, returns true.</returns>
+        bool IncludesModifier(string input);
 
         /// <summary>
         /// Command to send keystrokes to the system

@@ -13,6 +13,7 @@ namespace Sidekick.Domain.Platforms
         event Action OnFocus;
         event Action OnBlur;
 
-        bool IsPathOfExileInFocus();
+        bool IsPathOfExileInFocus { get; }
+        bool IsSidekickInFocus { get; }
     }
 }

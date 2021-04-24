@@ -1,17 +1,13 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Cheatsheets.Commands;
-using Sidekick.Domain.Game.Chat.Commands;
-using Sidekick.Domain.Game.Maps.Commands;
-using Sidekick.Domain.Game.Shortcuts.Commands;
-using Sidekick.Domain.Game.Stashes.Commands;
-using Sidekick.Domain.Game.Trade.Commands;
+using Sidekick.Application.Keybinds;
+using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings;
-using Sidekick.Domain.Settings.Commands;
-using Sidekick.Domain.Views.Commands;
-using Sidekick.Domain.Wikis.Commands;
 
 namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 {
@@ -22,19 +18,22 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
         private readonly ISidekickSettings settings;
         private readonly IKeyboardProvider keyboardProvider;
         private readonly IProcessProvider processProvider;
+        private readonly IServiceProvider serviceProvider;
 
         public KeybindProvider(
             IMediator mediator,
             ILogger<KeybindProvider> logger,
             ISidekickSettings settings,
             IKeyboardProvider keyboardProvider,
-            IProcessProvider processProvider)
+            IProcessProvider processProvider,
+            IServiceProvider serviceProvider)
         {
             this.mediator = mediator;
             this.logger = logger;
             this.settings = settings;
             this.keyboardProvider = keyboardProvider;
             this.processProvider = processProvider;
+            this.serviceProvider = serviceProvider;
         }
 
         public void Initialize()
@@ -49,19 +48,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 
             if (settings.EscapeClosesOverlays)
             {
-                RegisterKeybind<CloseOverlayCommand>("Esc");
+                RegisterKeybind<CloseOverlayKeybindHandler>("Esc");
             }
 
-            RegisterKeybind<CloseOverlayCommand>(settings.Key_Close);
-            RegisterKeybind<FindItemCommand>(settings.Key_FindItems);
-            RegisterKeybind<OpenSettingsCommand>(settings.Key_OpenSettings);
-            RegisterKeybind<OpenCheatsheetsCommand>(settings.Cheatsheets_Key_Open);
-            RegisterKeybind<OpenMapInfoCommand>(settings.Map_Key_Check);
-            RegisterKeybind<PriceCheckItemCommand>(settings.Trade_Key_Check);
-            RegisterKeybind<OpenTradePageCommand>(settings.Trade_Key_OpenSearch);
-            RegisterKeybind<OpenWikiPageCommand>(settings.Wiki_Key_Open);
-            RegisterKeybind<ScrollStashUpCommand>(settings.Stash_Key_Left);
-            RegisterKeybind<ScrollStashDownCommand>(settings.Stash_Key_Right);
+            RegisterKeybind<CloseOverlayKeybindHandler>(settings.Key_Close);
+            RegisterKeybind<FindItemKeybindHandler>(settings.Key_FindItems);
+            RegisterKeybind<OpenSettingsKeybindHandler>(settings.Key_OpenSettings);
+            RegisterKeybind<OpenCheatsheetsKeybindHandler>(settings.Cheatsheets_Key_Open);
+            RegisterKeybind<OpenMapInfoKeybindHandler>(settings.Map_Key_Check);
+            RegisterKeybind<PriceCheckItemKeybindHandler>(settings.Trade_Key_Check);
+            RegisterKeybind<OpenTradePageKeybindHandler>(settings.Trade_Key_OpenSearch);
+            RegisterKeybind<OpenWikiPageKeybindHandler>(settings.Wiki_Key_Open);
+            RegisterKeybind<ScrollStashUpKeybindHandler>(settings.Stash_Key_Left);
+            RegisterKeybind<ScrollStashDownKeybindHandler>(settings.Stash_Key_Right);
 
             foreach (var chat in settings.Chat_Commands)
             {
@@ -71,29 +70,40 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             logger.LogDebug("[Keybind] Registered keybinds");
         }
 
-        private Action GetAction(string accelerator, string key, Func<ICommand<bool>> keybind)
-        {
-            return async () =>
-            {
-                ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
-                var handled = await mediator.Send(keybind.Invoke());
-                if (!handled)
-                {
-                    keyboardProvider.PressKey(key);
-                }
-                ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, key, keybind));
-            };
-        }
-
-        private void RegisterKeybind<TCommand>(string keybind)
-            where TCommand : ICommand<bool>, new()
+        private void RegisterKeybind<THandler>(string keybind)
+            where THandler : IKeybindHandler
         {
             if (string.IsNullOrEmpty(keybind)) return;
 
             var accelerator = keyboardProvider.ToElectronAccelerator(keybind);
             if (string.IsNullOrEmpty(accelerator)) return;
 
-            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, keybind, () => new TCommand()));
+            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetKeybindAction<THandler>(accelerator, keybind));
+        }
+
+        private Action GetKeybindAction<THandler>(string accelerator, string key)
+            where THandler : IKeybindHandler
+        {
+            return () =>
+            {
+                ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
+                Thread.Sleep(1);
+
+                var handler = serviceProvider.GetService<THandler>();
+                if (handler.IsValid())
+                {
+                    Task.Run(async () =>
+                    {
+                        await handler.Execute();
+                        ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetKeybindAction<THandler>(accelerator, key));
+                    });
+                }
+                else
+                {
+                    keyboardProvider.PressKey(key);
+                    ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetKeybindAction<THandler>(accelerator, key));
+                }
+            };
         }
 
         private void RegisterChatKeybind(ChatSetting chat)
@@ -103,7 +113,28 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
             var accelerator = keyboardProvider.ToElectronAccelerator(chat.Key);
             if (string.IsNullOrEmpty(accelerator)) return;
 
-            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetAction(accelerator, chat.Key, () => new ChatCommand(chat.Command, chat.Submit)));
+            ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetChatKeybindAction(accelerator, chat));
+        }
+
+        private Action GetChatKeybindAction(string accelerator, ChatSetting chat)
+        {
+            return () =>
+            {
+                ElectronNET.API.Electron.GlobalShortcut.Unregister(accelerator);
+                Thread.Sleep(1);
+
+                var handler = serviceProvider.GetService<ChatKeybindHandler>();
+                if (handler.IsValid())
+                {
+                    Task.Run(() => handler.Execute(chat.Command, chat.Submit));
+                }
+                else
+                {
+                    keyboardProvider.PressKey(chat.Key);
+                }
+
+                ElectronNET.API.Electron.GlobalShortcut.Register(accelerator, GetChatKeybindAction(accelerator, chat));
+            };
         }
 
         public void Unregister()

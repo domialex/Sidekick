@@ -1,9 +1,0 @@
-branches:
-  release:
-    mode: ContinuousDeployment
-    tag: rc
-  develop:
-    mode: ContinuousDeployment
-    tag: beta
-    source-branches: ['master']
-    tracks-release-branches: false
