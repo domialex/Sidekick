@@ -1,0 +1,45 @@
+@page "/"
+
+<SidekickLogo />
+<MudGrid Class="mt-6">
+    <MudItem md="8" xs="12">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    Items
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTextField T="string" Lines="15" Variant="Variant.Filled" Label="Item Text" @bind-Value="ItemText" />
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="PriceCheck">Check Prices</MudButton>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="MapCheck">Check Dangerous Mods</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+    <MudItem md="4" xs="12">
+        <HomeButton Color="Color.Success" Icon="@Icons.Material.Filled.StickyNote2" Label="Cheatsheets" Link="/cheatsheets" />
+        <HomeButton Color="Color.Info" Icon="@Icons.Material.Filled.Settings" Label="Settings" Link="/settings" />
+        <HomeButton Color="Color.Secondary" Icon="@Icons.Material.Filled.Info" Label="About" Link="/about" />
+        <HomeButton Color="Color.Tertiary" Icon="@Icons.Material.Filled.BugReport" Label="Development" Link="/development" />
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Inject] private Sidekick.Domain.Platforms.IClipboardProvider ClipboardProvider { get; set; }
+    [Inject] private Sidekick.Domain.Views.IViewLocator ViewLocator { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    private string ItemText { get; set; }
+
+    private void PriceCheck()
+    {
+        NavigationManager.NavigateTo($"/price/{ItemText.EncodeBase64Url()}");
+    }
+
+    private void MapCheck()
+    {
+        NavigationManager.NavigateTo($"/map/{ItemText.EncodeBase64Url()}");
+    }
+}

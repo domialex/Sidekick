@@ -1,68 +1,75 @@
-# ![Sidekick logo](https://i.imgur.com/1B5jR3D.png) Sidekick
+# [![](./docs/assets/images/orb_exalted.png)](#) Sidekick 2
+[![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/downloads/domialex/Sidekick/total?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/downloads-pre/domialex/Sidekick/latest/total?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
 
-A Path of Exile helper that shows item prices using the **official** [Path of Exile Trade API](https://www.pathofexile.com/trade) instead of [poe.trade](http://poe.trade).
+A Path of Exile companion tool.
 
-![Sidekick preview image](https://i.imgur.com/KWaasdg.png)
+## Installation and Usage
+1. [Download Sidekick](https://github.com/domialex/Sidekick/releases)
+2. Run Sidekick-Setup.exe
+3. Optionnally, you may get a security warning when running this software. You may have to add a security exception to run this software. Our code is open source and there is no malware included with this program.
+4. You cannot run Path of Exile in Fullscreen mode to use this tool. We recommend using "Windowed Fullscreen".
+5. Enjoy! Report issues or suggestions in our Discord or create an issue here.
 
-## Demo videos
-**[Item price check](https://streamable.com/raz6q)**
+## Features
+### Trade
+#### Default Binding: Ctrl + D
+Opens a trade view from the official Path of Exile trade API. You can compare and preview items by clicking on any result. For rare items, a price prediction from poeprices.info is shown. For unique items, prices from poe.ninja are used.
+| Trade | Minimized |
+|---|---|
+| ![](./docs/assets/images/trade_maximized.png) | ![](./docs/assets/images/trade_minimized.png) |
 
-**[Currency price check](https://streamable.com/y0x6k)**
+### Cheatsheets
+#### Default Binding: F6
+Opens a view with useful common information about different mechanics of the game.
 
-## Description
+| Heist | Betrayal | Incursion | Blight |
+|---|---|---|---|
+| ![](./docs/assets/images/cheatsheets_heist.png) | ![](./docs/assets/images/cheatsheets_betrayal.png) | ![](./docs/assets/images/cheatsheets_incursion.png) | ![](./docs/assets/images/cheatsheets_blight.png) |
 
-If you used [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro), it's the same idea.
+### Map Information
+#### Default Binding: Ctrl + X
+Checks the modifiers on a map or contract for mods that are dangerous (configurable).
 
-Sidekick should be able to price check a lot of items now, the idea is to eventually be able to modify your search on-the-fly and configure which attributes are selected by default depending on the item type.
+| Safe Map | Unsafe Map |
+|---|---|
+| ![](./docs/assets/images/map_safe.png) | ![](./docs/assets/images/map_unsafe.png) |
 
-**Enjoy!**
+### Chat Commands
+| Name | Default Binding | Description |
+|---|---|---|
+| Go to Hideout | F5 | Quickly go to your hideout. Writes the following chat command: `/hideout` |
+| Leave Party | F4 | Quickly leave a party. You must have set your character name in the settings first. Writes the following chat command: `/kick {settings.Character_Name}` |
+| Reply to Latest Whisper | Ctrl + Shift + R | Reply to the last whisper received. Starts writing the following chat command: `@{characterName}` |
+| Exit to Character Selection | F9 | Exit to the character selection screen. Writes the following chat command: `/exit` |
 
-## Warning
-This is a **BETA**, it will probably break in some cases, if it does, don't hesitate to [create an issue](https://github.com/domialex/Sidekick/issues).
+### Other Features
+| Name | Default Binding | Description |
+|---|---|---|
+| Open Wiki | Alt + W | Open the wiki for the item currently under your mouse. |
+| Find Items | Ctrl + F | Search an item in your stash or passive tree. |
+| Open Search | Alt + Q | Open the official trade website using the item under your mouse. |
 
-**[Remember to choose your league with the league selector](https://i.imgur.com/7uFb7NF.png).**
+## Uninstallation
+You may uninstall Sidekick by using Windows Settings => Apps & features. Alternatively, you can run `Uninstall Sidekick.exe` in the installation folder. The default directory where the app is installed is `%APPDATA%/Local/Programs/sidekick`.
 
-All help is very welcomed.
+## Development [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
+We accept most PR and ideas. If you want a feature included, create an issue and we will discuss it.
 
-## Installation
-1. [Install .NET Framework 4.8](http://go.microsoft.com/fwlink/?LinkId=2085155).
-2. Download [Sidekick](https://github.com/domialex/Sidekick/releases/download/v0.3.0-beta/Sidekick.v0.3.0.Beta.zip) and extract anywhere on your computer.
-3. Run and enjoy.
-
-## Usage
-1. Run **Sidekick.exe**.
-2. Select your [current league](https://i.imgur.com/7uFb7NF.png)
-3. Put **Path of Exile** in **Windowed** or **Windowed Fullscreen** mode for better results.
-4. In **Path of Exile**, hover an item and press **Ctrl+D**.
-5. To close the overlay, press **Escape**.
-
-### Hotkeys
-- **Ctrl+D** to price check an item
-- **Escape** to close overlay
-- **Ctrl+Scroll wheel** navigates your **stash tabs**
-- **F5** goes to your **hideout**
-- **Alt+W** - Open the Wiki page for an item (only English version of Path of Exile)
-- **Shift+Z twice** will close Sidekick
-
-*All hotkeys will be configurable in the future.*
-
-## Roadmap
-1. Parse all items
-2. Support [poe.ninja](https://poe.ninja)
-3. Support [poeprices.info](https://www.poeprices.info)
-4. Settings page
-   - Change hotkeys
-   - Default attributes to price check
-5. Results pagination
+We are also available on [Discord](https://discord.gg/H4bg4GQ).
 
 ## Thanks
+Community
 - [Contributors](https://github.com/domialex/Sidekick/graphs/contributors)
-- [WindowsHook](https://github.com/topstarai/WindowsHook) - Keyboard and mouse hooks
+- [Path of Exile Trade](https://www.pathofexile.com/trade)
+- [poe.ninja](https://poe.ninja/)
+- [poeprices.info](https://www.poeprices.info/)
 - [POE-TradeMacro](https://github.com/PoE-TradeMacro/POE-TradeMacro) - Original idea
 
-## Donations
-I've been receiving messages from people who expressed interest in supporting the project with donations.
-
-Please know that I will work on this project because I enjoy it! There is no need to donate 😋.
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/domialex)
+Technology
+- [MudBlazor](https://mudblazor.com/)
+- [FluentAssertions](https://fluentassertions.com)
+- [Electron](https://www.electronjs.org/)
+- [Electron.NET](https://github.com/ElectronNET/Electron.NET/)
+- [NeatInput](https://github.com/LegendaryB/NeatInput)
+- [GregsStack.InputSimulatorStandard](https://github.com/GregsStack/InputSimulatorStandard)
+- [TextCopy](https://github.com/CopyText/TextCopy)

@@ -1,0 +1,37 @@
+@page "/cheatsheets/betrayal"
+@layout CheatsheetLayout
+
+<UltimatumAlert />
+<MudGrid Class="justify-end mb-1" Spacing="1">
+    <MudItem xs="12" sm="6" md="4" lg="3">
+        <AgentSort SortChanged="SortChanged" />
+    </MudItem>
+</MudGrid>
+<MudGrid Spacing="1">
+    @foreach (var agent in ViewModel.Agents)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Agent Model="agent" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private BetrayalLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(Resources.Betrayal);
+        ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
+        await base.OnInitializedAsync();
+    }
+
+    public async Task SortChanged()
+    {
+        ViewModel = await Mediator.Send(new GetBetrayalCheatsheetQuery());
+    }
+}

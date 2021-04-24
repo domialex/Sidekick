@@ -1,0 +1,41 @@
+@page "/settings/chat"
+@layout SettingsLayout
+@using Sidekick.Domain.Settings
+@using Sidekick.Presentation.Blazor.Settings.Components
+
+@foreach (var chatSetting in ViewModel.Chat_Commands)
+{
+    <ChatCommandEditor ChatSetting="chatSetting"
+                       OnRemove="() => Remove(chatSetting)" />
+}
+
+<MudText Typo="Typo.h5" Class="mb-2">@Resources.Chat_Commands</MudText>
+<MudText>@Resources.Chat_Commands_Hideout</MudText>
+<MudText>@Resources.Chat_Commands_Exit</MudText>
+
+<MudText Typo="Typo.h5" Class="mt-4 mb-2">@Resources.Chat_Wildcard</MudText>
+<MudText>@Resources.Chat_Wildcard_Me_CharacterName</MudText>
+<MudText>@Resources.Chat_Wildcard_LastWhisper_CharacterName</MudText>
+
+<div class="d-flex flex-row-reverse mt-4">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Secondary"
+               OnClick="Add">
+        @Resources.Chat_Add
+    </MudButton>
+</div>
+
+@code {
+    [Inject] private SettingsResources Resources { get; set; }
+    [Inject] private SettingsViewModel ViewModel { get; set; }
+
+    private void Remove(ChatSetting chatSetting)
+    {
+        ViewModel.Chat_Commands.Remove(chatSetting);
+    }
+
+    private void Add()
+    {
+        ViewModel.Chat_Commands.Add(new ChatSetting("", "", true));
+    }
+}

@@ -1,0 +1,41 @@
+@using Sidekick.Domain.Game.Items.Models;
+
+<div class="sockets-wrapper">
+    <div class="sockets @WidthClass narrow">
+        @{
+            var previousGroup = -1;
+            bool isLink;
+        }
+        @foreach (var socket in Item.Sockets.OrderBy(x => x.Group).Select((x, index) => new { Colour = x.Colour, Group = x.Group, Index = index }))
+        {
+            isLink = previousGroup != -1 && previousGroup == socket.Group;
+
+            switch (socket.Colour)
+            {
+                case SocketColour.Red:
+                    <div class="socket socket-red @(isLink ? "link" : "")"></div>
+                    break;
+                case SocketColour.Green:
+                    <div class="socket socket-green @(isLink ? "link" : "")"></div>
+                    break;
+                case SocketColour.Blue:
+                    <div class="socket socket-blue @(isLink ? "link" : "")"></div>
+                    break;
+                case SocketColour.White:
+                    <div class="socket socket-white @(isLink ? "link" : "")"></div>
+                    break;
+                case SocketColour.Abyss:
+                    <div class="socket socket-abyss @(isLink ? "link" : "")"></div>
+                    break;
+            }
+
+            previousGroup = socket.Group;
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public TradeItem Item { get; set; }
+
+    private string WidthClass => Item.Width == 1 ? "narrow" : "wide";
+}

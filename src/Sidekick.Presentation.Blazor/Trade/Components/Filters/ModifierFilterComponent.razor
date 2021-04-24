@@ -1,0 +1,23 @@
+
+<div>
+    <MudCheckBox @bind-Checked="Filter.Enabled" Color="Color.Primary" Label="@Filter.Modifier.Text" Class="font-smallcaps" />
+    @if (Expanded)
+    {
+        <div class="pl-12 d-flex flex-row justify-start align-center">
+            <div style="max-width: 100px;">
+                <MudTextField @bind-Value="Filter.Min" Label="@Resources.Filters_Min" Variant="Variant.Filled" Margin="Margin.Dense" />
+            </div>
+            <div class="ml-2" style="max-width: 100px;">
+                <MudTextField @bind-Value="Filter.Max" Label="@Resources.Filters_Max" Variant="Variant.Filled" Margin="Margin.Dense" />
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Inject] public TradeResources Resources { get; set; }
+
+    [Parameter] public ModifierFilter Filter { get; set; }
+
+    private bool Expanded => Filter.Enabled && Filter.Modifier.OptionValue == null && Filter.Modifier.Values.Count > 0;
+}

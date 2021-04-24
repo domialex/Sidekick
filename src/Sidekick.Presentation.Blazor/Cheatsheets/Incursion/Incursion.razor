@@ -1,0 +1,32 @@
+@page "/cheatsheets/incursion"
+@layout CheatsheetLayout
+
+<UltimatumAlert />
+<MudGrid Spacing="1">
+    @foreach (var room in ViewModel.Rooms)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Room Model="room" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private IncursionLeague ViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(Resources.Incursion);
+        ViewModel = await Mediator.Send(new GetIncursionCheatsheetQuery());
+        await base.OnInitializedAsync();
+    }
+
+    public async Task SortChanged()
+    {
+        ViewModel = await Mediator.Send(new GetIncursionCheatsheetQuery());
+    }
+}

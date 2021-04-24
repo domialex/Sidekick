@@ -1,0 +1,12 @@
+
+@if (Filters != null && Filters.Count > 0)
+{
+    foreach (var filter in Filters)
+    {
+        <ModifierFilterComponent Filter="filter" />
+    }
+}
+
+@code {
+    [Parameter] public List<ModifierFilter> Filters { get; set; }
+}

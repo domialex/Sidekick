@@ -1,0 +1,134 @@
+name: Sidekick Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      ASPNETCORE_ENVIRONMENT: Production
+    steps:
+    - name: Git - Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: GitVersion - Install
+      uses: gittools/actions/gitversion/setup@v0.9.9
+      with:
+        versionSpec: '5.x'
+    - name: GitVersion - Execute
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.9
+      with:
+        useConfigFile: true
+        additionalArguments: '/updateprojectfiles'
+    - name: GitVersion - Output
+      run: |
+        echo "Major: ${{ steps.gitversion.outputs.major }}"
+        echo "Minor: ${{ steps.gitversion.outputs.minor }}"
+        echo "Patch: ${{ steps.gitversion.outputs.patch }}"
+        echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
+        echo "PreReleaseTagWithDash: ${{ steps.gitversion.outputs.preReleaseTagWithDash }}"
+        echo "PreReleaseLabel: ${{ steps.gitversion.outputs.preReleaseLabel }}"
+        echo "PreReleaseNumber: ${{ steps.gitversion.outputs.preReleaseNumber }}"
+        echo "WeightedPreReleaseNumber: ${{ steps.gitversion.outputs.weightedPreReleaseNumber }}"
+        echo "BuildMetaData: ${{ steps.gitversion.outputs.buildMetaData }}"
+        echo "BuildMetaDataPadded: ${{ steps.gitversion.outputs.buildMetaDataPadded }}"
+        echo "FullBuildMetaData: ${{ steps.gitversion.outputs.fullBuildMetaData }}"
+        echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+        echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+        echo "LegacySemVer: ${{ steps.gitversion.outputs.legacySemVer }}"
+        echo "LegacySemVerPadded: ${{ steps.gitversion.outputs.legacySemVerPadded }}"
+        echo "AssemblySemVer: ${{ steps.gitversion.outputs.assemblySemVer }}"
+        echo "AssemblySemFileVer: ${{ steps.gitversion.outputs.assemblySemFileVer }}"
+        echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+        echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
+        echo "BranchName: ${{ steps.gitversion.outputs.branchName }}"
+        echo "EscapedBranchName: ${{ steps.gitversion.outputs.escapedBranchName }}"
+        echo "Sha: ${{ steps.gitversion.outputs.sha }}"
+        echo "ShortSha: ${{ steps.gitversion.outputs.shortSha }}"
+        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        echo "NuGetVersion: ${{ steps.gitversion.outputs.nuGetVersion }}"
+        echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.nuGetPreReleaseTagV2 }}"
+        echo "NuGetPreReleaseTag: ${{ steps.gitversion.outputs.nuGetPreReleaseTag }}"
+        echo "VersionSourceSha: ${{ steps.gitversion.outputs.versionSourceSha }}"
+        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.commitsSinceVersionSource }}"
+        echo "CommitsSinceVersionSourcePadded: ${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
+        echo "UncommittedChanges: ${{ steps.gitversion.outputs.uncommittedChanges }}"
+        echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
+    - name: Environment - Build Number
+      uses: myci-actions/export-env-var@1
+      with:
+        name: BUILD_NUMBER
+        value: ${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Environment - Github Token
+      uses: myci-actions/export-env-var@1
+      with:
+        name: GITHUB_TOKEN
+        value: ${{ github.token }}
+    - name: .NET - Setup
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: NuGet - Setup
+      uses: NuGet/setup-nuget@v1.0.5
+    - name: NuGet - Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+    - name: .NET - Restore
+      run: dotnet restore
+    - name: .NET - Build
+      run: dotnet build --no-restore
+    - name: .NET - Tool Restore
+      run: |
+        cd ./src/Sidekick.Presentation.Blazor.Electron
+        dotnet tool restore
+    - name: Electron - Build
+      run: |
+        cd ./src/Sidekick.Presentation.Blazor.Electron
+        dotnet electronize build /target win /PublishSingleFile false
+    - name: Artifact - Build
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        name: Sidekick-windows
+        path: ./src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        
+    # Manual release
+    - name: Manual Release - Notes
+      if: github.ref != 'refs/heads/main'
+      uses: release-drafter/release-drafter@v5.15.0
+      with:
+        name: 'Release v${{ steps.gitversion.outputs.fullSemVer }}'
+        tag: v${{ steps.gitversion.outputs.fullSemVer }}
+        version: v${{ steps.gitversion.outputs.fullSemVer }}
+        publish: false
+        prerelease: true
+    - name: Manual Release - Asset
+      if: github.ref != 'refs/heads/main'
+      uses: xresloader/upload-to-github-release@v1.3.0
+      with:
+        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        tag_name: v${{ steps.gitversion.outputs.fullSemVer }}
+        draft: true
+        verbose: true
+        overwrite: false
+
+    # Main release
+    - name: Main Release - Notes
+      if: github.ref == 'refs/heads/main'
+      uses: release-drafter/release-drafter@v5.15.0
+      with:
+        name: 'Release v${{ steps.gitversion.outputs.majorMinorPatch }}'
+        tag: v${{ steps.gitversion.outputs.majorMinorPatch }}
+        version: v${{ steps.gitversion.outputs.majorMinorPatch }}
+        publish: false
+        prerelease: false
+    - name: Main Release - Asset
+      if: github.ref == 'refs/heads/main'
+      uses: xresloader/upload-to-github-release@v1.3.0
+      with:
+        file: src/Sidekick.Presentation.Blazor.Electron/bin/Desktop/Sidekick-Setup.exe
+        tag_name: v${{ steps.gitversion.outputs.majorMinorPatch }}
+        draft: true
+        verbose: true
+        overwrite: false

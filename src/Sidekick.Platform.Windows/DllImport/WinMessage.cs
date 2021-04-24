@@ -1,0 +1,17 @@
+using System;
+using System.Runtime.InteropServices;
+
+namespace Sidekick.Platform.Windows.DllImport
+{
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct WinMessage
+    {
+        public IntPtr Hwnd;
+        public uint Message;
+        public IntPtr WParam;
+        public IntPtr LParam;
+        public uint Time;
+        public System.Drawing.Point Point;
+    }
+
+}

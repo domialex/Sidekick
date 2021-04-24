@@ -1,0 +1,41 @@
+@page "/error/{type}"
+@layout OverlayLayout
+
+<MudPaper Class="pa-2 mb-4 d-flex flex-row align-center">
+    <MudIcon Size="Size.Large" Color="Color.Error" Icon="@Icons.Filled.Error" Class="mr-4" />
+    <MudText Align="Align.Center">
+        @Text
+    </MudText>
+</MudPaper>
+<div class="d-flex justify-end">
+    <MudButton Variant="Variant.Filled"
+               Color="Color.Primary"
+               OnClick="Close">
+        @Resources.Close
+    </MudButton>
+</div>
+
+@code {
+    [Inject] private IViewInstance ViewInstance { get; set; }
+    [Inject] private ErrorResources Resources { get; set; }
+
+    [Parameter] public string Type { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ViewInstance.SetTitle(Resources.Title);
+    }
+
+    private string Text => Type switch
+    {
+        ErrorType.InvalidItem => Resources.InvalidItemError,
+        ErrorType.UnavailableTranslation => Resources.AvailableInEnglishError,
+        ErrorType.Unparsable => Resources.ParserError,
+        _ => Resources.Error,
+    };
+
+    public Task Close()
+    {
+        return ViewInstance.Close();
+    }
+}

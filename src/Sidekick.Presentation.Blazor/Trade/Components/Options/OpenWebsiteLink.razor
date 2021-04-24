@@ -1,0 +1,21 @@
+@using Sidekick.Domain.App.Commands
+@using Sidekick.Domain.Game.Trade.Queries
+
+@if (Item != null && !string.IsNullOrEmpty(QueryId))
+{
+    <MudNavLink OnClick="OpenWebsite">@Resources.OpenWebsite</MudNavLink>
+}
+
+@code {
+    [Inject] private TradeResources Resources { get; set; }
+    [Inject] private IMediator Mediator { get; set; }
+
+    [Parameter] public Item Item { get; set; }
+    [Parameter] public string QueryId { get; set; }
+
+    private async Task OpenWebsite()
+    {
+        var uri = await Mediator.Send(new GetTradeUriQuery(Item, QueryId));
+        await Mediator.Send(new OpenBrowserCommand(uri.AbsoluteUri));
+    }
+}
