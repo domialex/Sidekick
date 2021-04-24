@@ -18,8 +18,12 @@ branches:
     regex: ^master$|^main$
     tag: ''
     increment: Patch
-    is-source-branch-for: ['feature', 'pull-request', 'hotfix']
+    is-source-branch-for: ['release', 'feature', 'pull-request', 'hotfix']
     is-mainline: true
+  release:
+    regex: ^releases?[/-]
+    tag: 'beta'
+    increment: Minor
   feature:
     regex: ^features?[/-]
     tag: useBranchName
