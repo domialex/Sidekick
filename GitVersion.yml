@@ -18,22 +18,40 @@ branches:
     regex: ^master$|^main$
     tag: ''
     increment: Patch
-    is-source-branch-for: ['release', 'feature', 'pull-request', 'hotfix']
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
     is-mainline: true
-  release:
-    regex: ^releases?[/-]
-    tag: 'beta'
-    increment: Minor
+    source-branches: ['hotfix', 'pull-request', 'feature']
   feature:
     regex: ^features?[/-]
+    mode: ContinuousDeployment
     tag: useBranchName
-    increment: Minor
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
+    source-branches: ['main', 'feature', 'hotfix']
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
+    mode: ContinuousDeployment
     tag: pr
     increment: Minor
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
+    source-branches: ['main', 'feature', 'hotfix']
   hotfix:
     regex: ^hotfix(es)?[/-]
+    mode: ContinuousDeployment
     tag: beta
     increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
+    source-branches: ['main']
