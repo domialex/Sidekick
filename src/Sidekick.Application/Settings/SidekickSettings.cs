@@ -57,7 +57,7 @@ namespace Sidekick.Application.Settings
 
         public string Stash_Key_Right { get; set; } = "";
 
-        public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>()
+        public List<ChatSetting> Chat_Commands { get; set; } = new()
         {
             new ChatSetting("F5", "/hideout", true),
             new ChatSetting("F4", "/kick {Me.CharacterName}", true),
