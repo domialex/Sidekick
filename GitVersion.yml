@@ -13,6 +13,9 @@ build-metadata-padding: 4
 commits-since-version-source-padding: 4
 commit-message-incrementing: Enabled
 commit-date-format: 'yyyy-MM-dd'
+ignore:
+  sha: []
+  commits-before: 2021-04-20T00:00:00
 branches:
   main:
     regex: ^master$|^main$
