@@ -18,7 +18,7 @@ ignore:
   commits-before: 2021-04-20T00:00:00
 branches:
   main:
-    regex: ^master$|^main$
+    regex: ^main$
     tag: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
@@ -30,8 +30,8 @@ branches:
   feature:
     regex: ^features?[/-]
     mode: ContinuousDeployment
-    tag: useBranchName
-    increment: Inherit
+    tag: beta
+    increment: Minor
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
