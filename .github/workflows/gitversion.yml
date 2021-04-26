@@ -1,4 +1,4 @@
-name: Sidekick Release
+name: Sidekick GitVersion
 
 on:
   push:
