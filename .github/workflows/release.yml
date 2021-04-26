@@ -1,6 +1,12 @@
 name: Sidekick Release
 
 on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
   workflow_dispatch:
 
 jobs:
@@ -13,11 +19,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Git - Fetch Tags
-      run: git fetch --tags
-    - name: Git - Fetch Main
-      if: github.ref != 'refs/heads/main'
-      run: git branch --create-reflog main origin/main
     - name: GitVersion - Install
       uses: gittools/actions/gitversion/setup@v0.9.9
       with:
@@ -116,7 +117,7 @@ jobs:
         tag_name: v${{ steps.gitversion.outputs.fullSemVer }}
         draft: true
         verbose: true
-        overwrite: false
+        overwrite: true
 
     # Main release
     - name: Main Release - Notes
@@ -136,4 +137,4 @@ jobs:
         tag_name: v${{ steps.gitversion.outputs.majorMinorPatch }}
         draft: true
         verbose: true
-        overwrite: false
+        overwrite: true
