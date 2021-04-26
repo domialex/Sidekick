@@ -20,26 +20,16 @@ branches:
     regex: ^master$|^main$
     mode: ContinuousDelivery
     tag: ''
-    increment: Minor
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
-  release:
-    regex: ^releases?[/-]
-    mode: ContinuousDelivery
-    tag: beta
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: true
-    pre-release-weight: 1000
+    is-release-branch: false
   feature:
     regex: ^features?[/-]
     mode: ContinuousDelivery
-    tag: useBranchName
-    increment: Inherit
+    tag: beta
+    increment: Patch
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
@@ -62,22 +52,4 @@ branches:
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: false
-  support:
-    regex: ^support[/-]
-    mode: ContinuousDelivery
-    tag: ''
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
-  develop:
-    regex: ^dev(elop)?(ment)?$
-    mode: ContinuousDeployment
-    tag: unstable
-    increment: Minor
-    prevent-increment-of-merged-branch-version: false
-    track-merge-target: true
-    tracks-release-branches: true
     is-release-branch: false
