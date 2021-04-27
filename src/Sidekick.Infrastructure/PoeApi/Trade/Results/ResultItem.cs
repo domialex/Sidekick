@@ -5,66 +5,68 @@ using Sidekick.Domain.Game.Items.Models;
 namespace Sidekick.Infrastructure.PoeApi.Trade.Results
 {
     public class ResultItem
-  {
-    public string Name { get; set; }
+    {
+        public string Name { get; set; }
 
-    public string TypeLine { get; set; }
+        public string TypeLine { get; set; }
 
-    public bool Identified { get; set; }
+        public bool Identified { get; set; }
 
-    [JsonPropertyName("ilvl")]
-    public int ItemLevel { get; set; }
+        [JsonPropertyName("ilvl")]
+        public int ItemLevel { get; set; }
 
-    [JsonPropertyName("frameType")]
-    public Rarity Rarity { get; set; }
+        [JsonPropertyName("frameType")]
+        public Rarity Rarity { get; set; }
 
-    public bool Corrupted { get; set; }
+        public bool Corrupted { get; set; }
 
-    public bool Fractured { get; set; }
+        public bool Fractured { get; set; }
 
-    public Influences Influences { get; set; } = new Influences();
+        public bool IsRelic { get; set; }
 
-    public bool Verified { get; set; }
+        public Influences Influences { get; set; } = new Influences();
 
-    [JsonPropertyName("w")]
-    public int Width { get; set; }
+        public bool Verified { get; set; }
 
-    [JsonPropertyName("h")]
-    public int Height { get; set; }
+        [JsonPropertyName("w")]
+        public int Width { get; set; }
 
-    public string Icon { get; set; }
+        [JsonPropertyName("h")]
+        public int Height { get; set; }
 
-    public string League { get; set; }
+        public string Icon { get; set; }
 
-    public string Note { get; set; }
+        public string League { get; set; }
 
-    public List<ResultLineContent> Requirements { get; set; }
+        public string Note { get; set; }
 
-    public List<ResultLineContent> Properties { get; set; }
+        public List<ResultLineContent> Requirements { get; set; }
 
-    [JsonPropertyName("implicitMods")]
-    public List<string> ImplicitMods { get; set; }
+        public List<ResultLineContent> Properties { get; set; }
 
-    [JsonPropertyName("craftedMods")]
-    public List<string> CraftedMods { get; set; }
+        [JsonPropertyName("implicitMods")]
+        public List<string> ImplicitMods { get; set; }
 
-    [JsonPropertyName("explicitMods")]
-    public List<string> ExplicitMods { get; set; }
+        [JsonPropertyName("craftedMods")]
+        public List<string> CraftedMods { get; set; }
 
-    [JsonPropertyName("utilityMods")]
-    public List<string> UtilityMods { get; set; }
+        [JsonPropertyName("explicitMods")]
+        public List<string> ExplicitMods { get; set; }
 
-    [JsonPropertyName("pseudoMods")]
-    public List<string> PseudoMods { get; set; }
+        [JsonPropertyName("utilityMods")]
+        public List<string> UtilityMods { get; set; }
 
-    [JsonPropertyName("enchantMods")]
-    public List<string> EnchantMods { get; set; }
+        [JsonPropertyName("pseudoMods")]
+        public List<string> PseudoMods { get; set; }
 
-    [JsonPropertyName("fracturedMods")]
-    public List<string> FracturedMods { get; set; }
+        [JsonPropertyName("enchantMods")]
+        public List<string> EnchantMods { get; set; }
 
-    public List<ResultSocket> Sockets { get; set; } = new List<ResultSocket>();
+        [JsonPropertyName("fracturedMods")]
+        public List<string> FracturedMods { get; set; }
 
-    public Extended Extended { get; set; } = new Extended();
-  }
+        public List<ResultSocket> Sockets { get; set; } = new List<ResultSocket>();
+
+        public Extended Extended { get; set; } = new Extended();
+    }
 }

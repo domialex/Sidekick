@@ -39,6 +39,8 @@ namespace Sidekick.Application.Settings
 
         public string Key_Close { get; set; } = "Space";
 
+        public bool EscapeClosesOverlays { get; set; } = true;
+
         public string Trade_Key_Check { get; set; } = "Ctrl+D";
 
         public string Map_Key_Check { get; set; } = "Ctrl+X";
@@ -55,7 +57,7 @@ namespace Sidekick.Application.Settings
 
         public string Stash_Key_Right { get; set; } = "";
 
-        public List<ChatSetting> Chat_Commands { get; set; } = new List<ChatSetting>()
+        public List<ChatSetting> Chat_Commands { get; set; } = new()
         {
             new ChatSetting("F5", "/hideout", true),
             new ChatSetting("F4", "/kick {Me.CharacterName}", true),

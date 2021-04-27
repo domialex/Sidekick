@@ -11,6 +11,7 @@ namespace Sidekick.Domain.Settings
         string Language_UI { get; }
 
         string Key_Close { get; }
+        bool EscapeClosesOverlays { get; }
         string LeagueId { get; }
         string LeaguesHash { get; }
 

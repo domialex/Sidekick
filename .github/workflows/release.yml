@@ -1,6 +1,9 @@
 name: Sidekick Release
 
 on:
+  push:
+    branches:
+    - main
   pull_request:
     branches:
     - main

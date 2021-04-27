@@ -43,6 +43,7 @@ namespace Sidekick.Localization.Settings
         public string Group_Other => resources["Group_Other"];
         public string Key_Active => resources["Key_Active"];
         public string Key_Close => resources["Key_Close"];
+        public string EscapeClosesOverlays => resources["EscapeClosesOverlays"];
         public string Key_Duplicated => resources["Key_Duplicated"];
         public string Key_FindItems => resources["Key_FindItems"];
         public string Key_OpenSettings => resources["Key_OpenSettings"];

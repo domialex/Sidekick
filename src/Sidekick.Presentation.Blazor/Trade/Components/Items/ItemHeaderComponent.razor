@@ -26,11 +26,21 @@
     {
         get
         {
+            if (Item.Properties.IsRelic)
+            {
+                if (string.IsNullOrEmpty(Item.Original.Name) || string.IsNullOrEmpty(Item.Original.Type))
+                {
+                    return "header-relic";
+                }
+                return "header-double-relic";
+            }
+
             switch (Item.Metadata.Rarity)
             {
                 case Rarity.Currency: return "header-currency";
                 case Rarity.Magic: return "header-magic";
                 case Rarity.Prophecy: return "header-prophecy";
+                case Rarity.Gem: return "header-gem";
                 case Rarity.Rare:
                     if (string.IsNullOrEmpty(Item.Original.Name) || string.IsNullOrEmpty(Item.Original.Type))
                     {

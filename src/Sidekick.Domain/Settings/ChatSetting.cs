@@ -8,6 +8,11 @@ namespace Sidekick.Domain.Settings
         /// <summary>
         /// Send a message in the chat. Wildcards are supported.
         /// </summary>
+        public ChatSetting() { }
+
+        /// <summary>
+        /// Send a message in the chat. Wildcards are supported.
+        /// </summary>
         /// <param name="key">The keybind to send the command</param>
         /// <param name="command">The message to write in the chat</param>
         /// <param name="submit">Indicated if the message should be submitted after it is written</param>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using GregsStack.InputSimulatorStandard;
 using GregsStack.InputSimulatorStandard.Native;
 using Microsoft.Extensions.Logging;
@@ -16,7 +15,7 @@ namespace Sidekick.Platform.Windows.Keyboards
 {
     public class KeyboardProvider : IKeyboardProvider, IDisposable, IKeyboardEventReceiver
     {
-        private static readonly List<Key> ValidKeys = new List<Key>()
+        private static readonly List<Key> ValidKeys = new()
         {
             new Key(Keys.ShiftKey, VirtualKeyCode.SHIFT, "Shift", "Shift"),
             new Key(Keys.LShiftKey, VirtualKeyCode.LSHIFT, "Shift", "Shift"),
@@ -142,7 +141,7 @@ namespace Sidekick.Platform.Windows.Keyboards
             new Key(Keys.NumPad9, VirtualKeyCode.NUMPAD9, "Num9", "num9"),
         };
 
-        private static readonly Regex ModifierKeys = new Regex("Ctrl|Shift|Alt");
+        private static readonly Regex ModifierKeys = new("Ctrl|Shift|Alt");
 
         private readonly ILogger<KeyboardProvider> logger;
 
@@ -200,20 +199,25 @@ namespace Sidekick.Platform.Windows.Keyboards
             OnKeyDown?.Invoke(str.ToString());
         }
 
-        public bool IsCtrlPressed() =>
+        private bool IsCtrlPressed() =>
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LCONTROL) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RCONTROL);
 
-        public bool IsShiftPressed() =>
+        private bool IsShiftPressed() =>
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LSHIFT) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RSHIFT);
 
-        public bool IsAltPressed() =>
+        private bool IsAltPressed() =>
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.LMENU) ||
             Simulator.InputDeviceState.IsKeyDown(VirtualKeyCode.RMENU);
+
+        public bool IncludesModifier(string input)
+        {
+            return FetchKeys(input).Modifier.Count > 0;
+        }
 
         public void PressKey(params string[] keys)
         {

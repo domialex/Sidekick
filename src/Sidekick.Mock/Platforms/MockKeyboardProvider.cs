@@ -14,7 +14,7 @@ namespace Sidekick.Mock.Platforms
             // Do nothing in mock
         }
 
-        public bool IsCtrlPressed()
+        public bool IncludesModifier(string input)
         {
             return true;
         }

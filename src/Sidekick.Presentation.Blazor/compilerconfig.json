@@ -1,0 +1,110 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/site.css",
+    "inputFile": "Styles/site.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemHeaderComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemHeaderComponent.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Betrayal/Agent.razor.css",
+    "inputFile": "Cheatsheets/Betrayal/Agent.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Betrayal/Reward.razor.css",
+    "inputFile": "Cheatsheets/Betrayal/Reward.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Blight/Oil.razor.css",
+    "inputFile": "Cheatsheets/Blight/Oil.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Components/RewardProgress.razor.css",
+    "inputFile": "Cheatsheets/Components/RewardProgress.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Components/RewardValue.razor.css",
+    "inputFile": "Cheatsheets/Components/RewardValue.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Delve/Fossil.razor.css",
+    "inputFile": "Cheatsheets/Delve/Fossil.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Heist/Ally.razor.css",
+    "inputFile": "Cheatsheets/Heist/Ally.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Heist/Job.razor.css",
+    "inputFile": "Cheatsheets/Heist/Job.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Heist/Reward.razor.css",
+    "inputFile": "Cheatsheets/Heist/Reward.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Incursion/RoomTier.razor.css",
+    "inputFile": "Cheatsheets/Incursion/RoomTier.razor.scss"
+  },
+  {
+    "outputFile": "Cheatsheets/Metamorph/Catalyst.razor.css",
+    "inputFile": "Cheatsheets/Metamorph/Catalyst.razor.scss"
+  },
+  {
+    "outputFile": "Initialization/Initialization.razor.css",
+    "inputFile": "Initialization/Initialization.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/SidekickAppBar.razor.css",
+    "inputFile": "Shared/Components/SidekickAppBar.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/SidekickWrapper.razor.css",
+    "inputFile": "Shared/Components/SidekickWrapper.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/SidekickLogo.razor.css",
+    "inputFile": "Shared/Components/SidekickLogo.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Filters/FiltersComponent.razor.css",
+    "inputFile": "Trade/Components/Filters/FiltersComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemImageComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemImageComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemModifiersComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemModifiersComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemPropertiesComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemPropertiesComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemRequirementsComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemRequirementsComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemSeparatorComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemSeparatorComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Items/ItemSocketsComponent.razor.css",
+    "inputFile": "Trade/Components/Items/ItemSocketsComponent.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Prices/PriceDisplay.razor.css",
+    "inputFile": "Trade/Components/Prices/PriceDisplay.razor.scss"
+  },
+  {
+    "outputFile": "Trade/Components/Prices/PriceRangeDisplay.razor.css",
+    "inputFile": "Trade/Components/Prices/PriceRangeDisplay.razor.scss"
+  }
+]

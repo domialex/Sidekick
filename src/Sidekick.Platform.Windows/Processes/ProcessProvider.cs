@@ -25,7 +25,6 @@ namespace Sidekick.Platform.Windows.Processes
         private const string SIDEKICK_TITLE = "Sidekick";
         private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
 
-
         public string ClientLogPath => Path.Combine(Path.GetDirectoryName(GetPathOfExileProcess().GetMainModuleFileName()), "logs", "Client.txt");
 
         private const int STANDARD_RIGHTS_REQUIRED = 0xF0000;
@@ -78,13 +77,13 @@ namespace Sidekick.Platform.Windows.Processes
             if (eventType == WinEvent.EVENT_SYSTEM_MINIMIZEEND || eventType == WinEvent.EVENT_SYSTEM_FOREGROUND)
             {
                 FocusedWindow = GetWindowTitle(hwnd);
-                if (FocusedWindow == PATH_OF_EXILE_TITLE || FocusedWindow == SIDEKICK_TITLE)
+                if (IsPathOfExileInFocus || IsSidekickInFocus)
                 {
                     logger.LogInformation("Path of Exile focused.");
                     PathOfExileWasMinimized = false;
                     OnFocus?.Invoke();
                 }
-                else if (PathOfExileWasMinimized == false)
+                else if (!PathOfExileWasMinimized)
                 {
                     PathOfExileWasMinimized = true;
                     logger.LogInformation("Path of Exile minimized.");
@@ -92,7 +91,7 @@ namespace Sidekick.Platform.Windows.Processes
                 }
 
                 // If the game is run as administrator, Sidekick also needs administrator privileges.
-                if (!PermissionChecked && FocusedWindow == PATH_OF_EXILE_TITLE)
+                if (!PermissionChecked && IsPathOfExileInFocus)
                 {
                     PermissionChecked = true;
                     Task.Run(async () =>
@@ -106,10 +105,9 @@ namespace Sidekick.Platform.Windows.Processes
             }
         }
 
-        public bool IsPathOfExileInFocus()
-        {
-            return FocusedWindow == PATH_OF_EXILE_TITLE;
-        }
+        public bool IsPathOfExileInFocus => FocusedWindow == PATH_OF_EXILE_TITLE;
+
+        public bool IsSidekickInFocus => FocusedWindow == SIDEKICK_TITLE;
 
         private static string GetWindowTitle(IntPtr handle)
         {
@@ -144,7 +142,6 @@ namespace Sidekick.Platform.Windows.Processes
                     {
                         using var p = new Process();
                         p.StartInfo.FileName = "Sidekick.exe";
-                        // p.StartInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
                         p.StartInfo.UseShellExecute = true;
                         p.StartInfo.Verb = "runas";
                         p.Start();
@@ -209,7 +206,7 @@ namespace Sidekick.Platform.Windows.Processes
 
         public void Dispose()
         {
-            WindowsHook.Cancel();
+            WindowsHook?.Cancel();
         }
     }
 }

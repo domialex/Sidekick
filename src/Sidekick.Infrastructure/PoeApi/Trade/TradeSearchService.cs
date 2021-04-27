@@ -374,6 +374,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 {
                     ItemLevel = result.Item.ItemLevel,
                     Corrupted = result.Item.Corrupted,
+                    IsRelic = result.Item.IsRelic,
                     Identified = result.Item.Identified,
                     Armor = result.Item.Extended.ArmourAtMax,
                     EnergyShield = result.Item.Extended.EnergyShieldAtMax,

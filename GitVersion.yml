@@ -2,7 +2,7 @@ next-version: 2.0
 assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{Major}.{Minor}.{Patch}'
-mode: Mainline
+mode: ContinuousDelivery
 increment: Inherit
 continuous-delivery-fallback-tag: ci
 tag-prefix: '[vV]'
@@ -18,35 +18,25 @@ commit-date-format: 'yyyy-MM-dd'
 branches:
   main:
     regex: ^master$|^main$
+    mode: ContinuousDelivery
     tag: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
-    is-mainline: true
-  release:
-    regex: ^releases?[/-]
-    mode: ContinuousDeployment
-    tag: beta
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: true
-    pre-release-weight: 1000
   feature:
     regex: ^features?[/-]
-    mode: ContinuousDeployment
-    tag: useBranchName
-    increment: Inherit
+    mode: ContinuousDelivery
+    tag: beta
+    increment: Patch
     prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
-    mode: ContinuousDeployment
+    mode: ContinuousDelivery
     tag: pr
     increment: Inherit
     prevent-increment-of-merged-branch-version: false
@@ -56,19 +46,10 @@ branches:
     is-release-branch: false
   hotfix:
     regex: ^hotfix(es)?[/-]
-    mode: ContinuousDeployment
+    mode: ContinuousDelivery
     tag: beta
     increment: Patch
     prevent-increment-of-merged-branch-version: false
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch: false
-  support:
-    regex: ^support[/-]
-    mode: ContinuousDeployment
-    tag: ''
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false

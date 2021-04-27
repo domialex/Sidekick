@@ -1,4 +1,4 @@
-::deep .mud-appbar {
+﻿::deep .mud-appbar {
   height: var(--mud-appbar-min-height); }
   ::deep .mud-appbar .mud-toolbar-appbar {
     -webkit-app-region: drag;
