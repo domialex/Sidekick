@@ -27,8 +27,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal("Imbued Wand", actual.Metadata.Type);
 
             var crafteds = actual.Modifiers.Crafted.Select(x => x.Text);
-            // Commented because RePoe is not up to date
-            // Assert.Contains("Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown", crafteds);
+            Assert.Contains("Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown", crafteds);
         }
 
         #region ItemText
