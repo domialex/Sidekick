@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
@@ -20,6 +22,7 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
             InitProperties();
             InitSockets();
             InitInfluences();
+            InitClasses();
         }
 
         #region Header (Rarity, Name, Type)
@@ -115,5 +118,28 @@ namespace Sidekick.Application.Game.Items.Parser.Patterns
         public Regex Shaper { get; private set; }
         public Regex Warlord { get; private set; }
         #endregion Influences
+
+        #region Classes
+        public Dictionary<Class, Regex> Classes { get; } = new Dictionary<Class, Regex>();
+
+        private void InitClasses()
+        {
+            Classes.Clear();
+
+            if (gameLanguageProvider.Language.Classes == null) return;
+
+            var type = gameLanguageProvider.Language.Classes.GetType();
+            var properties = type.GetProperties().Where(x => x.Name != nameof(ClassLanguage.Prefix));
+            var prefix = gameLanguageProvider.Language.Classes.Prefix;
+
+            foreach (var property in properties)
+            {
+                var label = property.GetValue(gameLanguageProvider.Language.Classes).ToString();
+                if (string.IsNullOrEmpty(label)) continue;
+
+                Classes.Add(Enum.Parse<Class>(property.Name), $"{prefix}{label}".ToRegexLine());
+            }
+        }
+        #endregion
     }
 }

@@ -54,5 +54,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "異常的";
         public string PrefixDivergent => "相異的";
         public string PrefixPhantasmal => "幻影的";
+
+        public ClassLanguage Classes => null;
     }
 }

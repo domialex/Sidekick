@@ -37,7 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionMonsterPackSize => "Размер групп монстров";
         public string PrefixBlighted => "Заражённая";
         public string DescriptionExperience => "Опыт";
-        
+
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -58,5 +58,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "Аномальный: ";
         public string PrefixDivergent => "Искривлённый: ";
         public string PrefixPhantasmal => "Фантомный: ";
+
+        public ClassLanguage Classes => null;
     }
 }

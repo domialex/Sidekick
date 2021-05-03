@@ -52,5 +52,7 @@ namespace Sidekick.Domain.Game.Languages
         string InfluenceHunter { get; }
         string InfluenceRedeemer { get; }
         string InfluenceWarlord { get; }
+
+        ClassLanguage Classes { get; }
     }
 }

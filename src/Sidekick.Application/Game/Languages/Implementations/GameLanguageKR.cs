@@ -37,7 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionMonsterPackSize => "몬스터 무리 규모";
         public string PrefixBlighted => "역병";
         public string DescriptionExperience => "경험치";
-        
+
         public string DescriptionPhysicalDamage => "물리 피해";
 
         public string DescriptionElementalDamage => "원소 피해";
@@ -58,5 +58,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "기묘한";
         public string PrefixDivergent => "분기하는";
         public string PrefixPhantasmal => "환영의";
+
+        public ClassLanguage Classes => null;
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sidekick.Domain.Game.Items.Metadatas.Models;
+using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Domain.Game.Items
 {

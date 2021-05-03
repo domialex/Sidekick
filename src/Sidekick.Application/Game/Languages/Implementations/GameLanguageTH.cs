@@ -37,7 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionMonsterPackSize => "ขนาดบรรจุมอนสเตอร์";
         public string PrefixBlighted => "Blighted";
         public string DescriptionExperience => "ประสบการณ์";
-        
+
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -58,5 +58,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "Anomalous";
         public string PrefixDivergent => "Divergent";
         public string PrefixPhantasmal => "Phantasmal";
+
+        public ClassLanguage Classes => null;
     }
 }

@@ -37,7 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemRarity => "Rareza de Objetos";
         public string DescriptionMonsterPackSize => "Tamaño de Grupos de Monstruos";
         public string PrefixBlighted => "Infestado";
-        
+
         public string DescriptionPhysicalDamage => "__TranslationRequired__";
 
         public string DescriptionElementalDamage => "__TranslationRequired__";
@@ -57,5 +57,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "anómala";
         public string PrefixDivergent => "divergente";
         public string PrefixPhantasmal => "fantasmal";
+
+        public ClassLanguage Classes => null;
     }
 }

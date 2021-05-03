@@ -37,7 +37,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string DescriptionItemRarity => "Gegenstandsseltenheit";
         public string DescriptionMonsterPackSize => "Monstergruppengröße";
         public string PrefixBlighted => "Befallene";
-        
+
         public string DescriptionPhysicalDamage => "Physischer Schaden";
         public string DescriptionElementalDamage => "Elementarschaden";
         public string DescriptionAttacksPerSecond => "Angriffe pro Sekunde";
@@ -52,5 +52,7 @@ namespace Sidekick.Application.Game.Languages.Implementations
         public string PrefixAnomalous => "(anormal)";
         public string PrefixDivergent => "(abweichend)";
         public string PrefixPhantasmal => "(illusorisch)";
+
+        public ClassLanguage Classes => null;
     }
 }

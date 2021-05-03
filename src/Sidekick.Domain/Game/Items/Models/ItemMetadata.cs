@@ -1,6 +1,4 @@
-using Sidekick.Domain.Game.Items.Models;
-
-namespace Sidekick.Domain.Game.Items.Metadatas.Models
+namespace Sidekick.Domain.Game.Items.Models
 {
     public class ItemMetadata
     {
@@ -11,5 +9,7 @@ namespace Sidekick.Domain.Game.Items.Metadatas.Models
         public Rarity Rarity { get; set; }
 
         public Category Category { get; set; }
+
+        public Class Class { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moq;
 using Sidekick.Application.Settings;
+using Sidekick.Application.Tests.Game.Items;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Settings.Commands;
@@ -26,6 +27,7 @@ namespace Sidekick.Application.Tests
     public class MediatorFixture : IAsyncLifetime
     {
         public IMediator Mediator { get; private set; }
+        public ItemTexts Texts { get; private set; }
 
         public Task DisposeAsync()
         {
@@ -64,10 +66,13 @@ namespace Sidekick.Application.Tests
             services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
             services.AddSingleton<IKeyboardProvider, MockKeyboardProvider>();
             services.AddSingleton<IProcessProvider, MockProcessProvider>();
+            services.AddSingleton<ItemTexts>();
 
             var serviceProvider = services.BuildServiceProvider();
 
             Mediator = serviceProvider.GetRequiredService<IMediator>();
+            Texts = serviceProvider.GetRequiredService<ItemTexts>();
+
             await Mediator.Send(new SaveSettingsCommand(new SidekickSettings()
             {
                 Language_Parser = "en",
