@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AbyssJewel" xml:space="preserve">
+    <value>Item Class: Abyss Jewel
+Rarity: Magic
+Hypnotic Eye Jewel of Force
+--------
+Abyss
+--------
+Requirements:
+Level: 36
+--------
+Item Level: 47
+--------
+Adds 7 to 8 Physical Damage to Spells
+--------
+Place into an Abyssal Socket on an Item or into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.
+--------
+Note: ~price 1 jewellers</value>
+  </data>
   <data name="ArcaneSurgeSupport" xml:space="preserve">
     <value>Item Class: Support Skill Gems
 Rarity: Gem
@@ -270,6 +288,29 @@ and yet it always breaks free.
 --------
 Can be used in a personal Map Device, allowing you to capture the Soul of the Map's Boss. The Vessel containing the captured Soul can be retrieved from the Map Device. You must be in the Map when the boss is defeated.</value>
   </data>
+  <data name="FarricChieftain" xml:space="preserve">
+    <value>Item Class: Stackable Currency
+Rarity: Rare
+Gorespine
+Farric Chieftain
+--------
+Genus: Ape Chieftains
+Group: Primates
+Family: The Wilds
+--------
+Item Level: 76
+--------
+Farric Presence
+Aspect of the Hellion
+Allies Regenerate Life
+Quick
+Accurate
+Summons Apes from Trees
+--------
+Right-click to add this to your bestiary.
+--------
+Note: ~price 1 chaos</value>
+  </data>
   <data name="HallowedLifeFlask" xml:space="preserve">
     <value>Item Class: Life Flasks
 Rarity: Normal
@@ -304,24 +345,75 @@ Item Level: 73
 --------
 Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.</value>
   </data>
-  <data name="InscribedUltimatum" xml:space="preserve">
-    <value>Item Class: Misc Map Items
-Rarity: Currency
-Inscribed Ultimatum
+  <data name="HeistBrooch" xml:space="preserve">
+    <value>Item Class: Heist Brooch
+Rarity: Normal
+Silver Brooch
 --------
-Challenge: Defeat waves of enemies
-Area Level: 71
-Requires Sacrifice: Forbidden Taste
-Reward: Great Old One's Tentacles
+Any Heist member can equip this item.
 --------
-Choking Miasma III
-Restless Ground II
-Escalating Monster Speed
-Hindering Flasks
+Requirements:
+Level 2 in Any Job
 --------
-Can be used in a personal map device to open portals to the Trialmaster's Domain and attempt his challenge. Portals will close once the challenge begins.</value>
+Item Level: 69
+--------
+12% increased Rarity of Items dropped in Heists (implicit)
+--------
+Can only be equipped to Heist members.
+--------
+Note: ~price 1 alch</value>
   </data>
-  <data name="LustrousWard" xml:space="preserve">
+  <data name="HeistCloak" xml:space="preserve">
+    <value>Item Class: Heist Cloak
+Rarity: Magic
+Initiator's Torn Cloak
+--------
+Any Heist member can equip this item.
+--------
+Requirements:
+Level 2 in Any Job
+--------
+Item Level: 62
+--------
+2% reduced raising of Alert Level (implicit)
+--------
+27% increased Damage with Hits against Enemies on Full Life
+Players deal 27% increased Damage with Hits against Enemies on Full Life
+--------
+Can only be equipped to Heist members.</value>
+  </data>
+  <data name="HeistGear" xml:space="preserve">
+    <value>Item Class: Heist Gear
+Rarity: Rare
+Kraken Instrument
+Rough Sharpening Stone
+--------
+Any Heist member can equip this item.
+--------
+Requirements:
+Level 2 in Any Job
+--------
+Item Level: 69
+--------
+15% increased Melee Damage (implicit)
+--------
+The Ring's Cut reduced by 9%
+5% increased time before Lockdown
+11% increased Job speed
+--------
+Can only be equipped to Heist members.</value>
+  </data>
+  <data name="HeistTarget" xml:space="preserve">
+    <value>Item Class: Heist Target
+Rarity: Currency
+Alchemical Chalice
+--------
+"The chalice holds certain properties that make scientists quite possessive and irrational.
+It's best if you don't ask too many questions about this one."
+--------
+Can be exchanged with Faustus, the Fence in The Rogue Harbour</value>
+  </data>
+  <data name="HeistTool" xml:space="preserve">
     <value>Item Class: Heist Tool
 Rarity: Rare
 Entropy Gear
@@ -344,6 +436,69 @@ Item Level: 75
 5% chance to not generate Alert Level on opening a Chest using Counter-Thaumaturgy
 --------
 Can only be equipped to Heist members.</value>
+  </data>
+  <data name="InscribedUltimatum" xml:space="preserve">
+    <value>Item Class: Misc Map Items
+Rarity: Currency
+Inscribed Ultimatum
+--------
+Challenge: Defeat waves of enemies
+Area Level: 71
+Requires Sacrifice: Forbidden Taste
+Reward: Great Old One's Tentacles
+--------
+Choking Miasma III
+Restless Ground II
+Escalating Monster Speed
+Hindering Flasks
+--------
+Can be used in a personal map device to open portals to the Trialmaster's Domain and attempt his challenge. Portals will close once the challenge begins.</value>
+  </data>
+  <data name="KitavaTeachings" xml:space="preserve">
+    <value>Item Class: Jewel
+Rarity: Unique
+Kitava's Teachings
+Small Cluster Jewel
+--------
+Item Level: 72
+--------
+Adds Disciple of Kitava
+--------
+Savour the bitter, cherish the sweet,
+For there may never be another chance to eat.
+--------
+Place into an allocated Small, Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.
+--------
+Note: ~price 1.2 exalted</value>
+  </data>
+  <data name="MavenInvitation" xml:space="preserve">
+    <value>Item Class: Misc Map Items
+Rarity: Rare
+Zenith Passage
+Maven's Invitation: New Vastir
+--------
+Item Quantity: +68% (augmented)
+Item Rarity: +40% (augmented)
+--------
+Item Level: 83
+--------
+Area has patches of Chilled Ground
+Monsters have 393% increased Critical Strike Chance
++43% to Monster Critical Strike Multiplier
+27% increased Monster Movement Speed
+45% increased Monster Attack Speed
+40% increased Monster Cast Speed
+Monsters gain a Power Charge on Hit
+Monsters cannot be Taunted
+Monsters' Action Speed cannot be modified to below base value
+--------
+For those who must not endure it,
+there may be found a perverse joy 
+in watching the struggle for survival.
+--------
+Can be used in a personal Map Device. Modifiers to Item Quantity will affect the number of encounter rewards dropped.
+--------
+Note: ~price 2 chaos</value>
   </data>
   <data name="NoxiousCatalyst" xml:space="preserve">
     <value>Item Class: Stackable Currency
@@ -383,6 +538,30 @@ Sockets: D D D
 Reforges a rare item with new random modifiers
 --------
 All sockets must be filled with Fossils before this item can be used.</value>
+  </data>
+  <data name="Reefbane" xml:space="preserve">
+    <value>Item Class: Fishing Rods
+Rarity: Unique
+Reefbane
+Fishing Rod
+--------
+Fishing Rod
+Physical Damage: 8-15
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.20
+Weapon Range: 13
+--------
+Sockets: R G 
+--------
+Item Level: 84
+--------
+40% increased Cast Speed
+Thaumaturgical Lure
+10% increased Quantity of Fish Caught
+Glows while in an Area containing a Unique Fish
+--------
+He cast far into the ocean
+And tore out her heart.</value>
   </data>
   <data name="RitualSplinter" xml:space="preserve">
     <value>Item Class: Stackable Currency
@@ -492,6 +671,22 @@ Stack Size: 4/100
 --------
 Combine 100 Splinters to create Tul's Breachstone.
 Shift click to unstack.</value>
+  </data>
+  <data name="ThiefTrinket" xml:space="preserve">
+    <value>Item Class: Trinkets
+Rarity: Rare
+Carrion Ornament
+Thief's Trinket
+--------
+Item Level: 65
+--------
+2% chance to receive additional Gem items when opening a Reward Chest in a Heist
+2% chance in Heists for Orbs of Transmutation to drop as Chaos Orbs instead
+10% increased Rarity of Items dropped in Heists
+--------
+You must find the sculpture The Catch in a Smuggler's Den or Underbelly Blueprint to be able to equip this
+--------
+Corrupted</value>
   </data>
   <data name="TimelessEternalEmpireSplinter" xml:space="preserve">
     <value>Item Class: Stackable Currency

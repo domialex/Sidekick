@@ -9,12 +9,13 @@ namespace Sidekick.Domain.Game.Items.Models
         Jewel = 4,
         DelveStackableSocketableCurrency = 5,
         MetamorphSample = 6,
-        HeistTool = 7,
+        AbyssJewel = 7,
 
         // Accessory
         Amulet = 101,
         Ring = 102,
         Belt = 103,
+        Trinkets = 104,
 
         // Armour
         Gloves = 201,
@@ -58,5 +59,13 @@ namespace Sidekick.Domain.Game.Items.Models
         Sceptres = 613,
         RuneDaggers = 614,
         Warstaves = 615,
+        FishingRods = 616,
+
+        // Heist
+        HeistTool = 701,
+        HeistCloak = 702,
+        HeistGear = 703,
+        HeistBrooch = 704,
+        HeistTarget = 705,
     }
 }

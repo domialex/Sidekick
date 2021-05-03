@@ -306,17 +306,6 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task LustrousWard()
-        {
-            var actual = await mediator.Send(new ParseItemCommand(texts.LustrousWard));
-
-            Assert.Equal(Class.HeistTool, actual.Metadata.Class);
-            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
-            Assert.Equal(Category.HeistEquipment, actual.Metadata.Category);
-            Assert.Equal("Lustrous Ward", actual.Metadata.Type);
-        }
-
-        [Fact]
         public async Task InscribedUltimatum()
         {
             var actual = await mediator.Send(new ParseItemCommand(texts.InscribedUltimatum));
@@ -325,6 +314,106 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal("Inscribed Ultimatum", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task Reefbane()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.Reefbane));
+
+            Assert.Equal(Class.FishingRods, actual.Metadata.Class);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal("Reefbane", actual.Metadata.Name);
+            Assert.Equal("Fishing Rod", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task FarricChieftain()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.FarricChieftain));
+
+            Assert.Equal(Class.StackableCurrency, actual.Metadata.Class);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal(Category.ItemisedMonster, actual.Metadata.Category);
+            Assert.Equal("Farric Chieftain", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task HeistTool()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.HeistTool));
+
+            Assert.Equal(Class.HeistTool, actual.Metadata.Class);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal(Category.HeistEquipment, actual.Metadata.Category);
+            Assert.Equal("Lustrous Ward", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task HeistCloak()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.HeistCloak));
+
+            Assert.Equal(Class.HeistCloak, actual.Metadata.Class);
+            Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
+            Assert.Equal(Category.HeistEquipment, actual.Metadata.Category);
+            Assert.Equal("Torn Cloak", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task HeistBrooch()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.HeistBrooch));
+
+            Assert.Equal(Class.HeistBrooch, actual.Metadata.Class);
+            Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
+            Assert.Equal(Category.HeistEquipment, actual.Metadata.Category);
+            Assert.Equal("Silver Brooch", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task HeistGear()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.HeistGear));
+
+            Assert.Equal(Class.HeistGear, actual.Metadata.Class);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal(Category.HeistEquipment, actual.Metadata.Category);
+            Assert.Equal("Rough Sharpening Stone", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task HeistTarget()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.HeistTarget));
+
+            Assert.Equal(Class.HeistTarget, actual.Metadata.Class);
+            Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
+            Assert.Equal(Category.Currency, actual.Metadata.Category);
+            Assert.Equal("Alchemical Chalice", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task ThiefTrinket()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.ThiefTrinket));
+
+            Assert.Equal(Class.Trinkets, actual.Metadata.Class);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal(Category.Accessory, actual.Metadata.Category);
+            Assert.Equal("Thief's Trinket", actual.Metadata.Type);
+        }
+
+        [Fact]
+        public async Task AbyssJewel()
+        {
+            var actual = await mediator.Send(new ParseItemCommand(texts.AbyssJewel));
+
+            Assert.Equal(Class.AbyssJewel, actual.Metadata.Class);
+            Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
+            Assert.Equal(Category.Jewel, actual.Metadata.Category);
+            Assert.Equal("Hypnotic Eye Jewel", actual.Metadata.Type);
         }
     }
 }

@@ -96,6 +96,13 @@ namespace Sidekick.Application.Game.Languages.Implementations
             Sceptres = "Sceptres",
             RuneDaggers = "Rune Daggers",
             Warstaves = "Warstaves",
+            FishingRods = "Fishing Rods",
+            HeistGear = "Heist Gear",
+            HeistBrooch = "Heist Brooch",
+            HeistTarget = "Heist Target",
+            HeistCloak = "Heist Cloak",
+            AbyssJewel = "Abyss Jewel",
+            Trinkets = "Trinkets",
         };
     }
 }

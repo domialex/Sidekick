@@ -45,5 +45,12 @@ namespace Sidekick.Domain.Game.Languages
         public string Sceptres { get; init; }
         public string RuneDaggers { get; init; }
         public string Warstaves { get; init; }
+        public string FishingRods { get; init; }
+        public string HeistGear { get; init; }
+        public string HeistBrooch { get; init; }
+        public string HeistTarget { get; init; }
+        public string HeistCloak { get; init; }
+        public string AbyssJewel { get; init; }
+        public string Trinkets { get; init; }
     }
 }

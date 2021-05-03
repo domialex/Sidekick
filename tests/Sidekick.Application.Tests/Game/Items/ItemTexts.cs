@@ -37,7 +37,15 @@ namespace Sidekick.Application.Tests.Game.Items
         public string SacredHybridFlask => localizer["SacredHybridFlask"];
         public string ViridianJewel => localizer["ViridianJewel"];
         public string SmallClusterJewel => localizer["SmallClusterJewel"];
-        public string LustrousWard => localizer["LustrousWard"];
+        public string HeistTool => localizer["HeistTool"];
         public string InscribedUltimatum => localizer["InscribedUltimatum"];
+        public string Reefbane => localizer["Reefbane"];
+        public string FarricChieftain => localizer["FarricChieftain"];
+        public string HeistBrooch => localizer["HeistBrooch"];
+        public string HeistCloak => localizer["HeistCloak"];
+        public string HeistGear => localizer["HeistGear"];
+        public string HeistTarget => localizer["HeistTarget"];
+        public string ThiefTrinket => localizer["ThiefTrinket"];
+        public string AbyssJewel => localizer["AbyssJewel"];
     }
 }
