@@ -225,6 +225,13 @@ namespace Sidekick.Infrastructure.PoeApi.Items.Metadatas
                 {
                     result.Rarity = itemRarity;
                 }
+
+                if (result.Category == Category.ItemisedMonster && result.Rarity == Rarity.Unique && string.IsNullOrEmpty(result.Name))
+                {
+                    result.Name = name;
+                }
+
+
             }
 
             return result;

@@ -102,7 +102,18 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     };
                 }
 
-                if (item.Metadata.Rarity == Rarity.Unique)
+                if (item.Metadata.Category == Category.ItemisedMonster)
+                {
+                    if (!string.IsNullOrEmpty(item.Metadata.Name))
+                    {
+                        request.Query.Term = item.Metadata.Name;
+                    }
+                    else if (!string.IsNullOrEmpty(item.Metadata.Type))
+                    {
+                        request.Query.Type = item.Metadata.Type;
+                    }
+                }
+                else if (item.Metadata.Rarity == Rarity.Unique)
                 {
                     request.Query.Name = item.Metadata.Name;
                     request.Query.Type = item.Metadata.Type;
