@@ -61,6 +61,7 @@ namespace Sidekick.Infrastructure.PoeNinja
                     case Category.Jewel: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.UniqueJewel)); break;
                     case Category.Map: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.UniqueMap)); break;
                     case Category.Weapon: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.UniqueWeapon)); break;
+                    case Category.ItemisedMonster: fetchItems.Add(poeNinjaClient.FetchItems(ItemType.Beast)); break;
                 }
             }
             else
