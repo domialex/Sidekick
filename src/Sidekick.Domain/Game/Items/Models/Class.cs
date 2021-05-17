@@ -3,13 +3,12 @@ namespace Sidekick.Domain.Game.Items.Models
     public enum Class
     {
         Undefined = 0,
-        Other = 1,
-        DivinationCard = 2,
-        StackableCurrency = 3,
-        Jewel = 4,
-        DelveStackableSocketableCurrency = 5,
-        MetamorphSample = 6,
-        AbyssJewel = 7,
+        DivinationCard = 1,
+        StackableCurrency = 2,
+        Jewel = 3,
+        DelveStackableSocketableCurrency = 4,
+        MetamorphSample = 5,
+        AbyssJewel = 6,
 
         // Accessory
         Amulet = 101,

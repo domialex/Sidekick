@@ -84,22 +84,6 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 logger.LogInformation("Querying Trade API.");
 
                 var request = new QueryRequest();
-                SetPropertyFilters(request.Query.Filters, propertyFilters);
-                SetModifierFilters(request.Query.Stats, modifierFilters);
-
-                // Auto Search 5+ Links
-                var highestCount = item.Sockets
-                    .GroupBy(x => x.Group)
-                    .Select(x => x.Count())
-                    .OrderByDescending(x => x)
-                    .FirstOrDefault();
-                if (highestCount >= 5)
-                {
-                    request.Query.Filters.SocketFilters.Filters.Links = new SocketFilterOption()
-                    {
-                        Min = highestCount,
-                    };
-                }
 
                 if (item.Metadata.Rarity == Rarity.Unique)
                 {
@@ -113,12 +97,13 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
-                    {
-                        request.Query.Type = item.Metadata.Type;
-                    }
+                    request.Query.Type = item.Metadata.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("nonunique");
                 }
+
+                SetPropertyFilters(request.Query, propertyFilters);
+                SetModifierFilters(request.Query.Stats, modifierFilters);
+                SetSocketFilters(item, request.Query.Filters);
 
                 if (item.Properties.AlternateQuality)
                 {
@@ -156,7 +141,7 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
             return null;
         }
 
-        private static void SetPropertyFilters(SearchFilters filters, PropertyFilters propertyFilters)
+        private static void SetPropertyFilters(Query query, PropertyFilters propertyFilters)
         {
             if (propertyFilters == null) return;
 
@@ -210,27 +195,29 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                     // Class.StackableCurrency => "currency",
                     Class.Staves => "weapon.staff",
                     Class.SupportSkillGems => "gem.supportgem",
-                    Class.ThrustingOneHandSwords => "",
+                    // Ignoring for now
+                    // Class.ThrustingOneHandSwords => "",
                     Class.Trinkets => "accessory.trinket",
                     Class.TwoHandAxes => "weapon.twoaxe",
                     Class.TwoHandMaces => "weapon.twomace",
                     Class.TwoHandSwords => "weapon.twosword",
                     Class.UtilityFlasks => "flask",
                     Class.Wands => "weapon.wand",
-                    Class.
+                    Class.Warstaves => "weapon.warstaff",
                     _ => null,
                 };
 
                 if (!string.IsNullOrEmpty(category))
                 {
-                    filters.TypeFilters.Filters.Category = new SearchFilterOption(category);
+                    query.Filters.TypeFilters.Filters.Category = new SearchFilterOption(category);
+                    query.Type = null;
                 }
             }
 
-            SetPropertyFilters(filters, propertyFilters.Armour);
-            SetPropertyFilters(filters, propertyFilters.Weapon);
-            SetPropertyFilters(filters, propertyFilters.Map);
-            SetPropertyFilters(filters, propertyFilters.Misc);
+            SetPropertyFilters(query.Filters, propertyFilters.Armour);
+            SetPropertyFilters(query.Filters, propertyFilters.Weapon);
+            SetPropertyFilters(query.Filters, propertyFilters.Map);
+            SetPropertyFilters(query.Filters, propertyFilters.Misc);
         }
 
         private static void SetPropertyFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
@@ -363,6 +350,23 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
                 Id = x.Modifier.Id,
                 Value = new SearchFilterValue(x),
             }));
+        }
+
+        private static void SetSocketFilters(Item item, SearchFilters filters)
+        {
+            // Auto Search 5+ Links
+            var highestCount = item.Sockets
+                .GroupBy(x => x.Group)
+                .Select(x => x.Count())
+                .OrderByDescending(x => x)
+                .FirstOrDefault();
+            if (highestCount >= 5)
+            {
+                filters.SocketFilters.Filters.Links = new SocketFilterOption()
+                {
+                    Min = highestCount,
+                };
+            }
         }
 
         public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, ModifierFilters modifierFilters = null)

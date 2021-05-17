@@ -22,6 +22,7 @@
 
                 <MudGrid Spacing="2">
                     <MudItem xs="12" sm="6">
+                        <ClassFilter @bind-Value="PropertyFilters.Class" Item="Item" />
                         <PropertyFiltersComponent Filters="PropertyFilters.Armour" Title="@Resources.Filters_Armour" />
                         <PropertyFiltersComponent Filters="PropertyFilters.Weapon" Title="@Resources.Filters_Weapon" />
                         <PropertyFiltersComponent Filters="PropertyFilters.Map" Title="@Resources.Filters_Map" />
