@@ -117,13 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AislingResearch" xml:space="preserve">
+  <data name="_AislingResearch" xml:space="preserve">
     <value>Hinzufügen verschleierter Modifikationen</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
-  <data name="AislingResearchTooltip" xml:space="preserve">
+  <data name="_AislingResearchTooltip" xml:space="preserve">
     <value>Level1: 1 Modifikation
 Level2: Geringe Chance für 2 Modifikationen
 Level3: 2 Modifikationen</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
     <value>Sphären des Vorboten</value>
@@ -134,8 +136,9 @@ Level3: 2 Modifikationen</value>
   <data name="CameriaResearch" xml:space="preserve">
     <value>Sextanten</value>
   </data>
-  <data name="CameriaTransportation" xml:space="preserve">
+  <data name="_CameriaTransportation" xml:space="preserve">
     <value>Veraltete Relikte</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
     <value>League spezifische Items (Kopfjäger möglich)</value>
@@ -179,7 +182,7 @@ Level3: 18 Sekunden</value>
   <data name="GuffIntervention" xml:space="preserve">
     <value>Veränderung Crafting</value>
   </data>
-  <data name="GuffInterventionTooltip" xml:space="preserve">
+  <data name="_GuffInterventionTooltip" xml:space="preserve">
     <value>1 Umwandlung
 200 Veränderung
 100 Aufwertung
@@ -190,6 +193,7 @@ Level3: 18 Sekunden</value>
 Level1: 8 Sekunden
 Level2: 12 Sekunden
 Level3: 18 Sekunden</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="GuffResearch" xml:space="preserve">
     <value>Annulierung/Erhabene Crafting</value>
@@ -237,15 +241,12 @@ Level3: 18 Sekunden</value>
   <data name="HillockFortificationTooltip" xml:space="preserve">
     <value>Level1: 24 %
 Level2: 26 %
-Level3: 28 %</value>
+Level3: 28 %
+Level4: 30 %</value>
   </data>
-  <data name="HillockIntervention" xml:space="preserve">
+  <data name="_HillockIntervention" xml:space="preserve">
     <value>Karten Qualität</value>
-  </data>
-  <data name="HillockInterventionTooltip" xml:space="preserve">
-    <value>Level1: 25 %
-Level2: 30 %
-Level3: 35 %</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="HillockResearch" xml:space="preserve">
     <value>Flaschen Qualität</value>
@@ -253,7 +254,8 @@ Level3: 35 %</value>
   <data name="HillockResearchTooltip" xml:space="preserve">
     <value>Level1: 22 %
 Level2: 24 %
-Level3: 26%</value>
+Level3: 26%
+Level4: 28%</value>
   </data>
   <data name="HillockTransportation" xml:space="preserve">
     <value>Waffen Qualität</value>
@@ -261,10 +263,12 @@ Level3: 26%</value>
   <data name="HillockTransportationTooltip" xml:space="preserve">
     <value>Level1: 24 %
 Level2: 26 %
-Level3: 28%</value>
+Level3: 28%
+Level4: 30%/value>
   </data>
-  <data name="ItThatFledFortification" xml:space="preserve">
+  <data name="_ItThatFledFortification" xml:space="preserve">
     <value>Abgrund Juwele</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="ItThatFledIntervention" xml:space="preserve">
     <value>Risse Skarabäus</value>
@@ -286,8 +290,9 @@ Level3: Pur</value>
   <data name="JanusIntervention" xml:space="preserve">
     <value>Perandus Skarabäus</value>
   </data>
-  <data name="JanusResearch" xml:space="preserve">
+  <data name="_JanusResearch" xml:space="preserve">
     <value>Perandus Münzen</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="JanusTransportation" xml:space="preserve">
     <value>Qualitäts Währung</value>
@@ -330,10 +335,11 @@ Level3: Level 3 Talisman</value>
   <data name="LeoResearch" xml:space="preserve">
     <value>Währungs Nutzung</value>
   </data>
-  <data name="LeoResearchTooltip" xml:space="preserve">
+  <data name="_LeoResearchTooltip" xml:space="preserve">
     <value>Level1: Gesegnete Sphäre
 Level2: Göttliche Sphäre
 Level3: Erhabene Sphäre</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="LeoTransportation" xml:space="preserve">
     <value>Silber Münzen</value>
@@ -341,8 +347,9 @@ Level3: Erhabene Sphäre</value>
   <data name="RikerFortification" xml:space="preserve">
     <value>Wähle ein einzigartiges Item</value>
   </data>
-  <data name="RikerIntervention" xml:space="preserve">
+  <data name="_RikerIntervention" xml:space="preserve">
     <value>Wähle eine Weissagungskarte</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="RikerResearch" xml:space="preserve">
     <value>Wähle ein verschleiertes Item</value>
@@ -415,7 +422,8 @@ Itemstufe 100 Items</value>
   <data name="VoriciResearchTooltip" xml:space="preserve">
     <value>Level1: 1 Weißer Sockel
 Level2: 1-2 Weiße Sockel
-Level3: 1-3 Weiße Sockel</value>
+Level3: 1-3 Weiße Sockel
+Level3: 1-6 Weiße Sockel</value>
   </data>
   <data name="VoriciTransportation" xml:space="preserve">
     <value>Qualitäts Edelsteine</value>

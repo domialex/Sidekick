@@ -117,20 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AislingTransportation" xml:space="preserve">
+  <data name="_AislingTransportation" xml:space="preserve">
     <value>隱匿武器與飾品</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
-  <data name="AislingFortification" xml:space="preserve">
+  <data name="_AislingFortification" xml:space="preserve">
     <value>隱匿護甲與飾品</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
-  <data name="AislingResearch" xml:space="preserve">
+  <data name="_AislingResearch" xml:space="preserve">
     <value>增加隱匿詞綴</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="AislingIntervention" xml:space="preserve">
     <value>煉魔聖甲蟲</value>
   </data>
-  <data name="CameriaTransportation" xml:space="preserve">
+  <data name="_CameriaTransportation" xml:space="preserve">
     <value>聯盟限定傳奇</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
     <value>神諭石</value>
@@ -198,14 +202,16 @@
   <data name="HillockResearch" xml:space="preserve">
     <value>藥劑品質</value>
   </data>
-  <data name="HillockIntervention" xml:space="preserve">
+  <data name="_HillockIntervention" xml:space="preserve">
     <value>地圖品質</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="ItThatFledTransportation" xml:space="preserve">
     <value>裂痕裂片</value>
   </data>
-  <data name="ItThatFledFortification" xml:space="preserve">
+  <data name="_ItThatFledFortification" xml:space="preserve">
     <value>深淵珠寶</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="ItThatFledResearch" xml:space="preserve">
     <value>升級 裂痕石</value>
@@ -219,8 +225,9 @@
   <data name="JanusFortification" xml:space="preserve">
     <value>通貨碎片</value>
   </data>
-  <data name="JanusResearch" xml:space="preserve">
+  <data name="_JanusResearch" xml:space="preserve">
     <value>普蘭德斯金幣</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="JanusIntervention" xml:space="preserve">
     <value>普蘭德斯聖甲蟲</value>
@@ -270,8 +277,9 @@
   <data name="RikerResearch" xml:space="preserve">
     <value>選擇隱匿裝備</value>
   </data>
-  <data name="RikerIntervention" xml:space="preserve">
+  <data name="_RikerIntervention" xml:space="preserve">
     <value>選擇命運卡</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="RinTransportation" xml:space="preserve">
     <value>普通地圖</value>
@@ -321,10 +329,11 @@
   <data name="VoriciIntervention" xml:space="preserve">
     <value>塑者聖甲蟲</value>
   </data>
-  <data name="AislingResearchTooltip" xml:space="preserve">
+  <data name="_AislingResearchTooltip" xml:space="preserve">
     <value>階級1: 一詞
 階級2: 低機率兩詞
 階級3: 兩詞</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
     <value>可能出獵首</value>
@@ -375,22 +384,21 @@
   <data name="HillockTransportationTooltip" xml:space="preserve">
     <value>階級1: 24 %
 階級2: 26 %
-階級3: 28 %</value>
+階級3: 28 %
+階級4: 30 %</value>
   </data>
   <data name="HillockFortificationTooltip" xml:space="preserve">
     <value>階級1: 24 %
 階級2: 26 %
-階級3: 28 %</value>
+階級3: 28 %
+階級4: 30 %</value>
   </data>
   <data name="HillockResearchTooltip" xml:space="preserve">
     <value>階級1: 22 %
 階級2: 24 %
-階級3: 26 %</value>
+階級3: 26 %
+階級4: 28 %</value>
   </data>
-  <data name="HillockInterventionTooltip" xml:space="preserve">
-    <value>階級1: 25 %
-階級2: 30 %
-階級3: 35 %</value>
   </data>
   <data name="ItThatFledResearchTooltip" xml:space="preserve">
     <value>階級1: 充能
@@ -402,10 +410,11 @@
 階級2: 階級 2 魔符
 階級3: 階級 3 魔符</value>
   </data>
-  <data name="LeoResearchTooltip" xml:space="preserve">
+  <data name="_LeoResearchTooltip" xml:space="preserve">
     <value>階級1: 祝福石
 階級2: 神聖石
 階級3: 崇高石</value>
+    <comment>Requires updated translation, Remove leading _ when done</comment>
   </data>
   <data name="ToraTransportationTooltip" xml:space="preserve">
     <value>時間限制: 8 秒
@@ -427,7 +436,8 @@
   <data name="VoriciResearchTooltip" xml:space="preserve">
     <value>階級1: 1個白色插槽
 階級2: 1~2個白色插槽
-階級3: 1~3個白色插槽</value>
+階級3: 1~3個白色插槽
+階級4: 1~6個白色插槽</value>
   </data>
   <data name="AislingName" xml:space="preserve">
     <value>愛斯琳</value>
