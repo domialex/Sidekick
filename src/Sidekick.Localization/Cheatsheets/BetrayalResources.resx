@@ -316,7 +316,7 @@
     <value>Shaper Scarab</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
-    <value>Level 4: Adds veiled mod</value>
+    <value>Level 4: Adds 1-2 veiled mods</value>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
     <value>League Specific Items (Headhunter possible)</value>
