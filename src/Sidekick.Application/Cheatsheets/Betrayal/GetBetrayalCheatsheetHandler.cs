@@ -31,7 +31,7 @@ namespace Sidekick.Presentation.Cheatsheets.Betrayal
             {
                 Transportation = new BetrayalReward(resources.AislingTransportation, RewardValue.NoValue),
                 Fortification = new BetrayalReward(resources.AislingFortification, RewardValue.NoValue),
-                Research = new BetrayalReward(resources.AislingResearch, RewardValue.Low, resources.AislingResearchTooltip),
+                Research = new BetrayalReward(resources.AislingResearch, RewardValue.Medium, resources.AislingResearchTooltip),
                 Intervention = new BetrayalReward(resources.AislingIntervention, RewardValue.Low)
             });
 
