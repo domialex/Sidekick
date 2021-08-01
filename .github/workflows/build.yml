@@ -53,12 +53,3 @@ jobs:
       with:
         name: CoverageReport # Artifact name        
         path: coveragereport # Directory containing files to upload
-
-    - name: Tests - Coverage Report
-      uses: 5monkeys/cobertura-action@v8
-      with:
-        repo_token: ${{ github.token }}
-        report_name: Tests - Coverage
-        path: tests\Sidekick.Application.Tests\coverage.cobertura.xml
-        minimum_coverage: 0
-        only_changed_files: true

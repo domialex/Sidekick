@@ -18,7 +18,6 @@ namespace Sidekick.Application.Settings
         public const string FileName = "Sidekick_settings.json";
         private readonly IMediator mediator;
         private readonly SidekickSettings settings;
-        private readonly IKeybindProvider keybindProvider;
 
         public SaveSettingsHandler(
             IMediator mediator,
@@ -27,7 +26,6 @@ namespace Sidekick.Application.Settings
         {
             this.mediator = mediator;
             this.settings = settings;
-            this.keybindProvider = keybindProvider;
         }
 
         public async Task<Unit> Handle(SaveSettingsCommand request, CancellationToken cancellationToken)

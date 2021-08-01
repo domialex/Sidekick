@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AislingTransportation" xml:space="preserve">
-    <value>Veiled weapons/jewellery</value>
+    <value>Double-Veiled weapons/jewellery</value>
   </data>
   <data name="AislingResearch" xml:space="preserve">
-    <value>Add veiled mod(s)</value>
+    <value>Veiled chaos orb (T4 - adds veiled mod)</value>
   </data>
   <data name="CameriaTransportation" xml:space="preserve">
-    <value>Timeworn Relics</value>
+    <value>Timeworn Item</value>
   </data>
   <data name="CameriaFortification" xml:space="preserve">
     <value>Harbinger Orbs</value>
@@ -193,13 +193,13 @@
     <value>Flask Quality</value>
   </data>
   <data name="HillockIntervention" xml:space="preserve">
-    <value>Map Quality</value>
+    <value>Abyss Scarab</value>
   </data>
   <data name="ItThatFledTransportation" xml:space="preserve">
     <value>Breach Splinter</value>
   </data>
   <data name="ItThatFledFortification" xml:space="preserve">
-    <value>Abyss Jewels</value>
+    <value>Enchanted maps (Additional Breach)</value>
   </data>
   <data name="ItThatFledResearch" xml:space="preserve">
     <value>Upgrade Breachstone</value>
@@ -214,7 +214,7 @@
     <value>Currency Shards</value>
   </data>
   <data name="JanusResearch" xml:space="preserve">
-    <value>Perandus Coins</value>
+    <value>Perandus Coins (Spawns Perandus)</value>
   </data>
   <data name="JanusIntervention" xml:space="preserve">
     <value>Perandus Scarab</value>
@@ -265,7 +265,7 @@
     <value>Take One Veiled</value>
   </data>
   <data name="RikerIntervention" xml:space="preserve">
-    <value>Take On Div Card</value>
+    <value>Blighted Scarab</value>
   </data>
   <data name="RinTransportation" xml:space="preserve">
     <value>Normal Maps</value>
@@ -316,9 +316,7 @@
     <value>Shaper Scarab</value>
   </data>
   <data name="AislingResearchTooltip" xml:space="preserve">
-    <value>Level 1: 1 mod&lt;br /&gt;
-Level 2: chance for 2 mods&lt;br /&gt;
-Level 3: 2 mods</value>
+    <value>Level 4: Adds 1-2 veiled mods</value>
   </data>
   <data name="CameriaTransportationTooltip" xml:space="preserve">
     <value>League Specific Items (Headhunter possible)</value>
@@ -364,27 +362,26 @@ Level3: 18 Seconds</value>
 1 Vaal
 Level1: 8 Seconds
 Level2: 12 Seconds
-Level3: 18 Seconds</value>
+Level3: 18 Seconds
+Level4: All basic currency</value>
   </data>
   <data name="HillockTransportationTooltip" xml:space="preserve">
     <value>Level1: 24 %
 Level2: 26 %
-Level3: 28%</value>
+Level3: 28%
+Level4: 30 %</value>
   </data>
   <data name="HillockFortificationTooltip" xml:space="preserve">
     <value>Level1: 24 %
 Level2: 26 %
-Level3: 28 %</value>
+Level3: 28 %
+Level4: 30 %</value>
   </data>
   <data name="HillockResearchTooltip" xml:space="preserve">
     <value>Level1: 22 %
 Level2: 24 %
-Level3: 26%</value>
-  </data>
-  <data name="HillockInterventionTooltip" xml:space="preserve">
-    <value>Level1: 25 %
-Level2: 30 %
-Level3: 35 %</value>
+Level3: 26 %
+Level4: 28 %</value>
   </data>
   <data name="ItThatFledResearchTooltip" xml:space="preserve">
     <value>Level1: Charged
@@ -399,7 +396,8 @@ Level3: Level 3 Talisman</value>
   <data name="LeoResearchTooltip" xml:space="preserve">
     <value>Level1: Blessed Orb
 Level2: Divine Orb
-Level3: Exalted Orb</value>
+Level3: Exalted Orb
+Level4: 2 Exalted Orbs</value>
   </data>
   <data name="ToraTransportationTooltip" xml:space="preserve">
     <value>Time Limit: 8 Seconds
@@ -421,7 +419,8 @@ Level3: 200m Exp</value>
   <data name="VoriciResearchTooltip" xml:space="preserve">
     <value>Level1: 1 White Socket
 Level2: 1-2 White Sockets
-Level3: 1-3 White Sockets</value>
+Level3: 1-3 White Sockets
+Level4: 1-6 White Sockets</value>
   </data>
   <data name="CameriaName" xml:space="preserve">
     <value>Cameria</value>
@@ -505,7 +504,7 @@ Level3: 1-3 White Sockets</value>
     <value>Aisling</value>
   </data>
   <data name="AislingFortification" xml:space="preserve">
-    <value>Veiled armour/jewellery</value>
+    <value>Double-Veiled armour/jewellery</value>
   </data>
   <data name="AislingIntervention" xml:space="preserve">
     <value>Metamorph scarabs</value>

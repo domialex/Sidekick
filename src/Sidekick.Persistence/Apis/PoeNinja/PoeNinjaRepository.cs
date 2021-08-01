@@ -22,6 +22,8 @@ namespace Sidekick.Persistence.Apis.PoeNinja
             using var dbContext = new SidekickContext(options);
 
             var name = item.Original.Name;
+            var type = item.Original.Type;
+
             var translation = await dbContext.NinjaTranslations.FirstOrDefaultAsync(x => x.Translation == name);
             if (translation != null)
             {
@@ -29,7 +31,7 @@ namespace Sidekick.Persistence.Apis.PoeNinja
             }
 
             var query = dbContext.NinjaPrices
-                .Where(x => x.Name == name);
+                .Where(x => x.Name == name || x.Name == type);
 
             if (item.Properties != null)
             {
