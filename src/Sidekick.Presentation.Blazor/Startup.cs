@@ -23,6 +23,8 @@ using Sidekick.Mock.Platforms;
 using Sidekick.Mock.Views;
 using Sidekick.Persistence;
 using Sidekick.Platform;
+using Sidekick.Modules.Cheatsheets;
+using Sidekick.Common;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -41,7 +43,7 @@ namespace Sidekick.Presentation.Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services
+            var mvcBuilder = services
                 .AddRazorPages(options =>
                 {
                     options.RootDirectory = "/Shared";
@@ -72,7 +74,15 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Infrastructure"),
                     Assembly.Load("Sidekick.Persistence"),
                     Assembly.Load("Sidekick.Presentation.Blazor"),
-                    Assembly.Load("Sidekick.Mock"));
+                    Assembly.Load("Sidekick.Mock"))
+
+                // Modules
+                .AddSidekickCheatsheets();
+
+            foreach(var assembly in SidekickGlobals.Assemblies)
+            {
+                mvcBuilder.AddApplicationPart(assembly);
+            }
 
             // Mock services
             services.AddSingleton<IViewLocator, MockViewLocator>();

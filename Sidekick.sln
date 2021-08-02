@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{9B41443D-4D1E-4DF3-9DA5-522B0AAB40A0}"
 	ProjectSection(SolutionItems) = preProject
@@ -50,6 +50,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application.Tests", "tests\Sidekick.Application.Tests\Sidekick.Application.Tests.csproj", "{08B9CA00-4376-4D46-A22C-2E928BB0281F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Mock", "src\Sidekick.Mock\Sidekick.Mock.csproj", "{1C2974D8-B04E-4BF5-8CD8-65A82EE89493}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.Cheatsheets", "src\Sidekick.Modules.Cheatsheets\Sidekick.Modules.Cheatsheets.csproj", "{1182B4D2-EFD9-4155-8021-1A44897D25D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Common.Blazor", "src\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj", "{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Common", "src\Sidekick.Common\Sidekick.Common.csproj", "{484EAA27-27A0-4B0E-BA43-B5047D697CAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +123,18 @@ Global
 		{1C2974D8-B04E-4BF5-8CD8-65A82EE89493}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C2974D8-B04E-4BF5-8CD8-65A82EE89493}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C2974D8-B04E-4BF5-8CD8-65A82EE89493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1182B4D2-EFD9-4155-8021-1A44897D25D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1182B4D2-EFD9-4155-8021-1A44897D25D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1182B4D2-EFD9-4155-8021-1A44897D25D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1182B4D2-EFD9-4155-8021-1A44897D25D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{484EAA27-27A0-4B0E-BA43-B5047D697CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484EAA27-27A0-4B0E-BA43-B5047D697CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484EAA27-27A0-4B0E-BA43-B5047D697CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484EAA27-27A0-4B0E-BA43-B5047D697CAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +148,8 @@ Global
 		{243A7096-6057-4F7E-8813-30C6A03B03A8} = {FE50D09B-DA05-42C4-9A8C-014EC3A24B25}
 		{08B9CA00-4376-4D46-A22C-2E928BB0281F} = {1D8BF515-81E9-4769-9B27-24DFB8D8BDCC}
 		{1C2974D8-B04E-4BF5-8CD8-65A82EE89493} = {1D8BF515-81E9-4769-9B27-24DFB8D8BDCC}
+		{A78010BD-2B6B-4D13-A1A5-F90B1C395C1A} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
+		{484EAA27-27A0-4B0E-BA43-B5047D697CAE} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B5631D-95B3-4007-BE6B-C9BBE799D014}

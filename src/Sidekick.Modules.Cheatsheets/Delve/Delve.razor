@@ -1,0 +1,123 @@
+@page "/cheatsheets/delve"
+@layout CheatsheetLayout
+
+<MudGrid Spacing="1">
+    @foreach (var region in Regions)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Region Model="region" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
+    [Inject] private DelveResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private List<RegionModel> Regions { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(CheatsheetResources.Delve);
+        Regions = new List<RegionModel>
+{
+            new RegionModel(Resources.Mines)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.SerratedFossil, RewardValue.Medium),
+                    new FossilModel(Resources.MetallicFossil, RewardValue.Low),
+                    new FossilModel(Resources.AethericFossil, RewardValue.NoValue),
+                    new FossilModel(Resources.PristineFossil, RewardValue.NoValue),
+                }
+            },
+
+            new RegionModel(Resources.MagmaFissure)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.EnchantedFossil, RewardValue.Medium),
+                    new FossilModel(Resources.PrismaticFossil, RewardValue.Low),
+                    new FossilModel(Resources.EncrustedFossil, RewardValue.NoValue, true),
+                    new FossilModel(Resources.PristineFossil, RewardValue.NoValue),
+                    new FossilModel(Resources.ScorchedFossil, RewardValue.NoValue),
+                }
+            },
+
+            new RegionModel(Resources.SulfurVents)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.PerfectFossil, RewardValue.Medium),
+                    new FossilModel(Resources.MetallicFossil, RewardValue.Low),
+                    new FossilModel(Resources.AethericFossil, RewardValue.NoValue),
+                    new FossilModel(Resources.EncrustedFossil, RewardValue.NoValue, true),
+                }
+            },
+
+            new RegionModel(Resources.FrozenHollow)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.SanctifiedFossil, RewardValue.High, true),
+                    new FossilModel(Resources.SerratedFossil, RewardValue.Medium),
+                    new FossilModel(Resources.ShudderingFossil, RewardValue.Medium),
+                    new FossilModel(Resources.PrismaticFossil, RewardValue.Low),
+                    new FossilModel(Resources.FrigidFossil, RewardValue.NoValue),
+                }
+            },
+
+            new RegionModel(Resources.FungalCaverns)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.CorrodedFossil, RewardValue.Medium),
+                    new FossilModel(Resources.GildedFossil, RewardValue.Medium, true),
+                    new FossilModel(Resources.PerfectFossil, RewardValue.Medium),
+                    new FossilModel(Resources.AberrantFossil, RewardValue.Low),
+                    new FossilModel(Resources.DenseFossil, RewardValue.Low),
+                }
+            },
+
+            new RegionModel(Resources.PetrifiedForest)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.SanctifiedFossil, RewardValue.High, true),
+                    new FossilModel(Resources.CorrodedFossil, RewardValue.Medium),
+                    new FossilModel(Resources.BoundFossil, RewardValue.Low),
+                    new FossilModel(Resources.DenseFossil, RewardValue.Low),
+                    new FossilModel(Resources.JaggedFossil, RewardValue.NoValue),
+                }
+            },
+
+            new RegionModel(Resources.AbyssalDepths)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.GildedFossil, RewardValue.Medium, true),
+                    new FossilModel(Resources.AberrantFossil, RewardValue.Low),
+                    new FossilModel(Resources.BoundFossil, RewardValue.Low),
+                    new FossilModel(Resources.LucentFossil, RewardValue.NoValue, true),
+                }
+            },
+
+            new RegionModel(Resources.FossilRoom)
+            {
+                Fossils = new List<FossilModel>()
+{
+                    new FossilModel(Resources.BloodstainedFossil, RewardValue.High),
+                    new FossilModel(Resources.FacetedFossil, RewardValue.High),
+                    new FossilModel(Resources.FracturedFossil, RewardValue.High),
+                    new FossilModel(Resources.GlyphicFossil, RewardValue.High),
+                    new FossilModel(Resources.HollowFossil, RewardValue.High),
+                    new FossilModel(Resources.TangledFossil, RewardValue.Medium),
+                }
+            },
+        };
+
+        return base.OnInitializedAsync();
+    }
+}

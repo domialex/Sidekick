@@ -1,0 +1,183 @@
+@page "/cheatsheets/incursion"
+@layout CheatsheetLayout
+
+<UltimatumAlert />
+<MudGrid Spacing="1">
+    @foreach (var room in Rooms)
+    {
+        <MudItem xs="12" sm="6" md="4" lg="3">
+            <Room Model="room" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private CheatsheetResources CheatsheetResources { get; set; }
+    [Inject] private IncursionResources Resources { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+
+    private List<RoomModel> Rooms { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(CheatsheetResources.Incursion);
+
+        Rooms = new List<RoomModel>()
+    {
+            new RoomModel(string.Empty, Resources.GuardhouseModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.Guardhouse, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.Barracks, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.HallOfWar, RewardValue.Low),
+            },
+            new RoomModel(Resources.WorkshopContains, Resources.WorkshopModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.Workshop, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.EngineeringDepartment, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.Factory, RewardValue.NoValue),
+            },
+            new RoomModel(Resources.ExplosivesRoomContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.ExplosivesRoom, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.DemolitionLab, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.ShrineOfUnmaking, RewardValue.Low),
+            },
+            new RoomModel(Resources.SplinterResearchLabContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.SplinterResearchLab, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.BreachContainmentChamber, RewardValue.Medium),
+                Level3 = new RoomTierModel(Resources.HouseOfOthers, RewardValue.High),
+            },
+            new RoomModel(Resources.VaultContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.Vault, RewardValue.Medium),
+                Level2 = new RoomTierModel(Resources.Treasury, RewardValue.Medium),
+                Level3 = new RoomTierModel(Resources.WealthOfTheVaal, RewardValue.High),
+            },
+            new RoomModel(Resources.SparringRoomContains, Resources.SparringRoomModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.SparringRoom, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.ArenaOfValour, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.HallOfChampions, RewardValue.NoValue),
+            },
+            new RoomModel(Resources.ArmourersWorkshopContains, Resources.ArmourersWorkshopModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.ArmourersWorkshop, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.Armoury, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.ChamberOfIron, RewardValue.NoValue),
+            },
+            new RoomModel(Resources.JewellersWorkshopContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.JewellersWorkshop, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.JewelleryForge, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.GlitteringHalls, RewardValue.Low),
+            },
+            new RoomModel(Resources.SurveyorsStudyContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.SurveyorsStudy, RewardValue.Medium),
+                Level2 = new RoomTierModel(Resources.OfficeOfCartography, RewardValue.Medium),
+                Level3 = new RoomTierModel(Resources.AtlasOfWorlds, RewardValue.Medium),
+            },
+            new RoomModel(Resources.GemcuttersWorkshopContains, string.Empty)
+            {
+                Tooltip = Resources.DoubleGemCorruptionTooltip,
+                Level1 = new RoomTierModel(Resources.GemcuttersWorkshop, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.DepartmentOfThaumaturgy, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.DoryanisInstitute, RewardValue.High),
+            },
+            new RoomModel(Resources.TormentCellsContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.TormentCells, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.TortureCages, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.SadistsDen, RewardValue.NoValue),
+            },
+            new RoomModel(Resources.StrongboxChamberContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.StrongboxChamber, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.HallOfLocks, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.CourtOfTheSealedDeath, RewardValue.Low),
+            },
+            new RoomModel(Resources.HallOfMettleContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.HallOfMettle, RewardValue.Medium),
+                Level2 = new RoomTierModel(Resources.HallOfHeroes, RewardValue.Medium),
+                Level3 = new RoomTierModel(Resources.HallOfLegends, RewardValue.High),
+            },
+            new RoomModel(Resources.SacrificalChamberContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.SacrificialChamber, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.HallOfOfferings, RewardValue.Medium),
+                Level3 = new RoomTierModel(Resources.ApexOfAscension, RewardValue.High),
+            },
+            new RoomModel(Resources.StorageRoomContains, string.Empty)
+            {
+                Level1 = new RoomTierModel(Resources.StorageRoom, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.Warehouses, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.MuseumOfArtifacts, RewardValue.Medium),
+            },
+            new RoomModel(Resources.CorruptionChamberContains, Resources.CorruptionChamberModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.CorruptionChamber, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.CatalystOfCorruption, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.LocusOfCorruption, RewardValue.High),
+            },
+            new RoomModel(Resources.ShrineOfEmpowermentContains, Resources.ShrineOfEmpowermentModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.ShrineOfEmpowerment, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.SanctumOfUnity, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.TempleNexus, RewardValue.High),
+            },
+            new RoomModel(Resources.TempestGeneratorContains, Resources.TempestGeneratorModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.TempestGenerator, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.HurricaneEngine, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.StormOfCorruption, RewardValue.Medium),
+            },
+            new RoomModel(Resources.PoisonGardenContains, Resources.PoisonGardenModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.PoisonGarden, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.CultivarChamber, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.ToxicGrove, RewardValue.Low),
+            },
+            new RoomModel(Resources.TrapWorkshopContains, Resources.TrapWorkshopModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.TrapWorkshop, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.TempleDefenseWorkshop, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.DefenseResearchLab, RewardValue.Low),
+            },
+            new RoomModel(Resources.PoolsOfRestorationContains, Resources.PoolsOfRestorationModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.PoolsOfRestoration, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.SanctumOfVitality, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.SanctumOfImmortality, RewardValue.Low),
+            },
+            new RoomModel(Resources.FlameWorkshopContains, Resources.FlameWorkshopModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.FlameWorkshop, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.OmnitectForge, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.CrucibleOfFlame, RewardValue.Low),
+            },
+            new RoomModel(Resources.LightningWorkshopContains, Resources.LightningWorkshopModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.LightningWorkshop, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.OmnitectReactorPlant, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.ConduitOfLightning, RewardValue.Low),
+            },
+            new RoomModel(Resources.HatcheryContains, Resources.HatcheryModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.Hatchery, RewardValue.NoValue),
+                Level2 = new RoomTierModel(Resources.AutomatonLab, RewardValue.NoValue),
+                Level3 = new RoomTierModel(Resources.HybridisationChamber, RewardValue.Low),
+            },
+            new RoomModel(Resources.RoyalMeetingRoomContains, Resources.RoyalMeetingRoomModifiers)
+            {
+                Level1 = new RoomTierModel(Resources.RoyalMeetingRoom, RewardValue.Low),
+                Level2 = new RoomTierModel(Resources.HallOfLords, RewardValue.Low),
+                Level3 = new RoomTierModel(Resources.ThroneOfAtziri, RewardValue.Medium),
+            },
+        };
+
+        await base.OnInitializedAsync();
+    }
+}
