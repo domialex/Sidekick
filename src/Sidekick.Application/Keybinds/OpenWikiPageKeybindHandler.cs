@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Errors;
@@ -8,7 +9,6 @@ using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds

@@ -1,19 +1,17 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Keybinds;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 {
     public class KeybindProvider : IKeybindProvider, IDisposable
     {
-        private readonly IMediator mediator;
         private readonly ILogger<KeybindProvider> logger;
         private readonly ISettings settings;
         private readonly IKeyboardProvider keyboardProvider;
@@ -21,14 +19,12 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
         private readonly IServiceProvider serviceProvider;
 
         public KeybindProvider(
-            IMediator mediator,
             ILogger<KeybindProvider> logger,
             ISettings settings,
             IKeyboardProvider keyboardProvider,
             IProcessProvider processProvider,
             IServiceProvider serviceProvider)
         {
-            this.mediator = mediator;
             this.logger = logger;
             this.settings = settings;
             this.keyboardProvider = keyboardProvider;

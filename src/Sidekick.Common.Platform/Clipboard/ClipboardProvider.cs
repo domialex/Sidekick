@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Platform.Clipboard
+namespace Sidekick.Common.Platform.Clipboard
 {
     public class ClipboardProvider : IClipboardProvider
     {

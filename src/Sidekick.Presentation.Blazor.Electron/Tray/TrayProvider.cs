@@ -1,13 +1,8 @@
-using System;
 using System.Collections.Generic;
 using ElectronNET.API.Entities;
-using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Trade.Commands;
-using Sidekick.Domain.Platforms;
+using Sidekick.Common.Platform;
 using Sidekick.Domain.Views;
 using Sidekick.Localization.Tray;
 
@@ -16,24 +11,18 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
     public class TrayProvider
     {
         private readonly IWebHostEnvironment webHostEnvironment;
-        private readonly ILogger<TrayProvider> logger;
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IMediator mediator;
         private readonly TrayResources resources;
 
         public TrayProvider(IWebHostEnvironment webHostEnvironment,
-                            ILogger<TrayProvider> logger,
                             IViewLocator viewLocator,
                             IClipboardProvider clipboardProvider,
-                            IMediator mediator,
                             TrayResources resources)
         {
             this.webHostEnvironment = webHostEnvironment;
-            this.logger = logger;
             this.viewLocator = viewLocator;
             this.clipboardProvider = clipboardProvider;
-            this.mediator = mediator;
             this.resources = resources;
         }
 

@@ -1,11 +1,10 @@
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Domain.Platforms;
-using Sidekick.Platform.Clipboard;
-using Sidekick.Platform.Windows.Keyboards;
-using Sidekick.Platform.Windows.Processes;
+using Sidekick.Common.Platform.Clipboard;
+using Sidekick.Common.Platform.Windows.Keyboards;
+using Sidekick.Common.Platform.Windows.Processes;
 
-namespace Sidekick.Platform
+namespace Sidekick.Common.Platform
 {
     public static class StartupExtensions
     {

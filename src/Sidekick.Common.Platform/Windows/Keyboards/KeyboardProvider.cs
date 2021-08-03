@@ -9,9 +9,8 @@ using Microsoft.Extensions.Logging;
 using NeatInput.Windows;
 using NeatInput.Windows.Events;
 using NeatInput.Windows.Processing.Keyboard.Enums;
-using Sidekick.Domain.Platforms;
 
-namespace Sidekick.Platform.Windows.Keyboards
+namespace Sidekick.Common.Platform.Windows.Keyboards
 {
     public class KeyboardProvider : IKeyboardProvider, IDisposable, IKeyboardEventReceiver
     {

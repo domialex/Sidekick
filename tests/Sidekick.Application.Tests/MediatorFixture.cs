@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moq;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Infrastructure;
@@ -58,7 +58,10 @@ namespace Sidekick.Application.Tests
                 .AddSidekickApplication(configuration)
                 .AddSidekickInfrastructure()
                 .AddSidekickLocalization()
-                .AddSidekickPersistence();
+                .AddSidekickPersistence()
+
+                // Modules
+                .AddSidekickSettings(configuration);
 
             services.AddSingleton<IViewLocator, MockViewLocator>();
             services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
@@ -69,12 +72,9 @@ namespace Sidekick.Application.Tests
 
             Mediator = serviceProvider.GetRequiredService<IMediator>();
             var settingsService = serviceProvider.GetRequiredService<ISettingsService>();
-            await settingsService.Save(new Settings()
-            {
-                Language_Parser = "en",
-                Language_UI = "en",
-                LeagueId = "Standard",
-            }, true);
+            await settingsService.Save(nameof(ISettings.Language_Parser), "en");
+            await settingsService.Save(nameof(ISettings.Language_UI), "en");
+            await settingsService.Save(nameof(ISettings.LeagueId), "Standard");
             await Mediator.Send(new InitializeCommand(true, false));
         }
     }

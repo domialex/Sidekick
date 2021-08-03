@@ -30,7 +30,7 @@ namespace Sidekick.Modules.Settings
             var propertyType = settings.GetType().GetProperty(property);
             var propertyValue = propertyType.GetValue(settings);
 
-            if (propertyValue != null && value != null && value.Equals(value))
+            if (propertyValue != null && value != null && value.Equals(propertyValue))
             {
                 return;
             }

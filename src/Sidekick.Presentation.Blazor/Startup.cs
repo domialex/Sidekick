@@ -9,9 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sidekick.Application;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
@@ -23,7 +23,6 @@ using Sidekick.Mock.Views;
 using Sidekick.Modules.Cheatsheets;
 using Sidekick.Modules.Settings;
 using Sidekick.Persistence;
-using Sidekick.Platform;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -112,12 +111,9 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
-                await settingsService.Save(new Settings()
-                {
-                    Language_Parser = "en",
-                    Language_UI = "en",
-                    LeagueId = "Expedition",
-                }, true);
+                await settingsService.Save(nameof(ISettings.Language_Parser), "en");
+                await settingsService.Save(nameof(ISettings.Language_UI), "en");
+                await settingsService.Save(nameof(ISettings.LeagueId), "Expedition");
                 await mediator.Send(new InitializeCommand(true, false));
             });
         }

@@ -27,13 +27,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
+    <ProjectReference Include="..\Sidekick.Common.Platform\Sidekick.Common.Platform.csproj" />
     <ProjectReference Include="..\Sidekick.Extensions\Sidekick.Extensions.csproj" />
     <ProjectReference Include="..\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\Sidekick.Mock\Sidekick.Mock.csproj" />
     <ProjectReference Include="..\Sidekick.Modules.Cheatsheets\Sidekick.Modules.Cheatsheets.csproj" />
     <ProjectReference Include="..\Sidekick.Modules.Settings\Sidekick.Modules.Settings.csproj" />
     <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
-    <ProjectReference Include="..\Sidekick.Platform\Sidekick.Platform.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\images\influences\" />

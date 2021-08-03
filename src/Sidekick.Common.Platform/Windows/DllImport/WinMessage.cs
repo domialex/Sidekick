@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct WinMessage

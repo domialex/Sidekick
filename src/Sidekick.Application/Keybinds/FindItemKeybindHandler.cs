@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Platform;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Keybinds
 {

@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Platform;
 using Sidekick.Domain.Game.GameLogs.Queries;
-using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Game.GameLogs
 {

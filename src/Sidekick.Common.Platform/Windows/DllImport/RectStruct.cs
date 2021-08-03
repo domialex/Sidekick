@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     /// <summary>
     /// The RECT structure defines the coordinates of the upper-left and lower-right corners of a rectangle.

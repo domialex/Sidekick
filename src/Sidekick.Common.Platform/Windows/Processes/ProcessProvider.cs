@@ -13,11 +13,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Platform.Windows.DllImport;
 using Sidekick.Domain.Notifications.Commands;
-using Sidekick.Domain.Platforms;
-using Sidekick.Platform.Windows.DllImport;
 
-namespace Sidekick.Platform.Windows.Processes
+namespace Sidekick.Common.Platform.Windows.Processes
 {
     public class ProcessProvider : IProcessProvider, IDisposable
     {

@@ -1,4 +1,4 @@
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     public static class WinEvent
     {

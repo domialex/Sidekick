@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Common.Platform\Sidekick.Common.Platform.csproj" />
     <ProjectReference Include="..\Sidekick.Presentation.Blazor\Sidekick.Presentation.Blazor.csproj" />
   </ItemGroup>
 

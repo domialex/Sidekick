@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Platform;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 
 namespace Sidekick.Application.Keybinds
 {

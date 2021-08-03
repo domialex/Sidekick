@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick.Domain.Platforms
+namespace Sidekick.Common.Platform
 {
     /// <summary>
     /// Service providing keyboard functions

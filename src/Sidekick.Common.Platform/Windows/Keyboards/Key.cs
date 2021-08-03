@@ -1,7 +1,7 @@
 using GregsStack.InputSimulatorStandard.Native;
 using NeatInput.Windows.Processing.Keyboard.Enums;
 
-namespace Sidekick.Platform.Windows.Keyboards
+namespace Sidekick.Common.Platform.Windows.Keyboards
 {
     public struct Key
     {

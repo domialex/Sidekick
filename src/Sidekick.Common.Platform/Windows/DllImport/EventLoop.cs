@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     internal static class EventLoop
     {

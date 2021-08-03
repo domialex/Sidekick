@@ -1,4 +1,4 @@
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     /// <summary>
     /// Flags used with the Windows API (User32.dll):GetSystemMetrics(SystemMetric smIndex)

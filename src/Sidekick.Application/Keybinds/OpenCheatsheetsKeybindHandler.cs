@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds

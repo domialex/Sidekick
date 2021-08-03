@@ -1,7 +1,7 @@
 #pragma warning disable CS0067
 
 using System;
-using Sidekick.Domain.Platforms;
+using Sidekick.Common.Platform;
 
 namespace Sidekick.Mock.Platforms
 {

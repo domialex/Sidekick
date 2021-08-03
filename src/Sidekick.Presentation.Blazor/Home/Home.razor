@@ -27,7 +27,7 @@
 </MudGrid>
 
 @code {
-    [Inject] private Sidekick.Domain.Platforms.IClipboardProvider ClipboardProvider { get; set; }
+    [Inject] private IClipboardProvider ClipboardProvider { get; set; }
     [Inject] private Sidekick.Domain.Views.IViewLocator ViewLocator { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
 

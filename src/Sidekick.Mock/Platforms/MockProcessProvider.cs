@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Sidekick.Domain.Platforms;
+using Sidekick.Common.Platform;
 
 namespace Sidekick.Mock.Platforms
 {

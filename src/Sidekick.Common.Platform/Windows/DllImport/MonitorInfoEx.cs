@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Sidekick.Platform.Windows.DllImport
+namespace Sidekick.Common.Platform.Windows.DllImport
 {
     /// <summary>
     /// The MONITORINFOEX structure contains information about a display monitor.

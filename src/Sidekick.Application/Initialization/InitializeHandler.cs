@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Game.Items.Parser.Patterns;
+using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Apis.GitHub;
@@ -21,7 +22,6 @@ using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
-using Sidekick.Domain.Platforms;
 using Sidekick.Domain.Views;
 using Sidekick.Localization.Initialization;
 
