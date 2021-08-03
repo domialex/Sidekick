@@ -5,10 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moq;
-using Sidekick.Application.Settings;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Infrastructure;
@@ -18,6 +17,7 @@ using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Mock.Platforms;
 using Sidekick.Mock.Views;
+using Sidekick.Modules.Settings;
 using Sidekick.Persistence;
 using Xunit;
 
@@ -37,7 +37,7 @@ namespace Sidekick.Application.Tests
             var mockEnvironment = new Mock<IHostEnvironment>();
 
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile(SidekickPaths.GetDataFilePath(SaveSettingsHandler.FileName), true, true)
+                .AddJsonFile(SidekickPaths.GetDataFilePath(SettingsService.FileName), true, true)
                 .Build();
 
             var services = new ServiceCollection()
@@ -68,12 +68,13 @@ namespace Sidekick.Application.Tests
             var serviceProvider = services.BuildServiceProvider();
 
             Mediator = serviceProvider.GetRequiredService<IMediator>();
-            await Mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+            var settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+            await settingsService.Save(new Settings()
             {
                 Language_Parser = "en",
                 Language_UI = "en",
                 LeagueId = "Standard",
-            }, true));
+            }, true);
             await Mediator.Send(new InitializeCommand(true, false));
         }
     }

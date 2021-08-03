@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Errors;
 using Sidekick.Domain.Game.Items.Commands;
@@ -8,9 +9,7 @@ using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
-using Sidekick.Domain.Wikis;
 
 namespace Sidekick.Application.Keybinds
 {
@@ -19,14 +18,14 @@ namespace Sidekick.Application.Keybinds
         private readonly IClipboardProvider clipboardProvider;
         private readonly IMediator mediator;
         private readonly IViewLocator viewLocator;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IProcessProvider processProvider;
 
         public OpenWikiPageKeybindHandler(
             IClipboardProvider clipboardProvider,
             IMediator mediator,
             IViewLocator viewLocator,
-            ISidekickSettings settings,
+            ISettings settings,
             IProcessProvider processProvider)
         {
             this.clipboardProvider = clipboardProvider;

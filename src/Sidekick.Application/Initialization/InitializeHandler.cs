@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Game.Items.Parser.Patterns;
+using Sidekick.Common.Settings;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.Apis.GitHub;
 using Sidekick.Domain.App.Commands;
@@ -21,8 +22,6 @@ using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Localization;
 using Sidekick.Domain.Notifications.Commands;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Localization.Initialization;
 
@@ -32,7 +31,8 @@ namespace Sidekick.Application.Initialization
     {
         private readonly InitializationResources resources;
         private readonly IMediator mediator;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
+        private readonly ISettingsService settingsService;
         private readonly ILogger<InitializeHandler> logger;
         private readonly IViewLocator viewLocator;
         private readonly IProcessProvider processProvider;
@@ -47,7 +47,8 @@ namespace Sidekick.Application.Initialization
         public InitializeHandler(
             InitializationResources resources,
             IMediator mediator,
-            ISidekickSettings settings,
+            ISettings settings,
+            ISettingsService settingsService,
             ILogger<InitializeHandler> logger,
             IViewLocator viewLocator,
             IProcessProvider processProvider,
@@ -62,6 +63,7 @@ namespace Sidekick.Application.Initialization
             this.resources = resources;
             this.mediator = mediator;
             this.settings = settings;
+            this.settingsService = settingsService;
             this.logger = logger;
             this.viewLocator = viewLocator;
             this.processProvider = processProvider;
@@ -124,7 +126,7 @@ namespace Sidekick.Application.Initialization
                     if (leaguesHash != settings.LeaguesHash)
                     {
                         await mediator.Send(new ClearCacheCommand());
-                        await mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.LeaguesHash), leaguesHash));
+                        await settingsService.Save(nameof(ISettings.LeaguesHash), leaguesHash);
                     }
 
                     // Check to see if we should run Setup first before running the rest of the initialization process

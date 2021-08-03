@@ -2,8 +2,8 @@ using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Sidekick.Application.Settings;
 using Sidekick.Extensions;
+using Sidekick.Modules.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron
 {
@@ -19,7 +19,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             return Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(config =>
                 {
-                    config.AddJsonFile(SidekickPaths.GetDataFilePath(SaveSettingsHandler.FileName), true, true);
+                    config.AddJsonFile(SidekickPaths.GetDataFilePath(SettingsService.FileName), true, true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

@@ -5,8 +5,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Languages.Commands;
-using Sidekick.Domain.Settings;
-using Sidekick.Domain.Settings.Commands;
 
 namespace Sidekick.Application.Game.Languages
 {

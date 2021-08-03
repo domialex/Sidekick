@@ -1,0 +1,76 @@
+@page "/settings"
+@layout SettingsLayout
+
+<MudCard>
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h3">@Resources.Language_Title</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pt-0">
+        <UILanguageSelect @bind-Value="ViewModel.Language_UI"></UILanguageSelect>
+        <GameLanguageSelect @bind-Value="ViewModel.Language_Parser"></GameLanguageSelect>
+    </MudCardContent>
+</MudCard>
+<MudCard Class="mt-6">
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h3">@Resources.Character_Title</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pt-0">
+        <LeagueSelect @bind-Value="ViewModel.LeagueId"></LeagueSelect>
+        <MudTextField Label="@Resources.Character_Name"
+                      Variant="Variant.Filled"
+                      @bind-Value="ViewModel.Character_Name" />
+    </MudCardContent>
+</MudCard>
+<MudCard Class="mt-6">
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h3">@Resources.Cheatsheets</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pt-0">
+        <KeybindEditor Label="@Resources.Cheatsheets_Key_Open"
+                       @bind-Value="ViewModel.Cheatsheets_Key_Open" />
+    </MudCardContent>
+</MudCard>
+<MudCard Class="mt-6">
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h3">@Resources.Group_Other</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pt-0">
+        <div>
+            <MudCheckBox Label="@Resources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
+            <MudTooltip Text="@Resources.General_CopyUserIdToClipboard" Placement="Placement.Top">
+                <MudIconButton Icon="@Icons.Material.Filled.FileCopy" @onclick="CopyUserIdToClipboard" />
+            </MudTooltip>
+        </div>
+        <div>
+            <MudCheckBox Label="@Resources.General_ShowSplashScreen"
+                         @bind-Checked="@ViewModel.ShowSplashScreen"></MudCheckBox>
+        </div>
+        <div>
+            <MudCheckBox Label="@Resources.General_RetainClipboard"
+                         @bind-Checked="@ViewModel.RetainClipboard"></MudCheckBox>
+        </div>
+        <KeybindEditor Label="@Resources.Key_OpenSettings"
+                       @bind-Value="ViewModel.Key_OpenSettings" />
+        <KeybindEditor Label="@Resources.Key_FindItems"
+                       @bind-Value="ViewModel.Key_FindItems" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Inject] private SettingsResources Resources { get; set; }
+    [Inject] private SettingsModel ViewModel { get; set; }
+    [Inject] private IClipboardProvider ClipboardProvider { get; set; }
+
+    public void CopyUserIdToClipboard()
+    {
+        ClipboardProvider.SetText(ViewModel.UserId.ToString());
+    }
+}

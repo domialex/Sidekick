@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Apis.PoePriceInfo.Models;
 using Sidekick.Domain.Apis.PoePriceInfo.Queries;
-using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoePriceInfo.Models;
 
 namespace Sidekick.Infrastructure.PoePriceInfo
@@ -16,13 +16,13 @@ namespace Sidekick.Infrastructure.PoePriceInfo
     public class GetPricePredictionHandler : IQueryHandler<GetPricePredictionQuery, PricePrediction>
     {
         private readonly IPoePriceInfoClient client;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
         public GetPricePredictionHandler(
             IPoePriceInfoClient client,
-            ISidekickSettings settings,
+            ISettings settings,
             IMapper mapper,
             ILogger<GetPricePredictionHandler> logger)
         {

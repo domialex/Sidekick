@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds
@@ -9,12 +9,12 @@ namespace Sidekick.Application.Keybinds
     public class OpenCheatsheetsKeybindHandler : IKeybindHandler
     {
         private readonly IViewLocator viewLocator;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IProcessProvider processProvider;
 
         public OpenCheatsheetsKeybindHandler(
             IViewLocator viewLocator,
-            ISidekickSettings settings,
+            ISettings settings,
             IProcessProvider processProvider)
         {
             this.viewLocator = viewLocator;

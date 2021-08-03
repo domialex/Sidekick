@@ -5,7 +5,6 @@
 @using Sidekick.Domain.Game.Trade
 @using Sidekick.Domain.Game.Trade.Models
 @using Sidekick.Domain.Game.Trade.Queries
-@using Sidekick.Domain.Settings
 @using Sidekick.Extensions
 @using Sidekick.Localization.Trade
 @page "/price/{itemText}"
@@ -62,7 +61,7 @@ else
     [Inject] private ILogger<Prices> Logger { get; set; }
     [Inject] private ITradeSearchService TradeSearchService { get; set; }
     [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
-    [Inject] private ISidekickSettings Settings { get; set; }
+    [Inject] private ISettings Settings { get; set; }
     [Inject] private TradeResources Resources { get; set; }
 
     [Parameter] public string ItemText { get; set; }

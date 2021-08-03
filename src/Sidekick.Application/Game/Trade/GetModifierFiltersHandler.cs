@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Modifiers.Models;
 using Sidekick.Domain.Game.Trade.Models;
 using Sidekick.Domain.Game.Trade.Queries;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Game.Trade
 {
     public class GetModifierFiltersHandler : IQueryHandler<GetModifierFilters, ModifierFilters>
     {
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
 
-        public GetModifierFiltersHandler(ISidekickSettings settings)
+        public GetModifierFiltersHandler(ISettings settings)
         {
             this.settings = settings;
         }

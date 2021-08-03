@@ -7,9 +7,9 @@
 </MudSelect>
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
-    [Inject] private ISidekickSettings Settings { get; set; }
+    [Inject] private ISettings Settings { get; set; }
     [Inject] private BetrayalResources Resources { get; set; }
+    [Inject] private ISettingsService SettingsService { get; set; }
 
     [Parameter] public EventCallback OnChange { get; set; }
 
@@ -20,7 +20,7 @@
     {
         Value = Settings.Cheatsheets_Betrayal_Sort;
         Options = new Dictionary<string, string>()
-        {
+{
             { "default", Resources.Sort_Alphabetical },
             { "value", Resources.Sort_Value },
             { "transportation", Resources.Sort_Transportation },
@@ -35,7 +35,7 @@
     public async Task InternalSortChanged(string value)
     {
         Value = value;
-        await Mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.Cheatsheets_Betrayal_Sort), Value));
+        await SettingsService.Save(nameof(ISettings.Cheatsheets_Betrayal_Sort), Value);
         await OnChange.InvokeAsync();
     }
 }

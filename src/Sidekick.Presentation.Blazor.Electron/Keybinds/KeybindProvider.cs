@@ -5,9 +5,9 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Sidekick.Application.Keybinds;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 {
@@ -15,7 +15,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
     {
         private readonly IMediator mediator;
         private readonly ILogger<KeybindProvider> logger;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IKeyboardProvider keyboardProvider;
         private readonly IProcessProvider processProvider;
         private readonly IServiceProvider serviceProvider;
@@ -23,7 +23,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
         public KeybindProvider(
             IMediator mediator,
             ILogger<KeybindProvider> logger,
-            ISidekickSettings settings,
+            ISettings settings,
             IKeyboardProvider keyboardProvider,
             IProcessProvider processProvider,
             IServiceProvider serviceProvider)

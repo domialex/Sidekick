@@ -1,4 +1,3 @@
-@using Sidekick.Domain.Settings
 
 <MudNavGroup Title="@Resources.Layout" Expanded="true">
     <MudNavLink OnClick="@(() => Select(Layout.Cards_Maximized))">@Resources.Layout_Cards_Maximized</MudNavLink>
@@ -7,7 +6,8 @@
 
 @code {
     [Inject] private IMediator Mediator { get; set; }
-    [Inject] private ISidekickSettings Settings { get; set; }
+    [Inject] private ISettings Settings { get; set; }
+    [Inject] private ISettingsService SettingsService { get; set; }
     [Inject] private TradeResources Resources { get; set; }
 
     [Parameter] public Layout Layout { get; set; }
@@ -28,7 +28,7 @@
     {
         if (layout.ToString() != Settings.Trade_Layout)
         {
-            await Mediator.Send(new Sidekick.Domain.Settings.Commands.SaveSettingCommand(nameof(ISidekickSettings.Trade_Layout), layout.ToString()));
+            await SettingsService.Save(nameof(ISettings.Trade_Layout), layout.ToString());
         }
 
         await LayoutChanged.InvokeAsync(layout);

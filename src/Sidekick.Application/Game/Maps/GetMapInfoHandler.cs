@@ -3,19 +3,19 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Maps.Commands;
 using Sidekick.Domain.Game.Maps.Models;
 using Sidekick.Domain.Game.Modifiers.Models;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Game.Maps
 {
     public class GetMapInfoHandler : IQueryHandler<GetMapInfo, MapInfo>
     {
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
 
         public GetMapInfoHandler(
-            ISidekickSettings settings)
+            ISettings settings)
         {
             this.settings = settings;
         }

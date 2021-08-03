@@ -47,9 +47,9 @@
 </MudMainContent>
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private CheatsheetResources Resources { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private ISettingsService SettingsService { get; set; }
 
     [CascadingParameter] public MenuLayout Layout { get; set; }
 
@@ -58,7 +58,7 @@
         var routeMatch = new System.Text.RegularExpressions.Regex("cheatsheets\\/([^\\\\\\/]*)").Match(NavigationManager.Uri);
         if (routeMatch.Success)
         {
-            await Mediator.Send(new SaveSettingCommand(nameof(ISidekickSettings.Cheatsheets_Selected), routeMatch.Groups[1].Value));
+            await SettingsService.Save(nameof(ISettings.Cheatsheets_Selected), routeMatch.Groups[1].Value);
         }
         await base.OnInitializedAsync();
     }

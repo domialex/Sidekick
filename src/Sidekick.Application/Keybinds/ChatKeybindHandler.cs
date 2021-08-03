@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.GameLogs.Queries;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Keybinds
 {
@@ -13,7 +13,7 @@ namespace Sidekick.Application.Keybinds
         private const string Token_Me_CharacterName = "{Me.CharacterName}";
         private const string Token_LastWhisper_CharacterName = "{LastWhisper.CharacterName}";
 
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IClipboardProvider clipboard;
         private readonly IKeyboardProvider keyboard;
         private readonly ILogger<ChatKeybindHandler> logger;
@@ -21,7 +21,7 @@ namespace Sidekick.Application.Keybinds
         private readonly IProcessProvider processProvider;
 
         public ChatKeybindHandler(
-            ISidekickSettings settings,
+            ISettings settings,
             IClipboardProvider clipboard,
             IKeyboardProvider keyboard,
             ILogger<ChatKeybindHandler> logger,

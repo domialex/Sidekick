@@ -4,8 +4,6 @@ using Sidekick.Localization.Errors;
 using Sidekick.Localization.Initialization;
 using Sidekick.Localization.Maps;
 using Sidekick.Localization.Platforms;
-using Sidekick.Localization.Settings;
-using Sidekick.Localization.Setup;
 using Sidekick.Localization.Trade;
 using Sidekick.Localization.Tray;
 using Sidekick.Localization.Update;
@@ -26,13 +24,9 @@ namespace Sidekick.Localization
 
             services.AddTransient<PlatformResources>();
 
-            services.AddTransient<SettingsResources>();
-
             services.AddTransient<TradeResources>();
 
             services.AddTransient<MapInfoResources>();
-
-            services.AddTransient<SetupResources>();
 
             services.AddTransient<TrayResources>();
 

@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Platform.Clipboard
 {
     public class ClipboardProvider : IClipboardProvider
     {
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IKeyboardProvider keyboard;
 
         public ClipboardProvider(
-            ISidekickSettings settings,
+            ISettings settings,
             IKeyboardProvider keyboard)
         {
             this.settings = settings;

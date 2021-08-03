@@ -9,10 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sidekick.Application;
-using Sidekick.Application.Settings;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
@@ -21,10 +20,10 @@ using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Mock.Platforms;
 using Sidekick.Mock.Views;
+using Sidekick.Modules.Cheatsheets;
+using Sidekick.Modules.Settings;
 using Sidekick.Persistence;
 using Sidekick.Platform;
-using Sidekick.Modules.Cheatsheets;
-using Sidekick.Common;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -77,12 +76,8 @@ namespace Sidekick.Presentation.Blazor
                     Assembly.Load("Sidekick.Mock"))
 
                 // Modules
-                .AddSidekickCheatsheets();
-
-            foreach(var assembly in SidekickGlobals.Assemblies)
-            {
-                mvcBuilder.AddApplicationPart(assembly);
-            }
+                .AddSidekickCheatsheets()
+                .AddSidekickSettings(configuration);
 
             // Mock services
             services.AddSingleton<IViewLocator, MockViewLocator>();
@@ -91,7 +86,7 @@ namespace Sidekick.Presentation.Blazor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ISettingsService settingsService, IMediator mediator)
         {
             serviceProvider.UseSidekickMapper();
 
@@ -117,12 +112,12 @@ namespace Sidekick.Presentation.Blazor
 
             Task.Run(async () =>
             {
-                await mediator.Send(new SaveSettingsCommand(new SidekickSettings()
+                await settingsService.Save(new Settings()
                 {
                     Language_Parser = "en",
                     Language_UI = "en",
-                    LeagueId = "Ultimatum",
-                }, true));
+                    LeagueId = "Expedition",
+                }, true);
                 await mediator.Send(new InitializeCommand(true, false));
             });
         }

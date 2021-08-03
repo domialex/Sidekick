@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Metadatas.Models;
 using Sidekick.Domain.Game.Items.Models;
@@ -15,7 +16,6 @@ using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Modifiers.Models;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Domain.Game.Trade.Models;
-using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoeApi.Trade.Filters;
 using Sidekick.Infrastructure.PoeApi.Trade.Requests;
 using Sidekick.Infrastructure.PoeApi.Trade.Results;
@@ -26,14 +26,14 @@ namespace Sidekick.Infrastructure.PoeApi.Trade
     {
         private readonly ILogger logger;
         private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IPoeTradeClient poeTradeClient;
         private readonly IItemStaticDataProvider itemStaticDataProvider;
         private readonly IModifierProvider modifierProvider;
 
         public TradeSearchService(ILogger<TradeSearchService> logger,
             IGameLanguageProvider gameLanguageProvider,
-            ISidekickSettings settings,
+            ISettings settings,
             IPoeTradeClient poeTradeClient,
             IItemStaticDataProvider itemStaticDataProvider,
             IModifierProvider modifierProvider)

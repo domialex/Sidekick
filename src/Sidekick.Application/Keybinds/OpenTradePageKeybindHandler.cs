@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Game.Items.Models;
@@ -8,7 +9,6 @@ using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Platforms;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Keybinds
 {
@@ -18,7 +18,7 @@ namespace Sidekick.Application.Keybinds
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ITradeSearchService tradeSearchService;
         private readonly IMediator mediator;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly IProcessProvider processProvider;
 
         public OpenTradePageKeybindHandler(
@@ -26,7 +26,7 @@ namespace Sidekick.Application.Keybinds
             IGameLanguageProvider gameLanguageProvider,
             ITradeSearchService tradeSearchService,
             IMediator mediator,
-            ISidekickSettings settings,
+            ISettings settings,
             IProcessProvider processProvider)
         {
             this.clipboardProvider = clipboardProvider;

@@ -2,11 +2,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Models;
 using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade.Queries;
-using Sidekick.Domain.Settings;
 
 namespace Sidekick.Application.Game.Trade
 {
@@ -14,11 +14,11 @@ namespace Sidekick.Application.Game.Trade
     {
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly IItemStaticDataProvider itemStaticDataProvider;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
 
         public GetTradeUriHandler(IGameLanguageProvider gameLanguageProvider,
             IItemStaticDataProvider itemStaticDataProvider,
-            ISidekickSettings settings)
+            ISettings settings)
         {
             this.gameLanguageProvider = gameLanguageProvider;
             this.itemStaticDataProvider = itemStaticDataProvider;

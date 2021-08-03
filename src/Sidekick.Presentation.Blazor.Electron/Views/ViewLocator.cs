@@ -6,7 +6,7 @@ using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Settings;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Views;
 using Sidekick.Extensions;
 using Sidekick.Presentation.Blazor.Debounce;
@@ -18,14 +18,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         internal readonly IViewPreferenceRepository viewPreferenceRepository;
         internal readonly IDebouncer debouncer;
         internal readonly ILogger<ViewLocator> logger;
-        internal readonly ISidekickSettings settings;
+        internal readonly ISettings settings;
         internal readonly ElectronCookieProtection electronCookieProtection;
         internal readonly IHostEnvironment hostEnvironment;
 
         public ViewLocator(IViewPreferenceRepository viewPreferenceRepository,
                            IDebouncer debouncer,
                            ILogger<ViewLocator> logger,
-                           ISidekickSettings settings,
+                           ISettings settings,
                            ElectronCookieProtection electronCookieProtection,
                            IHostEnvironment hostEnvironment)
         {

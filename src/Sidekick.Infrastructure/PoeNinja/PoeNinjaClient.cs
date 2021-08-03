@@ -5,8 +5,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Languages;
-using Sidekick.Domain.Settings;
 using Sidekick.Infrastructure.PoeNinja.Models;
 
 namespace Sidekick.Infrastructure.PoeNinja
@@ -34,7 +34,7 @@ namespace Sidekick.Infrastructure.PoeNinja
         private readonly HttpClient client;
         private readonly ILogger logger;
         private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly ISidekickSettings settings;
+        private readonly ISettings settings;
         private readonly JsonSerializerOptions options;
 
         private string LanguageCode
@@ -55,7 +55,7 @@ namespace Sidekick.Infrastructure.PoeNinja
             IHttpClientFactory httpClientFactory,
             ILogger<PoeNinjaClient> logger,
             IGameLanguageProvider gameLanguageProvider,
-            ISidekickSettings settings)
+            ISettings settings)
         {
             this.logger = logger;
             this.gameLanguageProvider = gameLanguageProvider;

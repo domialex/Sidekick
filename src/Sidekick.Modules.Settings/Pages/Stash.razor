@@ -1,0 +1,21 @@
+@page "/settings/stash"
+@layout SettingsLayout
+
+<MudCard>
+    <MudCardHeader Class="pb-0">
+        <CardHeaderContent>
+            <MudText Typo="Typo.h3">@Resources.Group_Keybinds</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent Class="pt-0">
+        <KeybindEditor Label="@Resources.Stash_Key_Left"
+                       @bind-Value="ViewModel.Stash_Key_Left" />
+        <KeybindEditor Label="@Resources.Stash_Key_Right"
+                       @bind-Value="ViewModel.Stash_Key_Right" />
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Inject] private SettingsResources Resources { get; set; }
+    [Inject] private SettingsModel ViewModel { get; set; }
+}
