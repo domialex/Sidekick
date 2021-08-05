@@ -6,11 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Apis.GitHub;
 using Sidekick.Application.Game.Items.Parser.Patterns;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Core.Settings;
-using Sidekick.Domain.Apis.GitHub;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
 using Sidekick.Domain.Game.Items.Metadatas;
@@ -43,6 +43,7 @@ namespace Sidekick.Application.Initialization
         private readonly IPseudoModifierProvider pseudoModifierProvider;
         private readonly IItemMetadataProvider itemMetadataProvider;
         private readonly IItemStaticDataProvider itemStaticDataProvider;
+        private readonly IGitHubClient gitHubClient;
 
         public InitializeHandler(
             InitializationResources resources,
@@ -58,7 +59,8 @@ namespace Sidekick.Application.Initialization
             IModifierProvider modifierProvider,
             IPseudoModifierProvider pseudoModifierProvider,
             IItemMetadataProvider itemMetadataProvider,
-            IItemStaticDataProvider itemStaticDataProvider)
+            IItemStaticDataProvider itemStaticDataProvider,
+            IGitHubClient gitHubClient)
         {
             this.resources = resources;
             this.mediator = mediator;
@@ -74,6 +76,7 @@ namespace Sidekick.Application.Initialization
             this.pseudoModifierProvider = pseudoModifierProvider;
             this.itemMetadataProvider = itemMetadataProvider;
             this.itemStaticDataProvider = itemStaticDataProvider;
+            this.gitHubClient = gitHubClient;
         }
 
         private int Count = 0;
@@ -101,7 +104,7 @@ namespace Sidekick.Application.Initialization
                 await RunCommandStep(new SetUiLanguageCommand(settings.Language_UI));
 
                 // Check for updates
-                if (request.AutoUpdate && await mediator.Send(new CheckForUpdate(), cancellationToken))
+                if (request.AutoUpdate && await gitHubClient.Update())
                 {
                     viewLocator.Close(View.Initialization);
                     return Unit.Value;

@@ -44,15 +44,8 @@ namespace Sidekick.Application.Tests
 
                 // Building blocks
                 .AddSidekickLogging(configuration, mockEnvironment.Object)
-                .AddSidekickMapper(
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"))
-                .AddSidekickMediator(
-                    Assembly.Load("Sidekick.Application"),
-                    Assembly.Load("Sidekick.Domain"),
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Mock"),
-                    Assembly.Load("Sidekick.Persistence"))
+                .AddSidekickMapper()
+                .AddSidekickMediator()
 
                 // Layers
                 .AddSidekickApplication(configuration)

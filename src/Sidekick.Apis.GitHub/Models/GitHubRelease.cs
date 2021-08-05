@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Infrastructure.Github.Models
+namespace Sidekick.Apis.GitHub.Models
 {
-    public class GithubRelease
+    public class GitHubRelease
     {
         [JsonPropertyName("tag_name")]
         public string Tag { get; set; }

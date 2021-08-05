@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Localization.Update
+namespace Sidekick.Apis.GitHub.Localization
 {
     public class UpdateResources
     {

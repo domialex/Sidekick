@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Sidekick.Infrastructure.Github.Models
+namespace Sidekick.Apis.GitHub.Models
 {
     public class Asset
     {

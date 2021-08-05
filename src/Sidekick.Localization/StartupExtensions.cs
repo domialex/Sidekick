@@ -6,7 +6,6 @@ using Sidekick.Localization.Maps;
 using Sidekick.Localization.Platforms;
 using Sidekick.Localization.Trade;
 using Sidekick.Localization.Tray;
-using Sidekick.Localization.Update;
 
 namespace Sidekick.Localization
 {
@@ -29,8 +28,6 @@ namespace Sidekick.Localization
             services.AddTransient<MapInfoResources>();
 
             services.AddTransient<TrayResources>();
-
-            services.AddTransient<UpdateResources>();
 
             return services;
         }

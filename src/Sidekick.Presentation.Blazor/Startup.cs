@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sidekick.Apis.GitHub;
 using Sidekick.Application;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
@@ -63,16 +64,11 @@ namespace Sidekick.Presentation.Blazor
 
                 // Common
                 .AddSidekickLogging(configuration, environment)
-                .AddSidekickMapper(
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"))
-                .AddSidekickMediator(
-                    Assembly.Load("Sidekick.Application"),
-                    Assembly.Load("Sidekick.Domain"),
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"),
-                    Assembly.Load("Sidekick.Presentation.Blazor"),
-                    Assembly.Load("Sidekick.Mock"))
+                .AddSidekickMapper()
+                .AddSidekickMediator()
+
+                // Apis
+                .AddSidekickGitHubApi()
 
                 // Modules
                 .AddSidekickCheatsheets()

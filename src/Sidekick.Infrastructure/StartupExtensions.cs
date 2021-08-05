@@ -3,7 +3,6 @@ using Sidekick.Domain.Game.Items.Metadatas;
 using Sidekick.Domain.Game.Items.Modifiers;
 using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Game.Trade;
-using Sidekick.Infrastructure.Github;
 using Sidekick.Infrastructure.PoeApi;
 using Sidekick.Infrastructure.PoeApi.Items.Metadatas;
 using Sidekick.Infrastructure.PoeApi.Items.Modifiers;
@@ -23,7 +22,6 @@ namespace Sidekick.Infrastructure
             services.AddHttpClient();
 
             services.AddTransient<IPoeTradeClient, PoeTradeClient>();
-            services.AddTransient<IGithubClient, GithubClient>();
             services.AddTransient<IPoePriceInfoClient, PoePriceInfoClient>();
             services.AddTransient<IPoeNinjaClient, PoeNinjaClient>();
 

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sidekick.Apis.GitHub\Sidekick.Apis.GitHub.csproj" />
     <ProjectReference Include="..\Sidekick.Common.Platform\Sidekick.Common.Platform.csproj" />
     <ProjectReference Include="..\Sidekick.Common\Sidekick.Common.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />

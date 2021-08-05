@@ -2,40 +2,45 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Apis.GitHub;
+using Sidekick.Apis.GitHub.Localization;
+using Sidekick.Apis.GitHub.Models;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Extensions;
-using Sidekick.Infrastructure.Github.Models;
-using Sidekick.Localization.Update;
 
-namespace Sidekick.Infrastructure.Github.Queries
+namespace Sidekick.Apis.GitHub
 {
-    public class CheckForUpdateHandler : IQueryHandler<CheckForUpdate, bool>
+    public class GitHubClient : IGitHubClient
     {
         private readonly IMediator mediator;
-        private readonly ILogger<CheckForUpdateHandler> logger;
-        private readonly IGithubClient githubClient;
+        private readonly ILogger<GitHubClient> logger;
         private readonly UpdateResources resources;
 
-        public CheckForUpdateHandler(
+        public GitHubClient(
+            IHttpClientFactory httpClientFactory,
             IMediator mediator,
-            ILogger<CheckForUpdateHandler> logger,
-            IGithubClient githubClient,
+            ILogger<GitHubClient> logger,
             UpdateResources resources)
         {
             this.mediator = mediator;
             this.logger = logger;
-            this.githubClient = githubClient;
             this.resources = resources;
+
+            Client = httpClientFactory.CreateClient();
+            Client.BaseAddress = new Uri("https://api.github.com");
+            Client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<bool> Handle(CheckForUpdate request, CancellationToken cancellationToken)
+        public HttpClient Client { get; private set; }
+
+        public async Task<bool> Update()
         {
             try
             {
@@ -91,13 +96,13 @@ namespace Sidekick.Infrastructure.Github.Queries
         /// Determines latest release on github. Pre-releases do not count as release, therefore we need to get the list of releases first, if no actual latest release can be found
         /// </summary>
         /// <returns></returns>
-        private async Task<GithubRelease> GetLatestRelease()
+        private async Task<GitHubRelease> GetLatestRelease()
         {
             // Get List of releases
-            var listResponse = await githubClient.Client.GetAsync("/repos/domialex/Sidekick/releases");
+            var listResponse = await Client.GetAsync("/repos/domialex/Sidekick/releases");
             if (listResponse.IsSuccessStatusCode)
             {
-                var githubReleaseList = await JsonSerializer.DeserializeAsync<GithubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true });
+                var githubReleaseList = await JsonSerializer.DeserializeAsync<GitHubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true });
                 return githubReleaseList.FirstOrDefault(x => !x.Prerelease);
             }
 
@@ -108,7 +113,7 @@ namespace Sidekick.Infrastructure.Github.Queries
         /// Determines if there is a newer version available
         /// </summary>
         /// <returns></returns>
-        private bool IsUpdateAvailable(GithubRelease release)
+        private bool IsUpdateAvailable(GitHubRelease release)
         {
             if (release != null)
             {
@@ -132,7 +137,7 @@ namespace Sidekick.Infrastructure.Github.Queries
         /// Downloads the latest release from github
         /// </summary>
         /// <returns></returns>
-        private async Task<string> DownloadRelease(GithubRelease release)
+        private async Task<string> DownloadRelease(GitHubRelease release)
         {
             if (release == null) return null;
 
@@ -142,7 +147,7 @@ namespace Sidekick.Infrastructure.Github.Queries
             var downloadUrl = release.Assets.FirstOrDefault(x => x.Name == "Sidekick-Setup.exe")?.DownloadUrl;
             if (downloadUrl == null) return null;
 
-            var response = await githubClient.Client.GetAsync(downloadUrl);
+            var response = await Client.GetAsync(downloadUrl);
             using var downloadStream = await response.Content.ReadAsStreamAsync();
             using var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write, FileShare.None);
             await downloadStream.CopyToAsync(fileStream);

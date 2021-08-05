@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sidekick.Apis.GitHub;
 using Sidekick.Application;
 using Sidekick.Common.Platform;
 using Sidekick.Domain.Initialization.Commands;
@@ -19,6 +20,8 @@ using Sidekick.Localization;
 using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
+using Sidekick.Modules.Cheatsheets;
+using Sidekick.Modules.Settings;
 using Sidekick.Persistence;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
@@ -60,16 +63,15 @@ namespace Sidekick.Presentation.Blazor.Electron
 
                 // Common
                 .AddSidekickLogging(configuration, environment)
-                .AddSidekickMapper(
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"))
-                .AddSidekickMediator(
-                    Assembly.Load("Sidekick.Application"),
-                    Assembly.Load("Sidekick.Domain"),
-                    Assembly.Load("Sidekick.Infrastructure"),
-                    Assembly.Load("Sidekick.Persistence"),
-                    Assembly.Load("Sidekick.Presentation.Blazor"),
-                    Assembly.Load("Sidekick.Presentation.Blazor.Electron"));
+                .AddSidekickMapper()
+                .AddSidekickMediator()
+
+                // Apis
+                .AddSidekickGitHubApi()
+
+                // Modules
+                .AddSidekickCheatsheets()
+                .AddSidekickSettings(configuration);
 
             services.AddSingleton<TrayProvider>();
             services.AddSingleton<ViewLocator>();
