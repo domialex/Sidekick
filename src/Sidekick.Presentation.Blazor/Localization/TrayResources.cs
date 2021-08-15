@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Localization.Tray
+namespace Sidekick.Presentation.Blazor.Localization
 {
     public class TrayResources
     {

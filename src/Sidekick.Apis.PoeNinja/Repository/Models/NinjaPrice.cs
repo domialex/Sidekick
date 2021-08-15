@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Sidekick.Apis.PoeNinja.Repository.Models
 {
@@ -11,25 +10,21 @@ namespace Sidekick.Apis.PoeNinja.Repository.Models
         /// <summary>
         /// The name of the item
         /// </summary>
-        [Key]
         public string Name { get; set; }
 
         /// <summary>
         /// If the item is corrupted or not
         /// </summary>
-        [Key]
         public bool Corrupted { get; set; }
 
         /// <summary>
         /// If it is a map, indicates the tier of the map
         /// </summary>
-        [Key]
         public int MapTier { get; set; }
 
         /// <summary>
         /// If it is a gem, indicates the level of the gem
         /// </summary>
-        [Key]
         public int GemLevel { get; set; }
 
         /// <summary>

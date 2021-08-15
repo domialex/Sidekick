@@ -21,13 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Domain", "src\Side
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application", "src\Sidekick.Application\Sidekick.Application.csproj", "{5A2D100E-5475-4951-AA01-83A6CBCFC71F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Persistence", "src\Sidekick.Persistence\Sidekick.Persistence.csproj", "{A4D9D025-4013-43D4-8E69-4D07AE8205B7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor", "src\Sidekick.Presentation.Blazor\Sidekick.Presentation.Blazor.csproj", "{361C0444-11F7-4EDC-A30E-C1F529C2EB79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor.Electron", "src\Sidekick.Presentation.Blazor.Electron\Sidekick.Presentation.Blazor.Electron.csproj", "{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Localization", "src\Sidekick.Localization\Sidekick.Localization.csproj", "{288CB197-808D-40BA-B5A9-8439796781E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1D8BF515-81E9-4769-9B27-24DFB8D8BDCC}"
 EndProject
@@ -81,10 +77,6 @@ Global
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4D9D025-4013-43D4-8E69-4D07AE8205B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,10 +85,6 @@ Global
 		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{288CB197-808D-40BA-B5A9-8439796781E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{288CB197-808D-40BA-B5A9-8439796781E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{288CB197-808D-40BA-B5A9-8439796781E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{288CB197-808D-40BA-B5A9-8439796781E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08B9CA00-4376-4D46-A22C-2E928BB0281F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{08B9CA00-4376-4D46-A22C-2E928BB0281F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08B9CA00-4376-4D46-A22C-2E928BB0281F}.Release|Any CPU.ActiveCfg = Release|Any CPU

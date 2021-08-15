@@ -14,5 +14,19 @@ namespace Sidekick.Apis.PoeNinja.Repository
         public DbSet<NinjaPrice> Prices { get; set; }
 
         public DbSet<NinjaTranslation> Translations { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<NinjaPrice>()
+                .HasKey(x => new
+                {
+                    x.Name,
+                    x.Corrupted,
+                    x.MapTier,
+                    x.GemLevel,
+                });
+        }
     }
 }

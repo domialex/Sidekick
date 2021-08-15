@@ -1,12 +1,11 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sidekick.Common.Platform
 {
     public interface IProcessProvider
     {
-        Task Initialize(CancellationToken cancellationToken);
+        Task Initialize();
 
         string ClientLogPath { get; }
 

@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,21 +10,19 @@ using Microsoft.Extensions.Hosting;
 using Sidekick.Apis.GitHub;
 using Sidekick.Apis.Poe;
 using Sidekick.Apis.PoeNinja;
-using Sidekick.Application;
+using Sidekick.Apis.PoePriceInfo;
 using Sidekick.Common;
+using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Views;
-using Sidekick.Infrastructure;
-using Sidekick.Localization;
-using Sidekick.Mapper;
-using Sidekick.Mediator;
-using Sidekick.Mock.Platforms;
-using Sidekick.Mock.Views;
+using Sidekick.Mock;
+using Sidekick.Modules.About;
 using Sidekick.Modules.Cheatsheets;
+using Sidekick.Modules.Development;
+using Sidekick.Modules.Maps;
 using Sidekick.Modules.Settings;
-using Sidekick.Persistence;
+using Sidekick.Modules.Trade;
+using Sidekick.Presentation.Blazor.Initialization;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -53,39 +50,45 @@ namespace Sidekick.Presentation.Blazor
                 });
             services.AddServerSideBlazor();
 
+            services.AddHttpClient();
+
             services
                 // Layers
-                .AddSidekickApplication()
-                .AddSidekickInfrastructure()
-                .AddSidekickLocalization()
-                .AddSidekickPersistence()
-                .AddSidekickPlatform()
                 .AddSidekickPresentationBlazor()
 
                 // Common
-                .AddSidekickMapper()
-                .AddSidekickMediator()
                 .AddSidekickCommon()
+                .AddSidekickCommonGame()
+                .AddSidekickCommonPlatform()
 
                 // Apis
                 .AddSidekickGitHubApi()
                 .AddSidekickPoeApi()
                 .AddSidekickPoeNinjaApi()
+                .AddSidekickPoePriceInfoApi()
 
                 // Modules
+                .AddSidekickAbout()
                 .AddSidekickCheatsheets()
-                .AddSidekickSettings(configuration);
+                .AddSidekickDevelopment()
+                .AddSidekickMaps()
+                .AddSidekickSettings(configuration)
+                .AddSidekickTrade()
 
-            // Mock services
-            services.AddSingleton<IViewLocator, MockViewLocator>();
-            services.AddScoped<IViewInstance, MockViewInstance>();
-            services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
+                // Mocks
+                .AddSidekickMocks();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ISettingsService settingsService, IMediator mediator)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ISettingsService settingsService)
         {
-            serviceProvider.UseSidekickMapper();
+            Task.Run(async () =>
+            {
+                await settingsService.Save(nameof(ISettings.Language_Parser), "en");
+                await settingsService.Save(nameof(ISettings.Language_UI), "en");
+                await settingsService.Save(nameof(ISettings.LeagueId), "Expedition");
+            });
 
             if (env.IsDevelopment())
             {
@@ -101,19 +104,14 @@ namespace Sidekick.Presentation.Blazor
 
             app.UseRouting();
 
+            app.UseMiddleware<InitializationMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
 
-            Task.Run(async () =>
-            {
-                await settingsService.Save(nameof(ISettings.Language_Parser), "en");
-                await settingsService.Save(nameof(ISettings.Language_UI), "en");
-                await settingsService.Save(nameof(ISettings.LeagueId), "Expedition");
-                await mediator.Send(new InitializeCommand(true, false));
-            });
         }
     }
 }

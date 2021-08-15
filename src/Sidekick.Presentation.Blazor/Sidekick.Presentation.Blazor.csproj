@@ -22,13 +22,15 @@
     <PackageReference Include="MudBlazor" Version="5.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Apis.Poe\Sidekick.Apis.Poe.csproj" />
-    <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
+    <ProjectReference Include="..\Sidekick.Apis.GitHub\Sidekick.Apis.GitHub.csproj" />
     <ProjectReference Include="..\Sidekick.Common.Platform\Sidekick.Common.Platform.csproj" />
     <ProjectReference Include="..\Sidekick.Mock\Sidekick.Mock.csproj" />
+    <ProjectReference Include="..\Sidekick.Modules.About\Sidekick.Modules.About.csproj" />
     <ProjectReference Include="..\Sidekick.Modules.Cheatsheets\Sidekick.Modules.Cheatsheets.csproj" />
+    <ProjectReference Include="..\Sidekick.Modules.Development\Sidekick.Modules.Development.csproj" />
+    <ProjectReference Include="..\Sidekick.Modules.Maps\Sidekick.Modules.Maps.csproj" />
     <ProjectReference Include="..\Sidekick.Modules.Settings\Sidekick.Modules.Settings.csproj" />
-    <ProjectReference Include="..\Sidekick.Persistence\Sidekick.Persistence.csproj" />
+    <ProjectReference Include="..\Sidekick.Modules.Trade\Sidekick.Modules.Trade.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\images\influences\" />

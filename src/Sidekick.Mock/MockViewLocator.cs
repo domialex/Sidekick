@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Sidekick.Domain.Views;
+using Sidekick.Common.Blazor.Views;
 
-namespace Sidekick.Mock.Views
+namespace Sidekick.Mock
 {
     public class MockViewLocator : IViewLocator
     {

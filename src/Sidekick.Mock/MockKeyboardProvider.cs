@@ -3,7 +3,7 @@
 using System;
 using Sidekick.Common.Platform;
 
-namespace Sidekick.Mock.Platforms
+namespace Sidekick.Mock
 {
     public class MockKeyboardProvider : IKeyboardProvider
     {

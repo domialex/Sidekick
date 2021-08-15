@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
-using Sidekick.Presentation.Blazor.Debounce;
-using Sidekick.Presentation.Blazor.Initialization;
+using Sidekick.Presentation.Blazor.Localization;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -9,8 +8,11 @@ namespace Sidekick.Presentation.Blazor
     {
         public static IServiceCollection AddSidekickPresentationBlazor(this IServiceCollection services)
         {
-            services.AddSingleton<InitializationViewModel>();
-            services.AddSingleton<IDebouncer, Debouncer>();
+            services.AddLocalization();
+
+            services.AddTransient<ErrorResources>();
+            services.AddTransient<InitializationResources>();
+            services.AddTransient<TrayResources>();
 
             // Mudblazor
             services

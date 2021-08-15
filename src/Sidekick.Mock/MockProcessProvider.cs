@@ -1,11 +1,10 @@
 #pragma warning disable CS0067
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Sidekick.Common.Platform;
 
-namespace Sidekick.Mock.Platforms
+namespace Sidekick.Mock
 {
     public class MockProcessProvider : IProcessProvider
     {
@@ -14,7 +13,7 @@ namespace Sidekick.Mock.Platforms
         public event Action OnFocus;
         public event Action OnBlur;
 
-        public Task Initialize(CancellationToken cancellationToken)
+        public Task Initialize()
         {
             return Task.CompletedTask;
         }

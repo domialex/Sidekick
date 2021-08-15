@@ -62,7 +62,7 @@ namespace Sidekick.Common.Platform.Windows.Processes
             this.platformResources = platformResources;
         }
 
-        public Task Initialize(CancellationToken cancellationToken)
+        public Task Initialize()
         {
             WindowsHook = EventLoop.Run(WinEvent.EVENT_SYSTEM_FOREGROUND, WinEvent.EVENT_SYSTEM_CAPTURESTART, IntPtr.Zero, OnWindowsEvent, 0, 0, WinEvent.WINEVENT_OUTOFCONTEXT);
             return Task.CompletedTask;

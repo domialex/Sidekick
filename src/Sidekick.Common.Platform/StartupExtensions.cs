@@ -9,7 +9,7 @@ namespace Sidekick.Common.Platform
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddSidekickPlatform(this IServiceCollection services)
+        public static IServiceCollection AddSidekickCommonPlatform(this IServiceCollection services)
         {
             services.AddTransient<PlatformResources>();
             services.AddTransient<IClipboardProvider, ClipboardProvider>();

@@ -1,18 +1,15 @@
-@page "/initialization"
+@page "/initialize"
 @layout EmptyLayout
-@implements IDisposable
-@using Sidekick.Domain.App.Commands
-@using System.ComponentModel
 
 <SidekickLogo />
 <MudCard Class="my-4">
     <MudCardContent>
         <MudText Typo="Typo.body1"
                  Align="Align.Center">
-            @ViewModel.Title
+            @Title
         </MudText>
         <MudProgressLinear Color="Color.Primary"
-                           Value="ViewModel.Percentage"
+                           Value="Percentage"
                            Minimum="0"
                            Maximum="100" />
     </MudCardContent>
@@ -24,33 +21,3 @@
         @Resources.Exit
     </MudButton>
 </div>
-
-@code {
-    [Inject] private InitializationResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
-    [Inject] private InitializationViewModel ViewModel { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ViewModel.PropertyChanged += OnProgress;
-        base.OnInitialized();
-    }
-
-    public void OnProgress(object sender, PropertyChangedEventArgs e)
-    {
-        InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
-    }
-
-    public async Task Exit()
-    {
-        await Mediator.Send(new ShutdownCommand());
-    }
-
-    public void Dispose()
-    {
-        ViewModel.PropertyChanged -= OnProgress;
-    }
-}
