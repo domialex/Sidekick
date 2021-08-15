@@ -1,0 +1,48 @@
+
+@if (Loading || Item == null)
+{
+    <MudSkeleton Height="55px" Class="@Class" />
+}
+else if (Price != null)
+{
+    <MudPaper Class="@($"pa-2 {Class}")">
+        <MudGrid Spacing="4" Justify="Justify.Center" Class="align-center">
+            <MudItem xs="6">
+                <MudText Typo="Typo.subtitle1" Align="Align.Right">@Resources.PoeNinja</MudText>
+                <MudText Typo="Typo.caption" Align="Align.Right" Class="d-block">@Resources.LastUpdated : @Price.LastUpdated.ToString("t")</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <PriceDisplay Value="Price.Price" Class="justify-start" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+@code {
+    [Inject] private PoeNinjaResources Resources { get; set; }
+    [Inject] private IPoeNinjaClient Client { get; set; }
+
+    [Parameter] public string Class { get; set; }
+    [Parameter] public Item Item { get; set; }
+
+    private bool Loading { get; set; }
+    private NinjaPrice Price { get; set; }
+    private bool IsInit { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        if (IsInit) return;
+
+        Loading = true;
+
+        if (Item != null)
+        {
+            IsInit = true;
+            Price = await Client.GetPriceInfo(Item);
+        }
+
+        Loading = false;
+    }
+}

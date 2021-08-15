@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class JewelParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public JewelParsing(MediatorFixture fixture)
+        public JewelParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseJewelBlightCut()
         {
-            var actual = await mediator.Send(new ParseItemCommand(JewelBlightCut));
+            var actual = parser.ParseItem(JewelBlightCut);
 
             Assert.Equal(Category.Jewel, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -38,7 +37,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseJewelLoathHope()
         {
-            var actual = await mediator.Send(new ParseItemCommand(JewelLoathHope));
+            var actual = parser.ParseItem(JewelLoathHope);
 
             Assert.Equal(Category.Jewel, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);

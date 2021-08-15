@@ -20,7 +20,7 @@ namespace Sidekick.Mapper
         public static IServiceProvider UseSidekickMapper(this IServiceProvider serviceProvider)
         {
             var mapper = serviceProvider.GetService<IMapper>();
-            // mapper.ConfigurationProvider.AssertConfigurationIsValid();
+            mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
             return serviceProvider;
         }

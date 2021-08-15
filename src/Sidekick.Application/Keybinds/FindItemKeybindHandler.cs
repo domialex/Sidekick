@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
+using Sidekick.Apis.Poe;
 using Sidekick.Common.Platform;
-using Sidekick.Domain.Game.Items.Commands;
 using Sidekick.Domain.Keybinds;
 
 namespace Sidekick.Application.Keybinds
@@ -10,19 +9,19 @@ namespace Sidekick.Application.Keybinds
     {
         private readonly IKeyboardProvider keyboard;
         private readonly IClipboardProvider clipboardProvider;
-        private readonly IMediator mediator;
         private readonly IProcessProvider processProvider;
+        private readonly IItemParser itemParser;
 
         public FindItemKeybindHandler(
             IKeyboardProvider keyboard,
             IClipboardProvider clipboardProvider,
-            IMediator mediator,
-            IProcessProvider processProvider)
+            IProcessProvider processProvider,
+            IItemParser itemParser)
         {
             this.keyboard = keyboard;
             this.clipboardProvider = clipboardProvider;
-            this.mediator = mediator;
             this.processProvider = processProvider;
+            this.itemParser = itemParser;
         }
 
         public bool IsValid() => processProvider.IsPathOfExileInFocus;
@@ -30,7 +29,7 @@ namespace Sidekick.Application.Keybinds
         public async Task Execute()
         {
             var text = await clipboardProvider.Copy();
-            var item = await mediator.Send(new ParseItemCommand(text));
+            var item = itemParser.ParseItem(text);
 
             if (item != null)
             {

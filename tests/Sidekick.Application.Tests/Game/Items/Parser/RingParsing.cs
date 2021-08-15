@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class RingParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public RingParsing(MediatorFixture fixture)
+        public RingParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseAgonyFinger()
         {
-            var actual = await mediator.Send(new ParseItemCommand(AgonyFinger));
+            var actual = parser.ParseItem(AgonyFinger);
 
             Assert.Equal(Category.Accessory, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);

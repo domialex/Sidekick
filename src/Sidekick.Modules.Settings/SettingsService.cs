@@ -2,12 +2,12 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Extensions;
+using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Cache.Commands;
-using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Localization;
-using Sidekick.Extensions;
 
 namespace Sidekick.Modules.Settings
 {
@@ -16,13 +16,16 @@ namespace Sidekick.Modules.Settings
         public const string FileName = "Sidekick_settings.json";
         private readonly ISettings settings;
         private readonly IMediator mediator;
+        private readonly IGameLanguageProvider gameLanguageProvider;
 
         public SettingsService(
             ISettings settings,
-            IMediator mediator)
+            IMediator mediator,
+            IGameLanguageProvider gameLanguageProvider)
         {
             this.settings = settings;
             this.mediator = mediator;
+            this.gameLanguageProvider = gameLanguageProvider;
         }
 
         public async Task Save(string property, object value)
@@ -52,7 +55,7 @@ namespace Sidekick.Modules.Settings
             }
             if (languageHasChanged)
             {
-                await mediator.Send(new SetGameLanguageCommand(newSettings.Language_Parser));
+                gameLanguageProvider.SetLanguage(newSettings.Language_Parser);
             }
 
             newSettings.CopyValuesTo(settings);

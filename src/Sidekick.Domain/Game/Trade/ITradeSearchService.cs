@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Common.Game.Items;
 using Sidekick.Domain.Game.Trade.Models;
 
 namespace Sidekick.Domain.Game.Trade

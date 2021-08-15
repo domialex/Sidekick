@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -9,17 +8,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class DelveParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public DelveParsing(MediatorFixture fixture)
+        public DelveParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParsePotentChaoticResonator()
         {
-            var actual = await mediator.Send(new ParseItemCommand(PotentChaoticResonator));
+            var actual = parser.ParseItem(PotentChaoticResonator);
 
             Assert.Equal(Category.Currency, actual.Metadata.Category);
             Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);

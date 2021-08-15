@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub;
-using Sidekick.Application.Game.Items.Parser.Patterns;
+using Sidekick.Apis.Poe;
+using Sidekick.Apis.Poe.Modifiers;
+using Sidekick.Apis.Poe.Parser.Patterns;
+using Sidekick.Apis.Poe.Pseudo;
+using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Core.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Cache.Commands;
-using Sidekick.Domain.Game.Items.Metadatas;
-using Sidekick.Domain.Game.Items.Modifiers;
-using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Game.Leagues.Queries;
-using Sidekick.Domain.Game.Modifiers;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Initialization.Notifications;
 using Sidekick.Domain.Localization;
@@ -44,6 +44,7 @@ namespace Sidekick.Application.Initialization
         private readonly IItemMetadataProvider itemMetadataProvider;
         private readonly IItemStaticDataProvider itemStaticDataProvider;
         private readonly IGitHubClient gitHubClient;
+        private readonly IGameLanguageProvider gameLanguageProvider;
 
         public InitializeHandler(
             InitializationResources resources,
@@ -60,7 +61,8 @@ namespace Sidekick.Application.Initialization
             IPseudoModifierProvider pseudoModifierProvider,
             IItemMetadataProvider itemMetadataProvider,
             IItemStaticDataProvider itemStaticDataProvider,
-            IGitHubClient gitHubClient)
+            IGitHubClient gitHubClient,
+            IGameLanguageProvider gameLanguageProvider)
         {
             this.resources = resources;
             this.mediator = mediator;
@@ -77,6 +79,7 @@ namespace Sidekick.Application.Initialization
             this.itemMetadataProvider = itemMetadataProvider;
             this.itemStaticDataProvider = itemStaticDataProvider;
             this.gitHubClient = gitHubClient;
+            this.gameLanguageProvider = gameLanguageProvider;
         }
 
         private int Count = 0;
@@ -119,7 +122,7 @@ namespace Sidekick.Application.Initialization
                 }
 
                 // Set the game language
-                await RunCommandStep(new SetGameLanguageCommand(settings.Language_Parser));
+                await Run(() => gameLanguageProvider.SetLanguage(settings.Language_Parser));
 
                 if (request.FirstRun)
                 {

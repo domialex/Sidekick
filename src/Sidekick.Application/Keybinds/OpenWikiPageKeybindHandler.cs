@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
+using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.App.Commands;
 using Sidekick.Domain.Errors;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Game.Languages.Commands;
 using Sidekick.Domain.Keybinds;
 using Sidekick.Domain.Views;
 
@@ -20,19 +20,25 @@ namespace Sidekick.Application.Keybinds
         private readonly IViewLocator viewLocator;
         private readonly ISettings settings;
         private readonly IProcessProvider processProvider;
+        private readonly IItemParser itemParser;
+        private readonly IGameLanguageProvider gameLanguageProvider;
 
         public OpenWikiPageKeybindHandler(
             IClipboardProvider clipboardProvider,
             IMediator mediator,
             IViewLocator viewLocator,
             ISettings settings,
-            IProcessProvider processProvider)
+            IProcessProvider processProvider,
+            IItemParser itemParser,
+            IGameLanguageProvider gameLanguageProvider)
         {
             this.clipboardProvider = clipboardProvider;
             this.mediator = mediator;
             this.viewLocator = viewLocator;
             this.settings = settings;
             this.processProvider = processProvider;
+            this.itemParser = itemParser;
+            this.gameLanguageProvider = gameLanguageProvider;
         }
 
         public bool IsValid() => processProvider.IsPathOfExileInFocus;
@@ -40,7 +46,7 @@ namespace Sidekick.Application.Keybinds
         public async Task Execute()
         {
             var text = await clipboardProvider.Copy();
-            var item = await mediator.Send(new ParseItemCommand(text));
+            var item = itemParser.ParseItem(text);
 
             if (item == null)
             {
@@ -49,7 +55,7 @@ namespace Sidekick.Application.Keybinds
                 return;
             }
 
-            if (!await mediator.Send(new IsGameLanguageEnglishQuery()))
+            if (!gameLanguageProvider.IsEnglish())
             {
                 // Only available for english language
                 await viewLocator.Open(View.Error, ErrorType.UnavailableTranslation);

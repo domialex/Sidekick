@@ -9,14 +9,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sidekick.Apis.GitHub;
+using Sidekick.Apis.Poe;
+using Sidekick.Apis.PoeNinja;
 using Sidekick.Application;
+using Sidekick.Common;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
-using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Mock.Platforms;
@@ -30,12 +32,10 @@ namespace Sidekick.Presentation.Blazor
     public class Startup
     {
         private readonly IConfiguration configuration;
-        private readonly IHostEnvironment environment;
 
-        public Startup(IConfiguration configuration, IHostEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.environment = environment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -55,7 +55,7 @@ namespace Sidekick.Presentation.Blazor
 
             services
                 // Layers
-                .AddSidekickApplication(configuration)
+                .AddSidekickApplication()
                 .AddSidekickInfrastructure()
                 .AddSidekickLocalization()
                 .AddSidekickPersistence()
@@ -63,12 +63,14 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickPresentationBlazor()
 
                 // Common
-                .AddSidekickLogging(configuration, environment)
                 .AddSidekickMapper()
                 .AddSidekickMediator()
+                .AddSidekickCommon()
 
                 // Apis
                 .AddSidekickGitHubApi()
+                .AddSidekickPoeApi()
+                .AddSidekickPoeNinjaApi()
 
                 // Modules
                 .AddSidekickCheatsheets()

@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class EquipmentParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public EquipmentParsing(MediatorFixture fixture)
+        public EquipmentParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseUnidentifiedUnique()
         {
-            var actual = await mediator.Send(new ParseItemCommand(UnidentifiedUnique));
+            var actual = parser.ParseItem(UnidentifiedUnique);
 
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
@@ -31,7 +30,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseSixLinkUniqueBodyArmor()
         {
-            var actual = await mediator.Send(new ParseItemCommand(UniqueSixLink));
+            var actual = parser.ParseItem(UniqueSixLink);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
@@ -61,7 +60,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseRareGloves()
         {
-            var actual = await mediator.Send(new ParseItemCommand(GlovesAssasinsMitts));
+            var actual = parser.ParseItem(GlovesAssasinsMitts);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -79,7 +78,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseInfluencedWeapon()
         {
-            var actual = await mediator.Send(new ParseItemCommand(InfluencedWand));
+            var actual = parser.ParseItem(InfluencedWand);
 
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -100,7 +99,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseMagicWeapon()
         {
-            var actual = await mediator.Send(new ParseItemCommand(MagicWeapon));
+            var actual = parser.ParseItem(MagicWeapon);
 
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
@@ -113,7 +112,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseFracturedItem()
         {
-            var actual = await mediator.Send(new ParseItemCommand(FracturedItem));
+            var actual = parser.ParseItem(FracturedItem);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -129,7 +128,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseUniqueItemWithDifferentBases()
         {
-            var actual = await mediator.Send(new ParseItemCommand(UniqueItemWithDifferentBases));
+            var actual = parser.ParseItem(UniqueItemWithDifferentBases);
 
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
@@ -144,7 +143,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseWeaponWithMultipleElementalDamages()
         {
-            var actual = await mediator.Send(new ParseItemCommand(WeaponWithMultipleElementalDamages));
+            var actual = parser.ParseItem(WeaponWithMultipleElementalDamages);
 
             Assert.Equal(Category.Weapon, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -158,7 +157,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseEnchantWithAdditionalProjectiles()
         {
-            var actual = await mediator.Send(new ParseItemCommand(EnchantWithAdditionalProjectiles));
+            var actual = parser.ParseItem(EnchantWithAdditionalProjectiles);
 
             var enchants = actual.Modifiers.Enchant.Select(x => x.Text);
             Assert.Contains("Split Arrow fires 2 additional Projectiles", enchants);

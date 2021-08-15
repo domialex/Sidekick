@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sidekick.Common.Extensions;
 using Sidekick.Common.Settings;
-using Sidekick.Extensions;
 
 namespace Sidekick.Modules.Settings
 {

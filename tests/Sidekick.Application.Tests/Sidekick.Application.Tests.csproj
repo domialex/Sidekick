@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sidekick.Application\Sidekick.Application.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Common\Sidekick.Common.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Domain\Sidekick.Domain.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Infrastructure\Sidekick.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Mock\Sidekick.Mock.csproj" />

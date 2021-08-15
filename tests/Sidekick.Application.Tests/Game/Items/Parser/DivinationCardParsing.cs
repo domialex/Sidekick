@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -9,17 +8,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class DivinationCardParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public DivinationCardParsing(MediatorFixture fixture)
+        public DivinationCardParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseSaintTreasure()
         {
-            var actual = await mediator.Send(new ParseItemCommand(SaintTreasure));
+            var actual = parser.ParseItem(SaintTreasure);
 
             Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
             Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
@@ -30,7 +29,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseLordOfCelebration()
         {
-            var actual = await mediator.Send(new ParseItemCommand(LordOfCelebration));
+            var actual = parser.ParseItem(LordOfCelebration);
 
             Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
             Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);

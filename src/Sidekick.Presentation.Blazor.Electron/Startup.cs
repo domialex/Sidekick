@@ -12,12 +12,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub;
 using Sidekick.Application;
+using Sidekick.Common;
 using Sidekick.Common.Platform;
 using Sidekick.Domain.Initialization.Commands;
 using Sidekick.Domain.Views;
 using Sidekick.Infrastructure;
 using Sidekick.Localization;
-using Sidekick.Logging;
 using Sidekick.Mapper;
 using Sidekick.Mediator;
 using Sidekick.Modules.Cheatsheets;
@@ -54,7 +54,7 @@ namespace Sidekick.Presentation.Blazor.Electron
 
             services
                 // Layers
-                .AddSidekickApplication(configuration)
+                .AddSidekickApplication()
                 .AddSidekickInfrastructure()
                 .AddSidekickLocalization()
                 .AddSidekickPersistence()
@@ -62,7 +62,7 @@ namespace Sidekick.Presentation.Blazor.Electron
                 .AddSidekickPresentationBlazor()
 
                 // Common
-                .AddSidekickLogging(configuration, environment)
+                .AddSidekickCommon()
                 .AddSidekickMapper()
                 .AddSidekickMediator()
 

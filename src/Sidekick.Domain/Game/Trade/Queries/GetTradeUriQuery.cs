@@ -1,6 +1,6 @@
 using System;
 using MediatR;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Common.Game.Items;
 
 namespace Sidekick.Domain.Game.Trade.Queries
 {

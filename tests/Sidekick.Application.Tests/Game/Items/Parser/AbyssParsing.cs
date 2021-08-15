@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class AbyssParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public AbyssParsing(MediatorFixture fixture)
+        public AbyssParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
-        public async Task ParseBulbonicTrail()
+        public void ParseBulbonicTrail()
         {
-            var actual = await mediator.Send(new ParseItemCommand(BulbonicTrail));
+            var actual = parser.ParseItem(BulbonicTrail);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);

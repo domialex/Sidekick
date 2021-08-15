@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Common.Game.Items.Modifiers;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Game.Maps.Commands;
 using Sidekick.Domain.Game.Maps.Models;
-using Sidekick.Domain.Game.Modifiers.Models;
 
 namespace Sidekick.Application.Game.Maps
 {

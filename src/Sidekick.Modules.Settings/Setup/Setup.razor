@@ -57,6 +57,7 @@
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private SettingsModel ViewModel { get; set; }
     [Inject] private ISettingsService SettingsService { get; set; }
+    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
 
     private LeagueSelect RefLeagueSelect;
 
@@ -74,7 +75,7 @@
     public async Task OnGameLanguageChange(string value)
     {
         ViewModel.Language_Parser = value;
-        await Mediator.Send(new Sidekick.Domain.Game.Languages.Commands.SetGameLanguageCommand(value));
+        GameLanguageProvider.SetLanguage(value);
         await RefLeagueSelect.RefreshOptions();
     }
 

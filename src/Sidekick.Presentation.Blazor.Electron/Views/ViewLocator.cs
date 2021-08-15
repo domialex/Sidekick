@@ -6,9 +6,9 @@ using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Extensions;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Views;
-using Sidekick.Extensions;
 using Sidekick.Presentation.Blazor.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views

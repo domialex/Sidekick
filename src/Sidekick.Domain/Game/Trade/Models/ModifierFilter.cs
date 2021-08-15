@@ -1,4 +1,4 @@
-using Sidekick.Domain.Game.Modifiers.Models;
+using Sidekick.Common.Game.Items.Modifiers;
 
 namespace Sidekick.Domain.Game.Trade.Models
 {

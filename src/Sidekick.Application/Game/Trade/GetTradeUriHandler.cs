@@ -2,10 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
+using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Game.Items.Metadatas;
-using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade.Queries;
 
 namespace Sidekick.Application.Game.Trade

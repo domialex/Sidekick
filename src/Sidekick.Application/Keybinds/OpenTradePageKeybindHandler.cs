@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
+using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.App.Commands;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
-using Sidekick.Domain.Game.Languages;
 using Sidekick.Domain.Game.Trade;
 using Sidekick.Domain.Keybinds;
 
@@ -20,6 +20,7 @@ namespace Sidekick.Application.Keybinds
         private readonly IMediator mediator;
         private readonly ISettings settings;
         private readonly IProcessProvider processProvider;
+        private readonly IItemParser itemParser;
 
         public OpenTradePageKeybindHandler(
             IClipboardProvider clipboardProvider,
@@ -27,7 +28,8 @@ namespace Sidekick.Application.Keybinds
             ITradeSearchService tradeSearchService,
             IMediator mediator,
             ISettings settings,
-            IProcessProvider processProvider)
+            IProcessProvider processProvider,
+            IItemParser itemParser)
         {
             this.clipboardProvider = clipboardProvider;
             this.gameLanguageProvider = gameLanguageProvider;
@@ -35,6 +37,7 @@ namespace Sidekick.Application.Keybinds
             this.mediator = mediator;
             this.settings = settings;
             this.processProvider = processProvider;
+            this.itemParser = itemParser;
         }
 
         public bool IsValid() => processProvider.IsPathOfExileInFocus;
@@ -42,7 +45,7 @@ namespace Sidekick.Application.Keybinds
         public async Task Execute()
         {
             var text = await clipboardProvider.Copy();
-            var item = await mediator.Send(new ParseItemCommand(text));
+            var item = itemParser.ParseItem(text);
 
             if (item != null)
             {

@@ -1,12 +1,3 @@
-@using MediatR
-@using Microsoft.Extensions.Logging
-@using Sidekick.Domain.Game.Items.Metadatas
-@using Sidekick.Domain.Game.Items.Models
-@using Sidekick.Domain.Game.Trade
-@using Sidekick.Domain.Game.Trade.Models
-@using Sidekick.Domain.Game.Trade.Queries
-@using Sidekick.Extensions
-@using Sidekick.Localization.Trade
 @page "/price/{itemText}"
 @layout OverlayLayout
 
@@ -63,6 +54,7 @@ else
     [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
     [Inject] private ISettings Settings { get; set; }
     [Inject] private TradeResources Resources { get; set; }
+    [Inject] private IItemParser ItemParser { get; set; }
 
     [Parameter] public string ItemText { get; set; }
 
@@ -78,7 +70,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
+        Item = ItemParser.ParseItem(ItemText.DecodeBase64Url());
 
         if (Item == null)
         {

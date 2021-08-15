@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Sidekick.Domain.Apis.PoeNinja;
+using Sidekick.Apis.PoeNinja.Repository;
 using Sidekick.Domain.Cache;
 using Sidekick.Domain.Cache.Commands;
 

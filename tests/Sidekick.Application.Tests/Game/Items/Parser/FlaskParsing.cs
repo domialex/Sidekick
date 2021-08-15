@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class FlaskParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public FlaskParsing(MediatorFixture fixture)
+        public FlaskParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseSanctifiedManaFlask()
         {
-            var actual = await mediator.Send(new ParseItemCommand(SanctifiedManaFlask));
+            var actual = parser.ParseItem(SanctifiedManaFlask);
 
             Assert.Equal(Category.Flask, actual.Metadata.Category);
             Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);

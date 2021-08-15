@@ -34,7 +34,7 @@ namespace Sidekick.Infrastructure.PoePriceInfo
 
         public async Task<PricePrediction> Handle(GetPricePredictionQuery request, CancellationToken cancellationToken)
         {
-            if (request.Item.Metadata.Rarity != Domain.Game.Items.Models.Rarity.Rare)
+            if (request.Item.Metadata.Rarity != Common.Game.Items.Rarity.Rare)
             {
                 return null;
             }

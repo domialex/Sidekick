@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Common.Game.Items;
 
 namespace Sidekick.Infrastructure.PoeApi.Trade.Results
 {

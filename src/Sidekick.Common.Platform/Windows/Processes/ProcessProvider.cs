@@ -1,5 +1,4 @@
 #pragma warning disable CA1806 // Do not ignore method results
-#pragma warning disable S3881 // "IDisposable" should be implemented correctly
 #pragma warning disable CA1416 // Validate platform compatibility
 using System;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Sidekick.Common.Platform.Windows.Processes
     {
         private const string PATH_OF_EXILE_TITLE = "Path of Exile";
         private const string SIDEKICK_TITLE = "Sidekick";
-        private static readonly List<string> PossibleProcessNames = new List<string> { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
+        private static readonly List<string> PossibleProcessNames = new() { "PathOfExile", "PathOfExile_x64", "PathOfExileSteam", "PathOfExile_x64Steam" };
 
         public string ClientLogPath => Path.Combine(Path.GetDirectoryName(GetPathOfExileProcess().GetMainModuleFileName()), "logs", "Client.txt");
 

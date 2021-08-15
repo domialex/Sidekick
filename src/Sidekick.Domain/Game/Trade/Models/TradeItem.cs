@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Common.Game.Items;
 
 namespace Sidekick.Domain.Game.Trade.Models
 {

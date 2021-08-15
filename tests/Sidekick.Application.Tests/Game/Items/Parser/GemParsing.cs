@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -9,17 +8,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class GemParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public GemParsing(MediatorFixture fixture)
+        public GemParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseVaalGem()
         {
-            var actual = await mediator.Send(new ParseItemCommand(VaalGem));
+            var actual = parser.ParseItem(VaalGem);
 
             Assert.Equal(Category.Gem, actual.Metadata.Category);
             Assert.Equal(Rarity.Gem, actual.Metadata.Rarity);
@@ -33,7 +32,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseAnomalousGem()
         {
-            var actual = await mediator.Send(new ParseItemCommand(AnomalousGem));
+            var actual = parser.ParseItem(AnomalousGem);
 
             Assert.Equal(Category.Gem, actual.Metadata.Category);
             Assert.Equal(Rarity.Gem, actual.Metadata.Rarity);

@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class MapParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public MapParsing(MediatorFixture fixture)
+        public MapParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseNormalMap()
         {
-            var actual = await mediator.Send(new ParseItemCommand(NormalMap));
+            var actual = parser.ParseItem(NormalMap);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
@@ -31,7 +30,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseMagicMap()
         {
-            var actual = await mediator.Send(new ParseItemCommand(MagicMap));
+            var actual = parser.ParseItem(MagicMap);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Magic, actual.Metadata.Rarity);
@@ -42,7 +41,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseBlightedMap()
         {
-            var actual = await mediator.Send(new ParseItemCommand(BlightedMap));
+            var actual = parser.ParseItem(BlightedMap);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
@@ -54,7 +53,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseUniqueMap()
         {
-            var actual = await mediator.Send(new ParseItemCommand(UniqueMap));
+            var actual = parser.ParseItem(UniqueMap);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
@@ -69,7 +68,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseOccupiedMap()
         {
-            var actual = await mediator.Send(new ParseItemCommand(OccupiedMap));
+            var actual = parser.ParseItem(OccupiedMap);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -85,7 +84,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseTimelessKaruiEmblem()
         {
-            var actual = await mediator.Send(new ParseItemCommand(TimelessKaruiEmblem));
+            var actual = parser.ParseItem(TimelessKaruiEmblem);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Normal, actual.Metadata.Rarity);
@@ -95,7 +94,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseVortexPit()
         {
-            var actual = await mediator.Send(new ParseItemCommand(VortexPit));
+            var actual = parser.ParseItem(VortexPit);
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);

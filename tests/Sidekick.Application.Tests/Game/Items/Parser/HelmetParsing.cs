@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -10,17 +9,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class HelmetParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public HelmetParsing(MediatorFixture fixture)
+        public HelmetParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseBlightGuardian()
         {
-            var actual = await mediator.Send(new ParseItemCommand(BlightGuardian));
+            var actual = parser.ParseItem(BlightGuardian);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
@@ -33,7 +32,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseStarkonjaHead()
         {
-            var actual = await mediator.Send(new ParseItemCommand(StarkonjaHead));
+            var actual = parser.ParseItem(StarkonjaHead);
 
             Assert.Equal(Category.Armour, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);

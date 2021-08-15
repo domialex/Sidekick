@@ -10,9 +10,4 @@
     <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="5.0.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Setup\" />
-    <Folder Include="Update\" />
-  </ItemGroup>
-
 </Project>

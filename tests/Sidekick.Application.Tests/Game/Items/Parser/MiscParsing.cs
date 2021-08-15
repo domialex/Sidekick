@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Domain.Game.Items.Commands;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Apis.Poe;
+using Sidekick.Common.Game.Items;
 using Xunit;
 
 namespace Sidekick.Application.Tests.Game.Items.Parser
@@ -9,17 +8,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
     [Collection(Collections.Mediator)]
     public class MiscParsing
     {
-        private readonly IMediator mediator;
+        private readonly IItemParser parser;
 
-        public MiscParsing(MediatorFixture fixture)
+        public MiscParsing(ParserFixture fixture)
         {
-            mediator = fixture.Mediator;
+            parser = fixture.Parser;
         }
 
         [Fact]
         public async Task ParseProphecy()
         {
-            var actual = await mediator.Send(new ParseItemCommand(Prophecy));
+            var actual = parser.ParseItem(Prophecy);
 
             Assert.Equal(Category.Prophecy, actual.Metadata.Category);
             Assert.Equal(Rarity.Prophecy, actual.Metadata.Rarity);
@@ -30,7 +29,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseCurrency()
         {
-            var actual = await mediator.Send(new ParseItemCommand(Currency));
+            var actual = parser.ParseItem(Currency);
 
             Assert.Equal(Category.Currency, actual.Metadata.Category);
             Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
@@ -41,7 +40,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseOrgan()
         {
-            var actual = await mediator.Send(new ParseItemCommand(Organ));
+            var actual = parser.ParseItem(Organ);
 
             Assert.Equal(Category.ItemisedMonster, actual.Metadata.Category);
             Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
@@ -52,7 +51,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseRareBeast()
         {
-            var parsedRareBeast = await mediator.Send(new ParseItemCommand(RareBeast));
+            var parsedRareBeast = parser.ParseItem(RareBeast);
 
             Assert.Equal(Category.ItemisedMonster, parsedRareBeast.Metadata.Category);
             Assert.Equal(Rarity.Rare, parsedRareBeast.Metadata.Rarity);
@@ -63,7 +62,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public async Task ParseUniqueBeast()
         {
-            var parsedRareBeast = await mediator.Send(new ParseItemCommand(UniqueBeast));
+            var parsedRareBeast = parser.ParseItem(UniqueBeast);
 
             Assert.Equal(Category.ItemisedMonster, parsedRareBeast.Metadata.Category);
             Assert.Equal(Rarity.Unique, parsedRareBeast.Metadata.Rarity);

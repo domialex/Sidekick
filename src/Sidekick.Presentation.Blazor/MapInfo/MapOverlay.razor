@@ -46,6 +46,7 @@
     [Inject] private IMediator Mediator { get; set; }
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
+    [Inject] private IItemParser ItemParser { get; set; }
 
     [Parameter] public string ItemText { get; set; }
 
@@ -56,7 +57,7 @@
     {
         ViewInstance.SetTitle(Resources.Title);
 
-        Item = await Mediator.Send(new ParseItemCommand(ItemText.DecodeBase64Url()));
+        Item = ItemParser.ParseItem(ItemText.DecodeBase64Url());
         if (Item == null)
         {
             await ViewLocator.Open(View.Error, ErrorType.Unparsable);

@@ -1,6 +1,6 @@
 using MediatR;
+using Sidekick.Common.Game.Items;
 using Sidekick.Domain.Apis.PoePriceInfo.Models;
-using Sidekick.Domain.Game.Items.Models;
 
 namespace Sidekick.Domain.Apis.PoePriceInfo.Queries
 {

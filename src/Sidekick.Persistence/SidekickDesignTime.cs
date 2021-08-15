@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Sidekick.Extensions;
+using Sidekick.Common.Extensions;
 
 namespace Sidekick.Persistence
 {

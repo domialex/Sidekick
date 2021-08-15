@@ -15,7 +15,7 @@
 
 @code {
     [Inject] private SettingsResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
 
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
@@ -25,7 +25,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var languages = await Mediator.Send(new Sidekick.Domain.Game.Languages.Commands.GetGameLanguagesQuery());
+        var languages = GameLanguageProvider.GetList();
         Options = languages.ToDictionary(x => x.LanguageCode, x => x.Name);
 
         await base.OnInitializedAsync();

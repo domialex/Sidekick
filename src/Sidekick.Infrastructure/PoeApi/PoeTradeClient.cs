@@ -3,27 +3,22 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Game.Languages;
-using Sidekick.Domain.Game.Languages.Commands;
+using Sidekick.Common.Game.Languages;
 
 namespace Sidekick.Infrastructure.PoeApi
 {
     public class PoeTradeClient : IPoeTradeClient
     {
         private readonly ILogger logger;
-        private readonly IMediator mediator;
         private readonly IGameLanguageProvider gameLanguageProvider;
 
         public PoeTradeClient(
             ILogger<PoeTradeClient> logger,
-            IMediator mediator,
             IGameLanguageProvider gameLanguageProvider,
             IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
-            this.mediator = mediator;
             this.gameLanguageProvider = gameLanguageProvider;
             HttpClient = httpClientFactory.CreateClient();
             HttpClient.DefaultRequestHeaders.TryAddWithoutValidation("X-Powered-By", "Sidekick");
@@ -49,7 +44,7 @@ namespace Sidekick.Infrastructure.PoeApi
 
             if (useDefaultLanguage || language == null)
             {
-                language = await mediator.Send(new GetGameLanguageQuery("en"));
+                language = gameLanguageProvider.Get("en");
             }
 
             try

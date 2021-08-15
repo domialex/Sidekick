@@ -1,5 +1,5 @@
 using MediatR;
-using Sidekick.Domain.Game.Items.Models;
+using Sidekick.Common.Game.Items;
 using Sidekick.Domain.Game.Trade.Models;
 
 namespace Sidekick.Domain.Game.Trade.Commands

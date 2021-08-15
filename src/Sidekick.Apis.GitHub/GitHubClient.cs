@@ -11,8 +11,8 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub.Localization;
 using Sidekick.Apis.GitHub.Models;
+using Sidekick.Common.Extensions;
 using Sidekick.Domain.Initialization.Notifications;
-using Sidekick.Extensions;
 
 namespace Sidekick.Apis.GitHub
 {
@@ -21,6 +21,7 @@ namespace Sidekick.Apis.GitHub
         private readonly IMediator mediator;
         private readonly ILogger<GitHubClient> logger;
         private readonly UpdateResources resources;
+        private readonly HttpClient client;
 
         public GitHubClient(
             IHttpClientFactory httpClientFactory,
@@ -32,13 +33,11 @@ namespace Sidekick.Apis.GitHub
             this.logger = logger;
             this.resources = resources;
 
-            Client = httpClientFactory.CreateClient();
-            Client.BaseAddress = new Uri("https://api.github.com");
-            Client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client = httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri("https://api.github.com");
+            client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        public HttpClient Client { get; private set; }
 
         public async Task<bool> Update()
         {
@@ -99,7 +98,7 @@ namespace Sidekick.Apis.GitHub
         private async Task<GitHubRelease> GetLatestRelease()
         {
             // Get List of releases
-            var listResponse = await Client.GetAsync("/repos/domialex/Sidekick/releases");
+            var listResponse = await client.GetAsync("/repos/domialex/Sidekick/releases");
             if (listResponse.IsSuccessStatusCode)
             {
                 var githubReleaseList = await JsonSerializer.DeserializeAsync<GitHubRelease[]>(await listResponse.Content.ReadAsStreamAsync(), new JsonSerializerOptions { IgnoreNullValues = true, PropertyNameCaseInsensitive = true });
@@ -147,7 +146,7 @@ namespace Sidekick.Apis.GitHub
             var downloadUrl = release.Assets.FirstOrDefault(x => x.Name == "Sidekick-Setup.exe")?.DownloadUrl;
             if (downloadUrl == null) return null;
 
-            var response = await Client.GetAsync(downloadUrl);
+            var response = await client.GetAsync(downloadUrl);
             using var downloadStream = await response.Content.ReadAsStreamAsync();
             using var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write, FileShare.None);
             await downloadStream.CopyToAsync(fileStream);
