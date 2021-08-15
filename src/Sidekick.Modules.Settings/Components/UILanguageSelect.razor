@@ -15,6 +15,7 @@
 
 @code {
     [Inject] private SettingsResources Resources { get; set; }
+    [Inject] private IUILanguageProvider UILanguageProvider { get; set; }
 
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
@@ -24,7 +25,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var languages = await Mediator.Send(new Sidekick.Domain.Localization.GetUiLanguagesQuery());
+        var languages = UILanguageProvider.GetList();
         Options = languages.ToDictionary(x => x.Name, x => x.NativeName.First().ToString().ToUpper() + x.NativeName[1..]);
 
         await base.OnInitializedAsync();

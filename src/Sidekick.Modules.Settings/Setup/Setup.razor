@@ -57,18 +57,20 @@
     [Inject] private SettingsModel ViewModel { get; set; }
     [Inject] private ISettingsService SettingsService { get; set; }
     [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
+    [Inject] private IAppService AppService { get; set; }
+    [Inject] private IInitializationProvider InitializationProvider { get; set; }
 
     private LeagueSelect RefLeagueSelect;
 
-    public async Task Exit()
+    public void Exit()
     {
-        await Mediator.Send(new ShutdownCommand());
+        AppService.Shutdown();
     }
 
     public async Task Save()
     {
         await SettingsService.Save(ViewModel, true);
-        await Mediator.Send(new InitializeCommand(true, false));
+        await InitializationProvider.Initialize(true, false);
     }
 
     public async Task OnGameLanguageChange(string value)

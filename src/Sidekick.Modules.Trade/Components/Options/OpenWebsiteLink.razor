@@ -1,5 +1,3 @@
-@using Sidekick.Domain.App.Commands
-@using Sidekick.Domain.Game.Trade.Queries
 
 @if (Item != null && !string.IsNullOrEmpty(QueryId))
 {
@@ -8,14 +6,15 @@
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
+    [Inject] private ITradeSearchService TradeSearchService { get; set; }
+    [Inject] private IBrowserProvider BrowserProvider { get; set; }
 
     [Parameter] public Item Item { get; set; }
     [Parameter] public string QueryId { get; set; }
 
-    private async Task OpenWebsite()
+    private void OpenWebsite()
     {
-        var uri = await Mediator.Send(new GetTradeUriQuery(Item, QueryId));
-        await Mediator.Send(new OpenBrowserCommand(uri.AbsoluteUri));
+        var uri = TradeSearchService.GetTradeUri(Item, QueryId);
+        BrowserProvider.OpenUri(uri);
     }
 }

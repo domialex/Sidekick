@@ -9,8 +9,8 @@
 </div>
 
 @code {
-    [Inject] private Sidekick.Apis.Poe.IItemStaticDataProvider ItemStaticDataProvider { get; set; }
-    [Inject] private Sidekick.Common.Game.Languages.IGameLanguageProvider GameLanguageProvider { get; set; }
+    [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
+    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
 
     [Parameter] public string Currency { get; set; } = "chaos";
     [Parameter] public double Value { get; set; }

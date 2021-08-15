@@ -1,4 +1,3 @@
-@using Sidekick.Persistence.ItemCategories
 
 @if (Visible)
 {
@@ -17,7 +16,6 @@
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
-    [Inject] private IItemCategoryRepository ItemCategoryRepository { get; set; }
 
     [Parameter] public Item Item { get; set; }
     [Parameter] public string Value { get; set; }
@@ -138,12 +136,6 @@
             Options.Add("currency.resonator", Resources.Class_CurrencyResonator);
             Options.Add("currency.fossil", Resources.Class_CurrencyFossil);
             Options.Add("currency.incubator", Resources.Class_CurrencyIncubator);
-        }
-
-        var selectedCategory = (await ItemCategoryRepository.Get(Item.Original.Type))?.Category;
-        if (!Options.Values.Any(x => x == selectedCategory))
-        {
-            selectedCategory = null;
         }
 
         await base.OnParametersSetAsync();

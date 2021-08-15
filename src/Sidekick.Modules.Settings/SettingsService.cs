@@ -1,9 +1,12 @@
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Sidekick.Common;
 using Sidekick.Common.Cache;
 using Sidekick.Common.Extensions;
 using Sidekick.Common.Game.Languages;
+using Sidekick.Common.Initialization;
+using Sidekick.Common.Localization;
 using Sidekick.Common.Settings;
 
 namespace Sidekick.Modules.Settings
@@ -14,15 +17,21 @@ namespace Sidekick.Modules.Settings
         private readonly ISettings settings;
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheProvider cacheProvider;
+        private readonly IUILanguageProvider uILanguageProvider;
+        private readonly IInitializationProvider initializationProvider;
 
         public SettingsService(
             ISettings settings,
             IGameLanguageProvider gameLanguageProvider,
-            ICacheProvider cacheProvider)
+            ICacheProvider cacheProvider,
+            IUILanguageProvider uILanguageProvider,
+            IInitializationProvider initializationProvider)
         {
             this.settings = settings;
             this.gameLanguageProvider = gameLanguageProvider;
             this.cacheProvider = cacheProvider;
+            this.uILanguageProvider = uILanguageProvider;
+            this.initializationProvider = initializationProvider;
         }
 
         public async Task Save(string property, object value)
@@ -48,7 +57,7 @@ namespace Sidekick.Modules.Settings
 
             if (settings.Language_UI != newSettings.Language_UI)
             {
-                await mediator.Send(new SetUiLanguageCommand(newSettings.Language_UI));
+                uILanguageProvider.Set(newSettings.Language_UI);
             }
             if (languageHasChanged)
             {
@@ -108,7 +117,7 @@ namespace Sidekick.Modules.Settings
             if (!skipInitialize && (languageHasChanged || leagueHasChanged))
             {
                 cacheProvider.Clear();
-                await mediator.Send(new InitializeCommand(false, false));
+                await initializationProvider.Initialize(false, false);
             }
         }
     }

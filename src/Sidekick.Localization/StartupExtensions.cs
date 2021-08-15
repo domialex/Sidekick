@@ -1,10 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Localization.About;
 using Sidekick.Localization.Errors;
 using Sidekick.Localization.Initialization;
-using Sidekick.Localization.Maps;
-using Sidekick.Localization.Platforms;
-using Sidekick.Localization.Trade;
 using Sidekick.Localization.Tray;
 
 namespace Sidekick.Localization
@@ -15,17 +11,9 @@ namespace Sidekick.Localization
         {
             services.AddLocalization();
 
-            services.AddTransient<AboutResources>();
-
             services.AddTransient<ErrorResources>();
 
             services.AddTransient<InitializationResources>();
-
-            services.AddTransient<PlatformResources>();
-
-            services.AddTransient<TradeResources>();
-
-            services.AddTransient<MapInfoResources>();
 
             services.AddTransient<TrayResources>();
 

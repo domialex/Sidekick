@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Apis.PoeNinja.Localization;
 using Sidekick.Apis.PoeNinja.Repository;
 using Sidekick.Common;
 
@@ -20,7 +19,6 @@ namespace Sidekick.Apis.PoeNinja
             context.Database.Migrate();
 
             services.AddTransient<IPoeNinjaRepository, PoeNinjaRepository>();
-            services.AddTransient<PoeNinjaResources>();
 
             return services;
         }

@@ -46,7 +46,6 @@ else
 }
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ILogger<Prices> Logger { get; set; }
@@ -55,6 +54,7 @@ else
     [Inject] private ISettings Settings { get; set; }
     [Inject] private TradeResources Resources { get; set; }
     [Inject] private IItemParser ItemParser { get; set; }
+    [Inject] private ITradeFilterService TradeFilterService { get; set; }
 
     [Parameter] public string ItemText { get; set; }
 
@@ -80,8 +80,8 @@ else
         }
 
         ViewInstance.SetTitle(Item.Original.Name);
-        PropertyFilters = await Mediator.Send(new GetPropertyFilters(Item));
-        ModifierFilters = await Mediator.Send(new GetModifierFilters(Item));
+        PropertyFilters = TradeFilterService.GetPropertyFilters(Item);
+        ModifierFilters = TradeFilterService.GetModifierFilters(Item);
 
         if (Item.Metadata.Rarity != Rarity.Rare && Item.Metadata.Rarity != Rarity.Magic)
         {

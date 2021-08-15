@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Localization.Trade
+namespace Sidekick.Modules.Trade.Localization
 {
     public class TradeResources
     {

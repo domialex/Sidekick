@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Apis.PoeNinja.Localization
+namespace Sidekick.Modules.Trade.Localization
 {
     public class PoeNinjaResources
     {

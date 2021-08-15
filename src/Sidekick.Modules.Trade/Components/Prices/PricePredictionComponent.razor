@@ -2,9 +2,6 @@
 
 @implements IDisposable
 
-@using Sidekick.Domain.Apis.PoePriceInfo.Queries
-@using Sidekick.Domain.Apis.PoePriceInfo.Models
-
 @if (Settings.Trade_Prediction_Enable)
 {
     if (Loading || Item == null)
@@ -29,8 +26,8 @@
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private ISettings Settings { get; set; }
+    [Inject] private IPoePriceInfoClient Client { get; set; }
 
     [Parameter] public string Class { get; set; }
     [Parameter] public Item Item { get; set; }
@@ -51,7 +48,7 @@
         if (Item != null)
         {
             IsInit = true;
-            Prediction = await Mediator.Send(new GetPricePredictionQuery(Item), pricePredictionCancellationTokenSource.Token);
+            Prediction = await Client.GetPricePrediction(Item);
         }
 
         Loading = false;

@@ -1,5 +1,3 @@
-@using Sidekick.Domain.App.Commands
-@using Sidekick.Domain.Game.Trade.Queries
 
 <div class="d-flex flex-row align-center justify-end">
     <CountString Count="Count" Total="Total" />
@@ -18,7 +16,6 @@
 
 @code {
     [Inject] private TradeResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
 
     [Parameter] public Item Item { get; set; }
     [Parameter] public string QueryId { get; set; }

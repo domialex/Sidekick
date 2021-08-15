@@ -43,6 +43,8 @@
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ISettingsService SettingsService { get; set; }
+    [Inject] private ICacheProvider CacheProvider { get; set; }
+    [Inject] private IInitializationProvider InitializationProvider { get; set; }
 
     [CascadingParameter] public MenuLayout Layout { get; set; }
 
@@ -61,7 +63,7 @@
 
     public async Task ResetCache()
     {
-        await Mediator.Send(new ClearCacheCommand());
-        await Mediator.Send(new InitializeCommand(false, false));
+        CacheProvider.Clear();
+        await InitializationProvider.Initialize(false, false);
     }
 }

@@ -1,4 +1,4 @@
-namespace Sidekick.Presentation.Blazor.Trade
+namespace Sidekick.Modules.Trade
 {
     public enum Layout
     {

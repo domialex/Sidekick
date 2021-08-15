@@ -1,190 +1,291 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+using Sidekick.Apis.Poe.Localization;
+using Sidekick.Apis.Poe.Trade.Models;
 using Sidekick.Common.Game.Items;
+using Sidekick.Common.Game.Items.Modifiers;
 using Sidekick.Common.Game.Languages;
-using Sidekick.Domain.Game.Trade.Models;
-using Sidekick.Domain.Game.Trade.Queries;
-using Sidekick.Localization.Trade;
 
-namespace Sidekick.Application.Game.Trade
+namespace Sidekick.Apis.Poe.Trade
 {
-    public class GetPropertyFiltersHandler : IQueryHandler<GetPropertyFilters, PropertyFilters>
+    public class TradeFilterService : ITradeFilterService
     {
         private static readonly Regex LabelValues = new("(\\#)");
 
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly TradeResources resources;
 
-        public GetPropertyFiltersHandler(IGameLanguageProvider gameLanguageProvider,
+        public TradeFilterService(
+            IGameLanguageProvider gameLanguageProvider,
             TradeResources resources)
         {
             this.gameLanguageProvider = gameLanguageProvider;
             this.resources = resources;
         }
 
-        public Task<PropertyFilters> Handle(GetPropertyFilters request, CancellationToken cancellationToken)
+        public ModifierFilters GetModifierFilters(Item item)
+        {
+            var result = new ModifierFilters();
+
+            // No filters for prophecies, currencies and divination cards, etc.
+            if (item.Metadata.Category == Category.DivinationCard
+                || item.Metadata.Category == Category.Currency
+                || item.Metadata.Category == Category.Prophecy
+                || item.Metadata.Category == Category.ItemisedMonster
+                || item.Metadata.Category == Category.Leaguestone
+                || item.Metadata.Category == Category.Watchstone
+                || item.Metadata.Category == Category.Undefined)
+            {
+                return result;
+            }
+
+            List<string> enabledModifiers = new();
+
+            InitializeModifierFilters(result.Pseudo, item.Modifiers.Pseudo, enabledModifiers);
+            InitializeModifierFilters(result.Enchant, item.Modifiers.Enchant, enabledModifiers, false);
+            InitializeModifierFilters(result.Implicit, item.Modifiers.Implicit, enabledModifiers);
+            InitializeModifierFilters(result.Explicit, item.Modifiers.Explicit, enabledModifiers);
+            InitializeModifierFilters(result.Crafted, item.Modifiers.Crafted, enabledModifiers);
+            InitializeModifierFilters(result.Fractured, item.Modifiers.Fractured, enabledModifiers);
+
+            return result;
+        }
+
+        private static void InitializeModifierFilters(List<ModifierFilter> filters, List<Modifier> modifiers, List<string> enabledModifiers, bool normalizeValues = true)
+        {
+            if (modifiers.Count == 0) return;
+
+            foreach (var modifier in modifiers)
+            {
+                if (modifier.OptionValue != null)
+                {
+                    InitializeModifierFilter(filters,
+                        modifier,
+                        modifier.OptionValue,
+                        normalizeValues: normalizeValues,
+                        enabled: enabledModifiers.Contains(modifier.Id)
+                    );
+                }
+                else
+                {
+                    InitializeModifierFilter(filters,
+                        modifier,
+                        modifier.Values,
+                        normalizeValues: normalizeValues,
+                        enabled: enabledModifiers.Contains(modifier.Id)
+                    );
+                }
+            }
+        }
+
+        private static void InitializeModifierFilter<T>(List<ModifierFilter> filters,
+            Modifier modifier,
+            T value,
+            double delta = 5,
+            bool enabled = false,
+            bool normalizeValues = true)
+        {
+            double? min = null;
+            double? max = null;
+
+            if (value is List<double> groupValue)
+            {
+                var itemValue = groupValue.OrderBy(x => x).FirstOrDefault();
+
+                if (itemValue >= 0)
+                {
+                    min = itemValue;
+                    if (normalizeValues)
+                    {
+                        min = NormalizeMinValue(min, delta);
+                    }
+                }
+                else
+                {
+                    max = itemValue;
+                    if (normalizeValues)
+                    {
+                        max = NormalizeMaxValue(max, delta);
+                    }
+                }
+
+                if (!groupValue.Any())
+                {
+                    min = null;
+                    max = null;
+                }
+            }
+
+            filters.Add(new ModifierFilter()
+            {
+                Enabled = enabled,
+                Modifier = modifier,
+                Min = min,
+                Max = max,
+            });
+        }
+
+        public PropertyFilters GetPropertyFilters(Item item)
         {
             var result = new PropertyFilters();
 
             // No filters for prophecies, currencies and divination cards, etc.
-            if (request.Item.Metadata.Category == Category.DivinationCard
-                || request.Item.Metadata.Category == Category.Currency
-                || request.Item.Metadata.Category == Category.Prophecy
-                || request.Item.Metadata.Category == Category.ItemisedMonster
-                || request.Item.Metadata.Category == Category.Leaguestone
-                || request.Item.Metadata.Category == Category.Watchstone
-                || request.Item.Metadata.Category == Category.Undefined)
+            if (item.Metadata.Category == Category.DivinationCard
+                || item.Metadata.Category == Category.Currency
+                || item.Metadata.Category == Category.Prophecy
+                || item.Metadata.Category == Category.ItemisedMonster
+                || item.Metadata.Category == Category.Leaguestone
+                || item.Metadata.Category == Category.Watchstone
+                || item.Metadata.Category == Category.Undefined)
             {
-                return Task.FromResult(result);
+                return result;
             }
 
             // Armour
             InitializePropertyFilter(result.Armour,
                 PropertyFilterType.Armour_Armour,
                 gameLanguageProvider.Language.DescriptionArmour,
-                request.Item.Properties.Armor);
+                item.Properties.Armor);
             // Evasion
             InitializePropertyFilter(result.Armour,
                 PropertyFilterType.Armour_Evasion,
                 gameLanguageProvider.Language.DescriptionEvasion,
-                request.Item.Properties.Evasion);
+                item.Properties.Evasion);
             // Energy shield
             InitializePropertyFilter(result.Armour,
                 PropertyFilterType.Armour_EnergyShield,
                 gameLanguageProvider.Language.DescriptionEnergyShield,
-                request.Item.Properties.EnergyShield);
+                item.Properties.EnergyShield);
             // Block
             InitializePropertyFilter(result.Armour,
                 PropertyFilterType.Armour_Block,
                 gameLanguageProvider.Language.DescriptionChanceToBlock,
-                request.Item.Properties.ChanceToBlock,
+                item.Properties.ChanceToBlock,
                 delta: 1);
 
             // Physical Dps
             InitializePropertyFilter(result.Weapon,
                 PropertyFilterType.Weapon_PhysicalDps,
                 resources.Filters_PDps,
-                request.Item.Properties.PhysicalDps);
+                item.Properties.PhysicalDps);
             // Elemental Dps
             InitializePropertyFilter(result.Weapon,
                 PropertyFilterType.Weapon_ElementalDps,
                 resources.Filters_EDps,
-                request.Item.Properties.ElementalDps);
+                item.Properties.ElementalDps);
             // Total Dps
             InitializePropertyFilter(result.Weapon,
                 PropertyFilterType.Weapon_Dps,
                 resources.Filters_Dps,
-                request.Item.Properties.DamagePerSecond);
+                item.Properties.DamagePerSecond);
             // Attacks per second
             InitializePropertyFilter(result.Weapon,
                 PropertyFilterType.Weapon_AttacksPerSecond,
                 gameLanguageProvider.Language.DescriptionAttacksPerSecond,
-                request.Item.Properties.AttacksPerSecond,
+                item.Properties.AttacksPerSecond,
                 delta: 0.1);
             // Critical strike chance
             InitializePropertyFilter(result.Weapon,
                 PropertyFilterType.Weapon_CriticalStrikeChance,
                 gameLanguageProvider.Language.DescriptionCriticalStrikeChance,
-                request.Item.Properties.CriticalStrikeChance,
+                item.Properties.CriticalStrikeChance,
                 delta: 1);
 
             // Item quantity
             InitializePropertyFilter(result.Map,
                 PropertyFilterType.Map_ItemQuantity,
                 gameLanguageProvider.Language.DescriptionItemQuantity,
-                request.Item.Properties.ItemQuantity);
+                item.Properties.ItemQuantity);
             // Item rarity
             InitializePropertyFilter(result.Map,
                 PropertyFilterType.Map_ItemRarity,
                 gameLanguageProvider.Language.DescriptionItemRarity,
-                request.Item.Properties.ItemRarity);
+                item.Properties.ItemRarity);
             // Monster pack size
             InitializePropertyFilter(result.Map,
                 PropertyFilterType.Map_MonsterPackSize,
                 gameLanguageProvider.Language.DescriptionMonsterPackSize,
-                request.Item.Properties.MonsterPackSize);
+                item.Properties.MonsterPackSize);
             // Blighted
             InitializePropertyFilter(result.Map,
                 PropertyFilterType.Map_Blighted,
                 gameLanguageProvider.Language.PrefixBlighted,
-                request.Item.Properties.Blighted,
-                enabled: request.Item.Properties.Blighted);
+                item.Properties.Blighted,
+                enabled: item.Properties.Blighted);
             // Map tier
             InitializePropertyFilter(result.Map,
                 PropertyFilterType.Map_Tier,
                 gameLanguageProvider.Language.DescriptionMapTier,
-                request.Item.Properties.MapTier,
+                item.Properties.MapTier,
                 enabled: true,
-                min: request.Item.Properties.MapTier);
+                min: item.Properties.MapTier);
 
             // Quality
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Quality,
                 gameLanguageProvider.Language.DescriptionQuality,
-                request.Item.Properties.Quality,
-                enabled: request.Item.Metadata.Rarity == Rarity.Gem,
-                min: request.Item.Metadata.Rarity == Rarity.Gem && request.Item.Properties.Quality >= 20 ? request.Item.Properties.Quality : null);
+                item.Properties.Quality,
+                enabled: item.Metadata.Rarity == Rarity.Gem,
+                min: item.Metadata.Rarity == Rarity.Gem && item.Properties.Quality >= 20 ? item.Properties.Quality : null);
             // Gem level
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_GemLevel,
                 gameLanguageProvider.Language.DescriptionLevel,
-                request.Item.Properties.GemLevel,
+                item.Properties.GemLevel,
                 enabled: true,
-                min: request.Item.Properties.GemLevel);
+                min: item.Properties.GemLevel);
             // Item level
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_ItemLevel,
                 gameLanguageProvider.Language.DescriptionItemLevel,
-                request.Item.Properties.ItemLevel,
-                enabled: request.Item.Properties.ItemLevel >= 80 && request.Item.Properties.MapTier == 0 && request.Item.Metadata.Rarity != Rarity.Unique,
-                min: request.Item.Properties.ItemLevel >= 80 ? (double?)request.Item.Properties.ItemLevel : null);
+                item.Properties.ItemLevel,
+                enabled: item.Properties.ItemLevel >= 80 && item.Properties.MapTier == 0 && item.Metadata.Rarity != Rarity.Unique,
+                min: item.Properties.ItemLevel >= 80 ? (double?)item.Properties.ItemLevel : null);
             // Corrupted
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Corrupted,
                 gameLanguageProvider.Language.DescriptionCorrupted,
-                request.Item.Properties.Corrupted,
-                enabled: (request.Item.Metadata.Rarity == Rarity.Gem || request.Item.Metadata.Rarity == Rarity.Unique || request.Item.Metadata.Rarity == Rarity.Rare) && request.Item.Properties.Corrupted);
+                item.Properties.Corrupted,
+                enabled: (item.Metadata.Rarity == Rarity.Gem || item.Metadata.Rarity == Rarity.Unique || item.Metadata.Rarity == Rarity.Rare) && item.Properties.Corrupted);
             // Crusader
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Crusader,
                 gameLanguageProvider.Language.InfluenceCrusader,
-                request.Item.Influences.Crusader,
-                enabled: request.Item.Influences.Crusader);
+                item.Influences.Crusader,
+                enabled: item.Influences.Crusader);
             // Elder
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Elder,
                 gameLanguageProvider.Language.InfluenceElder,
-                request.Item.Influences.Elder,
-                enabled: request.Item.Influences.Elder);
+                item.Influences.Elder,
+                enabled: item.Influences.Elder);
             // Hunter
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Hunter,
                 gameLanguageProvider.Language.InfluenceHunter,
-                request.Item.Influences.Hunter,
-                enabled: request.Item.Influences.Hunter);
+                item.Influences.Hunter,
+                enabled: item.Influences.Hunter);
             // Redeemer
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Redeemer,
                 gameLanguageProvider.Language.InfluenceRedeemer,
-                request.Item.Influences.Redeemer,
-                enabled: request.Item.Influences.Redeemer);
+                item.Influences.Redeemer,
+                enabled: item.Influences.Redeemer);
             // Shaper
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Shaper,
                 gameLanguageProvider.Language.InfluenceShaper,
-                request.Item.Influences.Shaper,
-                enabled: request.Item.Influences.Shaper);
+                item.Influences.Shaper,
+                enabled: item.Influences.Shaper);
             // Warlord
             InitializePropertyFilter(result.Misc,
                 PropertyFilterType.Misc_Influence_Warlord,
-                gameLanguageProvider.Language.InfluenceWarlord, request.Item.Influences.Warlord,
-                enabled: request.Item.Influences.Warlord);
+                gameLanguageProvider.Language.InfluenceWarlord, item.Influences.Warlord,
+                enabled: item.Influences.Warlord);
 
-            return Task.FromResult(result);
+            return result;
         }
 
         private static void InitializePropertyFilter<T>(List<PropertyFilter> filters,
@@ -259,6 +360,26 @@ namespace Sidekick.Application.Game.Trade
                 else
                 {
                     return (int)Math.Min(Math.Min(value.Value - delta, value.Value * 1.1), 0);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Smallest positive value between a +5 delta or 110%.
+        /// </summary>
+        private static int? NormalizeMaxValue(double? value, double delta)
+        {
+            if (value.HasValue)
+            {
+                if (value.Value > 0)
+                {
+                    return (int)Math.Max(Math.Max(value.Value + delta, value.Value * 1.1), 0);
+                }
+                else
+                {
+                    return (int)Math.Min(Math.Max(value.Value + delta, value.Value * 0.9), 0);
                 }
             }
 

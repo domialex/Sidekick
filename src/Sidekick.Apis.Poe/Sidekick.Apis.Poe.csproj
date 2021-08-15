@@ -1,12 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Translations\Stats\stat_translations.min.json" />
@@ -17,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
     <ProjectReference Include="..\Sidekick.Common.Game\Sidekick.Common.Game.csproj" />
   </ItemGroup>
 
