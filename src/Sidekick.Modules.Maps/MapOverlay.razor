@@ -1,0 +1,101 @@
+@page "/map/{itemText}"
+@layout OverlayLayout
+
+@if (DangerousMods.Count == 0)
+{
+    <MudPaper Outlined="true" Class="pa-2 mb-2">
+        <MudText Typo="Typo.h1" Align="Align.Center" Color="Color.Success">
+            <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Large"></MudIcon>
+            @Resources.Is_Safe
+        </MudText>
+    </MudPaper>
+}
+else
+{
+    <MudPaper Outlined="true" Class="pa-2 mb-2">
+        <MudText Typo="Typo.h1" Align="Align.Center" Color="Color.Error">
+            <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Large"></MudIcon>
+            @Resources.Is_Unsafe
+        </MudText>
+    </MudPaper>
+    foreach (var mod in DangerousMods)
+    {
+        <MudText Typo="Typo.body1">
+            <MudIcon Icon="@Icons.Filled.ThumbDown" Size="Size.Small" Color="Color.Error" Class="mr-2"></MudIcon>
+            @mod
+        </MudText>
+    }
+    if (OkMods.Count > 0)
+    {
+        <MudDivider Class="my-1" />
+    }
+}
+@foreach (var mod in OkMods)
+{
+    <MudText Typo="Typo.body2">
+        <MudIcon Icon="@Icons.Filled.ThumbUp" Size="Size.Small" Color="Color.Success" Class="mr-2"></MudIcon>
+        @mod
+    </MudText>
+}
+
+@code {
+    [Inject] private MapInfoResources Resources { get; set; }
+    [Inject] private IViewLocator ViewLocator { get; set; }
+    [Inject] private IViewInstance ViewInstance { get; set; }
+    [Inject] private IItemParser ItemParser { get; set; }
+    [Inject] private ISettings Settings { get; set; }
+
+    [Parameter] public string ItemText { get; set; }
+
+    private List<string> DangerousMods { get; set; } = new();
+    private List<string> OkMods { get; set; } = new();
+    private Item Item { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewInstance.SetTitle(Resources.Title);
+
+        Item = ItemParser.ParseItem(ItemText.DecodeBase64Url());
+        if (Item == null)
+        {
+            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewInstance.Close();
+            return;
+        }
+        if (Item.Metadata.Category != Category.Map && Item.Metadata.Category != Category.Contract)
+        {
+            await ViewLocator.Open(View.Error, ErrorType.InvalidItem);
+            await ViewInstance.Close();
+            return;
+        }
+
+        ViewInstance.SetTitle(Item.Original.Type);
+
+        DangerousMods.Clear();
+        OkMods.Clear();
+
+        var dangerousModsRegex = new Regex(Settings.Map_Dangerous_Regex, RegexOptions.IgnoreCase);
+        FilterMods(dangerousModsRegex, Item.Modifiers.Enchant);
+        FilterMods(dangerousModsRegex, Item.Modifiers.Implicit);
+        FilterMods(dangerousModsRegex, Item.Modifiers.Explicit);
+        FilterMods(dangerousModsRegex, Item.Modifiers.Fractured);
+        FilterMods(dangerousModsRegex, Item.Modifiers.Crafted);
+
+        await base.OnInitializedAsync();
+    }
+
+    private void FilterMods(Regex modRegex, List<Modifier> modifiers)
+    {
+        foreach (var mod in modifiers)
+        {
+            if (modRegex.IsMatch(mod.Text))
+            {
+                DangerousMods.Add(mod.Text);
+            }
+            else
+            {
+                OkMods.Add(mod.Text);
+            }
+        }
+    }
+}

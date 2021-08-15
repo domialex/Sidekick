@@ -15,7 +15,6 @@
 
 @code {
     [Inject] private SettingsResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
 
     [Parameter] public string Value { get; set; }
     [Parameter] public EventCallback<string> ValueChanged { get; set; }

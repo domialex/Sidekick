@@ -11,7 +11,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
-    <ProjectReference Include="..\Sidekick.Mapper\Sidekick.Mapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PoeApi\" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Common\Sidekick.Common.csproj" />
-    <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
 </Project>

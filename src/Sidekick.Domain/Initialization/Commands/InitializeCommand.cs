@@ -1,11 +1,9 @@
-using MediatR;
-
 namespace Sidekick.Domain.Initialization.Commands
 {
     /// <summary>
     /// Command to initialize the application
     /// </summary>
-    public class InitializeCommand : ICommand
+    public class InitializeCommand
     {
         /// <summary>
         /// Command to initialize the application

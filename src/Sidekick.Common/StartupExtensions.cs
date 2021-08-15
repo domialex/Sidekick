@@ -2,8 +2,6 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Sidekick.Common.Cache;
-using Sidekick.Common.Extensions;
-using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Logging;
 
 namespace Sidekick.Common
@@ -13,7 +11,6 @@ namespace Sidekick.Common
         public static IServiceCollection AddSidekickCommon(this IServiceCollection services)
         {
             services.AddSingleton<ICacheProvider, CacheProvider>();
-            services.AddSingleton<IGameLanguageProvider, GameLanguageProvider>();
 
             // Logging
             var sidekickPath = Environment.ExpandEnvironmentVariables("%AppData%\\sidekick");

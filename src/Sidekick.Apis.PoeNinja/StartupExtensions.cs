@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Apis.PoeNinja.Localization;
 using Sidekick.Apis.PoeNinja.Repository;
-using Sidekick.Common.Extensions;
+using Sidekick.Common;
 
 namespace Sidekick.Apis.PoeNinja
 {

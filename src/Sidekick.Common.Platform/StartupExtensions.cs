@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Common.Platform.Clipboard;
 using Sidekick.Common.Platform.Windows.Keyboards;
 using Sidekick.Common.Platform.Windows.Processes;
+using Sidekick.Common.Platforms.Localization;
 
 namespace Sidekick.Common.Platform
 {
@@ -10,6 +11,7 @@ namespace Sidekick.Common.Platform
     {
         public static IServiceCollection AddSidekickPlatform(this IServiceCollection services)
         {
+            services.AddTransient<PlatformResources>();
             services.AddTransient<IClipboardProvider, ClipboardProvider>();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

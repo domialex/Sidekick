@@ -7,32 +7,30 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub.Localization;
 using Sidekick.Apis.GitHub.Models;
-using Sidekick.Common.Extensions;
-using Sidekick.Domain.Initialization.Notifications;
+using Sidekick.Common;
+using Sidekick.Common.Initialization;
 
 namespace Sidekick.Apis.GitHub
 {
     public class GitHubClient : IGitHubClient
     {
-        private readonly IMediator mediator;
         private readonly ILogger<GitHubClient> logger;
         private readonly UpdateResources resources;
+        private readonly IInitializationProvider initializationProvider;
         private readonly HttpClient client;
 
         public GitHubClient(
             IHttpClientFactory httpClientFactory,
-            IMediator mediator,
             ILogger<GitHubClient> logger,
-            UpdateResources resources)
+            UpdateResources resources,
+            IInitializationProvider initializationProvider)
         {
-            this.mediator = mediator;
             this.logger = logger;
             this.resources = resources;
-
+            this.initializationProvider = initializationProvider;
             client = httpClientFactory.CreateClient();
             client.BaseAddress = new Uri("https://api.github.com");
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
@@ -46,36 +44,21 @@ namespace Sidekick.Apis.GitHub
                 var release = await GetLatestRelease();
                 if (IsUpdateAvailable(release))
                 {
-                    await mediator.Publish(new InitializationProgressed(0)
-                    {
-                        Title = resources.Downloading(release.Tag),
-                    });
+                    await initializationProvider.OnProgress(0, resources.Downloading(release.Tag));
 
                     var path = await DownloadRelease(release);
                     if (path == null)
                     {
-                        await mediator.Publish(new InitializationProgressed(33)
-                        {
-                            Title = resources.Failed,
-                        });
+                        await initializationProvider.OnProgress(33, resources.Failed);
                         await Task.Delay(1000);
-                        await mediator.Publish(new InitializationProgressed(66)
-                        {
-                            Title = resources.Failed,
-                        });
+                        await initializationProvider.OnProgress(66, resources.Failed);
                         await Task.Delay(1000);
-                        await mediator.Publish(new InitializationProgressed(100)
-                        {
-                            Title = resources.Failed,
-                        });
+                        await initializationProvider.OnProgress(100, resources.Failed);
                         await Task.Delay(1000);
                         return false;
                     }
 
-                    await mediator.Publish(new InitializationProgressed(100)
-                    {
-                        Title = resources.Downloading(release.Tag),
-                    });
+                    await initializationProvider.OnProgress(100, resources.Downloading(release.Tag));
                     await Task.Delay(1000);
 
                     Process.Start(path);

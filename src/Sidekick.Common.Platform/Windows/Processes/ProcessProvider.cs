@@ -9,11 +9,9 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Sidekick.Common.Platform.Windows.DllImport;
-using Sidekick.Domain.Notifications.Commands;
+using Sidekick.Common.Platforms.Localization;
 
 namespace Sidekick.Common.Platform.Windows.Processes
 {
@@ -38,8 +36,8 @@ namespace Sidekick.Common.Platform.Windows.Processes
         private const int TOKEN_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | TOKEN_ASSIGN_PRIMARY | TOKEN_DUPLICATE | TOKEN_IMPERSONATE | TOKEN_QUERY | TOKEN_QUERY_SOURCE | TOKEN_ADJUST_PRIVILEGES | TOKEN_ADJUST_GROUPS | TOKEN_ADJUST_SESSIONID | TOKEN_ADJUST_DEFAULT;
 
         private readonly ILogger logger;
-        private readonly IMediator mediator;
-        private readonly IStringLocalizer<ProcessProvider> localizer;
+        private readonly IAppService appService;
+        private readonly PlatformResources platformResources;
 
         public event Action OnFocus;
         public event Action OnBlur;
@@ -56,12 +54,12 @@ namespace Sidekick.Common.Platform.Windows.Processes
 
         public ProcessProvider(
             ILogger<ProcessProvider> logger,
-            IMediator mediator,
-            IStringLocalizer<ProcessProvider> localizer)
+            IAppService appService,
+            PlatformResources platformResources)
         {
             this.logger = logger;
-            this.mediator = mediator;
-            this.localizer = localizer;
+            this.appService = appService;
+            this.platformResources = platformResources;
         }
 
         public Task Initialize(CancellationToken cancellationToken)
@@ -133,7 +131,7 @@ namespace Sidekick.Common.Platform.Windows.Processes
 
         private async Task RestartAsAdmin()
         {
-            await mediator.Send(new OpenConfirmNotificationCommand(localizer["RestartText"],
+            await appService.OpenConfirmationNotification(platformResources.RestartText,
                 onYes: () =>
                 {
                     try
@@ -146,14 +144,14 @@ namespace Sidekick.Common.Platform.Windows.Processes
                     }
                     catch (Exception e)
                     {
-                        logger.LogWarning(e, localizer["AdminError"]);
+                        logger.LogWarning(e, platformResources.AdminError);
                     }
                     finally
                     {
                         Environment.Exit(Environment.ExitCode);
                     }
                     return Task.CompletedTask;
-                }));
+                });
         }
 
         private static bool IsUserRunAsAdmin()

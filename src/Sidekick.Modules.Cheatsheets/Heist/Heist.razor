@@ -11,7 +11,6 @@
 </MudGrid>
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private CheatsheetResources CheatsheetResources { get; set; }
     [Inject] private HeistResources Resources { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
@@ -23,7 +22,7 @@
         ViewInstance.SetTitle(CheatsheetResources.Heist);
 
         Jobs = new List<JobModel>
-    {
+{
             new JobModel(Resources.Job_Lockpicking, "Lockpick.png", new RewardModel[] {
                 new RewardModel(Resources.Reward_Currency, RewardValue.High, "HeistRewardCurrency.png"),
                 new RewardModel(Resources.Reward_Accessories, RewardValue.Medium, "HeistRewardTrinkets.png"),

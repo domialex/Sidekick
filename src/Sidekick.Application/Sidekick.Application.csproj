@@ -17,7 +17,6 @@
     <ProjectReference Include="..\Sidekick.Common\Sidekick.Common.csproj" />
     <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
     <ProjectReference Include="..\Sidekick.Localization\Sidekick.Localization.csproj" />
-    <ProjectReference Include="..\Sidekick.Mapper\Sidekick.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

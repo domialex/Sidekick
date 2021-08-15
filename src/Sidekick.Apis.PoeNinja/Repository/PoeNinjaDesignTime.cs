@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Sidekick.Common.Extensions;
+using Sidekick.Common;
 
 namespace Sidekick.Apis.PoeNinja.Repository
 {

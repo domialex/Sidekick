@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Common\Sidekick.Common.csproj" />
-    <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
   </ItemGroup>
 
 </Project>

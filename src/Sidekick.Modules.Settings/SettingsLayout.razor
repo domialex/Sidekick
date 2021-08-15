@@ -1,6 +1,3 @@
-@using Sidekick.Domain.Cache.Commands
-@using Sidekick.Domain.Initialization.Commands
-
 @inherits LayoutComponentBase
 @layout MenuLayout
 
@@ -42,7 +39,6 @@
 
 @code {
     [Inject] private SettingsResources Resources { get; set; }
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private SettingsModel ViewModel { get; set; }
     [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }

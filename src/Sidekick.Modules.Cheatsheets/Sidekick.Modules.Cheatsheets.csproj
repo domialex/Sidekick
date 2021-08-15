@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
-    <ProjectReference Include="..\Sidekick.Domain\Sidekick.Domain.csproj" />
-    <ProjectReference Include="..\Sidekick.Mediator\Sidekick.Mediator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

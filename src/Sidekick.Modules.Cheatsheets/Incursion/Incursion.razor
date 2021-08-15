@@ -12,7 +12,6 @@
 </MudGrid>
 
 @code {
-    [Inject] private IMediator Mediator { get; set; }
     [Inject] private CheatsheetResources CheatsheetResources { get; set; }
     [Inject] private IncursionResources Resources { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
@@ -24,7 +23,7 @@
         ViewInstance.SetTitle(CheatsheetResources.Incursion);
 
         Rooms = new List<RoomModel>()
-    {
+{
             new RoomModel(string.Empty, Resources.GuardhouseModifiers)
             {
                 Level1 = new RoomTierModel(Resources.Guardhouse, RewardValue.Low),

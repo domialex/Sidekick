@@ -1,13 +1,10 @@
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using MediatR;
+using Sidekick.Common.Cache;
 using Sidekick.Common.Extensions;
 using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Cache.Commands;
-using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Localization;
 
 namespace Sidekick.Modules.Settings
 {
@@ -15,17 +12,17 @@ namespace Sidekick.Modules.Settings
     {
         public const string FileName = "Sidekick_settings.json";
         private readonly ISettings settings;
-        private readonly IMediator mediator;
         private readonly IGameLanguageProvider gameLanguageProvider;
+        private readonly ICacheProvider cacheProvider;
 
         public SettingsService(
             ISettings settings,
-            IMediator mediator,
-            IGameLanguageProvider gameLanguageProvider)
+            IGameLanguageProvider gameLanguageProvider,
+            ICacheProvider cacheProvider)
         {
             this.settings = settings;
-            this.mediator = mediator;
             this.gameLanguageProvider = gameLanguageProvider;
+            this.cacheProvider = cacheProvider;
         }
 
         public async Task Save(string property, object value)
@@ -110,7 +107,7 @@ namespace Sidekick.Modules.Settings
 
             if (!skipInitialize && (languageHasChanged || leagueHasChanged))
             {
-                await mediator.Send(new ClearCacheCommand());
+                cacheProvider.Clear();
                 await mediator.Send(new InitializeCommand(false, false));
             }
         }
