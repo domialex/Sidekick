@@ -1,23 +1,15 @@
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Apis.Poe;
-using Sidekick.Application.Initialization;
 using Sidekick.Common;
-using Sidekick.Common.Extensions;
+using Sidekick.Common.Blazor.Views;
+using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Views;
-using Sidekick.Infrastructure;
-using Sidekick.Localization;
-using Sidekick.Mapper;
-using Sidekick.Mediator;
-using Sidekick.Mock.Platforms;
-using Sidekick.Mock.Views;
+using Sidekick.Mock;
+using Sidekick.Modules.Initialization;
 using Sidekick.Modules.Settings;
-using Sidekick.Persistence;
 using Xunit;
 
 namespace Sidekick.Application.Tests
@@ -41,22 +33,13 @@ namespace Sidekick.Application.Tests
 
                 // Building blocks
                 .AddSidekickCommon()
-                .AddSidekickMapper()
-                .AddSidekickMediator(
-                    typeof(InitializeCommand).Assembly,
-                    typeof(InitializeHandler).Assembly
-                )
-
-                // Layers
-                .AddSidekickApplication()
-                .AddSidekickInfrastructure()
-                .AddSidekickLocalization()
-                .AddSidekickPersistence()
+                .AddSidekickCommonGame()
 
                 // Apis
                 .AddSidekickPoeApi()
 
                 // Modules
+                .AddSidekickInitialization()
                 .AddSidekickSettings(configuration);
 
             services.AddSingleton<IViewLocator, MockViewLocator>();
@@ -66,12 +49,13 @@ namespace Sidekick.Application.Tests
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var mediator = serviceProvider.GetRequiredService<IMediator>();
             var settingsService = serviceProvider.GetRequiredService<ISettingsService>();
             await settingsService.Save(nameof(ISettings.Language_Parser), "en");
             await settingsService.Save(nameof(ISettings.Language_UI), "en");
             await settingsService.Save(nameof(ISettings.LeagueId), "Standard");
-            await mediator.Send(new InitializeCommand(true, false));
+
+            var component = new Sidekick.Modules.Initialization.Pages.Initialization();
+            await component.Handle();
 
             Parser = serviceProvider.GetRequiredService<IItemParser>();
         }

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub.Localization;
 using Sidekick.Apis.GitHub.Models;
 using Sidekick.Common;
-using Sidekick.Common.Initialization;
 
 namespace Sidekick.Apis.GitHub
 {
@@ -19,18 +18,15 @@ namespace Sidekick.Apis.GitHub
     {
         private readonly ILogger<GitHubClient> logger;
         private readonly UpdateResources resources;
-        private readonly IInitializationProvider initializationProvider;
         private readonly HttpClient client;
 
         public GitHubClient(
             IHttpClientFactory httpClientFactory,
             ILogger<GitHubClient> logger,
-            UpdateResources resources,
-            IInitializationProvider initializationProvider)
+            UpdateResources resources)
         {
             this.logger = logger;
             this.resources = resources;
-            this.initializationProvider = initializationProvider;
             client = httpClientFactory.CreateClient();
             client.BaseAddress = new Uri("https://api.github.com");
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
@@ -78,7 +74,7 @@ namespace Sidekick.Apis.GitHub
         /// Determines latest release on github. Pre-releases do not count as release, therefore we need to get the list of releases first, if no actual latest release can be found
         /// </summary>
         /// <returns></returns>
-        private async Task<GitHubRelease> GetLatestRelease()
+        public async Task<GitHubRelease> GetLatestRelease()
         {
             // Get List of releases
             var listResponse = await client.GetAsync("/repos/domialex/Sidekick/releases");
@@ -95,7 +91,7 @@ namespace Sidekick.Apis.GitHub
         /// Determines if there is a newer version available
         /// </summary>
         /// <returns></returns>
-        private bool IsUpdateAvailable(GitHubRelease release)
+        public bool IsUpdateAvailable(GitHubRelease release)
         {
             if (release != null)
             {
@@ -119,7 +115,7 @@ namespace Sidekick.Apis.GitHub
         /// Downloads the latest release from github
         /// </summary>
         /// <returns></returns>
-        private async Task<string> DownloadRelease(GitHubRelease release)
+        public async Task<string> DownloadRelease(GitHubRelease release)
         {
             if (release == null) return null;
 

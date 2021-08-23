@@ -25,10 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sidekick.Application\Sidekick.Application.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Common\Sidekick.Common.csproj" />
-    <ProjectReference Include="..\..\src\Sidekick.Domain\Sidekick.Domain.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Mock\Sidekick.Mock.csproj" />
+    <ProjectReference Include="..\..\src\Sidekick.Modules.Initialization\Sidekick.Modules.Initialization.csproj" />
     <ProjectReference Include="..\..\src\Sidekick.Modules.Settings\Sidekick.Modules.Settings.csproj" />
   </ItemGroup>
 

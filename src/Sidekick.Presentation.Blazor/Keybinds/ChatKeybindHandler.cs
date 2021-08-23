@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using MediatR;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Game.GameLogs;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Game.GameLogs.Queries;
 using Sidekick.Domain.Keybinds;
 
 namespace Sidekick.Application.Keybinds
@@ -17,23 +16,23 @@ namespace Sidekick.Application.Keybinds
         private readonly IClipboardProvider clipboard;
         private readonly IKeyboardProvider keyboard;
         private readonly ILogger<ChatKeybindHandler> logger;
-        private readonly IMediator mediator;
         private readonly IProcessProvider processProvider;
+        private readonly IGameLogProvider gameLogProvider;
 
         public ChatKeybindHandler(
             ISettings settings,
             IClipboardProvider clipboard,
             IKeyboardProvider keyboard,
             ILogger<ChatKeybindHandler> logger,
-            IMediator mediator,
-            IProcessProvider processProvider)
+            IProcessProvider processProvider,
+            IGameLogProvider gameLogProvider)
         {
             this.settings = settings;
             this.clipboard = clipboard;
             this.keyboard = keyboard;
             this.logger = logger;
-            this.mediator = mediator;
             this.processProvider = processProvider;
+            this.gameLogProvider = gameLogProvider;
         }
 
         public bool IsValid() => processProvider.IsPathOfExileInFocus;
@@ -62,7 +61,7 @@ namespace Sidekick.Application.Keybinds
 
             if (command.Contains(Token_LastWhisper_CharacterName))
             {
-                var characterName = await mediator.Send(new GetLatestWhisperCharacterNameQuery());
+                var characterName = gameLogProvider.GetLatestWhisper();
                 if (string.IsNullOrEmpty(characterName))
                 {
                     logger.LogWarning(@"No last whisper was found in the log file.");

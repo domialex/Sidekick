@@ -1,15 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using MediatR;
-using Sidekick.Apis.Poe;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Game.Items;
 using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.App.Commands;
-using Sidekick.Domain.Errors;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds
 {

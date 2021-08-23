@@ -10,5 +10,6 @@ namespace Sidekick.Common.Blazor.Views
         Trade,
         Settings,
         Setup,
+        Update,
     }
 }

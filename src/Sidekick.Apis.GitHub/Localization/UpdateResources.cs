@@ -11,6 +11,7 @@ namespace Sidekick.Apis.GitHub.Localization
             this.localizer = localizer;
         }
 
+        public string Checking => localizer["Checking"];
         public string Downloaded => localizer["Downloaded"];
         public string Downloading(string version) => localizer["Downloading", version];
         public string Failed => localizer["Failed"];

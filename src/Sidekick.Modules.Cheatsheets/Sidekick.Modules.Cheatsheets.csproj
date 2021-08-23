@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
-
 </Project>

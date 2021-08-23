@@ -23,7 +23,6 @@ namespace Sidekick.Common.Settings
 
         bool Trade_CloseWithMouse { get; set; }
         string Trade_Key_Check { get; set; }
-        string Trade_Key_OpenSearch { get; set; }
         bool Trade_Prediction_Enable { get; set; }
         string Trade_Layout { get; set; }
 
@@ -38,9 +37,6 @@ namespace Sidekick.Common.Settings
         #endregion
 
         List<ChatSetting> Chat_Commands { get; set; }
-
-        string Stash_Key_Left { get; set; }
-        string Stash_Key_Right { get; set; }
 
         string Wiki_Key_Open { get; set; }
         WikiSetting Wiki_Preferred { get; set; }

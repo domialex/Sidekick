@@ -48,13 +48,7 @@ namespace Sidekick.Modules.Settings
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
 
-        public string Trade_Key_OpenSearch { get; set; } = "Alt+Q";
-
         public string Key_OpenSettings { get; set; } = "F12";
-
-        public string Stash_Key_Left { get; set; } = "";
-
-        public string Stash_Key_Right { get; set; } = "";
 
         public List<ChatSetting> Chat_Commands { get; set; } = new()
         {

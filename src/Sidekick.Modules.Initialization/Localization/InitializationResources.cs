@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Presentation.Blazor.Localization
+namespace Sidekick.Modules.Initialization.Localization
 {
     public class InitializationResources
     {

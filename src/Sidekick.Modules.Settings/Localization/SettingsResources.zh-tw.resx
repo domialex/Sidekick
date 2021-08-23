@@ -177,9 +177,6 @@
   <data name="Trade_Key_Check" xml:space="preserve">
     <value>查詢價錢</value>
   </data>
-  <data name="Trade_Key_OpenSearch" xml:space="preserve">
-    <value>在瀏覽器中開啟查詢結果</value>
-  </data>
   <data name="Trade_Prediction_Enable" xml:space="preserve">
     <value>啟用價錢預測</value>
   </data>

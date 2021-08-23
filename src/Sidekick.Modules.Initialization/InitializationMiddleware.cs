@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Sidekick.Presentation.Blazor.Initialization
+namespace Sidekick.Modules.Initialization
 {
     public class InitializationMiddleware
     {
@@ -14,7 +14,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
-            if (!Initialization.HasRun)
+            if (!Pages.Initialization.HasRun)
             {
                 httpContext.Response.Redirect("/initialize");
             }

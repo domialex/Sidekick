@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds
 {

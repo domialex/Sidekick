@@ -1,0 +1,23 @@
+@page "/update"
+@layout EmptyLayout
+
+<SidekickLogo />
+<MudCard Class="my-4">
+    <MudCardContent>
+        <MudText Typo="Typo.body1"
+                 Align="Align.Center">
+            @Title
+        </MudText>
+        <MudProgressLinear Color="Color.Primary"
+                           Value="Percentage"
+                           Minimum="0"
+                           Maximum="100" />
+    </MudCardContent>
+</MudCard>
+<div class="d-flex justify-end">
+    <MudButton OnClick="Exit"
+               Variant="Variant.Text"
+               Color="Color.Default">
+        @Resources.Exit
+    </MudButton>
+</div>

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Common.Extensions;
 using Sidekick.Common.Settings;
-using Sidekick.Domain.Views;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Presentation.Blazor.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views

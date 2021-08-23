@@ -168,9 +168,6 @@
   <data name="Trade_Key_Check" xml:space="preserve">
     <value>Prüfe Preise</value>
   </data>
-  <data name="Trade_Key_OpenSearch" xml:space="preserve">
-    <value>Öffne Suche</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Ok</value>
   </data>

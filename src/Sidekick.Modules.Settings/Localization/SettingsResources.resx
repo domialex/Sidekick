@@ -258,9 +258,6 @@
   <data name="Trade_Key_Check" xml:space="preserve">
     <value>Check Prices</value>
   </data>
-  <data name="Trade_Key_OpenSearch" xml:space="preserve">
-    <value>Open Search</value>
-  </data>
   <data name="Trade_Prediction_Enable" xml:space="preserve">
     <value>Enable Price Prediction</value>
   </data>

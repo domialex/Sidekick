@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Sidekick.Common.Cache;
+using Sidekick.Common.Localization;
 using Sidekick.Common.Logging;
 
 namespace Sidekick.Common
@@ -33,6 +34,8 @@ namespace Sidekick.Common
             });
 
             services.AddSingleton(logSink);
+
+            services.AddSingleton<IUILanguageProvider, UILanguageProvider>();
 
             return services;
         }

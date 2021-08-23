@@ -22,7 +22,6 @@ using Sidekick.Modules.Development;
 using Sidekick.Modules.Maps;
 using Sidekick.Modules.Settings;
 using Sidekick.Modules.Trade;
-using Sidekick.Presentation.Blazor.Initialization;
 
 namespace Sidekick.Presentation.Blazor
 {

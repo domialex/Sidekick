@@ -18,11 +18,11 @@ using Sidekick.Common.Localization;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Core.Settings;
-using Sidekick.Presentation.Blazor.Localization;
+using Sidekick.Modules.Initialization.Localization;
 
-namespace Sidekick.Presentation.Blazor.Initialization
+namespace Sidekick.Modules.Initialization.Pages
 {
-    public partial class Initialization : ComponentBase
+    public class InitializationProvider
     {
         [Inject] private InitializationResources Resources { get; set; }
         [Inject] private ISettings Settings { get; set; }
@@ -51,13 +51,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
 
         public static bool HasRun { get; set; } = false;
 
-        protected override void OnInitialized()
-        {
-            Task.Run(Handle);
-            base.OnInitialized();
-        }
-
-        public async Task Handle()
+        public async Task Initialize(Func<int, string, Task> onProgress)
         {
             try
             {
@@ -65,7 +59,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
                 Count = HasRun ? 7 : 10;
 
                 // Report initial progress
-                await ReportProgress();
+                await ReportProgress(onProgress);
 
                 // Open a clean view of the initialization
                 ViewLocator.CloseAll();
@@ -75,7 +69,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
                 }
 
                 // Set the UI language
-                await Run(() => UILanguageProvider.Set(Settings.Language_UI));
+                await Run(() => UILanguageProvider.Set(Settings.Language_UI), onProgress);
 
                 // Check for updates
                 if (!HasRun && await GitHubClient.Update())
@@ -93,7 +87,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
                 }
 
                 // Set the game language
-                await Run(() => GameLanguageProvider.SetLanguage(Settings.Language_Parser));
+                await Run(() => GameLanguageProvider.SetLanguage(Settings.Language_Parser), onProgress);
 
                 if (!HasRun)
                 {
@@ -116,22 +110,22 @@ namespace Sidekick.Presentation.Blazor.Initialization
                     }
                 }
 
-                await Run(() => ParserPatterns.Initialize());
-                await Run(() => ItemMetadataProvider.Initialize());
-                await Run(() => ItemStaticDataProvider.Initialize());
-                await Run(() => ModifierProvider.Initialize());
-                await Run(() => PseudoModifierProvider.Initialize());
+                await Run(() => ParserPatterns.Initialize(), onProgress);
+                await Run(() => ItemMetadataProvider.Initialize(), onProgress);
+                await Run(() => ItemStaticDataProvider.Initialize(), onProgress);
+                await Run(() => ModifierProvider.Initialize(), onProgress);
+                await Run(() => PseudoModifierProvider.Initialize(), onProgress);
 
                 if (!HasRun)
                 {
-                    await Run(() => ProcessProvider.Initialize());
-                    await Run(() => KeyboardProvider.Initialize());
-                    await Run(() => KeybindProvider.Initialize());
+                    await Run(() => ProcessProvider.Initialize(), onProgress);
+                    await Run(() => KeyboardProvider.Initialize(), onProgress);
+                    await Run(() => KeybindProvider.Initialize(), onProgress);
                 }
 
                 // If we have a successful initialization, we delay for half a second to show the "Ready" label on the UI before closing the view
                 Completed = Count;
-                await ReportProgress();
+                await ReportProgress(onProgress);
                 await Task.Delay(500);
 
                 // Show a system notification
@@ -149,7 +143,7 @@ namespace Sidekick.Presentation.Blazor.Initialization
             }
         }
 
-        private async Task Run(Func<Task> func)
+        private async Task Run(Func<Task> func, Func<int, string, Task> onProgress)
         {
             // Send the command
             await func.Invoke();
@@ -158,10 +152,10 @@ namespace Sidekick.Presentation.Blazor.Initialization
             Completed += 1;
 
             // Report progress
-            await ReportProgress();
+            await ReportProgress(onProgress);
         }
 
-        private async Task Run(Action action)
+        private async Task Run(Action action, Func<int, string, Task> onProgress)
         {
             // Send the command
             action.Invoke();
@@ -170,33 +164,21 @@ namespace Sidekick.Presentation.Blazor.Initialization
             Completed += 1;
 
             // Report progress
-            await ReportProgress();
+            await ReportProgress(onProgress);
         }
 
-        private Task ReportProgress(int percentage, string title)
+        private Task ReportProgress(Func<int, string, Task> onProgress)
         {
-            Percentage = percentage;
-            Title = title;
+            var percentage = Count == 0 ? 0 : Completed * 100 / Count;
+            var title = Resources.Title(Completed, Count);
 
-            StateHasChanged();
-            return Task.Delay(100);
-        }
-
-        private Task ReportProgress()
-        {
-            Percentage = Count == 0 ? 0 : Completed * 100 / Count;
             if (Percentage >= 100)
             {
-                Title = Resources.Ready;
-                Percentage = 100;
-            }
-            else
-            {
-                Title = Resources.Title(Completed, Count);
+                title = Resources.Ready;
+                percentage = 100;
             }
 
-            StateHasChanged();
-            return Task.Delay(100);
+            return onProgress.Invoke(percentage, title);
         }
 
         public void Exit()

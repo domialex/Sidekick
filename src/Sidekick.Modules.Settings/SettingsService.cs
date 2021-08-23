@@ -2,10 +2,10 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Sidekick.Common;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Cache;
 using Sidekick.Common.Extensions;
 using Sidekick.Common.Game.Languages;
-using Sidekick.Common.Initialization;
 using Sidekick.Common.Localization;
 using Sidekick.Common.Settings;
 
@@ -18,20 +18,20 @@ namespace Sidekick.Modules.Settings
         private readonly IGameLanguageProvider gameLanguageProvider;
         private readonly ICacheProvider cacheProvider;
         private readonly IUILanguageProvider uILanguageProvider;
-        private readonly IInitializationProvider initializationProvider;
+        private readonly IViewLocator viewLocator;
 
         public SettingsService(
             ISettings settings,
             IGameLanguageProvider gameLanguageProvider,
             ICacheProvider cacheProvider,
             IUILanguageProvider uILanguageProvider,
-            IInitializationProvider initializationProvider)
+            IViewLocator viewLocator)
         {
             this.settings = settings;
             this.gameLanguageProvider = gameLanguageProvider;
             this.cacheProvider = cacheProvider;
             this.uILanguageProvider = uILanguageProvider;
-            this.initializationProvider = initializationProvider;
+            this.viewLocator = viewLocator;
         }
 
         public async Task Save(string property, object value)
@@ -117,7 +117,7 @@ namespace Sidekick.Modules.Settings
             if (!skipInitialize && (languageHasChanged || leagueHasChanged))
             {
                 cacheProvider.Clear();
-                await initializationProvider.Initialize(false, false);
+                await viewLocator.Open(View.Initialization);
             }
         }
     }

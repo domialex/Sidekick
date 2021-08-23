@@ -17,10 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Domain", "src\Sidekick.Domain\Sidekick.Domain.csproj", "{E5F62F57-9FAB-430F-AD59-37CB3660E329}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Application", "src\Sidekick.Application\Sidekick.Application.csproj", "{5A2D100E-5475-4951-AA01-83A6CBCFC71F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor", "src\Sidekick.Presentation.Blazor\Sidekick.Presentation.Blazor.csproj", "{361C0444-11F7-4EDC-A30E-C1F529C2EB79}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Presentation.Blazor.Electron", "src\Sidekick.Presentation.Blazor.Electron\Sidekick.Presentation.Blazor.Electron.csproj", "{B7A98AE6-7AF7-4767-91F8-7FDCD08AC8E0}"
@@ -51,17 +47,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Apis.PoeNinja", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Apis.Poe", "src\Sidekick.Apis.Poe\Sidekick.Apis.Poe.csproj", "{D3311A5D-F921-4B5F-9EB1-6AEC5EAD72FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Apis.PoePriceInfo", "src\Sidekick.Apis.PoePriceInfo\Sidekick.Apis.PoePriceInfo.csproj", "{8A13FFC9-5C43-4565-B24C-2F2F10BF5AA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Apis.PoePriceInfo", "src\Sidekick.Apis.PoePriceInfo\Sidekick.Apis.PoePriceInfo.csproj", "{8A13FFC9-5C43-4565-B24C-2F2F10BF5AA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.About", "src\Sidekick.Modules.About\Sidekick.Modules.About.csproj", "{8E63B10C-109A-442B-81DE-1B7280988C0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Modules.About", "src\Sidekick.Modules.About\Sidekick.Modules.About.csproj", "{8E63B10C-109A-442B-81DE-1B7280988C0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.Development", "src\Sidekick.Modules.Development\Sidekick.Modules.Development.csproj", "{10ECD152-C29C-4799-BF16-76CC33DA82F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Modules.Development", "src\Sidekick.Modules.Development\Sidekick.Modules.Development.csproj", "{10ECD152-C29C-4799-BF16-76CC33DA82F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.Maps", "src\Sidekick.Modules.Maps\Sidekick.Modules.Maps.csproj", "{642D3141-6336-4424-A4D4-C97498615C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Modules.Maps", "src\Sidekick.Modules.Maps\Sidekick.Modules.Maps.csproj", "{642D3141-6336-4424-A4D4-C97498615C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Common.Game", "src\Sidekick.Common.Game\Sidekick.Common.Game.csproj", "{58364ACF-9239-48C8-A47D-405E1252B761}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Common.Game", "src\Sidekick.Common.Game\Sidekick.Common.Game.csproj", "{58364ACF-9239-48C8-A47D-405E1252B761}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.Trade", "src\Sidekick.Modules.Trade\Sidekick.Modules.Trade.csproj", "{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Modules.Trade", "src\Sidekick.Modules.Trade\Sidekick.Modules.Trade.csproj", "{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sidekick.Modules.Initialization", "src\Sidekick.Modules.Initialization\Sidekick.Modules.Initialization.csproj", "{654272FB-FFBF-41E0-A19E-66C7A7CB05D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Modules.Update", "src\Sidekick.Modules.Update\Sidekick.Modules.Update.csproj", "{D598BCBA-216A-4FBE-B680-A5D23F20CD47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,14 +69,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E5F62F57-9FAB-430F-AD59-37CB3660E329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5F62F57-9FAB-430F-AD59-37CB3660E329}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5F62F57-9FAB-430F-AD59-37CB3660E329}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5F62F57-9FAB-430F-AD59-37CB3660E329}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A2D100E-5475-4951-AA01-83A6CBCFC71F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{361C0444-11F7-4EDC-A30E-C1F529C2EB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -149,6 +141,14 @@ Global
 		{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{654272FB-FFBF-41E0-A19E-66C7A7CB05D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{654272FB-FFBF-41E0-A19E-66C7A7CB05D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{654272FB-FFBF-41E0-A19E-66C7A7CB05D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{654272FB-FFBF-41E0-A19E-66C7A7CB05D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D598BCBA-216A-4FBE-B680-A5D23F20CD47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D598BCBA-216A-4FBE-B680-A5D23F20CD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D598BCBA-216A-4FBE-B680-A5D23F20CD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D598BCBA-216A-4FBE-B680-A5D23F20CD47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -170,6 +170,8 @@ Global
 		{642D3141-6336-4424-A4D4-C97498615C3F} = {BB6816F5-1413-4545-96FA-D31D2D9BF6B1}
 		{58364ACF-9239-48C8-A47D-405E1252B761} = {E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}
 		{AD46F63E-E1AE-4E71-AC6B-B1947AFED1A3} = {BB6816F5-1413-4545-96FA-D31D2D9BF6B1}
+		{654272FB-FFBF-41E0-A19E-66C7A7CB05D1} = {BB6816F5-1413-4545-96FA-D31D2D9BF6B1}
+		{D598BCBA-216A-4FBE-B680-A5D23F20CD47} = {BB6816F5-1413-4545-96FA-D31D2D9BF6B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17B5631D-95B3-4007-BE6B-C9BBE799D014}

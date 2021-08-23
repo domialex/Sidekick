@@ -59,13 +59,10 @@ namespace Sidekick.Modules.Settings.Localization
         public string Trade => resources["Trade"];
         public string Trade_CloseWithMouse => resources["Trade_CloseWithMouse"];
         public string Trade_Key_Check => resources["Trade_Key_Check"];
-        public string Trade_Key_OpenSearch => resources["Trade_Key_OpenSearch"];
         public string Trade_Prediction_Enable => resources["Trade_Prediction_Enable"];
         public string ResetCache => resources["ResetCache"];
         public string Save => resources["Save"];
         public string Stash => resources["Stash"];
-        public string Stash_Key_Left => resources["Stash_Key_Left"];
-        public string Stash_Key_Right => resources["Stash_Key_Right"];
         public string Title => resources["Title"];
         public string Wiki => resources["Wiki"];
         public string Wiki_Key_Open => resources["Wiki_Key_Open"];

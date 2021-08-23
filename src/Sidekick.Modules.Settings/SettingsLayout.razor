@@ -11,7 +11,6 @@
         <MudNavLink Match="NavLinkMatch.All" Href="/settings/map">@Resources.Map</MudNavLink>
         <MudNavLink Match="NavLinkMatch.All" Href="/settings/wiki">@Resources.Wiki</MudNavLink>
         <MudNavLink Match="NavLinkMatch.All" Href="/settings/chat">@Resources.Chat</MudNavLink>
-        <MudNavLink Match="NavLinkMatch.All" Href="/settings/stash">@Resources.Stash</MudNavLink>
     </MudNavMenu>
 </MudDrawer>
 
@@ -44,7 +43,6 @@
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ISettingsService SettingsService { get; set; }
     [Inject] private ICacheProvider CacheProvider { get; set; }
-    [Inject] private IInitializationProvider InitializationProvider { get; set; }
 
     [CascadingParameter] public MenuLayout Layout { get; set; }
 
@@ -64,6 +62,7 @@
     public async Task ResetCache()
     {
         CacheProvider.Clear();
-        await InitializationProvider.Initialize(false, false);
+        await ViewLocator.Open(View.Initialization);
+        await ViewInstance.Close();
     }
 }

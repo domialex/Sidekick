@@ -1,17 +1,17 @@
 using System.Threading.Tasks;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Platform;
 using Sidekick.Domain.Keybinds;
-using Sidekick.Domain.Views;
 
 namespace Sidekick.Application.Keybinds
 {
-    public class OpenMapInfoKeybindHandler : IKeybindHandler
+    public class PriceCheckItemKeybindHandler : IKeybindHandler
     {
         private readonly IViewLocator viewLocator;
         private readonly IClipboardProvider clipboardProvider;
         private readonly IProcessProvider processProvider;
 
-        public OpenMapInfoKeybindHandler(
+        public PriceCheckItemKeybindHandler(
             IViewLocator viewLocator,
             IClipboardProvider clipboardProvider,
             IProcessProvider processProvider)
@@ -26,7 +26,7 @@ namespace Sidekick.Application.Keybinds
         public async Task Execute()
         {
             var itemText = await clipboardProvider.Copy();
-            await viewLocator.Open(View.Map, itemText);
+            await viewLocator.Open(View.Trade, itemText);
         }
     }
 }
