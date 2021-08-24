@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -16,7 +15,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseProphecy()
+        public void ParseProphecy()
         {
             var actual = parser.ParseItem(Prophecy);
 
@@ -27,7 +26,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseCurrency()
+        public void ParseCurrency()
         {
             var actual = parser.ParseItem(Currency);
 
@@ -38,7 +37,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseOrgan()
+        public void ParseOrgan()
         {
             var actual = parser.ParseItem(Organ);
 
@@ -49,7 +48,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseRareBeast()
+        public void ParseRareBeast()
         {
             var parsedRareBeast = parser.ParseItem(RareBeast);
 
@@ -60,7 +59,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseUniqueBeast()
+        public void ParseUniqueBeast()
         {
             var parsedRareBeast = parser.ParseItem(UniqueBeast);
 

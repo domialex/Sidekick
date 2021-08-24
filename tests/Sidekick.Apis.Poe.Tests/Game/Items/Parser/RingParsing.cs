@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseAgonyFinger()
+        public void ParseAgonyFinger()
         {
             var actual = parser.ParseItem(AgonyFinger);
 

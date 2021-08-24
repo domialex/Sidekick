@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -16,7 +15,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseVaalGem()
+        public void ParseVaalGem()
         {
             var actual = parser.ParseItem(VaalGem);
 
@@ -30,7 +29,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseAnomalousGem()
+        public void ParseAnomalousGem()
         {
             var actual = parser.ParseItem(AnomalousGem);
 

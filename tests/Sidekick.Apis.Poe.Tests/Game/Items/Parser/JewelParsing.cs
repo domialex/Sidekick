@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseJewelBlightCut()
+        public void ParseJewelBlightCut()
         {
             var actual = parser.ParseItem(JewelBlightCut);
 
@@ -35,7 +34,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseJewelLoathHope()
+        public void ParseJewelLoathHope()
         {
             var actual = parser.ParseItem(JewelLoathHope);
 
