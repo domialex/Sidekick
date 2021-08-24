@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -17,28 +16,17 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseHypnoticCharm()
+        public void ParseTriggerWeapon()
         {
-            var actual = parser.ParseItem(HypnoticCharm);
-
-            Assert.Equal(Category.Weapon, actual.Metadata.Category);
-            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
-            Assert.Equal("Imbued Wand", actual.Metadata.Type);
-
-            var crafteds = actual.Modifiers.Crafted.Select(x => x.Text);
-            Assert.Contains("Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown", crafteds);
-        }
-
-        #region ItemText
-
-        private const string HypnoticCharm = @"Item Class: Wands
+            var actual = parser.ParseItem(@"Item Class: Wands
 Rarity: Rare
-Hypnotic Charm
+Hypnotic Bite
 Imbued Wand
 --------
 Wand
-Quality: +20% (augmented)
-Physical Damage: 28-53
+Quality: +14% (augmented)
+Physical Damage: 45-82 (augmented)
+Elemental Damage: 51-83 (augmented)
 Critical Strike Chance: 7.00%
 Attacks per Second: 1.50
 --------
@@ -48,21 +36,25 @@ Int: 188
 --------
 Sockets: B-B-B 
 --------
-Item Level: 69
+Item Level: 72
 --------
-Quality does not increase Physical Damage (enchant)
-Grants 1% increased Elemental Damage per 2% Quality (enchant)
+37% increased Spell Damage (implicit)
 --------
-34% increased Spell Damage (implicit)
+41% increased Physical Damage
+81% increased Fire Damage
+Adds 51 to 83 Cold Damage
++88 to Accuracy Rating
+Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown and 150% more Cost (crafted)
 --------
-61% increased Spell Damage
-29% increased Critical Strike Chance for Spells
-+23 to maximum Mana
-+1 to Level of all Fire Spell Skill Gems
-26% increased Burning Damage
-Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown (crafted)
-";
+Note: ~price 5 chaos
+");
 
-        #endregion
+            Assert.Equal(Category.Weapon, actual.Metadata.Category);
+            Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
+            Assert.Equal("Imbued Wand", actual.Metadata.Type);
+
+            var crafteds = actual.Modifiers.Crafted.Select(x => x.Text);
+            Assert.Contains("Trigger a Socketed Spell when you Use a Skill, with a 8 second Cooldown and 150% more Cost", crafteds);
+        }
     }
 }

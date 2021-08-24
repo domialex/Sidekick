@@ -67,17 +67,46 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public void ParseOccupiedMap()
         {
-            var actual = parser.ParseItem(OccupiedMap);
+            var actual = parser.ParseItem(@"Item Class: Maps
+Rarity: Rare
+Vortex Crag
+Phantasmagoria Map
+--------
+Map Tier: 12
+Atlas Region: Lex Ejoris
+Item Quantity: +120% (augmented)
+Item Rarity: +61% (augmented)
+Monster Pack Size: +39% (augmented)
+Quality: +19% (augmented)
+--------
+Item Level: 79
+--------
+Area is influenced by The Elder (implicit)
+--------
+Players are Cursed with Vulnerability
+44% more Monster Life
+Monsters reflect 18% of Physical Damage
+Area contains two Unique Bosses
+Monsters take 39% reduced Extra Damage from Critical Strikes
+Monsters gain an Endurance Charge on Hit
+Monsters cannot be Taunted
+Monsters' Action Speed cannot be modified to below base value
+Players gain 50% reduced Flask Charges
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.
+--------
+Corrupted
+--------
+Note: ~price 2 chaos
+");
 
             Assert.Equal(Category.Map, actual.Metadata.Category);
             Assert.Equal(Rarity.Rare, actual.Metadata.Rarity);
-            Assert.Equal("Carcass Map", actual.Metadata.Type);
+            Assert.Equal("Phantasmagoria Map", actual.Metadata.Type);
 
             var implicits = actual.Modifiers.Implicit.Select(x => x.Text);
             Assert.Contains("Area is influenced by The Elder", implicits);
             Assert.Equal(2, actual.Modifiers.Implicit.First(x => x.Text.Contains("The Elder")).OptionValue.Value);
-            Assert.Contains("Map is occupied by The Purifier", implicits);
-            Assert.Contains("Players are Cursed with Enfeeble, with 60% increased Effect", actual.Modifiers.Explicit.Select(x => x.Text));
         }
 
         [Fact]
@@ -175,31 +204,6 @@ Will they grant me strength or doom?
 --------
 Travel to this Map by using it in a personal Map Device.Maps can only be used once.
 ";
-
-        private const string OccupiedMap = @"Item Class: Maps
-Rarity: Rare
-Lost Roost
-Carcass Map
---------
-Map Tier: 16
-Atlas Region: Lex Ejoris
-Item Quantity: +91% (augmented)
-Item Rarity: +42% (augmented)
-Monster Pack Size: +27% (augmented)
-Quality: +20% (augmented)
---------
-Item Level: 82
---------
-Area is influenced by The Elder (implicit)
-Map is occupied by The Purifier (implicit)
---------
-Players are Cursed with Enfeeble, with 60% increased Effect
-Monsters have 70% chance to Avoid Elemental Ailments
-Monsters fire 2 additional Projectiles
-Monsters' skills Chain 2 additional times
-Players gain 50% reduced Flask Charges
---------
-Travel to this Map by using it in a personal Map Device. Maps can only be used once.";
 
         private const string TimelessKaruiEmblem = @"Item Class: Map Fragments
 Rarity: Normal
