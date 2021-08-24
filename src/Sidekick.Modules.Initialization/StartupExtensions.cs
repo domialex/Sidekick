@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Modules.Initialization.Localization;
 
 namespace Sidekick.Modules.Initialization
 {
@@ -6,7 +7,7 @@ namespace Sidekick.Modules.Initialization
     {
         public static IServiceCollection AddSidekickInitialization(this IServiceCollection services)
         {
-
+            services.AddTransient<InitializationResources>();
 
             return services;
         }

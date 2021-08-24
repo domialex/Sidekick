@@ -57,5 +57,7 @@ namespace Sidekick.Common.Game.Languages.Implementations
         public string PrefixAnomalous => "기묘한";
         public string PrefixDivergent => "분기하는";
         public string PrefixPhantasmal => "환영의";
+
+        public ClassLanguage Classes => null;
     }
 }

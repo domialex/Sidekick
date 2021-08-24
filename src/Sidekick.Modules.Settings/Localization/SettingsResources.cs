@@ -37,7 +37,6 @@ namespace Sidekick.Modules.Settings.Localization
         public string General_RetainClipboard => resources["General_RetainClipboard"];
         public string General_SendCrashReports => resources["General_SendCrashReports"];
         public string General_CopyUserIdToClipboard => resources["General_CopyUserIdToClipboard"];
-        public string General_ShowSplashScreen => resources["General_ShowSplashScreen"];
         public string Group_Custom_Keybinds => resources["Group_Custom_Keybinds"];
         public string Group_Keybinds => resources["Group_Keybinds"];
         public string Group_Other => resources["Group_Other"];

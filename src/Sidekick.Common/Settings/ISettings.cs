@@ -18,7 +18,6 @@ namespace Sidekick.Common.Settings
         bool RetainClipboard { get; set; }
         string Key_FindItems { get; set; }
         string Key_OpenSettings { get; set; }
-        bool ShowSplashScreen { get; set; }
         bool SendCrashReports { get; set; }
 
         bool Trade_CloseWithMouse { get; set; }

@@ -57,5 +57,7 @@ namespace Sidekick.Common.Game.Languages.Implementations
         public string PrefixAnomalous => "anormale";
         public string PrefixDivergent => "divergente";
         public string PrefixPhantasmal => "fantasmatique";
+
+        public ClassLanguage Classes => null;
     }
 }

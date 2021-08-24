@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Sidekick.Apis.GitHub;
 using Sidekick.Apis.Poe;
 using Sidekick.Apis.Poe.Modifiers;
 using Sidekick.Apis.Poe.Parser.Patterns;
@@ -37,7 +36,6 @@ namespace Sidekick.Modules.Initialization.Pages
         [Inject] private IPseudoModifierProvider PseudoModifierProvider { get; set; }
         [Inject] private IItemMetadataProvider ItemMetadataProvider { get; set; }
         [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
-        [Inject] private IGitHubClient GitHubClient { get; set; }
         [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
         [Inject] private IAppService AppService { get; set; }
         [Inject] private ICacheProvider CacheProvider { get; set; }
@@ -50,10 +48,11 @@ namespace Sidekick.Modules.Initialization.Pages
         private int Percentage { get; set; }
 
         public static bool HasRun { get; set; } = false;
+        public Task InitializationTask { get; set; }
 
         protected override void OnInitialized()
         {
-            Task.Run(Handle);
+            InitializationTask = Task.Run(Handle);
             base.OnInitialized();
         }
 
@@ -67,22 +66,15 @@ namespace Sidekick.Modules.Initialization.Pages
                 // Report initial progress
                 await ReportProgress();
 
-                // Open a clean view of the initialization
-                ViewLocator.CloseAll();
-                if (Settings.ShowSplashScreen)
-                {
-                    await ViewLocator.Open(View.Initialization);
-                }
-
                 // Set the UI language
                 await Run(() => UILanguageProvider.Set(Settings.Language_UI));
 
                 // Check for updates
-                if (!HasRun && await GitHubClient.Update())
-                {
-                    ViewLocator.Close(View.Initialization);
-                    return;
-                }
+                // if (!HasRun && await GitHubClient.Update())
+                // {
+                //     ViewLocator.Close(View.Initialization);
+                //     return;
+                // }
 
                 // Check to see if we should run Setup first before running the rest of the initialization process
                 if (string.IsNullOrEmpty(Settings.LeagueId) || string.IsNullOrEmpty(Settings.Language_Parser) || string.IsNullOrEmpty(Settings.Language_UI))
@@ -173,30 +165,24 @@ namespace Sidekick.Modules.Initialization.Pages
             await ReportProgress();
         }
 
-        private Task ReportProgress(int percentage, string title)
-        {
-            Percentage = percentage;
-            Title = title;
-
-            StateHasChanged();
-            return Task.Delay(100);
-        }
-
         private Task ReportProgress()
         {
-            Percentage = Count == 0 ? 0 : Completed * 100 / Count;
-            if (Percentage >= 100)
+            return InvokeAsync(() =>
             {
-                Title = Resources.Ready;
-                Percentage = 100;
-            }
-            else
-            {
-                Title = Resources.Title(Completed, Count);
-            }
+                Percentage = Count == 0 ? 0 : Completed * 100 / Count;
+                if (Percentage >= 100)
+                {
+                    Title = Resources.Ready;
+                    Percentage = 100;
+                }
+                else
+                {
+                    Title = Resources.Title(Completed, Count);
+                }
 
-            StateHasChanged();
-            return Task.Delay(100);
+                StateHasChanged();
+                return Task.Delay(100);
+            });
         }
 
         public void Exit()

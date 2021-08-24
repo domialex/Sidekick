@@ -16,6 +16,7 @@ namespace Sidekick.Common.Game.Items
         Prophecy = 11,
         ItemisedMonster = 12,
         Watchstone = 13,
-        Contract = 14,
+        HeistEquipment = 14,
+        Contract = 15,
     }
 }

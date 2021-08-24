@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
+using Bunit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sidekick.Apis.GitHub;
 using Sidekick.Apis.Poe;
+using Sidekick.Application.Tests.Game.Items.Parser;
 using Sidekick.Common;
-using Sidekick.Common.Blazor.Views;
+using Sidekick.Common.Blazor;
 using Sidekick.Common.Game;
-using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Mock;
 using Sidekick.Modules.Initialization;
@@ -17,6 +19,7 @@ namespace Sidekick.Application.Tests
     public class ParserFixture : IAsyncLifetime
     {
         public IItemParser Parser { get; private set; }
+        public ItemTexts Texts { get; private set; }
 
         public Task DisposeAsync()
         {
@@ -25,39 +28,40 @@ namespace Sidekick.Application.Tests
 
         public async Task InitializeAsync()
         {
+            using var ctx = new TestContext();
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile(SidekickPaths.GetDataFilePath(SettingsService.FileName), true, true)
                 .Build();
 
-            var services = new ServiceCollection()
-
+            ctx.Services
                 // Building blocks
                 .AddSidekickCommon()
+                .AddSidekickCommonBlazor()
                 .AddSidekickCommonGame()
 
                 // Apis
+                .AddSidekickGitHubApi()
                 .AddSidekickPoeApi()
 
                 // Modules
                 .AddSidekickInitialization()
-                .AddSidekickSettings(configuration);
+                .AddSidekickSettings(configuration)
 
-            services.AddSingleton<IViewLocator, MockViewLocator>();
-            services.AddSingleton<IKeybindProvider, MockKeybindProvider>();
-            services.AddSingleton<IKeyboardProvider, MockKeyboardProvider>();
-            services.AddSingleton<IProcessProvider, MockProcessProvider>();
+                // Mocks
+                .AddSidekickMocks();
 
-            var serviceProvider = services.BuildServiceProvider();
+            ctx.Services.AddSingleton<ItemTexts>();
 
-            var settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+            var settingsService = ctx.Services.GetRequiredService<ISettingsService>();
             await settingsService.Save(nameof(ISettings.Language_Parser), "en");
             await settingsService.Save(nameof(ISettings.Language_UI), "en");
             await settingsService.Save(nameof(ISettings.LeagueId), "Standard");
 
-            var component = new Sidekick.Modules.Initialization.Pages.Initialization();
-            await component.Handle();
+            var initComponent = ctx.RenderComponent<Sidekick.Modules.Initialization.Pages.Initialization>();
+            await initComponent.Instance.InitializationTask;
 
-            Parser = serviceProvider.GetRequiredService<IItemParser>();
+            Parser = ctx.Services.GetRequiredService<IItemParser>();
+            Texts = ctx.Services.GetRequiredService<ItemTexts>();
         }
     }
 }

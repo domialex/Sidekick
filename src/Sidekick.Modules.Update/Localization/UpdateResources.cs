@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Localization;
 
-namespace Sidekick.Apis.GitHub.Localization
+namespace Sidekick.Modules.Update.Localization
 {
     public class UpdateResources
     {
@@ -14,6 +14,7 @@ namespace Sidekick.Apis.GitHub.Localization
         public string Checking => localizer["Checking"];
         public string Downloaded => localizer["Downloaded"];
         public string Downloading(string version) => localizer["Downloading", version];
+        public string Exit => localizer["Exit"];
         public string Failed => localizer["Failed"];
     }
 }

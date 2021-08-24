@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -16,9 +15,18 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseSaintTreasure()
+        public void ParseSaintTreasure()
         {
-            var actual = parser.ParseItem(SaintTreasure);
+            var actual = parser.ParseItem(@"Item Class: Unknown
+Rarity: Divination Card
+The Saint's Treasure
+--------
+Stack Size: 1/10
+--------
+2x Exalted Orb
+--------
+Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
+");
 
             Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
             Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
@@ -27,9 +35,18 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseLordOfCelebration()
+        public void ParseLordOfCelebration()
         {
-            var actual = parser.ParseItem(LordOfCelebration);
+            var actual = parser.ParseItem(@"Item Class: Unknown
+Rarity: Divination Card
+The Lord of Celebration
+--------
+Stack Size: 1/4
+--------
+Sceptre of Celebration
+Shaper Item
+--------
+Though they were a pack of elite combatants, the Emperor's royal guards were not ready to face one of his notorious parties.");
 
             Assert.Equal(Category.DivinationCard, actual.Metadata.Category);
             Assert.Equal(Rarity.DivinationCard, actual.Metadata.Rarity);
@@ -42,31 +59,5 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
             Assert.False(actual.Influences.Shaper);
             Assert.False(actual.Influences.Warlord);
         }
-
-        #region ItemText
-
-        private const string SaintTreasure = @"Item Class: Unknown
-Rarity: Divination Card
-The Saint's Treasure
---------
-Stack Size: 1/10
---------
-2x Exalted Orb
---------
-Publicly, he lived a pious and chaste life of poverty. Privately, tithes and tributes made him and his lascivious company very comfortable indeed.
-";
-
-        private const string LordOfCelebration = @"Item Class: Unknown
-Rarity: Divination Card
-The Lord of Celebration
---------
-Stack Size: 1/4
---------
-Sceptre of Celebration
-Shaper Item
---------
-Though they were a pack of elite combatants, the Emperor's royal guards were not ready to face one of his notorious parties.";
-
-        #endregion
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -8,7 +7,6 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Sidekick.Apis.GitHub.Localization;
 using Sidekick.Apis.GitHub.Models;
 using Sidekick.Common;
 
@@ -17,57 +15,17 @@ namespace Sidekick.Apis.GitHub
     public class GitHubClient : IGitHubClient
     {
         private readonly ILogger<GitHubClient> logger;
-        private readonly UpdateResources resources;
         private readonly HttpClient client;
 
         public GitHubClient(
             IHttpClientFactory httpClientFactory,
-            ILogger<GitHubClient> logger,
-            UpdateResources resources)
+            ILogger<GitHubClient> logger)
         {
             this.logger = logger;
-            this.resources = resources;
             client = httpClientFactory.CreateClient();
             client.BaseAddress = new Uri("https://api.github.com");
             client.DefaultRequestHeaders.UserAgent.TryParseAdd("request");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-        public async Task<bool> Update()
-        {
-            try
-            {
-                var release = await GetLatestRelease();
-                if (IsUpdateAvailable(release))
-                {
-                    await initializationProvider.OnProgress(0, resources.Downloading(release.Tag));
-
-                    var path = await DownloadRelease(release);
-                    if (path == null)
-                    {
-                        await initializationProvider.OnProgress(33, resources.Failed);
-                        await Task.Delay(1000);
-                        await initializationProvider.OnProgress(66, resources.Failed);
-                        await Task.Delay(1000);
-                        await initializationProvider.OnProgress(100, resources.Failed);
-                        await Task.Delay(1000);
-                        return false;
-                    }
-
-                    await initializationProvider.OnProgress(100, resources.Downloading(release.Tag));
-                    await Task.Delay(1000);
-
-                    Process.Start(path);
-
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                logger.LogWarning(e, "Update failed.");
-            }
-
-            return false;
         }
 
         /// <summary>

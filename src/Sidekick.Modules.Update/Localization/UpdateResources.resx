@@ -126,6 +126,9 @@
   <data name="Downloading" xml:space="preserve">
     <value>Update Available! Version {0} is being downloaded now.</value>
   </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Update process has failed!</value>
   </data>

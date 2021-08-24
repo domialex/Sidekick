@@ -80,8 +80,6 @@ namespace Sidekick.Modules.Settings
 
         public bool RetainClipboard { get; set; }
 
-        public bool ShowSplashScreen { get; set; }
-
         public bool SendCrashReports { get; set; }
 
         public WikiSetting Wiki_Preferred { get; set; }

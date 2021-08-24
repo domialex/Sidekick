@@ -9,5 +9,7 @@ namespace Sidekick.Common.Game.Items
         public Rarity Rarity { get; set; }
 
         public Category Category { get; set; }
+
+        public Class Class { get; set; }
     }
 }

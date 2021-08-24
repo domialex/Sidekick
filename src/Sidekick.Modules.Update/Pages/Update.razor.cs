@@ -3,11 +3,12 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
-using Sidekick.Apis.GitHub.Localization;
+using Sidekick.Apis.GitHub;
 using Sidekick.Common;
 using Sidekick.Common.Blazor.Views;
+using Sidekick.Modules.Update.Localization;
 
-namespace Sidekick.Apis.GitHub.Pages
+namespace Sidekick.Modules.Update.Pages
 {
     public partial class Update : ComponentBase
     {
@@ -21,7 +22,7 @@ namespace Sidekick.Apis.GitHub.Pages
         private int Count { get; set; } = 0;
         private int Completed { get; set; } = 0;
         private string Title { get; set; }
-        private decimal Percentage => (decimal)Completed / Count;
+        private double Percentage => (double)Completed / Count;
 
         public static bool HasRun { get; set; } = false;
 

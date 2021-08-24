@@ -35,5 +35,7 @@ namespace Sidekick.Apis.Poe.Parser.Patterns
         Regex Socket { get; }
         Regex Unidentified { get; }
         Regex Warlord { get; }
+
+        Dictionary<Class, Regex> Classes { get; }
     }
 }

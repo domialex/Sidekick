@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -19,20 +18,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         [Fact]
         public void ParseBulbonicTrail()
         {
-            var actual = parser.ParseItem(BulbonicTrail);
-
-            Assert.Equal(Category.Armour, actual.Metadata.Category);
-            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
-            Assert.Equal("Bubonic Trail", actual.Metadata.Name);
-            Assert.Equal("Murder Boots", actual.Metadata.Type);
-
-            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
-            Assert.Contains("Has 1 Abyssal Socket", explicits);
-        }
-
-        #region ItemText
-
-        private const string BulbonicTrail = @"Item Class: Unknown
+            var actual = parser.ParseItem(@"Item Class: Unknown
 Rarity: Unique
 Bubonic Trail
 Murder Boots
@@ -56,8 +42,15 @@ Triggers Level 20 Death Walk when Equipped
 10% increased Damage for each type of Abyss Jewel affecting you
 --------
 Even the dead serve the Lightless.
-";
+");
 
-        #endregion
+            Assert.Equal(Category.Armour, actual.Metadata.Category);
+            Assert.Equal(Rarity.Unique, actual.Metadata.Rarity);
+            Assert.Equal("Bubonic Trail", actual.Metadata.Name);
+            Assert.Equal("Murder Boots", actual.Metadata.Type);
+
+            var explicits = actual.Modifiers.Explicit.Select(x => x.Text);
+            Assert.Contains("Has 1 Abyssal Socket", explicits);
+        }
     }
 }

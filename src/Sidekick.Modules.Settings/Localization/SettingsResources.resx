@@ -195,9 +195,6 @@
   <data name="General_SendCrashReports" xml:space="preserve">
     <value>Send crash reports to help us fix bugs faster</value>
   </data>
-  <data name="General_ShowSplashScreen" xml:space="preserve">
-    <value>Show the splash screen when starting</value>
-  </data>
   <data name="Group_Custom_Keybinds" xml:space="preserve">
     <value>Custom Keybinds</value>
   </data>

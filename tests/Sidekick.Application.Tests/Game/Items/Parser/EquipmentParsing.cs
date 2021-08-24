@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseUnidentifiedUnique()
+        public void ParseUnidentifiedUnique()
         {
             var actual = parser.ParseItem(UnidentifiedUnique);
 
@@ -28,7 +27,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseSixLinkUniqueBodyArmor()
+        public void ParseSixLinkUniqueBodyArmor()
         {
             var actual = parser.ParseItem(UniqueSixLink);
 
@@ -58,7 +57,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseRareGloves()
+        public void ParseRareGloves()
         {
             var actual = parser.ParseItem(GlovesAssasinsMitts);
 
@@ -76,7 +75,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseInfluencedWeapon()
+        public void ParseInfluencedWeapon()
         {
             var actual = parser.ParseItem(InfluencedWand);
 
@@ -97,7 +96,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseMagicWeapon()
+        public void ParseMagicWeapon()
         {
             var actual = parser.ParseItem(MagicWeapon);
 
@@ -110,7 +109,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseFracturedItem()
+        public void ParseFracturedItem()
         {
             var actual = parser.ParseItem(FracturedItem);
 
@@ -126,7 +125,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         /// This unique item can have multiple possible bases.
         /// </summary>
         [Fact]
-        public async Task ParseUniqueItemWithDifferentBases()
+        public void ParseUniqueItemWithDifferentBases()
         {
             var actual = parser.ParseItem(UniqueItemWithDifferentBases);
 
@@ -141,7 +140,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseWeaponWithMultipleElementalDamages()
+        public void ParseWeaponWithMultipleElementalDamages()
         {
             var actual = parser.ParseItem(WeaponWithMultipleElementalDamages);
 
@@ -155,7 +154,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseEnchantWithAdditionalProjectiles()
+        public void ParseEnchantWithAdditionalProjectiles()
         {
             var actual = parser.ParseItem(EnchantWithAdditionalProjectiles);
 

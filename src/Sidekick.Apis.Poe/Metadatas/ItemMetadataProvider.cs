@@ -60,6 +60,7 @@ namespace Sidekick.Apis.Poe.Metadatas
             FillPattern(result.Result[10].Entries, Category.Prophecy);
             FillPattern(result.Result[11].Entries, Category.ItemisedMonster, useRegex: true);
             FillPattern(result.Result[12].Entries, Category.Watchstone);
+            FillPattern(result.Result[13].Entries, Category.HeistEquipment, useRegex: true);
             FillPattern(result.Result[14].Entries, Category.Contract, useRegex: true);
 
             Prefixes = new Regex("^(?:" +
@@ -205,15 +206,10 @@ namespace Sidekick.Apis.Poe.Metadatas
                 results = results.Where(x => x.Type == type).ToList();
             }
 
-            // If we have a Unique item in our results, we return it
-            if (results.Any(x => x.Rarity == Rarity.Unique))
-            {
-                parsingBlock.Parsed = true;
-                return results.First(x => x.Rarity == Rarity.Unique);
-            }
-
+            // If we have a Unique item in our results, we sort for it so it comes first
             var result = results
-                .OrderBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
+                .OrderBy(x => x.Rarity == Rarity.Unique ? 0 : 1)
+                .ThenBy(x => x.Rarity == Rarity.Unknown ? 0 : 1)
                 .FirstOrDefault();
 
             if (result != null)
@@ -231,7 +227,10 @@ namespace Sidekick.Apis.Poe.Metadatas
                     result.Name = name;
                 }
 
-
+                if (result.Class == Class.Undefined)
+                {
+                    result.Class = GetClass(parsingBlock);
+                }
             }
 
             return result;
@@ -247,6 +246,18 @@ namespace Sidekick.Apis.Poe.Metadatas
                 }
             }
             throw new NotSupportedException("Item rarity is unknown.");
+        }
+
+        private Class GetClass(ParsingBlock parsingBlock)
+        {
+            foreach (var pattern in parserPatterns.Classes)
+            {
+                if (pattern.Value.IsMatch(parsingBlock.Lines[0].Text))
+                {
+                    return pattern.Key;
+                }
+            }
+            return Class.Undefined;
         }
     }
 }

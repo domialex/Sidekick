@@ -12,6 +12,8 @@ namespace Sidekick.Common.Cache
         public async Task<TModel> Get<TModel>(string key)
             where TModel : class
         {
+            EnsureDirectory();
+
             var fileName = GetCacheFileName(key);
 
             if (!File.Exists(fileName))
@@ -33,6 +35,8 @@ namespace Sidekick.Common.Cache
         public async Task Set<TModel>(string key, TModel data)
             where TModel : class
         {
+            EnsureDirectory();
+
             var fileName = GetCacheFileName(key);
 
             if (File.Exists(fileName))
@@ -40,7 +44,7 @@ namespace Sidekick.Common.Cache
                 File.Delete(fileName);
             }
 
-            using var stream = File.OpenWrite(fileName);
+            using var stream = File.Create(fileName);
             await JsonSerializer.SerializeAsync(stream, data);
         }
 
@@ -51,6 +55,8 @@ namespace Sidekick.Common.Cache
 
         public async Task<TModel> GetOrSet<TModel>(string key, Func<Task<TModel>> func) where TModel : class
         {
+            EnsureDirectory();
+
             var result = await Get<TModel>(key);
 
             if (result == null)
@@ -61,6 +67,11 @@ namespace Sidekick.Common.Cache
             }
 
             return result;
+        }
+
+        private static void EnsureDirectory()
+        {
+            Directory.CreateDirectory(Path.Combine(SidekickPaths.GetDataFilePath(), cachePath));
         }
 
         private static string GetCacheFileName(string key)

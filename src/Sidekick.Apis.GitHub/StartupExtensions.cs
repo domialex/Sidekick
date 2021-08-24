@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Sidekick.Apis.GitHub.Localization;
 
 namespace Sidekick.Apis.GitHub
 {
@@ -7,7 +6,8 @@ namespace Sidekick.Apis.GitHub
     {
         public static IServiceCollection AddSidekickGitHubApi(this IServiceCollection services)
         {
-            services.AddTransient<UpdateResources>();
+            services.AddHttpClient();
+
             services.AddTransient<IGitHubClient, GitHubClient>();
 
             return services;

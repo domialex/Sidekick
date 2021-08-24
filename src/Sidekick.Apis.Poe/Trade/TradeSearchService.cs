@@ -83,22 +83,6 @@ namespace Sidekick.Apis.Poe.Trade
                 logger.LogInformation("Querying Trade API.");
 
                 var request = new QueryRequest();
-                SetPropertyFilters(request.Query.Filters, propertyFilters);
-                SetModifierFilters(request.Query.Stats, modifierFilters);
-
-                // Auto Search 5+ Links
-                var highestCount = item.Sockets
-                    .GroupBy(x => x.Group)
-                    .Select(x => x.Count())
-                    .OrderByDescending(x => x)
-                    .FirstOrDefault();
-                if (highestCount >= 5)
-                {
-                    request.Query.Filters.SocketFilters.Filters.Links = new SocketFilterOption()
-                    {
-                        Min = highestCount,
-                    };
-                }
 
                 if (item.Metadata.Category == Category.ItemisedMonster)
                 {
@@ -123,12 +107,13 @@ namespace Sidekick.Apis.Poe.Trade
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(request.Query.Filters.TypeFilters.Filters.Category?.Option))
-                    {
-                        request.Query.Type = item.Metadata.Type;
-                    }
+                    request.Query.Type = item.Metadata.Type;
                     request.Query.Filters.TypeFilters.Filters.Rarity = new SearchFilterOption("nonunique");
                 }
+
+                SetPropertyFilters(request.Query, propertyFilters);
+                SetModifierFilters(request.Query.Stats, modifierFilters);
+                SetSocketFilters(item, request.Query.Filters);
 
                 if (item.Properties.AlternateQuality)
                 {
@@ -166,14 +151,82 @@ namespace Sidekick.Apis.Poe.Trade
             return null;
         }
 
-        private static void SetPropertyFilters(SearchFilters filters, PropertyFilters propertyFilters)
+        private static void SetPropertyFilters(Query query, PropertyFilters propertyFilters)
         {
             if (propertyFilters == null) return;
 
-            SetPropertyFilters(filters, propertyFilters.Armour);
-            SetPropertyFilters(filters, propertyFilters.Weapon);
-            SetPropertyFilters(filters, propertyFilters.Map);
-            SetPropertyFilters(filters, propertyFilters.Misc);
+            if (propertyFilters.Class.HasValue && propertyFilters.Class.Value != Class.Undefined)
+            {
+                var category = propertyFilters.Class.Value switch
+                {
+                    Class.AbyssJewel => "jewel.abyss",
+                    Class.ActiveSkillGems => "gem.activegem",
+                    Class.Amulet => "accessory.amulet",
+                    Class.Belt => "accessory.belt",
+                    Class.Blueprint => "heistmission.blueprint",
+                    Class.BodyArmours => "armour.chest",
+                    Class.Boots => "armour.boots",
+                    Class.Bows => "weapon.bow",
+                    Class.Claws => "weapon.claw",
+                    Class.Contract => "heistmission.contract",
+                    Class.CriticalUtilityFlasks => "",
+                    Class.Daggers => "weapon.dagger",
+                    Class.DelveStackableSocketableCurrency => "currency.resonator",
+                    Class.DivinationCard => "card",
+                    Class.Gloves => "armour.gloves",
+                    Class.HeistBrooch => "heistequipment.heistreward",
+                    Class.HeistCloak => "heistequipment.heistutility",
+                    Class.HeistGear => "heistequipment.heistweapon",
+                    Class.HeistTarget => "currency.heistobjective",
+                    Class.HeistTool => "heistequipment.heisttool",
+                    Class.Helmets => "armour.helmet",
+                    Class.HybridFlasks => "flask",
+                    Class.Jewel => "jewel.base",
+                    Class.LifeFlasks => "flask",
+                    Class.ManaFlasks => "flask",
+                    Class.MapFragments => "map.fragment",
+                    // Maven invitations are in misc map items class at the moment. Ignoring for now.
+                    // Class.MapInvitations => "map.invitation",
+                    // This class does not exist, though the filter does. Ignoring for now.
+                    // Class.MapScarabs => "map.scarab",
+                    Class.Maps => "map",
+                    Class.MetamorphSample => "monster.sample",
+                    // Ignoring for now
+                    // Class.MiscMapItems => "",
+                    Class.OneHandAxes => "weapon.oneaxe",
+                    Class.OneHandMaces => "weapon.onemace",
+                    Class.OneHandSwords => "weapon.onesword",
+                    Class.Quivers => "armour.quiver",
+                    Class.Ring => "accessory.ring",
+                    Class.RuneDaggers => "weapon.runedagger",
+                    Class.Sceptres => "weapon.sceptre",
+                    Class.Shields => "armour.shield",
+                    // There are a lot of other uses for stackable currency currently such as beasts and scarabs. Ignoring for now.
+                    // Class.StackableCurrency => "currency",
+                    Class.Staves => "weapon.staff",
+                    Class.SupportSkillGems => "gem.supportgem",
+                    Class.ThrustingOneHandSwords => "",
+                    Class.Trinkets => "accessory.trinket",
+                    Class.TwoHandAxes => "weapon.twoaxe",
+                    Class.TwoHandMaces => "weapon.twomace",
+                    Class.TwoHandSwords => "weapon.twosword",
+                    Class.UtilityFlasks => "flask",
+                    Class.Wands => "weapon.wand",
+                    Class.Warstaves => "weapon.warstaff",
+                    _ => null,
+                };
+
+                if (!string.IsNullOrEmpty(category))
+                {
+                    query.Filters.TypeFilters.Filters.Category = new SearchFilterOption(category);
+                    query.Type = null;
+                }
+            }
+
+            SetPropertyFilters(query.Filters, propertyFilters.Armour);
+            SetPropertyFilters(query.Filters, propertyFilters.Weapon);
+            SetPropertyFilters(query.Filters, propertyFilters.Map);
+            SetPropertyFilters(query.Filters, propertyFilters.Misc);
         }
 
         private static void SetPropertyFilters(SearchFilters filters, List<PropertyFilter> propertyFilters)
@@ -306,6 +359,23 @@ namespace Sidekick.Apis.Poe.Trade
                 Id = x.Modifier.Id,
                 Value = new SearchFilterValue(x),
             }));
+        }
+
+        private static void SetSocketFilters(Item item, SearchFilters filters)
+        {
+            // Auto Search 5+ Links
+            var highestCount = item.Sockets
+                .GroupBy(x => x.Group)
+                .Select(x => x.Count())
+                .OrderByDescending(x => x)
+                .FirstOrDefault();
+            if (highestCount >= 5)
+            {
+                filters.SocketFilters.Filters.Links = new SocketFilterOption()
+                {
+                    Min = highestCount,
+                };
+            }
         }
 
         public async Task<List<TradeItem>> GetResults(string queryId, List<string> ids, ModifierFilters modifierFilters = null)

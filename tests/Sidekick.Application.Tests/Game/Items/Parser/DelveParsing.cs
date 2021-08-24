@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -16,18 +15,9 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParsePotentChaoticResonator()
+        public void ParsePotentChaoticResonator()
         {
-            var actual = parser.ParseItem(PotentChaoticResonator);
-
-            Assert.Equal(Category.Currency, actual.Metadata.Category);
-            Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
-            Assert.Equal("Potent Chaotic Resonator", actual.Metadata.Type);
-        }
-
-        #region ItemText
-
-        private const string PotentChaoticResonator = @"Item Class: Unknown
+            var actual = parser.ParseItem(@"Item Class: Unknown
 Rarity: Currency
 Potent Chaotic Resonator
 --------
@@ -39,8 +29,11 @@ Sockets: D D
 Reforges a rare item with new random modifiers
 --------
 All sockets must be filled with Fossils before this item can be used.
-";
+");
 
-        #endregion
+            Assert.Equal(Category.Currency, actual.Metadata.Category);
+            Assert.Equal(Rarity.Currency, actual.Metadata.Rarity);
+            Assert.Equal("Potent Chaotic Resonator", actual.Metadata.Type);
+        }
     }
 }

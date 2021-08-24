@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Sidekick.Apis.Poe;
 using Sidekick.Common.Game.Items;
 using Xunit;
@@ -17,7 +16,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseNormalMap()
+        public void ParseNormalMap()
         {
             var actual = parser.ParseItem(NormalMap);
 
@@ -28,7 +27,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseMagicMap()
+        public void ParseMagicMap()
         {
             var actual = parser.ParseItem(MagicMap);
 
@@ -39,7 +38,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseBlightedMap()
+        public void ParseBlightedMap()
         {
             var actual = parser.ParseItem(BlightedMap);
 
@@ -51,7 +50,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseUniqueMap()
+        public void ParseUniqueMap()
         {
             var actual = parser.ParseItem(UniqueMap);
 
@@ -66,7 +65,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseOccupiedMap()
+        public void ParseOccupiedMap()
         {
             var actual = parser.ParseItem(OccupiedMap);
 
@@ -82,7 +81,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseTimelessKaruiEmblem()
+        public void ParseTimelessKaruiEmblem()
         {
             var actual = parser.ParseItem(TimelessKaruiEmblem);
 
@@ -92,7 +91,7 @@ namespace Sidekick.Application.Tests.Game.Items.Parser
         }
 
         [Fact]
-        public async Task ParseVortexPit()
+        public void ParseVortexPit()
         {
             var actual = parser.ParseItem(VortexPit);
 

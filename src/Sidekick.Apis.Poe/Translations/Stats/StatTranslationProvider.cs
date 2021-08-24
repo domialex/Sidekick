@@ -11,7 +11,7 @@ namespace Sidekick.Apis.Poe.Translations.Stats
     {
         public async Task Initialize()
         {
-            using var stream = typeof(StatTranslationProvider).Assembly.GetManifestResourceStream("Sidekick.Infrastructure.RePoe.Data.stat_translations.min.json");
+            using var stream = typeof(StatTranslationProvider).Assembly.GetManifestResourceStream("Sidekick.Apis.Poe.Translations.Stats.stat_translations.min.json");
 
             var translations = await JsonSerializer.DeserializeAsync<List<Translation>>(stream);
             FeedAlternateModifiers(translations);

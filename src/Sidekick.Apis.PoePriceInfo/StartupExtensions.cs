@@ -6,6 +6,8 @@ namespace Sidekick.Apis.PoePriceInfo
     {
         public static IServiceCollection AddSidekickPoePriceInfoApi(this IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddTransient<IPoePriceInfoClient, PoePriceInfoClient>();
 
             return services;

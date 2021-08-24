@@ -9,6 +9,8 @@ namespace Sidekick.Apis.PoeNinja
     {
         public static IServiceCollection AddSidekickPoeNinjaApi(this IServiceCollection services)
         {
+            services.AddHttpClient();
+
             var connectionString = "Filename=" + SidekickPaths.GetDataFilePath("poeninja.db");
 
             services.AddDbContextPool<PoeNinjaContext>(options => options.UseSqlite(connectionString));

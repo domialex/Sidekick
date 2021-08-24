@@ -97,40 +97,6 @@ else
         IsError = false;
         IsFetching = true;
 
-        // if (Filters != null)
-        // {
-        //     var settingMods = Item.Metadata.Category switch
-        //     {
-        //         Category.Accessory => Settings.Price_Mods_Accessory,
-        //         Category.Armour => Settings.Price_Mods_Armour,
-        //         Category.Flask => Settings.Price_Mods_Flask,
-        //         Category.Jewel => Settings.Price_Mods_Jewel,
-        //         Category.Map => Settings.Price_Mods_Map,
-        //         Category.Weapon => Settings.Price_Mods_Weapon,
-        //         _ => new List<string>(),
-        //     };
-        //
-        //     foreach (var filter in Filters.SelectMany(x => x.Filters))
-        //     {
-        //         if (settingMods.Contains(filter.Id))
-        //         {
-        //             if (!filter.Enabled)
-        //             {
-        //                 settingMods.Remove(filter.Id);
-        //             }
-        //         }
-        //         else
-        //         {
-        //             if (filter.Enabled)
-        //             {
-        //                 settingMods.Add(filter.Id);
-        //             }
-        //         }
-        //     }
-        //
-        //     await Mediator.Send(new SaveSettingsCommand(Settings));
-        // }
-
         if (Item.Metadata.Rarity == Rarity.Currency && ItemStaticDataProvider.GetId(Item) != null)
         {
             QueryResult = await TradeSearchService.SearchBulk(Item);

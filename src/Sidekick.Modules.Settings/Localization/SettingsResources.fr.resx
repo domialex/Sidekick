@@ -135,9 +135,6 @@
   <data name="General_RetainClipboard" xml:space="preserve">
     <value>Garder les données du presse-papier</value>
   </data>
-  <data name="General_ShowSplashScreen" xml:space="preserve">
-    <value>Afficher la fenêtre d'accueil au chargement</value>
-  </data>
   <data name="Group_Keybinds" xml:space="preserve">
     <value>Raccourcis</value>
   </data>

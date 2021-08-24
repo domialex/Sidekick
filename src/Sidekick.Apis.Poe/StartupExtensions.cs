@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Sidekick.Apis.Poe.Clients;
+using Sidekick.Apis.Poe.Leagues;
 using Sidekick.Apis.Poe.Metadatas;
 using Sidekick.Apis.Poe.Modifiers;
 using Sidekick.Apis.Poe.Parser;
@@ -15,6 +16,8 @@ namespace Sidekick.Apis.Poe
     {
         public static IServiceCollection AddSidekickPoeApi(this IServiceCollection services)
         {
+            services.AddHttpClient();
+
             services.AddTransient<IPoeTradeClient, PoeTradeClient>();
 
             services.AddSingleton<IItemParser, ItemParser>();
@@ -25,6 +28,7 @@ namespace Sidekick.Apis.Poe
             services.AddSingleton<IStatTranslationProvider, StatTranslationProvider>();
             services.AddSingleton<IParserPatterns, ParserPatterns>();
             services.AddSingleton<ITradeSearchService, TradeSearchService>();
+            services.AddSingleton<ILeagueProvider, LeagueProvider>();
 
             return services;
         }
