@@ -8,7 +8,6 @@ using Sidekick.Apis.Poe.Parser.Patterns;
 using Sidekick.Apis.Poe.Pseudo;
 using Sidekick.Common;
 using Sidekick.Common.Blazor.Views;
-using Sidekick.Common.Cache;
 using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Localization;
 using Sidekick.Common.Platform;
@@ -22,9 +21,7 @@ namespace Sidekick.Modules.Initialization.Pages
     {
         [Inject] private InitializationResources Resources { get; set; }
         [Inject] private ISettings Settings { get; set; }
-        [Inject] private ISettingsService SettingsService { get; set; }
         [Inject] private ILogger<Initialization> Logger { get; set; }
-        [Inject] private IViewLocator ViewLocator { get; set; }
         [Inject] private IViewInstance ViewInstance { get; set; }
         [Inject] private IProcessProvider ProcessProvider { get; set; }
         [Inject] private IKeyboardProvider KeyboardProvider { get; set; }
@@ -36,9 +33,7 @@ namespace Sidekick.Modules.Initialization.Pages
         [Inject] private IItemStaticDataProvider ItemStaticDataProvider { get; set; }
         [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
         [Inject] private IAppService AppService { get; set; }
-        [Inject] private ICacheProvider CacheProvider { get; set; }
         [Inject] private IUILanguageProvider UILanguageProvider { get; set; }
-        [Inject] private ILeagueProvider LeagueProvider { get; set; }
 
         private int Count { get; set; } = 0;
         private int Completed { get; set; } = 0;

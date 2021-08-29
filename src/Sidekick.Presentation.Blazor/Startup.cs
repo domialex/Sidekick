@@ -12,7 +12,6 @@ using Sidekick.Apis.Poe;
 using Sidekick.Apis.PoeNinja;
 using Sidekick.Apis.PoePriceInfo;
 using Sidekick.Common;
-using Sidekick.Common.Blazor;
 using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
@@ -72,7 +71,6 @@ namespace Sidekick.Presentation.Blazor
 
                 // Common
                 .AddSidekickCommon()
-                .AddSidekickCommonBlazor("/update")
                 .AddSidekickCommonGame()
                 .AddSidekickCommonPlatform()
 
@@ -113,7 +111,7 @@ namespace Sidekick.Presentation.Blazor
 
             app.UseRouting();
 
-            app.UseMiddleware<StartupMiddleware>();
+            app.UseMiddleware<DevelopmentStartupMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
