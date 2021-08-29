@@ -2,11 +2,11 @@ using Microsoft.Extensions.Localization;
 
 namespace Sidekick.Apis.Poe.Localization
 {
-    public class TradeResources
+    public class FilterResources
     {
-        private readonly IStringLocalizer<TradeResources> localizer;
+        private readonly IStringLocalizer<FilterResources> localizer;
 
-        public TradeResources(IStringLocalizer<TradeResources> localizer)
+        public FilterResources(IStringLocalizer<FilterResources> localizer)
         {
             this.localizer = localizer;
         }

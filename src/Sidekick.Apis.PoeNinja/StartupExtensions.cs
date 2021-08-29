@@ -22,6 +22,8 @@ namespace Sidekick.Apis.PoeNinja
 
             services.AddTransient<IPoeNinjaRepository, PoeNinjaRepository>();
 
+            services.AddTransient<IPoeNinjaClient, PoeNinjaClient>();
+
             return services;
         }
     }

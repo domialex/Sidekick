@@ -15,11 +15,11 @@ namespace Sidekick.Apis.Poe.Trade
         private static readonly Regex LabelValues = new("(\\#)");
 
         private readonly IGameLanguageProvider gameLanguageProvider;
-        private readonly TradeResources resources;
+        private readonly FilterResources resources;
 
         public TradeFilterService(
             IGameLanguageProvider gameLanguageProvider,
-            TradeResources resources)
+            FilterResources resources)
         {
             this.gameLanguageProvider = gameLanguageProvider;
             this.resources = resources;

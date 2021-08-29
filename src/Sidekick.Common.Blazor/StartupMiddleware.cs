@@ -7,7 +7,7 @@ namespace Sidekick.Common.Blazor
     public class StartupMiddleware
     {
         private static bool HasStartup { get; set; } = false;
-        private static readonly Regex IgnorePaths = new Regex("^\\/_blazor\\/.*$");
+        private static readonly Regex IgnorePaths = new Regex("^\\/_blazor.*$");
         internal static string StartupPath { get; set; }
 
         private readonly RequestDelegate next;
