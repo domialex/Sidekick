@@ -22,9 +22,10 @@ namespace Sidekick.Mock
 
         public string Title { get; private set; }
 
-        public virtual void SetTitle(string title)
+        public Task Initialize(string title, int width = 768, int height = 600, bool isOverlay = false, bool isModal = false, bool closeOnBlur = false)
         {
             Title = title;
+            return Task.CompletedTask;
         }
     }
 }

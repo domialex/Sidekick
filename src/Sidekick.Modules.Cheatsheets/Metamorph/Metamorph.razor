@@ -20,7 +20,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(CheatsheetResources.Metamorph);
+        await ViewInstance.Initialize(CheatsheetResources.Metamorph);
 
         Catalysts = new List<CatalystModel>()
 {

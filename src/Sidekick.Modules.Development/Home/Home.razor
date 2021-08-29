@@ -32,10 +32,10 @@
 
     private string ItemText { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle("Home");
-        base.OnInitialized();
+        await ViewInstance.Initialize("Home");
+        await base.OnInitializedAsync();
     }
 
     private void PriceCheck()

@@ -20,7 +20,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(CheatsheetResources.Incursion);
+        await ViewInstance.Initialize(CheatsheetResources.Incursion);
 
         Rooms = new List<RoomModel>()
 {

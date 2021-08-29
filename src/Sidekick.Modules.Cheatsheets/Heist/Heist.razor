@@ -17,9 +17,9 @@
 
     private List<JobModel> Jobs { get; set; }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(CheatsheetResources.Heist);
+        await ViewInstance.Initialize(CheatsheetResources.Heist);
 
         Jobs = new List<JobModel>
 {
@@ -116,6 +116,6 @@
             }),
         };
 
-        return base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 }

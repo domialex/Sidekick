@@ -6,7 +6,6 @@ using Sidekick.Apis.GitHub;
 using Sidekick.Apis.Poe;
 using Sidekick.Application.Tests.Game.Items.Parser;
 using Sidekick.Common;
-using Sidekick.Common.Blazor;
 using Sidekick.Common.Game;
 using Sidekick.Common.Settings;
 using Sidekick.Mock;
@@ -33,10 +32,11 @@ namespace Sidekick.Application.Tests
                 .AddJsonFile(SidekickPaths.GetDataFilePath(SettingsService.FileName), true, true)
                 .Build();
 
+            ctx.Services.AddLocalization();
+
             ctx.Services
                 // Building blocks
                 .AddSidekickCommon()
-                .AddSidekickCommonBlazor("/update")
                 .AddSidekickCommonGame()
 
                 // Apis

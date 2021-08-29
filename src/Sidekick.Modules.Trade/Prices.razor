@@ -79,7 +79,7 @@ else
             return;
         }
 
-        ViewInstance.SetTitle(Item.Original.Name);
+        await ViewInstance.Initialize(Item.Original.Name);
         PropertyFilters = TradeFilterService.GetPropertyFilters(Item);
         ModifierFilters = TradeFilterService.GetModifierFilters(Item);
 

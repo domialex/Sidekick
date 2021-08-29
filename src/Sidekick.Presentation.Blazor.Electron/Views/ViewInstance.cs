@@ -1,19 +1,66 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Sidekick.Domain.Views;
+using ElectronNET.API.Entities;
+using Sidekick.Common.Blazor.Views;
+using Sidekick.Common.Cache;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public class ViewInstance : IViewInstance
     {
         private readonly InternalViewInstance view;
-        private readonly IViewPreferenceRepository viewPreferenceRepository;
+        private readonly ICacheProvider cacheProvider;
 
-        public ViewInstance(ViewLocator locator, IViewPreferenceRepository viewPreferenceRepository)
+        public ViewInstance(
+            ViewLocator locator,
+            ICacheProvider cacheProvider)
         {
             view = locator.Views.Last();
-            this.viewPreferenceRepository = viewPreferenceRepository;
+            this.cacheProvider = cacheProvider;
         }
+
+        public async Task Initialize(string title, int width = 768, int height = 600, bool isOverlay = false, bool isModal = false, bool closeOnBlur = false)
+        {
+            Title = title;
+            MinWidth = width;
+            MinHeight = height;
+
+            view.Browser.SetSize(width, height);
+            view.Browser.SetMinimumSize(width, height);
+
+            var preferences = await cacheProvider.Get<ViewPreferences>($"view_preference_{view.Key}");
+            if (preferences != null)
+            {
+                view.Browser.SetSize(preferences.Width, preferences.Height);
+            }
+
+            if (isOverlay)
+            {
+                view.Browser.SetAlwaysOnTop(true);
+                view.Browser.SetMaximizable(false);
+                view.Browser.SetMinimizable(false);
+                view.Browser.SetSkipTaskbar(true);
+                view.Browser.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
+                view.Browser.ShowInactive();
+            }
+            else if (isModal)
+            {
+                view.Browser.SetMaximizable(false);
+                view.Browser.SetMinimizable(false);
+                view.Browser.SetResizable(false);
+                view.Browser.ShowInactive();
+            }
+            else
+            {
+                view.Browser.Show();
+            }
+        }
+
+        public string Title { get; private set; } = "Sidekick";
+
+        public int MinWidth { get; set; }
+
+        public int MinHeight { get; set; }
 
         public Task Minimize()
         {
@@ -29,16 +76,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             }
             else
             {
-                var preferences = await viewPreferenceRepository.Get(view.View);
+                var preferences = await cacheProvider.Get<ViewPreferences>($"view_preference_{view.Key}");
                 if (preferences != null)
                 {
-                    view.Browser.SetSize(preferences.Width, preferences.Height);
+                    MinWidth = preferences.Width;
+                    MinHeight = preferences.Height;
                 }
-                else
-                {
-                    var (width, height) = ViewLocator.GetSize(view.View);
-                    view.Browser.SetSize(width, height);
-                }
+
+                view.Browser.SetSize(MinWidth, MinHeight);
                 view.Browser.Center();
             }
         }
@@ -47,15 +92,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         {
             view.Browser.Close();
             return Task.CompletedTask;
-        }
-
-        public string Title { get; private set; } = "Sidekick";
-
-        public void SetTitle(string title)
-        {
-            Title = title;
-            // Make sure the title is always Sidekick. For keybind management we are watching for this value.
-            // view.Browser.SetTitle(title ?? "Sidekick");
         }
     }
 }

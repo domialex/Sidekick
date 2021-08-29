@@ -46,11 +46,11 @@
 
     [CascadingParameter] public MenuLayout Layout { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(Resources.Title);
+        await ViewInstance.Initialize(Resources.Title);
         Layout.SetMenuIcon(false);
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
     public async Task Save()

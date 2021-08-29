@@ -1,5 +1,3 @@
-using System;
-using System.Reflection;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,9 +10,9 @@ using Sidekick.Apis.Poe;
 using Sidekick.Apis.PoeNinja;
 using Sidekick.Apis.PoePriceInfo;
 using Sidekick.Common;
+using Sidekick.Common.Blazor;
 using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
-using Sidekick.Common.Settings;
 using Sidekick.Mock;
 using Sidekick.Modules.About;
 using Sidekick.Modules.Cheatsheets;
@@ -41,23 +39,7 @@ namespace Sidekick.Presentation.Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var mvcBuilder = services
-                .AddRazorPages(options =>
-                {
-                    options.RootDirectory = "/Shared";
-                })
-                .AddFluentValidation(options =>
-                {
-                    options.RegisterValidatorsFromAssembly(Assembly.Load("Sidekick.Presentation.Blazor"));
-                });
-            services.AddServerSideBlazor();
-
-            services.AddHttpClient();
-
-            services.AddLocalization();
-
             services.AddTransient<ErrorResources>();
-            services.AddTransient<TrayResources>();
 
             services
                 // MudBlazor
@@ -92,10 +74,26 @@ namespace Sidekick.Presentation.Blazor
 
                 // Mocks
                 .AddSidekickMocks();
+
+            var mvcBuilder = services
+                .AddRazorPages(options =>
+                {
+                    options.RootDirectory = "/Shared";
+                })
+                .AddFluentValidation(options =>
+                {
+                    foreach (var module in SidekickModule.Modules)
+                    {
+                        options.RegisterValidatorsFromAssembly(module.Assembly);
+                    }
+                });
+            services.AddServerSideBlazor();
+            services.AddHttpClient();
+            services.AddLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ISettingsService settingsService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -108,7 +106,6 @@ namespace Sidekick.Presentation.Blazor
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseMiddleware<DevelopmentStartupMiddleware>();
@@ -118,7 +115,6 @@ namespace Sidekick.Presentation.Blazor
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
-
         }
     }
 }

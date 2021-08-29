@@ -15,7 +15,11 @@ namespace Sidekick.Development.Views
 
         public virtual Task Close()
         {
-            navigationManager.NavigateTo("/");
+            Task.Run(async () =>
+            {
+                await Task.Delay(500);
+                navigationManager.NavigateTo("/");
+            });
             return Task.CompletedTask;
         }
 
@@ -31,9 +35,10 @@ namespace Sidekick.Development.Views
 
         public string Title { get; private set; }
 
-        public virtual void SetTitle(string title)
+        public Task Initialize(string title, int width = 768, int height = 600, bool isOverlay = false, bool isModal = false, bool closeOnBlur = false)
         {
             Title = title;
+            return Task.CompletedTask;
         }
     }
 }

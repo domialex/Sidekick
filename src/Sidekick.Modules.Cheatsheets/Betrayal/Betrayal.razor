@@ -23,9 +23,9 @@
 
     private List<AgentModel> Agents { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(CheatsheetResources.Betrayal);
+        await ViewInstance.Initialize(CheatsheetResources.Betrayal);
         Agents = new List<AgentModel>();
 
         Agents.Add(new AgentModel(Resources.AislingName, "Aisling.png", RewardValue.Low)
@@ -166,7 +166,7 @@
 
         Sort();
 
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
     private void Sort()

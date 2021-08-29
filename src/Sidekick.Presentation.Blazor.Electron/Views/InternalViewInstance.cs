@@ -1,28 +1,26 @@
-using System;
-using System.Threading;
+using System.Linq;
+using System.Threading.Tasks;
 using ElectronNET.API;
-using Microsoft.Extensions.Logging;
-using Sidekick.Domain.Views;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     internal class InternalViewInstance
     {
-        private CancellationTokenSource WindowResizeCancellationTokenSource { get; }
-
         internal ViewLocator Locator { get; }
-        internal View View { get; }
         internal BrowserWindow Browser { get; }
+        internal string Url { get; }
+        internal string Key { get; }
+        internal bool IsModal { get; set; }
+        internal bool IsOverlay { get; set; }
+        internal bool CloseOnBlur { get; set; }
 
-        internal InternalViewInstance(ViewLocator locator, View view, BrowserWindow browser)
+        internal InternalViewInstance(BrowserWindow browser, ViewLocator locator, string url)
         {
-            WindowResizeCancellationTokenSource = new CancellationTokenSource();
-
             Locator = locator;
-            View = view;
             Browser = browser;
+            Url = url;
+            Key = url.Split('/').FirstOrDefault(x => !string.IsNullOrEmpty(x));
 
-            Browser.OnReadyToShow += Browser_OnReadyToShow;
             Browser.OnResize += Browser_OnResize;
             Browser.OnClosed += Browser_OnClosed;
             Browser.OnBlur += Browser_OnBlur;
@@ -30,52 +28,37 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         private void Browser_OnBlur()
         {
-            if (View == View.Map && Locator.settings.Map_CloseWithMouse)
-            {
-                Browser.Close();
-            }
-
-            if (View == View.Trade && Locator.settings.Trade_CloseWithMouse)
+            if (CloseOnBlur)
             {
                 Browser.Close();
             }
         }
 
-        private void Browser_OnReadyToShow()
-        {
-            if (ViewLocator.IsOverlay(View) || ViewLocator.IsModal(View))
-            {
-                Browser.ShowInactive();
-            }
-            else
-            {
-                Browser.Show();
-            }
-        }
-
+        private ulong resizeBounce = 0;
         private void Browser_OnResize()
         {
-            _ = Locator.debouncer.Debounce($"{nameof(InternalViewInstance)}_{nameof(Browser_OnResize)}", async () =>
+            Task.Run(async () =>
             {
-                try
+                var currentBounce = ++resizeBounce;
+                await Task.Delay(500);
+                if (currentBounce == resizeBounce)
                 {
                     if (!await Browser.IsMaximizedAsync())
                     {
                         var bounds = await Browser.GetBoundsAsync();
-                        await Locator.viewPreferenceRepository.SaveSize(View, bounds.Width, bounds.Height);
+                        await Locator.cacheProvider.Set($"view_preference_{Key}", new ViewPreferences()
+                        {
+                            Width = bounds.Width,
+                            Height = bounds.Height
+                        });
                     }
                 }
-                catch (Exception e)
-                {
-                    Locator.logger.LogWarning(e, "Failed to save the view size.");
-                }
-            }, WindowResizeCancellationTokenSource.Token, delay: 500);
+            });
         }
 
         private void Browser_OnClosed()
         {
-            WindowResizeCancellationTokenSource.Cancel();
-            Browser.OnReadyToShow -= Browser_OnReadyToShow;
+            resizeBounce++;
             Browser.OnResize -= Browser_OnResize;
             Browser.OnClosed -= Browser_OnClosed;
             Browser.OnBlur -= Browser_OnBlur;

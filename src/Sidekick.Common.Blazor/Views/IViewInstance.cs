@@ -8,6 +8,13 @@ namespace Sidekick.Common.Blazor.Views
     public interface IViewInstance
     {
         /// <summary>
+        ///  Initializes the view
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        Task Initialize(string title, int width = 768, int height = 600, bool isOverlay = false, bool isModal = false, bool closeOnBlur = false);
+
+        /// <summary>
         /// Minimizes the view
         /// </summary>
         Task Minimize();
@@ -26,12 +33,5 @@ namespace Sidekick.Common.Blazor.Views
         /// The title of the view
         /// </summary>
         string Title { get; }
-
-        /// <summary>
-        ///  Allows to change the title of the view
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        void SetTitle(string title);
     }
 }

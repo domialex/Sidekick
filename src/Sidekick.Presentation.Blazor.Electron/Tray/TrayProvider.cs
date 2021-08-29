@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Sidekick.Common.Blazor.Views;
+using Sidekick.Common.Extensions;
 using Sidekick.Common.Platform;
-using Sidekick.Domain.Views;
-using Sidekick.Localization.Tray;
+using Sidekick.Presentation.Blazor.Localization;
 
 namespace Sidekick.Presentation.Blazor.Electron.Tray
 {
@@ -43,19 +44,19 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                 new ()
                 {
                     Label = resources.Cheatsheets,
-                    Click = () => { viewLocator.Open(View.League); }
+                    Click = () => { viewLocator.Open("/cheatsheets"); }
                 },
 
                 new ()
                 {
                     Label = resources.About,
-                    Click = () => { viewLocator.Open(View.About); }
+                    Click = () => { viewLocator.Open("/about"); }
                 },
 
                 new ()
                 {
                     Label = resources.Settings,
-                    Click = () => { viewLocator.Open(View.Settings); }
+                    Click = () => { viewLocator.Open("/settings"); }
                 },
 
                 new () { Type = MenuType.separator },
@@ -73,7 +74,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
             }
 
             ElectronNET.API.Electron.Tray.Show($"{webHostEnvironment.ContentRootPath}Assets/icon.png", menuItems.ToArray());
-            ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open(View.Settings);
+            ElectronNET.API.Electron.Tray.OnDoubleClick += (_, _) => viewLocator.Open("/settings");
             ElectronNET.API.Electron.Tray.SetToolTip(resources.Title);
         }
 
@@ -91,7 +92,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                             Click = async () =>
                             {
                                 var itemText = await clipboardProvider.GetText();
-                                await viewLocator.Open(View.Trade, itemText);
+                                await viewLocator.Open($"/trade/{itemText.EncodeBase64Url()}");
                             }
                         },
                         new () {
@@ -99,7 +100,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Tray
                             Click = async () =>
                             {
                                 var itemText = await clipboardProvider.GetText();
-                                await viewLocator.Open(View.Map, itemText);
+                                await viewLocator.Open($"/map/{itemText.EncodeBase64Url()}");
                             }
                         }
                     }

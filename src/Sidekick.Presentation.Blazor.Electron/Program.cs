@@ -2,7 +2,7 @@ using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Sidekick.Common.Extensions;
+using Sidekick.Common;
 using Sidekick.Modules.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron

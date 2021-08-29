@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sidekick.Application.Keybinds;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
 using Sidekick.Domain.Keybinds;
@@ -48,7 +49,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Keybinds
 
             RegisterKeybind<CloseOverlayKeybindHandler>(settings.Key_Close);
             RegisterKeybind<FindItemKeybindHandler>(settings.Key_FindItems);
-            RegisterKeybind<OpenSettingsKeybindHandler>(settings.Key_OpenSettings);
             RegisterKeybind<OpenCheatsheetsKeybindHandler>(settings.Cheatsheets_Key_Open);
             RegisterKeybind<OpenMapInfoKeybindHandler>(settings.Map_Key_Check);
             RegisterKeybind<PriceCheckItemKeybindHandler>(settings.Trade_Key_Check);

@@ -7,7 +7,7 @@ namespace Sidekick.Modules.Development
     public class DevelopmentStartupMiddleware
     {
         private static bool HasStartup { get; set; } = false;
-        private static readonly Regex IgnorePaths = new Regex("^\\/_blazor.*$");
+        private static readonly Regex IgnorePaths = new("^\\/_blazor.*$");
 
         private readonly RequestDelegate next;
 

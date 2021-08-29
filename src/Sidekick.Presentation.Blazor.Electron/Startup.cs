@@ -1,114 +1,130 @@
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using ElectronNET.API.Entities;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 using Sidekick.Apis.GitHub;
-using Sidekick.Application;
+using Sidekick.Apis.Poe;
+using Sidekick.Apis.PoeNinja;
+using Sidekick.Apis.PoePriceInfo;
 using Sidekick.Common;
+using Sidekick.Common.Blazor;
+using Sidekick.Common.Blazor.Views;
+using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
-using Sidekick.Domain.Initialization.Commands;
-using Sidekick.Domain.Views;
-using Sidekick.Infrastructure;
-using Sidekick.Localization;
-using Sidekick.Mapper;
-using Sidekick.Mediator;
+using Sidekick.Modules.About;
 using Sidekick.Modules.Cheatsheets;
+using Sidekick.Modules.Initialization;
+using Sidekick.Modules.Maps;
 using Sidekick.Modules.Settings;
-using Sidekick.Persistence;
+using Sidekick.Modules.Trade;
+using Sidekick.Modules.Update;
+using Sidekick.Presentation.Blazor.Electron.App;
 using Sidekick.Presentation.Blazor.Electron.Keybinds;
 using Sidekick.Presentation.Blazor.Electron.Tray;
 using Sidekick.Presentation.Blazor.Electron.Views;
+using Sidekick.Presentation.Blazor.Localization;
 
 namespace Sidekick.Presentation.Blazor.Electron
 {
     public class Startup
     {
         private readonly IConfiguration configuration;
-        private readonly IHostEnvironment environment;
 
-        public Startup(IConfiguration configuration, IHostEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.environment = environment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddRazorPages()
-                .AddFluentValidation(options =>
-                {
-                    options.RegisterValidatorsFromAssembly(Assembly.Load("Sidekick.Presentation.Blazor"));
-                });
-            services.AddServerSideBlazor();
+            services.AddTransient<ErrorResources>();
 
             services
-                // Layers
-                .AddSidekickApplication()
-                .AddSidekickInfrastructure()
-                .AddSidekickLocalization()
-                .AddSidekickPersistence()
-                .AddSidekickPlatform()
-                .AddSidekickPresentationBlazor()
+                // MudBlazor
+                .AddMudServices()
+                .AddMudBlazorDialog()
+                .AddMudBlazorSnackbar()
+                .AddMudBlazorResizeListener()
+                .AddMudBlazorScrollListener()
+                .AddMudBlazorScrollManager()
+                .AddMudBlazorJsApi()
 
                 // Common
                 .AddSidekickCommon()
-                .AddSidekickMapper()
-                .AddSidekickMediator()
+                .AddSidekickCommonGame()
+                .AddSidekickCommonPlatform()
 
                 // Apis
                 .AddSidekickGitHubApi()
+                .AddSidekickPoeApi()
+                .AddSidekickPoeNinjaApi()
+                .AddSidekickPoePriceInfoApi()
 
                 // Modules
+                .AddSidekickAbout()
                 .AddSidekickCheatsheets()
-                .AddSidekickSettings(configuration);
+                .AddSidekickInitialization()
+                .AddSidekickMaps()
+                .AddSidekickSettings(configuration)
+                .AddSidekickTrade()
+                .AddSidekickUpdate();
 
+            // Electron services
+            services.AddTransient<TrayResources>();
             services.AddSingleton<TrayProvider>();
-            services.AddSingleton<ViewLocator>();
-            services.AddSingleton<IViewLocator>(implementationFactory: (sp) => sp.GetRequiredService<ViewLocator>());
-            services.AddScoped<IViewInstance, ViewInstance>();
+            services.AddSingleton<IAppService, AppService>();
             services.AddSingleton<IKeybindProvider, KeybindProvider>();
             services.AddSingleton<ElectronCookieProtection>();
+            services.AddSingleton<ViewLocator>();
+            services.AddSingleton<IViewLocator>((sp) => sp.GetRequiredService<ViewLocator>());
+            services.AddScoped<IViewInstance, ViewInstance>();
+
+            var mvcBuilder = services
+                .AddRazorPages(options =>
+                {
+                    options.RootDirectory = "/Shared";
+                })
+                .AddFluentValidation(options =>
+                {
+                    foreach (var module in SidekickModule.Modules)
+                    {
+                        options.RegisterValidatorsFromAssembly(module.Assembly);
+                    }
+                });
+            services.AddServerSideBlazor();
+            services.AddHttpClient();
+            services.AddLocalization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env,
-            IServiceProvider serviceProvider,
             TrayProvider trayProvider,
-            IMediator mediator,
-            ILogger<Startup> logger)
+            ILogger<Startup> logger,
+            IViewLocator viewLocator)
         {
-            serviceProvider.UseSidekickMapper();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
-            app.UseMiddleware<ElectronCookieProtectionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
@@ -145,11 +161,11 @@ namespace Sidekick.Presentation.Blazor.Electron
                         }
                     });
                     browserWindow.WebContents.OnCrashed += (killed) => ElectronNET.API.Electron.App.Exit();
-                    await Task.Delay(50);
+                    await Task.Delay(75);
                     browserWindow.Close();
 
                     // Initialize Sidekick
-                    await mediator.Send(new InitializeCommand(true, true));
+                    await viewLocator.Open("/update");
                 }
                 catch (Exception e)
                 {

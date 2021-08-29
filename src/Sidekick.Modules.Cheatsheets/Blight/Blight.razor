@@ -18,9 +18,9 @@
 
     private List<OilModel> Oils { get; set; }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(CheatsheetResources.Blight);
+        await ViewInstance.Initialize(CheatsheetResources.Blight);
 
         Oils = new List<OilModel>
 {
@@ -38,6 +38,6 @@
             new OilModel(Resources.ClearOil, Resources.ClearOilEffect, RewardValue.NoValue, "Clear_Oil.png"),
         };
 
-        return base.OnInitializedAsync();
+        await base.OnInitializedAsync();
     }
 }

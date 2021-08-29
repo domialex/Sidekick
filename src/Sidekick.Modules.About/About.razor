@@ -101,9 +101,9 @@
         { "TextCopy", "https://github.com/CopyText/TextCopy" },
     };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.SetTitle(Resources.Title);
+        await ViewInstance.Initialize(Resources.Title);
         VersionNumber = GetType().Assembly.GetName().Version.ToString();
 
         try
@@ -116,7 +116,7 @@
             Logger.LogInformation($"[About Page] - Failed to load Operating System details: " + e.Message);
         }
 
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
     public void Navigate(string uri)

@@ -7,29 +7,26 @@ using ElectronNET.API.Entities;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Common.Blazor.Views;
-using Sidekick.Common.Extensions;
+using Sidekick.Common.Cache;
 using Sidekick.Common.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
     public class ViewLocator : IViewLocator, IDisposable
     {
-        internal readonly IViewPreferenceRepository viewPreferenceRepository;
-        internal readonly IDebouncer debouncer;
+        internal readonly ICacheProvider cacheProvider;
         internal readonly ILogger<ViewLocator> logger;
         internal readonly ISettings settings;
         internal readonly ElectronCookieProtection electronCookieProtection;
         internal readonly IHostEnvironment hostEnvironment;
 
-        public ViewLocator(IViewPreferenceRepository viewPreferenceRepository,
-                           IDebouncer debouncer,
+        public ViewLocator(ICacheProvider cacheProvider,
                            ILogger<ViewLocator> logger,
                            ISettings settings,
                            ElectronCookieProtection electronCookieProtection,
                            IHostEnvironment hostEnvironment)
         {
-            this.viewPreferenceRepository = viewPreferenceRepository;
-            this.debouncer = debouncer;
+            this.cacheProvider = cacheProvider;
             this.logger = logger;
             this.settings = settings;
             this.electronCookieProtection = electronCookieProtection;
@@ -38,9 +35,9 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             ElectronNET.API.Electron.IpcMain.OnSync("close", (viewName) =>
             {
                 logger.LogError("Force closing the Blazor view {viewName}", viewName);
-                if (Enum.TryParse(viewName as string, true, out View view))
+                if (!string.IsNullOrEmpty(viewName?.ToString()))
                 {
-                    Close(view);
+                    Close(viewName.ToString());
                 }
                 else
                 {
@@ -55,90 +52,24 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
         internal List<InternalViewInstance> Views { get; set; } = new List<InternalViewInstance>();
 
-        private static string GetPath(View view, params object[] args)
+        private async Task<BrowserWindow> CreateBrowser(string path)
         {
-            var path = view switch
-            {
-                View.About => "/about",
-                View.Error => "/error",
-                View.Settings => "/settings",
-                View.Trade => "/price",
-                View.League => "/cheatsheets",
-                View.Setup => "/setup",
-                View.Initialization => "/initialization",
-                View.Map => "/map",
-                _ => null,
-            };
-
-            if (path == null)
-            {
-                return null;
-            }
-
-            foreach (var arg in args)
-            {
-                path += $"/{arg.ToString().EncodeBase64Url()}";
-            }
-
-            return path;
-        }
-
-        internal static (int Width, int Height) GetSize(View view)
-        {
-            return view switch
-            {
-                View.About => (768, 600),
-                View.Settings => (768, 600),
-                View.Trade => (768, 600),
-                View.League => (768, 600),
-                View.Setup => (768, 600),
-                View.Initialization => (400, 260),
-                View.Map => (400, 300),
-                View.Error => (300, 200),
-                _ => (800, 600),
-            };
-        }
-
-        private static readonly List<View> ModalViews = new()
-        {
-            View.Initialization,
-            View.Setup,
-            View.Error,
-        };
-        internal static bool IsModal(View view) => ModalViews.Contains(view);
-
-        private static readonly List<View> OverlayViews = new()
-        {
-            View.Map,
-            View.Trade,
-            View.Error,
-        };
-        internal static bool IsOverlay(View view) => OverlayViews.Contains(view);
-
-        private async Task<BrowserWindow> CreateBrowser(View view, string path)
-        {
-            var preferences = await viewPreferenceRepository.Get(view);
-            var (width, height) = GetSize(view);
-            var isOverlay = IsOverlay(view);
-            var isModal = IsModal(view);
-
             var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
-                Width = preferences?.Width ?? width,
-                Height = preferences?.Height ?? height,
+                Width = 768,
+                Height = 600,
                 AcceptFirstMouse = true,
-                AlwaysOnTop = isOverlay,
+                AlwaysOnTop = false,
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                Maximizable = !isOverlay && !isModal,
-                Minimizable = !isOverlay && !isModal,
-                MinHeight = height,
-                MinWidth = width,
-                Resizable = !isModal,
+                Maximizable = true,
+                Minimizable = true,
+                MinHeight = 600,
+                MinWidth = 768,
+                Resizable = true,
                 Show = false,
-                SkipTaskbar = isOverlay,
                 Transparent = true,
                 DarkTheme = true,
                 EnableLargerThanScreen = false,
@@ -150,14 +81,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
 
             window.WebContents.OnCrashed += (killed) =>
             {
-                logger.LogWarning("The view {view} has crashed. Attempting to close the window.", view);
-                Close(view);
+                logger.LogWarning("The view has crashed. Attempting to close the window.");
+                window.Close();
             };
 
             window.OnUnresponsive += () =>
             {
-                logger.LogWarning("The view {view} has become unresponsive. Attempting to close the window.", view);
-                Close(view);
+                logger.LogWarning("The view has become unresponsive. Attempting to close the window.");
+                window.Close();
             };
 
             await window.WebContents.Session.Cookies.SetAsync(electronCookieProtection.Cookie);
@@ -172,11 +103,6 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 window.RemoveMenu();
             }
 
-            if (isOverlay)
-            {
-                window.SetAlwaysOnTop(true, OnTopLevel.screenSaver);
-            }
-
             if (FirstView)
             {
                 FirstView = false;
@@ -186,24 +112,22 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             return window;
         }
 
-        public async Task Open(View view, params object[] args)
+        public async Task Open(string url)
         {
-            var url = GetPath(view, args);
-
             if (string.IsNullOrEmpty(url))
             {
                 return;
             }
 
-            if (IsOpened(view))
+            var newView = new InternalViewInstance(await CreateBrowser(url), this, url);
+
+            foreach (var view in Views.Where(x => x.Key == newView.Key))
             {
-                Close(view);
+                view.Browser.Close();
             }
 
-            Views.Add(new InternalViewInstance(this, view, await CreateBrowser(view, url)));
+            Views.Add(newView);
         }
-
-        public bool IsOpened(View view) => Views.Any(x => x.View == view);
 
         public bool IsAnyOpened() => Views.Any();
 
@@ -217,14 +141,14 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
             Views.Clear();
         }
 
-        public void Close(View view)
+        public void Close(string viewName)
         {
-            foreach (var instance in Views.Where(x => x.View == view))
+            foreach (var instance in Views.Where(x => x.Key == viewName))
             {
                 instance.Browser.Close();
             }
 
-            Views.RemoveAll(x => x.View == view);
+            Views.RemoveAll(x => x.Key == viewName);
         }
 
         public void Dispose()
@@ -236,6 +160,16 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         protected virtual void Dispose(bool disposing)
         {
             CloseAll();
+        }
+
+        public void CloseAllOverlays()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsOverlayOpened()
+        {
+            throw new NotImplementedException();
         }
     }
 }
