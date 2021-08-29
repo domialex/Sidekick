@@ -117,7 +117,7 @@ namespace Sidekick.Modules.Settings
             if (!skipInitialize && (languageHasChanged || leagueHasChanged))
             {
                 cacheProvider.Clear();
-                await viewLocator.Open(View.Initialization);
+                await viewLocator.Open("/initialize");
             }
         }
     }

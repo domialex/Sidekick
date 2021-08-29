@@ -26,7 +26,7 @@ namespace Sidekick.Application.Keybinds
         public async Task Execute()
         {
             var itemText = await clipboardProvider.Copy();
-            await viewLocator.Open(View.Map, itemText);
+            await viewLocator.Open($"/map/{itemText}");
         }
     }
 }

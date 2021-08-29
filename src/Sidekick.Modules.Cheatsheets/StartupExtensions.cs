@@ -8,7 +8,10 @@ namespace Sidekick.Modules.Cheatsheets
     {
         public static IServiceCollection AddSidekickCheatsheets(this IServiceCollection services)
         {
-            services.AddSidekickModule(typeof(StartupExtensions).Assembly);
+            services.AddSidekickModule(new SidekickModule()
+            {
+                Assembly = typeof(StartupExtensions).Assembly
+            });
 
             services.AddTransient<BetrayalResources>();
             services.AddTransient<BlightResources>();

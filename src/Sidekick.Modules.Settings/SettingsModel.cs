@@ -60,8 +60,6 @@ namespace Sidekick.Modules.Settings
 
         public string Map_Key_Check { get; set; }
 
-        public string Key_OpenSettings { get; set; }
-
         public string Wiki_Key_Open { get; set; }
 
         public string Stash_Key_Left { get; set; }

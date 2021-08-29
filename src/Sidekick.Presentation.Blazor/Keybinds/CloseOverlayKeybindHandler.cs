@@ -13,12 +13,11 @@ namespace Sidekick.Application.Keybinds
             this.viewLocator = viewLocator;
         }
 
-        public bool IsValid() => viewLocator.IsOpened(View.Map) || viewLocator.IsOpened(View.Trade);
+        public bool IsValid() => viewLocator.IsOverlayOpened();
 
         public Task Execute()
         {
-            viewLocator.Close(View.Map);
-            viewLocator.Close(View.Trade);
+            viewLocator.CloseAllOverlays();
             return Task.CompletedTask;
         }
     }

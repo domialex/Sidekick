@@ -26,7 +26,7 @@ namespace Sidekick.Application.Keybinds
 
         public Task Execute()
         {
-            viewLocator.Open(View.League, settings.Cheatsheets_Selected);
+            viewLocator.Open($"/cheatsheets/{settings.Cheatsheets_Selected}");
             return Task.CompletedTask;
         }
     }

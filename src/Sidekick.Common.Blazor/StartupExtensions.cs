@@ -1,23 +1,20 @@
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Sidekick.Common.Blazor
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddSidekickCommonBlazor(this IServiceCollection services)
+        public static IServiceCollection AddSidekickCommonBlazor(this IServiceCollection services, string startupPath)
         {
+            StartupMiddleware.StartupPath = startupPath;
             services.AddLocalization();
 
             return services;
         }
 
-        public static IServiceCollection AddSidekickModule(this IServiceCollection services, Assembly assembly)
+        public static IServiceCollection AddSidekickModule(this IServiceCollection services, SidekickModule module)
         {
-            if (assembly != Assembly.GetEntryAssembly())
-            {
-                SidekickGlobals.Assemblies.Add(assembly);
-            }
+            SidekickModule.Modules.Add(module);
 
             return services;
         }

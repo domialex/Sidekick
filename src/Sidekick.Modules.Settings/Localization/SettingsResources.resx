@@ -216,9 +216,6 @@
   <data name="Key_FindItems" xml:space="preserve">
     <value>Find Items</value>
   </data>
-  <data name="Key_OpenSettings" xml:space="preserve">
-    <value>Open Settings View</value>
-  </data>
   <data name="Key_Unset" xml:space="preserve">
     <value>&lt;Unset&gt;</value>
   </data>

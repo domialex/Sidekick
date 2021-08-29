@@ -1,5 +1,5 @@
 @page "/update"
-@layout EmptyLayout
+@layout StartupLayout
 
 <SidekickLogo />
 <MudCard Class="my-4">
@@ -9,9 +9,7 @@
             @Title
         </MudText>
         <MudProgressLinear Color="Color.Primary"
-                           Value="Percentage"
-                           Minimum="0"
-                           Maximum="100" />
+                           Indeterminate="true" />
     </MudCardContent>
 </MudCard>
 <div class="d-flex justify-end">

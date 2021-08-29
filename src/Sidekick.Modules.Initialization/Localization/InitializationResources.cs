@@ -12,7 +12,6 @@ namespace Sidekick.Modules.Initialization.Localization
         }
 
         public string Error => localizer["Error"];
-        public string NewLeagues => localizer["NewLeagues"];
         public string Notification_Message => localizer["Notification_Message"];
         public string Notification_Title => localizer["Notification_Title"];
         public string Ready => localizer["Ready"];

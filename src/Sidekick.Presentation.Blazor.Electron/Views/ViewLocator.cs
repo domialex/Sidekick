@@ -6,10 +6,9 @@ using ElectronNET.API;
 using ElectronNET.API.Entities;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Extensions;
 using Sidekick.Common.Settings;
-using Sidekick.Common.Blazor.Views;
-using Sidekick.Presentation.Blazor.Debounce;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
@@ -88,11 +87,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         {
             return view switch
             {
-                View.About => (800, 600),
-                View.Settings => (800, 600),
+                View.About => (768, 600),
+                View.Settings => (768, 600),
                 View.Trade => (768, 600),
-                View.League => (800, 600),
-                View.Setup => (600, 715),
+                View.League => (768, 600),
+                View.Setup => (768, 600),
                 View.Initialization => (400, 260),
                 View.Map => (400, 300),
                 View.Error => (300, 200),

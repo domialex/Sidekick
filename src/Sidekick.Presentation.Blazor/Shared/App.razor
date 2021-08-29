@@ -1,4 +1,4 @@
-<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="Sidekick.Common.SidekickGlobals.Assemblies">
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="Sidekick.Common.Blazor.SidekickModule.Modules.Select(x=>x.Assembly)">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(WindowLayout)" />
     </Found>

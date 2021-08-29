@@ -8,7 +8,10 @@ namespace Sidekick.Modules.About
     {
         public static IServiceCollection AddSidekickAbout(this IServiceCollection services)
         {
-            services.AddSidekickModule(typeof(StartupExtensions).Assembly);
+            services.AddSidekickModule(new SidekickModule()
+            {
+                Assembly = typeof(StartupExtensions).Assembly
+            });
 
             services.AddTransient<AboutResources>();
 

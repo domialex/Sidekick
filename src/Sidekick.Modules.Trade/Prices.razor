@@ -1,4 +1,4 @@
-@page "/price/{itemText}"
+@page "/trade/{itemText}"
 @layout OverlayLayout
 
 <PriceOptionsComponent Item="Item"
@@ -74,7 +74,7 @@ else
 
         if (Item == null)
         {
-            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewLocator.Open("/error/unparsable");
             await ViewInstance.Close();
             return;
         }

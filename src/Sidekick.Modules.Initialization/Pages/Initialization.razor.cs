@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -28,6 +25,7 @@ namespace Sidekick.Modules.Initialization.Pages
         [Inject] private ISettingsService SettingsService { get; set; }
         [Inject] private ILogger<Initialization> Logger { get; set; }
         [Inject] private IViewLocator ViewLocator { get; set; }
+        [Inject] private IViewInstance ViewInstance { get; set; }
         [Inject] private IProcessProvider ProcessProvider { get; set; }
         [Inject] private IKeyboardProvider KeyboardProvider { get; set; }
         [Inject] private IKeybindProvider KeybindProvider { get; set; }
@@ -66,47 +64,9 @@ namespace Sidekick.Modules.Initialization.Pages
                 // Report initial progress
                 await ReportProgress();
 
-                // Set the UI language
+                // Languages
                 await Run(() => UILanguageProvider.Set(Settings.Language_UI));
-
-                // Check for updates
-                // if (!HasRun && await GitHubClient.Update())
-                // {
-                //     ViewLocator.Close(View.Initialization);
-                //     return;
-                // }
-
-                // Check to see if we should run Setup first before running the rest of the initialization process
-                if (string.IsNullOrEmpty(Settings.LeagueId) || string.IsNullOrEmpty(Settings.Language_Parser) || string.IsNullOrEmpty(Settings.Language_UI))
-                {
-                    ViewLocator.Close(View.Initialization);
-                    await ViewLocator.Open(View.Setup);
-                    return;
-                }
-
-                // Set the game language
                 await Run(() => GameLanguageProvider.SetLanguage(Settings.Language_Parser));
-
-                if (!HasRun)
-                {
-                    var leagues = await LeagueProvider.GetList(false);
-                    var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
-
-                    if (leaguesHash != Settings.LeaguesHash)
-                    {
-                        CacheProvider.Clear();
-                        await SettingsService.Save(nameof(ISettings.LeaguesHash), leaguesHash);
-                    }
-
-                    // Check to see if we should run Setup first before running the rest of the initialization process
-                    if (string.IsNullOrEmpty(Settings.LeagueId) || !leagues.Any(x => x.Id == Settings.LeagueId))
-                    {
-                        await AppService.OpenNotification(Resources.NewLeagues);
-                        ViewLocator.Close(View.Initialization);
-                        await ViewLocator.Open(View.Setup);
-                        return;
-                    }
-                }
 
                 await Run(() => ParserPatterns.Initialize());
                 await Run(() => ItemMetadataProvider.Initialize());
@@ -131,7 +91,7 @@ namespace Sidekick.Modules.Initialization.Pages
                                                   Resources.Notification_Title);
 
                 HasRun = true;
-                ViewLocator.Close(View.Initialization);
+                await ViewInstance.Close();
             }
             catch (Exception ex)
             {

@@ -1,17 +1,18 @@
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MudBlazor.Services;
 using Sidekick.Apis.GitHub;
 using Sidekick.Apis.Poe;
 using Sidekick.Apis.PoeNinja;
 using Sidekick.Apis.PoePriceInfo;
 using Sidekick.Common;
+using Sidekick.Common.Blazor;
 using Sidekick.Common.Game;
 using Sidekick.Common.Platform;
 using Sidekick.Common.Settings;
@@ -19,9 +20,12 @@ using Sidekick.Mock;
 using Sidekick.Modules.About;
 using Sidekick.Modules.Cheatsheets;
 using Sidekick.Modules.Development;
+using Sidekick.Modules.Initialization;
 using Sidekick.Modules.Maps;
 using Sidekick.Modules.Settings;
 using Sidekick.Modules.Trade;
+using Sidekick.Modules.Update;
+using Sidekick.Presentation.Blazor.Localization;
 
 namespace Sidekick.Presentation.Blazor
 {
@@ -51,12 +55,24 @@ namespace Sidekick.Presentation.Blazor
 
             services.AddHttpClient();
 
+            services.AddLocalization();
+
+            services.AddTransient<ErrorResources>();
+            services.AddTransient<TrayResources>();
+
             services
-                // Layers
-                .AddSidekickPresentationBlazor()
+                // MudBlazor
+                .AddMudServices()
+                .AddMudBlazorDialog()
+                .AddMudBlazorSnackbar()
+                .AddMudBlazorResizeListener()
+                .AddMudBlazorScrollListener()
+                .AddMudBlazorScrollManager()
+                .AddMudBlazorJsApi()
 
                 // Common
                 .AddSidekickCommon()
+                .AddSidekickCommonBlazor("/update")
                 .AddSidekickCommonGame()
                 .AddSidekickCommonPlatform()
 
@@ -70,25 +86,19 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickAbout()
                 .AddSidekickCheatsheets()
                 .AddSidekickDevelopment()
+                .AddSidekickInitialization()
                 .AddSidekickMaps()
                 .AddSidekickSettings(configuration)
                 .AddSidekickTrade()
+                .AddSidekickUpdate()
 
                 // Mocks
                 .AddSidekickMocks();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, ISettingsService settingsService)
         {
-            Task.Run(async () =>
-            {
-                await settingsService.Save(nameof(ISettings.Language_Parser), "en");
-                await settingsService.Save(nameof(ISettings.Language_UI), "en");
-                await settingsService.Save(nameof(ISettings.LeagueId), "Expedition");
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -103,7 +113,7 @@ namespace Sidekick.Presentation.Blazor
 
             app.UseRouting();
 
-            app.UseMiddleware<InitializationMiddleware>();
+            app.UseMiddleware<StartupMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

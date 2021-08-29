@@ -36,7 +36,7 @@ namespace Sidekick.Application.Tests
             ctx.Services
                 // Building blocks
                 .AddSidekickCommon()
-                .AddSidekickCommonBlazor()
+                .AddSidekickCommonBlazor("/update")
                 .AddSidekickCommonGame()
 
                 // Apis

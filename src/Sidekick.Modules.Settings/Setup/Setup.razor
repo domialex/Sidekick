@@ -1,103 +1,76 @@
 @page "/setup"
-@layout EmptyLayout
+@layout StartupLayout
 
-<SidekickLogo />
-<EditForm Model="@ViewModel" OnValidSubmit="Save">
-    <FluentValidationValidator DisableAssemblyScanning="@true" />
-
-    <MudCard Class="my-3">
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudText Typo="Typo.h6">@SettingsResources.Language_Title</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
+@if (!RequiresSetup)
+{
+    <SidekickLogo />
+    <MudCard Class="my-4">
         <MudCardContent>
-            <UILanguageSelect @bind-Value="ViewModel.Language_UI" For="@(() => ViewModel.Language_UI)" />
-            <GameLanguageSelect Value="@ViewModel.Language_Parser" For="@(() => ViewModel.Language_Parser)" ValueChanged="OnGameLanguageChange" />
+            <MudText Typo="Typo.body1"
+                     Align="Align.Center">
+                @Resources.Title
+            </MudText>
+            <MudProgressLinear Color="Color.Primary"
+                               Indeterminate="true" />
         </MudCardContent>
     </MudCard>
-
-    <MudCard Class="mb-3">
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudText Typo="Typo.h6">@SettingsResources.Character_Title</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <LeagueSelect @bind-Value="ViewModel.LeagueId" For="@(() => ViewModel.LeagueId)" @ref="RefLeagueSelect" />
-            <MudTextField Label="@SettingsResources.Character_Name"
-                          Variant="Variant.Filled"
-                          @bind-Value="ViewModel.Character_Name" />
-        </MudCardContent>
-    </MudCard>
-
-    <MudCard Class="mb-3">
-        <MudCardContent>
-            <MudCheckBox Label="@SettingsResources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
-        </MudCardContent>
-    </MudCard>
-
     <div class="d-flex justify-end">
         <MudButton OnClick="Exit"
                    Variant="Variant.Text"
                    Color="Color.Default">
             @Resources.Exit
         </MudButton>
-        <MudButton Variant="Variant.Filled"
-                   Color="Color.Primary"
-                   ButtonType="ButtonType.Submit">
-            @SettingsResources.Save
-        </MudButton>
     </div>
-</EditForm>
+}
+else
+{
+    <SidekickLogo />
+    <EditForm Model="@ViewModel" OnValidSubmit="Save">
+        <FluentValidationValidator DisableAssemblyScanning="@true" />
 
-@code {
-    [Inject] private SettingsResources SettingsResources { get; set; }
-    [Inject] private SetupResources Resources { get; set; }
-    [Inject] private SettingsModel ViewModel { get; set; }
-    [Inject] private ISettingsService SettingsService { get; set; }
-    [Inject] private IGameLanguageProvider GameLanguageProvider { get; set; }
-    [Inject] private IAppService AppService { get; set; }
-    [Inject] private IViewLocator ViewLocator { get; set; }
-    [Inject] private IViewInstance ViewInstance { get; set; }
+        <MudCard Class="my-3">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@SettingsResources.Language_Title</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <UILanguageSelect @bind-Value="ViewModel.Language_UI" For="@(() => ViewModel.Language_UI)" />
+                <GameLanguageSelect Value="@ViewModel.Language_Parser" For="@(() => ViewModel.Language_Parser)" ValueChanged="OnGameLanguageChange" />
+            </MudCardContent>
+        </MudCard>
 
-    private LeagueSelect RefLeagueSelect;
+        <MudCard Class="mb-3">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">@SettingsResources.Character_Title</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <LeagueSelect @bind-Value="ViewModel.LeagueId" For="@(() => ViewModel.LeagueId)" @ref="RefLeagueSelect" />
+                <MudTextField Label="@SettingsResources.Character_Name"
+                              Variant="Variant.Filled"
+                              @bind-Value="ViewModel.Character_Name" />
+            </MudCardContent>
+        </MudCard>
 
-    public void Exit()
-    {
-        AppService.Shutdown();
-    }
+        <MudCard Class="mb-3">
+            <MudCardContent>
+                <MudCheckBox Label="@SettingsResources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
+            </MudCardContent>
+        </MudCard>
 
-    public async Task Save()
-    {
-        await SettingsService.Save(ViewModel, true);
-        await ViewLocator.Open(View.Initialization);
-        await ViewInstance.Close();
-    }
-
-    public async Task OnGameLanguageChange(string value)
-    {
-        ViewModel.Language_Parser = value;
-        GameLanguageProvider.SetLanguage(value);
-        await RefLeagueSelect.RefreshOptions();
-    }
-
-    public class Validator : AbstractValidator<SettingsModel>
-    {
-        public Validator(SettingsResources resources)
-        {
-            RuleFor(v => v.Language_UI)
-                .Cascade(CascadeMode.Stop)
-                .NotEmpty()
-                .WithName(resources.Language_UI);
-            RuleFor(v => v.Language_Parser)
-                .Cascade(CascadeMode.Stop)
-                .NotEmpty()
-                .WithName(resources.Language_Parser);
-            RuleFor(v => v.LeagueId)
-                .Cascade(CascadeMode.Stop)
-                .NotEmpty()
-                .WithName(resources.Character_League);
-        }
-    }
+        <div class="d-flex justify-end">
+            <MudButton OnClick="Exit"
+                       Variant="Variant.Text"
+                       Color="Color.Default">
+                @Resources.Exit
+            </MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       ButtonType="ButtonType.Submit">
+                @SettingsResources.Save
+            </MudButton>
+        </div>
+    </EditForm>
 }

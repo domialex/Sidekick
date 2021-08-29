@@ -12,7 +12,10 @@ namespace Sidekick.Modules.Settings
     {
         public static IServiceCollection AddSidekickSettings(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSidekickModule(typeof(StartupExtensions).Assembly);
+            services.AddSidekickModule(new SidekickModule()
+            {
+                Assembly = typeof(StartupExtensions).Assembly
+            });
 
             services.AddTransient<SettingsResources>();
             services.AddTransient<SetupResources>();

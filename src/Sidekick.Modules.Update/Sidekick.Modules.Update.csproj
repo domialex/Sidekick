@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <ProjectReference Include="..\Sidekick.Apis.GitHub\Sidekick.Apis.GitHub.csproj" />
+    <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sidekick.Apis.GitHub\Sidekick.Apis.GitHub.csproj" />
-    <ProjectReference Include="..\Sidekick.Common.Blazor\Sidekick.Common.Blazor.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

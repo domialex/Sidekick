@@ -5,33 +5,19 @@ namespace Sidekick.Mock
 {
     public class MockViewLocator : IViewLocator
     {
-        public Task Open(View view, params object[] args)
+        public Task Open(string url)
         {
             return Task.CompletedTask;
         }
 
-        public bool IsOpened(View view) => true;
-
-        public bool IsAnyOpened() => true;
-
-        public void CloseAll()
+        public void CloseAllOverlays()
         {
             // Do nothing
         }
 
-        public void Minimize(View view)
+        public bool IsOverlayOpened()
         {
-
-        }
-
-        public void Maximize(View view)
-        {
-
-        }
-
-        public void Close(View view)
-        {
-            // Do nothing
+            return false;
         }
     }
 }

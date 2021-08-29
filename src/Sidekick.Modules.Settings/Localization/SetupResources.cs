@@ -12,6 +12,7 @@ namespace Sidekick.Modules.Settings.Localization
         }
 
         public string Exit => resources["Exit"];
+        public string NewLeagues => resources["NewLeagues"];
         public string Title => resources["Title"];
     }
 }

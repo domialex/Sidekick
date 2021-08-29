@@ -56,13 +56,13 @@
     public async Task Save()
     {
         await SettingsService.Save(ViewModel, false);
-        ViewLocator.Close(View.Settings);
+        await ViewInstance.Close();
     }
 
     public async Task ResetCache()
     {
         CacheProvider.Clear();
-        await ViewLocator.Open(View.Initialization);
+        await ViewLocator.Open("/initialize");
         await ViewInstance.Close();
     }
 }

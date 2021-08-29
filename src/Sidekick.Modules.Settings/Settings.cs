@@ -46,8 +46,6 @@ namespace Sidekick.Modules.Settings
 
         public string Key_FindItems { get; set; } = "Ctrl+F";
 
-        public string Key_OpenSettings { get; set; } = "F12";
-
         public List<ChatSetting> Chat_Commands { get; set; } = new()
         {
             new ChatSetting("F5", "/hideout", true),

@@ -45,7 +45,6 @@ namespace Sidekick.Modules.Settings.Localization
         public string EscapeClosesOverlays => resources["EscapeClosesOverlays"];
         public string Key_Duplicated => resources["Key_Duplicated"];
         public string Key_FindItems => resources["Key_FindItems"];
-        public string Key_OpenSettings => resources["Key_OpenSettings"];
         public string Key_Unset => resources["Key_Unset"];
         public string Language_Parser => resources["Language_Parser"];
         public string Language_Title => resources["Language_Title"];

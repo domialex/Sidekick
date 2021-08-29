@@ -2,10 +2,11 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub;
 using Sidekick.Common;
-using Sidekick.Common.Blazor.Views;
 using Sidekick.Modules.Update.Localization;
 
 namespace Sidekick.Modules.Update.Pages
@@ -13,22 +14,19 @@ namespace Sidekick.Modules.Update.Pages
     public partial class Update : ComponentBase
     {
         [Inject] private ILogger<Update> Logger { get; set; }
-        [Inject] private IViewLocator ViewLocator { get; set; }
         [Inject] private IGitHubClient GitHubClient { get; set; }
         [Inject] private IAppService AppService { get; set; }
         [Inject] private UpdateResources UpdateResources { get; set; }
-        [Inject] private IViewInstance ViewInstance { get; set; }
+        [Inject] private IWebHostEnvironment Environment { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
 
-        private int Count { get; set; } = 0;
-        private int Completed { get; set; } = 0;
         private string Title { get; set; }
-        private double Percentage => (double)Completed / Count;
 
         public static bool HasRun { get; set; } = false;
 
         protected override void OnInitialized()
         {
-            Task.Run(Handle);
+            InvokeAsync(Handle);
             base.OnInitialized();
         }
 
@@ -37,37 +35,32 @@ namespace Sidekick.Modules.Update.Pages
             try
             {
                 // Checking release
-                Completed = 1;
-                Count = 3;
                 Title = UpdateResources.Checking;
                 StateHasChanged();
                 var release = await GitHubClient.GetLatestRelease();
 
-                if (!GitHubClient.IsUpdateAvailable(release))
+                if (!GitHubClient.IsUpdateAvailable(release) || Environment.IsDevelopment())
                 {
-                    Completed = 3;
-                    StateHasChanged();
-                    await ViewLocator.Open(View.Initialization);
-                    await ViewInstance.Close();
+                    await Task.Delay(750);
+                    NavigationManager.NavigateTo("/setup");
                     return;
                 }
 
                 // Downloading
-                Completed = 2;
                 Title = UpdateResources.Downloading(release.Tag);
                 StateHasChanged();
                 var path = await GitHubClient.DownloadRelease(release);
                 if (path == null)
                 {
-                    Completed = 3;
                     Title = UpdateResources.Failed;
                     StateHasChanged();
                     await Task.Delay(3000);
+                    NavigationManager.NavigateTo("/setup");
                     return;
                 }
 
                 // Downloaded
-                await Task.Delay(1000);
+                await Task.Delay(1500);
                 Process.Start(path);
                 Exit();
             }

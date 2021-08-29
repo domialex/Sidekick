@@ -1,23 +1,24 @@
 @inherits LayoutComponentBase
+@layout MenuLayout
 
-<MudLayout>
-    <MudAppBar Color="Color.Primary">
-        <MudText Typo="Typo.body1">Development Page</MudText>
-    </MudAppBar>
+<MudDrawer @bind-Open="@Layout.MenuOpened"
+           Anchor="Anchor.Left"
+           Variant="@DrawerVariant.Responsive"
+           Breakpoint="Breakpoint.Lg"
+           ClipMode="DrawerClipMode.Docked">
+    <MudDrawerHeader></MudDrawerHeader>
+    <MudNavMenu>
+        <MudNavLink Match="NavLinkMatch.All" Href="/development/typography">Typography</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="/development/tests">Tests</MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
 
-    <MudDrawer ClipMode="DrawerClipMode.Always"
-               Open="true"
-               Variant="DrawerVariant.Persistent">
-        <MudDrawerHeader></MudDrawerHeader>
-        <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All" Href="/development/typography">Typography</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All" Href="/development/tests">Tests</MudNavLink>
-        </MudNavMenu>
-    </MudDrawer>
+<MudMainContent>
+    <MudContainer Class="py-6">
+        @Body
+    </MudContainer>
+</MudMainContent>
 
-    <MudMainContent>
-        <MudContainer Class="py-6">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+@code {
+    [CascadingParameter] public MenuLayout Layout { get; set; }
+}

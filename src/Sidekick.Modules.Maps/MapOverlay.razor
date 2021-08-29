@@ -58,13 +58,13 @@ else
         Item = ItemParser.ParseItem(ItemText.DecodeBase64Url());
         if (Item == null)
         {
-            await ViewLocator.Open(View.Error, ErrorType.Unparsable);
+            await ViewLocator.Open("/error/unparsable");
             await ViewInstance.Close();
             return;
         }
         if (Item.Metadata.Category != Category.Map && Item.Metadata.Category != Category.Contract)
         {
-            await ViewLocator.Open(View.Error, ErrorType.InvalidItem);
+            await ViewLocator.Open("/error/invalid");
             await ViewInstance.Close();
             return;
         }
