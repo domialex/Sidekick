@@ -21,13 +21,10 @@
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private ISettings Settings { get; set; }
 
-    private List<AgentModel> Agents { get; set; }
+    private List<AgentModel> Agents { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(CheatsheetResources.Betrayal);
-        Agents = new List<AgentModel>();
-
         Agents.Add(new AgentModel(Resources.AislingName, "Aisling.png", RewardValue.Low)
         {
             Transportation = new RewardModel(Resources.AislingTransportation, RewardValue.NoValue),
@@ -166,6 +163,7 @@
 
         Sort();
 
+        await ViewInstance.Initialize(CheatsheetResources.Betrayal);
         await base.OnInitializedAsync();
     }
 

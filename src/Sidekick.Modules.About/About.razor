@@ -103,7 +103,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(Resources.Title);
         VersionNumber = GetType().Assembly.GetName().Version.ToString();
 
         try
@@ -116,6 +115,7 @@
             Logger.LogInformation($"[About Page] - Failed to load Operating System details: " + e.Message);
         }
 
+        await ViewInstance.Initialize(Resources.Title);
         await base.OnInitializedAsync();
     }
 

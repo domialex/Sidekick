@@ -19,8 +19,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(CheatsheetResources.Heist);
-
         Jobs = new List<JobModel>
 {
             new JobModel(Resources.Job_Lockpicking, "Lockpick.png", new RewardModel[] {
@@ -116,6 +114,7 @@
             }),
         };
 
+        await ViewInstance.Initialize(CheatsheetResources.Heist);
         await base.OnInitializedAsync();
     }
 }

@@ -19,7 +19,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(CheatsheetResources.Delve);
         Regions = new List<RegionModel>
 {
             new RegionModel(Resources.Mines)
@@ -117,6 +116,7 @@
             },
         };
 
+        await ViewInstance.Initialize(CheatsheetResources.Delve);
         await base.OnInitializedAsync();
     }
 }

@@ -21,9 +21,10 @@
 
     [Parameter] public string Type { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ViewInstance.Initialize(Resources.Title);
+        await ViewInstance.Initialize(Resources.Title, width: 400, height: 260, isModal: true);
+        await base.OnInitializedAsync();
     }
 
     private string Text => Type switch

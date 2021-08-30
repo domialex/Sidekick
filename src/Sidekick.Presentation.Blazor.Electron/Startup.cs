@@ -91,7 +91,7 @@ namespace Sidekick.Presentation.Blazor.Electron
             var mvcBuilder = services
                 .AddRazorPages(options =>
                 {
-                    options.RootDirectory = "/Shared";
+                    options.RootDirectory = "/ElectronPages";
                 })
                 .AddFluentValidation(options =>
                 {
@@ -122,7 +122,6 @@ namespace Sidekick.Presentation.Blazor.Electron
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
 
@@ -161,11 +160,12 @@ namespace Sidekick.Presentation.Blazor.Electron
                         }
                     });
                     browserWindow.WebContents.OnCrashed += (killed) => ElectronNET.API.Electron.App.Exit();
-                    await Task.Delay(75);
+                    await Task.Delay(50);
                     browserWindow.Close();
 
                     // Initialize Sidekick
                     await viewLocator.Open("/update");
+
                 }
                 catch (Exception e)
                 {

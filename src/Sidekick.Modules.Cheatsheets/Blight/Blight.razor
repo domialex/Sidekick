@@ -20,8 +20,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(CheatsheetResources.Blight);
-
         Oils = new List<OilModel>
 {
             new OilModel(Resources.GoldenOil, Resources.GoldenOilEffect, RewardValue.High, "Golden_Oil.png"),
@@ -38,6 +36,7 @@
             new OilModel(Resources.ClearOil, Resources.ClearOilEffect, RewardValue.NoValue, "Clear_Oil.png"),
         };
 
+        await ViewInstance.Initialize(CheatsheetResources.Blight);
         await base.OnInitializedAsync();
     }
 }

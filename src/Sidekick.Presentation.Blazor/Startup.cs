@@ -76,10 +76,7 @@ namespace Sidekick.Presentation.Blazor
                 .AddSidekickMocks();
 
             var mvcBuilder = services
-                .AddRazorPages(options =>
-                {
-                    options.RootDirectory = "/Shared";
-                })
+                .AddRazorPages()
                 .AddFluentValidation(options =>
                 {
                     foreach (var module in SidekickModule.Modules)

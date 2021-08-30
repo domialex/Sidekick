@@ -40,10 +40,10 @@ else
 
 @code {
     [Inject] private MapInfoResources Resources { get; set; }
-    [Inject] private IViewLocator ViewLocator { get; set; }
     [Inject] private IViewInstance ViewInstance { get; set; }
     [Inject] private IItemParser ItemParser { get; set; }
     [Inject] private ISettings Settings { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     [Parameter] public string ItemText { get; set; }
 
@@ -53,23 +53,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(Resources.Title);
-
         Item = ItemParser.ParseItem(ItemText.DecodeBase64Url());
         if (Item == null)
         {
-            await ViewLocator.Open("/error/unparsable");
-            await ViewInstance.Close();
+            NavigationManager.NavigateTo("/error/unparsable");
             return;
         }
         if (Item.Metadata.Category != Category.Map && Item.Metadata.Category != Category.Contract)
         {
-            await ViewLocator.Open("/error/invalid");
-            await ViewInstance.Close();
+            NavigationManager.NavigateTo("/error/invalid");
             return;
         }
 
-        await ViewInstance.Initialize(Item.Original.Type);
+        await ViewInstance.Initialize(Item.Original.Type, isOverlay: true, closeOnBlur: Settings.Map_CloseWithMouse);
 
         DangerousMods.Clear();
         OkMods.Clear();

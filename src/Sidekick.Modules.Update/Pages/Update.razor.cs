@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sidekick.Apis.GitHub;
 using Sidekick.Common;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Modules.Update.Localization;
 
 namespace Sidekick.Modules.Update.Pages
@@ -19,15 +20,17 @@ namespace Sidekick.Modules.Update.Pages
         [Inject] private UpdateResources UpdateResources { get; set; }
         [Inject] private IWebHostEnvironment Environment { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IViewInstance ViewInstance { get; set; }
 
         private string Title { get; set; }
 
         public static bool HasRun { get; set; } = false;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            InvokeAsync(Handle);
-            base.OnInitialized();
+            await ViewInstance.Initialize("Update", width: 400, height: 260, isModal: true);
+            await base.OnInitializedAsync();
+            await Handle();
         }
 
         public async Task Handle()

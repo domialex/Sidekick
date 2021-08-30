@@ -7,6 +7,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Sidekick.Apis.Poe;
 using Sidekick.Common;
+using Sidekick.Common.Blazor.Views;
 using Sidekick.Common.Cache;
 using Sidekick.Common.Game.Languages;
 using Sidekick.Common.Settings;
@@ -27,6 +28,7 @@ namespace Sidekick.Modules.Settings.Setup
         [Inject] private ILeagueProvider LeagueProvider { get; set; }
         [Inject] private ISettings Settings { get; set; }
         [Inject] private ICacheProvider CacheProvider { get; set; }
+        [Inject] private IViewInstance ViewInstance { get; set; }
 
         public static bool HasRun { get; set; } = false;
         public bool RequiresSetup { get; set; } = false;
@@ -35,6 +37,8 @@ namespace Sidekick.Modules.Settings.Setup
 
         protected override async Task OnInitializedAsync()
         {
+            await ViewInstance.Initialize("Setup", width: 400, height: 260, isModal: true);
+
             var leagues = await LeagueProvider.GetList(false);
             var leaguesHash = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(leagues)));
 
@@ -47,6 +51,8 @@ namespace Sidekick.Modules.Settings.Setup
             // Check to see if we should run Setup first before running the rest of the initialization process
             if (string.IsNullOrEmpty(Settings.LeagueId) || !leagues.Any(x => x.Id == Settings.LeagueId))
             {
+                await ViewInstance.Initialize("Setup", width: 600, height: 715, isModal: true);
+
                 RequiresSetup = true;
                 await AppService.OpenNotification(Resources.NewLeagues);
             }

@@ -43,10 +43,11 @@ namespace Sidekick.Modules.Initialization.Pages
         public static bool HasRun { get; set; } = false;
         public Task InitializationTask { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            InitializationTask = Task.Run(Handle);
-            base.OnInitialized();
+            await ViewInstance.Initialize("Initialize", width: 400, height: 260, isModal: true);
+            await base.OnInitializedAsync();
+            await Handle();
         }
 
         public async Task Handle()

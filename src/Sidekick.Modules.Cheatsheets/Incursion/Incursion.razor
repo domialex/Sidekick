@@ -20,8 +20,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await ViewInstance.Initialize(CheatsheetResources.Incursion);
-
         Rooms = new List<RoomModel>()
 {
             new RoomModel(string.Empty, Resources.GuardhouseModifiers)
@@ -177,6 +175,7 @@
             },
         };
 
+        await ViewInstance.Initialize(CheatsheetResources.Incursion);
         await base.OnInitializedAsync();
     }
 }

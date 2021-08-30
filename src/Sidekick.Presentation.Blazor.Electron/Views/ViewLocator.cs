@@ -12,7 +12,7 @@ using Sidekick.Common.Settings;
 
 namespace Sidekick.Presentation.Blazor.Electron.Views
 {
-    public class ViewLocator : IViewLocator, IDisposable
+    public class ViewLocator : IViewLocator
     {
         internal readonly ICacheProvider cacheProvider;
         internal readonly ILogger<ViewLocator> logger;
@@ -37,11 +37,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 logger.LogError("Force closing the Blazor view {viewName}", viewName);
                 if (!string.IsNullOrEmpty(viewName?.ToString()))
                 {
-                    Close(viewName.ToString());
+                    // Close(viewName.ToString());
                 }
                 else
                 {
-                    CloseAll();
+                    // CloseAll();
                 }
 
                 return null;
@@ -56,19 +56,11 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
         {
             var window = await ElectronNET.API.Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
-                Width = 768,
-                Height = 600,
                 AcceptFirstMouse = true,
-                AlwaysOnTop = false,
                 Center = true,
                 Frame = false,
                 Fullscreenable = false,
                 HasShadow = true,
-                Maximizable = true,
-                Minimizable = true,
-                MinHeight = 600,
-                MinWidth = 768,
-                Resizable = true,
                 Show = false,
                 Transparent = true,
                 DarkTheme = true,
@@ -119,57 +111,42 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 return;
             }
 
-            var newView = new InternalViewInstance(await CreateBrowser(url), this, url);
+            var newView = new InternalViewInstance(await CreateBrowser(url), url);
 
-            foreach (var view in Views.Where(x => x.Key == newView.Key))
-            {
-                view.Browser.Close();
-            }
+            await TryCloseViews(x => x.Key == newView.Key);
 
             Views.Add(newView);
         }
 
-        public bool IsAnyOpened() => Views.Any();
-
-        public void CloseAll()
+        public bool IsOverlayOpened()
         {
-            foreach (var instance in Views)
-            {
-                instance.Browser.Close();
-            }
-
-            Views.Clear();
-        }
-
-        public void Close(string viewName)
-        {
-            foreach (var instance in Views.Where(x => x.Key == viewName))
-            {
-                instance.Browser.Close();
-            }
-
-            Views.RemoveAll(x => x.Key == viewName);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            CloseAll();
+            return Views.Any(x => x.IsOverlay);
         }
 
         public void CloseAllOverlays()
         {
-            throw new NotImplementedException();
+            _ = TryCloseViews((view) => view.IsOverlay);
         }
 
-        public bool IsOverlayOpened()
+        private async Task TryCloseViews(Func<InternalViewInstance, bool> func)
         {
-            throw new NotImplementedException();
+            while (Views.Any(func))
+            {
+                var view = Views.FirstOrDefault(func);
+
+                try
+                {
+                    if (!await view.Browser.IsDestroyedAsync())
+                    {
+                        view.Browser.Close();
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                Views.Remove(view);
+            }
         }
     }
 }
