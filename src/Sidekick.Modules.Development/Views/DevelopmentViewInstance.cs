@@ -15,11 +15,7 @@ namespace Sidekick.Development.Views
 
         public virtual Task Close()
         {
-            Task.Run(async () =>
-            {
-                await Task.Delay(500);
-                navigationManager.NavigateTo("/");
-            });
+            navigationManager.NavigateTo("/");
             return Task.CompletedTask;
         }
 
