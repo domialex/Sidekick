@@ -91,7 +91,7 @@ jobs:
         dotnet tool restore
     - name: Electron - Build
       run: |
-        cd ./src/Sidekick.Presentation.Blazor.Electron
+        cd ./src/Sidekick.Electron
         dotnet electronize build /target win /PublishSingleFile false
     - name: Artifact - Build
       uses: actions/upload-artifact@v2.2.3
