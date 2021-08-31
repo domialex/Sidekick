@@ -53,7 +53,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 view.Browser.SetMinimizable(false);
                 view.Browser.SetSkipTaskbar(false);
                 view.Browser.SetResizable(false);
-                view.Browser.SetAlwaysOnTop(false, OnTopLevel.screenSaver);
+                view.Browser.SetAlwaysOnTop(false);
                 view.Browser.ShowInactive();
             }
             else
@@ -62,7 +62,7 @@ namespace Sidekick.Presentation.Blazor.Electron.Views
                 view.Browser.SetMinimizable(true);
                 view.Browser.SetSkipTaskbar(false);
                 view.Browser.SetResizable(true);
-                view.Browser.SetAlwaysOnTop(false, OnTopLevel.screenSaver);
+                view.Browser.SetAlwaysOnTop(false);
                 view.Browser.Show();
             }
 

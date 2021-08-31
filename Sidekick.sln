@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31521.260
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{9B41443D-4D1E-4DF3-9DA5-522B0AAB40A0}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,10 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution", "_Solution", "{
 		.filenesting.json = .filenesting.json
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		.github\workflows\build.yml = .github\workflows\build.yml
 		CONTRIBUTING.md = CONTRIBUTING.md
 		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
 		README.md = README.md
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E4920CFB-0EED-44B1-AC8D-8F5ECBCB7788}"

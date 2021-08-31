@@ -57,7 +57,7 @@ namespace Sidekick.Application.Tests
             await settingsService.Save(nameof(ISettings.Language_UI), "en");
             await settingsService.Save(nameof(ISettings.LeagueId), "Standard");
 
-            var initComponent = ctx.RenderComponent<Sidekick.Modules.Initialization.Pages.Initialization>();
+            var initComponent = ctx.RenderComponent<Modules.Initialization.Pages.Initialization>();
             await initComponent.Instance.InitializationTask;
 
             Parser = ctx.Services.GetRequiredService<IItemParser>();

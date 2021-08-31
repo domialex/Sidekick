@@ -17,7 +17,7 @@ namespace Sidekick.Common.Settings
         string Character_Name { get; set; }
         bool RetainClipboard { get; set; }
         string Key_FindItems { get; set; }
-        bool SendCrashReports { get; set; }
+        // bool SendCrashReports { get; set; }
 
         bool Trade_CloseWithMouse { get; set; }
         string Trade_Key_Check { get; set; }

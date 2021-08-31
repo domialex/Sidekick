@@ -54,11 +54,13 @@ else
             </MudCardContent>
         </MudCard>
 
-        <MudCard Class="mb-3">
-            <MudCardContent>
-                <MudCheckBox Label="@SettingsResources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
-            </MudCardContent>
-        </MudCard>
+        @*
+            <MudCard Class="mb-3">
+                <MudCardContent>
+                    <MudCheckBox Label="@SettingsResources.General_SendCrashReports" @bind-Checked="@ViewModel.SendCrashReports" />
+                </MudCardContent>
+            </MudCard>
+        *@
 
         <div class="d-flex justify-end">
             <MudButton OnClick="Exit"
