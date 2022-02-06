@@ -1,4 +1,7 @@
-# Sidekick moved to https://github.com/Sidekick-Poe/Sidekick
+<h1 align="center">
+👇Sidekick moved👇<br />
+https://github.com/Sidekick-Poe/Sidekick
+</h1>
 
 # [![](./docs/assets/images/orb_exalted.png)](#) Sidekick 2
 [![](https://img.shields.io/github/v/release/domialex/sidekick?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/downloads/domialex/Sidekick/total?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/github/downloads-pre/domialex/Sidekick/latest/total?style=flat-square)](https://github.com/domialex/Sidekick/releases) [![](https://img.shields.io/discord/664252463188279300?color=%23738AD6&label=Discord&style=flat-square)](https://discord.gg/H4bg4GQ)
